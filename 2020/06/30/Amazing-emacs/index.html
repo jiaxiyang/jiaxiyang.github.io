@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Bash_usage | Jia Xiyang</title>
-  <meta name="keywords" content=" Bash ">
-  <meta name="description" content="Bash_usage | Jia Xiyang">
+  <title>Amazing emacs | Jia Xiyang</title>
+  <meta name="keywords" content=" Emacs ">
+  <meta name="description" content="Amazing emacs | Jia Xiyang">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="个人简介贾夕阳毕业于北京理工大学，目前从事人工智能软件架构工作 联系方式 mail: jiaxiyangbit@126.com qq: 312567150">
 <meta property="og:type" content="website">
@@ -322,9 +322,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-Bash-usage" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Amazing-emacs" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Bash_usage</h1>
+        <h1 class="article-title">Amazing emacs</h1>
     
     <div class="article-meta">
         
@@ -336,7 +336,7 @@
             
             <a  data-rel="Tools">Tools</a> > 
             
-            <a  data-rel="Tools&lt;---&gt;Bash">Bash</a>
+            <a  data-rel="Tools&lt;---&gt;Emacs">Emacs</a>
             
         </span>
         
@@ -344,19 +344,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color5">Bash</a>
+            <a class="color1">Emacs</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-06-30 09:45:22'>2020-06-29 20:39</time>
+            Created At : <time class="date" title='Updated At: 2020-06-30 10:01:26'>2020-06-30 09:48</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:1.2k</span>
+        <span>Count:49</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -375,7 +375,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Useful-Tools"><span class="toc-text">Useful Tools</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Shortcuts"><span class="toc-text">Shortcuts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Miscellaneous"><span class="toc-text">Miscellaneous</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Links-and-Reference"><span class="toc-text">Links and Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-amazing-features"><span class="toc-text">The amazing features</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -391,78 +391,29 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Useful-Tools"><a href="#Useful-Tools" class="headerlink" title="Useful Tools"></a>Useful Tools</h2><ol>
-<li><a href="https://github.com/tmux/tmux/wiki" target="_blank" rel="noopener">tmux</a></li>
-<li><a href="https://github.com/skywind3000/z.lua" target="_blank" rel="noopener">z.lua(zh)</a><ul>
-<li>zh: grep directory</li>
-<li>zh foo: auto jump to foo directory</li>
-<li>C-r: grep history</li>
-</ul>
-</li>
-<li><a href="https://github.com/junegunn/fzf" target="_blank" rel="noopener">fzf</a></li>
-<li><a href="https://github.com/BurntSushi/ripgrep" target="_blank" rel="noopener">rg</a></li>
-<li><a href="https://github.com/sharkdp/fd" target="_blank" rel="noopener">fd</a></li>
-</ol>
-<h2 id="Shortcuts"><a href="#Shortcuts" class="headerlink" title="Shortcuts"></a>Shortcuts</h2><h2 id="Miscellaneous"><a href="#Miscellaneous" class="headerlink" title="Miscellaneous"></a>Miscellaneous</h2><ol>
-<li><code>cat url-list.txt | xargs wget -c</code>xargs将参数列表转换成小块分段传递给其他命令</li>
-<li>ssh scp 免密登录<code>ssh-keygen -t rsa &amp;&amp; ssh-copy-id -i ~/.ssh/id_rsa.pub root@10.10.129.25</code>  或将一台机器的id_rsa.pub复制到另一台机器~/.ssh/authorized_keys文件中</li>
-<li><code>tree -L 2</code>  查看二级目录结构</li>
-<li><code>lsb_release -a</code>  查看操作系统版本，是Ubuntu还是CentOS，是14.04还是16.04</li>
-<li><code>./test.sh  2&gt;&amp;1 | tee test.log</code> log同时输出到前台和文件中    可以不带2&gt;&amp;1(将标准错误输出到标准输出)<br><code>./test.sh 2&gt;test.log 1&gt;&amp;2</code></li>
-<li>IP地址别名，如服务器别名 <code>/etc/hosts 10.10.0.61 dg16</code></li>
-<li><code>ssh -v root@10.10.129.25</code> 通过[-v]参数，查看ssh连接的具体过程</li>
-<li><code>echo123456 | sudo -S ./winless.sh</code>   以root权限来执行文件 这里123456是密码，参数-S专门为执行sudo命令的时候要输入密码而准备的，表示标准输入。</li>
-<li>ssh打洞，中间机器运行 <code>ssh -R10115:${IP1}:22 ${IP2}</code><br>然后运行 <code>rsync -avz --progress -e &#39;ssh -p 10115&#39; ${FILES} localhost:${PATH}</code></li>
-<li>w查看登录的用户 who 向登录用户发消息 <code>( echo jia &gt; /pts/20 for i in</code>who | awk ‘{print $2}’<code>; do echo &quot;${i}&quot; &gt; /dev/${i}; done</code></li>
-<li>开发板命令显示颜色：<code>alias ll=&quot;ls -al --color=auto&quot;     alias ls=&quot;ls --color=auto&quot;</code></li>
-<li><code>nslookup www.baidu.com</code>  域名查询命令</li>
-<li>split 将一个大文件分割成多个小文件</li>
-<li><code>chmod 777 -R work_space</code> 改变目录下所有文件权限</li>
-<li><code>time program</code> 测试程序运行时间</li>
-<li><code>ssh -XY jiaxiyang@10.10.0.61</code> 需要的时候显示图形界面</li>
-<li><code>arp -na</code> 查看网络中连接情况</li>
-<li><code>find  .  -name &#39;*&#39;  -exec touch {} \;</code> 修改当前目录及子目录中所有文件的时间</li>
-<li><code>chattr</code> 修改文件（夹）属性 不能被删除</li>
-<li><code>figlet &quot;jia&quot; -f scrpt(ls /usr/share/figlet)</code> 改变输出字体大小</li>
-<li><code>ln -s   source  target</code>   创建软连接</li>
-<li>ln 非常有用，可以使用ln来重新命名文件，可以提供一层虚拟层，文件名字路径改变只需重新链接一下，上层代码不用改变。例如xilinx所有硬盘都连接到 /proj/rdi/staff/xiyang 方便操作</li>
-<li><code>watch -d -n 1 ./Re   reg</code> 每隔1秒查看程序变化</li>
-<li><code>axel -n 15（线程数）URL</code> 多线程下载</li>
-<li><code>apt-cache search trash</code>  搜索安装包</li>
-<li><code>ldconfig -p</code>查看系统安装的库</li>
-<li><code>ldconfig -p | grep pcap</code> 查看系统是否安装pcap</li>
-<li><code>pkg-config --modversion poppler-data</code> 查看库版本 , pkg-confg配置文件在/usr/share/pkgconfig下(pkg-config一般为开发者使用，文件系统中勾选-dev)</li>
-<li><code>sudo dpkg --install atom-amd64.deb</code> dpkg安装.deb软件包</li>
-<li><code>export PATH=&quot;/home/zxy/Desktop:$PATH&quot;</code>   添加环境变量</li>
-<li><code>linuxlogo</code> 命令行显示linux logo</li>
-<li><code>sudo mount -t tmpfs -o size=8G tmpfs ramdisk/</code> 创建内存文件系统， 可以加快程序运行时间。</li>
-<li><code>hostname</code> 查看主机名</li>
-<li><code>tar -zxvf aa.tar.gz BOOT.BIN</code> 单独解压 某个文件 <code>tar -tf</code> 压缩包名称，可以查看压缩包内容  <a href="https://www.cnblogs.com/manong--/p/8012324.html" target="_blank" rel="noopener">https://www.cnblogs.com/manong--/p/8012324.html</a></li>
-<li><code>speedtest-cli</code> 测下载上传网速</li>
-<li><code>curl -O -u jiaxiyang:jiaxiyang -s[-#]</code></li>
-<li><code>wget -c url</code>   支持断点续传  好用，可以用来下载大文件，比如： petalinux cache 30G</li>
-<li>rsync 同步数据， 可以启服务备份数据   <code>rsync -avzr --progress  test --exclude=test/5 10.10.0.98:/home/jiaxiyang/</code>   多用rsync，少用scp</li>
-<li><code>crontab -e</code>  定时执行脚本 cat /var/mail/jiaxiyang查看结果</li>
-<li><code>syncthing</code> 文件同步神器</li>
-<li><code>nl file</code> 显示行号</li>
-<li><code>realpath</code> 查看文件全路径</li>
-<li><code>shotwell</code> *.jpg 打开图片</li>
-<li><code>vimdiff dp</code> 快速移动不同</li>
-<li><code>stat -c %s file</code> 查看文件长度</li>
-<li><code>stat -z %s file</code> 查看文件修改时间</li>
-<li><code>rm file || true</code> 如果不存在执行true，还是会报错，但$?返回为0 使用，使用bash -ex时不会退出。</li>
-<li><code>cat file | grep -v &#39;^#&#39;</code> 输出不以#号开头的行</li>
-<li><code>SCRIPT_PATH=$(dirname  $(realpath xx.sh))</code> 比pwd要好，pwd显示的是虚拟链接地址。</li>
-<li><code>PROJECT_NAME=$(basename $(SCPRIT_PATH))</code> 当前脚本所在的工程名字</li>
-<li><code>sshpass -p root（密码） ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@10.10.129.22 &#39;/etc/init.d/led start&#39;</code>  跨机器执行命令 在机器A上调用，在机器B上执行，将结果输出到A上。</li>
-<li><code>sshpass -p root（密码） ssh(scp) -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@10.10.129.22   ssh -y -y  root@zu9-2  &quot; &#39; cd /home &amp;&amp; ls&#39;&quot;</code>zu9 上执行 cd /home &amp;&amp; ls 注意  要同时加双引号和单引号。<code>sshpass -p jiaxiyang scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null static_ip.txt jiaxiyang@10.10.0.96:~</code></li>
-<li><code>tar -cf - zu9_test | sshpass -p root ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@10.10.129.133 ssh -y -y zu9-2 tar -xvf - -C /var</code>  跨机器cp文件并免密</li>
-</ol>
-<h2 id="Links-and-Reference"><a href="#Links-and-Reference" class="headerlink" title="Links and Reference"></a>Links and Reference</h2><ol>
-<li><a href="https://github.com/jlevy/the-art-of-command-line/blob/master/README-zh.md" target="_blank" rel="noopener">The art of command line</a></li>
-<li><a href="https://github.com/alebcay/awesome-shell" target="_blank" rel="noopener">Awesome shell</a></li>
-<li><a href="https://github.com/awesome-lists/awesome-bash" target="_blank" rel="noopener">Awesome bash</a></li>
-<li><a href="https://github.com/zhouyiqi91/awesome-cheatsheets/blob/master/languages/bash.sh" target="_blank" rel="noopener">Bash cheatsheet</a></li>
+        <h2 id="The-amazing-features"><a href="#The-amazing-features" class="headerlink" title="The amazing features"></a>The amazing features</h2><ol>
+<li>ace jump</li>
+<li>compile and gdb</li>
+<li>next error</li>
+<li>clang format</li>
+<li>company</li>
+<li>undo tree</li>
+<li>snippets</li>
+<li>help mans</li>
+<li>M-x: you can use commands to do every thing</li>
+<li>magit</li>
+<li>counsel buffers and files</li>
+<li>bookmarks</li>
+<li>leader key</li>
+<li>org</li>
+<li>google translate</li>
+<li>macro</li>
+<li>smartparens</li>
+<li>swiper</li>
+<li>shift select</li>
+<li>flycheck</li>
+<li>hungry delete</li>
+<li>ox-reveal</li>
 </ol>
 
       
