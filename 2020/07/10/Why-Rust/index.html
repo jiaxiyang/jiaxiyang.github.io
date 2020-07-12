@@ -221,7 +221,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="10">
-<input type="hidden" id="yelog_site_word_count" value="2.5k">
+<input type="hidden" id="yelog_site_word_count" value="2.8k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -435,12 +435,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-07-12 11:26:22'>2020-07-10 21:45</time>
+            Created At : <time class="date" title='Updated At: 2020-07-12 17:57:10'>2020-07-10 21:45</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:213</span>
+        <span>Count:423</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -459,7 +459,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-Rust"><span class="toc-text">Why Rust?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Performance"><span class="toc-text">Performance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reliability"><span class="toc-text">Reliability</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Productivity"><span class="toc-text">Productivity</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-Name-Rust"><span class="toc-text">Why Name Rust?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存错误类型"><span class="toc-text">内存错误类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust类型系统借鉴Haskell特性"><span class="toc-text">Rust类型系统借鉴Haskell特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust相比Haskell独有特点"><span class="toc-text">Rust相比Haskell独有特点</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-Rust"><span class="toc-text">Why Rust?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Performance"><span class="toc-text">Performance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reliability"><span class="toc-text">Reliability</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Productivity"><span class="toc-text">Productivity</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-Name-Rust"><span class="toc-text">Why Name Rust?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust-目的"><span class="toc-text">Rust 目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存-堆栈-错误类型"><span class="toc-text">内存(堆栈)错误类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存管理方式"><span class="toc-text">内存管理方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust类型系统借鉴Haskell特性"><span class="toc-text">Rust类型系统借鉴Haskell特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Rust相比Haskell独有特点"><span class="toc-text">Rust相比Haskell独有特点</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -491,12 +491,20 @@
 <h2 id="Why-Name-Rust"><a href="#Why-Name-Rust" class="headerlink" title="Why Name Rust?"></a>Why Name Rust?</h2><ol>
 <li>It’s a pun on “chrome”. Rust was written by the engineer company Mozilla(firefox). And chrome is a metal.</li>
 </ol>
-<h2 id="内存错误类型"><a href="#内存错误类型" class="headerlink" title="内存错误类型"></a>内存错误类型</h2><ol>
+<h2 id="Rust-目的"><a href="#Rust-目的" class="headerlink" title="Rust 目的"></a>Rust 目的</h2><ol>
+<li>创建这个新语言的目的是为了解决一个顽疾：软件的演进速度大大低于硬件的演进，软件在语言级别上无法真正利用多核计算带来的性能提升。Rust是针对多核体系提出的语言，并且吸收一些其他动态语言的重要特性，比如不需要管理内存，比如不会出现Null指针等</li>
+</ol>
+<h2 id="内存-堆栈-错误类型"><a href="#内存-堆栈-错误类型" class="headerlink" title="内存(堆栈)错误类型"></a>内存(堆栈)错误类型</h2><ol>
 <li>引用空指针</li>
 <li>使用未初始化的内存</li>
 <li>释放后使用，也就是使用悬垂指针</li>
 <li>缓冲区溢出，比如数组越界</li>
 <li>非法释放已经释放过的或者未分配的指针</li>
+</ol>
+<h2 id="内存管理方式"><a href="#内存管理方式" class="headerlink" title="内存管理方式"></a>内存管理方式</h2><ol>
+<li>垃圾回收机制，在程序运行时不断的寻找不再使用的内存</li>
+<li>程序员亲自分配内存和释放内存</li>
+<li>Rust通过所有权系统管理内存，编译器在编译时会根据一系列规则进行检查，拥有数据所有者在离开作用域后自动清除其数据</li>
 </ol>
 <h2 id="Rust类型系统借鉴Haskell特性"><a href="#Rust类型系统借鉴Haskell特性" class="headerlink" title="Rust类型系统借鉴Haskell特性"></a>Rust类型系统借鉴Haskell特性</h2><ol>
 <li>没有空指针</li>
