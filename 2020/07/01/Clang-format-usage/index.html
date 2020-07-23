@@ -229,7 +229,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="11">
-<input type="hidden" id="yelog_site_word_count" value="3.9k">
+<input type="hidden" id="yelog_site_word_count" value="4k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -459,12 +459,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-07-01 17:08:53'>2020-07-01 13:16</time>
+            Created At : <time class="date" title='Updated At: 2020-07-23 09:10:23'>2020-07-01 13:16</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:182</span>
+        <span>Count:245</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -483,7 +483,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Install-clang"><span class="toc-text">Install clang</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bash-Command"><span class="toc-text">Bash Command</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vim-Config"><span class="toc-text">Vim Config</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Emacs-Config"><span class="toc-text">Emacs Config</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Install-clang"><span class="toc-text">Install clang</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bash-Command"><span class="toc-text">Bash Command</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vim-Config"><span class="toc-text">Vim Config</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Emacs-Config"><span class="toc-text">Emacs Config</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Config"><span class="toc-text">Config</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -502,6 +502,7 @@
         <h2 id="Install-clang"><a href="#Install-clang" class="headerlink" title="Install clang"></a>Install clang</h2><ol>
 <li><a href="http://clang.llvm.org/get_started.html" target="_blank" rel="noopener">Build clang from source</a></li>
 <li><a href="http://clang.llvm.org/docs/ClangFormat.html" target="_blank" rel="noopener">Clang format doc</a></li>
+<li><a href="http://clang.llvm.org/docs/ClangFormatStyleOptions.html" target="_blank" rel="noopener">Clang format style</a></li>
 </ol>
 <h2 id="Bash-Command"><a href="#Bash-Command" class="headerlink" title="Bash Command"></a>Bash Command</h2><ol>
 <li>Format one cpp file:<br><code>clang-format --style=Google -i test.cpp</code></li>
@@ -534,6 +535,12 @@ autocmd BufWritePre *.h,*.hpp,*.cc,*.cpp call Formatonsave()
   (add-hook &#39;c-mode-common-hook #&#39;(lambda()
                                     (add-hook &#39;before-save-hook
                                               &#39;clang-format-buffer t t))))</code></pre>
+<h2 id="Config"><a href="#Config" class="headerlink" title="Config"></a>Config</h2><p>Clang-format understands also special comments that switch formatting in a delimited range. The code between a comment <code>// clang-format off or /* clang-format off */</code>up to a comment <code>// clang-format on or /* clang-format on */</code>will not be formatted. The comments themselves will be formatted (aligned) normally.</p>
+<pre><code class="c++">int formatted_code;
+// clang-format off
+    void    unformatted_code  ;
+// clang-format on
+void formatted_code_again;</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jiaxiyangbit@126.com </span>
