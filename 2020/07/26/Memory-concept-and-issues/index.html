@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>about | Jia Xiyang</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="about | Jia Xiyang">
+  <title>Memory concept and issues | Jia Xiyang</title>
+  <meta name="keywords" content=" Memory , C++ , Rust ">
+  <meta name="description" content="Memory concept and issues | Jia Xiyang">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="个人简介贾夕阳毕业于北京理工大学，目前从事人工智能软件架构工作 联系方式 mail: jiaxiyangbit@126.com qq: 312567150">
 <meta property="og:type" content="website">
@@ -470,24 +470,45 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+        <article id="post-Memory-concept-and-issues" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">about</h1>
+        <h1 class="article-title">Memory concept and issues</h1>
     
     <div class="article-meta">
         
         
         
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Program">Program</a> > 
+            
+            <a  data-rel="Program&lt;---&gt;Basic">Basic</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color2">Memory</a>
+            
+            <a class="color4">C++</a>
+            
+            <a class="color5">Rust</a>
+            
+        </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-06-27 15:08:55'>2020-06-27 13:54</time>
+            Created At : <time class="date" title='Updated At: 2020-07-26 15:55:54'>2020-07-26 15:34</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:40</span>
+        <span>Count:402</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -506,7 +527,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#个人简介"><span class="toc-text">个人简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#联系方式"><span class="toc-text">联系方式</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#内存概念"><span class="toc-text">内存概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存-堆栈-错误类型"><span class="toc-text">内存(堆栈)错误类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存管理方式"><span class="toc-text">内存管理方式</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -522,10 +543,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="个人简介"><a href="#个人简介" class="headerlink" title="个人简介"></a>个人简介</h2><p>贾夕阳<br>毕业于北京理工大学，目前从事人工智能软件架构工作</p>
-<h2 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h2><ol>
-<li>mail: <a href="mailto:jiaxiyangbit@126.com">jiaxiyangbit@126.com</a></li>
-<li>qq: 312567150</li>
+        <h2 id="内存概念"><a href="#内存概念" class="headerlink" title="内存概念"></a>内存概念</h2><ol>
+<li>栈和堆都是代码在运行时可供使用的内存。</li>
+<li>栈中的所有数据都必须占用已知且固定大小。</li>
+<li>栈的读写比堆要快。</li>
+<li>当代码调用一个函数时，传递给函数的值和数据的局部变量被压入栈中，当函数结束时，这些值被移除栈。</li>
+<li>Rust所有权的存在是为了管理堆数据。</li>
+<li>数据在堆上才需要释放</li>
+<li>数据在堆上赋值时无指出是浅拷贝(C++)或移动(Rust，原来的变量不在有效)，而不是深拷贝。</li>
+<li>Rust数据在栈上，赋值是都是拷贝，原来的变量依旧有效。在堆上，赋值都是移动，原来变量无效。</li>
+<li>Rust String由三部分组成，ptr，len，capacity，这一组数据在栈上，ptr是指向在堆上数据的指针。（数据结构的固定长度数据在栈上，可变数据在堆上）</li>
+</ol>
+<h2 id="内存-堆栈-错误类型"><a href="#内存-堆栈-错误类型" class="headerlink" title="内存(堆栈)错误类型"></a>内存(堆栈)错误类型</h2><ol>
+<li>引用空指针</li>
+<li>使用未初始化的内存</li>
+<li>释放后使用，也就是使用悬垂指针</li>
+<li>缓冲区溢出，比如数组越界</li>
+<li>非法释放已经释放过的或者未分配的指针</li>
+</ol>
+<h2 id="内存管理方式"><a href="#内存管理方式" class="headerlink" title="内存管理方式"></a>内存管理方式</h2><ol>
+<li>垃圾回收机制，在程序运行时不断的寻找不再使用的内存</li>
+<li>程序员亲自分配内存和释放内存</li>
+<li>Rust通过所有权系统管理内存，编译器在编译时会根据一系列规则进行检查，拥有数据所有者在离开作用域后自动清除其数据</li>
 </ol>
 
       
