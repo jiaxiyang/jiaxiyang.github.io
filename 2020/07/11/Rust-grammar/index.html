@@ -507,12 +507,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-07-29 22:06:07'>2020-07-11 18:34</time>
+            Created At : <time class="date" title='Updated At: 2020-07-29 22:11:25'>2020-07-11 18:34</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:1.2k</span>
+        <span>Count:1.3k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -531,7 +531,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Grammar"><span class="toc-text">Grammar</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Grammar"><span class="toc-text">Grammar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生命周期"><span class="toc-text">生命周期</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -605,45 +605,32 @@
 </li>
 <li><p>只有当trait或者要实现trait的类型位于crate的本地作用域时，才能为该类型实现trait。</p>
 </li>
-<li><p>生命周期的目的是<strong>避免悬垂指针</strong></p>
-</li>
-<li><p><code>longest&lt;&#39;a&gt;(x: &amp;&#39;a str, y: &amp;&#39;a str) -&gt;&amp;&#39;a str</code> 它的实际含义是longest函数保证返回的引用的生命周期与传入该函数的引用的生命周期的较小者一致（x作用域和y作用域重叠的那一部分）。并没有改变传入值或返回值的生命周期，而是指出任何不满足这个约束条件的值都将被借用检查器拒绝。</p>
-</li>
-<li><p><code>struct Test&lt;&#39;a&gt; { part: &amp;&#39;a str, }</code> Test的实例不能比part字段中的引用存在的更久，Test实例应先离开作用域。（后定义的存在的应更短）</p>
-</li>
-<li><p>每一个<code>引用</code>都有一个生命周期，我们需要为那些使用了引用的函数或者结构体指定生命周期。</p>
-</li>
-<li><p>只有引用才需要指定生命周期。</p>
-</li>
-<li><p>函数或方法的参数的生命周期被称为输入生命周期，二返回的生命周期被成为输入生命周期。</p>
-</li>
-<li><p>函数或方法生命周期省略规则，需满足下面三条且无冲突</p>
-<ul>
+</ol>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><ol>
+<li>生命周期的目的是<strong>避免悬垂指针</strong></li>
+<li><code>longest&lt;&#39;a&gt;(x: &amp;&#39;a str, y: &amp;&#39;a str) -&gt;&amp;&#39;a str</code> 它的实际含义是longest函数保证返回的引用的生命周期与传入该函数的引用的生命周期的较小者一致（x作用域和y作用域重叠的那一部分）。并没有改变传入值或返回值的生命周期，而是指出任何不满足这个约束条件的值都将被借用检查器拒绝。</li>
+<li><code>struct Test&lt;&#39;a&gt; { part: &amp;&#39;a str, }</code> Test的实例不能比part字段中的引用存在的更久，Test实例应先离开作用域。（后定义的存在的应更短）</li>
+<li>每一个<code>引用</code>都有一个生命周期，我们需要为那些使用了引用的函数或者结构体指定生命周期。</li>
+<li>只有引用才需要指定生命周期。</li>
+<li>函数或方法的参数的生命周期被称为输入生命周期，二返回的生命周期被成为输入生命周期。</li>
+<li>函数或方法生命周期省略规则，需满足下面三条且无冲突<ul>
 <li>每一个输入参数都有自己的生命周期参数</li>
 <li>如果只有一个输入周期，那么它将被赋予所有的输出生命周期参数</li>
 <li>如果有多个输入生命周期且其中一个是<code>&amp;self</code>或者<code>&amp;mut self</code>(说明是个对象的方法）；那么所有的输出生命周期参数将被赋予<code>self</code>的生命周期。</li>
 </ul>
 </li>
-<li><p>生命周期省略简记：</p>
-<ul>
+<li>生命周期省略简记：<ul>
 <li>只有一个输入参数</li>
 <li>有多个输入且其中一个是<code>&amp;self</code></li>
 </ul>
 </li>
-<li><p>Rust中struct和其方法未封装到一起，C++相当于将struct和方法封装到类中。C也有struct和函数，但不具有trait或接口功能。</p>
-</li>
-<li><p>方法签名中，<code>&amp;self</code> 来替代 <code>rectangle: &amp;Rectangle</code>，因为该方法位于<code>impl Rectangle</code>上下文中，所以Rust知道<code>self</code>类型是<code>Rectangle</code></p>
-</li>
-<li><p><code>impl</code>不以<code>self</code>作为参数的函数，被称为关联函数。是函数不是方法。</p>
-</li>
-<li><p><code>self</code>是keyword. 方法中如果想改名字，可以这样传参<code>self1: &amp;Rectangle</code></p>
-</li>
-<li><p>方法定义中的生命周期注解应用于关联函数，方法（含有<code>&amp;self</code>)可省略。</p>
-</li>
-<li><p>静态生命周期： <code>&#39;static</code>，其生命周期能够存活于整个程序期间。所有的字符串字面值都拥有<code>&#39;static</code>生命周期。</p>
-</li>
-<li><p>生命周期也是泛型<code>test&lt;&#39;a, T&gt;(x: &amp;&#39;a str, y: &amp;&#39;a str, ann: T) -&gt; &amp;&#39;a str where T: Display</code> 因为生命周期也是泛型，所以<code>&#39;a</code>和泛型参数<code>T</code>都位于函数名后的同一尖括号列表中。</p>
-</li>
+<li>Rust中struct和其方法未封装到一起，C++相当于将struct和方法封装到类中。C也有struct和函数，但不具有trait或接口功能。</li>
+<li>方法签名中，<code>&amp;self</code> 来替代 <code>rectangle: &amp;Rectangle</code>，因为该方法位于<code>impl Rectangle</code>上下文中，所以Rust知道<code>self</code>类型是<code>Rectangle</code></li>
+<li><code>impl</code>不以<code>self</code>作为参数的函数，被称为关联函数。是函数不是方法。</li>
+<li><code>self</code>是keyword. 方法中如果想改名字，可以这样传参<code>self1: &amp;Rectangle</code></li>
+<li>方法定义中的生命周期注解应用于关联函数，方法（含有<code>&amp;self</code>)可省略。</li>
+<li>静态生命周期： <code>&#39;static</code>，其生命周期能够存活于整个程序期间。所有的字符串字面值都拥有<code>&#39;static</code>生命周期。</li>
+<li>生命周期也是泛型<code>test&lt;&#39;a, T&gt;(x: &amp;&#39;a str, y: &amp;&#39;a str, ann: T) -&gt; &amp;&#39;a str where T: Display</code> 因为生命周期也是泛型，所以<code>&#39;a</code>和泛型参数<code>T</code>都位于函数名后的同一尖括号列表中。</li>
 </ol>
 
       
