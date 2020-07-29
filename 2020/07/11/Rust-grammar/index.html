@@ -245,7 +245,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="14">
-<input type="hidden" id="yelog_site_word_count" value="5.9k">
+<input type="hidden" id="yelog_site_word_count" value="6k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -507,7 +507,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-07-29 22:11:25'>2020-07-11 18:34</time>
+            Created At : <time class="date" title='Updated At: 2020-07-29 23:39:55'>2020-07-11 18:34</time>
         
     </div>
     <div class="article-meta">
@@ -531,7 +531,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Grammar"><span class="toc-text">Grammar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生命周期"><span class="toc-text">生命周期</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Grammar"><span class="toc-text">Grammar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ownership-所有权"><span class="toc-text">Ownership 所有权</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Error-Handling-错误处理"><span class="toc-text">Error Handling 错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Traits"><span class="toc-text">Traits</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lifetimes-生命周期"><span class="toc-text">Lifetimes 生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Generic-Types-泛型"><span class="toc-text">Generic Types 泛型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Iterators-and-Closures-迭代器与闭包"><span class="toc-text">Iterators and Closures 迭代器与闭包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Smart-Pointers-智能指针"><span class="toc-text">Smart Pointers 智能指针</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Concurrency-并发"><span class="toc-text">Concurrency 并发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Object-Oriented-面向对象"><span class="toc-text">Object Oriented 面向对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Macros-宏"><span class="toc-text">Macros 宏</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -606,7 +606,7 @@
 <li><p>只有当trait或者要实现trait的类型位于crate的本地作用域时，才能为该类型实现trait。</p>
 </li>
 </ol>
-<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><ol>
+<h2 id="Ownership-所有权"><a href="#Ownership-所有权" class="headerlink" title="Ownership 所有权"></a>Ownership 所有权</h2><h2 id="Error-Handling-错误处理"><a href="#Error-Handling-错误处理" class="headerlink" title="Error Handling 错误处理"></a>Error Handling 错误处理</h2><h2 id="Traits"><a href="#Traits" class="headerlink" title="Traits"></a>Traits</h2><h2 id="Lifetimes-生命周期"><a href="#Lifetimes-生命周期" class="headerlink" title="Lifetimes 生命周期"></a>Lifetimes 生命周期</h2><ol>
 <li>生命周期的目的是<strong>避免悬垂指针</strong></li>
 <li><code>longest&lt;&#39;a&gt;(x: &amp;&#39;a str, y: &amp;&#39;a str) -&gt;&amp;&#39;a str</code> 它的实际含义是longest函数保证返回的引用的生命周期与传入该函数的引用的生命周期的较小者一致（x作用域和y作用域重叠的那一部分）。并没有改变传入值或返回值的生命周期，而是指出任何不满足这个约束条件的值都将被借用检查器拒绝。</li>
 <li><code>struct Test&lt;&#39;a&gt; { part: &amp;&#39;a str, }</code> Test的实例不能比part字段中的引用存在的更久，Test实例应先离开作用域。（后定义的存在的应更短）</li>
@@ -632,7 +632,7 @@
 <li>静态生命周期： <code>&#39;static</code>，其生命周期能够存活于整个程序期间。所有的字符串字面值都拥有<code>&#39;static</code>生命周期。</li>
 <li>生命周期也是泛型<code>test&lt;&#39;a, T&gt;(x: &amp;&#39;a str, y: &amp;&#39;a str, ann: T) -&gt; &amp;&#39;a str where T: Display</code> 因为生命周期也是泛型，所以<code>&#39;a</code>和泛型参数<code>T</code>都位于函数名后的同一尖括号列表中。</li>
 </ol>
-
+<h2 id="Generic-Types-泛型"><a href="#Generic-Types-泛型" class="headerlink" title="Generic Types 泛型"></a>Generic Types 泛型</h2><h2 id="Iterators-and-Closures-迭代器与闭包"><a href="#Iterators-and-Closures-迭代器与闭包" class="headerlink" title="Iterators and Closures 迭代器与闭包"></a>Iterators and Closures 迭代器与闭包</h2><h2 id="Smart-Pointers-智能指针"><a href="#Smart-Pointers-智能指针" class="headerlink" title="Smart Pointers 智能指针"></a>Smart Pointers 智能指针</h2><h2 id="Concurrency-并发"><a href="#Concurrency-并发" class="headerlink" title="Concurrency 并发"></a>Concurrency 并发</h2><h2 id="Object-Oriented-面向对象"><a href="#Object-Oriented-面向对象" class="headerlink" title="Object Oriented 面向对象"></a>Object Oriented 面向对象</h2><h2 id="Macros-宏"><a href="#Macros-宏" class="headerlink" title="Macros 宏"></a>Macros 宏</h2>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jiaxiyangbit@126.com </span>
     </div>
