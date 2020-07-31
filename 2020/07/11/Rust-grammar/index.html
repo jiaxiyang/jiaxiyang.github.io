@@ -245,7 +245,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="14">
-<input type="hidden" id="yelog_site_word_count" value="7.4k">
+<input type="hidden" id="yelog_site_word_count" value="7.6k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -359,7 +359,7 @@
         
         <a  class="All Program Basic "
            href="/2020/07/26/Memory-concept-and-issues/"
-           data-tag="Memory,C++,Rust"
+           data-tag="Rust,Memory,C++"
            data-author="" >
             <span class="post-title" title="Memory concept and issues">Memory concept and issues</span>
             <span class="post-date" title="2020-07-26 15:34:35">2020/07/26</span>
@@ -507,12 +507,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-07-31 17:11:44'>2020-07-11 18:34</time>
+            Created At : <time class="date" title='Updated At: 2020-07-31 23:40:47'>2020-07-11 18:34</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:2.6k</span>
+        <span>Count:2.9k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -611,6 +611,12 @@
 <li><code>use std::{cmp::Ordering, io};</code>使用嵌套路径减少use的使用。</li>
 <li><code>use std::io:*</code> 将<code>std::io</code>中定义的所有公有项引入当前作用域。使用时要多加小心，常用于测试模块<code>tests</code>中。</li>
 <li>Rust将package分成多个crate，将crate分成模块，通过绝对或相对路径从一个模块引用另一个模块。</li>
+<li>Cargo提供了叫工作空间<code>workspaces</code>的功能，它可以帮助我们管理多个相关的协同开发的包。</li>
+<li>工作空间是一系列共享同样的cargo.lock和输出目录的包。</li>
+<li>工作空间顶级目录中的Cargo.toml中不包含<code>[package]</code>等信息，相反，它以<code>[workspace]</code>部分作为开始。</li>
+<li>工作空间在顶级目录有一个<code>target</code>目录，<code>member</code>并没有自己的target目录。通过共享的target目录，工作空间可以避免其他crate多余的重复构建。</li>
+<li>cargo不假定工作空间中的crates包会相互依赖，所以需要明确表明工作空间中crate包的依赖关系。一个包用到了其他包，需要在该包的Cargo.toml文件<code>[dependencies]</code>域中加入依赖</li>
+<li>工作空间只在根目录有一个Cargo.lock，而不是在每一个crate（就当是packge)目录都有Cargo.lock。这确保了所有的crate都使用完全相同版本的依赖。也节省了空间，避免多个拷贝。</li>
 </ol>
 <h2 id="Ownership-所有权"><a href="#Ownership-所有权" class="headerlink" title="Ownership 所有权"></a>Ownership 所有权</h2><h2 id="Error-Handling-错误处理"><a href="#Error-Handling-错误处理" class="headerlink" title="Error Handling 错误处理"></a>Error Handling 错误处理</h2><h2 id="Traits"><a href="#Traits" class="headerlink" title="Traits"></a>Traits</h2><h2 id="Lifetimes-生命周期"><a href="#Lifetimes-生命周期" class="headerlink" title="Lifetimes 生命周期"></a>Lifetimes 生命周期</h2><ol>
 <li>生命周期的目的是<strong>避免悬垂指针</strong></li>
