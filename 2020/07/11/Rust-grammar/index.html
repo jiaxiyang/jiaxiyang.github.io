@@ -245,7 +245,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="14">
-<input type="hidden" id="yelog_site_word_count" value="6.9k">
+<input type="hidden" id="yelog_site_word_count" value="7.4k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -507,12 +507,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-07-31 10:43:14'>2020-07-11 18:34</time>
+            Created At : <time class="date" title='Updated At: 2020-07-31 17:11:44'>2020-07-11 18:34</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:2.1k</span>
+        <span>Count:2.6k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -582,7 +582,7 @@
 <h2 id="Project-Manage"><a href="#Project-Manage" class="headerlink" title="Project Manage"></a>Project Manage</h2><ol>
 <li>包<code>packages</code>: Cargo的一个功能，允许你构建、测试和分享crate</li>
 <li><code>crates</code>: 一个模块的<code>树形</code>结构，它形成了库或二进制项目。</li>
-<li>模块<code>modeules and use</code>: 允许你控制作用域和路径的私有性。</li>
+<li>模块<code>modules and use</code>: 允许你控制作用域和路径的私有性。</li>
 <li>路径<code>path</code>: 一个命名机结构体、函数或模块等项的方式。</li>
 <li>一个包中可以包含多个二进制crate和一个可选的crate库。</li>
 <li>包中至少包含一个crate，无论是库还是二进制，至多包含一个库crate</li>
@@ -590,11 +590,27 @@
 <li>Cargo准守一个约定： <code>src/main.rs</code>就是一个与包同名的二进制crate的crate根。同理，<code>src/lib.rs</code>是库crate的crate根。如果同时包含，则它有两个crate。</li>
 <li>通过将文件放在<code>src/bin</code>目录下，一个包可以拥有多个二进制crate：每个<code>src/bin</code>下的文件都会被编译成一个独立的二进制crate。</li>
 <li>模块让我们可以将一个crate中的代码进行分组，以提高重用性。</li>
-<li>模块一般是在上一级文件中定义，不是在本文件中定义，如可以在lib.rs中定义模块，然后在相应.rs文件中实现该模块。</li>
+<li><code>模块的定义</code>是以<code>mod</code>(module)关键字为起始，然后指定模块的名字，并且用或花括号包围模块的主题。</li>
+<li><code>模块的声明</code>是以<code>mod</code>为起始，指定模块名字，以<code>;</code>结尾，不带有花括号。在与模块名同名的.rs文件中定义该模块。</li>
+<li>模块一般是在上一级文件声明，不是在本文件中声明，如可以在lib.rs中声明模块，然后在相应.rs文件中定义该模块。</li>
 <li>crate的组织结构类似于文件系统的目录，被称为模块树(module tree)。</li>
 <li>Rust通过路径来查找一个项的位置。</li>
 <li><code>绝对路径(absolute path)</code> 从crate根开始，以crate名或者字面值<code>crate</code>开头。</li>
 <li><code>相对路径(relative path)</code> 从当前模块开始，以<code>self</code>、<code>super</code>或当前模块的表示符开头。</li>
+<li>只有在同一crate中才能使用<code>crate::</code>关键字为起始的绝对路径。</li>
+<li>模块不仅对你组织代码很有用。它们还定义了Rust的私有性边界：这条界限不允许外部代码了解、调用和依赖被封装的实现细节。</li>
+<li>Rust中默认所有项(函数、方法、结构体、枚举、模块、和常量）都是私有的。</li>
+<li>项是指：函数、方法、结构体、枚举、模块和常量。</li>
+<li>父模块中的项不能使用子模块中的私有项，但是子模块可以使用它们父模块中的项。</li>
+<li>Rust通过这种方式来实现模块系统功能，因此隐藏内部实现细节，这样你就知道可以更改内部代码的哪部分而不会破坏外部代码。</li>
+<li>可以使用<code>super</code>开头来构建父模块开始的相对路径。类似于文件系统的<code>..</code>语法。</li>
+<li>如果请偶们将枚举设置为公有，则它的所有成员都将变为共有。</li>
+<li>在作用域中增加<code>use</code>类似于在文件系统中创建软连接。</li>
+<li>使用<code>use</code>引入结构体、枚举和其他项时，习惯是指定它们的完整路径。</li>
+<li>使用<code>use</code>将两个同名类型引入同意作用域的一个解决办法：在类型后面使用<code>as</code>指定一个新的本地名称或者别名。</li>
+<li><code>use std::{cmp::Ordering, io};</code>使用嵌套路径减少use的使用。</li>
+<li><code>use std::io:*</code> 将<code>std::io</code>中定义的所有公有项引入当前作用域。使用时要多加小心，常用于测试模块<code>tests</code>中。</li>
+<li>Rust将package分成多个crate，将crate分成模块，通过绝对或相对路径从一个模块引用另一个模块。</li>
 </ol>
 <h2 id="Ownership-所有权"><a href="#Ownership-所有权" class="headerlink" title="Ownership 所有权"></a>Ownership 所有权</h2><h2 id="Error-Handling-错误处理"><a href="#Error-Handling-错误处理" class="headerlink" title="Error Handling 错误处理"></a>Error Handling 错误处理</h2><h2 id="Traits"><a href="#Traits" class="headerlink" title="Traits"></a>Traits</h2><h2 id="Lifetimes-生命周期"><a href="#Lifetimes-生命周期" class="headerlink" title="Lifetimes 生命周期"></a>Lifetimes 生命周期</h2><ol>
 <li>生命周期的目的是<strong>避免悬垂指针</strong></li>
