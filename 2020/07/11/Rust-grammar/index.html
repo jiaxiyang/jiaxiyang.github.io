@@ -415,7 +415,7 @@
         
         <a  class="All Tools Vim "
            href="/2020/07/01/Clang-format-usage/"
-           data-tag="Clang format,Vim,Emacs"
+           data-tag="Emacs,Clang format,Vim"
            data-author="" >
             <span class="post-title" title="Clang-format-usage">Clang-format-usage</span>
             <span class="post-date" title="2020-07-01 13:16:38">2020/07/01</span>
@@ -507,7 +507,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-07-31 10:23:27'>2020-07-11 18:34</time>
+            Created At : <time class="date" title='Updated At: 2020-07-31 10:43:14'>2020-07-11 18:34</time>
         
     </div>
     <div class="article-meta">
@@ -548,63 +548,36 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="Grammar"><a href="#Grammar" class="headerlink" title="Grammar"></a>Grammar</h2><ol>
-<li><p>indent with four spaces, not a tab</p>
-</li>
-<li><p>Most lines of Rust code end with a semicolon(;)</p>
-</li>
-<li><p><code>println!()</code> ! means call macro, not a function</p>
-</li>
-<li><p>Cargo is Rust’s build system and package manager.</p>
-</li>
-<li><p>Cargo expects your source files to live inside the src directory. The top-level project directory is just for README files, license information, configuration files, and anything else not related to your code.</p>
-</li>
-<li><p><code>cargo run</code> Compile the code and then run the resulting executable all in one command.</p>
-</li>
-<li><p><code>cargo check</code> is much faster than <code>cargo build</code></p>
-</li>
-<li><p><code>cargo build --release</code> compile the project with optimizations. Run faster but compile slower.</p>
-</li>
-<li><p>The <code>main</code> function is the entry point into the program.</p>
-</li>
-<li><p>The <code>fn</code> syntax declares a new function, the parentheses, <code>()</code>, indicate there are no parameters, and the curly bracket, <code>{</code>, starts the body of the function.</p>
-</li>
-<li><p><code>let</code> is used to create a variable. In Rust, variables are immutable by default.</p>
-<pre><code class="rust"> let foo = 5;  // immutable
- let mut bar = 5;  // mutable</code></pre>
-</li>
-<li><p><code>String::new()</code> An associated function is implemented on a type, in this case String, rather than on a particular instance of a String. Some languages call this a static method. This new function creates a new, empty string. You’ll find a new function on many types, because it’s a common name for a function that makes a new value of some kind.</p>
-</li>
-<li><p><code>{}</code> is a place holder when using <code>println!</code></p>
-</li>
-<li><p>Crate is a coleection of Rust source code files.</p>
-</li>
-<li><p>Cargo.toml dependencies rand = “0.5.5”;  In this case, we’ll specify the rand crate with the semantic version specifier 0.5.5. Cargo understands Semantic Versioning (sometimes called SemVer), which is a standard for writing version numbers. The number 0.5.5 is actually shorthand for ^0.5.5, which means “any version that has a public API compatible with version 0.5.5.”</p>
-</li>
-<li><p><code>cargo doc --open</code> It will build documentation provided by all of your dependencies locally and open it in your browser.</p>
-</li>
-<li><p><code>match</code> is like <code>switch</code> in C++</p>
-</li>
-<li><p>shallow copy, deep copy(clone), move(let s2 = s1; // s1 is invailid)</p>
-</li>
-<li><p>Differences Between Immutable Variables and Constants:</p>
-<ul>
+<li>indent with four spaces, not a tab</li>
+<li>Most lines of Rust code end with a semicolon(;)</li>
+<li><code>println!()</code> ! means call macro, not a function</li>
+<li>Cargo is Rust’s build system and package manager.</li>
+<li>Cargo expects your source files to live inside the src directory. The top-level project directory is just for README files, license information, configuration files, and anything else not related to your code.</li>
+<li><code>cargo run</code> Compile the code and then run the resulting executable all in one command.</li>
+<li><code>cargo check</code> is much faster than <code>cargo build</code></li>
+<li><code>cargo build --release</code> compile the project with optimizations. Run faster but compile slower.</li>
+<li>The <code>main</code> function is the entry point into the program.</li>
+<li>The <code>fn</code> syntax declares a new function, the parentheses, <code>()</code>, indicate there are no parameters, and the curly bracket, <code>{</code>, starts the body of the function.</li>
+<li><code>let</code> is used to create a variable. In Rust, variables are immutable by default.</li>
+<li><code>String::new()</code> An associated function is implemented on a type, in this case String, rather than on a particular instance of a String. Some languages call this a static method. This new function creates a new, empty string. You’ll find a new function on many types, because it’s a common name for a function that makes a new value of some kind.</li>
+<li><code>{}</code> is a place holder when using <code>println!</code></li>
+<li>Crate is a coleection of Rust source code files.</li>
+<li>Cargo.toml dependencies rand = “0.5.5”;  In this case, we’ll specify the rand crate with the semantic version specifier 0.5.5. Cargo understands Semantic Versioning (sometimes called SemVer), which is a standard for writing version numbers. The number 0.5.5 is actually shorthand for ^0.5.5, which means “any version that has a public API compatible with version 0.5.5.”</li>
+<li><code>cargo doc --open</code> It will build documentation provided by all of your dependencies locally and open it in your browser.</li>
+<li><code>match</code> is like <code>switch</code> in C++</li>
+<li>shallow copy, deep copy(clone), move(let s2 = s1; // s1 is invailid)</li>
+<li>Differences Between Immutable Variables and Constants:<ul>
 <li>You declare constants using the const keyword instead of the let keyword, and the type of the value must be annotated.</li>
 <li>Constants can be declared in any scope, including the global scope</li>
 <li>Constants may be set only to a constant expression, not the result of a function call or any other value that could only be computed at runtime.</li>
 </ul>
 </li>
-<li><p>trait can add some useful functions for user’s own struct.</p>
-</li>
-<li><p>trait 可以与泛型结合来将泛型限制为拥有特定行为的类型，而不是任意类型。</p>
-</li>
-<li><p>Rust编译时会将泛型代码单态化(monomorphization)来保证效率，单态化是指编译时用具体类型来填充泛型。</p>
-</li>
-<li><p>用户会将重复代码泛化（抽象），编译器会将泛化代码具体化。</p>
-</li>
-<li><p>trait类似其他语言中接口(interfaces)功能，虽然有些不同。</p>
-</li>
-<li><p>只有当trait或者要实现trait的类型位于crate的本地作用域时，才能为该类型实现trait。</p>
-</li>
+<li>trait can add some useful functions for user’s own struct.</li>
+<li>trait 可以与泛型结合来将泛型限制为拥有特定行为的类型，而不是任意类型。</li>
+<li>Rust编译时会将泛型代码单态化(monomorphization)来保证效率，单态化是指编译时用具体类型来填充泛型。</li>
+<li>用户会将重复代码泛化（抽象），编译器会将泛化代码具体化。</li>
+<li>trait类似其他语言中接口(interfaces)功能，虽然有些不同。</li>
+<li>只有当trait或者要实现trait的类型位于crate的本地作用域时，才能为该类型实现trait。</li>
 </ol>
 <h2 id="Project-Manage"><a href="#Project-Manage" class="headerlink" title="Project Manage"></a>Project Manage</h2><ol>
 <li>包<code>packages</code>: Cargo的一个功能，允许你构建、测试和分享crate</li>
