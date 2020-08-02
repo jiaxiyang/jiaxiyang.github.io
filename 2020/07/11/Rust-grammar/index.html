@@ -245,7 +245,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="14">
-<input type="hidden" id="yelog_site_word_count" value="7.6k">
+<input type="hidden" id="yelog_site_word_count" value="8.3k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -359,7 +359,7 @@
         
         <a  class="All Program Basic "
            href="/2020/07/26/Memory-concept-and-issues/"
-           data-tag="Rust,Memory,C++"
+           data-tag="Memory,C++,Rust"
            data-author="" >
             <span class="post-title" title="Memory concept and issues">Memory concept and issues</span>
             <span class="post-date" title="2020-07-26 15:34:35">2020/07/26</span>
@@ -507,12 +507,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-07-31 23:40:47'>2020-07-11 18:34</time>
+            Created At : <time class="date" title='Updated At: 2020-08-02 21:08:25'>2020-07-11 18:34</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:2.9k</span>
+        <span>Count:3.5k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -584,6 +584,7 @@
 <li><code>crates</code>: 一个模块的<code>树形</code>结构，它形成了库或二进制项目。</li>
 <li>模块<code>modules and use</code>: 允许你控制作用域和路径的私有性。</li>
 <li>路径<code>path</code>: 一个命名机结构体、函数或模块等项的方式。</li>
+<li>在Rust中，代码包也被称为crates</li>
 <li>一个包中可以包含多个二进制crate和一个可选的crate库。</li>
 <li>包中至少包含一个crate，无论是库还是二进制，至多包含一个库crate</li>
 <li><code>cargo new</code>会创建一个包。</li>
@@ -618,7 +619,38 @@
 <li>cargo不假定工作空间中的crates包会相互依赖，所以需要明确表明工作空间中crate包的依赖关系。一个包用到了其他包，需要在该包的Cargo.toml文件<code>[dependencies]</code>域中加入依赖</li>
 <li>工作空间只在根目录有一个Cargo.lock，而不是在每一个crate（就当是packge)目录都有Cargo.lock。这确保了所有的crate都使用完全相同版本的依赖。也节省了空间，避免多个拷贝。</li>
 </ol>
-<h2 id="Ownership-所有权"><a href="#Ownership-所有权" class="headerlink" title="Ownership 所有权"></a>Ownership 所有权</h2><h2 id="Error-Handling-错误处理"><a href="#Error-Handling-错误处理" class="headerlink" title="Error Handling 错误处理"></a>Error Handling 错误处理</h2><h2 id="Traits"><a href="#Traits" class="headerlink" title="Traits"></a>Traits</h2><h2 id="Lifetimes-生命周期"><a href="#Lifetimes-生命周期" class="headerlink" title="Lifetimes 生命周期"></a>Lifetimes 生命周期</h2><ol>
+<h2 id="Ownership-所有权"><a href="#Ownership-所有权" class="headerlink" title="Ownership 所有权"></a>Ownership 所有权</h2><h2 id="Error-Handling-错误处理"><a href="#Error-Handling-错误处理" class="headerlink" title="Error Handling 错误处理"></a>Error Handling 错误处理</h2><ol>
+<li>Rust将错误组合成两个主要类别，可恢复错误和不可恢复错误。</li>
+<li>可恢复错误通常代表向用户报告错误和重试操作是合理的情况，比如未找到文件。</li>
+<li>不可恢复错误通常是Bug的同义词，比如访问超过数组结尾的位置。</li>
+<li>大部分语言并不区分这两类错误，并采用类似异常这样方式统一处理他们。</li>
+<li>Rust没有异常，但是有可恢复错误<code>Result&lt;T, E&gt;</code>和不可恢复错误<code>panic!</code></li>
+<li>执行Rust的<code>panic!</code>宏时，程序会打印出一个错误信息，展开并清理栈数据，然后接着退出。</li>
+<li>出现panic时，程序默认是<code>展开(unwinding)</code>，这意味着Rust会回溯栈并清理它遇到的每一个函数的数据。另一种选择是<code>终止(abort)</code>，这回不清理数据就退出程序。可以在Cargo.toml的[profile]部分增加<code>panic = &#39;abort&#39;</code>，可以由展开切换为终止。</li>
+<li>使用<code>RUST_BACKTRACE</code>环境变量运行程序会得到一个backtrace，backtrace是一个执行到目前位置所有被调用的函数的列表。</li>
+<li>Rust的backtrace跟其他语言一样：阅读backtrace的<code>关键</code>是<code>从头开始读直到发现你自己编写的代码</code>，这就是问题的根源。<code>这一行往上是你的代码所调用的代码，往下则是调用你的代码的代码(栈)</code></li>
+<li>为了获取带有详细信息的backtrace，<code>必须是debug模式</code></li>
+<li>Result枚举的定义。<code>enum Result&lt;T, E&gt; { Ok(T), Err(E), }</code>，其中<code>T</code>代表返回的<code>Ok</code>成员中的<code>数据类型</code>，而<code>E</code>代表失败是返回<code>Err</code>成员中的错误的类型。</li>
+<li>Result常与match进行联合使用</li>
+</ol>
+<pre><code class="rust">use std::fs::File;
+
+fn main() {
+    let f = File::open(&quot;hello.txt&quot;); // f值是Ok(file)或者是Err(error)
+
+    let f = match f {
+        Ok(file) =&gt; file,
+        Err(error) =&gt; {
+            panic!(&quot;Problem opening the file: {:?}&quot;, error)
+        },
+    };
+}</code></pre>
+<ol>
+<li><code>unwrap</code>函数作用于Result，如果Result的值是成员OK，unwrap会返回Ok中的值，如果是成员Err，unwrap会为我们调用<code>panic!</code></li>
+<li><code>expect</code>与<code>unwrap</code>使用方式一样，<code>expect</code>用来调用<code>panic!</code>的错误信息将会作为参数传递给<code>expect</code>，而不像<code>unwrap</code>那样使用默认的<code>panic!</code>信息。<code>expect</code>更容易查找错误信息位置。</li>
+<li><code>?</code>运算符放在Result之后的含义：如果Result的值是Ok，这个表达式将会返回Ok中的值而程序继续执行，如果是Err，Err中的值将作为整个函数的返回值，就好像使用了return关键字一样，这样错误值就被传递给调用者。</li>
+</ol>
+<h2 id="Traits"><a href="#Traits" class="headerlink" title="Traits"></a>Traits</h2><h2 id="Lifetimes-生命周期"><a href="#Lifetimes-生命周期" class="headerlink" title="Lifetimes 生命周期"></a>Lifetimes 生命周期</h2><ol>
 <li>生命周期的目的是<strong>避免悬垂指针</strong></li>
 <li><code>longest&lt;&#39;a&gt;(x: &amp;&#39;a str, y: &amp;&#39;a str) -&gt;&amp;&#39;a str</code> 它的实际含义是longest函数保证返回的引用的生命周期与传入该函数的引用的生命周期的较小者一致（x作用域和y作用域重叠的那一部分）。并没有改变传入值或返回值的生命周期，而是指出任何不满足这个约束条件的值都将被借用检查器拒绝。</li>
 <li><code>struct Test&lt;&#39;a&gt; { part: &amp;&#39;a str, }</code> Test的实例不能比part字段中的引用存在的更久，Test实例应先离开作用域。（后定义的存在的应更短）</li>
