@@ -253,7 +253,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="16">
-<input type="hidden" id="yelog_site_word_count" value="8.9k">
+<input type="hidden" id="yelog_site_word_count" value="9.9k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -387,7 +387,7 @@
         
         <a  class="All Program Basic "
            href="/2020/07/26/Memory-concept-and-issues/"
-           data-tag="Memory,C++,Rust"
+           data-tag="Rust,Memory,C++"
            data-author="" >
             <span class="post-title" title="Memory concept and issues">Memory concept and issues</span>
             <span class="post-date" title="2020-07-26 15:34:35">2020/07/26</span>
@@ -535,12 +535,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-08-02 21:08:25'>2020-07-11 18:34</time>
+            Created At : <time class="date" title='Updated At: 2020-08-04 22:17:18'>2020-07-11 18:34</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:3.5k</span>
+        <span>Count:4.6k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -716,9 +716,46 @@ fn main() {
 <li>带类型注解的闭包 <code>let test = |num1: u32, num2: u32| -&gt; u32 { println(&quot;num1: {}&quot;,num1); num2 + 1 };</code></li>
 <li>如果闭包体只有一行则大括号可以省略。例如： <code>let add_one = |x| x+1;</code></li>
 <li>如果调用多次闭包，编译器会根据第一次使用时的参数类型，如果对同一闭包使用不同类型会得到类型错误。</li>
+<li>…</li>
 <li></li>
+<li></li>
+<li>迭代器负责遍历序列中的灭一项和决定序列何时结束的逻辑。</li>
+<li>迭代器是惰性的，在调用方法使用之前它都不会有效果。</li>
+<li>迭代器的实现方式提供了对多种不同的序列使用相同逻辑的灵活性，减少了重复代码并消除了潜在的混乱。</li>
+<li>迭代器都实现了定义于标准库的trait <code>Iterator</code>。包含<code>next</code>方法。</li>
+<li>迭代器的<code>sum</code>方法返回迭代的次数，会消费适配器。迭代器调用<code>sum</code>方法后不再允许使用迭代器，因为<code>sum</code>会获取迭代器所有权。</li>
+<li>迭代器的方法：<code>迭代器适配器(iterator adaptors)</code> 允许将迭代器变为不同类型的迭代器。</li>
+<li><code>v1.iter().map(|x| x+1);</code>迭代器适配器方法<code>map</code>使用闭包来调用每个元素以生成新的迭代器。这里的闭包创建了一个新的迭代器，对其中vector中的每个元素都被加1。因为迭代器适配器是惰性的，这里需要消费迭代器。</li>
+<li><code>collect</code>方法会消费迭代器并将结果收集到一个数据结构中。</li>
+<li>下面例子会调用<code>map</code>方法创建一个新的迭代器，接着调用<code>collect</code>方法消费新迭代器并创建一个vector。</li>
 </ol>
-<h2 id="Smart-Pointers-智能指针"><a href="#Smart-Pointers-智能指针" class="headerlink" title="Smart Pointers 智能指针"></a>Smart Pointers 智能指针</h2><h2 id="Concurrency-并发"><a href="#Concurrency-并发" class="headerlink" title="Concurrency 并发"></a>Concurrency 并发</h2><h2 id="Object-Oriented-面向对象"><a href="#Object-Oriented-面向对象" class="headerlink" title="Object Oriented 面向对象"></a>Object Oriented 面向对象</h2><h2 id="Macros-宏"><a href="#Macros-宏" class="headerlink" title="Macros 宏"></a>Macros 宏</h2><h2 id="Program-with-C-C"><a href="#Program-with-C-C" class="headerlink" title="Program with C/C++"></a>Program with C/C++</h2>
+<pre><code class="rust">let v1: Vec&lt;i32&gt; = vec![1, 2, 3];
+let v2: Vec&lt;_&gt; = v1.iter().map(|x| x + 1).collect();
+assert_eq!(v2, vec![2, 3, 4]);</code></pre>
+<h2 id="Smart-Pointers-智能指针"><a href="#Smart-Pointers-智能指针" class="headerlink" title="Smart Pointers 智能指针"></a>Smart Pointers 智能指针</h2><ol>
+<li>指针是一个包含内存地址的变量的通用概念，这个地址指向一些其他数据。</li>
+<li>Rust最常见的指针是引用，他们没有任何额外的开销，所以应用的最多。</li>
+<li><code>智能指针(smart pointers)</code>是一类数据结构，它们的表现类似指针，但是也拥有额外的元数据和功能。</li>
+<li><code>引用计数(reference counting)</code> 是智能指针类型，其允许数据有多个所有者。引用计数智能指针记录总共有多少个所有者，并当没有任何所有者时负责清理数据。</li>
+<li>在Rust中，普通引用和智能指针的一个额外的区别是引用是一类只借用数据的指针；相反，在大部分情况下，智能指针拥有他们指向的数据。</li>
+<li>智能指针通常使用结构体实现。</li>
+<li>智能指针区别于常规结构体的显著特性在于其实现了<code>Deref</code>和<code>Drop</code>trait。</li>
+<li><code>Deref</code> trait允许智能指针结构体实例表现的像引用一样，这样就可以编写既用于引用，又用于智能指针的代码。</li>
+<li><code>Drop</code> trait允许我们自定义当智能指针离开作用域时运行的代码。</li>
+<li>很多库都拥有自己的智能指针而你也可以编写属于你的智能指针。</li>
+<li><code>Box&lt;T&gt;</code>用于在堆上分配值。</li>
+<li><code>Rc&lt;T&gt;</code>一个引用计数类型，其数据可以有多个所有者。</li>
+<li><code>Ref&lt;T&gt;</code>和<code>RefMut&lt;T&gt;</code>通过<code>RefCell&lt;T&gt;</code>访问。</li>
+<li>最简单直接的智能指针是<code>box</code>，其类型是<code>Box&lt;T&gt;</code>，box允许你将一个值放在堆上而不是栈上，留在栈上的则是指向堆数据的指针。</li>
+<li>除了数据被存储在堆上而不是栈上之外，box没有性能损失，不过也没有很多额外的功能。多用于<ul>
+<li>当有一个在编译时未知大小的类型，而又想要在需要确切大小的上下文中使用这个类型值的时候。（box作为链表的指针实现链表）</li>
+<li>当有大量数据并希望在确保数据不被拷贝的情况下转移所有权的时候。</li>
+<li>当希望拥有一个值并只关心它的类型是否实现了特定trait而不是具体类型的时候</li>
+</ul>
+</li>
+<li><code>Box&lt;T&gt;</code>类型是一个只能智能指针，因为它实现了<code>Deref</code>trait，它允许<code>Box&lt;T&gt;</code>的值被当做引用对待。</li>
+</ol>
+<h2 id="Concurrency-并发"><a href="#Concurrency-并发" class="headerlink" title="Concurrency 并发"></a>Concurrency 并发</h2><h2 id="Object-Oriented-面向对象"><a href="#Object-Oriented-面向对象" class="headerlink" title="Object Oriented 面向对象"></a>Object Oriented 面向对象</h2><h2 id="Macros-宏"><a href="#Macros-宏" class="headerlink" title="Macros 宏"></a>Macros 宏</h2><h2 id="Program-with-C-C"><a href="#Program-with-C-C" class="headerlink" title="Program with C/C++"></a>Program with C/C++</h2>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jiaxiyangbit@126.com </span>
     </div>
