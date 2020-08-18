@@ -281,7 +281,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="21">
-<input type="hidden" id="yelog_site_word_count" value="17k">
+<input type="hidden" id="yelog_site_word_count" value="17.4k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -615,12 +615,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-08-18 12:13:54'>2020-08-18 09:34</time>
+            Created At : <time class="date" title='Updated At: 2020-08-18 16:09:09'>2020-08-18 09:34</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:201</span>
+        <span>Count:580</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -639,7 +639,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-really-matters"><span class="toc-text">What really matters?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstraction"><span class="toc-text">Abstraction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-onion-principle"><span class="toc-text">The onion principle</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#An-engineering-approach"><span class="toc-text">An engineering approach</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-in-two-lines"><span class="toc-text">C++ in two lines</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-’s-role"><span class="toc-text">C++’s role</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-is-C-20"><span class="toc-text">What is C++20?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Keys-C-“Rules-of-Thumb”"><span class="toc-text">Keys C++ “Rules of Thumb”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lower-levels-of-abstaction"><span class="toc-text">Lower levels of abstaction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-really-matters"><span class="toc-text">What really matters?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstraction"><span class="toc-text">Abstraction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-onion-principle"><span class="toc-text">The onion principle</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#An-engineering-approach"><span class="toc-text">An engineering approach</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-in-two-lines"><span class="toc-text">C++ in two lines</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-’s-role"><span class="toc-text">C++’s role</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#C-is-tunable"><span class="toc-text">C++ is tunable</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -655,7 +655,89 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="What-really-matters"><a href="#What-really-matters" class="headerlink" title="What really matters?"></a>What really matters?</h2><ol>
+        <h2 id="What-is-C-20"><a href="#What-is-C-20" class="headerlink" title="What is C++20?"></a>What is C++20?</h2><ol>
+<li>The best approximation of C++’s ideals so far.</li>
+<li>As big an improvement over C++11 as C++11 was over C++98: A major “release”</li>
+<li>Lots of useful features<ul>
+<li>Simpler, more expressive, faster code that compiles faster</li>
+<li>Modeles</li>
+<li>Concepts</li>
+<li>Coroutines</li>
+<li>Ranges</li>
+<li>Dates</li>
+<li>Span</li>
+<li>Better compile-time programing support</li>
+<li>Many “minor features”</li>
+</ul>
+</li>
+<li>C++23 and C++26 is better than C++20, not the major “release”.</li>
+<li>Diretly learn C++20. It’s the outside layer of the onion.</li>
+<li>C++23:<ul>
+<li>“Completes C++20”</li>
+<li>Plus: standard modules, library support for coroutines, executors &amp; networking</li>
+<li>Maybe: static reflection, pattern matching</li>
+</ul>
+</li>
+</ol>
+<h2 id="Keys-C-“Rules-of-Thumb”"><a href="#Keys-C-“Rules-of-Thumb”" class="headerlink" title="Keys C++ “Rules of Thumb”"></a>Keys C++ “Rules of Thumb”</h2><ol>
+<li>A <code>static type system</code> with equal support for build-in and user-defined types<ul>
+<li>A static type system: the base of all</li>
+<li>compile-time error detection</li>
+<li>performance</li>
+<li>flexibility through compile-time resolution(overloading, generic programming, metaprogramming…)</li>
+</ul>
+</li>
+<li><code>Value and reference semantics</code><ul>
+<li>value types: Inegers, characters, strings, containers,…</li>
+<li>Pointers/references: T*, T&amp;, unique_ptr<T>, Forward_iterator</li>
+</ul>
+</li>
+<li><code>Direct use</code> of machine and operating system resources<ul>
+<li>bitset and span(modern c++)</li>
+<li>the onion principle: the more layers you peel off, the more control, the more error.</li>
+</ul>
+</li>
+<li>Systematic and general <code>resource management</code>(RALL)<ul>
+<li>manage heap, file…</li>
+<li>every resource must have an owner: responsible for its cleanup.</li>
+<li>control the complete object life cycle: creation, copy, move, destruction</li>
+</ul>
+</li>
+<li>Support <code>composition</code> of software from separately developed parts.<ul>
+<li>modules</li>
+<li>all major features support composition: moduls, classes, concepts, templates, functions, aliases</li>
+</ul>
+</li>
+<li>Support for <code>object-oriented programming</code></li>
+<li>Support for <code>generic programming</code><ul>
+<li>concepts</li>
+</ul>
+</li>
+<li>Support <code>compile-time programming</code><ul>
+<li>Move computation from run-time to compile-time(performace, do once)</li>
+<li>It’s everywhere: overloading and virtual functions, templates, variadic templates, constexp functions…</li>
+</ul>
+</li>
+<li><code>Concurency</code> through libraries supported by intrinsics</li>
+<li><code>Libraries</code><ul>
+<li>A user shouldn’t have to care whether a feature is implemented in the language or in a library</li>
+</ul>
+</li>
+</ol>
+<h2 id="Lower-levels-of-abstaction"><a href="#Lower-levels-of-abstaction" class="headerlink" title="Lower levels of abstaction"></a>Lower levels of abstaction</h2><ol>
+<li>Samples:<ul>
+<li>Sizes</li>
+<li>Raw pointers</li>
+<li>Allocation and deallocation</li>
+<li>Loop-control variables</li>
+<li>Casts</li>
+<li>Macros</li>
+</ul>
+</li>
+<li>Except as implementation details and asides</li>
+<li>Don’t go to lower level if you have to.</li>
+</ol>
+<h2 id="What-really-matters"><a href="#What-really-matters" class="headerlink" title="What really matters?"></a>What really matters?</h2><ol>
 <li>People</li>
 <li>A programming language is a tool, not an end goal: peopeo want great systems, not programming languages.</li>
 <li>Software developers want great tools: not just programming language features.</li>
@@ -711,6 +793,20 @@
 <li>for everyone</li>
 </ul>
 </li>
+</ol>
+<h2 id="C-is-tunable"><a href="#C-is-tunable" class="headerlink" title="C++ is tunable"></a>C++ is tunable</h2><ol>
+<li>Make simple things simple<ul>
+<li>Don’t make complicated tasks impossible</li>
+<li>Don’t make complicated tasks unreasonable hard to do</li>
+<li>The onion principle</li>
+</ul>
+</li>
+<li>Don’t drop to lower levels of abstraction<ul>
+<li>Unless you really, really need to</li>
+<li>Hide messy code behind clean interfaces</li>
+</ul>
+</li>
+<li>Alwasy measure</li>
 </ol>
 
       
