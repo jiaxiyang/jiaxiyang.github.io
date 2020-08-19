@@ -281,7 +281,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="21">
-<input type="hidden" id="yelog_site_word_count" value="17.8k">
+<input type="hidden" id="yelog_site_word_count" value="18.3k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -615,12 +615,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-08-18 12:13:09'>2020-08-14 10:56</time>
+            Created At : <time class="date" title='Updated At: 2020-08-19 20:50:39'>2020-08-14 10:56</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:0</span>
+        <span>Count:356</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -639,7 +639,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#绪论"><span class="toc-text">绪论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第一章-类型推到"><span class="toc-text">第一章 类型推到</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#条款1：-理解模板类别推导"><span class="toc-text">条款1： 理解模板类别推导</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -655,7 +655,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h2><ol>
+<li><code>右值</code>对应的是函数返回的临时对象，<code>左值</code>是可指涉的对象，可通过名字，指针等来标识。</li>
+<li>判断左值右值方法： 判断是否能取得地址。如果能取得地址则是左值，不能则为右值。例如<code>Widget(Widget&amp;&amp; rhs);</code>其中rhs为左值，因为函数体内对rhs取地址没有问题。相当于rhs被右值初始化，接受了右值。</li>
+<li>函数中，<code>实参</code>是用来初始化<code>形参</code>的。</li>
+<li>形参都是左值，而作为其初始化依据的实参，既能是右值，也可能是左值。例：<code>Widget(Widget&amp; rhs);</code>rhs是左值，传入的实参也是左值。<code>Widget(Widget&amp;&amp; rhs);</code>rhs是左值，传入的实参是右值。</li>
+<li><code>声明</code>的作用是引入名字和类型，而不给出细节。如存储位置或具体实现。<code>定义</code>则会给存储位置和具体实现的细节。定义同时也可以当声明用。</li>
+<li><code>函数的签名</code>：只包含形参类别和返回值类别，不包含函数名字和形参名字。例如：<code>bool(const Widget&amp;)</code></li>
+</ol>
+<h2 id="第一章-类型推到"><a href="#第一章-类型推到" class="headerlink" title="第一章 类型推到"></a>第一章 类型推到</h2><ol>
+<li>C++98仅有一套类型推导规则，用于函数模板。C++11对其进行改进，并增加了两套，一套用于auto，一套用于decltype。C++14又扩展了使用语义。</li>
+</ol>
+<h3 id="条款1：-理解模板类别推导"><a href="#条款1：-理解模板类别推导" class="headerlink" title="条款1： 理解模板类别推导"></a>条款1： 理解模板类别推导</h3><p>1.</p>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jiaxiyangbit@126.com </span>
     </div>
