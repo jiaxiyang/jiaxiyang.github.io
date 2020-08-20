@@ -136,7 +136,7 @@
 
 
 <ul>
-    <li><div class="all active" data-rel="All">All<small>(21)</small></div></li>
+    <li><div class="all active" data-rel="All">All<small>(22)</small></div></li>
     
         
             
@@ -148,7 +148,7 @@
     
         
             
-            <li><div data-rel="Program"><i class="fold iconfont icon-right"></i>Program<small>(11)</small></div>
+            <li><div data-rel="Program"><i class="fold iconfont icon-right"></i>Program<small>(12)</small></div>
                 
                     <ul class="sub hide">
                         
@@ -156,7 +156,7 @@
                             
                         </li>
                             
-                        <li><div data-rel="Program<--->Cpp">Cpp<small>(5)</small></div>
+                        <li><div data-rel="Program<--->Cpp">Cpp<small>(6)</small></div>
                             
                         </li>
                             
@@ -280,8 +280,8 @@
     </div>
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="21">
-<input type="hidden" id="yelog_site_word_count" value="18.4k">
+<input type="hidden" id="yelog_site_posts_number" value="22">
+<input type="hidden" id="yelog_site_word_count" value="18.7k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -347,6 +347,10 @@
             </li>
         
             <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Concurrency</a>
+            </li>
+        
+            <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>Cpp</a>
             </li>
         
@@ -400,6 +404,14 @@
 
     
     <nav id="title-list-nav">
+        
+        <a  class="All Program Cpp "
+           href="/2020/08/20/Cpp-concurrency-in-action/"
+           data-tag="Cpp,Concurrency"
+           data-author="" >
+            <span class="post-title" title="Cpp-concurrency-in-action">Cpp-concurrency-in-action</span>
+            <span class="post-date" title="2020-08-20 09:05:48">2020/08/20</span>
+        </a>
         
         <a  class="All Program Cpp "
            href="/2020/08/18/Bjarny-Stroustrup-Cpp/"
@@ -615,12 +627,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-08-19 20:50:39'>2020-08-14 10:56</time>
+            Created At : <time class="date" title='Updated At: 2020-08-20 10:55:45'>2020-08-14 10:56</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:356</span>
+        <span>Count:680</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -639,7 +651,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#绪论"><span class="toc-text">绪论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第一章-类型推到"><span class="toc-text">第一章 类型推到</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#条款1：-理解模板类别推导"><span class="toc-text">条款1： 理解模板类别推导</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#绪论"><span class="toc-text">绪论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第一章-类型推到"><span class="toc-text">第一章 类型推到</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#条款1：-理解模板类别推导"><span class="toc-text">条款1： 理解模板类别推导</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第三章-转向现代C"><span class="toc-text">第三章 转向现代C++</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在创建对象时注意区分-和"><span class="toc-text">在创建对象时注意区分()和{}</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -667,6 +679,17 @@
 <li>C++98仅有一套类型推导规则，用于函数模板。C++11对其进行改进，并增加了两套，一套用于auto，一套用于decltype。C++14又扩展了使用语义。</li>
 </ol>
 <h3 id="条款1：-理解模板类别推导"><a href="#条款1：-理解模板类别推导" class="headerlink" title="条款1： 理解模板类别推导"></a>条款1： 理解模板类别推导</h3><p>1.</p>
+<h2 id="第三章-转向现代C"><a href="#第三章-转向现代C" class="headerlink" title="第三章 转向现代C++"></a>第三章 转向现代C++</h2><h3 id="在创建对象时注意区分-和"><a href="#在创建对象时注意区分-和" class="headerlink" title="在创建对象时注意区分()和{}"></a>在创建对象时注意区分()和{}</h3><ol>
+<li>对象初始化的方式包括使用小括号，使用等号，或是使用大括号：<code>int x(0); int y = 0; int z{0};</code> 等号加大括号等效于大括号<code>int z = {0};</code></li>
+<li>大括号初始化又称为<code>统一初始化</code>。</li>
+<li>大括号可以用来对容器进行初始化，例如: <code>vector&lt;int&gt; v{1, 2, 3, 4};</code></li>
+<li>类的成员变量在类的定义时可以用<code>{}</code>或者<code>=</code>进行初始化，不能使用<code>()</code></li>
+<li>不可复制对象(例如：std::atomic)可以使用<code>{}</code>或者<code>()</code>进行初始化，不能使用<code>=</code></li>
+<li>大括号初始化<code>禁止内建类型进行隐式窄化类型转化</code>。如：<code>double x, y; ... ; int sum{x+y};</code>编译出错，double无法用int表示。</li>
+<li>C++规定，任何能够解析为声明的都要解析为声明。大括号初始化免疫。<code>Widget w1();</code>此处被解析为函数声明，而不是初始化w1调用构造函数。<code>Widget w2{};</code>调用无形参的构造函数来构造w2。</li>
+<li>大括号初始化时如果形参出现std::initializer_list会优先调用，此时可以小括号。</li>
+<li>模板内容进行创建时，应该使用小括号还是大括号是一个棘手问题。</li>
+</ol>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jiaxiyangbit@126.com </span>
