@@ -281,7 +281,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="22">
-<input type="hidden" id="yelog_site_word_count" value="18.7k">
+<input type="hidden" id="yelog_site_word_count" value="19.8k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -629,12 +629,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-08-20 09:06:28'>2020-08-20 09:05</time>
+            Created At : <time class="date" title='Updated At: 2020-08-24 16:54:33'>2020-08-20 09:05</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:0</span>
+        <span>Count:1.1k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -653,7 +653,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Hello-world-of-concurrency-in-C"><span class="toc-text">1. Hello, world of concurrency in C++</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-并发是什么"><span class="toc-text">1.1 并发是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-为什么使用并发"><span class="toc-text">1.2 为什么使用并发</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-什么时候不使用并发"><span class="toc-text">1.2.1 什么时候不使用并发</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-并发和多线程"><span class="toc-text">1.3 并发和多线程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-1-C-多线程历史"><span class="toc-text">1.3.1 C++多线程历史</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-支持并发"><span class="toc-text">1.3.2 支持并发</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-4-C-线程库的效率"><span class="toc-text">1.3.4 C++线程库的效率</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Managing-threads"><span class="toc-text">2. Managing threads</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-线程标识"><span class="toc-text">2.5 线程标识</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Sharing-data-between-threads"><span class="toc-text">3. Sharing data between threads</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-使用互斥量"><span class="toc-text">3.2 使用互斥量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-互斥量"><span class="toc-text">3.2.1 互斥量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-4-死锁"><span class="toc-text">3.2.4 死锁</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Synchronizing-concurrent-operations-on-atomic-types"><span class="toc-text">4. Synchronizing concurrent operations on atomic types</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-The-C-memory-model-and-operations-on-atomic-types"><span class="toc-text">5. The C++ memory model and operations on atomic types</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Designing-lock-based-concurrent-data-structures"><span class="toc-text">6. Designing lock-based concurrent data structures.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-Designing-lock-free-concurrent-data-structures"><span class="toc-text">7. Designing lock-free concurrent data structures</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-Designing-concurrent-code"><span class="toc-text">8. Designing concurrent code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-Advanced-thread-managment"><span class="toc-text">9. Advanced thread managment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-Parallel-algorithms"><span class="toc-text">10. Parallel algorithms</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-Testing-and-debugging-multithreaded-applications"><span class="toc-text">11. Testing and debugging multithreaded applications</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -669,8 +669,56 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>##</p>
-
+        <h2 id="1-Hello-world-of-concurrency-in-C"><a href="#1-Hello-world-of-concurrency-in-C" class="headerlink" title="1. Hello, world of concurrency in C++"></a>1. Hello, world of concurrency in C++</h2><h3 id="1-1-并发是什么"><a href="#1-1-并发是什么" class="headerlink" title="1.1 并发是什么"></a>1.1 并发是什么</h3><ol>
+<li>多进程并发优点： 操作系统在进程间提供的保护操作和更高级别的通信机制，可以更容易编写安全的并发代码。还有一个优势，可以使用远程连接的方式，在不同的机器上运行独立的进程。</li>
+</ol>
+<h3 id="1-2-为什么使用并发"><a href="#1-2-为什么使用并发" class="headerlink" title="1.2 为什么使用并发"></a>1.2 为什么使用并发</h3><ol>
+<li><code>分离程序</code>： 将相互独立的部分分开就行操作。如DVD用户界面和播放功能应分离。</li>
+<li><code>性能</code>：两种方式：任务并行（将单一任务分成几部分并行）和数据并行（每个线程在不同的数据块上执行相同的操作）</li>
+</ol>
+<h4 id="1-2-1-什么时候不使用并发"><a href="#1-2-1-什么时候不使用并发" class="headerlink" title="1.2.1 什么时候不使用并发"></a>1.2.1 什么时候不使用并发</h4><ol>
+<li>收益比不上成本，除非潜在性能足够大，否则不使用并发，需要脑力成本和维护成本，代码更复杂，难以理解。</li>
+<li>资源有限： 太多线程的会耗尽资源。可以使用线程池进行优化。太多的线程上下文切换导致的性能损耗可能比增加线程的收益更多。</li>
+</ol>
+<h3 id="1-3-并发和多线程"><a href="#1-3-并发和多线程" class="headerlink" title="1.3 并发和多线程"></a>1.3 并发和多线程</h3><h4 id="1-3-1-C-多线程历史"><a href="#1-3-1-C-多线程历史" class="headerlink" title="1.3.1 C++多线程历史"></a>1.3.1 C++多线程历史</h4><ol>
+<li>C++98标准不支持多线程，没有内存模型。</li>
+<li>各种非标准多线程库：MFC，Boost，大部分使用的是RAII</li>
+</ol>
+<h4 id="1-3-2-支持并发"><a href="#1-3-2-支持并发" class="headerlink" title="1.3.2 支持并发"></a>1.3.2 支持并发</h4><ol>
+<li>C++11: <code>线程管理，共享数据保护，线程间同步操作，原子操作</code></li>
+<li>C++11之后，C++标准支持多线程，也就是说可以跨平台编写高效，可移植的代码。编译器可以搞定具体平台，用户无需担心。</li>
+</ol>
+<h4 id="1-3-4-C-线程库的效率"><a href="#1-3-4-C-线程库的效率" class="headerlink" title="1.3.4 C++线程库的效率"></a>1.3.4 C++线程库的效率</h4><ol>
+<li>高级工具（使用高级API, 抽象高）和低级工具（使用低级API，抽象低)有开销差，即抽象代价（abstraction penalty)。C++标准库设计时尽量使得高级API和低级API具有相同的性能。</li>
+<li>低级工具：为了达到终极性能，需要提供给硬件打交道的低级API。为了这个目的，形成了原子操作库。</li>
+<li>高级工具：为了使得编写多线程代码更简单。因为有额外的代码需要执行，这些工具会带来性能开销。</li>
+<li>如果很看重性能或者高级工具开销过高，可以通过低层工具来实现。绝大多数情况，有过高的复杂度和过大的出错率，来交换小幅度的性能收益是不划算的。</li>
+</ol>
+<h2 id="2-Managing-threads"><a href="#2-Managing-threads" class="headerlink" title="2. Managing threads"></a>2. Managing threads</h2><h3 id="2-5-线程标识"><a href="#2-5-线程标识" class="headerlink" title="2.5 线程标识"></a>2.5 线程标识</h3><ol>
+<li><code>std::this_thread::get_id()</code>获取当前线程的ID.</li>
+</ol>
+<h2 id="3-Sharing-data-between-threads"><a href="#3-Sharing-data-between-threads" class="headerlink" title="3. Sharing data between threads"></a>3. Sharing data between threads</h2><ol>
+<li>错误的数据共享是多线程产生bug的主要原因。</li>
+<li><code>data race</code>: the specific type of race condition that arises because of concurrent modification to a single object</li>
+<li>数据竞争时间敏感，Bug可能很难复现，很难查找。</li>
+</ol>
+<h3 id="3-2-使用互斥量"><a href="#3-2-使用互斥量" class="headerlink" title="3.2 使用互斥量"></a>3.2 使用互斥量</h3><ol>
+<li>访问共享数据前将数据锁住，访问结束将数据解锁。</li>
+<li>互斥量是C++保护数据最通用的机制。</li>
+<li>互斥量问题： 死锁，对数据保护太多。</li>
+<li>一个互斥量只能用于一个资源的互斥访问。</li>
+<li>互斥量(互斥锁)本质上是一把锁。</li>
+</ol>
+<h4 id="3-2-1-互斥量"><a href="#3-2-1-互斥量" class="headerlink" title="3.2.1 互斥量"></a>3.2.1 互斥量</h4><ol>
+<li><code>std::mutex</code>创建互斥量，<code>lock</code>对互斥量上锁，unlock为解锁。</li>
+<li>RAII管理互斥量：C++标准库为互斥量提供了RAII模板类<code>std::lock_guard</code>，在构造时提供已锁的互斥量（lock_guard对象在构造时对传进来的mutex上锁），并在析构时解锁，从而保证互斥量被正确的解锁。</li>
+<li>大多数情况下，互斥量通常会与需要保护的数据放在同一类中，而不是定义成全局变量。</li>
+</ol>
+<h4 id="3-2-4-死锁"><a href="#3-2-4-死锁" class="headerlink" title="3.2.4 死锁"></a>3.2.4 死锁</h4><ol>
+<li>死锁一般解决方法：按顺序上锁。要么将两个都锁住，要么一个都不锁。</li>
+<li>C++17中的<code>std::scoped_lock&lt;&gt;</code>是一种新的RAII模板类型。能接受不定数量的互斥量类型作为模板参数。在构造scoped_lock对象时对传入的mutex上锁，析构时解锁。</li>
+</ol>
+<h2 id="4-Synchronizing-concurrent-operations-on-atomic-types"><a href="#4-Synchronizing-concurrent-operations-on-atomic-types" class="headerlink" title="4. Synchronizing concurrent operations on atomic types"></a>4. Synchronizing concurrent operations on atomic types</h2><h2 id="5-The-C-memory-model-and-operations-on-atomic-types"><a href="#5-The-C-memory-model-and-operations-on-atomic-types" class="headerlink" title="5. The C++ memory model and operations on atomic types"></a>5. The C++ memory model and operations on atomic types</h2><h2 id="6-Designing-lock-based-concurrent-data-structures"><a href="#6-Designing-lock-based-concurrent-data-structures" class="headerlink" title="6. Designing lock-based concurrent data structures."></a>6. Designing lock-based concurrent data structures.</h2><h2 id="7-Designing-lock-free-concurrent-data-structures"><a href="#7-Designing-lock-free-concurrent-data-structures" class="headerlink" title="7. Designing lock-free concurrent data structures"></a>7. Designing lock-free concurrent data structures</h2><h2 id="8-Designing-concurrent-code"><a href="#8-Designing-concurrent-code" class="headerlink" title="8. Designing concurrent code"></a>8. Designing concurrent code</h2><h2 id="9-Advanced-thread-managment"><a href="#9-Advanced-thread-managment" class="headerlink" title="9. Advanced thread managment"></a>9. Advanced thread managment</h2><h2 id="10-Parallel-algorithms"><a href="#10-Parallel-algorithms" class="headerlink" title="10. Parallel algorithms"></a>10. Parallel algorithms</h2><h2 id="11-Testing-and-debugging-multithreaded-applications"><a href="#11-Testing-and-debugging-multithreaded-applications" class="headerlink" title="11. Testing and debugging multithreaded applications"></a>11. Testing and debugging multithreaded applications</h2>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jiaxiyangbit@126.com </span>
     </div>
