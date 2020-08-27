@@ -281,7 +281,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="22">
-<input type="hidden" id="yelog_site_word_count" value="20.4k">
+<input type="hidden" id="yelog_site_word_count" value="20.6k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -629,12 +629,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-08-26 18:43:48'>2020-08-20 09:05</time>
+            Created At : <time class="date" title='Updated At: 2020-08-27 19:49:44'>2020-08-20 09:05</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:1.6k</span>
+        <span>Count:1.7k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -713,10 +713,14 @@
 <li><code>std::mutex</code>创建互斥量，<code>lock</code>对互斥量上锁，unlock为解锁。</li>
 <li>RAII管理互斥量：C++标准库为互斥量提供了RAII模板类<code>std::lock_guard</code>，在构造时提供已锁的互斥量（lock_guard对象在构造时对传进来的mutex上锁），并在析构时解锁，从而保证互斥量被正确的解锁。</li>
 <li>大多数情况下，互斥量通常会与需要保护的数据放在同一类中，而不是定义成全局变量。</li>
+<li>C++17 提供<code>std::scoped_lock</code>加强版的<code>std::lock_guard</code>, 可以接受多个参数。</li>
 </ol>
 <h4 id="3-2-4-死锁"><a href="#3-2-4-死锁" class="headerlink" title="3.2.4 死锁"></a>3.2.4 死锁</h4><ol>
 <li>死锁一般解决方法：按顺序上锁。要么将两个都锁住，要么一个都不锁。</li>
+<li><code>std::lock</code>能同时锁住多个互斥量。</li>
 <li>C++17中的<code>std::scoped_lock&lt;&gt;</code>是一种新的RAII模板类型。能接受不定数量的互斥量类型作为模板参数。在构造scoped_lock对象时对传入的mutex上锁，析构时解锁。</li>
+<li><code>std::lock</code>锁上mutex之后不负责释放，还需要配合lock_guard或者手动释放mutex。<code>std::scoped_lock</code>生命周期结束后会自动释放锁。</li>
+<li>C++17特性：<code>自动推导模板参数</code>。可以简写为<code>std::scoped_lock lk(m1, m2);</code> 而不用写为<code>std::scoped_lock&lt;std::mutex, std::mutex&gt; lk(m1, m2);</code></li>
 </ol>
 <h2 id="4-Synchronizing-concurrent-operations-on-atomic-types"><a href="#4-Synchronizing-concurrent-operations-on-atomic-types" class="headerlink" title="4. Synchronizing concurrent operations on atomic types"></a>4. Synchronizing concurrent operations on atomic types</h2><h3 id="4-1-等待时间或条件"><a href="#4-1-等待时间或条件" class="headerlink" title="4.1 等待时间或条件"></a>4.1 等待时间或条件</h3><ol>
 <li>当一个线程等待另一个线程完成时，有几种选择：<ul>
@@ -726,7 +730,9 @@
 </ul>
 </li>
 </ol>
-<h3 id="4-2-future"><a href="#4-2-future" class="headerlink" title="4.2 future"></a>4.2 future</h3><p>1.</p>
+<h3 id="4-2-future"><a href="#4-2-future" class="headerlink" title="4.2 future"></a>4.2 future</h3><ol>
+<li>async（sender)函数是一种promise,负责发送数据， future（receiver)负责接收数据。<code>future fut = async([]{return 3+4;}); cout &lt;&lt; fut.get() &lt;&lt; endl;</code></li>
+</ol>
 <h2 id="5-The-C-memory-model-and-operations-on-atomic-types"><a href="#5-The-C-memory-model-and-operations-on-atomic-types" class="headerlink" title="5. The C++ memory model and operations on atomic types"></a>5. The C++ memory model and operations on atomic types</h2><h3 id="5-1-内存模型"><a href="#5-1-内存模型" class="headerlink" title="5.1 内存模型"></a>5.1 内存模型</h3><h4 id="5-1-1-对象和内存模型"><a href="#5-1-1-对象和内存模型" class="headerlink" title="5.1.1 对象和内存模型"></a>5.1.1 对象和内存模型</h4><ol>
 <li>C++程序中数据都是由对象构成。</li>
 <li>每个变量都是对象</li>
