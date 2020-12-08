@@ -289,7 +289,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="25">
-<input type="hidden" id="yelog_site_word_count" value="21k">
+<input type="hidden" id="yelog_site_word_count" value="21.1k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -663,12 +663,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-12-08 12:26:19'>2020-12-07 15:19</time>
+            Created At : <time class="date" title='Updated At: 2020-12-08 21:34:01'>2020-12-07 15:19</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:153</span>
+        <span>Count:206</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -717,8 +717,17 @@ bind C-t send-prefix
 
 # key bindings for horizontal and vertical panes
 bind | split-window -h
-bind \ split-window -h
+bind \\ split-window -h
 bind - split-window -v
+
+set -g base-index 1
+set-window-option -g pane-base-index 1
+set -g renumber-windows on
+
+# right status: tmux show-options -g | grep status-right
+# `man tmux` search &quot;pane_title&quot; or &quot;host&quot;
+# set -g status-right &quot;#{=18:host} &quot;
+set -g status-right &quot;#{=18:host_short} &quot;
 
 # reference C-t ?
 bind-key -T prefix a select-window -t :=1
