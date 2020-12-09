@@ -289,7 +289,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="25">
-<input type="hidden" id="yelog_site_word_count" value="21.2k">
+<input type="hidden" id="yelog_site_word_count" value="21.3k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -663,12 +663,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-12-09 21:14:22'>2020-06-29 20:39</time>
+            Created At : <time class="date" title='Updated At: 2020-12-09 21:35:03'>2020-06-29 20:39</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:1.4k</span>
+        <span>Count:1.5k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -730,6 +730,10 @@
 </ol>
 <h2 id="Miscellaneous"><a href="#Miscellaneous" class="headerlink" title="Miscellaneous"></a>Miscellaneous</h2><ol>
 <li><code>ftp</code>: 搭建ftp服务器，脚本put:<code>scp -r $@ user@IP:path</code>上传文件，脚本get:<code>for i in $@; do scp -r user@IP:path/${i}; done</code>获取文件。服务器上可以放常用文件，也可以用来与windows交换数据。</li>
+<li>打洞： A1, A2, A3…, B, C; A能连接B, B能连接C, A不能连接C。C上配置<code>~/.ssh/config</code>:</li>
+</ol>
+<pre><code>config</code></pre><p>B上执行<code>ssh</code>登录到C，再打开一个C连接，就能和A之间使用scpc传数据。如果A连网，C如果想连网，B执行完ssh命令后，登录到C上，再执行<code>ssh</code>后登录到A上，再打开一个C连接，就能上网了。</p>
+<ol>
 <li><code>cat url-list.txt | xargs wget -c</code>xargs将参数列表转换成小块分段传递给其他命令</li>
 <li>ssh scp 免密登录<code>ssh-keygen -t rsa &amp;&amp; ssh-copy-id -i ~/.ssh/id_rsa.pub root@10.10.129.25</code>  或将一台机器的id_rsa.pub复制到另一台机器~/.ssh/authorized_keys文件中</li>
 <li><code>tree -L 2</code>  查看二级目录结构</li>
