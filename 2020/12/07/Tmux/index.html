@@ -663,12 +663,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-12-08 21:34:01'>2020-12-07 15:19</time>
+            Created At : <time class="date" title='Updated At: 2020-12-09 08:33:19'>2020-12-07 15:19</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:206</span>
+        <span>Count:235</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -714,20 +714,28 @@ set -g history-limit 15000
 set -g prefix C-t
 unbind C-b
 bind C-t send-prefix
+# more intuitive keybindings for splitting and create window
+bind \\ split-window -h -c &quot;#{pane_current_path}&quot;
+bind - split-window -v -c &quot;#{pane_current_path}&quot;
+bind c new-window -c &quot;#{pane_current_path}&quot;
 
-# key bindings for horizontal and vertical panes
-bind | split-window -h
-bind \\ split-window -h
-bind - split-window -v
-
+# display
 set -g base-index 1
 set-window-option -g pane-base-index 1
 set -g renumber-windows on
 
+# set terminal title
+set -g set-titles on
+
+# redraw status line every 10 seconds
+set -g status-interval 10
+
 # right status: tmux show-options -g | grep status-right
-# `man tmux` search &quot;pane_title&quot; or &quot;host&quot;
-# set -g status-right &quot;#{=18:host} &quot;
-set -g status-right &quot;#{=18:host_short} &quot;
+set -g status-right &quot;#{=21:host_short} &quot;
+
+# Remove delay when sending commands
+# (default is 500 milliseconds)
+set -sg escape-time 1
 
 # reference C-t ?
 bind-key -T prefix a select-window -t :=1
