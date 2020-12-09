@@ -289,7 +289,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="25">
-<input type="hidden" id="yelog_site_word_count" value="21.1k">
+<input type="hidden" id="yelog_site_word_count" value="21.2k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -663,12 +663,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-12-09 08:58:31'>2020-12-07 15:19</time>
+            Created At : <time class="date" title='Updated At: 2020-12-09 20:32:16'>2020-12-07 15:19</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:271</span>
+        <span>Count:302</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -714,10 +714,15 @@ set -g history-limit 15000
 set -g prefix C-t
 unbind C-b
 bind C-t send-prefix
+
 # more intuitive keybindings for splitting and create window
 bind \\ split-window -h -c &quot;#{pane_current_path}&quot;
 bind - split-window -v -c &quot;#{pane_current_path}&quot;
 bind c new-window -c &quot;#{pane_current_path}&quot;
+
+# swap window bind
+bind M-l swap-window -t + \; next-window
+bind M-h swap-window -t - \; previous-window
 
 # display
 set -g base-index 1
@@ -745,7 +750,8 @@ bind-key -T prefix f select-window -t :=4
 bind-key -T prefix g select-window -t :=5
 bind-key -T prefix h select-window -t :=6
 bind-key -T prefix j select-window -t :=7
-bind-key -T prefix k select-window -t :=8</code></pre>
+bind-key -T prefix k select-window -t :=8
+bind-key -T prefix \; select-window -t :=1 \; select-window -t -1</code></pre>
 <h2 id="Reload-config"><a href="#Reload-config" class="headerlink" title="Reload config"></a>Reload config</h2><pre><code class="shell">tmux source-file ~/.tmux.conf</code></pre>
 <h2 id="Tmux-Zsh-CheatSheet"><a href="#Tmux-Zsh-CheatSheet" class="headerlink" title="Tmux Zsh CheatSheet"></a>Tmux Zsh CheatSheet</h2><p><a href="https://github.com/ohmyzsh/ohmyzsh/wiki/Cheatsheet" target="_blank" rel="noopener">https://github.com/ohmyzsh/ohmyzsh/wiki/Cheatsheet</a></p>
 <pre><code class="shell">ta    : tmux attach -t
