@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>OS | Jia Xiyang</title>
-  <meta name="keywords" content=" OS ">
-  <meta name="description" content="OS | Jia Xiyang">
+  <title>Redis | Jia Xiyang</title>
+  <meta name="keywords" content=" Redis , Database ">
+  <meta name="description" content="Redis | Jia Xiyang">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="个人简介贾夕阳毕业于北京理工大学，目前从事人工智能软件架构工作 联系方式 mail: jiaxiyangbit@126.com qq: 312567150">
 <meta property="og:type" content="website">
@@ -658,9 +658,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-OS" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Redis" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">OS</h1>
+        <h1 class="article-title">Redis</h1>
     
     <div class="article-meta">
         
@@ -670,9 +670,9 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="Computer">Computer</a> > 
+            <a  data-rel="Program">Program</a> > 
             
-            <a  data-rel="Computer&lt;---&gt;OS">OS</a>
+            <a  data-rel="Program&lt;---&gt;Database">Database</a>
             
         </span>
         
@@ -680,19 +680,21 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color3">OS</a>
+            <a class="color1">Redis</a>
+            
+            <a class="color4">Database</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-08-11 12:11:32'>2020-08-11 12:10</time>
+            Created At : <time class="date" title='Updated At: 2021-01-11 21:42:57'>2021-01-11 21:27</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:0</span>
+        <span>Count:86</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -711,7 +713,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-server"><span class="toc-text">Redis server</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-client"><span class="toc-text">Redis client</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hiredis-just-a-C-client-not-include-server"><span class="toc-text">hiredis (just a C client; not include server)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#redis-lock-using-hiredis"><span class="toc-text">redis lock using hiredis</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -727,7 +729,30 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="Redis-server"><a href="#Redis-server" class="headerlink" title="Redis server"></a>Redis server</h2><pre><code class="shell">git clone https://github.com/redis/redis.git
+cd redis &amp;&amp; make
+cd src
+./redis-server</code></pre>
+<h2 id="Redis-client"><a href="#Redis-client" class="headerlink" title="Redis client"></a>Redis client</h2><pre><code class="shell">./redis-cli
+
+## cmd
+set foo bar
+get foo bar
+
+## change dump.rdb path
+config set dir /home/xxx
+
+# save data to dump.rdb
+save</code></pre>
+<h2 id="hiredis-just-a-C-client-not-include-server"><a href="#hiredis-just-a-C-client-not-include-server" class="headerlink" title="hiredis (just a C client; not include server)"></a>hiredis (just a C client; not include server)</h2><pre><code class="shell">git clone https://github.com/redis/hiredis.git
+cd hiredis
+mkdir build; cd build; cmake ..; make;
+sudo make install
+./hiredis-test
+
+## NOTE: sample are easier than hiredis-test</code></pre>
+<h2 id="redis-lock-using-hiredis"><a href="#redis-lock-using-hiredis" class="headerlink" title="redis lock using hiredis"></a>redis lock using hiredis</h2><p><a href="https://github.com/yuhanfang/redislock" target="_blank" rel="noopener">redislock C++ sample</a></p>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jiaxiyangbit@126.com </span>
     </div>
