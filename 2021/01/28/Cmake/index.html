@@ -305,7 +305,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="27">
-<input type="hidden" id="yelog_site_word_count" value="24.7k">
+<input type="hidden" id="yelog_site_word_count" value="24.8k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -707,12 +707,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-01-28 12:32:13'>2021-01-28 08:56</time>
+            Created At : <time class="date" title='Updated At: 2021-01-28 13:01:23'>2021-01-28 08:56</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:532</span>
+        <span>Count:594</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -731,7 +731,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Modern-Cmake-Using-Steps"><span class="toc-text">Modern Cmake Using Steps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Target-and-Property"><span class="toc-text">Target and Property</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Target"><span class="toc-text">Target</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Properties"><span class="toc-text">Properties</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Build-Requirements-and-Usage-Requirements"><span class="toc-text">Build-Requirements and Usage-Requirements</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PRIVATE-INTERFACE-PUBLIC"><span class="toc-text">PRIVATE&#x2F;INTERFACE&#x2F;PUBLIC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-13之默认生成绝对路径"><span class="toc-text">3.13之默认生成绝对路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Links"><span class="toc-text">Links</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Modern-Cmake-Using-Steps"><span class="toc-text">Modern Cmake Using Steps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Target-and-Property"><span class="toc-text">Target and Property</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Target"><span class="toc-text">Target</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Properties"><span class="toc-text">Properties</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Build-Requirements-and-Usage-Requirements"><span class="toc-text">Build-Requirements and Usage-Requirements</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PRIVATE-INTERFACE-PUBLIC"><span class="toc-text">PRIVATE&#x2F;INTERFACE&#x2F;PUBLIC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-13之默认生成绝对路径"><span class="toc-text">3.13之默认生成绝对路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CMakeLists-txt"><span class="toc-text">CMakeLists.txt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Links"><span class="toc-text">Links</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -799,16 +799,34 @@ target_sources ( MyTarget
     PUBLIC     ${CMAKE_CURRENT_SOURCE_DIR}/headers/A.hpp
     INTERFACE  ${CMAKE_CURRENT_SOURCE_DIR}/headers/C.hpp
 )</code></pre><ol>
-<li>3.13之后生成绝对路径<pre><code>add_library( MyTarget SHARED )
-target_sources ( MyTarget
- PRIVATE    src/A.cpp
-            src/B.cpp
-            headers/B.hpp
- PUBLIC     headers/A.hpp
- INTERFACE  headers/C.hpp
-)</code></pre></li>
+<li>3.13之后生成绝对路径</li>
 </ol>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<pre><code>add_library( MyTarget SHARED )
+target_sources ( MyTarget
+    PRIVATE    src/A.cpp
+               src/B.cpp
+               headers/B.hpp
+    PUBLIC     headers/A.hpp
+    INTERFACE  headers/C.hpp
+)</code></pre><h2 id="CMakeLists-txt"><a href="#CMakeLists-txt" class="headerlink" title="CMakeLists.txt"></a>CMakeLists.txt</h2><ol>
+<li>top level CMakeLists.txt begining:</li>
+</ol>
+<pre><code>cmake_minimum_required( VERSION 3.15...3.17 )
+
+set( CMAKE_PROJECT_INCLUDE_BEFORE
+     &quot;${CMAKE_CURRENT_LIST_DIR}/common-project-info.in&quot; )
+# include( &quot;${CMAKE_CURRENT_LIST_DIR}/common-project-include.in&quot; )
+
+project (MyRootProject
+    VERSION ${project_version}
+    DESCRIPTION ${project_description}
+    HOMEPAGE_URL ${project_homepage}
+    LANGUAGES C CXX )
+</code></pre><pre><code># common-project-info.in
+
+set ( project_version 1.2.3 )
+set ( project_description &quot;test....&quot; )
+set ( project_homepage &quot;https://www....&quot; )</code></pre><h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
 <li><a href="https://cmake.org/cmake/help/v3.19/guide/tutorial/" target="_blank" rel="noopener">Cmake Tutorial</a></li>
 <li><a href="https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html" target="_blank" rel="noopener">Cmake Buildsystem</a></li>
 <li><a href="https://gist.github.com/mbinna/c61dbb39bca0e4fb7d1f73b0d66a4fd1" target="_blank" rel="noopener">Effective Modern Cmake</a></li>
