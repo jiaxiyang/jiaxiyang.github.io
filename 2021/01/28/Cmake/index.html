@@ -707,7 +707,7 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-01-28 13:01:23'>2021-01-28 08:56</time>
+            Created At : <time class="date" title='Updated At: 2021-01-28 16:19:42'>2021-01-28 08:56</time>
         
     </div>
     <div class="article-meta">
@@ -731,7 +731,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Modern-Cmake-Using-Steps"><span class="toc-text">Modern Cmake Using Steps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Target-and-Property"><span class="toc-text">Target and Property</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Target"><span class="toc-text">Target</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Properties"><span class="toc-text">Properties</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Build-Requirements-and-Usage-Requirements"><span class="toc-text">Build-Requirements and Usage-Requirements</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PRIVATE-INTERFACE-PUBLIC"><span class="toc-text">PRIVATE&#x2F;INTERFACE&#x2F;PUBLIC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-13之默认生成绝对路径"><span class="toc-text">3.13之默认生成绝对路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CMakeLists-txt"><span class="toc-text">CMakeLists.txt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Links"><span class="toc-text">Links</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Target-and-Property"><span class="toc-text">Target and Property</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Target"><span class="toc-text">Target</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Properties"><span class="toc-text">Properties</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Build-Requirements-and-Usage-Requirements"><span class="toc-text">Build-Requirements and Usage-Requirements</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PRIVATE-INTERFACE-PUBLIC"><span class="toc-text">PRIVATE&#x2F;INTERFACE&#x2F;PUBLIC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Modern-Cmake-Using-Steps"><span class="toc-text">Modern Cmake Using Steps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-13之默认生成绝对路径"><span class="toc-text">3.13之默认生成绝对路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CMakeLists-txt"><span class="toc-text">CMakeLists.txt</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Links"><span class="toc-text">Links</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -747,12 +747,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Modern-Cmake-Using-Steps"><a href="#Modern-Cmake-Using-Steps" class="headerlink" title="Modern Cmake Using Steps"></a>Modern Cmake Using Steps</h2><ol>
-<li>Always create targets with no sources first.</li>
-<li>Use <code>target...</code> commands to add build-/usage-requirements</li>
-<li>Use <code>IMPORTED</code> targets for external libraires. But, prefer <code>find_package</code> or <code>EXPORTED</code> targets ro creating them yourself.</li>
-</ol>
-<h2 id="Target-and-Property"><a href="#Target-and-Property" class="headerlink" title="Target and Property"></a>Target and Property</h2><ol>
+        <h2 id="Target-and-Property"><a href="#Target-and-Property" class="headerlink" title="Target and Property"></a>Target and Property</h2><ol>
 <li>现代化的CMake是围绕 Target 和 Property 来定义的，并且竭力避免出现变量variable的定义。Variable横行是典型CMake2.8时期的风格。现代版的CMake更像是在遵循OOP的规则，通过target来约束link、compile等相关属性的作用域。</li>
 </ol>
 <h3 id="Target"><a href="#Target" class="headerlink" title="Target"></a>Target</h3><ol>
@@ -787,6 +782,11 @@ target_compile_definition(MyEXE PRIVATE std_cxx_14) ## std_cxx_14为编译属性
 <li><code>PRIVATE</code>: 表示Target的属性只定义在当前Target中，任何依赖当前Target的Target不共享PRIVATE关键字下定义的属性。</li>
 <li><code>INTERFACE</code>：表示Target的属性不适用于其自身，而只适用于依赖其的Target。</li>
 <li><code>PUBLIC</code>：表示Target的属性既是build-requirements也是usage-requirements。凡是依赖。凡是依赖于当前Target的Target都会共享本属性。</li>
+</ol>
+<h2 id="Modern-Cmake-Using-Steps"><a href="#Modern-Cmake-Using-Steps" class="headerlink" title="Modern Cmake Using Steps"></a>Modern Cmake Using Steps</h2><ol>
+<li>Always create targets with no sources first.</li>
+<li>Use <code>target...</code> commands to add build-/usage-requirements</li>
+<li>Use <code>IMPORTED</code> targets for external libraires. But, prefer <code>find_package</code> or <code>EXPORTED</code> targets ro creating them yourself.</li>
 </ol>
 <h2 id="3-13之默认生成绝对路径"><a href="#3-13之默认生成绝对路径" class="headerlink" title="3.13之默认生成绝对路径"></a>3.13之默认生成绝对路径</h2><ol>
 <li>3.13之前</li>
