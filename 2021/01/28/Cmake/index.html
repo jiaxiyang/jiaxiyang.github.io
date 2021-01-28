@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>OS | Jia Xiyang</title>
-  <meta name="keywords" content=" OS ">
-  <meta name="description" content="OS | Jia Xiyang">
+  <title>Modern Cmake | Jia Xiyang</title>
+  <meta name="keywords" content=" Cmake ">
+  <meta name="description" content="Modern Cmake | Jia Xiyang">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="个人简介贾夕阳毕业于北京理工大学，目前从事人工智能软件架构工作 联系方式 mail: jiaxiyangbit@126.com qq: 312567150">
 <meta property="og:type" content="website">
@@ -678,9 +678,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-OS" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Cmake" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">OS</h1>
+        <h1 class="article-title">Modern Cmake</h1>
     
     <div class="article-meta">
         
@@ -690,9 +690,9 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="Computer">Computer</a> > 
+            <a  data-rel="Tools">Tools</a> > 
             
-            <a  data-rel="Computer&lt;---&gt;OS">OS</a>
+            <a  data-rel="Tools&lt;---&gt;Cmake">Cmake</a>
             
         </span>
         
@@ -700,19 +700,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color3">OS</a>
+            <a class="color1">Cmake</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-08-11 12:11:32'>2020-08-11 12:10</time>
+            Created At : <time class="date" title='Updated At: 2021-01-28 11:03:59'>2021-01-28 08:56</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:0</span>
+        <span>Count:457</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -731,7 +731,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Modern-Cmake-Using-Steps"><span class="toc-text">Modern Cmake Using Steps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Target-and-Property"><span class="toc-text">Target and Property</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Target"><span class="toc-text">Target</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Properties"><span class="toc-text">Properties</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Build-Requirements-and-Usage-Requirements"><span class="toc-text">Build-Requirements and Usage-Requirements</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PRIVATE-INTERFACE-PUBLIC"><span class="toc-text">PRIVATE&#x2F;INTERFACE&#x2F;PUBLIC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Links"><span class="toc-text">Links</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -747,7 +747,57 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="Modern-Cmake-Using-Steps"><a href="#Modern-Cmake-Using-Steps" class="headerlink" title="Modern Cmake Using Steps"></a>Modern Cmake Using Steps</h2><ol>
+<li>Always create targets with no sources first.</li>
+<li>Use <code>target...</code> commands to add build-/usage-requirements</li>
+<li>Use <code>IMPORTED</code> targets for external libraires. But, prefer <code>find_package</code> or <code>EXPORTED</code> targets ro creating them yourself.</li>
+</ol>
+<h2 id="Target-and-Property"><a href="#Target-and-Property" class="headerlink" title="Target and Property"></a>Target and Property</h2><ol>
+<li>现代化的CMake是围绕 Target 和 Property 来定义的，并且竭力避免出现变量variable的定义。Variable横行是典型CMake2.8时期的风格。现代版的CMake更像是在遵循OOP的规则，通过target来约束link、compile等相关属性的作用域。</li>
+</ol>
+<h3 id="Target"><a href="#Target" class="headerlink" title="Target"></a>Target</h3><ol>
+<li>如果把一个Target想象成一个对象（Object），会发现两者的组织方式非常相似：</li>
+</ol>
+<pre><code>构造函数：
+add_executable
+add_library
+成员函数：
+get_target_property()
+set_target_properties()
+get_property(TARGET)
+set_property(TARGET)
+target_compile_definitions()
+target_compile_features()
+target_compile_options()
+target_include_directories()
+target_link_libraries()
+target_sources()
+成员变量
+Target properties（太多）</code></pre><h3 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h3><ol>
+<li>target_xxx命令PRIVATE/PUBLIC…后为property，例如</li>
+</ol>
+<pre><code>target_source(MyEXE PRIVATE &quot;main.cpp&quot;)  ## main.cpp为source属性
+target_link_library(MyEXE PRIVATE Poco::Net Poco::Util) ## Poco:Net Poco::Util为link属性
+target_compile_definition(MyEXE PRIVATE std_cxx_14) ## std_cxx_14为编译属性</code></pre><h2 id="Build-Requirements-and-Usage-Requirements"><a href="#Build-Requirements-and-Usage-Requirements" class="headerlink" title="Build-Requirements and Usage-Requirements"></a>Build-Requirements and Usage-Requirements</h2><ol>
+<li><code>Build-Requirements</code>： 包含了所有构建Target必须的材料。如源代码，include路径，预编译命令，链接依赖，编译/链接选项，编译/链接特性等。</li>
+<li><code>Usage-Requirements</code>：包含了所有使用Target必须的材料。如源代码，include路径，预编译命令，链接依赖，编译/链接选项，编译/链接特性等。这些往往是当另一个Target需要使用当前target时，必须包含的依赖</li>
+</ol>
+<h2 id="PRIVATE-INTERFACE-PUBLIC"><a href="#PRIVATE-INTERFACE-PUBLIC" class="headerlink" title="PRIVATE/INTERFACE/PUBLIC"></a>PRIVATE/INTERFACE/PUBLIC</h2><ol>
+<li>定义了<code>Target属性</code>的传递范围。</li>
+<li><code>PRIVATE</code>: 表示Target的属性只定义在当前Target中，任何依赖当前Target的Target不共享PRIVATE关键字下定义的属性。</li>
+<li><code>INTERFACE</code>：表示Target的属性不适用于其自身，而只适用于依赖其的Target。</li>
+<li><code>PUBLIC</code>：表示Target的属性既是build-requirements也是usage-requirements。凡是依赖。凡是依赖于当前Target的Target都会共享本属性。</li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a href="https://cmake.org/cmake/help/v3.19/guide/tutorial/" target="_blank" rel="noopener">Cmake Tutorial</a></li>
+<li><a href="https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html" target="_blank" rel="noopener">Cmake Buildsystem</a></li>
+<li><a href="https://www.youtube.com/watch?v=y9kSr5enrSk" target="_blank" rel="noopener">Deniz Bahadir 2019</a></li>
+<li><a href="https://www.youtube.com/watch?v=y7ndUhdQuU8" target="_blank" rel="noopener">Deniz Bahadir 2018 traditional and modern camke</a></li>
+<li><a href="https://github.com/Bagira80/More-Modern-CMake" target="_blank" rel="noopener">Beniz Bahadir PPT</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/76975231" target="_blank" rel="noopener">OO Cmake</a></li>
+<li><a href="https://ukabuer.me/blog/more-modern-cmake" target="_blank" rel="noopener">Cmake Concept</a></li>
+</ol>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jiaxiyangbit@126.com </span>
     </div>
