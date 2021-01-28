@@ -305,7 +305,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="27">
-<input type="hidden" id="yelog_site_word_count" value="24.6k">
+<input type="hidden" id="yelog_site_word_count" value="24.7k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -707,12 +707,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-01-28 11:16:30'>2021-01-28 08:56</time>
+            Created At : <time class="date" title='Updated At: 2021-01-28 12:32:13'>2021-01-28 08:56</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:460</span>
+        <span>Count:532</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -731,7 +731,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Modern-Cmake-Using-Steps"><span class="toc-text">Modern Cmake Using Steps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Target-and-Property"><span class="toc-text">Target and Property</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Target"><span class="toc-text">Target</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Properties"><span class="toc-text">Properties</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Build-Requirements-and-Usage-Requirements"><span class="toc-text">Build-Requirements and Usage-Requirements</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PRIVATE-INTERFACE-PUBLIC"><span class="toc-text">PRIVATE&#x2F;INTERFACE&#x2F;PUBLIC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Links"><span class="toc-text">Links</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Modern-Cmake-Using-Steps"><span class="toc-text">Modern Cmake Using Steps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Target-and-Property"><span class="toc-text">Target and Property</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Target"><span class="toc-text">Target</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Properties"><span class="toc-text">Properties</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Build-Requirements-and-Usage-Requirements"><span class="toc-text">Build-Requirements and Usage-Requirements</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PRIVATE-INTERFACE-PUBLIC"><span class="toc-text">PRIVATE&#x2F;INTERFACE&#x2F;PUBLIC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-13之默认生成绝对路径"><span class="toc-text">3.13之默认生成绝对路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Links"><span class="toc-text">Links</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -787,6 +787,26 @@ target_compile_definition(MyEXE PRIVATE std_cxx_14) ## std_cxx_14为编译属性
 <li><code>PRIVATE</code>: 表示Target的属性只定义在当前Target中，任何依赖当前Target的Target不共享PRIVATE关键字下定义的属性。</li>
 <li><code>INTERFACE</code>：表示Target的属性不适用于其自身，而只适用于依赖其的Target。</li>
 <li><code>PUBLIC</code>：表示Target的属性既是build-requirements也是usage-requirements。凡是依赖。凡是依赖于当前Target的Target都会共享本属性。</li>
+</ol>
+<h2 id="3-13之默认生成绝对路径"><a href="#3-13之默认生成绝对路径" class="headerlink" title="3.13之默认生成绝对路径"></a>3.13之默认生成绝对路径</h2><ol>
+<li>3.13之前</li>
+</ol>
+<pre><code>add_library( MyTarget SHARED )
+target_sources ( MyTarget
+    PRIVATE    src/A.cpp
+               src/B.cpp
+               headers/B.hpp
+    PUBLIC     ${CMAKE_CURRENT_SOURCE_DIR}/headers/A.hpp
+    INTERFACE  ${CMAKE_CURRENT_SOURCE_DIR}/headers/C.hpp
+)</code></pre><ol>
+<li>3.13之后生成绝对路径<pre><code>add_library( MyTarget SHARED )
+target_sources ( MyTarget
+ PRIVATE    src/A.cpp
+            src/B.cpp
+            headers/B.hpp
+ PUBLIC     headers/A.hpp
+ INTERFACE  headers/C.hpp
+)</code></pre></li>
 </ol>
 <h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
 <li><a href="https://cmake.org/cmake/help/v3.19/guide/tutorial/" target="_blank" rel="noopener">Cmake Tutorial</a></li>
