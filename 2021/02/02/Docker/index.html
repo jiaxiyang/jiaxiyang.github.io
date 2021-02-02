@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Network | Jia Xiyang</title>
-  <meta name="keywords" content=" Network ">
-  <meta name="description" content="Network | Jia Xiyang">
+  <title>Docker | Jia Xiyang</title>
+  <meta name="keywords" content=" Docker ">
+  <meta name="description" content="Docker | Jia Xiyang">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="个人简介贾夕阳毕业于北京理工大学，目前从事人工智能软件架构工作 联系方式 mail: jiaxiyangbit@126.com qq: 312567150">
 <meta property="og:type" content="website">
@@ -730,9 +730,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-Network" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Docker" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Network</h1>
+        <h1 class="article-title">Docker</h1>
     
     <div class="article-meta">
         
@@ -742,9 +742,9 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="Computer">Computer</a> > 
+            <a  data-rel="Tools">Tools</a> > 
             
-            <a  data-rel="Computer&lt;---&gt;Network">Network</a>
+            <a  data-rel="Tools&lt;---&gt;Docker">Docker</a>
             
         </span>
         
@@ -752,19 +752,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color3">Network</a>
+            <a class="color2">Docker</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-08-11 12:12:27'>2020-08-11 12:11</time>
+            Created At : <time class="date" title='Updated At: 2021-02-02 19:02:27'>2021-02-02 18:29</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:0</span>
+        <span>Count:383</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -783,7 +783,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Command"><span class="toc-text">Command</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Concept"><span class="toc-text">Concept</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Image"><span class="toc-text">Image</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Container"><span class="toc-text">Container</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Repository"><span class="toc-text">Repository</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传统虚拟化与docker虚拟化"><span class="toc-text">传统虚拟化与docker虚拟化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Links"><span class="toc-text">Links</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -799,7 +799,32 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="Command"><a href="#Command" class="headerlink" title="Command"></a>Command</h2><p><img src="https://user-gold-cdn.xitu.io/2019/4/9/16a02cdbf14142a0?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="一图胜千言"></p>
+<h2 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h2><p>Docker 包括三个基本概念:</p>
+<ol>
+<li>镜像（Image）</li>
+<li>容器（Container）</li>
+<li>仓库（Repository）<br>理解了这三个概念，就理解了 Docker 的整个生命周期。</li>
+</ol>
+<h3 id="Image"><a href="#Image" class="headerlink" title="Image"></a><a href="https://yeasy.gitbook.io/docker_practice/basic_concept/image" target="_blank" rel="noopener">Image</a></h3><ol>
+<li>Docker 镜像（Image），就相当于是一个 root 文件系统</li>
+<li>Docker 镜像是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。镜像不包含任何动态数据，其内容在构建之后也不会被改变。</li>
+</ol>
+<h3 id="Container"><a href="#Container" class="headerlink" title="Container"></a><a href="https://yeasy.gitbook.io/docker_practice/basic_concept/container" target="_blank" rel="noopener">Container</a></h3><ol>
+<li>镜像（Image）和容器（Container）的关系，就像是面向对象程序设计中的 类 和 实例 一样，镜像是静态的定义，容器是镜像运行时的实体。容器可以被创建、启动、停止、删除、暂停等。</li>
+</ol>
+<h3 id="Repository"><a href="#Repository" class="headerlink" title="Repository"></a><a href="https://yeasy.gitbook.io/docker_practice/basic_concept/repository" target="_blank" rel="noopener">Repository</a></h3><ol>
+<li><code>Docker Registry</code>: 一个集中的存储、分发镜像的服务</li>
+<li>一个 Docker Registry 中可以包含多个 仓库（Repository）；每个仓库可以包含多个 标签（Tag）；每个标签对应一个镜像。</li>
+<li>通常，一个仓库会包含同一个软件不同版本的镜像，而标签就常用于对应该软件的各个版本。我们可以通过 <code>&lt;仓库名&gt;:&lt;标签&gt;</code> 的格式来指定具体是这个软件哪个版本的镜像。如果不给出标签，将以 latest 作为默认标签。</li>
+</ol>
+<h2 id="传统虚拟化与docker虚拟化"><a href="#传统虚拟化与docker虚拟化" class="headerlink" title="传统虚拟化与docker虚拟化"></a>传统虚拟化与docker虚拟化</h2><p><img src="https://gblobscdn.gitbook.com/assets%2F-M5xTVjmK7ax94c8ZQcm%2F-M5xT_hHX2g5ldlyp9nm%2F-M5xTdXNYDmRWNH-Lqez%2Fvirtualization.png?alt=media" alt="传统虚拟化"><br><img src="https://gblobscdn.gitbook.com/assets%2F-M5xTVjmK7ax94c8ZQcm%2F-M5xT_hHX2g5ldlyp9nm%2F-M5xTdXP2scg0hxytUHA%2Fdocker.png?alt=media" alt="docker虚拟化"></p>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a href="https://yeasy.gitbook.io/docker_practice/introduction/why" target="_blank" rel="noopener">从入门到实践</a></li>
+<li><a href="https://juejin.im/post/5cacbfd7e51d456e8833390c" target="_blank" rel="noopener">30分钟快速入门</a></li>
+<li><a href="https://juejin.cn/post/6844903450203914253" target="_blank" rel="noopener">资源整理</a></li>
+</ol>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jiaxiyangbit@126.com </span>
     </div>
