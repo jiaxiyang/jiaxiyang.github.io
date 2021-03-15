@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Redis | Jia Xiyang</title>
-  <meta name="keywords" content=" Redis , Database ">
-  <meta name="description" content="Redis | Jia Xiyang">
+  <title>Pybind11 | Jia Xiyang</title>
+  <meta name="keywords" content=" Python ">
+  <meta name="description" content="Pybind11 | Jia Xiyang">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="个人简介贾夕阳毕业于北京理工大学，目前从事人工智能软件架构工作 联系方式 mail: jiaxiyangbit@126.com qq: 312567150">
 <meta property="og:type" content="website">
@@ -810,9 +810,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-Redis" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Pybind11" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Redis</h1>
+        <h1 class="article-title">Pybind11</h1>
     
     <div class="article-meta">
         
@@ -824,7 +824,7 @@
             
             <a  data-rel="Program">Program</a> > 
             
-            <a  data-rel="Program&lt;---&gt;Database">Database</a>
+            <a  data-rel="Program&lt;---&gt;Python">Python</a>
             
         </span>
         
@@ -832,21 +832,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color1">Redis</a>
-            
-            <a class="color4">Database</a>
+            <a class="color2">Python</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-02-22 10:23:18'>2021-01-11 21:27</time>
+            Created At : <time class="date" title='Updated At: 2021-03-15 11:39:17'>2021-03-15 11:33</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:614</span>
+        <span>Count:17</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -865,7 +863,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#锁设计原则"><span class="toc-text">锁设计原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于Redis的分布式锁"><span class="toc-text">基于Redis的分布式锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现思想："><span class="toc-text">实现思想：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#超时后又多个程序获得锁解决方法"><span class="toc-text">超时后又多个程序获得锁解决方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用守护线程特点"><span class="toc-text">使用守护线程特点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-server"><span class="toc-text">Redis server</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-client"><span class="toc-text">Redis client</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hiredis-just-a-C-client-not-include-server"><span class="toc-text">hiredis (just a C client; not include server)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Links"><span class="toc-text">Links</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Pybind11"><span class="toc-text">Pybind11</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -881,59 +879,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="锁设计原则"><a href="#锁设计原则" class="headerlink" title="锁设计原则"></a>锁设计原则</h2><ol>
-<li>所有操作都可分为增删改查，改可用删除和增加来实现，但改更快并且具有原子性。</li>
-<li>只有获得锁才能对锁进行删和改。</li>
-<li>注意区分又状态和无状态。凡是涉及到有状态的API(lock, unlock)要特别小心。要与无状态API(圆的面积)模块区分开。</li>
-<li>系统状态尽可能的少，太多状态容易出问题。</li>
-</ol>
-<h2 id="基于Redis的分布式锁"><a href="#基于Redis的分布式锁" class="headerlink" title="基于Redis的分布式锁"></a>基于Redis的分布式锁</h2><ol>
-<li>Redis Lua脚本具有原子性</li>
-</ol>
-<h3 id="实现思想："><a href="#实现思想：" class="headerlink" title="实现思想："></a>实现思想：</h3><ol>
-<li>获取锁的时候，使用setnx加锁，并使用expire命令为锁添加一个超时时间，超过该时间则自动释放锁，锁的value值为一个随机生成的UUID，通过此在释放锁的时候进行判断。</li>
-<li>获取锁的时候还设置一个获取的超时时间，若超过这个时间则放弃获取锁。</li>
-<li>释放锁的时候，通过UUID判断是不是该锁，若是该锁，则执行delete进行锁释放。</li>
-</ol>
-<h3 id="超时后又多个程序获得锁解决方法"><a href="#超时后又多个程序获得锁解决方法" class="headerlink" title="超时后又多个程序获得锁解决方法"></a>超时后又多个程序获得锁解决方法</h3><ol>
-<li>将过期时间设置足够长，确保代码逻辑在锁释放之前能够执行完成</li>
-<li><code>为获取锁的线程增加守护线程，为将要过期但未释放的锁增加有效时间</code></li>
-</ol>
-<h3 id="使用守护线程特点"><a href="#使用守护线程特点" class="headerlink" title="使用守护线程特点"></a><a href="https://segmentfault.com/a/1190000022935064" target="_blank" rel="noopener">使用守护线程特点</a></h3><ol>
-<li><code>一定要用SET key value NX PX milliseconds 命令</code>:如果不用，先设置了值，再设置过期时间，这个不是原子性操作，有可能在设置过期时间之前宕机，会造成死锁(key永久存在)</li>
-<li><code>value要具有唯一性</code>:这个是为了在解锁的时候，需要验证value是和加锁的一致才删除key。这是避免了一种情况：假设A获取了锁，过期时间30s，此时35s之后，锁已经自动释放了，A去释放锁，但是此时可能B获取了锁。A客户端就不能删除B的锁了。</li>
-</ol>
-<h2 id="Redis-server"><a href="#Redis-server" class="headerlink" title="Redis server"></a>Redis server</h2><pre><code class="shell">git clone https://github.com/redis/redis.git
-cd redis &amp;&amp; make
-cd src
-./redis-server</code></pre>
-<h2 id="Redis-client"><a href="#Redis-client" class="headerlink" title="Redis client"></a>Redis client</h2><pre><code class="shell">./redis-cli
-
-## cmd
-set foo bar
-get foo
-
-## change dump.rdb path
-config set dir /home/xxx
-
-# save data to dump.rdb
-save</code></pre>
-<h2 id="hiredis-just-a-C-client-not-include-server"><a href="#hiredis-just-a-C-client-not-include-server" class="headerlink" title="hiredis (just a C client; not include server)"></a>hiredis (just a C client; not include server)</h2><pre><code class="shellp">git clone https://github.com/redis/hiredis.git
-cd hiredis
-mkdir build; cd build; cmake ..; make;
-sudo make install
-./hiredis-test
-
-## NOTE: sample are easier than hiredis-test</code></pre>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a href="https://bbs.huaweicloud.com/blogs/209955" target="_blank" rel="noopener">redis lock华为漫画</a></li>
-<li><a href="https://bbs.huaweicloud.com/blogs/209954" target="_blank" rel="noopener">Zookeeper 华为漫画</a></li>
-<li><a href="https://blog.csdn.net/xlgen157387/article/details/79036337" target="_blank" rel="noopener">redis实现分布式锁</a></li>
-<li><a href="https://xiaomi-info.github.io/2019/12/17/redis-distributed-lock/" target="_blank" rel="noopener">小米解决方案</a></li>
-<li><a href="https://juejin.cn/post/6844903830442737671" target="_blank" rel="noopener">redis分布式锁</a></li>
-<li><a href="https://github.com/yuhanfang/redislock" target="_blank" rel="noopener">redislock C++ sample</a></li>
-<li><a href="https://redis.io/commands/set" target="_blank" rel="noopener">Redis set command(note: NX)</a></li>
-<li><a href="https://github.com/redisson/redisson" target="_blank" rel="noopener">Redisson</a></li>
+        <h2 id="Pybind11"><a href="#Pybind11" class="headerlink" title="Pybind11"></a>Pybind11</h2><ol>
+<li>python与C/C++相互调用</li>
+<li>轻量级，只含有头文件</li>
 </ol>
 
       

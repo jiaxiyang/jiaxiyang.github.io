@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>git biset to debug | Jia Xiyang</title>
+  <title>Git bisect to debug | Jia Xiyang</title>
   <meta name="keywords" content=" Git ">
-  <meta name="description" content="git biset to debug | Jia Xiyang">
+  <meta name="description" content="Git bisect to debug | Jia Xiyang">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="个人简介贾夕阳毕业于北京理工大学，目前从事人工智能软件架构工作 联系方式 mail: jiaxiyangbit@126.com qq: 312567150">
 <meta property="og:type" content="website">
@@ -136,7 +136,7 @@
 
 
 <ul>
-    <li><div class="all active" data-rel="All">All<small>(32)</small></div></li>
+    <li><div class="all active" data-rel="All">All<small>(33)</small></div></li>
     
         
             
@@ -148,7 +148,7 @@
     
         
             
-            <li><div data-rel="Program"><i class="fold iconfont icon-right"></i>Program<small>(16)</small></div>
+            <li><div data-rel="Program"><i class="fold iconfont icon-right"></i>Program<small>(17)</small></div>
                 
                     <ul class="sub hide">
                         
@@ -173,6 +173,10 @@
                         </li>
                             
                         <li><div data-rel="Program<--->Gstreamer">Gstreamer<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Python">Python<small>(1)</small></div>
                             
                         </li>
                             
@@ -346,6 +350,10 @@
             
         
     
+        
+            
+        
+    
 </ul>
 <div class="left-bottom">
     <div class="menus">
@@ -356,8 +364,8 @@
     </div>
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="32">
-<input type="hidden" id="yelog_site_word_count" value="27.9k">
+<input type="hidden" id="yelog_site_posts_number" value="33">
+<input type="hidden" id="yelog_site_word_count" value="28.1k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -491,6 +499,10 @@
             </li>
         
             <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Python</a>
+            </li>
+        
+            <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>Redis</a>
             </li>
         
@@ -517,11 +529,19 @@
     
     <nav id="title-list-nav">
         
+        <a  class="All Program Python "
+           href="/2021/03/15/Pybind11/"
+           data-tag="Python"
+           data-author="" >
+            <span class="post-title" title="Pybind11">Pybind11</span>
+            <span class="post-date" title="2021-03-15 11:33:25">2021/03/15</span>
+        </a>
+        
         <a  class="All Tools Git "
            href="/2021/03/05/git-biset-to-debug/"
            data-tag="Git"
            data-author="" >
-            <span class="post-title" title="git biset to debug">git biset to debug</span>
+            <span class="post-title" title="Git bisect to debug">Git bisect to debug</span>
             <span class="post-date" title="2021-03-05 09:51:13">2021/03/05</span>
         </a>
         
@@ -792,7 +812,7 @@
     <div class="pjax">
         <article id="post-git-biset-to-debug" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">git biset to debug</h1>
+        <h1 class="article-title">Git bisect to debug</h1>
     
     <div class="article-meta">
         
@@ -819,12 +839,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-03-05 09:55:34'>2021-03-05 09:51</time>
+            Created At : <time class="date" title='Updated At: 2021-03-15 11:40:28'>2021-03-05 09:51</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:12</span>
+        <span>Count:132</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -843,7 +863,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Links"><span class="toc-text">Links</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Function"><span class="toc-text">Function</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Command"><span class="toc-text">Command</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Links"><span class="toc-text">Links</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -859,7 +879,29 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><p><a href="https://www.jianshu.com/p/e954e8821f6b" target="_blank" rel="noopener">Git 二分法快速定位问题代码</a></p>
+        <h2 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h2><ol>
+<li>Use binary search to find the commit that introduced a bug</li>
+</ol>
+<h2 id="Command"><a href="#Command" class="headerlink" title="Command"></a>Command</h2><pre><code>$ git bisect start
+$ git bisect bad                 # Current version is bad
+$ git bisect good v2.6.13-rc2    # v2.6.13-rc2 is known to be good
+$ git bisect log
+$ git bisect skip                 # Current version cannot be tested
+$ git bisect reset
+
+# run script
+$ git bisect run my_script arguments
+$ cat ~/test.sh
+#!/bin/sh
+make || exit 125                     # this skips broken builds
+~/check_test_case.sh                 # does the test case pass?
+$ git bisect start HEAD v1.3.1 --      # HEAD is bad, v1.2 is good
+$ git bisect run ~/test.sh
+# git bisect run sh -c &quot;make || exit 125; ~/check_test_case.sh&quot;
+$ git bisect reset                   # quit the bisect session</code></pre><h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a href="https://git-scm.com/docs/git-bisect" target="_blank" rel="noopener">git bisect</a></li>
+<li><a href="https://juejin.cn/post/6844903537860673544" target="_blank" rel="noopener">Git 二分调试法，火速定位疑难Bug</a></li>
+</ol>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jiaxiyangbit@126.com </span>
