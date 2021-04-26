@@ -365,7 +365,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="35">
-<input type="hidden" id="yelog_site_word_count" value="28.4k">
+<input type="hidden" id="yelog_site_word_count" value="29.2k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -763,7 +763,7 @@
         
         <a  class="All Tools Vim "
            href="/2020/07/01/Clang-format-usage/"
-           data-tag="Clang format,Vim,Emacs"
+           data-tag="Emacs,Clang format,Vim"
            data-author="" >
             <span class="post-title" title="Clang-format-usage">Clang-format-usage</span>
             <span class="post-date" title="2020-07-01 13:16:38">2020/07/01</span>
@@ -855,12 +855,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-03-22 09:54:14'>2021-03-22 09:53</time>
+            Created At : <time class="date" title='Updated At: 2021-04-27 07:32:55'>2021-03-22 09:53</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:0</span>
+        <span>Count:140</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -879,7 +879,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#basic"><span class="toc-text">basic</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Links"><span class="toc-text">Links</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -895,7 +895,43 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><pre><code>use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
+
+#[get(&quot;/&quot;)]
+async fn hello() -&gt; impl Responder {
+    HttpResponse::Ok().body(&quot;Hello world!&quot;)
+}
+
+#[post(&quot;/echo&quot;)]
+async fn echo(req_body: String) -&gt; impl Responder {
+    HttpResponse::Ok().body(req_body)
+}
+
+async fn manual_hello() -&gt; impl Responder {
+    HttpResponse::Ok().body(&quot;Hey there!&quot;)
+}
+
+#[actix_web::main]
+async fn main() -&gt; std::io::Result&lt;()&gt; {
+    HttpServer::new(|| {
+        App::new()
+            .service(hello)
+            .service(echo)
+            .route(&quot;/hey&quot;, web::get().to(manual_hello))
+    })
+    .bind(&quot;127.0.0.1:8080&quot;)?
+    .run()
+    .await
+}</code></pre><ol>
+<li>Use App::service for the handlersusing routing <code>macros</code> and App::route for <code>manually</code> routed handlers, declaring the <code>path</code> and <code>method</code>.</li>
+<li><code>path</code>: http URL,例如：<a href="http://github.com/xxx/xx/xx" target="_blank" rel="noopener">http://github.com/xxx/xx/xx</a></li>
+<li><code>method</code>: path的响应</li>
+<li>All actix-web servers are built around the <code>App</code> instance.</li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a href="https://actix.rs/docs/" target="_blank" rel="noopener">official docs</a></li>
+</ol>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jiaxiyangbit@126.com </span>
     </div>
