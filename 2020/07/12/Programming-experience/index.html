@@ -136,7 +136,7 @@
 
 
 <ul>
-    <li><div class="all active" data-rel="All">All<small>(35)</small></div></li>
+    <li><div class="all active" data-rel="All">All<small>(36)</small></div></li>
     
         
             
@@ -148,7 +148,7 @@
     
         
             
-            <li><div data-rel="Program"><i class="fold iconfont icon-right"></i>Program<small>(18)</small></div>
+            <li><div data-rel="Program"><i class="fold iconfont icon-right"></i>Program<small>(19)</small></div>
                 
                     <ul class="sub hide">
                         
@@ -173,6 +173,10 @@
                         </li>
                             
                         <li><div data-rel="Program<--->Gstreamer">Gstreamer<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->PLT">PLT<small>(1)</small></div>
                             
                         </li>
                             
@@ -354,6 +358,10 @@
             
         
     
+        
+            
+        
+    
 </ul>
 <div class="left-bottom">
     <div class="menus">
@@ -364,8 +372,8 @@
     </div>
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="35">
-<input type="hidden" id="yelog_site_word_count" value="29.8k">
+<input type="hidden" id="yelog_site_posts_number" value="36">
+<input type="hidden" id="yelog_site_word_count" value="30.2k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -495,6 +503,10 @@
             </li>
         
             <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Paradigm</a>
+            </li>
+        
+            <li class="article-tag-list-item">
                 <i class="iconfont icon-tag"></i><a>Program</a>
             </li>
         
@@ -528,6 +540,14 @@
 
     
     <nav id="title-list-nav">
+        
+        <a  class="All Program PLT "
+           href="/2021/04/29/Programming-Paradigm/"
+           data-tag="Paradigm"
+           data-author="" >
+            <span class="post-title" title="Programming-Paradigm">Programming-Paradigm</span>
+            <span class="post-date" title="2021-04-29 08:23:46">2021/04/29</span>
+        </a>
         
         <a  class="All Program Rust "
            href="/2021/03/22/Actix/"
@@ -763,7 +783,7 @@
         
         <a  class="All Tools Vim "
            href="/2020/07/01/Clang-format-usage/"
-           data-tag="Emacs,Clang format,Vim"
+           data-tag="Clang format,Vim,Emacs"
            data-author="" >
             <span class="post-title" title="Clang-format-usage">Clang-format-usage</span>
             <span class="post-date" title="2020-07-01 13:16:38">2020/07/01</span>
@@ -853,12 +873,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-04-27 20:37:20'>2020-07-12 07:02</time>
+            Created At : <time class="date" title='Updated At: 2021-04-29 08:56:04'>2020-07-12 07:02</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:3k</span>
+        <span>Count:3.1k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -908,7 +928,9 @@
 <h2 id="Principles-of-Software-Engineering"><a href="#Principles-of-Software-Engineering" class="headerlink" title="Principles of Software Engineering"></a>Principles of Software Engineering</h2><ol>
 <li>自动化</li>
 <li>可重复</li>
+<li>权衡</li>
 <li>实用易用</li>
+<li>模块间有层次</li>
 <li>KISS (Keep It Simple Stupid)</li>
 <li>小步快跑，节奏</li>
 <li>出错仔细看log，调试步步为营</li>
@@ -917,6 +939,7 @@
 <li>DRY (Don’t Repeat Yourself) <a href="https://medium.com/swlh/6-principles-of-software-engineering-that-every-developer-should-know-7868f362b633" target="_blank" rel="noopener">link</a></li>
 <li>YAGNI (You Aren’t Gonna Need It)</li>
 <li>高内聚，低耦合</li>
+<li>正交</li>
 <li><code>开闭原则</code> 软件中的对象（类，模块，函数等等）应该对于扩展是开放的，但是对于修改是封闭的</li>
 <li><code>单一职责原则</code> 一个类只做一件事</li>
 <li><code>里氏替换原则</code> 子类应该可以完全替代父类，也就是说在使用继承时，只扩展新功能，不要破坏父类原有的功能。</li>
@@ -925,6 +948,7 @@
 <li><code>接口隔离原则</code> 客户端不应该依赖它不需要的接口。如果一个接口在实现时，部分方法由于冗余被客户端空实现，则应该将该接口拆分，让实现类只依赖自己需要的接口。</li>
 <li>多看文档</li>
 <li>记录工作日志</li>
+<li>分离<code>控制和逻辑</code>。<code>控制</code>：与业务逻辑无关的代码或系统的控制，如：多线程，异步，部署等，<code>逻辑</code>：业务逻辑，即解决用户问题的逻辑。</li>
 </ol>
 <h2 id="Theories-of-Programming-Languages"><a href="#Theories-of-Programming-Languages" class="headerlink" title="Theories of Programming Languages"></a>Theories of Programming Languages</h2><ol>
 <li><a href="https://people.cs.uchicago.edu/~blume/classes/aut2008/proglang/text/offline.pdf" target="_blank" rel="noopener">book</a></li>
@@ -978,7 +1002,9 @@
 </ol>
 <h2 id="Programming-experience"><a href="#Programming-experience" class="headerlink" title="Programming experience"></a>Programming experience</h2><ol>
 <li><code>语言feature</code>: 编程语言有一堆feature，每种语言在其中选择权衡，理解了各种feature，也就学会了各种语言，各feature之间的关系，互斥，相交。<a href="https://wiki.haskell.org/Functional_programming" target="_blank" rel="noopener">haskell feature</a>  <a href="http://learnyouahaskell.com/chapters" target="_blank" rel="noopener">haskell book</a></li>
+<li>函数式编程没有变量也没有side effect。隔离了可变性，变量或者默认状态默认就是不可变的。避免了死锁，状态冲突等众多麻烦。</li>
 <li>函数式编程，命令式编程，面向对象编程区别</li>
+<li>以前的面向对象系统和如今的分布式系统。</li>
 <li>表达式expression和语句statement区别，表达式有返回值。</li>
 <li><code>测试</code>分为<code>单元测试，集成测试和文档测试</code>。单元测试独立地验证库的不同部分，也能够测试私有函数实现细节。集成测试则检查多个部分是否能结合起来正确地工作，并像其他外部代码那样测试库的公有 API。</li>
 <li>最重要的是<code>官方资源</code>，看英文原文，如rust官网教程，c++ cppcon会议。</li>
