@@ -373,7 +373,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="36">
-<input type="hidden" id="yelog_site_word_count" value="31.3k">
+<input type="hidden" id="yelog_site_word_count" value="32.3k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -873,12 +873,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-04-29 21:01:58'>2020-07-12 07:02</time>
+            Created At : <time class="date" title='Updated At: 2021-05-16 15:05:35'>2020-07-12 07:02</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:3.1k</span>
+        <span>Count:3.4k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -922,34 +922,47 @@
 <li>错误处理</li>
 <li>samples/demos</li>
 <li>benchmarks</li>
-<li>文档</li>
+<li>docs and docs tests</li>
 <li>代码风格</li>
 </ol>
 <h2 id="Principles-of-Software-Engineering"><a href="#Principles-of-Software-Engineering" class="headerlink" title="Principles of Software Engineering"></a>Principles of Software Engineering</h2><ol>
+<li>讲故事编程, 串起来</li>
 <li>自动化</li>
 <li>可重复</li>
-<li>权衡</li>
-<li>实用易用</li>
-<li>模块间有层次</li>
-<li>KISS (Keep It Simple Stupid)</li>
+<li>学习性测试：使用第三方代码，第一步不要在生产代码中实验新东西，而是单独编写测试来浏览和理解第三方代码。区分学习和整合。</li>
 <li>小步快跑，节奏</li>
+<li>KISS (Keep It Simple Stupid)</li>
+<li>DRY (Don’t Repeat Yourself) (generic programing, 提出重复代码公用….)</li>
+<li>层次, 抽象级别</li>
+<li>边界，隔离</li>
+<li>具体规则：<ul>
+<li><code>命名规则</code>：类名是名词，方法名是动词。</li>
+<li><code>函数规则</code>：尽可能短小，只做一件事，每个函数一个抽象层次，名字不怕长，尽量少参数，无side effect.</li>
+<li><code>类规则</code>：短小，单一权责，高内聚(方法和变量互相依赖）</li>
+<li><code>系统设计规则</code>： 多写测试，不可重复，表达力(好名字，好结构…), 尽可能少的类和函数(和前三条冲突，优先级最低）</li>
+</ul>
+</li>
+<li>迭代： 先想怎么写就怎么写，可能非常丑陋，然后再打磨代码。是一个迭代过程，不是一蹴而就。</li>
+<li>一键： 单个命令构建系统，单个命令运行所有测试</li>
 <li>出错仔细看log，调试步步为营</li>
-<li>区分对内和对外，区别对待</li>
-<li>不要重复造轮子</li>
-<li>DRY (Don’t Repeat Yourself) <a href="https://medium.com/swlh/6-principles-of-software-engineering-that-every-developer-should-know-7868f362b633" target="_blank" rel="noopener">link</a></li>
-<li>YAGNI (You Aren’t Gonna Need It)</li>
-<li>高内聚，低耦合</li>
-<li>正交</li>
-<li><code>开闭原则</code> 软件中的对象（类，模块，函数等等）应该对于扩展是开放的，但是对于修改是封闭的</li>
-<li><code>单一职责原则</code> 一个类只做一件事</li>
-<li><code>里氏替换原则</code> 子类应该可以完全替代父类，也就是说在使用继承时，只扩展新功能，不要破坏父类原有的功能。</li>
-<li><code>依赖倒置原则</code> 细节应该依赖与抽象，抽象不应该依赖于细节。把抽象层放在程序设计的高层，并保持稳定，程序的细节变化由低层的实现层来完成。</li>
-<li><code>迪米特法则/最少知道原则</code> 一个类不应该知道自己操作类的细节，换言之，只和朋友谈话，不和朋友的朋友谈话。</li>
-<li><code>接口隔离原则</code> 客户端不应该依赖它不需要的接口。如果一个接口在实现时，部分方法由于冗余被客户端空实现，则应该将该接口拆分，让实现类只依赖自己需要的接口。</li>
 <li>多看文档</li>
 <li>记录工作日志</li>
-<li>可变状态逻辑越少越好。</li>
+<li>区分对内和对外，区别对待</li>
+<li>不要重复造轮子</li>
+<li>YAGNI (You Aren’t Gonna Need It) <a href="https://medium.com/swlh/6-principles-of-software-engineering-that-every-developer-should-know-7868f362b633" target="_blank" rel="noopener">link</a></li>
+<li>高内聚，低耦合</li>
+<li>正交</li>
 <li>分离<code>控制和逻辑</code>。<code>控制</code>：与业务逻辑无关的代码或系统的控制，如：多线程，异步，部署等，<code>逻辑</code>：业务逻辑，即解决用户问题的逻辑。</li>
+<li>权衡</li>
+<li>实用易用</li>
+<li>SOLID原则<ul>
+<li><code>单一职责原则 SRP</code> 一个类只做一件事</li>
+<li><code>开闭原则 OCP</code> 软件中的对象（类，模块，函数等等）应该对于扩展是开放的，但是对于修改是封闭的</li>
+<li><code>里氏替换原则 LSP</code> 子类应该可以完全替代父类，也就是说在使用继承时，只扩展新功能，不要破坏父类原有的功能。</li>
+<li><code>接口隔离原则 ISP</code> 客户端不应该依赖它不需要的接口。如果一个接口在实现时，部分方法由于冗余被客户端空实现，则应该将该接口拆分，让实现类只依赖自己需要的接口。</li>
+<li><code>依赖倒置原则 DIP</code> 细节应该依赖与抽象，抽象不应该依赖于细节。把抽象层放在程序设计的高层，并保持稳定，程序的细节变化由低层的实现层来完成。</li>
+</ul>
+</li>
 </ol>
 <h2 id="Theories-of-Programming-Languages"><a href="#Theories-of-Programming-Languages" class="headerlink" title="Theories of Programming Languages"></a>Theories of Programming Languages</h2><ol>
 <li><a href="https://people.cs.uchicago.edu/~blume/classes/aut2008/proglang/text/offline.pdf" target="_blank" rel="noopener">book</a></li>
@@ -1002,6 +1015,8 @@
 <li><a href="http://www.ruanyifeng.com/blog/2015/07/monad.html" target="_blank" rel="noopener">monad</a></li>
 </ol>
 <h2 id="Programming-experience"><a href="#Programming-experience" class="headerlink" title="Programming experience"></a>Programming experience</h2><ol>
+<li><code>讲故事</code>：大师级程序员把系统当作故事来讲，而不是当作程序来写。学会讲故事会提升编程能力和应表达能力。</li>
+<li>编程艺术：编程的目的是搭建系统，系统是由语言来描述的，函数是语言的动词，类是名词。编程的艺术其实也是语言的艺术，合理的使用动词，名词。</li>
 <li><code>语言feature</code>: 编程语言有一堆feature，每种语言在其中选择权衡，理解了各种feature，也就学会了各种语言，各feature之间的关系，互斥，相交。<a href="https://wiki.haskell.org/Functional_programming" target="_blank" rel="noopener">haskell feature</a>  <a href="http://learnyouahaskell.com/chapters" target="_blank" rel="noopener">haskell book</a></li>
 <li>函数式编程没有变量也没有side effect。隔离了可变性，变量或者默认状态默认就是不可变的。避免了死锁，状态冲突等众多麻烦。</li>
 <li>函数式编程，命令式编程，面向对象编程区别</li>
