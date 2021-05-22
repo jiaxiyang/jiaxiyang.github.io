@@ -373,7 +373,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="36">
-<input type="hidden" id="yelog_site_word_count" value="32.3k">
+<input type="hidden" id="yelog_site_word_count" value="32.5k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -783,7 +783,7 @@
         
         <a  class="All Tools Vim "
            href="/2020/07/01/Clang-format-usage/"
-           data-tag="Emacs,Clang format,Vim"
+           data-tag="Clang format,Vim,Emacs"
            data-author="" >
             <span class="post-title" title="Clang-format-usage">Clang-format-usage</span>
             <span class="post-date" title="2020-07-01 13:16:38">2020/07/01</span>
@@ -875,12 +875,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-05-16 15:05:35'>2020-07-11 18:34</time>
+            Created At : <time class="date" title='Updated At: 2021-05-22 16:40:36'>2020-07-11 18:34</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:8.3k</span>
+        <span>Count:8.5k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -982,7 +982,6 @@ impl Rectangle {
 }</code></pre>
 <ol>
 <li>impl 块的另一个有用的功能是：允许在 impl 块中定义 不 以 <code>self</code> 作为参数的函数。这被称为 <code>关联函数（associated functions）</code>，因为它们与结构体相关联。它们仍是函数而不是方法，因为它们并不作用于一个结构体的实例。你已经使用过 String::from 关联函数了。使用结构体名和 <code>::</code> 语法来调用关联函数。</li>
-<li><a href="https://zhuanlan.zhihu.com/p/76945648" target="_blank" rel="noopener">胖指针</a></li>
 </ol>
 <h2 id="Project-Manage"><a href="#Project-Manage" class="headerlink" title="Project Manage"></a>Project Manage</h2><ol>
 <li>包<code>packages</code>: Cargo的一个功能，允许你构建、测试和分享crate</li>
@@ -1026,12 +1025,16 @@ impl Rectangle {
 <li>Cargo 有一个机制来确保任何人在任何时候重新构建代码，都会产生相同的结果：Cargo 只会使用你指定的依赖版本，除非你又手动指定了别的。</li>
 </ol>
 <h2 id="Ownership-所有权"><a href="#Ownership-所有权" class="headerlink" title="Ownership 所有权"></a>Ownership 所有权</h2><ol>
-<li>所有权是指： 每一个值都有一个所有者（变量）</li>
+<li>区分值(内存)和变量。</li>
+<li>所有权是指： 每一个值都只有一个所有者（变量）, 当变量离开作用于时，值被丢弃。</li>
 <li>当变量离开作用域，Rust 为我们调用一个特殊的函数drop。在 C++ 中，这种 item 在生命周期结束时释放资源的模式有时被称作 资源获取即初始化（Resource Acquisition Is Initialization (RAII)）。</li>
 <li><code>move:</code> <code>let s1 = String::from(&quot;hello&quot;); let s2 = s1;</code>  这个操作被称为移动（move），而不是浅拷贝。Rust 则认为 s1 不再有效，因此 Rust 不需要在 s1 离开作用域后清理任何东西。</li>
 <li>Rust 永远也不会自动创建数据的 “深拷贝”。因此，任何 自动 的复制可以被认为对运行时性能影响较小。</li>
 <li><code>clone:</code> 当出现 clone 调用时，你知道一些特定的代码被执行而且这些代码可能相当消耗资源</li>
-<li><code>copy:</code> <code>let x = 5; let y = x;</code> x在栈上，copy操作。Rust 有一个叫做 Copy trait 的特殊注解，可以用在类似整型这样的存储在栈上的类型上。如果一个类型拥有 Copy trait，一个旧的变量在将其赋值给其他变量后仍然可用。</li>
+<li><code>copy:</code> <code>let x = 5; let y = x;</code> x在栈上，copy操作。Rust 有一个叫做 Copy trait 的特殊注解，可以用在类似整型这样的存储在栈上的类型上。</li>
+<li>如果一个类型拥有 Copy trait，一个旧的变量在将其赋值给其他变量后仍然可用。如String没有实现Copy trait, i32实现了。</li>
+<li>Copy and Clone: Copy是隐性调用，Clone显性。 Copies happen implicitly, for example as part of an assignment y = x. The behavior of Copy is not overloadable; it is always a simple bit-wise copy. Cloning is an explicit action, x.clone()</li>
+<li><a href="https://doc.rust-lang.org/beta/std/marker/trait.Copy.html" target="_blank" rel="noopener">link</a> Clone is a supertrait of Copy, so everything which is Copy must also implement Clone. If a type is Copy then its Clone implementation only needs to return *self</li>
 <li>Rust 不允许自身或其任何部分实现了 Drop trait 的类型使用 Copy trait。</li>
 <li>任何简单标量值的组合可以是 Copy 的，不需要分配内存或某种形式资源的类型是 Copy 的。</li>
 </ol>
@@ -1062,6 +1065,9 @@ fn makes_copy(some_integer: i32) { // some_integer 进入作用域
 <li>也不能在拥有不可变引用的同时拥有可变引用。</li>
 <li>Rust 中编译器确保引用永远也不会变成悬垂状态：当你拥有一些数据的引用，编译器确保数据不会在其引用之前离开作用域。</li>
 <li>在任意给定时间，要么 只能有一个可变引用，要么 只能有多个不可变引用。</li>
+<li><code>另一个没有所有权的数据类型是 slice(部分引用 &amp;[T])。slice 允许你引用集合中一段连续的元素序列，而不用引用整个集合</code>。</li>
+<li>“字符串 slice” 的类型声明写作 &amp;str, 字符串字面值就是 slice</li>
+<li><a href="https://zhuanlan.zhihu.com/p/76945648" target="_blank" rel="noopener">胖指针</a></li>
 </ol>
 <h2 id="Enums-枚举-and-模式匹配"><a href="#Enums-枚举-and-模式匹配" class="headerlink" title="Enums 枚举 and 模式匹配"></a>Enums 枚举 and 模式匹配</h2><ol>
 <li>枚举允许你通过列举可能的 成员（variants） 来定义一个类型</li>
@@ -1185,6 +1191,7 @@ match v.get(2) {
 <li>使用 &amp; 和 [] 返回一个引用；或者使用 get 方法以索引作为参数来返回一个 Option&lt;&amp;T&gt;。</li>
 </ol>
 <h2 id="Error-Handling-错误处理"><a href="#Error-Handling-错误处理" class="headerlink" title="Error Handling 错误处理"></a>Error Handling 错误处理</h2><ol>
+<li>当函数返回为Result时: <code>?</code>运算符放在Result之后的含义：如果Result的值是Ok，这个表达式将会返回Ok中的值而程序继续执行，如果是Err，Err中的值将作为整个函数的返回值，就好像使用了return关键字一样，这样错误值就被传递给调用者。</li>
 <li><code>cargo clippy</code> 报更多的错误</li>
 <li>Rust将错误组合成两个主要类别，可恢复错误和不可恢复错误。</li>
 <li>可恢复错误通常代表向用户报告错误和重试操作是合理的情况，比如未找到文件。</li>
@@ -1214,7 +1221,6 @@ fn main() {
 <ol>
 <li><code>unwrap</code>函数作用于Result，如果Result的值是成员OK，unwrap会返回Ok中的值，如果是成员Err，unwrap会为我们调用<code>panic!</code></li>
 <li><code>expect</code>与<code>unwrap</code>使用方式一样，<code>expect</code>用来调用<code>panic!</code>的错误信息将会作为参数传递给<code>expect</code>，而不像<code>unwrap</code>那样使用默认的<code>panic!</code>信息。<code>expect</code>更容易查找错误信息位置。</li>
-<li><code>?</code>运算符放在Result之后的含义：如果Result的值是Ok，这个表达式将会返回Ok中的值而程序继续执行，如果是Err，Err中的值将作为整个函数的返回值，就好像使用了return关键字一样，这样错误值就被传递给调用者。</li>
 <li>每一个Result都需要被处理，否则会出现警告。</li>
 </ol>
 <h2 id="Traits"><a href="#Traits" class="headerlink" title="Traits"></a>Traits</h2><h2 id="Lifetimes-生命周期"><a href="#Lifetimes-生命周期" class="headerlink" title="Lifetimes 生命周期"></a>Lifetimes 生命周期</h2><ol>
@@ -1325,6 +1331,7 @@ assert_eq!(v2, vec![2, 3, 4]);</code></pre>
 <li>hello_macro(不是宏) 中定义的 trait(可包含多个接口）， hello_macro_derive 中实现的过程式宏。在一个类型上指定 #[derive(HelloMacro)] 时，hello_macro_derive 函数将会被调用。</li>
 </ol>
 <h2 id="Program-with-C-C"><a href="#Program-with-C-C" class="headerlink" title="Program with C/C++"></a>Program with C/C++</h2><ol>
+<li><a href="https://doc.rust-lang.org/nomicon/index.html" target="_blank" rel="noopener">Rustonomicon</a></li>
 <li><a href="https://github.com/rust-lang/rust-bindgen" target="_blank" rel="noopener">rust bindgen</a></li>
 <li><a href="https://doc.rust-lang.org/stable/embedded-book/interoperability/index.html" target="_blank" rel="noopener">rust with C</a></li>
 </ol>
