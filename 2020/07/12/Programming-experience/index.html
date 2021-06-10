@@ -373,7 +373,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="36">
-<input type="hidden" id="yelog_site_word_count" value="33.4k">
+<input type="hidden" id="yelog_site_word_count" value="34.1k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -873,12 +873,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-05-16 15:05:35'>2020-07-12 07:02</time>
+            Created At : <time class="date" title='Updated At: 2021-06-10 18:43:52'>2020-07-12 07:02</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:3.4k</span>
+        <span>Count:3.5k</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -927,6 +927,7 @@
 </ol>
 <h2 id="Principles-of-Software-Engineering"><a href="#Principles-of-Software-Engineering" class="headerlink" title="Principles of Software Engineering"></a>Principles of Software Engineering</h2><ol>
 <li>讲故事编程, 串起来</li>
+<li>迭代和重构。</li>
 <li>自动化</li>
 <li>可重复</li>
 <li>学习性测试：使用第三方代码，第一步不要在生产代码中实验新东西，而是单独编写测试来浏览和理解第三方代码。区分学习和整合。</li>
@@ -942,7 +943,6 @@
 <li><code>系统设计规则</code>： 多写测试，不可重复，表达力(好名字，好结构…), 尽可能少的类和函数(和前三条冲突，优先级最低）</li>
 </ul>
 </li>
-<li>迭代： 先想怎么写就怎么写，可能非常丑陋，然后再打磨代码。是一个迭代过程，不是一蹴而就。</li>
 <li>一键： 单个命令构建系统，单个命令运行所有测试</li>
 <li>出错仔细看log，调试步步为营</li>
 <li>多看文档</li>
@@ -992,6 +992,12 @@
 <li><a href="https://cs.lmu.edu/~ray/classes/pl/" target="_blank" rel="noopener">link</a></li>
 </ol>
 <h2 id="Language-Features-王垠-如何掌握所有的程序语言"><a href="#Language-Features-王垠-如何掌握所有的程序语言" class="headerlink" title="Language Features 王垠 如何掌握所有的程序语言"></a>Language Features <a href="http://www.yinwang.org/blog-cn/2017/07/06/master-pl" target="_blank" rel="noopener">王垠 如何掌握所有的程序语言</a></h2><ol>
+<li>编程语言取舍：<a href="https://rustmagazine.github.io/rust_magazine_2021/chapter_4/rust-to-system-essence-lang.html" target="_blank" rel="noopener">link</a><ul>
+<li><code>性能</code>：编译或解释语言，并发</li>
+<li><code>安全</code>： 内存安全(GC或RAII,所有权), 并发安全,类型安全</li>
+<li><code>表达力</code>：泛型，宏</li>
+</ul>
+</li>
 <li>Compiled language or Interpreted language</li>
 <li>Purely functional, Side effect</li>
 <li>Statically typed or Dynamically typed</li>
@@ -1015,6 +1021,7 @@
 <li><a href="http://www.ruanyifeng.com/blog/2015/07/monad.html" target="_blank" rel="noopener">monad</a></li>
 </ol>
 <h2 id="Programming-experience"><a href="#Programming-experience" class="headerlink" title="Programming experience"></a>Programming experience</h2><ol>
+<li><code>迭代</code>： 先想怎么写就怎么写，可能非常丑陋，然后再打磨代码。是一个迭代过程，不是一蹴而就,例如：rust xmodel product模块，刚开始特别烂，不断迭代，抽象了接口，使用了trait object, 工厂模式，模板，前后提交了几十个commit。</li>
 <li><code>讲故事</code>：大师级程序员把系统当作故事来讲，而不是当作程序来写。学会讲故事会提升编程能力和应表达能力。</li>
 <li>编程艺术：编程的目的是搭建系统，系统是由语言来描述的，函数是语言的动词，类是名词。编程的艺术其实也是语言的艺术，合理的使用动词，名词。</li>
 <li><code>语言feature</code>: 编程语言有一堆feature，每种语言在其中选择权衡，理解了各种feature，也就学会了各种语言，各feature之间的关系，互斥，相交。<a href="https://wiki.haskell.org/Functional_programming" target="_blank" rel="noopener">haskell feature</a>  <a href="http://learnyouahaskell.com/chapters" target="_blank" rel="noopener">haskell book</a></li>
@@ -1086,8 +1093,10 @@
 <li>区分公开与非公开部分。</li>
 <li>学习语言，应该了解编译器，编译器是整个编程中重要一环。</li>
 <li>使用cppinsights从编译器的角度看程序。有助于对语法的了解。</li>
+<li>区分计算密集和I/O密集，计算密集多线程，I/O密集异步？</li>
 </ol>
 <h2 id="Productivity"><a href="#Productivity" class="headerlink" title="Productivity"></a>Productivity</h2><ol>
+<li>工程加make命令： make init，make build，make run，make create-pr <a href="https://mp.weixin.qq.com/s?__biz=MzA3NDM0ODQwMw==&mid=2649828020&idx=1&sn=59668db47a49e023735152e51b450b88&chksm=8704a8a8b07321be4bb8f540909f2a0b1be4c3a250c71d04e115f78ab19dc804310b55170ed4&scene=21#wechat_redirect" target="_blank" rel="noopener">link</a></li>
 <li>搭建ftp服务器，使用<code>put</code>上传，<code>get</code>下载，<code>gls</code>查看列表。多个服务器之间共享传递文件，windows上浏览器也可访问。见Bash-usage.md</li>
 <li>用好tmux, fd, rg, zh, fzf</li>
 <li>使用格式化工具刷代码，不要手动刷</li>
@@ -1113,6 +1122,7 @@
 </ol>
 <h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
 <li><a href="https://github.com/dwmkerr/hacker-laws" target="_blank" rel="noopener">Hacker laws</a></li>
+<li><a href="https://www.zhihu.com/people/tchen/columns" target="_blank" rel="noopener">陈天</a></li>
 </ol>
 
       
