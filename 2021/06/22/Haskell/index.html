@@ -373,7 +373,7 @@
     <div><a class="about  hasFriend  site_url"  href="/about">About</a><a style="width: 50%"  class="friends">Friends</a></div>
 </div>
 <input type="hidden" id="yelog_site_posts_number" value="37">
-<input type="hidden" id="yelog_site_word_count" value="34.4k">
+<input type="hidden" id="yelog_site_word_count" value="34.7k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -866,12 +866,12 @@
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2021-06-23 20:42:23'>2021-06-22 10:47</time>
+            Created At : <time class="date" title='Updated At: 2021-06-25 14:21:59'>2021-06-22 10:47</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:240</span>
+        <span>Count:507</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -915,15 +915,46 @@
 <li><a href="https://excalidraw.com/#json=5033777575231488,ixM2dP13DMyzxCvIDEpzqg" target="_blank" rel="noopener">map, filter, fold 示意图</a></li>
 </ol>
 <h2 id="Functors-Applicatives-And-Monads"><a href="#Functors-Applicatives-And-Monads" class="headerlink" title="Functors, Applicatives And Monads"></a>Functors, Applicatives And Monads</h2><ol>
+<li>defination</li>
+</ol>
+<pre><code>class Functor f where  
+    fmap :: (a -&gt; b) -&gt; f a -&gt; f b  
+
+class (Functor f) =&gt; Applicative f where  
+    pure :: a -&gt; f a  
+    (&lt;*&gt;) :: f (a -&gt; b) -&gt; f a -&gt; f b  
+
+class (Applicative m) =&gt; Monad m where  
+    return :: a -&gt; m a  
+    (&gt;&gt;=) :: m a -&gt; (a -&gt; m b) -&gt; m b    
+    (&gt;&gt;) :: m a -&gt; m b -&gt; m b  
+    x &gt;&gt; y = x &gt;&gt;= \_ -&gt; y    
+    fail :: String -&gt; m a  
+    fail msg = error msg  
+
+class Monoid m where  -- 注意是Monoid不是Monad
+    mempty :: m  
+    mappend :: m -&gt; m -&gt; m  
+    mconcat :: [m] -&gt; m  
+    mconcat = foldr mappend mempty </code></pre><ol>
+<li>type of fmap, (&lt;*&gt;) and (&gt;&gt;=)</li>
+</ol>
+<pre><code>fmap :: (Functor f) =&gt; (a -&gt; b) -&gt; f a -&gt; f b           -- 先解f a封装到a, a -&gt; b, b再封装到f b; 操作2次封装
+(&lt;*&gt;) :: (Applicative f) =&gt; f (a -&gt; b) -&gt; f a -&gt; f b    -- 先解f a封装到a, 解f(a -&gt; b)封装， a -&gt; b, b再封装到f b; 操作3次封装
+(&gt;&gt;=) :: (Monad m) =&gt; m a -&gt; (a -&gt; m b) -&gt; m b          -- 先解m a封装到a, a -&gt; mb; 操作1次封装</code></pre><ol start="3">
+<li>Functor, Applicative and Monad都是封装，可以封装原始类型。</li>
+<li>&lt;$&gt; 是 fmap 的中缀表达式版本</li>
 <li>functors: you apply a function to a wrapped value using fmap or &lt;$&gt;</li>
 <li>applicatives: you apply a wrapped function to a wrapped value using &lt;*&gt; or liftA</li>
 <li>monads: you apply a function that returns a wrapped value, to a wrapped value using &gt;&gt;= or liftM</li>
+<li>conclusion<ul>
 <li>A functor is a data type that implements the Functor typeclass.</li>
 <li>An applicative is a data type that implements the Applicative typeclass.</li>
 <li>A monad is a data type that implements the Monad typeclass.</li>
 <li>A Maybe implements all three, so it is a functor, an applicative, and a monad.</li>
-</ol>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+</ul>
+</li>
+<li>区别<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2></li>
 <li><a href="http://learnyouahaskell.com/chapters" target="_blank" rel="noopener">Learn you haskell book</a></li>
 <li><a href="https://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html" target="_blank" rel="noopener">Functors, Applicatives, And Monads In Pictures</a></li>
 </ol>
