@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Clang-format-usage | Jia Xiyang</title>
-  <meta name="keywords" content=" Emacs , Clang format , Vim ">
-  <meta name="description" content="Clang-format-usage | Jia Xiyang">
+  <title>Elisp | Jia Xiyang</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="Elisp | Jia Xiyang">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="个人简介贾夕阳毕业于北京理工大学，目前从事人工智能软件架构工作 联系方式 mail: jiaxiyangbit@126.com qq: 312567150">
 <meta property="og:type" content="website">
@@ -862,45 +862,24 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-Clang-format-usage" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-Elisp" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">Clang-format-usage</h1>
+        <h1 class="article-title">Elisp</h1>
     
     <div class="article-meta">
         
         
         
-        <span class="book">
-            <i class="iconfont icon-category"></i>
-            
-            
-            <a  data-rel="Tools">Tools</a> > 
-            
-            <a  data-rel="Tools&lt;---&gt;Vim">Vim</a>
-            
-        </span>
-        
-        
-        <span class="tag">
-            <i class="iconfont icon-tag"></i>
-            
-            <a class="color1">Emacs</a>
-            
-            <a class="color3">Clang format</a>
-            
-            <a class="color4">Vim</a>
-            
-        </span>
         
     </div>
     <div class="article-meta">
         
-            Created At : <time class="date" title='Updated At: 2020-07-23 09:10:23'>2020-07-01 13:16</time>
+            Created At : <time class="date" title='Updated At: 2021-06-27 22:39:10'>2021-06-27 22:37</time>
         
     </div>
     <div class="article-meta">
         
-        <span>Count:245</span>
+        <span>Count:4</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -919,7 +898,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Install-clang"><span class="toc-text">Install clang</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bash-Command"><span class="toc-text">Bash Command</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vim-Config"><span class="toc-text">Vim Config</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Emacs-Config"><span class="toc-text">Emacs Config</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Config"><span class="toc-text">Config</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -935,48 +914,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Install-clang"><a href="#Install-clang" class="headerlink" title="Install clang"></a>Install clang</h2><ol>
-<li><a href="http://clang.llvm.org/get_started.html" target="_blank" rel="noopener">Build clang from source</a></li>
-<li><a href="http://clang.llvm.org/docs/ClangFormat.html" target="_blank" rel="noopener">Clang format doc</a></li>
-<li><a href="http://clang.llvm.org/docs/ClangFormatStyleOptions.html" target="_blank" rel="noopener">Clang format style</a></li>
+        <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="http://ergoemacs.org/emacs/elisp_basics.html" target="_blank" rel="noopener">Xah教程</a></li>
 </ol>
-<h2 id="Bash-Command"><a href="#Bash-Command" class="headerlink" title="Bash Command"></a>Bash Command</h2><ol>
-<li>Format one cpp file:<br><code>clang-format --style=Google -i test.cpp</code></li>
-<li>Format all cpp files:<br><code>fd &quot;.cpp$&quot; | xargs clang-format --style=Google -i</code></li>
-</ol>
-<h2 id="Vim-Config"><a href="#Vim-Config" class="headerlink" title="Vim Config"></a>Vim Config</h2><ol>
-<li>Find clang-format.py in your system and copy the file path.</li>
-</ol>
-<pre><code class="shell"> ~ : find /usr -iname &quot;clang-format.py&quot;
-/usr/local/share/clang/clang-format.py</code></pre>
-<ol start="2">
-<li>Put the following config in your .vimrc. It will automaticly format the c++ file when the file is saved.</li>
-</ol>
-<pre><code>function! Formatonsave()
-  let l:lines = &#39;all&#39;
-  let l:formatdiff = 1
-  let g:clang_format_fallback_style = &#39;Google&#39;
-  &quot; Remember to repalce the path of clang-format.py
-  pyfile /usr/local/share/clang/clang-format.py
-  &quot; py3file /usr/local/share/clang/clang-format.py
-endfunction
-autocmd BufWritePre *.h,*.hpp,*.cc,*.cpp call Formatonsave()
-</code></pre><h2 id="Emacs-Config"><a href="#Emacs-Config" class="headerlink" title="Emacs Config"></a>Emacs Config</h2><ol>
-<li>use package config</li>
-</ol>
-<pre><code class="emacs-lisp">(use-package clang-format
-  :after (cc-mode)
-  :config
-  (set-default &#39;clang-format-fallback-style &quot;Google&quot;)
-  (add-hook &#39;c-mode-common-hook #&#39;(lambda()
-                                    (add-hook &#39;before-save-hook
-                                              &#39;clang-format-buffer t t))))</code></pre>
-<h2 id="Config"><a href="#Config" class="headerlink" title="Config"></a>Config</h2><p>Clang-format understands also special comments that switch formatting in a delimited range. The code between a comment <code>// clang-format off or /* clang-format off */</code>up to a comment <code>// clang-format on or /* clang-format on */</code>will not be formatted. The comments themselves will be formatted (aligned) normally.</p>
-<pre><code class="c++">int formatted_code;
-// clang-format off
-    void    unformatted_code  ;
-// clang-format on
-void formatted_code_again;</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jiaxiyangbit@126.com </span>
