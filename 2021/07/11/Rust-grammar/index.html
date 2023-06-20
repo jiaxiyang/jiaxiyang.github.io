@@ -1,0 +1,2485 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Rust grammar | Jia Xiyang</title>
+  <meta name="keywords" content=" Rust ">
+  <meta name="description" content="Rust grammar | Jia Xiyang">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人简介贾夕阳毕业于北京理工大学，目前从事人工智能软件架构工作 联系方式 mail: jiaxiyangbit@126.com qq: 312567150">
+<meta property="og:type" content="website">
+<meta property="og:title" content="about">
+<meta property="og:url" content="http://yoursite.com/about/index.html">
+<meta property="og:site_name" content="Jia Xiyang">
+<meta property="og:description" content="个人简介贾夕阳毕业于北京理工大学，目前从事人工智能软件架构工作 联系方式 mail: jiaxiyangbit@126.com qq: 312567150">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-27T05:54:48.000Z">
+<meta property="article:modified_time" content="2023-06-20T07:37:37.567Z">
+<meta property="article:author" content="贾夕阳">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/tomoto.jpeg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/zenbum.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+</div>
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/code_slogon.jpg" />
+</a>
+<div class="author">
+    <span>贾夕阳</span>
+</div>
+
+<div class="icon">
+    
+        
+    
+        
+        <a title="github" href="https://github.com/jiaxiyang" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-github"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+        <a title="email" href="mailto:jiaxiyangbit@126.com" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-email"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+    
+        
+    
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li><div class="all active" data-rel="All">All<small>(134)</small></div></li>
+    
+        
+            
+            <li><div data-rel="Summary">Summary<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="Program"><i class="fold iconfont icon-right"></i>Program<small>(30)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="Program<--->AI">AI<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Basic">Basic<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Cpp">Cpp<small>(11)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Cuda">Cuda<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Database">Database<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Design">Design<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->FFmpeg">FFmpeg<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Gstreamer">Gstreamer<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->PLT">PLT<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Python">Python<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Rust">Rust<small>(5)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Shell">Shell<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="Tools"><i class="fold iconfont icon-right"></i>Tools<small>(16)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="Tools<--->Bash">Bash<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Blog">Blog<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Chrome">Chrome<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->CI">CI<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Clang">Clang<small>(2)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Cmake">Cmake<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Docker">Docker<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Emacs">Emacs<small>(3)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->git">git<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Git">Git<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->gitlab">gitlab<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Tmux">Tmux<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Zsh">Zsh<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="Algorithm"><i class="fold iconfont icon-right"></i>Algorithm<small>(3)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="Algorithm<--->AI">AI<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Algorithm<--->Kalman">Kalman<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="Computer"><i class="fold iconfont icon-right"></i>Computer<small>(3)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="Computer<--->GPU">GPU<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Computer<--->Network">Network<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Computer<--->OS">OS<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="Emacs">Emacs<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    
+    </div>
+    <div></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="134">
+<input type="hidden" id="yelog_site_word_count" value="110.7k">
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="https://jiaxiyang.github.io/">贾夕阳</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" />
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">Outline</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>AI</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Algorithm</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Bash</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Blog</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>C++</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Cargo</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>CI</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Clang format</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Clang Tidy</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Cmake</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Concurrency</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Cpp</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Cuda</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Database</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Design</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Docker</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Doxygen</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Eigen</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Emacs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>FFmpeg</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Filters</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>git</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Git</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>gitlab</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Gstreamer</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Jetson</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Links</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Memory</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Network</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>OS</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Paradigm</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Program</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Python</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Redis</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Rust</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Shell</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>TensorRT</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Tmux</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Tools</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>UML</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Vim</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>YAML</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Zsh</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <div id="local-search-result">
+
+    </div>
+    
+    <nav id="title-list-nav">
+        
+        <a id="top" class="All Summary "
+           href="/2021/11/29/Links/"
+           data-tag="Links"
+           data-author="" >
+            <span class="post-title" title="Links">Links</span>
+            <span class="post-date" title="2021-11-29 12:48:48">2021/11/29</span>
+        </a>
+        
+        <a id="top" class="All Tools Bash "
+           href="/2021/06/29/Bash-usage/"
+           data-tag="Bash"
+           data-author="" >
+            <span class="post-title" title="Tools and Linux Command">Tools and Linux Command</span>
+            <span class="post-date" title="2021-06-29 20:39:09">2021/06/29</span>
+        </a>
+        
+        <a id="top" class="All Summary "
+           href="/2021/10/03/Programming-experience/"
+           data-tag="Program"
+           data-author="" >
+            <span class="post-title" title="Programming experience">Programming experience</span>
+            <span class="post-date" title="2021-10-03 17:02:35">2021/10/03</span>
+        </a>
+        
+        <a id="top" class="All Program Cpp "
+           href="/2021/09/20/Cpp-grammar/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Cpp grammar">Cpp grammar</span>
+            <span class="post-date" title="2021-09-20 14:28:44">2021/09/20</span>
+        </a>
+        
+        <a id="top" class="All "
+           href="/2022/10/09/bling/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="bling">bling</span>
+            <span class="post-date" title="2022-10-09 11:21:20">2022/10/09</span>
+        </a>
+        
+        <a id="top" class="All Program Design "
+           href="/2020/08/03/Software-design/"
+           data-tag="Design"
+           data-author="" >
+            <span class="post-title" title="Software design">Software design</span>
+            <span class="post-date" title="2020-08-03 09:31:41">2020/08/03</span>
+        </a>
+        
+        <a id="top" class="All "
+           href="/2022/07/27/software-features/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="software-features">software-features</span>
+            <span class="post-date" title="2022-07-27 19:41:17">2022/07/27</span>
+        </a>
+        
+        <a id="top" class="All Program Cpp "
+           href="/2022/02/03/Cpp-debug/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Debug">Debug</span>
+            <span class="post-date" title="2022-02-03 17:02:35">2022/02/03</span>
+        </a>
+        
+        <a id="top" class="All Program Cpp "
+           href="/2021/08/24/Cpp-Profiling/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Profiling">Profiling</span>
+            <span class="post-date" title="2021-08-24 22:30:52">2021/08/24</span>
+        </a>
+        
+        <a id="top" class="All "
+           href="/2022/10/21/Compiler/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Compiler">Compiler</span>
+            <span class="post-date" title="2022-10-21 12:08:03">2022/10/21</span>
+        </a>
+        
+        <a id="top" class="All Tools Emacs "
+           href="/2021/09/30/Amazing-emacs/"
+           data-tag="Emacs"
+           data-author="" >
+            <span class="post-title" title="Amazing emacs">Amazing emacs</span>
+            <span class="post-date" title="2021-09-30 09:48:34">2021/09/30</span>
+        </a>
+        
+        <a id="top" class="All Program Rust "
+           href="/2021/07/11/Rust-grammar/"
+           data-tag="Rust"
+           data-author="" >
+            <span class="post-title" title="Rust grammar">Rust grammar</span>
+            <span class="post-date" title="2021-07-11 18:34:03">2021/07/11</span>
+        </a>
+        
+        <a id="top" class="All Computer OS "
+           href="/2020/08/11/OS/"
+           data-tag="OS"
+           data-author="" >
+            <span class="post-title" title="OS">OS</span>
+            <span class="post-date" title="2020-08-11 12:10:18">2020/08/11</span>
+        </a>
+        
+        <a id="top" class="All Program Shell "
+           href="/2020/11/28/Shell-script/"
+           data-tag="Shell"
+           data-author="" >
+            <span class="post-title" title="Shell Script">Shell Script</span>
+            <span class="post-date" title="2020-11-28 10:38:00">2020/11/28</span>
+        </a>
+        
+        <a id="top" class="All Program "
+           href="/2022/03/03/UML/"
+           data-tag="UML"
+           data-author="" >
+            <span class="post-title" title="UML">UML</span>
+            <span class="post-date" title="2022-03-03 02:32:22">2022/03/03</span>
+        </a>
+        
+        <a id="top" class="All "
+           href="/2022/10/18/explore/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="explore">explore</span>
+            <span class="post-date" title="2022-10-18 19:35:20">2022/10/18</span>
+        </a>
+        
+        <a id="top" class="All Tools CI "
+           href="/2022/02/15/Gitlab-CI/"
+           data-tag="Tools,CI"
+           data-author="" >
+            <span class="post-title" title="Gitlab-CI">Gitlab-CI</span>
+            <span class="post-date" title="2022-02-15 23:27:31">2022/02/15</span>
+        </a>
+        
+        <a id="top" class="All "
+           href="/2022/08/19/Jenkins/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Jenkins">Jenkins</span>
+            <span class="post-date" title="2022-08-19 12:59:26">2022/08/19</span>
+        </a>
+        
+        <a id="top" class="All Tools Tmux "
+           href="/2020/12/07/Tmux/"
+           data-tag="Tmux"
+           data-author="" >
+            <span class="post-title" title="Tmux config">Tmux config</span>
+            <span class="post-date" title="2020-12-07 15:19:28">2020/12/07</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/20/basic_data_op/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="basic_data_op">basic_data_op</span>
+            <span class="post-date" title="2023-06-20 15:37:37">2023/06/20</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/12/onnxruntime/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="onnxruntime">onnxruntime</span>
+            <span class="post-date" title="2023-06-12 14:39:10">2023/06/12</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/12/Quantization/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Quantization">Quantization</span>
+            <span class="post-date" title="2023-06-12 11:43:36">2023/06/12</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/09/pytorch/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="pytorch">pytorch</span>
+            <span class="post-date" title="2023-06-09 15:28:49">2023/06/09</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/08/colab/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="colab">colab</span>
+            <span class="post-date" title="2023-06-08 17:16:31">2023/06/08</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/08/roadmap/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="roadmap">roadmap</span>
+            <span class="post-date" title="2023-06-08 13:04:42">2023/06/08</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/08/AI-ops/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="AI-ops">AI-ops</span>
+            <span class="post-date" title="2023-06-08 10:21:24">2023/06/08</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/01/chatgpt/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="chatgpt">chatgpt</span>
+            <span class="post-date" title="2023-06-01 10:23:18">2023/06/01</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/05/10/RISC-V/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="RISC-V">RISC-V</span>
+            <span class="post-date" title="2023-05-10 16:37:46">2023/05/10</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/05/10/benchmark/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="benchmark">benchmark</span>
+            <span class="post-date" title="2023-05-10 15:55:27">2023/05/10</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/05/09/hightway/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="hightway">hightway</span>
+            <span class="post-date" title="2023-05-09 20:33:10">2023/05/09</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/03/23/neon/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="neon">neon</span>
+            <span class="post-date" title="2023-03-23 16:55:28">2023/03/23</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/03/06/cross-compile/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="cross-compile">cross-compile</span>
+            <span class="post-date" title="2023-03-06 20:42:24">2023/03/06</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/02/17/TVM/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="TVM">TVM</span>
+            <span class="post-date" title="2023-02-17 15:46:22">2023/02/17</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/01/16/JFrog/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="JFrog">JFrog</span>
+            <span class="post-date" title="2023-01-16 14:23:18">2023/01/16</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/01/13/Cpp20/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Cpp20">Cpp20</span>
+            <span class="post-date" title="2023-01-13 15:31:55">2023/01/13</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/12/26/BPF/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="BPF">BPF</span>
+            <span class="post-date" title="2022-12-26 16:52:00">2022/12/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/12/02/unix/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="unix">unix</span>
+            <span class="post-date" title="2022-12-02 09:14:27">2022/12/02</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/11/15/version/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="version">version</span>
+            <span class="post-date" title="2022-11-15 10:21:58">2022/11/15</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/30/github-ci/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="github-ci">github-ci</span>
+            <span class="post-date" title="2022-10-30 21:35:59">2022/10/30</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/25/Coroutine/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Coroutine">Coroutine</span>
+            <span class="post-date" title="2022-10-25 19:55:32">2022/10/25</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/21/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="开发方法">开发方法</span>
+            <span class="post-date" title="2022-10-21 16:57:14">2022/10/21</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/20/KataOS/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="KataOS">KataOS</span>
+            <span class="post-date" title="2022-10-20 13:11:40">2022/10/20</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/15/color/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="color">color</span>
+            <span class="post-date" title="2022-10-15 15:43:06">2022/10/15</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/14/Markdown/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Markdown">Markdown</span>
+            <span class="post-date" title="2022-10-14 15:38:52">2022/10/14</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/09/v4l2/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="v4l2">v4l2</span>
+            <span class="post-date" title="2022-10-09 17:22:03">2022/10/09</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/09/Life-experience/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Life-experience">Life-experience</span>
+            <span class="post-date" title="2022-10-09 10:13:03">2022/10/09</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/30/log/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="log">log</span>
+            <span class="post-date" title="2022-09-30 10:46:58">2022/09/30</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/29/wallpaper/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="wallpaper">wallpaper</span>
+            <span class="post-date" title="2022-09-29 14:39:45">2022/09/29</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/27/Pandoc/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Pandoc">Pandoc</span>
+            <span class="post-date" title="2022-09-27 11:08:48">2022/09/27</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/26/Document/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Document">Document</span>
+            <span class="post-date" title="2022-09-26 14:53:29">2022/09/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/26/github/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="github">github</span>
+            <span class="post-date" title="2022-09-26 11:27:54">2022/09/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/25/LaTeX/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="LaTeX">LaTeX</span>
+            <span class="post-date" title="2022-09-25 14:25:17">2022/09/25</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/15/DataStructure/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="DataStructure">DataStructure</span>
+            <span class="post-date" title="2022-09-15 21:17:10">2022/09/15</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/14/J5/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="J5">J5</span>
+            <span class="post-date" title="2022-09-14 10:29:39">2022/09/14</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/07/SOA/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SOA">SOA</span>
+            <span class="post-date" title="2022-09-07 10:45:11">2022/09/07</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/07/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%9B%BE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="软件架构图">软件架构图</span>
+            <span class="post-date" title="2022-09-07 10:23:23">2022/09/07</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/06/AUTOSAR/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="AUTOSAR">AUTOSAR</span>
+            <span class="post-date" title="2022-09-06 20:25:30">2022/09/06</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/06/%E5%9F%9F%E6%8E%A7%E5%88%B6%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="域控制器">域控制器</span>
+            <span class="post-date" title="2022-09-06 19:37:11">2022/09/06</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/06/ROS2/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="ROS2">ROS2</span>
+            <span class="post-date" title="2022-09-06 13:39:31">2022/09/06</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/06/CANBUS/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="CANBUS">CANBUS</span>
+            <span class="post-date" title="2022-09-06 10:40:49">2022/09/06</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/06/IDL/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="IDL">IDL</span>
+            <span class="post-date" title="2022-09-06 10:22:41">2022/09/06</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/05/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="消息中间件">消息中间件</span>
+            <span class="post-date" title="2022-09-05 20:32:52">2022/09/05</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/05/DDS/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="DDS">DDS</span>
+            <span class="post-date" title="2022-09-05 20:19:17">2022/09/05</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/05/VSCode/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="VSCode">VSCode</span>
+            <span class="post-date" title="2022-09-05 17:57:52">2022/09/05</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/08/18/OpenCV/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="OpenCV">OpenCV</span>
+            <span class="post-date" title="2022-08-18 19:43:20">2022/08/18</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/08/13/Vim/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Vim">Vim</span>
+            <span class="post-date" title="2022-08-13 14:30:50">2022/08/13</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/07/30/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%B8%88/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="系统架构师">系统架构师</span>
+            <span class="post-date" title="2022-07-30 19:36:08">2022/07/30</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/07/16/CPM/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="CPM">CPM</span>
+            <span class="post-date" title="2022-07-16 15:53:20">2022/07/16</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/07/07/Clang/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Clang">Clang</span>
+            <span class="post-date" title="2022-07-07 13:58:12">2022/07/07</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/07/05/Bazel/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Bazel">Bazel</span>
+            <span class="post-date" title="2022-07-05 20:48:35">2022/07/05</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/07/05/Ninja/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Ninja">Ninja</span>
+            <span class="post-date" title="2022-07-05 20:26:50">2022/07/05</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/07/04/%E6%95%B0%E6%8D%AE%E8%90%BD%E7%9B%98/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="数据落盘">数据落盘</span>
+            <span class="post-date" title="2022-07-04 21:14:07">2022/07/04</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/06/30/Model-deploy/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Model-deploy">Model-deploy</span>
+            <span class="post-date" title="2022-06-30 14:37:15">2022/06/30</span>
+        </a>
+        
+        <a  class="All Tools gitlab "
+           href="/2022/06/30/gitlab/"
+           data-tag="gitlab"
+           data-author="" >
+            <span class="post-title" title="gitlab">gitlab</span>
+            <span class="post-date" title="2022-06-30 10:30:26">2022/06/30</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/06/24/magit/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="magit">magit</span>
+            <span class="post-date" title="2022-06-24 10:26:33">2022/06/24</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/05/19/Cpp-awesome-src/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Cpp awesome src">Cpp awesome src</span>
+            <span class="post-date" title="2022-05-19 19:42:56">2022/05/19</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/05/19/taskflow/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="taskflow">taskflow</span>
+            <span class="post-date" title="2022-05-19 15:39:43">2022/05/19</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/26/windows-docker/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="windows-docker">windows-docker</span>
+            <span class="post-date" title="2022-04-26 14:37:25">2022/04/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/26/docker-windows/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="windows WSL2">windows WSL2</span>
+            <span class="post-date" title="2022-04-26 13:16:59">2022/04/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/26/windows-WSL2/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="windows WSL2">windows WSL2</span>
+            <span class="post-date" title="2022-04-26 13:16:59">2022/04/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/18/sphinx-doc/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="sphinx-doc">sphinx-doc</span>
+            <span class="post-date" title="2022-04-18 10:59:13">2022/04/18</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/14/onnx-md/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="onnx">onnx</span>
+            <span class="post-date" title="2022-04-14 13:45:11">2022/04/14</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/13/AI-models/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="AI-models">AI-models</span>
+            <span class="post-date" title="2022-04-13 16:45:08">2022/04/13</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/11/AI-performance/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="AI-chip-performance">AI-chip-performance</span>
+            <span class="post-date" title="2022-04-11 16:30:54">2022/04/11</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/08/ChangeLog/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="ChangeLog">ChangeLog</span>
+            <span class="post-date" title="2022-04-08 17:08:27">2022/04/08</span>
+        </a>
+        
+        <a  class="All Tools Clang "
+           href="/2022/04/07/clang-tidy/"
+           data-tag="Tools,Clang Tidy"
+           data-author="" >
+            <span class="post-title" title="clang-tidy">clang-tidy</span>
+            <span class="post-date" title="2022-04-07 12:14:50">2022/04/07</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2022/04/02/gtest/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="gtest">gtest</span>
+            <span class="post-date" title="2022-04-02 07:06:28">2022/04/02</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/03/31/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E4%B8%93%E4%B8%9A%E6%9C%AF%E8%AF%AD/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="自动驾驶专业术语">自动驾驶专业术语</span>
+            <span class="post-date" title="2022-03-31 02:24:23">2022/03/31</span>
+        </a>
+        
+        <a  class="All Program "
+           href="/2022/03/26/eigen/"
+           data-tag="Eigen"
+           data-author="" >
+            <span class="post-title" title="eigen">eigen</span>
+            <span class="post-date" title="2022-03-26 07:08:50">2022/03/26</span>
+        </a>
+        
+        <a  class="All Program "
+           href="/2022/03/26/yaml/"
+           data-tag="YAML"
+           data-author="" >
+            <span class="post-title" title="yaml">yaml</span>
+            <span class="post-date" title="2022-03-26 04:00:17">2022/03/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/03/18/samba/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="samba">samba</span>
+            <span class="post-date" title="2022-03-18 01:43:12">2022/03/18</span>
+        </a>
+        
+        <a  class="All Program Cuda "
+           href="/2022/03/10/Cuda/"
+           data-tag="Cuda"
+           data-author="" >
+            <span class="post-title" title="Cuda">Cuda</span>
+            <span class="post-date" title="2022-03-10 02:17:38">2022/03/10</span>
+        </a>
+        
+        <a  class="All Program "
+           href="/2022/03/03/Doxygen/"
+           data-tag="Doxygen"
+           data-author="" >
+            <span class="post-title" title="Doxygen">Doxygen</span>
+            <span class="post-date" title="2022-03-03 03:58:22">2022/03/03</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/03/02/Nvidia-NPP/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Nvidia-NPP">Nvidia-NPP</span>
+            <span class="post-date" title="2022-03-02 11:30:48">2022/03/02</span>
+        </a>
+        
+        <a  class="All Algorithm "
+           href="/2022/02/05/image_process/"
+           data-tag="Algorithm"
+           data-author="" >
+            <span class="post-title" title="Image Process">Image Process</span>
+            <span class="post-date" title="2022-02-05 20:05:33">2022/02/05</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/10/05/resume/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="resume">resume</span>
+            <span class="post-date" title="2021-10-05 12:24:06">2021/10/05</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2021/09/13/Plugin-System/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="plugins">plugins</span>
+            <span class="post-date" title="2021-09-13 22:17:40">2021/09/13</span>
+        </a>
+        
+        <a  class="All Program PLT "
+           href="/2021/08/22/Programming-Paradigm/"
+           data-tag="Paradigm"
+           data-author="" >
+            <span class="post-title" title="Programming-Paradigm">Programming-Paradigm</span>
+            <span class="post-date" title="2021-08-22 08:23:46">2021/08/22</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/08/16/Awesome-Books/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Awesome Books">Awesome Books</span>
+            <span class="post-date" title="2021-08-16 22:39:38">2021/08/16</span>
+        </a>
+        
+        <a  class="All Tools Cmake "
+           href="/2021/07/28/Cmake/"
+           data-tag="Cmake"
+           data-author="" >
+            <span class="post-title" title="Modern Cmake">Modern Cmake</span>
+            <span class="post-date" title="2021-07-28 08:56:09">2021/07/28</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2021/07/20/Cpp-concurrency-in-action/"
+           data-tag="Cpp,Concurrency"
+           data-author="" >
+            <span class="post-title" title="Cpp-concurrency-in-action">Cpp-concurrency-in-action</span>
+            <span class="post-date" title="2021-07-20 09:05:48">2021/07/20</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/06/27/Elisp/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Elisp">Elisp</span>
+            <span class="post-date" title="2021-06-27 22:37:13">2021/06/27</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/06/22/Haskell/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Haskell">Haskell</span>
+            <span class="post-date" title="2021-06-22 10:47:46">2021/06/22</span>
+        </a>
+        
+        <a  class="All Tools Chrome "
+           href="/2021/05/21/Chrome-config/"
+           data-tag="Tools"
+           data-author="" >
+            <span class="post-title" title="Chrome shortcuts">Chrome shortcuts</span>
+            <span class="post-date" title="2021-05-21 15:56:05">2021/05/21</span>
+        </a>
+        
+        <a  class="All Computer GPU "
+           href="/2021/05/14/Jetson-test/"
+           data-tag="Jetson"
+           data-author="" >
+            <span class="post-title" title="Jetson test">Jetson test</span>
+            <span class="post-date" title="2021-05-14 21:33:07">2021/05/14</span>
+        </a>
+        
+        <a  class="All Algorithm AI "
+           href="/2021/05/10/3d_detection/"
+           data-tag="AI"
+           data-author="" >
+            <span class="post-title" title="3d Detection">3d Detection</span>
+            <span class="post-date" title="2021-05-10 12:48:48">2021/05/10</span>
+        </a>
+        
+        <a  class="All Program AI "
+           href="/2021/04/13/TensorRT/"
+           data-tag="TensorRT"
+           data-author="" >
+            <span class="post-title" title="TensorRT">TensorRT</span>
+            <span class="post-date" title="2021-04-13 21:35:32">2021/04/13</span>
+        </a>
+        
+        <a  class="All Program Rust "
+           href="/2021/03/22/Actix/"
+           data-tag="Rust"
+           data-author="" >
+            <span class="post-title" title="Actix">Actix</span>
+            <span class="post-date" title="2021-03-22 09:53:35">2021/03/22</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/03/16/Web/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Web">Web</span>
+            <span class="post-date" title="2021-03-16 22:27:02">2021/03/16</span>
+        </a>
+        
+        <a  class="All Program Python "
+           href="/2021/03/15/Pybind11/"
+           data-tag="Python"
+           data-author="" >
+            <span class="post-title" title="Pybind11">Pybind11</span>
+            <span class="post-date" title="2021-03-15 11:33:25">2021/03/15</span>
+        </a>
+        
+        <a  class="All Tools Emacs "
+           href="/2021/03/12/First-Emacs-Plugin/"
+           data-tag="Emacs"
+           data-author="" >
+            <span class="post-title" title="First-Emacs-Plugin">First-Emacs-Plugin</span>
+            <span class="post-date" title="2021-03-12 08:33:44">2021/03/12</span>
+        </a>
+        
+        <a  class="All Tools Git "
+           href="/2021/03/05/git-biset-to-debug/"
+           data-tag="Git"
+           data-author="" >
+            <span class="post-title" title="Git bisect to debug">Git bisect to debug</span>
+            <span class="post-date" title="2021-03-05 09:51:13">2021/03/05</span>
+        </a>
+        
+        <a  class="All Program FFmpeg "
+           href="/2021/02/23/FFmpeg/"
+           data-tag="FFmpeg"
+           data-author="" >
+            <span class="post-title" title="FFmpeg">FFmpeg</span>
+            <span class="post-date" title="2021-02-23 20:21:13">2021/02/23</span>
+        </a>
+        
+        <a  class="All Program Gstreamer "
+           href="/2021/02/23/Gstreamer/"
+           data-tag="Gstreamer"
+           data-author="" >
+            <span class="post-title" title="Gstreamer">Gstreamer</span>
+            <span class="post-date" title="2021-02-23 08:43:01">2021/02/23</span>
+        </a>
+        
+        <a  class="All Tools Docker "
+           href="/2021/02/02/Docker/"
+           data-tag="Docker"
+           data-author="" >
+            <span class="post-title" title="Docker">Docker</span>
+            <span class="post-date" title="2021-02-02 18:29:14">2021/02/02</span>
+        </a>
+        
+        <a  class="All Algorithm Kalman "
+           href="/2021/01/30/Kalman-Filters/"
+           data-tag="Filters"
+           data-author="" >
+            <span class="post-title" title="Kalman Filters">Kalman Filters</span>
+            <span class="post-date" title="2021-01-30 11:43:37">2021/01/30</span>
+        </a>
+        
+        <a  class="All Program Database "
+           href="/2021/01/11/Redis/"
+           data-tag="Redis,Database"
+           data-author="" >
+            <span class="post-title" title="Redis">Redis</span>
+            <span class="post-date" title="2021-01-11 21:27:34">2021/01/11</span>
+        </a>
+        
+        <a  class="All "
+           href="/2020/11/16/Python-grammar/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Python-grammar">Python-grammar</span>
+            <span class="post-date" title="2020-11-16 21:39:20">2020/11/16</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2020/10/06/Eclipse-Cpp-IDE-on-Windows10/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Eclipse Cpp">Eclipse Cpp</span>
+            <span class="post-date" title="2020-10-06 09:32:38">2020/10/06</span>
+        </a>
+        
+        <a  class="All Tools Emacs "
+           href="/2020/09/30/Emacs-on-Windows10/"
+           data-tag="Emacs"
+           data-author="" >
+            <span class="post-title" title="Emacs on Windows10">Emacs on Windows10</span>
+            <span class="post-date" title="2020-09-30 08:05:00">2020/09/30</span>
+        </a>
+        
+        <a  class="All Tools git "
+           href="/2020/09/17/git/"
+           data-tag="git"
+           data-author="" >
+            <span class="post-title" title="git">git</span>
+            <span class="post-date" title="2020-09-17 20:46:21">2020/09/17</span>
+        </a>
+        
+        <a  class="All Emacs "
+           href="/2020/09/05/How-to-use-org-mode/"
+           data-tag="Emacs"
+           data-author="" >
+            <span class="post-title" title="How to use org mode">How to use org mode</span>
+            <span class="post-date" title="2020-09-05 23:05:33">2020/09/05</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2020/08/18/Bjarny-Stroustrup-Cpp/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Bjarny Stroustrup cpp">Bjarny Stroustrup cpp</span>
+            <span class="post-date" title="2020-08-18 09:34:33">2020/08/18</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2020/08/14/Effective-modern-cpp/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Effective modern cpp">Effective modern cpp</span>
+            <span class="post-date" title="2020-08-14 10:56:45">2020/08/14</span>
+        </a>
+        
+        <a  class="All Computer Network "
+           href="/2020/08/11/Network/"
+           data-tag="Network"
+           data-author="" >
+            <span class="post-title" title="Network">Network</span>
+            <span class="post-date" title="2020-08-11 12:11:56">2020/08/11</span>
+        </a>
+        
+        <a  class="All Program Rust "
+           href="/2020/08/05/Cargo/"
+           data-tag="Rust,Cargo"
+           data-author="" >
+            <span class="post-title" title="Cargo">Cargo</span>
+            <span class="post-date" title="2020-08-05 08:58:58">2020/08/05</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2020/07/27/Cpp-to-c-interface/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Cpp to c interface">Cpp to c interface</span>
+            <span class="post-date" title="2020-07-27 22:43:02">2020/07/27</span>
+        </a>
+        
+        <a  class="All Program Basic "
+           href="/2020/07/26/Memory-concept-and-issues/"
+           data-tag="Rust,Memory,C++"
+           data-author="" >
+            <span class="post-title" title="Memory concept and issues">Memory concept and issues</span>
+            <span class="post-date" title="2020-07-26 15:34:35">2020/07/26</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2020/07/26/Dangling-pointer/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Dangling pointer">Dangling pointer</span>
+            <span class="post-date" title="2020-07-26 09:18:37">2020/07/26</span>
+        </a>
+        
+        <a  class="All Tools Zsh "
+           href="/2020/07/22/Zsh-config/"
+           data-tag="Zsh"
+           data-author="" >
+            <span class="post-title" title="Zsh config">Zsh config</span>
+            <span class="post-date" title="2020-07-22 15:19:28">2020/07/22</span>
+        </a>
+        
+        <a  class="All Program Rust "
+           href="/2020/07/10/Why-Rust/"
+           data-tag="Rust"
+           data-author="" >
+            <span class="post-title" title="Why Rust">Why Rust</span>
+            <span class="post-date" title="2020-07-10 21:45:08">2020/07/10</span>
+        </a>
+        
+        <a  class="All Program Rust "
+           href="/2020/07/09/Rust-start/"
+           data-tag="Rust"
+           data-author="" >
+            <span class="post-title" title="Rust start">Rust start</span>
+            <span class="post-date" title="2020-07-09 08:56:09">2020/07/09</span>
+        </a>
+        
+        <a  class="All Tools Clang "
+           href="/2020/07/01/Clang-format-usage/"
+           data-tag="Emacs,Clang format,Vim"
+           data-author="" >
+            <span class="post-title" title="Clang-format-usage">Clang-format-usage</span>
+            <span class="post-date" title="2020-07-01 13:16:38">2020/07/01</span>
+        </a>
+        
+        <a  class="All Tools Blog "
+           href="/2020/06/26/How-to-start-writing-blog/"
+           data-tag="Blog"
+           data-author="" >
+            <span class="post-title" title="write blog">write blog</span>
+            <span class="post-date" title="2020-06-26 14:52:10">2020/06/26</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-Rust-grammar" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">Rust grammar</h1>
+    
+    <div class="article-meta">
+        
+        <span class="top"><a>置顶</a></span>
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Program">Program</a> > 
+            
+            <a  data-rel="Program&lt;---&gt;Rust">Rust</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color5">Rust</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2023-06-20 15:37:37'>2021-07-11 18:34</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>Count:9.8k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#顶层概念"><span class="toc-text">顶层概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Grammar"><span class="toc-text">Grammar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Project-Manage"><span class="toc-text">Project Manage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类型系统"><span class="toc-text">类型系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ownership-所有权"><span class="toc-text">Ownership 所有权</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Enums-枚举-and-模式匹配"><span class="toc-text">Enums 枚举 and 模式匹配</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见集合-collections"><span class="toc-text">常见集合 collections</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Error-Handling-错误处理"><span class="toc-text">Error Handling 错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lifetimes-生命周期"><span class="toc-text">Lifetimes 生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Traits"><span class="toc-text">Traits</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Generic-Types-泛型"><span class="toc-text">Generic Types 泛型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Iterators-and-Closures-迭代器与闭包"><span class="toc-text">Iterators and Closures 迭代器与闭包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Smart-Pointers-智能指针"><span class="toc-text">Smart Pointers 智能指针</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AsRef-and-Deref"><span class="toc-text">AsRef and Deref</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Concurrency-并发"><span class="toc-text">Concurrency 并发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Asynchronous-Programming"><span class="toc-text">Asynchronous Programming</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异步编程"><span class="toc-text">异步编程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Object-Oriented-面向对象"><span class="toc-text">Object Oriented 面向对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Macros-宏"><span class="toc-text">Macros 宏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Program-with-C-C"><span class="toc-text">Program with C&#x2F;C++</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#日志"><span class="toc-text">日志</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="顶层概念"><a href="#顶层概念" class="headerlink" title="顶层概念"></a><a href="https://www.infoq.cn/article/Uugi_eIJusEka1aSPmQM" target="_blank" rel="noopener">顶层概念</a></h2><p><img src="https://static001.infoq.cn/resource/image/2d/91/2d36b45f6905a13a310e6447778ca391.jpg" alt="概念层次图"></p>
+<h2 id="Grammar"><a href="#Grammar" class="headerlink" title="Grammar"></a>Grammar</h2><ol>
+<li>unimplemented! and todo!来表明函数未实现，先跳过</li>
+<li>indent with four spaces, not a tab</li>
+<li>Most lines of Rust code end with a semicolon(;)</li>
+<li><code>println!()</code> ! means call macro, not a function</li>
+<li>Cargo is Rust’s build system and package manager.</li>
+<li>Cargo expects your source files to live inside the src directory. The top-level project directory is just for README files, license information, configuration files, and anything else not related to your code.</li>
+<li><code>cargo run</code> Compile the code and then run the resulting executable all in one command.</li>
+<li><code>cargo check</code> is much faster than <code>cargo build</code></li>
+<li><code>cargo build --release</code> compile the project with optimizations. Run faster but compile slower.</li>
+<li>The <code>main</code> function is the entry point into the program.</li>
+<li>The <code>fn</code> syntax declares a new function, the parentheses, <code>()</code>, indicate there are no parameters, and the curly bracket, <code>{</code>, starts the body of the function.</li>
+<li><code>let</code> is used to create a variable. In Rust, variables are immutable by default.</li>
+<li><code>String::new()</code> An associated function is implemented on a type, in this case String, rather than on a particular instance of a String. Some languages call this a static method. This new function creates a new, empty string. You’ll find a new function on many types, because it’s a common name for a function that makes a new value of some kind.</li>
+<li><code>{}</code> is a place holder when using <code>println!</code></li>
+<li>Crate is a coleection of Rust source code files.</li>
+<li>Cargo.toml dependencies rand = “0.5.5”; In this case, we’ll specify the rand crate with the semantic version specifier 0.5.5. Cargo understands Semantic Versioning (sometimes called SemVer), which is a standard for writing version numbers. The number 0.5.5 is actually shorthand for ^0.5.5, which means “any version that has a public API compatible with version 0.5.5.”</li>
+<li><code>cargo doc --open</code> It will build documentation provided by all of your dependencies locally and open it in your browser.</li>
+<li><code>match</code> is like <code>switch</code> in C++</li>
+<li>shallow copy, deep copy(clone), move(let s2 = s1; // s1 is invailid)</li>
+<li>Differences Between Immutable Variables and Constants:<ul>
+<li>You declare constants using the const keyword instead of the let keyword, and the type of the value must be annotated.</li>
+<li>Constants can be declared in any scope, including the global scope</li>
+<li>Constants may be set only to a constant expression, not the result of a function call or any other value that could only be computed at runtime.</li>
+</ul>
+</li>
+<li>trait can add some useful functions for user’s own struct.</li>
+<li>trait 可以与泛型结合来将泛型限制为拥有特定行为的类型，而不是任意类型。</li>
+<li>Rust 编译时会将泛型代码单态化(monomorphization)来保证效率，单态化是指编译时用具体类型来填充泛型。</li>
+<li>用户会将重复代码泛化（抽象），编译器会将泛化代码具体化。</li>
+<li>trait 类似其他语言中接口(interfaces)功能，虽然有些不同。</li>
+<li>只有当 trait 或者要实现 trait 的类型位于 crate 的本地作用域时，才能为该类型实现 trait。</li>
+<li>在 release 构建中，Rust 不检测溢出，相反会进行一种被称为二进制补码包装（two’s complement wrapping）的操作。当在 debug 模式编译时，Rust 检查这类问题并使程序 panic</li>
+<li>Rust 的浮点数默认类型是 f64。数字类型默认是 i32。</li>
+<li>Rust 的 char 类型的大小为四个字节(four bytes)，并代表了一个 Unicode 标量值（Unicode Scalar Value），这意味着它可以比 ASCII 表示更多内容。在 Rust 中，拼音字母（Accented letters），中文、日文、韩文等字符，emoji（绘文字）以及零长度的空白字符都是有效的 char 值。</li>
+<li>Rust 有两个原生的复合类型：元组（tuple）和数组（array）。</li>
+<li><code>tuple:</code> <code>let tup: (i32, f64, u8) = (500, 6.4, 1); let (x, y, z) = tup; //结构 let five_hundred = tup.0;</code></li>
+<li><code>struct:</code></li>
+</ol>
+<pre><code class="rust">struct User {
+    username: String,
+    email: String,
+}
+
+let mut user1 = User {
+    email: String::from(&quot;someone@example.com&quot;), //实例中字段的顺序不需要和它们在结构体中声明的顺序一致
+    username: String::from(&quot;someusername123&quot;),
+};
+
+user1.email = String::from(&quot;anotheremail@example.com&quot;);</code></pre>
+<ol>
+<li>我们也可以定义一个没有任何字段的结构体！它们被称为 类单元结构体（unit-like structs）因为它们类似于 ()，即 unit 类型。类单元结构体常常在你想要在某个类型上实现 trait 但不需要在类型中存储数据的时候发挥作用。</li>
+<li>方法与函数类似：它们使用 fn 关键字和名称声明，可以拥有参数和返回值，同时包含在某处调用该方法时会执行的代码。不过方法与函数是不同的，因为它们在结构体的上下文中被定义</li>
+</ol>
+<pre><code class="rust">#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&amp;self) -&gt; u32 {
+        self.width * self.height
+    }
+}</code></pre>
+<ol>
+<li>impl 块的另一个有用的功能是：允许在 impl 块中定义 不 以 <code>self</code> 作为参数的函数。这被称为 <code>关联函数（associated functions）</code>，因为它们与结构体相关联。它们仍是函数而不是方法，因为它们并不作用于一个结构体的实例。你已经使用过 String::from 关联函数了。使用结构体名和 <code>::</code> 语法来调用关联函数。</li>
+</ol>
+<h2 id="Project-Manage"><a href="#Project-Manage" class="headerlink" title="Project Manage"></a>Project Manage</h2><ol>
+<li>包<code>packages</code>: Cargo 的一个功能，允许你构建、测试和分享 crate</li>
+<li><code>crates</code>: 一个模块的<code>树形</code>结构，它形成了库或二进制项目。</li>
+<li>模块<code>modules and use</code>: 允许你控制作用域和路径的私有性。</li>
+<li>路径<code>path</code>: 一个命名机结构体、函数或模块等项的方式。</li>
+<li>在 Rust 中，代码包也被称为 crates</li>
+<li>一个包中可以包含多个二进制 crate 和一个可选的 crate 库。</li>
+<li>包中至少包含一个 crate，无论是库还是二进制，至多包含一个库 crate</li>
+<li><code>cargo new</code>会创建一个包。</li>
+<li>Cargo 准守一个约定： <code>src/main.rs</code>就是一个与包同名的二进制 crate 的 crate 根。同理，<code>src/lib.rs</code>是库 crate 的 crate 根。如果同时包含，则它有两个 crate。</li>
+<li>通过将文件放在<code>src/bin</code>目录下，一个包可以拥有多个二进制 crate：每个<code>src/bin</code>下的文件都会被编译成一个独立的二进制 crate。</li>
+<li>模块让我们可以将一个 crate 中的代码进行分组，以提高重用性。</li>
+<li><code>模块的定义</code>是以<code>mod</code>(module)关键字为起始，然后指定模块的名字，并且用或花括号包围模块的主题。</li>
+<li><code>模块的声明</code>是以<code>mod</code>为起始，指定模块名字，以<code>;</code>结尾，不带有花括号。在与模块名同名的.rs 文件中定义该模块。</li>
+<li>模块一般是在上一级文件声明，不是在本文件中声明，如可以在 lib.rs 中声明模块，然后在相应.rs 文件中定义该模块。</li>
+<li>crate 的组织结构类似于文件系统的目录，被称为模块树(module tree)。</li>
+<li>Rust 通过路径来查找一个项的位置。</li>
+<li><code>绝对路径(absolute path)</code> 从 crate 根开始，以 crate 名或者字面值<code>crate</code>开头。</li>
+<li><code>相对路径(relative path)</code> 从当前模块开始，以<code>self</code>、<code>super</code>或当前模块的表示符开头。</li>
+<li>只有在同一 crate 中才能使用<code>crate::</code>关键字为起始的绝对路径。</li>
+<li>模块不仅对你组织代码很有用。它们还定义了 Rust 的私有性边界：这条界限不允许外部代码了解、调用和依赖被封装的实现细节。</li>
+<li>Rust 中默认所有项(函数、方法、结构体、枚举、模块、和常量）都是私有的。</li>
+<li>项是指：函数、方法、结构体、枚举、模块和常量。</li>
+<li>父模块中的项不能使用子模块中的私有项，但是子模块可以使用它们父模块中的项。</li>
+<li>Rust 通过这种方式来实现模块系统功能，因此隐藏内部实现细节，这样你就知道可以更改内部代码的哪部分而不会破坏外部代码。</li>
+<li>可以使用<code>super</code>开头来构建父模块开始的相对路径。类似于文件系统的<code>..</code>语法。</li>
+<li>如果请偶们将枚举设置为公有，则它的所有成员都将变为共有。</li>
+<li>在作用域中增加<code>use</code>类似于在文件系统中创建软连接。</li>
+<li>使用<code>use</code>引入结构体、枚举和其他项时，习惯是指定它们的完整路径。</li>
+<li>使用<code>use</code>将两个同名类型引入同意作用域的一个解决办法：在类型后面使用<code>as</code>指定一个新的本地名称或者别名。</li>
+<li><code>use std::{cmp::Ordering, io};</code>使用嵌套路径减少 use 的使用。</li>
+<li><code>use std::io:*</code> 将<code>std::io</code>中定义的所有公有项引入当前作用域。使用时要多加小心，常用于测试模块<code>tests</code>中。</li>
+<li>Rust 将 package 分成多个 crate，将 crate 分成模块，通过绝对或相对路径从一个模块引用另一个模块。</li>
+<li>Cargo 提供了叫工作空间<code>workspaces</code>的功能，它可以帮助我们管理多个相关的协同开发的包。</li>
+<li>工作空间是一系列共享同样的 cargo.lock 和输出目录的包。</li>
+<li>工作空间顶级目录中的 Cargo.toml 中不包含<code>[package]</code>等信息，相反，它以<code>[workspace]</code>部分作为开始。</li>
+<li>工作空间在顶级目录有一个<code>target</code>目录，<code>member</code>并没有自己的 target 目录。通过共享的 target 目录，工作空间可以避免其他 crate 多余的重复构建。</li>
+<li>cargo 不假定工作空间中的 crates 包会相互依赖，所以需要明确表明工作空间中 crate 包的依赖关系。一个包用到了其他包，需要在该包的 Cargo.toml 文件<code>[dependencies]</code>域中加入依赖</li>
+<li>工作空间只在根目录有一个 Cargo.lock，而不是在每一个 crate（就当是 packge)目录都有 Cargo.lock。这确保了所有的 crate 都使用完全相同版本的依赖。也节省了空间，避免多个拷贝。</li>
+<li>Cargo 有一个机制来确保任何人在任何时候重新构建代码，都会产生相同的结果：Cargo 只会使用你指定的依赖版本，除非你又手动指定了别的。</li>
+</ol>
+<h2 id="类型系统"><a href="#类型系统" class="headerlink" title="类型系统"></a>类型系统</h2><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/21820917" target="_blank" rel="noopener">类型大小</a></li>
+<li>Rust 中有一个重要的 trait Sized，可以用于区分一个类型是不是 DST。所有的 DST 类型都不满足 Sized 约束。我们可以在泛型约束中使用 Sized、!Sized、?Sized 三种写法。</li>
+<li>Rust 还支持 0 大小类型（Zero Sized Type）。 () 类型和空结构体类型，都是 0 大小类型。</li>
+</ol>
+<h2 id="Ownership-所有权"><a href="#Ownership-所有权" class="headerlink" title="Ownership 所有权"></a>Ownership 所有权</h2><ol>
+<li>区分值(内存)和变量。</li>
+<li>所有权是指： 每一个值都只有一个所有者（变量）, 当变量离开作用于时，值被丢弃。</li>
+<li>当变量离开作用域，Rust 为我们调用一个特殊的函数 drop。在 C++ 中，这种 item 在生命周期结束时释放资源的模式有时被称作 资源获取即初始化（Resource Acquisition Is Initialization (RAII)）。</li>
+<li><code>move:</code> <code>let s1 = String::from(&quot;hello&quot;); let s2 = s1;</code> 这个操作被称为移动（move），而不是浅拷贝。Rust 则认为 s1 不再有效，因此 Rust 不需要在 s1 离开作用域后清理任何东西。</li>
+<li>Rust 永远也不会自动创建数据的 “深拷贝”。因此，任何 自动 的复制可以被认为对运行时性能影响较小。</li>
+<li><code>clone:</code> 当出现 clone 调用时，你知道一些特定的代码被执行而且这些代码可能相当消耗资源</li>
+<li><code>copy:</code> <code>let x = 5; let y = x;</code> x 在栈上，copy 操作。Rust 有一个叫做 Copy trait 的特殊注解，可以用在类似整型这样的存储在栈上的类型上。</li>
+<li>如果一个类型拥有 Copy trait，一个旧的变量在将其赋值给其他变量后仍然可用。如 String 没有实现 Copy trait, i32 实现了。</li>
+<li>Copy and Clone: Copy 是隐性调用，Clone 显性。 Copies happen implicitly, for example as part of an assignment y = x. The behavior of Copy is not overloadable; it is always a simple bit-wise copy. Cloning is an explicit action, x.clone()</li>
+<li><a href="https://doc.rust-lang.org/beta/std/marker/trait.Copy.html" target="_blank" rel="noopener">link</a> Clone is a supertrait of Copy, so everything which is Copy must also implement Clone. If a type is Copy then its Clone implementation only needs to return *self</li>
+<li>Rust 不允许自身或其任何部分实现了 Drop trait 的类型使用 Copy trait。</li>
+<li>任何简单标量值的组合可以是 Copy 的，不需要分配内存或某种形式资源的类型是 Copy 的。</li>
+</ol>
+<pre><code class="rust">fn main() {
+    let s = String::from(&quot;hello&quot;);  // s 进入作用域
+
+    takes_ownership(s);             // s 的值移动到函数里 ...
+                                    // ... 所以到这里不再有效
+
+    let x = 5;                      // x 进入作用域
+
+    makes_copy(x);                  // x 应该移动函数里，
+                                    // 但 i32 是 Copy 的，所以在后面可继续使用 x
+} // 这里, x 先移出了作用域，然后是 s。但因为 s 的值已被移走，
+  // 所以不会有特殊操作
+
+fn takes_ownership(some_string: String) { // some_string 进入作用域
+    println!(&quot;{}&quot;, some_string);
+} // 这里，some_string 移出作用域并调用 `drop` 方法。占用的内存被释放
+
+fn makes_copy(some_integer: i32) { // some_integer 进入作用域
+    println!(&quot;{}&quot;, some_integer);
+} // 这里，some_integer 移出作用域。不会有特殊操作</code></pre>
+<ol>
+<li>变量的所有权总是遵循相同的模式：将值赋给另一个变量时移动它。当持有堆中数据值的变量离开作用域时，其值将通过 drop 被清理掉，除非数据被移动为另一个变量所有。</li>
+<li>将获取引用作为函数参数称为 借用（borrowing）。</li>
+<li>可变引用有一个很大的限制：在特定作用域中的特定数据只能有一个可变引用。</li>
+<li>也不能在拥有不可变引用的同时拥有可变引用。</li>
+<li>Rust 中编译器确保引用永远也不会变成悬垂状态：当你拥有一些数据的引用，编译器确保数据不会在其引用之前离开作用域。</li>
+<li>在任意给定时间，要么 只能有一个可变引用，要么 只能有多个不可变引用。</li>
+<li><code>另一个没有所有权的数据类型是 slice(部分引用 &amp;[T])。slice 允许你引用集合中一段连续的元素序列，而不用引用整个集合</code>。</li>
+<li>“字符串 slice” 的类型声明写作 &amp;str, 字符串字面值就是 slice</li>
+<li><a href="https://zhuanlan.zhihu.com/p/76945648" target="_blank" rel="noopener">胖指针</a></li>
+</ol>
+<h2 id="Enums-枚举-and-模式匹配"><a href="#Enums-枚举-and-模式匹配" class="headerlink" title="Enums 枚举 and 模式匹配"></a>Enums 枚举 and 模式匹配</h2><ol>
+<li>枚举允许你通过列举可能的 成员（variants） 来定义一个类型</li>
+<li>用枚举替代结构体还有另一个优势：每个成员可以处理不同类型和数量的数据。</li>
+</ol>
+<pre><code class="rust">enum IpAddr {
+    V4(u8, u8, u8, u8),
+    V6(String),
+}
+
+let home = IpAddr::V4(127, 0, 0, 1);
+
+let loopback = IpAddr::V6(String::from(&quot;::1&quot;));</code></pre>
+<ol>
+<li>结构体和枚举还有另一个相似点：就像可以使用 impl 来为结构体定义方法那样，也可以在枚举上定义方法</li>
+<li><code>Option</code> 类型应用广泛因为它编码了一个非常普遍的场景，即一个值要么有值要么没值。</li>
+<li>Rust 并没有空值，不过它确实拥有一个可以编码存在或不存在概念的枚举。这个枚举是 Option<T>，而且它定义于标准库中，如下:</li>
+</ol>
+<pre><code class="rust">enum Option&lt;T&gt; {
+    Some(T),
+    None,
+}</code></pre>
+<ol>
+<li>Option<T> 枚举是如此有用以至于它甚至被包含在了 prelude 之中，你不需要将其显式引入作用域。另外，它的成员也是如此，可以不需要 Option:: 前缀来直接使用 Some 和 None。即便如此 Option<T> 也仍是常规的枚举，Some(T) 和 None 仍是 Option<T> 的成员。</li>
+<li>只要一个值不是 Option<T> 类型，你就可以安全的认定它的值不为空。</li>
+<li>Rust 有一个叫做 match 的极为强大的控制流运算符，它允许我们将一个值与一系列的模式相比较，并根据相匹配的模式执行相应代码。模式可由字面值、变量、通配符和许多其他内容构成</li>
+</ol>
+<pre><code class="rust">enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter,
+}
+
+fn value_in_cents(coin: Coin) -&gt; u8 {
+    match coin {
+        Coin::Penny =&gt; 1,
+        Coin::Nickel =&gt; 5,
+        Coin::Dime =&gt; 10,
+        Coin::Quarter =&gt; 25,
+    }
+}</code></pre>
+<ol>
+<li>对于 if, 表达式必须返回一个布尔值，而 match 可以是任何类型的。</li>
+<li>一个分支有两个部分：一个模式和一些代码。第一个分支的模式是值 Coin::Penny 而之后的 =&gt; 运算符将模式和将要运行的代码分开。这里的代码就仅仅是值 1。每一个分支之间使用逗号<code>,</code>分隔。</li>
+<li>如果想要在分支中运行多行代码，可以使用大括号<code>{}</code>。</li>
+<li>匹配 Option<T>:</li>
+</ol>
+<pre><code class="rust">fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
+    match x {
+        None =&gt; None,
+        Some(i) =&gt; Some(i + 1),
+    }
+}
+
+let five = Some(5);
+let six = plus_one(five);
+let none = plus_one(None);</code></pre>
+<ol>
+<li>Rust 中的匹配是 穷尽的（exhaustive）：必须穷举到最后的可能性来使代码有效。</li>
+<li><code>_</code>通配符：</li>
+</ol>
+<pre><code class="rust">let some_u8_value = 0u8;
+match some_u8_value {
+    1 =&gt; println!(&quot;one&quot;),
+    3 =&gt; println!(&quot;three&quot;),
+    5 =&gt; println!(&quot;five&quot;),
+    7 =&gt; println!(&quot;seven&quot;),
+    _ =&gt; (),
+}</code></pre>
+<ol>
+<li>if let 语法让我们以一种不那么冗长的方式结合 if 和 let，来处理只匹配一个模式的值而忽略其他模式的情况。</li>
+</ol>
+<pre><code class="rust">
+let some_u8_value = Some(0u8);
+match some_u8_value {
+    Some(3) =&gt; println!(&quot;three&quot;),
+    _ =&gt; (),
+}
+
+if let Some(3) = some_u8_value {
+    println!(&quot;three&quot;);
+}</code></pre>
+<ol>
+<li>使用 if let 意味着编写更少代码，更少的缩进和更少的样板代码。然而，这样会失去 match 强制要求的穷尽性检查。match 和 if let 之间的选择依赖特定的环境以及增加简洁度和失去穷尽性检查的权衡取舍。</li>
+<li>可以在 if let 中包含一个 else。else 块中的代码与 match 表达式中的 _ 分支块中的代码相同</li>
+</ol>
+<pre><code class="rust">let mut count = 0;
+if let Coin::Quarter(state) = coin {
+    println!(&quot;State quarter from {:?}!&quot;, state);
+} else {
+    count += 1;
+}</code></pre>
+<ol>
+<li>如果你的程序遇到一个使用 match 表达起来过于啰嗦的逻辑，记住 if let 也在你的 Rust 工具箱中。</li>
+</ol>
+<h2 id="常见集合-collections"><a href="#常见集合-collections" class="headerlink" title="常见集合 collections"></a>常见集合 collections</h2><ol>
+<li>不同于内建的数组和元组类型，这些集合指向的数据是储存在堆上的，这意味着数据的数量不必在编译时就已知，并且还可以随着程序的运行增长或缩小。</li>
+<li>vector 允许我们在一个单独的数据结构中储存多于一个的值，它在内存中彼此相邻地排列所有的值。vector 只能储存相同类型的值。</li>
+<li><code>let v: Vec&lt;i32&gt; = Vec::new();</code> 创建空的 vector</li>
+<li>为了方便 Rust 提供了 vec! 宏。这个宏会根据我们提供的值来创建一个新的 Vec。<code>let v = vec![1, 2, 3];</code></li>
+<li>对于新建一个 vector 并向其增加元素，可以使用 push 方法</li>
+</ol>
+<pre><code class="rust">let mut v = Vec::new();
+
+v.push(5);
+v.push(6);</code></pre>
+<ol>
+<li>访问 vector 中一个值的两种方式，索引语法或者 get 方法：</li>
+</ol>
+<pre><code class="rust">let v = vec![1, 2, 3, 4, 5];
+
+let third: &amp;i32 = &amp;v[2];
+println!(&quot;The third element is {}&quot;, third);
+
+match v.get(2) {
+    Some(third) =&gt; println!(&quot;The third element is {}&quot;, third),
+    None =&gt; println!(&quot;There is no third element.&quot;),
+}</code></pre>
+<ol>
+<li>使用 &amp; 和 [] 返回一个引用；或者使用 get 方法以索引作为参数来返回一个 Option&lt;&amp;T&gt;。</li>
+</ol>
+<h2 id="Error-Handling-错误处理"><a href="#Error-Handling-错误处理" class="headerlink" title="Error Handling 错误处理"></a>Error Handling 错误处理</h2><ol>
+<li>当函数返回为 Result 时: <code>?</code>运算符放在 Result 之后的含义：如果 Result 的值是 Ok，这个表达式将会返回 Ok 中的值而程序继续执行，如果是 Err，Err 中的值将作为整个函数的返回值，就好像使用了 return 关键字一样，这样错误值就被传递给调用者。</li>
+<li><code>cargo clippy</code> 报更多的错误</li>
+<li>Rust 将错误组合成两个主要类别，可恢复错误和不可恢复错误。</li>
+<li>可恢复错误通常代表向用户报告错误和重试操作是合理的情况，比如未找到文件。</li>
+<li>不可恢复错误通常是 Bug 的同义词，比如访问超过数组结尾的位置。</li>
+<li>大部分语言并不区分这两类错误，并采用类似异常这样方式统一处理他们。</li>
+<li>Rust 没有异常，但是有可恢复错误<code>Result&lt;T, E&gt;</code>和不可恢复错误<code>panic!</code></li>
+<li>执行 Rust 的<code>panic!</code>宏时，程序会打印出一个错误信息，展开并清理栈数据，然后接着退出。</li>
+<li>出现 panic 时，程序默认是<code>展开(unwinding)</code>，这意味着 Rust 会回溯栈并清理它遇到的每一个函数的数据。另一种选择是<code>终止(abort)</code>，这回不清理数据就退出程序。可以在 Cargo.toml 的[profile]部分增加<code>panic = &#39;abort&#39;</code>，可以由展开切换为终止。</li>
+<li>使用<code>RUST_BACKTRACE</code>环境变量运行程序会得到一个 backtrace，backtrace 是一个执行到目前位置所有被调用的函数的列表。</li>
+<li>Rust 的 backtrace 跟其他语言一样：阅读 backtrace 的<code>关键</code>是<code>从头开始读直到发现你自己编写的代码</code>，这就是问题的根源。<code>这一行往上是你的代码所调用的代码，往下则是调用你的代码的代码(栈)</code></li>
+<li>为了获取带有详细信息的 backtrace，<code>必须是debug模式</code></li>
+<li>Result 枚举的定义。<code>enum Result&lt;T, E&gt; { Ok(T), Err(E), }</code>，其中<code>T</code>代表返回的<code>Ok</code>成员中的<code>数据类型</code>，而<code>E</code>代表失败是返回<code>Err</code>成员中的错误的类型。</li>
+<li>Result 常与 match 进行联合使用</li>
+</ol>
+<pre><code class="rust">use std::fs::File;
+
+fn main() {
+    let f = File::open(&quot;hello.txt&quot;); // f值是Ok(file)或者是Err(error)
+
+    let f = match f {
+        Ok(file) =&gt; file,
+        Err(error) =&gt; {
+            panic!(&quot;Problem opening the file: {:?}&quot;, error)
+        },
+    };
+}</code></pre>
+<ol>
+<li><code>unwrap</code>函数作用于 Result，如果 Result 的值是成员 OK，unwrap 会返回 Ok 中的值，如果是成员 Err，unwrap 会为我们调用<code>panic!</code></li>
+<li><code>expect</code>与<code>unwrap</code>使用方式一样，<code>expect</code>用来调用<code>panic!</code>的错误信息将会作为参数传递给<code>expect</code>，而不像<code>unwrap</code>那样使用默认的<code>panic!</code>信息。<code>expect</code>更容易查找错误信息位置。</li>
+<li>每一个 Result 都需要被处理，否则会出现警告。</li>
+</ol>
+<h2 id="Lifetimes-生命周期"><a href="#Lifetimes-生命周期" class="headerlink" title="Lifetimes 生命周期"></a>Lifetimes 生命周期</h2><ol>
+<li><a href="https://skyline75489.github.io/post/2017-7-27_rust_mm.html" target="_blank" rel="noopener">link</a> rust 生命周期包含变量和引用，C++ RAII 主要是变量的生命周期管理，引用除了 smart pointer C++不负责检查引用的对象是否存在</li>
+<li>生命周期的目的是<strong>避免悬垂指针</strong>. 生命周期帮助编译器执行一个简单的规则：引用不应该活得比所指对象长(no reference should outlive its referent)。</li>
+<li>生命周期之所以如此令人困惑，其部分原因在于 Rust 的很多写作中，生命周期这个词被宽泛地用来指代三种不同的东西——<code>变量真实的生命周期、生命周期约束和生命周期标注</code>。 <a href="https://juejin.cn/post/6862976475860041741" target="_blank" rel="noopener">link</a></li>
+<li>只是用来检查生命周期关系，不影响生命周期</li>
+<li>Lifetime annotations don’t change how long any of the references live. Lifetime annotations describe the relationships of the lifetimes of multiple references to each other without affecting the lifetimes.</li>
+<li>One lifetime annotation by itself doesn’t have much meaning,</li>
+<li><code>longest&lt;&#39;a&gt;(x: &amp;&#39;a str, y: &amp;&#39;a str) -&gt;&amp;&#39;a str</code> 它的实际含义是 longest 函数保证返回的引用的生命周期与传入该函数的引用的生命周期的较小者一致（x 作用域和 y 作用域重叠的那一部分）。并没有改变传入值或返回值的生命周期，而是指出任何不满足这个约束条件的值都将被借用检查器拒绝。</li>
+<li><code>struct Test&lt;&#39;a&gt; { part: &amp;&#39;a str, }</code> Test 的实例不能比 part 字段中的引用存在的更久，Test 实例应先离开作用域。（后定义的存在的应更短）</li>
+<li>每一个<code>引用</code>都有一个生命周期，我们需要为那些使用了引用的函数或者结构体指定生命周期。</li>
+<li>只有引用才需要指定生命周期。</li>
+<li>函数或方法的参数的生命周期被称为输入生命周期，二返回的生命周期被成为输出生命周期。</li>
+<li>函数或方法生命周期省略规则，需满足下面三条且无冲突</li>
+</ol>
+<ul>
+<li>每一个输入参数都有自己的生命周期参数</li>
+<li>如果只有一个输入周期，那么它将被赋予所有的输出生命周期参数</li>
+<li>如果有多个输入生命周期且其中一个是<code>&amp;self</code>或者<code>&amp;mut self</code>(说明是个对象的方法）；那么所有的输出生命周期参数将被赋予<code>self</code>的生命周期。</li>
+</ul>
+<ol start="12">
+<li>生命周期省略简记：</li>
+</ol>
+<ul>
+<li>只有一个输入参数</li>
+<li>有多个输入且其中一个是<code>&amp;self</code></li>
+</ul>
+<ol start="13">
+<li>Rust 中 struct 和其方法未封装到一起，C++相当于将 struct 和方法封装到类中。C 也有 struct 和函数，但不具有 trait 或接口功能。</li>
+<li>方法签名中，<code>&amp;self</code> 来替代 <code>rectangle: &amp;Rectangle</code>，因为该方法位于<code>impl Rectangle</code>上下文中，所以 Rust 知道<code>self</code>类型是<code>Rectangle</code></li>
+<li><code>impl</code>不以<code>self</code>作为参数的函数，被称为关联函数。是函数不是方法。(类似 C++的静态函数）)</li>
+<li><code>self</code>是 keyword. 方法中如果想改名字，可以这样传参<code>self1: &amp;Rectangle</code></li>
+<li>方法定义中的生命周期注解应用于关联函数，方法（含有<code>&amp;self</code>)可省略。</li>
+<li>静态生命周期： <code>&#39;static</code>，其生命周期能够存活于整个程序期间。所有的字符串字面值都拥有<code>&#39;static</code>生命周期。</li>
+<li>生命周期也是泛型<code>test&lt;&#39;a, T&gt;(x: &amp;&#39;a str, y: &amp;&#39;a str, ann: T) -&gt; &amp;&#39;a str where T: Display</code> 因为生命周期也是泛型，所以<code>&#39;a</code>和泛型参数<code>T</code>都位于函数名后的同一尖括号列表中。</li>
+<li>PhantomData Zero-sized type used to mark things that “act like” they own a T. 用在 ffi 封装指针上。</li>
+<li><code>fn longest&lt;&#39;a&gt;(x: &amp;&#39;a str, y: &amp;&#39;a str) -&gt; &amp;&#39;a str</code> 当具体的引用被传递给 longest 时，被 ‘a 所替代的具体生命周期是 x 的作用域与 y 的作用域相重叠的那一部分。</li>
+</ol>
+<h2 id="Traits"><a href="#Traits" class="headerlink" title="Traits"></a>Traits</h2><ol>
+<li>trait object 用来实现泛型函数里动他分发</li>
+<li>Trait Object，表现为 &amp;dyn Trait (无所有权） 或者 Box<dyn Trait>（有所有权）。</li>
+<li>在 Rust 里，类型的行为是通过 Trait 来赋予的，几乎所有的数据结构都实现了一个到多个 Trait。泛型编程时只有指定 trait bound(限制)才能使用接口。</li>
+<li>Rust 可以同时支持“静态分派(static dispatch)”和“动态分派(dynamic dispatch)”</li>
+<li>利用泛型：编译器会根据实际调用参数的类型不同，直接生成不同的函数版本，类似 C++ 的 template 一样。通过泛型函数实现的“多态”，是在编译阶段就已经确定好了调用哪个版本的函数，因此被称为“静态分派”。</li>
+<li>Rust 中的“动态分派”靠 Trait Object 来完成。</li>
+<li>指向 trait 的指针就是 Trait Object。如 Box<dyn Bird>.</li>
+<li><a href="https://zhuanlan.zhihu.com/p/23791817" target="_blank" rel="noopener">Object Safe</a>: 以下条件下 Trait Object 是无法构造出来：<ul>
+<li>当 trait 有 Self:Sized 约束时</li>
+<li>当函数中有 Self 类型作为参数或者返回类型时</li>
+<li>当函数第一个参数不是 self 时</li>
+<li>当函数有泛型参数时</li>
+</ul>
+</li>
+<li>使用工厂模式时， 如果 trait 返回 Self，例如：fn get(&amp;self) -&gt; Self; <code>fn get(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn InfoManager&gt;;</code> <a href="https://users.rust-lang.org/t/boxed-self-in-a-trait-method/1742/2" target="_blank" rel="noopener">link</a></li>
+<li>Rust 的动态分派，和 C++的动态分派，内存布局有所不同。在 C++里，如果一个类型里面有虚函数，那么每一个这种类型的变量，内部都包含一个指向虚函数表的地址。而在 Rust 里面，对象本身不包含指向虚函数表的指针，这个指针是存在于 trait object 指针里面。<code>如果一个类型实现了多个 trait，那么不同的 trait object 指向的虚函数表也不一样</code>。</li>
+<li>You can implement traits for types you didn’t define, whereas interfaces can only be implemented for your own classes.</li>
+<li><code>孤儿规则</code>(orphan rule)，简称 OR：”当你为某类型实现某 trait 的时候，必须要求类型或者 trait 至少有一个是在当前 crate 中定义的。 你不能为第三方的类型实现第三方的 trait 。</li>
+<li>Trait Object 的底层逻辑不过就是胖指针（fat pointer） —— 一个包含两个指针的数据结构。其中，一个指针指向数据本身，另一个则指向虚函数表（vtable）。在这张表里，包含具体类型的一些信息，如 size，aligment 以及一系列函数指针：<a href="https://mp.weixin.qq.com/s?__biz=MzA3NDM0ODQwMw==&mid=2649829038&idx=1&sn=b9459537ff93d2aee56b822d09d6a80a&chksm=8704acb2b07325a4a9c46f0bbac3df2db2fadeb2b7928e3949072f01df0d975eaecb36a6e8dd&scene=178&cur_album_id=1701598373151047686#rd" target="_blank" rel="noopener">link</a></li>
+</ol>
+<h2 id="Generic-Types-泛型"><a href="#Generic-Types-泛型" class="headerlink" title="Generic Types 泛型"></a>Generic Types 泛型</h2><ol start="3">
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzA3NDM0ODQwMw==&mid=2649829038&idx=1&sn=b9459537ff93d2aee56b822d09d6a80a&chksm=8704acb2b07325a4a9c46f0bbac3df2db2fadeb2b7928e3949072f01df0d975eaecb36a6e8dd&scene=178&cur_album_id=1701598373151047686#rd" target="_blank" rel="noopener">透过 Rust 探索系统的本原：泛型</a></li>
+<li>泛型编程，与其说是一种技术，不如说是一种思想。它不仅仅是类型参数化，函数泛型化那么简单，背后体现的是程序员的抽象思维能力。抽象思维的能力，和语言无关，和工具无关，它是一种在实践中不断探索，不断学习，不断历练得出的能力。支持泛型的语言并不能帮助你更好地做泛型编程，就好比给我一台斯坦威钢琴，并不意味着我就具备了演奏李斯特《钟》的能力。</li>
+<li>定义数据结构时： 参数化类型（Parameterized Type）</li>
+<li>定义函数时： 泛型函数（Generic Function）</li>
+<li>泛型函数: 静态分派（static dispatch 泛型为具体类型 T）和动态分派（dynamic dispatching 泛型为 trait object）</li>
+<li>编译器在编译时就能捕获到使用的类型，从而进行对应的处理，这被称之为静态分派（static dispatch）。</li>
+<li><img src="https://mmbiz.qpic.cn/mmbiz_png/SER9L29WQ0icrEMnzjvMNTzSZbaPboUnMUFBia3wHebkuX9e6Ah70g3CKC9v8bVicGeGJEq0Dd38AnesVU5ffXmdg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1" alt="静态分派和动态分派"></li>
+</ol>
+<h2 id="Iterators-and-Closures-迭代器与闭包"><a href="#Iterators-and-Closures-迭代器与闭包" class="headerlink" title="Iterators and Closures 迭代器与闭包"></a>Iterators and Closures 迭代器与闭包</h2><ol>
+<li>函数式编程：包含将函数作为参数值或其他函数的返回值，将函数赋值给变量以供之后执行等等。</li>
+<li>闭包：一个可以储存在变量里的类似函数的结构</li>
+<li>迭代器：一种处理元素序列的方式。</li>
+<li>Rust 的闭包是可以保存进变量或作为参数传递给其他函数的匿名函数（可以捕获环境的匿名函数）。可以在一个地方创建闭包，然后在不同的上下文中执行闭包运算。</li>
+<li>不同于函数，闭包允许捕获调用者作用域的值。</li>
+<li>在程序的一个位置指定某些代码，并只在程序的某处实际需要结果的时候执行这些代码。这正式闭包的用武之地。</li>
+<li>闭包通常很短，并只关联于小范围的上下文而非任意情境。在有限的上下文中，编译器能可靠的推断参数和返回值的类型。</li>
+<li>闭包语法：<code>let test = |num1, num2| { println(&quot;num1: {}&quot;,num1); num2 + 1 };</code> <code>|num1, num2|</code>是参数，<code>num2+1</code>是返回值。<code>let</code>表明<code>tet</code>是一个匿名函数的定义。不是调用匿名函数的返回值。<code>test</code>存储的是代码。</li>
+<li>带类型注解的闭包 <code>let test = |num1: u32, num2: u32| -&gt; u32 { println(&quot;num1: {}&quot;,num1); num2 + 1 };</code></li>
+<li>如果闭包体只有一行则大括号可以省略。例如： <code>let add_one = |x| x+1;</code></li>
+<li>如果调用多次闭包，编译器会根据第一次使用时的参数类型，如果对同一闭包使用不同类型会得到类型错误。</li>
+<li>…</li>
+<li></li>
+<li></li>
+<li>迭代器负责遍历序列中的灭一项和决定序列何时结束的逻辑。</li>
+<li>迭代器是惰性的，在调用方法使用之前它都不会有效果。</li>
+<li>迭代器的实现方式提供了对多种不同的序列使用相同逻辑的灵活性，减少了重复代码并消除了潜在的混乱。</li>
+<li>迭代器都实现了定义于标准库的 trait <code>Iterator</code>。包含<code>next</code>方法。</li>
+<li>迭代器的<code>sum</code>方法返回迭代的次数，会消费适配器。迭代器调用<code>sum</code>方法后不再允许使用迭代器，因为<code>sum</code>会获取迭代器所有权。</li>
+<li>迭代器的方法：<code>迭代器适配器(iterator adaptors)</code> 允许将迭代器变为不同类型的迭代器。</li>
+<li><code>v1.iter().map(|x| x+1);</code>迭代器适配器方法<code>map</code>使用闭包来调用每个元素以生成新的迭代器。这里的闭包创建了一个新的迭代器，对其中 vector 中的每个元素都被加 1。因为迭代器适配器是惰性的，这里需要消费迭代器。</li>
+<li><code>collect</code>方法会消费迭代器并将结果收集到一个数据结构中。</li>
+<li>下面例子会调用<code>map</code>方法创建一个新的迭代器，接着调用<code>collect</code>方法消费新迭代器并创建一个 vector。</li>
+</ol>
+<pre><code class="rust">let v1: Vec&lt;i32&gt; = vec![1, 2, 3];
+let v2: Vec&lt;_&gt; = v1.iter().map(|x| x + 1).collect();
+assert_eq!(v2, vec![2, 3, 4]);</code></pre>
+<h2 id="Smart-Pointers-智能指针"><a href="#Smart-Pointers-智能指针" class="headerlink" title="Smart Pointers 智能指针"></a>Smart Pointers 智能指针</h2><ol>
+<li>指针是一个包含内存地址的变量的通用概念，这个地址指向一些其他数据。</li>
+<li>Rust 最常见的指针是引用，他们没有任何额外的开销，所以应用的最多。</li>
+<li><code>智能指针(smart pointers)</code>是一类数据结构，它们的表现类似指针，但是也拥有额外的元数据和功能。</li>
+<li><code>引用计数(reference counting)</code> 是智能指针类型，其允许数据有多个所有者。引用计数智能指针记录总共有多少个所有者，并当没有任何所有者时负责清理数据。</li>
+<li>在 Rust 中，普通引用和智能指针的一个额外的区别是引用是一类只借用数据的指针；相反，在大部分情况下，智能指针拥有他们指向的数据。</li>
+<li>智能指针通常使用结构体实现。</li>
+<li>智能指针区别于常规结构体的显著特性在于其实现了<code>Deref</code>和<code>Drop</code>trait。</li>
+<li><code>Deref</code> trait 允许智能指针结构体实例表现的像引用一样，这样就可以编写既用于引用，又用于智能指针的代码。</li>
+<li><code>Drop</code> trait 允许我们自定义当智能指针离开作用域时运行的代码。</li>
+<li>很多库都拥有自己的智能指针而你也可以编写属于你的智能指针。</li>
+<li><code>Box&lt;T&gt;</code>用于在堆上分配值。</li>
+<li><code>Rc&lt;T&gt;</code>一个引用计数类型，其数据可以有多个所有者。</li>
+<li><code>Ref&lt;T&gt;</code>和<code>RefMut&lt;T&gt;</code>通过<code>RefCell&lt;T&gt;</code>访问。</li>
+<li>最简单直接的智能指针是<code>box</code>，其类型是<code>Box&lt;T&gt;</code>，box 允许你将一个值放在堆上而不是栈上，留在栈上的则是指向堆数据的指针。</li>
+<li>除了数据被存储在堆上而不是栈上之外，box 没有性能损失，不过也没有很多额外的功能。多用于<ul>
+<li>当有一个在编译时未知大小的类型，而又想要在需要确切大小的上下文中使用这个类型值的时候。（box 作为链表的指针实现链表）</li>
+<li>当有大量数据并希望在确保数据不被拷贝的情况下转移所有权的时候。</li>
+<li>当希望拥有一个值并只关心它的类型是否实现了特定 trait 而不是具体类型的时候</li>
+</ul>
+</li>
+<li><code>Box&lt;T&gt;</code>类型是一个只能智能指针，因为它实现了<code>Deref</code>trait，它允许<code>Box&lt;T&gt;</code>的值被当做引用对待。</li>
+<li>变量的所有权总是遵循相同的模式：将值赋给另一个变量时移动它。当持有堆中数据值的变量离开作用域时，其值将通过 drop 被清理掉，除非数据被移动为另一个变量所有。</li>
+<li>&amp; 符号就是 引用，允许你使用值但不获取其所有权。</li>
+<li>我们将获取引用作为函数参数称为 借用（borrowing）。</li>
+</ol>
+<h2 id="AsRef-and-Deref"><a href="#AsRef-and-Deref" class="headerlink" title="AsRef and Deref"></a>AsRef and Deref</h2><ol>
+<li>Deref is different from the other two: one type can only be derefed to one target type, and *d always has the same type.</li>
+<li>Borrow and AsRef both give a reference to the underlying data, but Borrow requires that the original type and the borrowed type have the same behavior, while AsRef does not have the same requirement.</li>
+<li>当我们在示例中输入 <em>y 时，Rust 事实上在底层运行了如下代码：`</em>(y.deref()) ` Rust 将 * 运算符替换为先调用 deref 方法再进行普通解引用的操作，如此我们便不用担心是否还需手动调用 deref 方法了。Rust 的这个特性可以让我们写出行为一致的代码，无论是面对的是常规引用还是实现了 Deref 的类型。</li>
+<li>解引用强制多态（deref coercions）是 Rust 在函数或方法传参上的一种便利。其将实现了 Deref 的类型的引用转换为原始类型通过 Deref 所能够转换的类型的引用。当这种特定类型的引用作为实参传递给和形参类型不同的函数或方法时，解引用强制多态将自动发生。这时会有一系列的 deref 方法被调用，把我们提供的类型转换成了参数所需的类型。</li>
+<li>解引用强制多态的加入使得 Rust 程序员编写<code>函数和方法</code>调用时无需增加过多显式使用 &amp; 和 * 的引用和解引用。这个功能也使得我们可以编写更多同时作用于引用或智能指针的代码。</li>
+<li><a href="https://wiki.jikexueyuan.com/project/rust-primer/intoborrow/deref.html" target="_blank" rel="noopener">deref</a></li>
+</ol>
+<h2 id="Concurrency-并发"><a href="#Concurrency-并发" class="headerlink" title="Concurrency 并发"></a>Concurrency 并发</h2><h2 id="Asynchronous-Programming"><a href="#Asynchronous-Programming" class="headerlink" title="Asynchronous Programming"></a>Asynchronous Programming</h2><ol>
+<li>async function 是一种 promise(sender). promise 调用 await 时，执行并返回 future(reciever).</li>
+</ol>
+<h2 id="异步编程"><a href="#异步编程" class="headerlink" title="异步编程"></a>异步编程</h2><ol>
+<li>主要作用： makes it possible for a thread to continue doing useful work while it waits for the value to become available. 例如：IO DMA</li>
+<li><a href="https://zhuanlan.zhihu.com/p/107820568" target="_blank" rel="noopener">深入浅出 Tokio</a></li>
+<li><a href="https://www.cnblogs.com/mhq-martin/p/9035640.html" target="_blank" rel="noopener">同步异步，阻塞非阻塞区别</a></li>
+<li>同步异步区别是在调用一个功能时，没得到<code>结果</code>之前，是否继续后续操作</li>
+<li>阻塞非阻塞区别是<code>线程/程序</code>在等待调用结果时，是否一直等待（挂起当前线程）</li>
+<li>阻塞和非阻塞关注的是程序在<code>等待调用结果</code>（消息，返回值）时的<code>状态</code>.</li>
+<li>进程线程锁是用来同步的，lock()函数是阻塞式，不拿到锁不返回，线程被阻塞。try_lock()是非阻塞式的，如果拿不到锁也返回。</li>
+<li>异步是目的，而多线程是实现这个目的的方法</li>
+<li>Async/Await is a paradigm that is orthogonal to threading, which means that it has the potential to run tasks on a single thread OR on multiple threads depending on the executor that is used.</li>
+<li>async/await 与多线程 <a href="https://qvault.io/rust/concurrency-in-rust-can-it-stack-up-against-gos-goroutines/" target="_blank" rel="noopener">link</a></li>
+</ol>
+<pre><code>use async_std::task;
+use futures::executor::block_on;
+use std::time::Duration;
+
+fn main() {
+    let future = async_main();
+    block_on(future); // 执行器单线程执行，总共需要15秒，多线程可能就快很多
+}
+
+async fn async_main() {
+    print_for_five(&quot;await&quot;).await; // await: function 阻塞
+
+    let async_one = print_for_five(&quot;async 1&quot;);
+    let async_two = print_for_five(&quot;async 2&quot;);
+
+    futures::join!(async_one, async_two);
+}
+
+async fn print_for_five(msg: &amp;str) {
+    for _ in 0..5 {
+        // task::sleep(Duration::from_secs(1)).await; //async 1, 2 循环执行，task await会异步阻塞
+        std::thread::sleep(std::time::Duration::from_secs(1)); //执行器单线程时顺序执行，因为不会阻塞
+        println!(&quot;one second has passed: {}&quot;, msg)
+    }
+}
+</code></pre><h2 id="Object-Oriented-面向对象"><a href="#Object-Oriented-面向对象" class="headerlink" title="Object Oriented 面向对象"></a>Object Oriented 面向对象</h2><h2 id="Macros-宏"><a href="#Macros-宏" class="headerlink" title="Macros 宏"></a>Macros 宏</h2><ol>
+<li>从根本上来说，宏是一种为写其他代码而写代码的方式，即所谓的 元编程（metaprogramming）</li>
+<li>元编程对于减少大量编写和维护的代码是非常有用的，它也扮演了函数扮演的角色。但宏有一些函数所没有的附加能力。</li>
+<li>derive 属性，其生成各种 trait 的实现</li>
+<li>一个函数标签必须声明函数参数个数和类型。相比之下，宏能够接受不同数量的参数：用一个参数调用 println!(“hello”) 或用两个参数调用 println!(“hello {}”, name) 。</li>
+<li>宏可以在编译器翻译代码前展开，例如，宏可以在一个给定类型上实现 trait 。而函数则不行，因为函数是在运行时被调用，同时 trait 需要在编译时实现。</li>
+<li>实现一个宏而不是函数的消极面是宏定义要比函数定义更复杂，因为你正在编写生成 Rust 代码的 Rust 代码。由于这样的间接性，宏定义通常要比函数定义更难阅读、理解以及维护。</li>
+<li>hello_macro(不是宏) 中定义的 trait(可包含多个接口）， hello_macro_derive 中实现的过程式宏。在一个类型上指定 #[derive(HelloMacro)] 时，hello_macro_derive 函数将会被调用。</li>
+</ol>
+<h2 id="Program-with-C-C"><a href="#Program-with-C-C" class="headerlink" title="Program with C/C++"></a>Program with C/C++</h2><ol>
+<li><a href="https://doc.rust-lang.org/nomicon/index.html" target="_blank" rel="noopener">Rustonomicon</a></li>
+<li><a href="https://github.com/rust-lang/rust-bindgen" target="_blank" rel="noopener">rust bindgen</a></li>
+<li><a href="https://doc.rust-lang.org/stable/embedded-book/interoperability/index.html" target="_blank" rel="noopener">rust with C</a></li>
+</ol>
+<h2 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h2><ol>
+<li><a href="https://docs.rs/env_logger/0.8.3/env_logger/" target="_blank" rel="noopener">env_logger</a></li>
+<li>actix_web 使用了 env_logger <a href="https://github.com/actix/actix-web/blob/master/src/middleware/logger.rs#L51" target="_blank" rel="noopener">actix_web::middleware::Logger</a></li>
+</ol>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jiaxiyangbit@126.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2016-2024 Jia Xiyang
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 540px;
+    }
+    .nav.fullscreen {
+        margin-left: -540px;
+    }
+    .nav-left {
+        width: 150px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>

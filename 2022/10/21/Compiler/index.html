@@ -1,0 +1,2223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Compiler | Jia Xiyang</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="Compiler | Jia Xiyang">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人简介贾夕阳毕业于北京理工大学，目前从事人工智能软件架构工作 联系方式 mail: jiaxiyangbit@126.com qq: 312567150">
+<meta property="og:type" content="website">
+<meta property="og:title" content="about">
+<meta property="og:url" content="http://yoursite.com/about/index.html">
+<meta property="og:site_name" content="Jia Xiyang">
+<meta property="og:description" content="个人简介贾夕阳毕业于北京理工大学，目前从事人工智能软件架构工作 联系方式 mail: jiaxiyangbit@126.com qq: 312567150">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-27T05:54:48.000Z">
+<meta property="article:modified_time" content="2023-06-20T07:37:37.567Z">
+<meta property="article:author" content="贾夕阳">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/tomoto.jpeg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/zenbum.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+</div>
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/code_slogon.jpg" />
+</a>
+<div class="author">
+    <span>贾夕阳</span>
+</div>
+
+<div class="icon">
+    
+        
+    
+        
+        <a title="github" href="https://github.com/jiaxiyang" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-github"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+        <a title="email" href="mailto:jiaxiyangbit@126.com" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-email"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+    
+        
+    
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li><div class="all active" data-rel="All">All<small>(134)</small></div></li>
+    
+        
+            
+            <li><div data-rel="Summary">Summary<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="Program"><i class="fold iconfont icon-right"></i>Program<small>(30)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="Program<--->AI">AI<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Basic">Basic<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Cpp">Cpp<small>(11)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Cuda">Cuda<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Database">Database<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Design">Design<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->FFmpeg">FFmpeg<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Gstreamer">Gstreamer<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->PLT">PLT<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Python">Python<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Rust">Rust<small>(5)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Shell">Shell<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="Tools"><i class="fold iconfont icon-right"></i>Tools<small>(16)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="Tools<--->Bash">Bash<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Blog">Blog<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Chrome">Chrome<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->CI">CI<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Clang">Clang<small>(2)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Cmake">Cmake<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Docker">Docker<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Emacs">Emacs<small>(3)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->git">git<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Git">Git<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->gitlab">gitlab<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Tmux">Tmux<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Zsh">Zsh<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="Algorithm"><i class="fold iconfont icon-right"></i>Algorithm<small>(3)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="Algorithm<--->AI">AI<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Algorithm<--->Kalman">Kalman<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="Computer"><i class="fold iconfont icon-right"></i>Computer<small>(3)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="Computer<--->GPU">GPU<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Computer<--->Network">Network<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Computer<--->OS">OS<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="Emacs">Emacs<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    
+    </div>
+    <div></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="134">
+<input type="hidden" id="yelog_site_word_count" value="110.7k">
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="https://jiaxiyang.github.io/">贾夕阳</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" />
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">Outline</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>AI</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Algorithm</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Bash</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Blog</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>C++</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Cargo</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>CI</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Clang format</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Clang Tidy</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Cmake</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Concurrency</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Cpp</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Cuda</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Database</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Design</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Docker</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Doxygen</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Eigen</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Emacs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>FFmpeg</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Filters</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>git</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Git</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>gitlab</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Gstreamer</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Jetson</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Links</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Memory</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Network</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>OS</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Paradigm</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Program</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Python</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Redis</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Rust</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Shell</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>TensorRT</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Tmux</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Tools</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>UML</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Vim</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>YAML</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Zsh</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <div id="local-search-result">
+
+    </div>
+    
+    <nav id="title-list-nav">
+        
+        <a id="top" class="All Summary "
+           href="/2021/11/29/Links/"
+           data-tag="Links"
+           data-author="" >
+            <span class="post-title" title="Links">Links</span>
+            <span class="post-date" title="2021-11-29 12:48:48">2021/11/29</span>
+        </a>
+        
+        <a id="top" class="All Tools Bash "
+           href="/2021/06/29/Bash-usage/"
+           data-tag="Bash"
+           data-author="" >
+            <span class="post-title" title="Tools and Linux Command">Tools and Linux Command</span>
+            <span class="post-date" title="2021-06-29 20:39:09">2021/06/29</span>
+        </a>
+        
+        <a id="top" class="All Summary "
+           href="/2021/10/03/Programming-experience/"
+           data-tag="Program"
+           data-author="" >
+            <span class="post-title" title="Programming experience">Programming experience</span>
+            <span class="post-date" title="2021-10-03 17:02:35">2021/10/03</span>
+        </a>
+        
+        <a id="top" class="All Program Cpp "
+           href="/2021/09/20/Cpp-grammar/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Cpp grammar">Cpp grammar</span>
+            <span class="post-date" title="2021-09-20 14:28:44">2021/09/20</span>
+        </a>
+        
+        <a id="top" class="All "
+           href="/2022/10/09/bling/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="bling">bling</span>
+            <span class="post-date" title="2022-10-09 11:21:20">2022/10/09</span>
+        </a>
+        
+        <a id="top" class="All Program Design "
+           href="/2020/08/03/Software-design/"
+           data-tag="Design"
+           data-author="" >
+            <span class="post-title" title="Software design">Software design</span>
+            <span class="post-date" title="2020-08-03 09:31:41">2020/08/03</span>
+        </a>
+        
+        <a id="top" class="All "
+           href="/2022/07/27/software-features/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="software-features">software-features</span>
+            <span class="post-date" title="2022-07-27 19:41:17">2022/07/27</span>
+        </a>
+        
+        <a id="top" class="All Program Cpp "
+           href="/2022/02/03/Cpp-debug/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Debug">Debug</span>
+            <span class="post-date" title="2022-02-03 17:02:35">2022/02/03</span>
+        </a>
+        
+        <a id="top" class="All Program Cpp "
+           href="/2021/08/24/Cpp-Profiling/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Profiling">Profiling</span>
+            <span class="post-date" title="2021-08-24 22:30:52">2021/08/24</span>
+        </a>
+        
+        <a id="top" class="All "
+           href="/2022/10/21/Compiler/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Compiler">Compiler</span>
+            <span class="post-date" title="2022-10-21 12:08:03">2022/10/21</span>
+        </a>
+        
+        <a id="top" class="All Tools Emacs "
+           href="/2021/09/30/Amazing-emacs/"
+           data-tag="Emacs"
+           data-author="" >
+            <span class="post-title" title="Amazing emacs">Amazing emacs</span>
+            <span class="post-date" title="2021-09-30 09:48:34">2021/09/30</span>
+        </a>
+        
+        <a id="top" class="All Program Rust "
+           href="/2021/07/11/Rust-grammar/"
+           data-tag="Rust"
+           data-author="" >
+            <span class="post-title" title="Rust grammar">Rust grammar</span>
+            <span class="post-date" title="2021-07-11 18:34:03">2021/07/11</span>
+        </a>
+        
+        <a id="top" class="All Computer OS "
+           href="/2020/08/11/OS/"
+           data-tag="OS"
+           data-author="" >
+            <span class="post-title" title="OS">OS</span>
+            <span class="post-date" title="2020-08-11 12:10:18">2020/08/11</span>
+        </a>
+        
+        <a id="top" class="All Program Shell "
+           href="/2020/11/28/Shell-script/"
+           data-tag="Shell"
+           data-author="" >
+            <span class="post-title" title="Shell Script">Shell Script</span>
+            <span class="post-date" title="2020-11-28 10:38:00">2020/11/28</span>
+        </a>
+        
+        <a id="top" class="All Program "
+           href="/2022/03/03/UML/"
+           data-tag="UML"
+           data-author="" >
+            <span class="post-title" title="UML">UML</span>
+            <span class="post-date" title="2022-03-03 02:32:22">2022/03/03</span>
+        </a>
+        
+        <a id="top" class="All "
+           href="/2022/10/18/explore/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="explore">explore</span>
+            <span class="post-date" title="2022-10-18 19:35:20">2022/10/18</span>
+        </a>
+        
+        <a id="top" class="All Tools CI "
+           href="/2022/02/15/Gitlab-CI/"
+           data-tag="Tools,CI"
+           data-author="" >
+            <span class="post-title" title="Gitlab-CI">Gitlab-CI</span>
+            <span class="post-date" title="2022-02-15 23:27:31">2022/02/15</span>
+        </a>
+        
+        <a id="top" class="All "
+           href="/2022/08/19/Jenkins/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Jenkins">Jenkins</span>
+            <span class="post-date" title="2022-08-19 12:59:26">2022/08/19</span>
+        </a>
+        
+        <a id="top" class="All Tools Tmux "
+           href="/2020/12/07/Tmux/"
+           data-tag="Tmux"
+           data-author="" >
+            <span class="post-title" title="Tmux config">Tmux config</span>
+            <span class="post-date" title="2020-12-07 15:19:28">2020/12/07</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/20/basic_data_op/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="basic_data_op">basic_data_op</span>
+            <span class="post-date" title="2023-06-20 15:37:37">2023/06/20</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/12/onnxruntime/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="onnxruntime">onnxruntime</span>
+            <span class="post-date" title="2023-06-12 14:39:10">2023/06/12</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/12/Quantization/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Quantization">Quantization</span>
+            <span class="post-date" title="2023-06-12 11:43:36">2023/06/12</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/09/pytorch/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="pytorch">pytorch</span>
+            <span class="post-date" title="2023-06-09 15:28:49">2023/06/09</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/08/colab/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="colab">colab</span>
+            <span class="post-date" title="2023-06-08 17:16:31">2023/06/08</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/08/roadmap/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="roadmap">roadmap</span>
+            <span class="post-date" title="2023-06-08 13:04:42">2023/06/08</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/08/AI-ops/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="AI-ops">AI-ops</span>
+            <span class="post-date" title="2023-06-08 10:21:24">2023/06/08</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/01/chatgpt/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="chatgpt">chatgpt</span>
+            <span class="post-date" title="2023-06-01 10:23:18">2023/06/01</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/05/10/RISC-V/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="RISC-V">RISC-V</span>
+            <span class="post-date" title="2023-05-10 16:37:46">2023/05/10</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/05/10/benchmark/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="benchmark">benchmark</span>
+            <span class="post-date" title="2023-05-10 15:55:27">2023/05/10</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/05/09/hightway/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="hightway">hightway</span>
+            <span class="post-date" title="2023-05-09 20:33:10">2023/05/09</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/03/23/neon/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="neon">neon</span>
+            <span class="post-date" title="2023-03-23 16:55:28">2023/03/23</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/03/06/cross-compile/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="cross-compile">cross-compile</span>
+            <span class="post-date" title="2023-03-06 20:42:24">2023/03/06</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/02/17/TVM/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="TVM">TVM</span>
+            <span class="post-date" title="2023-02-17 15:46:22">2023/02/17</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/01/16/JFrog/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="JFrog">JFrog</span>
+            <span class="post-date" title="2023-01-16 14:23:18">2023/01/16</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/01/13/Cpp20/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Cpp20">Cpp20</span>
+            <span class="post-date" title="2023-01-13 15:31:55">2023/01/13</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/12/26/BPF/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="BPF">BPF</span>
+            <span class="post-date" title="2022-12-26 16:52:00">2022/12/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/12/02/unix/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="unix">unix</span>
+            <span class="post-date" title="2022-12-02 09:14:27">2022/12/02</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/11/15/version/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="version">version</span>
+            <span class="post-date" title="2022-11-15 10:21:58">2022/11/15</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/30/github-ci/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="github-ci">github-ci</span>
+            <span class="post-date" title="2022-10-30 21:35:59">2022/10/30</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/25/Coroutine/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Coroutine">Coroutine</span>
+            <span class="post-date" title="2022-10-25 19:55:32">2022/10/25</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/21/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="开发方法">开发方法</span>
+            <span class="post-date" title="2022-10-21 16:57:14">2022/10/21</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/20/KataOS/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="KataOS">KataOS</span>
+            <span class="post-date" title="2022-10-20 13:11:40">2022/10/20</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/15/color/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="color">color</span>
+            <span class="post-date" title="2022-10-15 15:43:06">2022/10/15</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/14/Markdown/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Markdown">Markdown</span>
+            <span class="post-date" title="2022-10-14 15:38:52">2022/10/14</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/09/v4l2/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="v4l2">v4l2</span>
+            <span class="post-date" title="2022-10-09 17:22:03">2022/10/09</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/09/Life-experience/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Life-experience">Life-experience</span>
+            <span class="post-date" title="2022-10-09 10:13:03">2022/10/09</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/30/log/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="log">log</span>
+            <span class="post-date" title="2022-09-30 10:46:58">2022/09/30</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/29/wallpaper/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="wallpaper">wallpaper</span>
+            <span class="post-date" title="2022-09-29 14:39:45">2022/09/29</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/27/Pandoc/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Pandoc">Pandoc</span>
+            <span class="post-date" title="2022-09-27 11:08:48">2022/09/27</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/26/Document/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Document">Document</span>
+            <span class="post-date" title="2022-09-26 14:53:29">2022/09/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/26/github/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="github">github</span>
+            <span class="post-date" title="2022-09-26 11:27:54">2022/09/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/25/LaTeX/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="LaTeX">LaTeX</span>
+            <span class="post-date" title="2022-09-25 14:25:17">2022/09/25</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/15/DataStructure/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="DataStructure">DataStructure</span>
+            <span class="post-date" title="2022-09-15 21:17:10">2022/09/15</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/14/J5/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="J5">J5</span>
+            <span class="post-date" title="2022-09-14 10:29:39">2022/09/14</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/07/SOA/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SOA">SOA</span>
+            <span class="post-date" title="2022-09-07 10:45:11">2022/09/07</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/07/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%9B%BE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="软件架构图">软件架构图</span>
+            <span class="post-date" title="2022-09-07 10:23:23">2022/09/07</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/06/AUTOSAR/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="AUTOSAR">AUTOSAR</span>
+            <span class="post-date" title="2022-09-06 20:25:30">2022/09/06</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/06/%E5%9F%9F%E6%8E%A7%E5%88%B6%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="域控制器">域控制器</span>
+            <span class="post-date" title="2022-09-06 19:37:11">2022/09/06</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/06/ROS2/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="ROS2">ROS2</span>
+            <span class="post-date" title="2022-09-06 13:39:31">2022/09/06</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/06/CANBUS/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="CANBUS">CANBUS</span>
+            <span class="post-date" title="2022-09-06 10:40:49">2022/09/06</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/06/IDL/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="IDL">IDL</span>
+            <span class="post-date" title="2022-09-06 10:22:41">2022/09/06</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/05/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="消息中间件">消息中间件</span>
+            <span class="post-date" title="2022-09-05 20:32:52">2022/09/05</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/05/DDS/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="DDS">DDS</span>
+            <span class="post-date" title="2022-09-05 20:19:17">2022/09/05</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/05/VSCode/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="VSCode">VSCode</span>
+            <span class="post-date" title="2022-09-05 17:57:52">2022/09/05</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/08/18/OpenCV/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="OpenCV">OpenCV</span>
+            <span class="post-date" title="2022-08-18 19:43:20">2022/08/18</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/08/13/Vim/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Vim">Vim</span>
+            <span class="post-date" title="2022-08-13 14:30:50">2022/08/13</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/07/30/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%B8%88/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="系统架构师">系统架构师</span>
+            <span class="post-date" title="2022-07-30 19:36:08">2022/07/30</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/07/16/CPM/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="CPM">CPM</span>
+            <span class="post-date" title="2022-07-16 15:53:20">2022/07/16</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/07/07/Clang/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Clang">Clang</span>
+            <span class="post-date" title="2022-07-07 13:58:12">2022/07/07</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/07/05/Bazel/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Bazel">Bazel</span>
+            <span class="post-date" title="2022-07-05 20:48:35">2022/07/05</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/07/05/Ninja/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Ninja">Ninja</span>
+            <span class="post-date" title="2022-07-05 20:26:50">2022/07/05</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/07/04/%E6%95%B0%E6%8D%AE%E8%90%BD%E7%9B%98/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="数据落盘">数据落盘</span>
+            <span class="post-date" title="2022-07-04 21:14:07">2022/07/04</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/06/30/Model-deploy/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Model-deploy">Model-deploy</span>
+            <span class="post-date" title="2022-06-30 14:37:15">2022/06/30</span>
+        </a>
+        
+        <a  class="All Tools gitlab "
+           href="/2022/06/30/gitlab/"
+           data-tag="gitlab"
+           data-author="" >
+            <span class="post-title" title="gitlab">gitlab</span>
+            <span class="post-date" title="2022-06-30 10:30:26">2022/06/30</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/06/24/magit/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="magit">magit</span>
+            <span class="post-date" title="2022-06-24 10:26:33">2022/06/24</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/05/19/Cpp-awesome-src/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Cpp awesome src">Cpp awesome src</span>
+            <span class="post-date" title="2022-05-19 19:42:56">2022/05/19</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/05/19/taskflow/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="taskflow">taskflow</span>
+            <span class="post-date" title="2022-05-19 15:39:43">2022/05/19</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/26/windows-docker/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="windows-docker">windows-docker</span>
+            <span class="post-date" title="2022-04-26 14:37:25">2022/04/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/26/docker-windows/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="windows WSL2">windows WSL2</span>
+            <span class="post-date" title="2022-04-26 13:16:59">2022/04/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/26/windows-WSL2/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="windows WSL2">windows WSL2</span>
+            <span class="post-date" title="2022-04-26 13:16:59">2022/04/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/18/sphinx-doc/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="sphinx-doc">sphinx-doc</span>
+            <span class="post-date" title="2022-04-18 10:59:13">2022/04/18</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/14/onnx-md/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="onnx">onnx</span>
+            <span class="post-date" title="2022-04-14 13:45:11">2022/04/14</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/13/AI-models/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="AI-models">AI-models</span>
+            <span class="post-date" title="2022-04-13 16:45:08">2022/04/13</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/11/AI-performance/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="AI-chip-performance">AI-chip-performance</span>
+            <span class="post-date" title="2022-04-11 16:30:54">2022/04/11</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/08/ChangeLog/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="ChangeLog">ChangeLog</span>
+            <span class="post-date" title="2022-04-08 17:08:27">2022/04/08</span>
+        </a>
+        
+        <a  class="All Tools Clang "
+           href="/2022/04/07/clang-tidy/"
+           data-tag="Tools,Clang Tidy"
+           data-author="" >
+            <span class="post-title" title="clang-tidy">clang-tidy</span>
+            <span class="post-date" title="2022-04-07 12:14:50">2022/04/07</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2022/04/02/gtest/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="gtest">gtest</span>
+            <span class="post-date" title="2022-04-02 07:06:28">2022/04/02</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/03/31/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E4%B8%93%E4%B8%9A%E6%9C%AF%E8%AF%AD/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="自动驾驶专业术语">自动驾驶专业术语</span>
+            <span class="post-date" title="2022-03-31 02:24:23">2022/03/31</span>
+        </a>
+        
+        <a  class="All Program "
+           href="/2022/03/26/eigen/"
+           data-tag="Eigen"
+           data-author="" >
+            <span class="post-title" title="eigen">eigen</span>
+            <span class="post-date" title="2022-03-26 07:08:50">2022/03/26</span>
+        </a>
+        
+        <a  class="All Program "
+           href="/2022/03/26/yaml/"
+           data-tag="YAML"
+           data-author="" >
+            <span class="post-title" title="yaml">yaml</span>
+            <span class="post-date" title="2022-03-26 04:00:17">2022/03/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/03/18/samba/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="samba">samba</span>
+            <span class="post-date" title="2022-03-18 01:43:12">2022/03/18</span>
+        </a>
+        
+        <a  class="All Program Cuda "
+           href="/2022/03/10/Cuda/"
+           data-tag="Cuda"
+           data-author="" >
+            <span class="post-title" title="Cuda">Cuda</span>
+            <span class="post-date" title="2022-03-10 02:17:38">2022/03/10</span>
+        </a>
+        
+        <a  class="All Program "
+           href="/2022/03/03/Doxygen/"
+           data-tag="Doxygen"
+           data-author="" >
+            <span class="post-title" title="Doxygen">Doxygen</span>
+            <span class="post-date" title="2022-03-03 03:58:22">2022/03/03</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/03/02/Nvidia-NPP/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Nvidia-NPP">Nvidia-NPP</span>
+            <span class="post-date" title="2022-03-02 11:30:48">2022/03/02</span>
+        </a>
+        
+        <a  class="All Algorithm "
+           href="/2022/02/05/image_process/"
+           data-tag="Algorithm"
+           data-author="" >
+            <span class="post-title" title="Image Process">Image Process</span>
+            <span class="post-date" title="2022-02-05 20:05:33">2022/02/05</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/10/05/resume/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="resume">resume</span>
+            <span class="post-date" title="2021-10-05 12:24:06">2021/10/05</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2021/09/13/Plugin-System/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="plugins">plugins</span>
+            <span class="post-date" title="2021-09-13 22:17:40">2021/09/13</span>
+        </a>
+        
+        <a  class="All Program PLT "
+           href="/2021/08/22/Programming-Paradigm/"
+           data-tag="Paradigm"
+           data-author="" >
+            <span class="post-title" title="Programming-Paradigm">Programming-Paradigm</span>
+            <span class="post-date" title="2021-08-22 08:23:46">2021/08/22</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/08/16/Awesome-Books/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Awesome Books">Awesome Books</span>
+            <span class="post-date" title="2021-08-16 22:39:38">2021/08/16</span>
+        </a>
+        
+        <a  class="All Tools Cmake "
+           href="/2021/07/28/Cmake/"
+           data-tag="Cmake"
+           data-author="" >
+            <span class="post-title" title="Modern Cmake">Modern Cmake</span>
+            <span class="post-date" title="2021-07-28 08:56:09">2021/07/28</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2021/07/20/Cpp-concurrency-in-action/"
+           data-tag="Cpp,Concurrency"
+           data-author="" >
+            <span class="post-title" title="Cpp-concurrency-in-action">Cpp-concurrency-in-action</span>
+            <span class="post-date" title="2021-07-20 09:05:48">2021/07/20</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/06/27/Elisp/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Elisp">Elisp</span>
+            <span class="post-date" title="2021-06-27 22:37:13">2021/06/27</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/06/22/Haskell/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Haskell">Haskell</span>
+            <span class="post-date" title="2021-06-22 10:47:46">2021/06/22</span>
+        </a>
+        
+        <a  class="All Tools Chrome "
+           href="/2021/05/21/Chrome-config/"
+           data-tag="Tools"
+           data-author="" >
+            <span class="post-title" title="Chrome shortcuts">Chrome shortcuts</span>
+            <span class="post-date" title="2021-05-21 15:56:05">2021/05/21</span>
+        </a>
+        
+        <a  class="All Computer GPU "
+           href="/2021/05/14/Jetson-test/"
+           data-tag="Jetson"
+           data-author="" >
+            <span class="post-title" title="Jetson test">Jetson test</span>
+            <span class="post-date" title="2021-05-14 21:33:07">2021/05/14</span>
+        </a>
+        
+        <a  class="All Algorithm AI "
+           href="/2021/05/10/3d_detection/"
+           data-tag="AI"
+           data-author="" >
+            <span class="post-title" title="3d Detection">3d Detection</span>
+            <span class="post-date" title="2021-05-10 12:48:48">2021/05/10</span>
+        </a>
+        
+        <a  class="All Program AI "
+           href="/2021/04/13/TensorRT/"
+           data-tag="TensorRT"
+           data-author="" >
+            <span class="post-title" title="TensorRT">TensorRT</span>
+            <span class="post-date" title="2021-04-13 21:35:32">2021/04/13</span>
+        </a>
+        
+        <a  class="All Program Rust "
+           href="/2021/03/22/Actix/"
+           data-tag="Rust"
+           data-author="" >
+            <span class="post-title" title="Actix">Actix</span>
+            <span class="post-date" title="2021-03-22 09:53:35">2021/03/22</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/03/16/Web/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Web">Web</span>
+            <span class="post-date" title="2021-03-16 22:27:02">2021/03/16</span>
+        </a>
+        
+        <a  class="All Program Python "
+           href="/2021/03/15/Pybind11/"
+           data-tag="Python"
+           data-author="" >
+            <span class="post-title" title="Pybind11">Pybind11</span>
+            <span class="post-date" title="2021-03-15 11:33:25">2021/03/15</span>
+        </a>
+        
+        <a  class="All Tools Emacs "
+           href="/2021/03/12/First-Emacs-Plugin/"
+           data-tag="Emacs"
+           data-author="" >
+            <span class="post-title" title="First-Emacs-Plugin">First-Emacs-Plugin</span>
+            <span class="post-date" title="2021-03-12 08:33:44">2021/03/12</span>
+        </a>
+        
+        <a  class="All Tools Git "
+           href="/2021/03/05/git-biset-to-debug/"
+           data-tag="Git"
+           data-author="" >
+            <span class="post-title" title="Git bisect to debug">Git bisect to debug</span>
+            <span class="post-date" title="2021-03-05 09:51:13">2021/03/05</span>
+        </a>
+        
+        <a  class="All Program FFmpeg "
+           href="/2021/02/23/FFmpeg/"
+           data-tag="FFmpeg"
+           data-author="" >
+            <span class="post-title" title="FFmpeg">FFmpeg</span>
+            <span class="post-date" title="2021-02-23 20:21:13">2021/02/23</span>
+        </a>
+        
+        <a  class="All Program Gstreamer "
+           href="/2021/02/23/Gstreamer/"
+           data-tag="Gstreamer"
+           data-author="" >
+            <span class="post-title" title="Gstreamer">Gstreamer</span>
+            <span class="post-date" title="2021-02-23 08:43:01">2021/02/23</span>
+        </a>
+        
+        <a  class="All Tools Docker "
+           href="/2021/02/02/Docker/"
+           data-tag="Docker"
+           data-author="" >
+            <span class="post-title" title="Docker">Docker</span>
+            <span class="post-date" title="2021-02-02 18:29:14">2021/02/02</span>
+        </a>
+        
+        <a  class="All Algorithm Kalman "
+           href="/2021/01/30/Kalman-Filters/"
+           data-tag="Filters"
+           data-author="" >
+            <span class="post-title" title="Kalman Filters">Kalman Filters</span>
+            <span class="post-date" title="2021-01-30 11:43:37">2021/01/30</span>
+        </a>
+        
+        <a  class="All Program Database "
+           href="/2021/01/11/Redis/"
+           data-tag="Redis,Database"
+           data-author="" >
+            <span class="post-title" title="Redis">Redis</span>
+            <span class="post-date" title="2021-01-11 21:27:34">2021/01/11</span>
+        </a>
+        
+        <a  class="All "
+           href="/2020/11/16/Python-grammar/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Python-grammar">Python-grammar</span>
+            <span class="post-date" title="2020-11-16 21:39:20">2020/11/16</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2020/10/06/Eclipse-Cpp-IDE-on-Windows10/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Eclipse Cpp">Eclipse Cpp</span>
+            <span class="post-date" title="2020-10-06 09:32:38">2020/10/06</span>
+        </a>
+        
+        <a  class="All Tools Emacs "
+           href="/2020/09/30/Emacs-on-Windows10/"
+           data-tag="Emacs"
+           data-author="" >
+            <span class="post-title" title="Emacs on Windows10">Emacs on Windows10</span>
+            <span class="post-date" title="2020-09-30 08:05:00">2020/09/30</span>
+        </a>
+        
+        <a  class="All Tools git "
+           href="/2020/09/17/git/"
+           data-tag="git"
+           data-author="" >
+            <span class="post-title" title="git">git</span>
+            <span class="post-date" title="2020-09-17 20:46:21">2020/09/17</span>
+        </a>
+        
+        <a  class="All Emacs "
+           href="/2020/09/05/How-to-use-org-mode/"
+           data-tag="Emacs"
+           data-author="" >
+            <span class="post-title" title="How to use org mode">How to use org mode</span>
+            <span class="post-date" title="2020-09-05 23:05:33">2020/09/05</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2020/08/18/Bjarny-Stroustrup-Cpp/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Bjarny Stroustrup cpp">Bjarny Stroustrup cpp</span>
+            <span class="post-date" title="2020-08-18 09:34:33">2020/08/18</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2020/08/14/Effective-modern-cpp/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Effective modern cpp">Effective modern cpp</span>
+            <span class="post-date" title="2020-08-14 10:56:45">2020/08/14</span>
+        </a>
+        
+        <a  class="All Computer Network "
+           href="/2020/08/11/Network/"
+           data-tag="Network"
+           data-author="" >
+            <span class="post-title" title="Network">Network</span>
+            <span class="post-date" title="2020-08-11 12:11:56">2020/08/11</span>
+        </a>
+        
+        <a  class="All Program Rust "
+           href="/2020/08/05/Cargo/"
+           data-tag="Rust,Cargo"
+           data-author="" >
+            <span class="post-title" title="Cargo">Cargo</span>
+            <span class="post-date" title="2020-08-05 08:58:58">2020/08/05</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2020/07/27/Cpp-to-c-interface/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Cpp to c interface">Cpp to c interface</span>
+            <span class="post-date" title="2020-07-27 22:43:02">2020/07/27</span>
+        </a>
+        
+        <a  class="All Program Basic "
+           href="/2020/07/26/Memory-concept-and-issues/"
+           data-tag="Rust,Memory,C++"
+           data-author="" >
+            <span class="post-title" title="Memory concept and issues">Memory concept and issues</span>
+            <span class="post-date" title="2020-07-26 15:34:35">2020/07/26</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2020/07/26/Dangling-pointer/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Dangling pointer">Dangling pointer</span>
+            <span class="post-date" title="2020-07-26 09:18:37">2020/07/26</span>
+        </a>
+        
+        <a  class="All Tools Zsh "
+           href="/2020/07/22/Zsh-config/"
+           data-tag="Zsh"
+           data-author="" >
+            <span class="post-title" title="Zsh config">Zsh config</span>
+            <span class="post-date" title="2020-07-22 15:19:28">2020/07/22</span>
+        </a>
+        
+        <a  class="All Program Rust "
+           href="/2020/07/10/Why-Rust/"
+           data-tag="Rust"
+           data-author="" >
+            <span class="post-title" title="Why Rust">Why Rust</span>
+            <span class="post-date" title="2020-07-10 21:45:08">2020/07/10</span>
+        </a>
+        
+        <a  class="All Program Rust "
+           href="/2020/07/09/Rust-start/"
+           data-tag="Rust"
+           data-author="" >
+            <span class="post-title" title="Rust start">Rust start</span>
+            <span class="post-date" title="2020-07-09 08:56:09">2020/07/09</span>
+        </a>
+        
+        <a  class="All Tools Clang "
+           href="/2020/07/01/Clang-format-usage/"
+           data-tag="Emacs,Clang format,Vim"
+           data-author="" >
+            <span class="post-title" title="Clang-format-usage">Clang-format-usage</span>
+            <span class="post-date" title="2020-07-01 13:16:38">2020/07/01</span>
+        </a>
+        
+        <a  class="All Tools Blog "
+           href="/2020/06/26/How-to-start-writing-blog/"
+           data-tag="Blog"
+           data-author="" >
+            <span class="post-title" title="write blog">write blog</span>
+            <span class="post-date" title="2020-06-26 14:52:10">2020/06/26</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-Compiler" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">Compiler</h1>
+    
+    <div class="article-meta">
+        
+        <span class="top"><a>置顶</a></span>
+        
+        
+        
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2023-06-20 15:37:37'>2022-10-21 12:08</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>Count:3.9k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#编译器一般构成"><span class="toc-text">编译器一般构成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#base"><span class="toc-text">base</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#link"><span class="toc-text">link</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#环境变量"><span class="toc-text">环境变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#LD-PRELOAD"><span class="toc-text">LD_PRELOAD</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LD-LIBRARY-PATH"><span class="toc-text">LD_LIBRARY_PATH</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LD-DEBUG"><span class="toc-text">LD_DEBUG</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Binary-Utils"><span class="toc-text">Binary Utils</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Google-bloaty-https-github-com-google-bloaty"><span class="toc-text">Google bloaty(https:&#x2F;&#x2F;github.com&#x2F;google&#x2F;bloaty)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#elfutils"><span class="toc-text">elfutils</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GNU-binutils"><span class="toc-text">GNU binutils</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#glibc-初始化"><span class="toc-text">glibc 初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GCC-编译选项"><span class="toc-text">GCC 编译选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#other"><span class="toc-text">other</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#buildid"><span class="toc-text">buildid</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#links"><span class="toc-text">links</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#books"><span class="toc-text">books</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="编译器一般构成"><a href="#编译器一般构成" class="headerlink" title="编译器一般构成"></a>编译器一般构成</h2><ol>
+<li>传统的编译器通常分为三个部分，前端(frontEnd)，优化器(Optimizer)和后端(backEnd)。在编译过程中，前端主要负责词法和语法分析，将源代码转化为抽象语法树；优化器则是在前端的基础上，对得到的中间代码进行优化，使代码更加高效；后端则是将已经优化的中间代码转化为针对各自平台的机器代码</li>
+<li>llvm 和 clang 关系<br><img src="https://img-blog.csdn.net/20160718211639694?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="llvm和clang关系"></li>
+<li>IR(intermediate representation): 中间语言，最常见的中间语言表述形式，是三位址码（Three address code）</li>
+</ol>
+<h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li><p><a href="https://gaomf.cn/2020/06/03/shared_library_global_symbol_override/" target="_blank" rel="noopener">动态库全局符号覆盖的大坑 double free</a></p>
+<ul>
+<li><code>nm libmylib1.so libmylib2.so | grep -P &quot;^[^\\s]+ T &quot; | cut -d&#39; &#39; -f3 | sort | uniq -d | grep -v &#39;_fini&#39; | grep -v &#39;_init&#39; | c++filt</code> 查看是否有相同全局符号</li>
+</ul>
+</li>
+<li><p><a href="http://arthurchiao.art/blog/linux-tracing-basis-zh/" target="_blank" rel="noopener">Symbols 与 gcc -g 产生的 debug info 并不是一个东西</a></p>
+</li>
+<li><p>function tracing 只需要 symbols，不需要 debug symbols（gcc -g）。</p>
+</li>
+<li><p>动态符号（.dynsym）vs. 局部符号（.symtab）， 可以用命令 strip 来手动去掉局部符号表</p>
+</li>
+<li><p><a href="https://unix.stackexchange.com/questions/120015/how-to-find-out-the-dynamic-libraries-executables-loads-when-run" target="_blank" rel="noopener">查看依赖动态库的一些方法</a></p>
+<ul>
+<li><code>sudo awk &#39;/\.so/{print $6}&#39; /proc/1/maps | sort -u</code> 查看进行 1 链接的动态库</li>
+<li><code>LD_DEBUG=files ./xx</code> 查看运行时加载的库</li>
+<li><code>readelf -d build/dog/dog_test1 | grep &#39;NEEDED&#39;</code> 查看加载用到的库</li>
+<li><code>sudo lsof -p 1| grep mem | grep so</code> 查看进程用到的库</li>
+</ul>
+</li>
+<li><p>解释型语言解释器是一个运行的交互程序，接收输入命令，执行对应操作并将结果输出</p>
+</li>
+<li><p>ld 编译选项<code>--whole-archive</code>, 告诉链接器，将后面库中所有符号都链接进来，参数<code>-no-whole-archive</code>则是重置，以避免后面库的所有符号被链接进来。要通 gcc 传递到 ld，需要在他们前面加 -Wl</p>
+</li>
+<li><p><code>set(CMAKE_SHARED_LINKER_FLAGS &quot;-s -Wl,--version-script=${PROJECT_SOURCE_DIR}/symbol.lst&quot;)</code> 跟据 symbol.lit 来 strip， 可以只暴露需要的 symbol, <code>nm -C</code>看不到符号， <code>readelf -s</code>可以<br><code>target_link_options(tensorflowlite_c PRIVATE &quot;-Wl,--version-script,${TENSORFLOW_SOURCE_DIR}/tensorflow/lite/c/version_script.lds&quot;)</code></p>
+</li>
+<li><p><a href="https://www.cnblogs.com/catch/p/4314256.html" target="_blank" rel="noopener">c++ 全局变量初始化</a><br>根据 C++ 标准，全局变量的初始化要在 main 函数执行前完成，常识无疑，但是这个说法有点含糊，main 函数执行前到底具体是什么时候呢？是编译时还是运行时？答案是既有编译时，也可能会有运行时(seriously), 从语言的层面来说，全局变量的初始化可以划分为以下两个阶段（c++11 N3690 3.6.2)：</p>
+<ul>
+<li>static initialization: 静态初始化指的是用常量来对变量进行初始化,主要包括 zero initialization 和 const initialization，静态初始化在程序加载的过程中完成，对简单类型(内建类型，POD 等)来说，从具体实现上看，zero initialization 的变量会被保存在 bss 段，const initialization 的变量则放在 data 段内，程序加载即可完成初始化，这和 c 语言里的全局变量初始化基本是一致的。</li>
+<li>dynamic initialization：动态初始化主要是指需要经过函数调用才能完成的初始化，比如说：int a = foo()，或者是复杂类型（类）的初始化（需要调用构造函数）等。这些变量的初始化会在 main 函数执行前由运行时调用相应的代码从而得以进行(函数内的 static 变量除外)。<br>需要明确的是：静态初始化执行先于动态初始化！ 只有当所有静态初始化执行完毕，动态初始化才会执行。显然，这样的设计是很直观的，能静态初始化的变量，它的初始值都是在编译时就能确定，因此可以直接 hard code 到生成的代码里，而动态初始化需要在运行时执行相应的动作才能进行，因此，静态初始化先于动态初始化是必然的。</li>
+</ul>
+</li>
+<li><p>注册：(<code>库中符号没有被使用，库不会被初始化(具有全局声明周期的变量和所有函数)</code> <code>具有side-effect的变量会被初始化，肯定用到了所在库</code>)</p>
+<ul>
+<li>全局不初始化是没链接接上，没链接是因为没加载， 不是 NEEDED lib</li>
+<li><code>readelf -d build/dog/dog_test1 | grep &#39;NEEDED&#39;</code> 查看加载用到的库</li>
+<li><a href="http://www.cppblog.com/kevinlynx/archive/2010/01/17/105885.aspx" target="_blank" rel="noopener">注册全局变量未初始化初始化</a></li>
+<li><a href="https://stackoverflow.com/questions/5202142/static-variable-initialization-over-a-library" target="_blank" rel="noopener">Static variable initialization over a library</a></li>
+<li>未依赖的全局变量可能并不初始化。main 之前也可以打印。</li>
+<li>dlopen 打开 lib，运行时注册(需要知道库名字)。</li>
+<li>My guess - when linking against a library, the linker only brings over symbols that are actually used by the executable. Object files whose exported symbols are not referenced from anywhere are simply ignored; so registered variable is dropped and its initializer doesn’t run. Normally, that’s a good thing - you wouldn’t usually want unused parts of a large library to nevertheless wind up in your binary.</li>
+<li><a href="https://blog.csdn.net/gaussrieman123/article/details/106384853" target="_blank" rel="noopener">TensorFlow c++ SessionFactory 注册与 No session factory registered 错误</a><br>在上面我们已经分析清楚，这个报错的根本原因是 TensorFlow 动态库中的这两个源文件中的全局静态变量 registrar 没有初始化，导致后面在创建 Session 的时候 GetFactory 失败。<br>有一篇文章”Integrating TensorFlow libraries”也分析是这个原因。因为 TF 组件化的设计思路，一个很小的 core+注册的方式来完成包括 SessionFactory、Op_Kernel、Op 等的加载，在编译的时候，如果这部分代码被编译器忽略了，就会导致部分代码注册失败，进而导致报错。<br>为什么不初始化呢？<br>动态库的加载分为<code>显示加载和隐式加载</code>，我们后面验证了显示加载，即显示通过 dlopen 来调用这些动态库，是可以正常运行的，说明这种情况下，所有的注册都完成了。问题出在隐式加载上。</li>
+<li><code>A non-local variable with static storage duration having initialization with side-effects must be initialized even if it is not odr-used</code> side-effects 引起其他地方改变，被其他地方使用就算引起改变</li>
+<li><a href="https://en.wikipedia.org/wiki/One_Definition_Rule" target="_blank" rel="noopener">One_Definition_Rule(ODR)</a> 在整个程序中，对象或非内联函数不能有多个定义；如果使用一个对象或函数，它必须有一个定义。您可以声明一个从未使用过的对象或函数，在这种情况下，您不必提供定义。在任何情况下都不可能有多个定义</li>
+<li><a href="https://stackoverflow.com/questions/18600034/is-static-object-guaranteed-to-be-initialized" target="_blank" rel="noopener">Is static object guaranteed to be initialized</a></li>
+<li><a href="https://stackoverflow.com/a/18601535" target="_blank" rel="noopener">与 flow 加载问题相似例子</a></li>
+<li><code>the first odr-use of any function or variable deﬁned in the same translation unit as the variable to be initialized</code> 同一个编译单元不管是否用到都会初始化</li>
+<li><code>If the initialization is deferred to some point in time after the ﬁrst statement of main, it shall occur before the ﬁrst odr-use (3.2) of any function or variable deﬁned in the same translation unit as the variable to be initialized.</code> 如果某全局变量初始化推迟到 main 之后，那么使用该全局变量所在 TU 内的任何变量和函数之前需要初始化该全局变量，如果该全局变量与 main 在同一 TU 内，那么使用 main 中任何变量前，都要初始化改全局变量，等效 main 之前初始化, 因为用到了当前库中的符号。(做实验，同一 UT 内(没使用也会被初始化，注册成功)，随便使用另一个 so 中的函数(随便引用了一个毫无相关的内容，注册进工厂))</li>
+<li><code>The compiler is not allowed to optimiza away global objects. Even if they are never used.</code> 全局变量不会被优化掉，静态库可能不链接；动态库整个 TU 可能不被加载, 动态库在磁盘上，如果没有用到，不会被加载?。 <a href="https://stackoverflow.com/a/1229542" target="_blank" rel="noopener">link</a> <code>&quot;It seems that having a file purely consisting of these global objects is what&#39;s causing the problem. It&#39;s as if that translation unit was entirely ignored&quot;. The translation unit is being ignored in the sense that it is being omitted by the linker because it&#39;s in a library. If an object is in a library and isn&#39;t called by anything in the app, it&#39;s omitted, that&#39;s the whole idea of libaries!</code></li>
+<li><code>they were not setup at startup if no symbol of the DLL were used in the main.</code> 库中符号没有被使用，库不会被初始化。</li>
+<li><a href="https://accu.org/journals/overload/6/27/bellingham_597/" target="_blank" rel="noopener">SELF REGISTERING CLASSES</a> (多研究下怎们用 extern)</li>
+<li>解决方法 1： 运行时加载 dlopen 打开 so 时， 会初始化全局变量</li>
+<li>解决方法 2： 显示使用符号，测试程序中使用库中的任意符号<code>extern int xxx; int test(){return xxx;}</code> 为什么能工作？<code>当前TU中的函数会被初始化， 函数里使用到了xxx， xxx所在库全局声明周期变量会被初始化</code></li>
+<li>库和测试程序都定义同一个内联函数不解决问题。</li>
+<li>由于内存太小，所以真的动态执行，只有用到了才加载到内存，执行完就释放掉了，</li>
+</ul>
+</li>
+<li><p>动态链接库的加载方式有两种：隐式加载(静态链接或动态加载时链接)和显示加载(动态运行时链接)。 显示加载会加载所有符号，初始化所有变量, 可能是因为不确定要调用哪些符号，所以都初始化了。</p>
+</li>
+<li><p><code>flow单例注册问题</code>: 单例不只一份 static</p>
+<ul>
+<li>隐藏单例的 Instance 函数 symbol 会出问题, 会有多个 static 变量</li>
+<li><code>链接静态库要用PRIVATE保护</code>： 可能被链接两次，如单例模式注册问题， 链接了两份静态， 导致注册到不同地方。</li>
+<li><a href="https://www.zhihu.com/question/425920019/answer/2254967131" target="_blank" rel="noopener">C++单例模式跨 DLL 是不是就是会出问题?</a></li>
+<li>linux 上的 GNU GCC 编译器默认给函数的属性是<strong>attribute</strong>((visibility(“default”)))，如果没有指定编译选项 visilibility 的话默认会导出所有的符号 <code>-fvisibility=hidden</code></li>
+<li><a href="https://www.cnblogs.com/lsgxeva/p/12510201.html" target="_blank" rel="noopener">控制库符号导出</a></li>
+<li>加了-fvisibility=hidden 后 static 符号(Instance 函数)被隐藏，有多份 static 局部变量，会有多个实例</li>
+<li><a href="https://github.com/jiaxiyang/cpp_sandbox/tree/master/design_pattern/singleton" target="_blank" rel="noopener">自测 sample</a></li>
+<li>还有可能测试程序链接的静态库，只链接了用到的静态变量，导致未用到的没注册；链接整个静态库<code>-Wl,--whole-archive dcv_predict -Wl,-no-whole-archive</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="link"><a href="#link" class="headerlink" title="link"></a>link</h2><ol>
+<li>链接就像拼积木，有凹槽，也有凸槽，有一定的规则，满足规则凹凸部分才能拼合。</li>
+<li>程序段和代码段为什么分开？<ul>
+<li>程序运行多次可以共享只读内容， 包括代码段，只读数据段等，可以节省大量内存。</li>
+<li>权限可以不同：代码自读， 数据可以读写</li>
+<li>提高 cache 命中率</li>
+</ul>
+</li>
+<li><code>/usr/include/elf.h</code>看 elf 文件结构体</li>
+</ol>
+<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><ol>
+<li><code>man ld.so</code> 查看各种 linker/loader 环境变量</li>
+<li><a href="https://blog.csdn.net/llm_hao/article/details/115493516" target="_blank" rel="noopener">Linux 环境变量之 LD_PRELOAD &amp; LD_LIBRARY_PATH &amp; LD_DEBUG</a></li>
+</ol>
+<h4 id="LD-PRELOAD"><a href="#LD-PRELOAD" class="headerlink" title="LD_PRELOAD"></a>LD_PRELOAD</h4><ol>
+<li><code>LD_PRELOAD=&quot;/path/to/library.so&quot; valgrind my-executable</code> valgrind 定位动态库内存泄漏可以用到 <a href="https://stackoverflow.com/a/13136609" target="_blank" rel="noopener">link</a></li>
+<li>gdb 调试时打不上断点，要使用 LD_PRELOAD 先加载动态库，找不到文件所在动态库，使用 speedscope</li>
+</ol>
+<h4 id="LD-LIBRARY-PATH"><a href="#LD-LIBRARY-PATH" class="headerlink" title="LD_LIBRARY_PATH"></a>LD_LIBRARY_PATH</h4><h4 id="LD-DEBUG"><a href="#LD-DEBUG" class="headerlink" title="LD_DEBUG"></a>LD_DEBUG</h4><ol>
+<li><p><code>LD_DEBUG=help ls</code> 查看帮助</p>
+</li>
+<li><p><code>LD_DEBUG=libs ./xxx</code> 查看加载库时详细信息</p>
+</li>
+<li><p><code>LD_DEBUG=libs LD_DEBUG_OUTPUT=lib ./xxx</code> 信息输出文件中</p>
+<ul>
+<li>搜索 so -&gt; 初始化 so -&gt; 初始化 elf -&gt; 控制转移到 elf -&gt; 运行 elf -&gt; 结束 elf -&gt; 反序结束 so</li>
+<li>可以看到搜索顺序; LD_LIBRARY_PATH -&gt; RUNPATH from elf -&gt; /etc/ld.so.cache</li>
+<li>可以看到库的初始化顺序与完成顺序相反， 先初始化的库后完成</li>
+<li>可以看到一次对动态库进行初始化，然后再对可执行程序进行初始化</li>
+<li>可以指定 so 初始化和析构函数, 可用于注册机制?</li>
+</ul>
+<pre><code class="c++">    void __attribute__((constructor)) init_function();
+    void __attribute__((destructor))  fini_function();</code></pre>
+</li>
+<li><p>info</p>
+<ul>
+<li>“files”，显示整个装载过程；</li>
+<li>“libs”，显示共享库查找过程；</li>
+<li>“symbols”，显示符号的查找过程；</li>
+<li>“bindings”，显示动态链接的符号绑定过程；</li>
+<li>“versions”，显示符号的版本依赖关系；</li>
+<li>“reloc”，显示重定位信息；</li>
+</ul>
+</li>
+</ol>
+<h2 id="Binary-Utils"><a href="#Binary-Utils" class="headerlink" title="Binary Utils"></a>Binary Utils</h2><h3 id="Google-bloaty-https-github-com-google-bloaty"><a href="#Google-bloaty-https-github-com-google-bloaty" class="headerlink" title="Google bloaty(https://github.com/google/bloaty)"></a>Google bloaty(<a href="https://github.com/google/bloaty" target="_blank" rel="noopener">https://github.com/google/bloaty</a>)</h3><ol>
+<li>查看二进制大的原因</li>
+</ol>
+<h3 id="elfutils"><a href="#elfutils" class="headerlink" title="elfutils"></a><a href="https://sourceware.org/elfutils/" target="_blank" rel="noopener">elfutils</a></h3><ol>
+<li>eu-stack 可以跟踪 on-cpu and off-cpu, perf 只能跟踪 off-cpu</li>
+</ol>
+<h3 id="GNU-binutils"><a href="#GNU-binutils" class="headerlink" title="GNU binutils"></a><a href="https://www.gnu.org/software/binutils/" target="_blank" rel="noopener">GNU binutils</a></h3><ol>
+<li><p><code>ar</code> : 创建静态库，插入删除，列出和提取成员。</p>
+</li>
+<li><p><code>strings</code> : 列出一个目标文件中所有可打印的字符串。</p>
+<ul>
+<li>找一个唯一字符串， 可以用来看程序是否为最新版本</li>
+</ul>
+</li>
+<li><p><code>strip</code> : 从目标文件中删除符号表信息。 <code>file</code>可以查看是否 strip</p>
+</li>
+<li><p><code>nm</code> : 列出一个目标文件的符号表中定义的符号。</p>
+<ul>
+<li><code>nm -S xxx</code>查看 defined symbols size</li>
+<li><code>nm -S --size-sort test</code> 按 size 排序</li>
+<li><code>nm -A -l build/base</code> 显示文件名和行号(需要 debug 模式编译)</li>
+<li><code>man nm</code> 查看用法</li>
+<li>大写全局，小写局部, 局部变量不会记录到符号表中（static 除外）</li>
+<li>b:bss, t:text, d:data, r:readonly</li>
+<li><code>nm -C build/base</code> decode <a href="https://en.wikipedia.org/wiki/Name_mangling" target="_blank" rel="noopener">Name_mangling</a> this makes C++ function names readable.</li>
+<li><code>extern &quot;C&quot; {}</code> 作用是阻止 C++ name mangling, 生成 C 格式符号表</li>
+<li><code>c++filt _ZN9NS_QZSOCK10CTcpClient11SendAndRecvEPciRiRjd</code> c++filt Name De-Mangling</li>
+<li>符号详解<ul>
+<li><code>T</code>: 定义：函数定义在当前模块中， <code>nm -C libxxx | grep &quot; T &quot;</code>查看当前模块定义的函数</li>
+<li><code>U</code>: 声明：使用定义在其他模块中的函数</li>
+<li><code>D</code>: 初始化的 data (静态初始化的变量)</li>
+<li><code>B</code>: 未初始化的 data(动态初始化的变量)</li>
+<li><code>N</code>: debug 符号</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>size</code> : 列出目标文件中的节的名字和大小。</p>
+<ul>
+<li><code>size -A ./test</code> 列出 section 详细信息</li>
+</ul>
+</li>
+<li><p><code>readelf</code> : 显示一个目标文件的完整结构，包含 size 和 nm 的功能。</p>
+<ul>
+<li><code>readelf -d build/dog/dog_test1 | grep &#39;NEEDED&#39;</code> 查看加载用到的库</li>
+<li>readelf -a test 先显示 section 信息， 然后显示 segment(Program Headers)信息，接着显示 Section to Segment mapping 信息</li>
+</ul>
+</li>
+<li><p><code>objdump</code> : 所有二进制文件之母。能够显示一个目标文件中所有的信息。它最大作用是反汇编.text 节中的二进制指令。</p>
+<ul>
+<li><code>objdump -p test | grep NEEDED</code> 查看加载用到的库</li>
+<li><code>objdump -g libxxx.so | grep /data0/....</code> 动态库调试信息中找文件路径</li>
+<li><code>objdump --dwarf=decodedline test</code> 显示内存地址映射到具体某行源代码</li>
+</ul>
+</li>
+<li><p><code>ldd</code> : 列出一个可执行文件在运行时所需要的共享库。</p>
+<ul>
+<li><code>ldd -v xxx</code> 列出依赖详细关系，包括依赖的依赖</li>
+</ul>
+</li>
+<li><p>!notice : use tldr to show the basic usage.</p>
+</li>
+<li><p><code>cat /proc/pid/maps 或 pmap pid</code> 看进程映射区域</p>
+</li>
+</ol>
+<h2 id="glibc-初始化"><a href="#glibc-初始化" class="headerlink" title="glibc 初始化"></a>glibc 初始化</h2><ol>
+<li><code>_start -&gt; __libc_start_main -&gt; __libc_csu_init -&gt; _init -&gt; __do_global_ctors_aux(c++构造函数) -&gt; main -&gt; __do_global_dtors_aux -&gt; _fini -&gt; __libc_csu_fini</code></li>
+</ol>
+<h2 id="GCC-编译选项"><a href="#GCC-编译选项" class="headerlink" title="GCC 编译选项"></a>GCC 编译选项</h2><ol>
+<li>给 gcc 加上<code>-fno-common</code>选项, 这个选项会告诉链接器，在遇到多重定义的全局符号时，触发一个错误。或者使用 -Werror 选项，它会把所有的警告都变为错误。<code>set(CMAKE_CXX_FLAGS &quot;${CMAKE_CXX_FLAGS} -fno-common&quot;)</code></li>
+<li><code>-Wl,--whole-archive target -Wl,-no-whole-archive</code> 静态链接时把 target 都打包， 正常情况下只会将使用到的符号相关代码数据打包</li>
+</ol>
+<h2 id="other"><a href="#other" class="headerlink" title="other"></a>other</h2><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/268462046" target="_blank" rel="noopener">编译期间获取类型名</a></li>
+</ol>
+<pre><code>template &lt;typename T&gt;
+constexpr auto type_name() noexcept
+{
+    std::string_view name, prefix, suffix;
+#ifdef __clang__
+    name = __PRETTY_FUNCTION__;
+    prefix = &quot;auto type_name() [T = &quot;;
+    suffix = &quot;]&quot;;
+#elif defined(__GNUC__)
+    name = __PRETTY_FUNCTION__;
+    prefix = &quot;constexpr auto type_name() [with T = &quot;;
+    suffix = &quot;]&quot;;
+#elif defined(_MSC_VER)
+    name = __FUNCSIG__;
+    prefix = &quot;auto __cdecl type_name&lt;&quot;;
+    suffix = &quot;&gt;(void) noexcept&quot;;
+#endif
+    name.remove_prefix(prefix.size());
+    name.remove_suffix(suffix.size());
+    return name;
+}</code></pre><ol>
+<li><a href="https://blog.csdn.net/K346K346/article/details/51698184" target="_blank" rel="noopener">运行时获取类名字</a></li>
+</ol>
+<pre><code class="c++">class Object
+{
+public:
+    //用于在运行时获取对象的真实类型名称
+    virtual string getClassName() const
+    {
+#ifdef _MSC_VER
+        return typeid(*this).name() + 6;
+#else
+        const char* name = typeid(*this).name();
+
+        while (*name &gt;= &#39;0&#39; &amp;&amp; *name &lt;= &#39;9&#39;) name++;
+
+        return name;
+#endif
+    }
+};</code></pre>
+<ol>
+<li>防止编译器优化</li>
+</ol>
+<pre><code class="c++">#pragma optimize off
+int globalVar
+#pragma optimize on</code></pre>
+<h2 id="buildid"><a href="#buildid" class="headerlink" title="buildid"></a>buildid</h2><ol>
+<li>This allows two builds of the same program on the same host to always produce consistent build-ids and binary content.</li>
+<li><code>readelf -n /bin/bash</code> or <code>file /bin/bash</code></li>
+<li><a href="https://blog.csdn.net/flurry_rain/article/details/122544969" target="_blank" rel="noopener">读取自己的 buildid</a></li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/139026433" target="_blank" rel="noopener">程序的编译、装载与链接</a></li>
+</ol>
+<h2 id="books"><a href="#books" class="headerlink" title="books"></a>books</h2><ol>
+<li>深入理解计算机系统</li>
+<li>程序员的自我修养</li>
+<li>程序是怎样跑起来的</li>
+</ol>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jiaxiyangbit@126.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2016-2024 Jia Xiyang
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 540px;
+    }
+    .nav.fullscreen {
+        margin-left: -540px;
+    }
+    .nav-left {
+        width: 150px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>

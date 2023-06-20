@@ -1,0 +1,3143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Profiling | Jia Xiyang</title>
+  <meta name="keywords" content=" Cpp ">
+  <meta name="description" content="Profiling | Jia Xiyang">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="个人简介贾夕阳毕业于北京理工大学，目前从事人工智能软件架构工作 联系方式 mail: jiaxiyangbit@126.com qq: 312567150">
+<meta property="og:type" content="website">
+<meta property="og:title" content="about">
+<meta property="og:url" content="http://yoursite.com/about/index.html">
+<meta property="og:site_name" content="Jia Xiyang">
+<meta property="og:description" content="个人简介贾夕阳毕业于北京理工大学，目前从事人工智能软件架构工作 联系方式 mail: jiaxiyangbit@126.com qq: 312567150">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-27T05:54:48.000Z">
+<meta property="article:modified_time" content="2023-06-20T07:37:37.567Z">
+<meta property="article:author" content="贾夕阳">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="icon" href="/img/tomoto.jpeg">
+
+<link href="/css/style.css?v=1.1.0" rel="stylesheet">
+
+<link href="/css/hl_theme/zenbum.css?v=1.1.0" rel="stylesheet">
+
+<link href="//cdn.jsdelivr.net/npm/animate.css@4.1.0/animate.min.css" rel="stylesheet">
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="/js/titleTip.js?v=1.1.0" ></script>
+
+<script src="//cdn.jsdelivr.net/npm/highlightjs@9.16.2/highlight.pack.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js" ></script>
+
+<script src="/js/iconfont.js?v=1.1.0" ></script>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="">
+  <input class="theme_blog_path" value="">
+  <input id="theme_shortcut" value="true" />
+</div>
+
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/code_slogon.jpg" />
+</a>
+<div class="author">
+    <span>贾夕阳</span>
+</div>
+
+<div class="icon">
+    
+        
+    
+        
+        <a title="github" href="https://github.com/jiaxiyang" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-github"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+        <a title="email" href="mailto:jiaxiyangbit@126.com" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-email"></use>
+                </svg>
+            
+        </a>
+        
+    
+        
+    
+        
+    
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li><div class="all active" data-rel="All">All<small>(134)</small></div></li>
+    
+        
+            
+            <li><div data-rel="Summary">Summary<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="Program"><i class="fold iconfont icon-right"></i>Program<small>(30)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="Program<--->AI">AI<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Basic">Basic<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Cpp">Cpp<small>(11)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Cuda">Cuda<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Database">Database<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Design">Design<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->FFmpeg">FFmpeg<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Gstreamer">Gstreamer<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->PLT">PLT<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Python">Python<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Rust">Rust<small>(5)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Program<--->Shell">Shell<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="Tools"><i class="fold iconfont icon-right"></i>Tools<small>(16)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="Tools<--->Bash">Bash<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Blog">Blog<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Chrome">Chrome<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->CI">CI<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Clang">Clang<small>(2)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Cmake">Cmake<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Docker">Docker<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Emacs">Emacs<small>(3)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->git">git<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Git">Git<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->gitlab">gitlab<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Tmux">Tmux<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Tools<--->Zsh">Zsh<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="Algorithm"><i class="fold iconfont icon-right"></i>Algorithm<small>(3)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="Algorithm<--->AI">AI<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Algorithm<--->Kalman">Kalman<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="Computer"><i class="fold iconfont icon-right"></i>Computer<small>(3)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="Computer<--->GPU">GPU<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Computer<--->Network">Network<small>(1)</small></div>
+                            
+                        </li>
+                            
+                        <li><div data-rel="Computer<--->OS">OS<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+            <li><div data-rel="Emacs">Emacs<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    
+    </div>
+    <div></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="134">
+<input type="hidden" id="yelog_site_word_count" value="110.7k">
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        Links
+        <i class="iconfont icon-left"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="https://jiaxiyang.github.io/">贾夕阳</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <div class="right-top">
+        <div id="default-panel">
+            <i class="iconfont icon-search" data-title="搜索 快捷键 i"></i>
+            <div class="right-title">All</div>
+            <i class="iconfont icon-file-tree" data-title="切换到大纲视图 快捷键 w"></i>
+        </div>
+        <div id="search-panel">
+            <i class="iconfont icon-left" data-title="返回"></i>
+            <input id="local-search-input" />
+            <label class="border-line" for="input"></label>
+            <i class="iconfont icon-case-sensitive" data-title="大小写敏感"></i>
+            <i class="iconfont icon-tag" data-title="标签"></i>
+        </div>
+        <div id="outline-panel" style="display: none">
+            <div class="right-title">Outline</div>
+            <i class="iconfont icon-list" data-title="切换到文章列表"></i>
+        </div>
+    </div>
+
+    <div class="tags-list">
+    <input id="tag-search" />
+    <div class="tag-wrapper">
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>AI</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Algorithm</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Bash</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Blog</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>C++</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Cargo</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>CI</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Clang format</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Clang Tidy</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Cmake</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Concurrency</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Cpp</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Cuda</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Database</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Design</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Docker</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Doxygen</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Eigen</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Emacs</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>FFmpeg</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Filters</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>git</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Git</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>gitlab</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Gstreamer</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Jetson</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Links</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Memory</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Network</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>OS</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Paradigm</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Program</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Python</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Redis</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Rust</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Shell</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>TensorRT</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Tmux</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Tools</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>UML</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Vim</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>YAML</a>
+            </li>
+        
+            <li class="article-tag-list-item">
+                <i class="iconfont icon-tag"></i><a>Zsh</a>
+            </li>
+        
+    </div>
+
+</div>
+
+    
+    <div id="local-search-result">
+
+    </div>
+    
+    <nav id="title-list-nav">
+        
+        <a id="top" class="All Summary "
+           href="/2021/11/29/Links/"
+           data-tag="Links"
+           data-author="" >
+            <span class="post-title" title="Links">Links</span>
+            <span class="post-date" title="2021-11-29 12:48:48">2021/11/29</span>
+        </a>
+        
+        <a id="top" class="All Tools Bash "
+           href="/2021/06/29/Bash-usage/"
+           data-tag="Bash"
+           data-author="" >
+            <span class="post-title" title="Tools and Linux Command">Tools and Linux Command</span>
+            <span class="post-date" title="2021-06-29 20:39:09">2021/06/29</span>
+        </a>
+        
+        <a id="top" class="All Summary "
+           href="/2021/10/03/Programming-experience/"
+           data-tag="Program"
+           data-author="" >
+            <span class="post-title" title="Programming experience">Programming experience</span>
+            <span class="post-date" title="2021-10-03 17:02:35">2021/10/03</span>
+        </a>
+        
+        <a id="top" class="All Program Cpp "
+           href="/2021/09/20/Cpp-grammar/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Cpp grammar">Cpp grammar</span>
+            <span class="post-date" title="2021-09-20 14:28:44">2021/09/20</span>
+        </a>
+        
+        <a id="top" class="All "
+           href="/2022/10/09/bling/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="bling">bling</span>
+            <span class="post-date" title="2022-10-09 11:21:20">2022/10/09</span>
+        </a>
+        
+        <a id="top" class="All Program Design "
+           href="/2020/08/03/Software-design/"
+           data-tag="Design"
+           data-author="" >
+            <span class="post-title" title="Software design">Software design</span>
+            <span class="post-date" title="2020-08-03 09:31:41">2020/08/03</span>
+        </a>
+        
+        <a id="top" class="All "
+           href="/2022/07/27/software-features/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="software-features">software-features</span>
+            <span class="post-date" title="2022-07-27 19:41:17">2022/07/27</span>
+        </a>
+        
+        <a id="top" class="All Program Cpp "
+           href="/2022/02/03/Cpp-debug/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Debug">Debug</span>
+            <span class="post-date" title="2022-02-03 17:02:35">2022/02/03</span>
+        </a>
+        
+        <a id="top" class="All Program Cpp "
+           href="/2021/08/24/Cpp-Profiling/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Profiling">Profiling</span>
+            <span class="post-date" title="2021-08-24 22:30:52">2021/08/24</span>
+        </a>
+        
+        <a id="top" class="All "
+           href="/2022/10/21/Compiler/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Compiler">Compiler</span>
+            <span class="post-date" title="2022-10-21 12:08:03">2022/10/21</span>
+        </a>
+        
+        <a id="top" class="All Tools Emacs "
+           href="/2021/09/30/Amazing-emacs/"
+           data-tag="Emacs"
+           data-author="" >
+            <span class="post-title" title="Amazing emacs">Amazing emacs</span>
+            <span class="post-date" title="2021-09-30 09:48:34">2021/09/30</span>
+        </a>
+        
+        <a id="top" class="All Program Rust "
+           href="/2021/07/11/Rust-grammar/"
+           data-tag="Rust"
+           data-author="" >
+            <span class="post-title" title="Rust grammar">Rust grammar</span>
+            <span class="post-date" title="2021-07-11 18:34:03">2021/07/11</span>
+        </a>
+        
+        <a id="top" class="All Computer OS "
+           href="/2020/08/11/OS/"
+           data-tag="OS"
+           data-author="" >
+            <span class="post-title" title="OS">OS</span>
+            <span class="post-date" title="2020-08-11 12:10:18">2020/08/11</span>
+        </a>
+        
+        <a id="top" class="All Program Shell "
+           href="/2020/11/28/Shell-script/"
+           data-tag="Shell"
+           data-author="" >
+            <span class="post-title" title="Shell Script">Shell Script</span>
+            <span class="post-date" title="2020-11-28 10:38:00">2020/11/28</span>
+        </a>
+        
+        <a id="top" class="All Program "
+           href="/2022/03/03/UML/"
+           data-tag="UML"
+           data-author="" >
+            <span class="post-title" title="UML">UML</span>
+            <span class="post-date" title="2022-03-03 02:32:22">2022/03/03</span>
+        </a>
+        
+        <a id="top" class="All "
+           href="/2022/10/18/explore/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="explore">explore</span>
+            <span class="post-date" title="2022-10-18 19:35:20">2022/10/18</span>
+        </a>
+        
+        <a id="top" class="All Tools CI "
+           href="/2022/02/15/Gitlab-CI/"
+           data-tag="Tools,CI"
+           data-author="" >
+            <span class="post-title" title="Gitlab-CI">Gitlab-CI</span>
+            <span class="post-date" title="2022-02-15 23:27:31">2022/02/15</span>
+        </a>
+        
+        <a id="top" class="All "
+           href="/2022/08/19/Jenkins/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Jenkins">Jenkins</span>
+            <span class="post-date" title="2022-08-19 12:59:26">2022/08/19</span>
+        </a>
+        
+        <a id="top" class="All Tools Tmux "
+           href="/2020/12/07/Tmux/"
+           data-tag="Tmux"
+           data-author="" >
+            <span class="post-title" title="Tmux config">Tmux config</span>
+            <span class="post-date" title="2020-12-07 15:19:28">2020/12/07</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/20/basic_data_op/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="basic_data_op">basic_data_op</span>
+            <span class="post-date" title="2023-06-20 15:37:37">2023/06/20</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/12/onnxruntime/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="onnxruntime">onnxruntime</span>
+            <span class="post-date" title="2023-06-12 14:39:10">2023/06/12</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/12/Quantization/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Quantization">Quantization</span>
+            <span class="post-date" title="2023-06-12 11:43:36">2023/06/12</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/09/pytorch/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="pytorch">pytorch</span>
+            <span class="post-date" title="2023-06-09 15:28:49">2023/06/09</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/08/colab/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="colab">colab</span>
+            <span class="post-date" title="2023-06-08 17:16:31">2023/06/08</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/08/roadmap/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="roadmap">roadmap</span>
+            <span class="post-date" title="2023-06-08 13:04:42">2023/06/08</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/08/AI-ops/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="AI-ops">AI-ops</span>
+            <span class="post-date" title="2023-06-08 10:21:24">2023/06/08</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/06/01/chatgpt/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="chatgpt">chatgpt</span>
+            <span class="post-date" title="2023-06-01 10:23:18">2023/06/01</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/05/10/RISC-V/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="RISC-V">RISC-V</span>
+            <span class="post-date" title="2023-05-10 16:37:46">2023/05/10</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/05/10/benchmark/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="benchmark">benchmark</span>
+            <span class="post-date" title="2023-05-10 15:55:27">2023/05/10</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/05/09/hightway/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="hightway">hightway</span>
+            <span class="post-date" title="2023-05-09 20:33:10">2023/05/09</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/03/23/neon/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="neon">neon</span>
+            <span class="post-date" title="2023-03-23 16:55:28">2023/03/23</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/03/06/cross-compile/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="cross-compile">cross-compile</span>
+            <span class="post-date" title="2023-03-06 20:42:24">2023/03/06</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/02/17/TVM/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="TVM">TVM</span>
+            <span class="post-date" title="2023-02-17 15:46:22">2023/02/17</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/01/16/JFrog/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="JFrog">JFrog</span>
+            <span class="post-date" title="2023-01-16 14:23:18">2023/01/16</span>
+        </a>
+        
+        <a  class="All "
+           href="/2023/01/13/Cpp20/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Cpp20">Cpp20</span>
+            <span class="post-date" title="2023-01-13 15:31:55">2023/01/13</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/12/26/BPF/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="BPF">BPF</span>
+            <span class="post-date" title="2022-12-26 16:52:00">2022/12/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/12/02/unix/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="unix">unix</span>
+            <span class="post-date" title="2022-12-02 09:14:27">2022/12/02</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/11/15/version/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="version">version</span>
+            <span class="post-date" title="2022-11-15 10:21:58">2022/11/15</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/30/github-ci/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="github-ci">github-ci</span>
+            <span class="post-date" title="2022-10-30 21:35:59">2022/10/30</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/25/Coroutine/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Coroutine">Coroutine</span>
+            <span class="post-date" title="2022-10-25 19:55:32">2022/10/25</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/21/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="开发方法">开发方法</span>
+            <span class="post-date" title="2022-10-21 16:57:14">2022/10/21</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/20/KataOS/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="KataOS">KataOS</span>
+            <span class="post-date" title="2022-10-20 13:11:40">2022/10/20</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/15/color/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="color">color</span>
+            <span class="post-date" title="2022-10-15 15:43:06">2022/10/15</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/14/Markdown/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Markdown">Markdown</span>
+            <span class="post-date" title="2022-10-14 15:38:52">2022/10/14</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/09/v4l2/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="v4l2">v4l2</span>
+            <span class="post-date" title="2022-10-09 17:22:03">2022/10/09</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/10/09/Life-experience/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Life-experience">Life-experience</span>
+            <span class="post-date" title="2022-10-09 10:13:03">2022/10/09</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/30/log/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="log">log</span>
+            <span class="post-date" title="2022-09-30 10:46:58">2022/09/30</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/29/wallpaper/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="wallpaper">wallpaper</span>
+            <span class="post-date" title="2022-09-29 14:39:45">2022/09/29</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/27/Pandoc/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Pandoc">Pandoc</span>
+            <span class="post-date" title="2022-09-27 11:08:48">2022/09/27</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/26/Document/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Document">Document</span>
+            <span class="post-date" title="2022-09-26 14:53:29">2022/09/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/26/github/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="github">github</span>
+            <span class="post-date" title="2022-09-26 11:27:54">2022/09/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/25/LaTeX/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="LaTeX">LaTeX</span>
+            <span class="post-date" title="2022-09-25 14:25:17">2022/09/25</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/15/DataStructure/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="DataStructure">DataStructure</span>
+            <span class="post-date" title="2022-09-15 21:17:10">2022/09/15</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/14/J5/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="J5">J5</span>
+            <span class="post-date" title="2022-09-14 10:29:39">2022/09/14</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/07/SOA/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="SOA">SOA</span>
+            <span class="post-date" title="2022-09-07 10:45:11">2022/09/07</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/07/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%9B%BE/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="软件架构图">软件架构图</span>
+            <span class="post-date" title="2022-09-07 10:23:23">2022/09/07</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/06/AUTOSAR/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="AUTOSAR">AUTOSAR</span>
+            <span class="post-date" title="2022-09-06 20:25:30">2022/09/06</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/06/%E5%9F%9F%E6%8E%A7%E5%88%B6%E5%99%A8/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="域控制器">域控制器</span>
+            <span class="post-date" title="2022-09-06 19:37:11">2022/09/06</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/06/ROS2/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="ROS2">ROS2</span>
+            <span class="post-date" title="2022-09-06 13:39:31">2022/09/06</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/06/CANBUS/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="CANBUS">CANBUS</span>
+            <span class="post-date" title="2022-09-06 10:40:49">2022/09/06</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/06/IDL/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="IDL">IDL</span>
+            <span class="post-date" title="2022-09-06 10:22:41">2022/09/06</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/05/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="消息中间件">消息中间件</span>
+            <span class="post-date" title="2022-09-05 20:32:52">2022/09/05</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/05/DDS/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="DDS">DDS</span>
+            <span class="post-date" title="2022-09-05 20:19:17">2022/09/05</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/09/05/VSCode/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="VSCode">VSCode</span>
+            <span class="post-date" title="2022-09-05 17:57:52">2022/09/05</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/08/18/OpenCV/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="OpenCV">OpenCV</span>
+            <span class="post-date" title="2022-08-18 19:43:20">2022/08/18</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/08/13/Vim/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Vim">Vim</span>
+            <span class="post-date" title="2022-08-13 14:30:50">2022/08/13</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/07/30/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%B8%88/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="系统架构师">系统架构师</span>
+            <span class="post-date" title="2022-07-30 19:36:08">2022/07/30</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/07/16/CPM/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="CPM">CPM</span>
+            <span class="post-date" title="2022-07-16 15:53:20">2022/07/16</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/07/07/Clang/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Clang">Clang</span>
+            <span class="post-date" title="2022-07-07 13:58:12">2022/07/07</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/07/05/Bazel/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Bazel">Bazel</span>
+            <span class="post-date" title="2022-07-05 20:48:35">2022/07/05</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/07/05/Ninja/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Ninja">Ninja</span>
+            <span class="post-date" title="2022-07-05 20:26:50">2022/07/05</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/07/04/%E6%95%B0%E6%8D%AE%E8%90%BD%E7%9B%98/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="数据落盘">数据落盘</span>
+            <span class="post-date" title="2022-07-04 21:14:07">2022/07/04</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/06/30/Model-deploy/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Model-deploy">Model-deploy</span>
+            <span class="post-date" title="2022-06-30 14:37:15">2022/06/30</span>
+        </a>
+        
+        <a  class="All Tools gitlab "
+           href="/2022/06/30/gitlab/"
+           data-tag="gitlab"
+           data-author="" >
+            <span class="post-title" title="gitlab">gitlab</span>
+            <span class="post-date" title="2022-06-30 10:30:26">2022/06/30</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/06/24/magit/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="magit">magit</span>
+            <span class="post-date" title="2022-06-24 10:26:33">2022/06/24</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/05/19/Cpp-awesome-src/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Cpp awesome src">Cpp awesome src</span>
+            <span class="post-date" title="2022-05-19 19:42:56">2022/05/19</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/05/19/taskflow/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="taskflow">taskflow</span>
+            <span class="post-date" title="2022-05-19 15:39:43">2022/05/19</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/26/windows-docker/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="windows-docker">windows-docker</span>
+            <span class="post-date" title="2022-04-26 14:37:25">2022/04/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/26/docker-windows/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="windows WSL2">windows WSL2</span>
+            <span class="post-date" title="2022-04-26 13:16:59">2022/04/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/26/windows-WSL2/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="windows WSL2">windows WSL2</span>
+            <span class="post-date" title="2022-04-26 13:16:59">2022/04/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/18/sphinx-doc/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="sphinx-doc">sphinx-doc</span>
+            <span class="post-date" title="2022-04-18 10:59:13">2022/04/18</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/14/onnx-md/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="onnx">onnx</span>
+            <span class="post-date" title="2022-04-14 13:45:11">2022/04/14</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/13/AI-models/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="AI-models">AI-models</span>
+            <span class="post-date" title="2022-04-13 16:45:08">2022/04/13</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/11/AI-performance/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="AI-chip-performance">AI-chip-performance</span>
+            <span class="post-date" title="2022-04-11 16:30:54">2022/04/11</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/04/08/ChangeLog/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="ChangeLog">ChangeLog</span>
+            <span class="post-date" title="2022-04-08 17:08:27">2022/04/08</span>
+        </a>
+        
+        <a  class="All Tools Clang "
+           href="/2022/04/07/clang-tidy/"
+           data-tag="Tools,Clang Tidy"
+           data-author="" >
+            <span class="post-title" title="clang-tidy">clang-tidy</span>
+            <span class="post-date" title="2022-04-07 12:14:50">2022/04/07</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2022/04/02/gtest/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="gtest">gtest</span>
+            <span class="post-date" title="2022-04-02 07:06:28">2022/04/02</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/03/31/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E4%B8%93%E4%B8%9A%E6%9C%AF%E8%AF%AD/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="自动驾驶专业术语">自动驾驶专业术语</span>
+            <span class="post-date" title="2022-03-31 02:24:23">2022/03/31</span>
+        </a>
+        
+        <a  class="All Program "
+           href="/2022/03/26/eigen/"
+           data-tag="Eigen"
+           data-author="" >
+            <span class="post-title" title="eigen">eigen</span>
+            <span class="post-date" title="2022-03-26 07:08:50">2022/03/26</span>
+        </a>
+        
+        <a  class="All Program "
+           href="/2022/03/26/yaml/"
+           data-tag="YAML"
+           data-author="" >
+            <span class="post-title" title="yaml">yaml</span>
+            <span class="post-date" title="2022-03-26 04:00:17">2022/03/26</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/03/18/samba/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="samba">samba</span>
+            <span class="post-date" title="2022-03-18 01:43:12">2022/03/18</span>
+        </a>
+        
+        <a  class="All Program Cuda "
+           href="/2022/03/10/Cuda/"
+           data-tag="Cuda"
+           data-author="" >
+            <span class="post-title" title="Cuda">Cuda</span>
+            <span class="post-date" title="2022-03-10 02:17:38">2022/03/10</span>
+        </a>
+        
+        <a  class="All Program "
+           href="/2022/03/03/Doxygen/"
+           data-tag="Doxygen"
+           data-author="" >
+            <span class="post-title" title="Doxygen">Doxygen</span>
+            <span class="post-date" title="2022-03-03 03:58:22">2022/03/03</span>
+        </a>
+        
+        <a  class="All "
+           href="/2022/03/02/Nvidia-NPP/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Nvidia-NPP">Nvidia-NPP</span>
+            <span class="post-date" title="2022-03-02 11:30:48">2022/03/02</span>
+        </a>
+        
+        <a  class="All Algorithm "
+           href="/2022/02/05/image_process/"
+           data-tag="Algorithm"
+           data-author="" >
+            <span class="post-title" title="Image Process">Image Process</span>
+            <span class="post-date" title="2022-02-05 20:05:33">2022/02/05</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/10/05/resume/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="resume">resume</span>
+            <span class="post-date" title="2021-10-05 12:24:06">2021/10/05</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2021/09/13/Plugin-System/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="plugins">plugins</span>
+            <span class="post-date" title="2021-09-13 22:17:40">2021/09/13</span>
+        </a>
+        
+        <a  class="All Program PLT "
+           href="/2021/08/22/Programming-Paradigm/"
+           data-tag="Paradigm"
+           data-author="" >
+            <span class="post-title" title="Programming-Paradigm">Programming-Paradigm</span>
+            <span class="post-date" title="2021-08-22 08:23:46">2021/08/22</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/08/16/Awesome-Books/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Awesome Books">Awesome Books</span>
+            <span class="post-date" title="2021-08-16 22:39:38">2021/08/16</span>
+        </a>
+        
+        <a  class="All Tools Cmake "
+           href="/2021/07/28/Cmake/"
+           data-tag="Cmake"
+           data-author="" >
+            <span class="post-title" title="Modern Cmake">Modern Cmake</span>
+            <span class="post-date" title="2021-07-28 08:56:09">2021/07/28</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2021/07/20/Cpp-concurrency-in-action/"
+           data-tag="Cpp,Concurrency"
+           data-author="" >
+            <span class="post-title" title="Cpp-concurrency-in-action">Cpp-concurrency-in-action</span>
+            <span class="post-date" title="2021-07-20 09:05:48">2021/07/20</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/06/27/Elisp/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Elisp">Elisp</span>
+            <span class="post-date" title="2021-06-27 22:37:13">2021/06/27</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/06/22/Haskell/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Haskell">Haskell</span>
+            <span class="post-date" title="2021-06-22 10:47:46">2021/06/22</span>
+        </a>
+        
+        <a  class="All Tools Chrome "
+           href="/2021/05/21/Chrome-config/"
+           data-tag="Tools"
+           data-author="" >
+            <span class="post-title" title="Chrome shortcuts">Chrome shortcuts</span>
+            <span class="post-date" title="2021-05-21 15:56:05">2021/05/21</span>
+        </a>
+        
+        <a  class="All Computer GPU "
+           href="/2021/05/14/Jetson-test/"
+           data-tag="Jetson"
+           data-author="" >
+            <span class="post-title" title="Jetson test">Jetson test</span>
+            <span class="post-date" title="2021-05-14 21:33:07">2021/05/14</span>
+        </a>
+        
+        <a  class="All Algorithm AI "
+           href="/2021/05/10/3d_detection/"
+           data-tag="AI"
+           data-author="" >
+            <span class="post-title" title="3d Detection">3d Detection</span>
+            <span class="post-date" title="2021-05-10 12:48:48">2021/05/10</span>
+        </a>
+        
+        <a  class="All Program AI "
+           href="/2021/04/13/TensorRT/"
+           data-tag="TensorRT"
+           data-author="" >
+            <span class="post-title" title="TensorRT">TensorRT</span>
+            <span class="post-date" title="2021-04-13 21:35:32">2021/04/13</span>
+        </a>
+        
+        <a  class="All Program Rust "
+           href="/2021/03/22/Actix/"
+           data-tag="Rust"
+           data-author="" >
+            <span class="post-title" title="Actix">Actix</span>
+            <span class="post-date" title="2021-03-22 09:53:35">2021/03/22</span>
+        </a>
+        
+        <a  class="All "
+           href="/2021/03/16/Web/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Web">Web</span>
+            <span class="post-date" title="2021-03-16 22:27:02">2021/03/16</span>
+        </a>
+        
+        <a  class="All Program Python "
+           href="/2021/03/15/Pybind11/"
+           data-tag="Python"
+           data-author="" >
+            <span class="post-title" title="Pybind11">Pybind11</span>
+            <span class="post-date" title="2021-03-15 11:33:25">2021/03/15</span>
+        </a>
+        
+        <a  class="All Tools Emacs "
+           href="/2021/03/12/First-Emacs-Plugin/"
+           data-tag="Emacs"
+           data-author="" >
+            <span class="post-title" title="First-Emacs-Plugin">First-Emacs-Plugin</span>
+            <span class="post-date" title="2021-03-12 08:33:44">2021/03/12</span>
+        </a>
+        
+        <a  class="All Tools Git "
+           href="/2021/03/05/git-biset-to-debug/"
+           data-tag="Git"
+           data-author="" >
+            <span class="post-title" title="Git bisect to debug">Git bisect to debug</span>
+            <span class="post-date" title="2021-03-05 09:51:13">2021/03/05</span>
+        </a>
+        
+        <a  class="All Program FFmpeg "
+           href="/2021/02/23/FFmpeg/"
+           data-tag="FFmpeg"
+           data-author="" >
+            <span class="post-title" title="FFmpeg">FFmpeg</span>
+            <span class="post-date" title="2021-02-23 20:21:13">2021/02/23</span>
+        </a>
+        
+        <a  class="All Program Gstreamer "
+           href="/2021/02/23/Gstreamer/"
+           data-tag="Gstreamer"
+           data-author="" >
+            <span class="post-title" title="Gstreamer">Gstreamer</span>
+            <span class="post-date" title="2021-02-23 08:43:01">2021/02/23</span>
+        </a>
+        
+        <a  class="All Tools Docker "
+           href="/2021/02/02/Docker/"
+           data-tag="Docker"
+           data-author="" >
+            <span class="post-title" title="Docker">Docker</span>
+            <span class="post-date" title="2021-02-02 18:29:14">2021/02/02</span>
+        </a>
+        
+        <a  class="All Algorithm Kalman "
+           href="/2021/01/30/Kalman-Filters/"
+           data-tag="Filters"
+           data-author="" >
+            <span class="post-title" title="Kalman Filters">Kalman Filters</span>
+            <span class="post-date" title="2021-01-30 11:43:37">2021/01/30</span>
+        </a>
+        
+        <a  class="All Program Database "
+           href="/2021/01/11/Redis/"
+           data-tag="Redis,Database"
+           data-author="" >
+            <span class="post-title" title="Redis">Redis</span>
+            <span class="post-date" title="2021-01-11 21:27:34">2021/01/11</span>
+        </a>
+        
+        <a  class="All "
+           href="/2020/11/16/Python-grammar/"
+           data-tag=""
+           data-author="" >
+            <span class="post-title" title="Python-grammar">Python-grammar</span>
+            <span class="post-date" title="2020-11-16 21:39:20">2020/11/16</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2020/10/06/Eclipse-Cpp-IDE-on-Windows10/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Eclipse Cpp">Eclipse Cpp</span>
+            <span class="post-date" title="2020-10-06 09:32:38">2020/10/06</span>
+        </a>
+        
+        <a  class="All Tools Emacs "
+           href="/2020/09/30/Emacs-on-Windows10/"
+           data-tag="Emacs"
+           data-author="" >
+            <span class="post-title" title="Emacs on Windows10">Emacs on Windows10</span>
+            <span class="post-date" title="2020-09-30 08:05:00">2020/09/30</span>
+        </a>
+        
+        <a  class="All Tools git "
+           href="/2020/09/17/git/"
+           data-tag="git"
+           data-author="" >
+            <span class="post-title" title="git">git</span>
+            <span class="post-date" title="2020-09-17 20:46:21">2020/09/17</span>
+        </a>
+        
+        <a  class="All Emacs "
+           href="/2020/09/05/How-to-use-org-mode/"
+           data-tag="Emacs"
+           data-author="" >
+            <span class="post-title" title="How to use org mode">How to use org mode</span>
+            <span class="post-date" title="2020-09-05 23:05:33">2020/09/05</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2020/08/18/Bjarny-Stroustrup-Cpp/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Bjarny Stroustrup cpp">Bjarny Stroustrup cpp</span>
+            <span class="post-date" title="2020-08-18 09:34:33">2020/08/18</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2020/08/14/Effective-modern-cpp/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Effective modern cpp">Effective modern cpp</span>
+            <span class="post-date" title="2020-08-14 10:56:45">2020/08/14</span>
+        </a>
+        
+        <a  class="All Computer Network "
+           href="/2020/08/11/Network/"
+           data-tag="Network"
+           data-author="" >
+            <span class="post-title" title="Network">Network</span>
+            <span class="post-date" title="2020-08-11 12:11:56">2020/08/11</span>
+        </a>
+        
+        <a  class="All Program Rust "
+           href="/2020/08/05/Cargo/"
+           data-tag="Rust,Cargo"
+           data-author="" >
+            <span class="post-title" title="Cargo">Cargo</span>
+            <span class="post-date" title="2020-08-05 08:58:58">2020/08/05</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2020/07/27/Cpp-to-c-interface/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Cpp to c interface">Cpp to c interface</span>
+            <span class="post-date" title="2020-07-27 22:43:02">2020/07/27</span>
+        </a>
+        
+        <a  class="All Program Basic "
+           href="/2020/07/26/Memory-concept-and-issues/"
+           data-tag="Rust,Memory,C++"
+           data-author="" >
+            <span class="post-title" title="Memory concept and issues">Memory concept and issues</span>
+            <span class="post-date" title="2020-07-26 15:34:35">2020/07/26</span>
+        </a>
+        
+        <a  class="All Program Cpp "
+           href="/2020/07/26/Dangling-pointer/"
+           data-tag="Cpp"
+           data-author="" >
+            <span class="post-title" title="Dangling pointer">Dangling pointer</span>
+            <span class="post-date" title="2020-07-26 09:18:37">2020/07/26</span>
+        </a>
+        
+        <a  class="All Tools Zsh "
+           href="/2020/07/22/Zsh-config/"
+           data-tag="Zsh"
+           data-author="" >
+            <span class="post-title" title="Zsh config">Zsh config</span>
+            <span class="post-date" title="2020-07-22 15:19:28">2020/07/22</span>
+        </a>
+        
+        <a  class="All Program Rust "
+           href="/2020/07/10/Why-Rust/"
+           data-tag="Rust"
+           data-author="" >
+            <span class="post-title" title="Why Rust">Why Rust</span>
+            <span class="post-date" title="2020-07-10 21:45:08">2020/07/10</span>
+        </a>
+        
+        <a  class="All Program Rust "
+           href="/2020/07/09/Rust-start/"
+           data-tag="Rust"
+           data-author="" >
+            <span class="post-title" title="Rust start">Rust start</span>
+            <span class="post-date" title="2020-07-09 08:56:09">2020/07/09</span>
+        </a>
+        
+        <a  class="All Tools Clang "
+           href="/2020/07/01/Clang-format-usage/"
+           data-tag="Emacs,Clang format,Vim"
+           data-author="" >
+            <span class="post-title" title="Clang-format-usage">Clang-format-usage</span>
+            <span class="post-date" title="2020-07-01 13:16:38">2020/07/01</span>
+        </a>
+        
+        <a  class="All Tools Blog "
+           href="/2020/06/26/How-to-start-writing-blog/"
+           data-tag="Blog"
+           data-author="" >
+            <span class="post-title" title="write blog">write blog</span>
+            <span class="post-date" title="2020-06-26 14:52:10">2020/06/26</span>
+        </a>
+        
+        <div id="no-item-tips">
+
+        </div>
+    </nav>
+    <div id="outline-list">
+    </div>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle" data-title="切换全屏 快捷键 s">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div id="post">
+    <div class="pjax">
+        <article id="post-Cpp-Profiling" class="article article-type-post" itemscope itemprop="blogPost">
+    
+        <h1 class="article-title">Profiling</h1>
+    
+    <div class="article-meta">
+        
+        <span class="top"><a>置顶</a></span>
+        
+        
+        
+        <span class="book">
+            <i class="iconfont icon-category"></i>
+            
+            
+            <a  data-rel="Program">Program</a> > 
+            
+            <a  data-rel="Program&lt;---&gt;Cpp">Cpp</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            <i class="iconfont icon-tag"></i>
+            
+            <a class="color4">Cpp</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+            Created At : <time class="date" title='Updated At: 2023-06-20 15:37:37'>2021-08-24 22:30</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>Count:10.4k</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            Views 👀 :<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#great"><span class="toc-text">great</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#simd-library"><span class="toc-text">simd library</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译器选项"><span class="toc-text">编译器选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#程序性能分析步骤"><span class="toc-text">程序性能分析步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#60s-操作-bpf"><span class="toc-text">60s 操作 bpf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#性能基准测试"><span class="toc-text">性能基准测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#top"><span class="toc-text">top</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Basic"><span class="toc-text">Basic</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存性能测试"><span class="toc-text">内存性能测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存压测"><span class="toc-text">内存压测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#理论性能评估"><span class="toc-text">理论性能评估</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推理优化"><span class="toc-text">推理优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#算子融合"><span class="toc-text">算子融合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cpu-time-and-off-cpu-time"><span class="toc-text">cpu time and off-cpu time</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#性能调优方法"><span class="toc-text">性能调优方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PMC-Performance-Monitoring-Counters"><span class="toc-text">PMC(Performance Monitoring Counters)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#循环展开"><span class="toc-text">循环展开</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分支预测"><span class="toc-text">分支预测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IPC-instruction-per-cycle"><span class="toc-text">IPC (instruction per cycle)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CPI-Cycle-Per-Instruction"><span class="toc-text">CPI(Cycle Per Instruction)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#绑核"><span class="toc-text">绑核</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#memory-bound"><span class="toc-text">memory bound</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSE（Streaming-SIMD-Extensions）"><span class="toc-text">SSE（Streaming SIMD Extensions）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SVE-Scalable-Vector-Extension"><span class="toc-text">SVE(Scalable Vector Extension)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多发射处理器"><span class="toc-text">多发射处理器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#静态调度超标量处理器"><span class="toc-text">静态调度超标量处理器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#VLIW-超长指令字-处理器"><span class="toc-text">VLIW( 超长指令字)处理器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动态调度超标量处理器"><span class="toc-text">动态调度超标量处理器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cache"><span class="toc-text">cache</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#cache-line"><span class="toc-text">cache line</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cache-miss"><span class="toc-text">cache miss</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#伪共享"><span class="toc-text">伪共享</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Notes"><span class="toc-text">Notes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tools"><span class="toc-text">Tools</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#gprof"><span class="toc-text">gprof</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#google-perftools"><span class="toc-text">google-perftools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#valgrind"><span class="toc-text">valgrind</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#cachegrind"><span class="toc-text">cachegrind</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#callgrind"><span class="toc-text">callgrind</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pmu-tools"><span class="toc-text">pmu-tools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pprof"><span class="toc-text">pprof</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#perf"><span class="toc-text">perf</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#record"><span class="toc-text">record</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#report"><span class="toc-text">report</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#script"><span class="toc-text">script</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#stat"><span class="toc-text">stat</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#annotate"><span class="toc-text">annotate</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#list"><span class="toc-text">list</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#top-1"><span class="toc-text">top</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mem"><span class="toc-text">mem</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hotspot"><span class="toc-text">hotspot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pyroscope"><span class="toc-text">pyroscope</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#speedscope"><span class="toc-text">speedscope</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#flamescope"><span class="toc-text">flamescope</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#火焰图"><span class="toc-text">火焰图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nsight"><span class="toc-text">nsight</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结-搜索-speed-up-C"><span class="toc-text">总结(搜索 speed up C++)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#profiling-result"><span class="toc-text">profiling result</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Links"><span class="toc-text">Links</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优化的问题"><span class="toc-text">优化的问题</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="great"><a href="#great" class="headerlink" title="great"></a>great</h2><ol>
+<li>谓词替换分支， 谓词函数是一个返回布尔值的函数。</li>
+<li>问 chatgpt 如何优化</li>
+<li><a href="https://tvm.hyper.ai/docs/tutorial/tensor_expr#%E7%A4%BA%E4%BE%8B-2%E4%BD%BF%E7%94%A8-te-%E6%89%8B%E5%8A%A8%E4%BC%98%E5%8C%96%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95" target="_blank" rel="noopener">TVM 各种优化方法</a><ul>
+<li>块操作</li>
+<li>循环置换</li>
+<li>向量化</li>
+<li>数组打包</li>
+<li>通过缓存优化块写入</li>
+<li>并行化</li>
+</ul>
+</li>
+<li><a href="https://easyperf.net/" target="_blank" rel="noopener">easyperf</a></li>
+<li><a href="https://github.com/dendibakh/perf-book" target="_blank" rel="noopener">perf-book</a></li>
+<li><a href="https://github.com/dendibakh/perf-ninja" target="_blank" rel="noopener">perf-ninja</a></li>
+<li><a href="https://www.eet-china.com/mp/a196988.html" target="_blank" rel="noopener">基于 CPU 性能调优的必要性和方法</a></li>
+<li><a href="https://github.com/topics/profiling" target="_blank" rel="noopener">topics/profiling</a></li>
+<li><a href="https://www.brendangregg.com/overview.html" target="_blank" rel="noopener">各种性能分析工具</a></li>
+<li><a href="https://www.brendangregg.com/linuxperf.html" target="_blank" rel="noopener">linuxperf</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/362575905" target="_blank" rel="noopener">profiling 与性能优化总结</a></li>
+<li><a href="http://arthurchiao.art/blog/linux-tracing-basis-zh/" target="_blank" rel="noopener">Linux tracing/profiling 基础：符号表、调用栈、perf/bpftrace</a></li>
+<li><a href="https://medium.com/coccoc-engineering-blog/things-you-should-know-to-begin-playing-with-linux-tracing-tools-part-i-x-225aae1aaf13" target="_blank" rel="noopener">Practical Linux tracing ( Part 1/5) : symbols, debug symbols and stack unwinding</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/385519404" target="_blank" rel="noopener">Perf IPC 以及 CPU 性能</a></li>
+<li><a href="https://plantegg.github.io/" target="_blank" rel="noopener">plantegg’s blog</a></li>
+<li><a href="https://github.com/Xilinx/Vitis-AI/tree/master/src/vai_runtime/vart/trace" target="_blank" rel="noopener">VART trace</a></li>
+<li><a href="https://github.com/Xilinx/Vitis-AI/tree/master/src/vai_runtime/vart/trace/vaitrace/vaitraceTools/mem_perf" target="_blank" rel="noopener">vaitraceTools/mem_perf</a></li>
+<li><a href="https://docs.xilinx.com/r/en-US/ug1414-vitis-ai/Vitis-AI-Profiler?tocId=LjrELULUsJtA_mgGxWE2lQ" target="_blank" rel="noopener">Vitis-AI-Profiler</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/445267642" target="_blank" rel="noopener">linux 性能分析工具 perf：十八般武器之 cache</a></li>
+<li><a href="https://static.linaro.org/connect/yvr18/presentations/yvr18-416.pdf" target="_blank" rel="noopener">Using perf On Arm platforms</a></li>
+</ol>
+<h2 id="simd-library"><a href="#simd-library" class="headerlink" title="simd library"></a><a href="https://www.reddit.com/r/cpp/comments/106ivke/simd_intrinsics_and_the_possibility_of_a_standard/" target="_blank" rel="noopener">simd library</a></h2><ol>
+<li><a href="https://github.com/google/highway" target="_blank" rel="noopener">highway cpu 向量加速库 SIMD</a><ul>
+<li><a href="https://github.com/google/highway/blob/f86369577e9f884f9156dddbf03ee786493c67f9/hwy/examples/benchmark.cc#LL245C5-L245C31" target="_blank" rel="noopener">获取支持的加速硬件</a></li>
+<li><code>cat /proc/cpuinfo</code> 看 flags</li>
+</ul>
+</li>
+<li><a href="https://github.com/jfalcou/eve" target="_blank" rel="noopener">eve</a></li>
+<li><a href="https://github.com/xtensor-stack/xsimd" target="_blank" rel="noopener">xsimd</a></li>
+<li><a href="https://github.com/ermig1979/Simd" target="_blank" rel="noopener">图像处理与机器学习 Simd</a></li>
+<li><a href="https://en.cppreference.com/w/cpp/experimental/simd" target="_blank" rel="noopener">parallelism TS v2</a></li>
+<li><a href="https://github.com/simd-everywhere/simde" target="_blank" rel="noopener">simde</a></li>
+</ol>
+<h2 id="编译器选项"><a href="#编译器选项" class="headerlink" title="编译器选项"></a>编译器选项</h2><ol>
+<li><code>-O3</code> 是编译器的优化级别选项，表示进行高级优化。这个选项告诉编译器进行更多的优化，以提高代码的执行效率。<code>-O3</code> 是最高级别的优化选项，它会启用多种优化技术，包括循环展开、函数内联、向量化等。使用 <code>-O3</code> 可以显著提高代码的执行速度，但可能会增加编译时间和可执行文件的大小。</li>
+<li><code>-LNO:simd</code> 是针对 SIMD（Single Instruction Multiple Data）指令集的优化选项。SIMD 是一种并行计算的技术，它允许在同一时间执行多个数据元素的相同操作，以提高程序的并行性和性能。<code>-LNO:simd</code> 告诉编译器使用 SIMD 指令集进行优化，以利用硬件的并行能力。这可以在循环、向量操作和并行计算等方面提高程序的性能。</li>
+<li><code>-openmp</code>可以在编译时启用 OpenMP 并行编程的支持，从而实现多线程并行执行，提高程序的性能， 需要注意的是，使用 OpenMP 进行并行编程需要在代码中添加适当的并行指令，如 #pragma omp parallel，来标识需要并行执行的代码块。同时，也需要注意线程间的同步和数据共享，以避免并发冲突和数据竞争的问题。</li>
+<li><code>-fopenmp-simd -DSIMDE_ENABLE_OPENMP</code></li>
+</ol>
+<h2 id="程序性能分析步骤"><a href="#程序性能分析步骤" class="headerlink" title="程序性能分析步骤"></a>程序性能分析步骤</h2><ol>
+<li>perf stat -ddd</li>
+<li>perf top 快速的定位热点函数</li>
+<li>火焰图看各函数耗时占比</li>
+<li>perf report and annotate 查看热点函数的热点代码</li>
+<li>profiling table 统计代码具体时间</li>
+<li>flamescope 看 hot map</li>
+<li>speedscope</li>
+</ol>
+<h2 id="60s-操作-bpf"><a href="#60s-操作-bpf" class="headerlink" title="60s 操作 bpf"></a>60s 操作 bpf</h2><ol>
+<li><p>uptime —–&gt; <code>load averages</code> <a href="https://zhuanlan.zhihu.com/p/75975041" target="_blank" rel="noopener">link</a> <a href="https://blog.51cto.com/u_15077533/4173309" target="_blank" rel="noopener">link1</a></p>
+<ul>
+<li>Linux load averages 不仅可以用于追踪 runnable 任务，还可以跟踪不间断睡眠状态下的任务（uninterruptible sleep state）。</li>
+<li>如果 1min 平均值高于 5min 或 15min 平均值，则负载正在增加, 如果 1min 平均值低于 5min 或 15min 平均值，则负载正在减少</li>
+<li>如果它们高于系统 CPU 的数量，那么系统很可能会遇到性能问题（视情况而定）</li>
+<li>当 load averages 首次出现在 Linux 中时，就像其他操作系统一样，它们反映了 CPU 的需求。但后来在 Linux 上将它们改为不仅包括 runnable 任务，还包括处于不间断状态的任务（TASK_UNINTERRUPTIBLE 或 nr_uninterruptible）</li>
+<li>这证实了故意改变 load averages 以反映对其他系统资源的需求，而不仅仅针对于 CPU 资源。Linux 从 “CPU load averages” 变为 “system load averages”。</li>
+</ul>
+</li>
+<li><p>dmesg -T | tail ——&gt; <code>kernal erros</code></p>
+</li>
+<li><p>vmstat 1 ——&gt; <code>overall stats by time</code></p>
+</li>
+<li><p>mpstat -P ALL 1 —–&gt; <code>CPU balance</code></p>
+<ul>
+<li>可以查看多核心 cpu 中每个计算核心的统计数据；</li>
+<li>Report CPU statistics.</li>
+</ul>
+</li>
+<li><p>pidstat 1 —–&gt; <code>process usage</code></p>
+</li>
+<li><p>iostate -xz 1 —–&gt; <code>iostat -xz 1</code></p>
+</li>
+<li><p>free -m —–&gt; <code>memory usage</code></p>
+<ul>
+<li>man free 查看各个字段含义</li>
+<li>cat /proc/meminfo 有更详细内存占用</li>
+</ul>
+</li>
+<li><p>sar -n DEV 1 —–&gt; <code>network I/O</code></p>
+</li>
+<li><p>sar -n TCP,ETCP 1 —–&gt; <code>TCP stats</code></p>
+</li>
+<li><p>top —–&gt; <code>check overview</code></p>
+</li>
+</ol>
+<h2 id="性能基准测试"><a href="#性能基准测试" class="headerlink" title="性能基准测试"></a>性能基准测试</h2><ol>
+<li><a href="https://www.spec.org/" target="_blank" rel="noopener">spec</a> 需要 ios 文件</li>
+</ol>
+<h2 id="top"><a href="#top" class="headerlink" title="top"></a><a href="https://www.jianshu.com/p/af584c5a79f2" target="_blank" rel="noopener">top</a></h2><ol>
+<li>man top</li>
+<li>? help</li>
+<li>RES=CODE+DATA 进程使用的、未被换出的物理内存大小</li>
+<li>内存主要关注物理内存, 虚拟内存表示程序文件及链接库大小，并不是所有的都加载到内存</li>
+<li>used mem = total - free - buffers - cache （man free 可以看计算公式),</li>
+<li>主要看 avaliable &lt; free + buff/cache</li>
+<li>纳入内核管理的内存不见得都在使用中，还包括过去使用过的现在可以被重复利用的内存，内核并不把这些可被重新使用的内存交还到 free 中去，因此在 linux 上 free 内存会越来越少。</li>
+<li>%MEM – Memory Usage (RES) A task’s currently used share of available physical memory. 当前使用的物理内存 / 总的物理内存</li>
+</ol>
+<h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><ol>
+<li><p>eigen 矩阵可以向量化，Eigen::Map 问 chatgpt</p>
+</li>
+<li><p>矩阵乘法是计算密集型运算。为取得良好的 CPU 性能，有两个重要的优化： <a href="https://tvm.hyper.ai/docs/tutorial/tensor_expr#%E7%A4%BA%E4%BE%8B-2%E4%BD%BF%E7%94%A8-te-%E6%89%8B%E5%8A%A8%E4%BC%98%E5%8C%96%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95" target="_blank" rel="noopener">link</a></p>
+<ul>
+<li><code>提高内存访问的缓存命中率</code>。高缓存命中率可以加速复杂的数值计算和热点内存访问。这需要将原始内存访问模式转换为适合缓存策略的模式。</li>
+<li><code>SIMD（单指令多数据）</code>，又称向量处理单元。在每个循环中，SIMD 可以处理一小批数据，而不是处理单个值。这需要将循环体中的数据访问模式转换为统一模式，以便 LLVM 后端可将其降低到 SIMD。</li>
+</ul>
+</li>
+<li><p><code>效率 = 有效量 / 理论量 = 有效量 / (理论峰值量 * 时间) = 有效量 * fps / 理论峰值量</code></p>
+</li>
+<li><p>op 计算效率：根据 op 算法算出计算量 C（可用 highway 函数统计 cycle)， 测出实际耗时 t, 已知理论峰值算力 O/s; <code>计算效率 = 计算量 / 理论计算量(峰值算力 * 实际耗时) = C / (O * t) = C * fps / O</code> ？</p>
+</li>
+<li><p>op io 效率 <code>io效率 = io量 / 理论io量(峰值IO * 实际耗时)</code></p>
+</li>
+<li><p>模型算力利用率： <code>利用率 = 模型计算量 / 理论计算量(峰值算力 * 实际耗时) = 模型计算量 * fps / 峰值算力</code></p>
+</li>
+<li><p>提高 cache 命中率软件方法：</p>
+<ul>
+<li>连续访存</li>
+<li>分块</li>
+</ul>
+</li>
+<li><p>向量处理器可以设置步幅，访问步幅确定的非连续内存也有比较高的性能</p>
+</li>
+<li><p>在栈上申请内存比堆快, 不是运算快 <a href="https://zhuanlan.zhihu.com/p/481687008" target="_blank" rel="noopener">link</a>;</p>
+</li>
+<li><p>MIPS: 每秒执行了多少百万条指令。DMIPS：D 是 Dhrystone 的缩写，在 MIPS 前面加上 Dhrystone （整数运算），用于测整数计算能力。进程占用 DMIPS = 总的 DMIPS * 进程占用 CPU 百分比</p>
+<ul>
+<li><a href="https://blog.csdn.net/qq_21475601/article/details/106564903" target="_blank" rel="noopener">ARM 各内核系列整型运算能力对比—DMIPS / MHz</a></li>
+<li>A55 单核算力： 2.7DMIPS/MHz*1.2GHz=3.24 KDMIPS</li>
+<li>评估算力： 某个平台 top（隔几秒统计一次）看各进程 cpu 占比(max, mean)，根据 cpu 占比计算进程占 DMIPS， 所有进程加起来看是否超过另外一个平台总算力</li>
+</ul>
+</li>
+<li><p><img src="https://mmbiz.qpic.cn/sz_mmbiz_png/2icOarNW84W7BnJpVvdnUeOgJYHibeWJbd4z0KJu556ykzgnjl7MHm5YWyjWDqR7eMPmXIWSWCFy8KG3dJQD8O8A/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="cpu gpu npu算力单位"></p>
+</li>
+<li><p><a href="https://mp.weixin.qq.com/s/uTp9DXsG0pzTbyux1JgHMA" target="_blank" rel="noopener">抛弃 ARM，高通第五代汽车芯片</a></p>
+</li>
+<li><p>芯片指令解码位宽对 IPC 有直接影响</p>
+</li>
+<li><p>提高性能方法： 充分利用并行， 局部性原理</p>
+</li>
+<li><p>并行加速：</p>
+<ul>
+<li><p><code>数据级并行（DLP）</code>，它的出现是因为可以同时操作许多数据项。</p>
+<ul>
+<li><code>指令级并行</code>: 在编译器的帮助下，利用流水线之类的思想适度开发数据级并行，利用推理执行之类的思想以中等水平开发数据级并行。</li>
+<li><code>SIMD</code>： 向量体系结构和图形处理器（GPU）将单条指令并行应用于一个数据集，以开发数据级并行。</li>
+</ul>
+</li>
+<li><p><code>任务级并行（TLP）</code>，它的出现是因为创建了一些能够单独处理但大量采用并行方式执行的工作任务。</p>
+<ul>
+<li><code>线程并行</code>：线程级井行在一种紧耦合硬件模型中开发数据级并行或任务级并行，这种模型允许在并行线程之间进行交互。</li>
+<li><code>请求级并行</code>: 在程序员或操作系统指定的大量去耦合任务之间开发并行。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>局部性原理</p>
+<ul>
+<li>时间局部性：最近访问过的内容很可能会在短期内被再次访问</li>
+<li>空间局部性：地址相互临近的指令或数据很可能会在短时间内被用到</li>
+</ul>
+</li>
+<li><p>加速比(归一化)： 原执行时间 / 新执行时间 = 1 / ( (1 - 升级比例) + (升级比例/升级加速比))；新执行时间 = 不能加速部分 + 加速后部分 = 不能加速部分 + 加速部分/加速部分加速比</p>
+</li>
+<li><p>Amdahl 定律：根据加速比， 可以得到</p>
+<ul>
+<li>如果仅改进一部分计算的性能，在增加改进是，所获得的加速比增量会逐渐减小</li>
+<li>加速比有最大值： 1 / ( 1 - 升级比例)</li>
+</ul>
+</li>
+<li><p>感知系统优化方案（从系统上分析)：</p>
+<ul>
+<li>整体 pipeline 调度优化: 线程优先级， 各模块多线程，异步</li>
+<li>整体数据流优化： 合并前处理操作， rgba 在 rgb 转 nchw 时来做， memory_pool, zero copy</li>
+<li>模型+后处理联合优化：sigmoid 在后处理做, 反算阈值，sigmoid 之前先过滤， 优化 cpu 热点代码</li>
+<li>cuda 算子， neon 加速</li>
+</ul>
+</li>
+<li><p>关注数据流，具体哪一步耗时</p>
+</li>
+<li><p>data packing:</p>
+<ul>
+<li>注意 struct 成员变量顺序，尽量减少 padding</li>
+</ul>
+</li>
+<li><p>访存优化：</p>
+<ul>
+<li>连续访问</li>
+<li>不要重复访问（可以先用临时变量存下来)</li>
+</ul>
+</li>
+<li><p>软硬算法联合优化</p>
+</li>
+<li><p>编译器：</p>
+<ul>
+<li>打开编译器优化报告</li>
+<li>编译器参数：-O3(启动与机器无关的优化功能) -march=armv8.2-a(启动针对特定 CPU 系列的优化功能) -flto(启动过程间优化功能)</li>
+<li>gcc -fopt-info 输出优化报告</li>
+</ul>
+</li>
+<li><p>技术栈:</p>
+<ul>
+<li>第一个就是编译器，你可能不需要更深入理解编译器的具体的原理，但是你要了解编译器通用的编译优化手段，以及它有比较通用的一些编译优化的选项。</li>
+<li>第二个就是 OS 的一个调度，还有一个可能 CPU 绑核。在手机上的话，绑核还是很明显的，如果是在小核上和大核，要是中核，它们也差距很多。硬件的限制。如果你想你的任务要跑特别快，比如假如一个特别重要的前台功能，你需要把你的主线程一个界面相关的线程可能就要绑定到大核上，让他跑这么快。</li>
+<li>第三个在硬点上，我可能我们要比较了解 CPU 的微架构是什么样的， CPU 微架构什么样的，为什么我的代码跑的时候它就慢，慢又拆解为几类，怎么去分析它。第二个你要去可能要去尝试的去学习，怎么去读或者改这些汇编的一些指令。</li>
+</ul>
+</li>
+<li><p>系统级性能优化通常包括两个阶段：性能剖析（performance profiling）和代码优化。</p>
+</li>
+<li><p><a href="https://zhuanlan.zhihu.com/p/419859575" target="_blank" rel="noopener">性能静态分析（定量）</a></p>
+<ul>
+<li><a href="https://www.jianshu.com/p/a0296d5b91bc" target="_blank" rel="noopener">Parallelware Analyzer</a></li>
+</ul>
+</li>
+<li><p><a href="https://zhuanlan.zhihu.com/p/343408130" target="_blank" rel="noopener">性能指标</a></p>
+<ul>
+<li>latency(延迟或响应时间)</li>
+<li>throughput()</li>
+<li>资源使用率 (资源：处理器，内存，IO)<ul>
+<li>cpu(不大于 75%)</li>
+<li>内存(不大于 80%)</li>
+<li>IO(磁盘, 网络)</li>
+</ul>
+</li>
+<li>错误率</li>
+</ul>
+</li>
+<li><p>latency 和 throughput (延迟和吞吐量)</p>
+<ul>
+<li>throughput(速度？)：吞吐量一般指相当一段时间内测量出来的系统单位时间处理的任务数或事务数。如：1s 处理 10 帧图片 (10FPS)</li>
+<li>latency: 执行一次任务需要的时间。如：处理一帧图片耗时 10ms</li>
+<li>latency 最大值：每个节点最大耗时叠加在一起，就是整体 pipeline 的 latency 最大值，即一帧最大需要多少时间输出结果，这个 latency 值尽量越小越好；</li>
+<li>目标：低延迟，高吞吐</li>
+<li>提高吞吐：提升 node 处理速度或异步流水线， 异步流水可能会增加延迟（较好提升, 有两种方法)</li>
+<li>降低延迟：提升 node 处理速度， 优化关键点，也会增加吞吐(容易遇见瓶颈)</li>
+<li>提升 node 处理速度能够同时提高吞吐和降低延迟。</li>
+</ul>
+</li>
+<li><p>流水线深度(硬件执行单元个数)，buffer 数量(处理多少帧)关系</p>
+<ul>
+<li>如果完全流水起来， buffer size 不小于流水线深度，流水线帧率由耗时最大的 node 决定: 1 / max(node time)</li>
+<li>(异步处理比较重要 queue size)</li>
+<li>node 之间相互不影响，buffer size 大于流水线深度通常作用不大， 同一时刻所有 node 只能处理流水线深度的 buffer，但如果 node 之间相互影响，不好推测 buffer size 大小。</li>
+<li>node 之间相互影响：buffer size 不影响其他功能越大越好</li>
+<li><a href="https://zhuanlan.zhihu.com/p/66933636" target="_blank" rel="noopener">流水线深度</a></li>
+</ul>
+</li>
+<li><p>提升 node 处理速度方法：</p>
+<ul>
+<li>减少运算量(降低算法复杂度)</li>
+<li>加速库(如：硬件加速) 或更换更强硬件</li>
+<li>多线程</li>
+<li>减少资源申请与释放(如 memory pool, thread pool)</li>
+<li>减小内存拷贝(如：零拷贝)</li>
+<li>内存使用优化：如模型多个输出，申请一次大内存，偏移量来寻址。</li>
+<li>空间换时间(如查表法)</li>
+<li>语言特性：内联函数</li>
+<li>提高 cache 命中率(如：矩阵变数组，连续访问会提高 cache 命中率)</li>
+<li>改变运算方法(如 sigmoid 后再做处理，减少指数运算)</li>
+</ul>
+</li>
+<li><p>异步方法(流水线)</p>
+<ul>
+<li>多线程</li>
+<li>增加 buffer 数</li>
+<li>调度优化</li>
+<li>多流水线(pingpang)</li>
+</ul>
+</li>
+<li><p><a href="https://bbs.huaweicloud.com/blogs/detail/222032" target="_blank" rel="noopener">定位和优化程序 CPU、内存、IO 瓶颈</a></p>
+<ul>
+<li>两个方向：<code>提⾼运⾏速度 + 减少计算量</code></li>
+<li>先建立测试<code>baseline</code></li>
+<li>瓶颈点可能有多个，如果不解决最狭窄的瓶颈点</li>
+</ul>
+</li>
+<li><p>调研性能瓶颈，如何对系统性能进行分析。</p>
+</li>
+<li><p>单例 perf table</p>
+</li>
+<li><p>计算密集型</p>
+<ul>
+<li>减少不必要计算</li>
+</ul>
+</li>
+<li><p>访存密集型</p>
+<ul>
+<li>提高 page 和 cache 命中率</li>
+<li>减少不必要访存</li>
+</ul>
+</li>
+<li><p>IO 密集型</p>
+</li>
+</ol>
+<h2 id="内存性能测试"><a href="#内存性能测试" class="headerlink" title="内存性能测试"></a><a href="https://blog.csdn.net/pcokk/article/details/90733871" target="_blank" rel="noopener">内存性能测试</a></h2><ol>
+<li><code>mbw 32 -b 4096</code></li>
+<li><code>sysbench memory run</code></li>
+<li><code>lmbench</code></li>
+<li><code>Memtest86+</code></li>
+</ol>
+<h2 id="内存压测"><a href="#内存压测" class="headerlink" title="内存压测"></a><a href="https://blog.51cto.com/u_14900374/2533353" target="_blank" rel="noopener">内存压测</a></h2><ol>
+<li>memtester</li>
+</ol>
+<h2 id="理论性能评估"><a href="#理论性能评估" class="headerlink" title="理论性能评估"></a>理论性能评估</h2><ol>
+<li>理论 GPU 使用时间计算：各模型的推理耗时是单模型实测值，GPU 时间片按照各自的设计帧率（如 15Hz (fps)）× 推理耗时得到，是个纯理论计算的值。总和为各部分理论值相加，820 为理论值，这个值如果大于 1000 则系统无法达成。</li>
+<li>单模型推理时间 * fps = 模型占用 gpu 时间, 所有模型时间不能超过 1000ms;</li>
+<li>有了各个模型推理时间也可以算理论最大帧率；（未考虑模型对计算资源的抢占，锁）</li>
+</ol>
+<h2 id="推理优化"><a href="#推理优化" class="headerlink" title="推理优化"></a><a href="https://www.cnblogs.com/Matrix_Yao/p/13181778.html" target="_blank" rel="noopener">推理优化</a></h2><ol>
+<li><a href="https://www.6aiq.com/article/1662281420188" target="_blank" rel="noopener">深度模型推理加速的术与道</a></li>
+<li>减少 sigmoid 的使用(非常耗时)，可以放到后处理来做，根据 sigmoid 公式， 反算阈值，过滤之后再进行计算</li>
+</ol>
+<h3 id="算子融合"><a href="#算子融合" class="headerlink" title="算子融合"></a>算子融合</h3><ol>
+<li><p>算子融合基于对深度学习拓扑结构模式的观察。深度学习算子按其对资源的需求可以分为两类：</p>
+<ul>
+<li>计算密集型算子，这些算子的时间绝大部分花在计算上，如卷积、全连接等。</li>
+<li>访存密集型算子，这些算子的时间绝大部分花在访存上，他们大部分是 element-wise 算子， ReLU，eltment-wise sum。</li>
+</ul>
+</li>
+</ol>
+<h2 id="cpu-time-and-off-cpu-time"><a href="#cpu-time-and-off-cpu-time" class="headerlink" title="cpu time and off-cpu time"></a>cpu time and off-cpu time</h2><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/362575905" target="_blank" rel="noopener">profiling 与性能优化总结</a></li>
+</ol>
+<h2 id="性能调优方法"><a href="#性能调优方法" class="headerlink" title="性能调优方法"></a>性能调优方法</h2><h3 id="PMC-Performance-Monitoring-Counters"><a href="#PMC-Performance-Monitoring-Counters" class="headerlink" title="PMC(Performance Monitoring Counters)"></a>PMC(Performance Monitoring Counters)</h3><h3 id="循环展开"><a href="#循环展开" class="headerlink" title="循环展开"></a><a href="https://zhuanlan.zhihu.com/p/553771789" target="_blank" rel="noopener">循环展开</a></h3><ol>
+<li>计算能力（GFlops）和访存速度（MB/s）的矛盾，在汇编语言中就是取指令（load）和计算（ALU）的矛盾。访存和计算天然是两种独立的资源，两者可以独立运行互不影响。</li>
+<li>当循环次数变少，循环体增多的时候，<code>CPU在执行循环体的过程中就有了更大的操作空间进行指令调度(inline也有这个作用)</code>，在计算 a[i]的时候就可以去调度 a[i+1]相关的指令（取数据）和 a[i-1]相关的指令（存数据），因此 CPU 流水线更满载，也就提高了性能。</li>
+<li>一般不需要手动优化，-O2 会自动展开， -O1 不会</li>
+<li>perf annotate 可以看出循环有开销(判断，跳转或 index 操作)， cpu 流水线并行性低</li>
+</ol>
+<h3 id="分支预测"><a href="#分支预测" class="headerlink" title="分支预测"></a>分支预测</h3><h3 id="IPC-instruction-per-cycle"><a href="#IPC-instruction-per-cycle" class="headerlink" title="IPC (instruction per cycle)"></a><a href="https://zhuanlan.zhihu.com/p/385519404" target="_blank" rel="noopener">IPC (instruction per cycle)</a></h3><ol>
+<li><code>tiptop</code></li>
+<li><code>perf stat</code> 可以查看</li>
+<li>当比较不同的指令集时，与使用相同芯片技术实现更复杂的指令集相比，更简单的指令集可能会导致更高的 IPC 数字。但是，更复杂的指令集可能能够以更少的指令实现更多有用的工作。</li>
+<li>确定： <code>计算密集型或访存密集型</code></li>
+<li>如果 IPC &lt; 1.0, 很可能是 Memory stall 占主导，可从软件和硬件两个方面考虑这个问题。软件方面：减少不必要的访存操作，提升 cache 命中率，尽量访问本地节点内存；硬件方面：增加 cache 容量，加快访存速度，提升总线带宽。<br>如果 IPC &gt; 1.0, 很可能是计算密集型的程序。可以试图减少执行指令的数量：消除不必要的工作。火焰图 CPU flame graphs，非常适用于分析这类问题。硬件方面：尝试超频、使用更多的 core 或 hyperthread。作者根据 PMU 相关的工作经验，设定了 1.0 这个阈值，用于区分访存密集型(memory-bound)和计算密集型(cpu-bound)程序。读者可以根据自己的实际工作平台，合理调整这个阈值。</li>
+<li><a href="https://www.brendangregg.com/blog/2017-05-09/cpu-utilization-is-wrong.html" target="_blank" rel="noopener">cpu-utilization-is-wrong</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/364661188?utm_source=zhihu&utm_medium=social&utm_oi=26748628500480" target="_blank" rel="noopener">CPU 最高性能预估之“理论最大 IPC”</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/385519404" target="_blank" rel="noopener">IPC 测试，可以预估最大 IPC</a></li>
+<li>ipc 是指每个 core 的 IPC</li>
+</ol>
+<h3 id="CPI-Cycle-Per-Instruction"><a href="#CPI-Cycle-Per-Instruction" class="headerlink" title="CPI(Cycle Per Instruction)"></a>CPI(Cycle Per Instruction)</h3><h3 id="绑核"><a href="#绑核" class="headerlink" title="绑核"></a>绑核</h3><ol>
+<li>taskset</li>
+</ol>
+<h3 id="memory-bound"><a href="#memory-bound" class="headerlink" title="memory bound"></a>memory bound</h3><h3 id="SSE（Streaming-SIMD-Extensions）"><a href="#SSE（Streaming-SIMD-Extensions）" class="headerlink" title="SSE（Streaming SIMD Extensions）"></a>SSE（Streaming SIMD Extensions）</h3><h3 id="SVE-Scalable-Vector-Extension"><a href="#SVE-Scalable-Vector-Extension" class="headerlink" title="SVE(Scalable Vector Extension)"></a>SVE(Scalable Vector Extension)</h3><ol>
+<li>是 arm AArch64 架构下的下一代 SIMD 指令集，旨在加速高性能计算，SVE 引入了很多新的架构特点</li>
+</ol>
+<h3 id="多发射处理器"><a href="#多发射处理器" class="headerlink" title="多发射处理器"></a>多发射处理器</h3><ol>
+<li>多发射处理器相对于向量处理器的潜在优势在于它们能够从结构化程度较低的代码中提取某些并行，以及能够很轻松地缓存所有形式的数据。因为这些原因，<code>多发射方法已经成为利用指令级并行的主要方法</code>，而向量主要作为这些处理器的扩展。</li>
+<li>目标就是允许在一个时钟周期中发射多条指令。多发射处理器主要有以下 3 类。</li>
+</ol>
+<h4 id="静态调度超标量处理器"><a href="#静态调度超标量处理器" class="headerlink" title="静态调度超标量处理器"></a>静态调度超标量处理器</h4><ol>
+<li>由于静态调度超标量的收益会随着发射宽度的增长而逐渐减少，所以静态调度超标量主要用于发射宽度较窄的情况，通常仅有两条指令</li>
+<li>大多属于嵌入式领域， MiPS 和 ARM ，包括 ARM Cortex-A8</li>
+</ol>
+<h4 id="VLIW-超长指令字-处理器"><a href="#VLIW-超长指令字-处理器" class="headerlink" title="VLIW( 超长指令字)处理器"></a>VLIW( 超长指令字)处理器</h4><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/337749676" target="_blank" rel="noopener">计算机指令集架构 – 超长指令字（VLIW）</a></li>
+<li>大多数属于信号处理领域，比如 TI C6x</li>
+</ol>
+<h4 id="动态调度超标量处理器"><a href="#动态调度超标量处理器" class="headerlink" title="动态调度超标量处理器"></a>动态调度超标量处理器</h4><ol>
+<li>Intel Core i3 、i5 ， i7. AMD Phenom, IBM Power7</li>
+</ol>
+<h3 id="cache"><a href="#cache" class="headerlink" title="cache"></a>cache</h3><ol>
+<li>LLC: last level cache 最后一级缓存，比较关键</li>
+</ol>
+<h4 id="cache-line"><a href="#cache-line" class="headerlink" title="cache line"></a><a href="https://plantegg.github.io/2021/05/16/CPU_Cache_Line%E5%92%8C%E6%80%A7%E8%83%BD/" target="_blank" rel="noopener">cache line</a></h4><ol>
+<li>一般 size 64 byte</li>
+<li><code>getconf -a | grep CACHE</code> 查看各级 cache line size</li>
+<li><code>lscpu</code></li>
+</ol>
+<h4 id="cache-miss"><a href="#cache-miss" class="headerlink" title="cache miss"></a>cache miss</h4><ol>
+<li>应用程序的读占比越高，对缓存越友好；访问的字长越大对预取越友好；同等数量的指令内存依赖越低，CPI 会越高。</li>
+<li><code>sudo perf stat -d -d -d -a -- sleep 10</code></li>
+<li><code>sudo perf stat -e cache-misses ls</code></li>
+<li><code>sudo cachestat-bpfcc 2</code></li>
+<li><code>sudo cachetop-bpfcc</code></li>
+</ol>
+<h3 id="伪共享"><a href="#伪共享" class="headerlink" title="伪共享"></a>伪共享</h3><h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><ol>
+<li>Release 模式编译</li>
+<li>看 cpu 使用率 log 重定向到/dev/null。 <code>&gt; /dev/null 2&gt;&amp;1</code></li>
+<li>log 重定向到文件, 不要打印到 stdout<ul>
+<li><code>&gt; output.log 2&gt;&amp;1</code> this will redirect both STDOUT and STDERR to the file.</li>
+<li><code>2&gt;&amp;1 &gt; output.log</code> the old STDOUT will be saved (copied) in STDERR and then STDOUT will be redirected to file. So, stdout will go to file and stderr will go to console.</li>
+<li><code>2&gt;&amp;1 | tee output.log</code> both streams will be redirected to tee. Tee will duplicate any input to its stdout (the console in your case) and to file (output.log).</li>
+</ul>
+</li>
+<li>GPU 函数耗时统计不能只记录一次的，GPU 可能做一些准备工作，教训： nppiResize_8u_C3R 不管大小第一次运行耗时都很大 The cuda context is lazily initialized</li>
+<li>-O3 测试</li>
+<li>perf stat ./xxx 测试程序运行时间</li>
+</ol>
+<h2 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h2><h3 id="gprof"><a href="#gprof" class="headerlink" title="gprof"></a><a href="http://www.tastones.com/stackoverflow/c++/profiling/profiling_with_gcc_and_gprof/" target="_blank" rel="noopener">gprof</a></h3><p><a href="https://jasonblog.github.io/note/ncku_embededd/tong_xue_li_yong_gprof2dot_gong_ju_ff0c_jiang_zui_.html" target="_blank" rel="noopener">link</a></p>
+<pre><code>- g++ -pg ... -o xxx (Note: do not use -g)
+- ./xxx
+- gprof -b ./xxx gmon.out &gt; xxx.log
+-  gprof ./xxx gmon.out | less
+
+sudo pip install gprof2dot
+gprof ./xxx | gprof2dot | dot -Tpng -o report.png
+gprof ./xxx | gprof2dot | dot -Tsvg -o report.svg
+
+SET(CMAKE_CXX_FLAGS &quot;${CMAKE_CXX_FLAGS} -pg&quot;)
+SET(CMAKE_EXE_LINKER_FLAGS &quot;${CMAKE_EXE_LINKER_FLAGS} -pg&quot;)
+SET(CMAKE_SHARED_LINKER_FLAGS &quot;${CMAKE_SHARED_LINKER_FLAGS} -pg&quot;)</code></pre><h3 id="google-perftools"><a href="#google-perftools" class="headerlink" title="google-perftools"></a>google-perftools</h3><pre><code>- g++ -O3 -o test test.cc -lprofiler
+- LD_PRELOAD=/usr/local/lib/libprofiler.so CPUPROFILE=test.prof ./test
+- google-pprof ./test test.prof --svg &gt; test.svg</code></pre><h3 id="valgrind"><a href="#valgrind" class="headerlink" title="valgrind"></a>valgrind</h3><ol>
+<li><a href="https://www.zhihu.com/question/31382177" target="_blank" rel="noopener">valgrind + massif-visualizer 看内存占用</a></li>
+</ol>
+<h4 id="cachegrind"><a href="#cachegrind" class="headerlink" title="cachegrind"></a>cachegrind</h4><ol>
+<li>cachegrind：分析 CPU 的 cache 命中率、丢失率，用于进行代码优化。</li>
+<li><code>valgrind --tool=cachegrind --branch-sim=yes ls</code></li>
+<li><code>cg_annotatel(callgrind_annotate) cachegrind.out.88431</code> 各模块 cache 统计</li>
+<li><code>cg_annotatel(callgrind_annotate) cachegrind.out.88431 file</code> 统计 file 每一行 cache 情况, 可以看出 O3 比 O1 cache 优化了</li>
+<li><a href="https://jaist.dl.sourceforge.net/project/qcachegrindwin/0.7.4/" target="_blank" rel="noopener">qcachegrindwin 分析生成文件</a></li>
+<li>Kcachegrind GUI 显示分析生成的文件</li>
+</ol>
+<h4 id="callgrind"><a href="#callgrind" class="headerlink" title="callgrind"></a><a href="https://learnku.com/articles/46663" target="_blank" rel="noopener">callgrind</a></h4><ol>
+<li>callgrind</li>
+</ol>
+<pre><code class="shell">valgrind –tool=callgrind ./tmp
+callgrind_annotate callgrind.out.XXX
+gprof2dot.py -f callgrind callgrind.out.XXX |dot -Tpng -o report.png</code></pre>
+<h3 id="pmu-tools"><a href="#pmu-tools" class="headerlink" title="pmu-tools"></a><a href="https://github.com/andikleen/pmu-tools" target="_blank" rel="noopener">pmu-tools</a></h3><h3 id="pprof"><a href="#pprof" class="headerlink" title="pprof"></a><a href="https://github.com/google/pprof" target="_blank" rel="noopener">pprof</a></h3><h3 id="perf"><a href="#perf" class="headerlink" title="perf"></a><a href="https://billtian.github.io/digoal.blog/2016/11/27/01.html" target="_blank" rel="noopener">perf</a></h3><ol>
+<li><a href="https://gaomf.cn/2019/10/30/perf_stack_traceback/" target="_blank" rel="noopener">使用 perf 进行性能分析时如何获取准确的调用栈</a></li>
+<li><a href="https://www.brendangregg.com/perf.html" target="_blank" rel="noopener">good examples</a></li>
+<li>perf 是性能分析的必备工具, 它最核心的能力是能访问硬件上的 Performance Monitor Unit (PMU), 对分析 CPU bound 的问题很有帮助, 当然 perf 也支持各种软件 event.</li>
+</ol>
+<h4 id="record"><a href="#record" class="headerlink" title="record"></a>record</h4><ol>
+<li><code>perf record -e LLC-load-misses</code> 只记录某个热点，可生成火焰图</li>
+</ol>
+<h4 id="report"><a href="#report" class="headerlink" title="report"></a>report</h4><h4 id="script"><a href="#script" class="headerlink" title="script"></a>script</h4><ol>
+<li><code>perf script -v</code> -v 查看调试信息</li>
+</ol>
+<h4 id="stat"><a href="#stat" class="headerlink" title="stat"></a><a href="https://zhuanlan.zhihu.com/p/385519404" target="_blank" rel="noopener">stat</a></h4><ol>
+<li>性能有一些损耗，影响不大（-ddd 打开细节越多损失越大）</li>
+<li><code>sudo perf stat -a -- sleep 10</code></li>
+<li>不计算分布，仅仅进行统计, 可以看总体性能(IPC 等)</li>
+<li><code>sudo perf stat -d -d -d -a -- sleep 10</code></li>
+<li><code>sudo perf stat -e cache-misses ls</code></li>
+<li>可以查看 CPU 真实利用率： CPUs utilized, 不包括等待时间，自旋时间等。真实利用率比 top 查看的利用率要低很多。</li>
+<li>top 查看的利用率： 如果 CPU 没有运行在内核的 idle 线程，就认为 CPU 在被使用。当 cpu 阻塞并等待内存访问时，也可能显示较高的利用率。</li>
+</ol>
+<h4 id="annotate"><a href="#annotate" class="headerlink" title="annotate"></a><a href="https://developer.ibm.com/tutorials/l-analyzing-performance-perf-annotate-trs/" target="_blank" rel="noopener">annotate</a></h4><ol>
+<li>将热点函数精确到代码行，用于对问题进行精确定位。</li>
+<li>perf report 可以选中 sympol, 按快捷键 a</li>
+<li>h 显示快捷键</li>
+<li>k 显示行号</li>
+<li><tab> Cycle thru hottest instructions</li>
+<li>t Circulate percent, total period, samples view</li>
+<li>Cross-arch annotate: 需要 vmlinux</li>
+<li><a href="https://ctf-wiki.org/pwn/linux/kernel-mode/environment/build-kernel/" target="_blank" rel="noopener">build-kernel</a></li>
+<li><a href="https://phoenixnap.com/kb/build-linux-kernel" target="_blank" rel="noopener">build-linux-kernel</a></li>
+<li><a href="https://patchwork.ozlabs.org/project/linuxppc-dev/patch/1474472876-2706-2-git-send-email-ravi.bangoria@linux.vnet.ibm.com/" target="_blank" rel="noopener">cross arch</a></li>
+</ol>
+<h4 id="list"><a href="#list" class="headerlink" title="list"></a>list</h4><ol>
+<li>查看支持的 events</li>
+</ol>
+<h4 id="top-1"><a href="#top-1" class="headerlink" title="top"></a>top</h4><ol>
+<li>我们知道 perf top 是通过读取 PMU 的 PC 寄存器来获取当前执行的指令进而根据汇编的 symbol 信息获得是执行的哪条指令。</li>
+<li>能够快速的定位热点函数</li>
+<li>(只统计栈顶)可以看到具体函数占用 cpu 比例，与火焰图从上往下看，越宽的函数占比越高，被遮盖的函数占比少</li>
+<li>lib 不能被 strip， 否则函数名显示地址</li>
+<li>perf top -p xxxx<ul>
+<li>perf top -p 23015,32476 // 查看这两个进程的 cpu cycles 使用情况</li>
+<li>perf top // 默认配置</li>
+<li>perf top -G // 得到调用关系图</li>
+<li>perf top -e cycles // 指定性能事件</li>
+<li>perf top -s comm,pid,symbol // 显示调用 symbol 的进程名和进程号</li>
+<li>perf top –comms nginx,top // 仅显示属于指定进程的符号</li>
+<li>perf top –symbols kfree // 仅显示指定的符号</li>
+</ul>
+</li>
+</ol>
+<h4 id="mem"><a href="#mem" class="headerlink" title="mem"></a>mem</h4><h3 id="hotspot"><a href="#hotspot" class="headerlink" title="hotspot"></a><a href="https://github.com/KDAB/hotspot" target="_blank" rel="noopener">hotspot</a></h3><ol>
+<li>the Linux perf GUI for performance analysis</li>
+<li><code>sudo apt install hotspot</code></li>
+<li><code>sudo strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5</code></li>
+<li><code>sudo perf record -F 99 -p 81163 --call-graph dwarf -- sleep 60</code></li>
+</ol>
+<h3 id="pyroscope"><a href="#pyroscope" class="headerlink" title="pyroscope"></a><a href="https://github.com/grafana/pyroscope" target="_blank" rel="noopener">pyroscope</a></h3><h3 id="speedscope"><a href="#speedscope" class="headerlink" title="speedscope"></a><a href="https://github.com/jlfwong/speedscope" target="_blank" rel="noopener">speedscope</a></h3><ol>
+<li><a href="https://www.speedscope.app/" target="_blank" rel="noopener">在线网页</a></li>
+<li>页面上边中间可选择具体线程来看占用时间</li>
+<li>time order: 时间变化</li>
+<li>left heavy: 类似火焰图</li>
+<li>Sandwidth: 占用时间比例，及调用栈</li>
+<li>点击符号可以看到在哪个动态库中，助于调试</li>
+<li>调用堆栈按照它们在输入文件中出现的顺序从左到右排列，这通常是安排它们被记录的时间顺序。这个视图对于理解应用程序随时间变化的行为非常有帮助，比如 “首次从数据库获取到数据，然后为序列化准备数据，数据被序列化为 JSON”。</li>
+<li>可以用来看调用关系</li>
+</ol>
+<h3 id="flamescope"><a href="#flamescope" class="headerlink" title="flamescope"></a><a href="https://github.com/Netflix/flamescope" target="_blank" rel="noopener">flamescope</a></h3><ol>
+<li><a href="https://www.brendangregg.com/blog/2018-11-08/flamescope-pattern-recognition.html" target="_blank" rel="noopener">flamescope recognition</a></li>
+<li><a href="https://netflixtechblog.com/netflix-flamescope-a57ca19d47bb" target="_blank" rel="noopener">netflix-flamescope</a></li>
+<li>heatmap + flamegraph</li>
+<li>需要 npm install</li>
+<li>将生成的 perf 文件 copy 到 examples 目录下</li>
+<li>可以看 pagefault</li>
+<li>perf 可以看 all， 也可以看单独进程</li>
+<li>斜线可以大概分辨出程序帧率，因为周期性活动</li>
+<li>为什么以 49 赫兹采样？因为 50 赫兹可能会与定时活动同步进行采样，并且计数过高或过低。为什么一开始大约是 50 赫兹？它不太慢也不太快。太慢了，我们没有足够的样本来绘制 FlameScope 的 50 行热图（行数可以更改）。太快和采样的开销会减慢应用程序。</li>
+<li>注意显示火焰图时 url 会显示时间区间</li>
+</ol>
+<h3 id="火焰图"><a href="#火焰图" class="headerlink" title="火焰图"></a><a href="https://github.com/brendangregg/FlameGraph" target="_blank" rel="noopener">火焰图</a></h3><ol>
+<li><p><a href="https://www.slideshare.net/brendangregg/usenix-atc-2017-visualizing-performance-with-flame-graphs" target="_blank" rel="noopener">作者 slice</a></p>
+</li>
+<li><p>可以跑多次，看看优化效果</p>
+</li>
+<li><p>开发板交叉编译 perf，或者找相同 aarch 机器，copy。perf 之后将结果 copy 到开发机生成火焰图</p>
+</li>
+<li><p>release 模式显示不全，debug 模式更全,可能是 release 符号被保护了？因为 release 模式用到的库被 strip 了</p>
+</li>
+<li><p>库不能 strip</p>
+</li>
+<li><p>函数名可能被 mangle，需要 demangle <code>./stackcollapse-perf.pl data.unfold | c++filt &gt; data.folded</code></p>
+</li>
+<li><p>If you are profiling C++ code, you may want to pipe stacks through c++filt to get readable frames.</p>
+</li>
+<li><p><a href="https://github.com/flamegraph-rs/flamegraph" target="_blank" rel="noopener">flamegraph-rust</a></p>
+</li>
+<li><p><a href="https://www.infoq.cn/article/a8kmnxdhbwmzxzsytlga" target="_blank" rel="noopener">火焰图类型</a></p>
+<ul>
+<li>on-cpu(默认): 分析 cpu 瓶颈</li>
+<li>off-cpu: 阻塞时间</li>
+<li>内存火焰图：内存问题</li>
+<li>Hot/Cold 火焰图： on-cpu and off-cpu 结合</li>
+</ul>
+</li>
+<li><p><a href="https://zhuanlan.zhihu.com/p/162375221" target="_blank" rel="noopener">性能分析之 off-cpu</a></p>
+</li>
+<li><p>Top edge shows who is running on cpu and how much(width)</p>
+</li>
+<li><p><code>flamegraph.pl --color=java</code> C++和系统调用显示颜色不一样,</p>
+</li>
+<li><p>平顶山的火苗是瓶颈，perf top 也可以看出来 1. <code>flamegraph.pl --color=java</code> C++, 注意 C++ 普通函数会被认为是其他，比较傻瓜，索引::</p>
+</li>
+<li><p>第一要想到的是优化平顶</p>
+</li>
+<li><p>栈上空白处是没有函数调用，栈上没信息，所以不显示，也在计算，比如 for</p>
+</li>
+<li><p>为什么要叫火焰图，形象的理解：整个图形看起来就像一团跳动的火焰，这也正是其名字的由来。燃烧的火苗尖部就是 CPU 正在执行的操纵，图纵向表示调用栈的深度，横向表示消耗的时间。一个格子的宽度越大越说明其可能是瓶颈。当我们分析火焰图时，主要就是看那些比较宽大的火苗，<code>特别留意那些类似平顶山的火苗</code>。<br>火焰图是基于 stack 信息生成的 SVG 图片，用来展示 CPU 的调用栈。<br>y 轴表示调用栈，每一层都是一个函数，调用栈越深，火焰图的层数就越高，火焰就看起来越高，顶部就是正在执行的函数，下方就是它的父函数。<br>x 轴表示抽样数，表示一个函数在 x 轴占据的宽度越宽，就表示它被抽到的次数多，即执行的时间长，注意，x 轴不代表时间，而是所有的调用栈合并后，按字母顺序排列的。<br>火焰图是 SVG 图片，可以很方便的使用：<br>（1）鼠标悬浮<br>火焰的每一层都会标注函数名，鼠标悬浮时会显示完整的函数名、抽样抽中的次数、<code>占据总抽样次数的百分比</code>；<br>（2）点击放大<br>在某一层点击，火焰图会水平放大，该层会占据所有宽度，显示详细信息；<br>左上角会同时显示“Reset Zoom”，点击该链接，图片就会恢复原样；<br>（3）搜索<br>按下 Ctrl+F 会显示一个搜索框，用户可以输入关键词或正则表达式，所有复合条件的函数名会<code>高亮显示</code>。</p>
+</li>
+<li><p>火焰图生成<br>生成和创建火焰图需要以下几个步骤：<br>（1）捕获堆栈<br>使用 perf/systemtap/dtrace 等工具抓取程序的运行堆栈。<br>（2）折叠堆栈<br>trace 工具抓取的系统和程序运行每一时刻的堆栈信息，需要对他们进行分析组合，将重复的堆栈累计在一起，从而体现出负载和关键路径。<br>（3）生成火焰图<br>分析 stackcollapse 输出的堆栈信息生成火焰图。</p>
+</li>
+<li><p>火焰图结合 perf(on-cpu) 实际使用方法</p>
+</li>
+</ol>
+<pre><code class="shell"># sudo apt install linux-tools-generic
+# sudo ln -s /usr/lib/linux-tools/4.15.0-162-generic/perf /usr/bin/perf
+# git clone https://github.com/brendangregg/FlameGraph.git
+# cd FlameGraph
+# perf record -F 99 -p ${PID} -a -g -- sleep 60
+# perf script &gt; out.perf
+# ./stackcollapse-perf.pl out.perf &gt; out.folded
+# ./stackcollapse-perf.pl out.perf | c++flit &gt; out.folded
+# ./flamegraph.pl out.folded &gt; out.svg</code></pre>
+<ol>
+<li>很轻松的分析出，哪些代码会经常性的触发 pagefault，以及比重。</li>
+<li><a href="https://github.com/lrita/lrita.github.io/blob/master/_posts/2019-09-27-systemtap-profiling-pagefault.md#L29" target="_blank" rel="noopener">page-faults</a> flamegraph 作者给的例子有些错误,<br>map, vector clear 会调用 explicit_bzero，容易产生 pagefault</li>
+</ol>
+<pre><code class="shell"># perf record -e page-faults -p $1 -g -- sleep 60
+# perf script &gt; out.perf
+# ./stackcollapse-perf.pl out.perf &gt; out.folded
+# ./flamegraph.pl out.folded &gt; out.svg</code></pre>
+<ol>
+<li><a href="https://blog.csdn.net/bandaoyu/article/details/108765693" target="_blank" rel="noopener">出现 e 大量 unknown</a> 加<code>--call-graph dwarf</code>, 而 -g 就相当于 –call-graph fp. fp 就是 Frame Pointer，即 x86 中的 EBP 寄存器，fp 指向当前栈帧栈底地址，此地址保存着上一栈帧的 EBP 值</li>
+</ol>
+<pre><code class="shell">sudo perf record -F 99 -p 81163 --call-graph dwarf -- sleep 60</code></pre>
+<ol>
+<li>问题：<ul>
+<li>perf 还有一个问题是对中断的要求，perf 很多事件都依赖中断，但 Linux 内核是可以关中断的，关中断以后，你就无法击中关中断的点了，你的中断会被延迟到开中断的时候，所以，在这样的平台上，你会看到很多开中断之后的函数被密集击中。但它们是无辜的。但更糟糕的是，如果在关中断的时候，发生了多个事件，由于中断控制器会合并相同的中断，你就会失去多次事件，让你的统计发生错误。现代的 Intel 平台，基本上已经把 PMU 中断都切换为 NMI 中断了（不可屏蔽），所以前面这个问题不存在。但在大部分 ARM/ARM64 平台上，这个问题都没有解决，所以看这种平台的报告，都要特别小心，特别是你看到_raw_spin_unlock()一类的函数击中极高，你就要怀疑一下你的测试结果了（注意，这个结果也是能用的，只是看你怎么用）。</li>
+<li>你每次看 perf report 的报告，首先要去注意一下总共收集了多少个点，如果你只有几十个点，你这个报告就可能很不可信了。</li>
+</ul>
+</li>
+<li>哪些场景下可以利用火焰图来帮助我们处理问题<br>（1）版本更新时，对比前后两个版本的火焰图差别，有助于我们分析新旧两个版本的异同；<br>（2）CPU 异常占用时（CPU 异常打满或者 CPU 利用率一直上不去），通过火焰图，有助于我们定位异常代码；<br>（3）性能分析时，通过火焰图来了解程序实际执行时各模块对 CPU 资源的占用情况；<br>（4）问题排查，通过分析火焰图的调用栈是否符合预期，排查程序逻辑执行是否符合预期；</li>
+</ol>
+<h2 id="nsight"><a href="#nsight" class="headerlink" title="nsight"></a>nsight</h2><ol>
+<li><a href="https://docs.nvidia.com/nsight-systems/UserGuide/index.html" target="_blank" rel="noopener">user guide</a></li>
+<li>NsightSystems-2023.2.1.122-3259852.msi 安装包</li>
+<li>Nsight_Systems_User_Guide_2023.2.1.122-3259852.pdf 文档</li>
+<li>左上角 timeline view 可以选择 analysis summary，有各种总结</li>
+<li>左侧右键选<code>show in events view</code>， 可以看具体时间, 可以在 all 上操作，看所有 event 运行时间</li>
+<li>右键 reset room 显示全部</li>
+<li><code>shift + mouseleftdoubleclick</code> timeline 可以找到对应 event 在 event view 位置</li>
+<li><code>ctrl + mouseleftdoubleclick</code> timeline 可以 fit to screen</li>
+<li><code>backspace</code> timeline 可以 undo room</li>
+<li><code>ctrl + mouseleftdoubleclick</code> 可以找到 event view 对应的 timeline 位置</li>
+<li><code>sudo nsys profile &lt;app&gt;</code></li>
+<li><code>nsys stats report1.nsys-rep</code> 输出各种 report</li>
+<li>可以看 cpu 执行情况， tensort 可以看详细算子耗时，也有对应 cuda 执行情况</li>
+<li>analysis summary 中有各个线程的 cpu 利用率总结</li>
+<li>可以关注 cpu 空闲的地方，为什么会空闲(同步数据？)</li>
+<li>可以缩小看颜色占比，关注占比大的模块</li>
+<li>cudaMemcpy 会阻塞 cpu 执行， 可以多注意 cudaMemcpy 影响</li>
+<li>cudaStreamSynchronize 是 CUDA API 中的一个函数，用于等待指定的 CUDA 流上的所有 CUDA 核函数执行完毕。当 CUDA 核函数被执行时，它们会被添加到一个 CUDA 流中，这些核函数的执行可能是异步的，也可能是同步的，具体取决于如何在代码中调用它们。当我们调用 cudaStreamSynchronize 时，它将会阻塞当前 CPU 线程，直到指定的流上的所有核函数都执行完毕。</li>
+</ol>
+<h2 id="总结-搜索-speed-up-C"><a href="#总结-搜索-speed-up-C" class="headerlink" title="总结(搜索 speed up C++)"></a>总结(搜索 speed up C++)</h2><ol>
+<li>内存连续读写速度远快于随机读写。(尽可能顺序访问内存)</li>
+<li>内存的写入速度比读取慢不少(减少内存写操作)</li>
+<li>用连续内存(多线程分配内存？)</li>
+<li>少分配内存, 尽量原位操作</li>
+<li>函数满足 RVO(return value optimization)</li>
+<li>不满足 RVO, 用 move, 例如返回 tuple, 构造时元素要用 move</li>
+<li>多维 vector 内存分配比较耗时</li>
+<li>尽量用一维 vector 或 array，多维 vector 慢很多</li>
+<li>transform 不要用 back_inserter,先分配好，然后用 begin()</li>
+<li>lamda 是内联函数，比普通函数快</li>
+<li>多用 for, transform, 少用 push_back, emplace_back</li>
+<li>transform 应用到连续内存会比较快， 比如 array, 应用到 vector 比 array 慢很多</li>
+<li>range 应用到连续内存比较快，array 比 vector 快很多，array 的 range 比 for 快很多，vector 的 range 比 for 慢</li>
+<li>range 比 transform 快</li>
+<li>矩阵运算用一维矩阵比二维矩阵快很多。</li>
+<li>vector: resize 会调用构造函数，reserve 不会调用。reserve 比 resize 快很多。需要 empalce_back 的要先 reserve。初始化为 0 比较慢？</li>
+<li>动态内存分配、STL 容器、string 都是一些常容易 cache 不友好的场景，核心代码处尽量不用</li>
+</ol>
+<h2 id="profiling-result"><a href="#profiling-result" class="headerlink" title="profiling result"></a>profiling result</h2><ol>
+<li>多线程分配内存(申请内存足够大，且时间大于线程开销)（或申请内存时可以做其他操作）</li>
+</ol>
+<pre><code>TEST : 4955us
+TEST_MT : 2786us
+
+vector&lt;int&gt; test1(1000000, 100);
+  vector&lt;int&gt; test2(1000000, 100);
+  vector&lt;int&gt; test11(1000000, 100);
+  __TOC__(TEST)
+
+  __TIC__(TEST_MT)
+  std::vector&lt;int&gt; test3;
+  std::vector&lt;int&gt; test4;
+  std::vector&lt;int&gt; test5;
+  auto fun = [](std::vector&lt;int&gt; &amp;v, int num) { v.resize(num); };
+  auto f1 = async(fun, ref(test3), 1000000);
+  auto f2 = async(fun, ref(test4), 1000000);
+  auto f3 = async(fun, ref(test5), 1000000);
+  f1.get();
+  f2.get();
+  f3.get();
+  __TOC__(TEST_MT)
+</code></pre><ol>
+<li>vector construct, reserve, resize （resize 会调用构造函数，reserve 不会调用。需要 empalce_back 的要先 reserve。初始化为 0 比较慢？）</li>
+</ol>
+<pre><code>TEST_RESERVE : 6275us
+TEST_NOT_RESERVE : 10727us
+TEST : 3740us
+TEST_zero : 3763us
+TEST_one : 3292us
+TEST_RESIZE : 3575us
+
+  __TIC__(TEST_RESERVE)
+  vector&lt;int&gt; test0;
+  test0.reserve(2000000);
+  for (auto i = 0u; i &lt; 2000000; ++i) {
+    test0.emplace_back(0);
+  }
+  __TOC__(TEST_RESERVE)
+
+  __TIC__(TEST_NOT_RESERVE)
+  vector&lt;int&gt; test1;
+  for (auto i = 0u; i &lt; 2000000; ++i) {
+    test1.emplace_back(0);
+  }
+  __TOC__(TEST_NOT_RESERVE)
+
+  __TIC__(TEST)
+  vector&lt;int&gt; test(2000000);
+  __TOC__(TEST)
+
+  __TIC__(TEST_zero)
+  vector&lt;int&gt; test2(2000000, 0);
+  __TOC__(TEST_zero)
+
+  __TIC__(TEST_one)
+  vector&lt;int&gt; test4(2000000, 1);
+  __TOC__(TEST_one)
+
+ __TIC__(TEST_RESIZE)
+  vector&lt;int&gt; test3;
+  test3.resize(2000000);
+  __TOC__(TEST_RESIZE)
+</code></pre><ol>
+<li>range and transform (array 的 transform 比 vector 的快)</li>
+</ol>
+<pre><code>ARRAY_RANGE : 1084us
+VECTOR_RANGE : 6421us
+ARRAY_TRANSFORM : 1603us
+VECTOR_TRANSFORM : 8252us
+
+  __TIC__(ARRAY)
+  array&lt;int, 1000000&gt; a;
+  for (auto i = 0u; i &lt; 1000000; ++i) {
+    a[i] = i;
+  }
+  __TOC__(ARRAY)
+
+  __TIC__(ARRAY_TRAN)
+  array&lt;int, 1000000&gt; a1;
+  transform(a1.begin(), a1.end(), a1.begin(), [](auto &amp;a) { return a + 1; });
+  __TOC__(ARRAY_TRAN)
+
+  __TIC__(VECTOR)
+  vector&lt;int&gt; v(1000000);
+  for (auto i = 0u; i &lt; 1000000; ++i) {
+    v[i] = i;
+  }
+  __TOC__(VECTOR)
+
+  __TIC__(VECTOR_TRAN)
+  vector&lt;int&gt; v1(1000000);
+  transform(v1.begin(), v1.end(), v1.begin(), [](auto &amp;v) { return v + 1; });
+  __TOC__(VECTOR_TRAN)
+
+  __TIC__(VECTOR_TRAN2)
+  vector&lt;int&gt; v2(1000000);
+  transform(v1.begin(), v1.end(), v2.begin(), [](auto &amp;v) { return v + 1; });
+  __TOC__(VECTOR_TRAN2)
+</code></pre><ol>
+<li>一维 vector 和二维 vector(一维比多维快很多)</li>
+</ol>
+<pre><code>VECTOR2 : 3770us
+VECTOR1 : 554us
+ARRAY : 627us
+
+ __TIC__(VECTOR2)
+  vector&lt;vector&lt;int&gt;&gt; v(10000, vector&lt;int&gt;(5));
+  for (auto i = 0u; i &lt; v.size(); ++i) {
+    for (auto j = 0u; j &lt; 5; ++j) {
+      v[i][j] = 1;
+    }
+  }
+  __TOC__(VECTOR2)
+
+  __TIC__(VECTOR1)
+  vector&lt;int&gt; v1(10000 * 5);
+  for (auto i = 0u; i &lt; 10000 * 5; ++i) {
+    v1[i] = 1;
+  }
+  __TOC__(VECTOR1)
+
+  __TIC__(ARRAY)
+  array&lt;int, 10000 * 5&gt; a;
+  for (auto i = 0u; i &lt; 10000 * 5; ++i) {
+    a[i] = 1;
+  }
+  __TOC__(ARRAY)
+
+</code></pre><ol>
+<li>array and vector, transform and for(array 配合 transform 比较快， vector 配合 transform 很慢)</li>
+</ol>
+<pre><code>ARRAY : 1372us
+ARRAY_TRAN : 1078us
+VECTOR : 1219us
+VECTOR_TRAN : 4595us
+
+  __TIC__(ARRAY)
+  array&lt;int, 100000&gt; a;
+  for (auto i = 0u; i &lt; 100000; ++i) {
+    a[i] = i;
+  }
+  __TOC__(ARRAY)
+
+  __TIC__(ARRAY_TRAN)
+  array&lt;int, 100000&gt; a1;
+  transform(a1.begin(), a1.end(), a1.begin(), [](auto a) { return a + 1; });
+  __TOC__(ARRAY_TRAN)
+
+  __TIC__(VECTOR)
+  vector&lt;int&gt; v(100000);
+  for (auto i = 0u; i &lt; 100000; ++i) {
+    v[i] = i;
+  }
+  __TOC__(VECTOR)
+
+  __TIC__(VECTOR_TRAN)
+  vector&lt;int&gt; v1(100000);
+  transform(v1.begin(), v1.end(), v1.begin(), [](auto v) { return v + 1; });
+  __TOC__(VECTOR_TRAN)
+</code></pre><ol>
+<li>function return</li>
+</ol>
+<pre><code>std::vector&lt;int&gt; m1() { return std::vector&lt;int&gt;(3000000, 1); }
+
+std::vector&lt;int&gt; m2() { return std::move(std::vector&lt;int&gt;(3000000, 1)); }
+
+// fastest
+std::vector&lt;int&gt; m3() {
+  std::vector&lt;int&gt; result(3000000, 1);
+  return result;
+}
+
+std::vector&lt;int&gt; m4() {
+  std::vector&lt;int&gt; result(3000000, 1);
+  return std::move(result);
+}
+
+M1 : 16538117ns
+M2 : 15113944ns
+M3 : 14415912ns
+M4 : 15932611ns</code></pre><ol>
+<li>range: vector and array(array 的 range 比 for 快很多，vector 的 range 比 for 慢)</li>
+</ol>
+<pre><code>VECTOR : 648us
+VECTOR_RANGE : 1784us
+ARRAY : 743us
+ARRAY_RANGE : 177us
+
+__TIC__(VECTOR)
+  vector&lt;int&gt; v1(10000 * 5);
+  for (auto i = 0u; i &lt; 10000 * 5; ++i) {
+    v1[i] = 1;
+  }
+  __TOC__(VECTOR)
+
+  __TIC__(VECTOR_RANGE)
+  vector&lt;int&gt; v2(10000 * 5);
+  for (auto &amp;i : v2) {
+    i = 1;
+  }
+  __TOC__(VECTOR_RANGE)
+
+  __TIC__(ARRAY)
+  array&lt;int, 10000 * 5&gt; a;
+  for (auto i = 0u; i &lt; 10000 * 5; ++i) {
+    a[i] = 1;
+  }
+  __TOC__(ARRAY)
+
+  __TIC__(ARRAY_RANGE)
+  array&lt;int, 10000 * 5&gt; a1;
+  for (auto &amp;i : a) {
+    i = 1;
+  }
+  __TOC__(ARRAY_RANGE)
+</code></pre><ol start="2">
+<li>range and for</li>
+</ol>
+<pre><code> std::vector&lt;int&gt; vec(500000, 0);
+
+  __TIC__(M1);
+  for (int i = 0; i &lt; vec.size(); ++i) {
+    vec[i]++;
+  }
+  __TOC__(M1);
+
+  __TIC__(M2);
+  for (auto item : vec) {
+    item++;
+  }
+  __TOC__(M2);
+
+  __TIC__(M3);
+  for (auto&amp; item : vec) {
+    item++;
+  }
+  __TOC__(M3);
+
+
+M1 : 5885us
+M2 : 12406us
+M3 : 11534us</code></pre><ol>
+<li>transform and for</li>
+</ol>
+<pre><code>  std::vector&lt;float&gt; vec(10000, 1.111);
+  std::vector&lt;float&gt; vec1(10000, 2.111);
+  std::vector&lt;float&gt; result;
+  // 操作一个vector
+  std::transform(vec.begin(), vec.end(), std::back_inserter(result),
+                 [](const auto item) -&gt; float { return item + 100; });
+  // for_each(vec.begin(), vec.end(), [](auto &amp;item) { item += 100; })
+
+ // 性能好很多，不要用back_inserter
+  std::vector&lt;float&gt; result5(vec.size(), 0);
+  std::transform(vec.begin(), vec.end(), result5.begin(),
+                 [](const auto &amp;item) -&gt; float { return item + 100; });
+
+
+  // 操作两个vector NOTE: 使用前需要检查vec, vec1 size是否匹配。
+  // 性能好 797us 13us(-O3)
+  std::vector&lt;float&gt; result1(10, 0.0);
+  std::transform(vec.begin(), vec.end(), vec1.begin(), result1.begin(),
+                 [](const auto &amp;item1, const auto &amp;item2) -&gt; float {
+                   return item1 + item2;
+                 });
+
+  // 性能差 2605us 173us(-O3)
+  std::vector&lt;float&gt; result2;
+  std::transform(vec.begin(), vec.end(), vec1.begin(),
+                 std::back_inserter(result2),
+                 [](const auto &amp;item1, const auto &amp;item2) -&gt; float {
+                   return item1 + item2;
+                 });
+  // for 463us 70us(-O3)
+  std::vector&lt;float&gt; result3(vec.size(), 0);
+  for (auto i = 0u; i &lt; result3.size(); ++i) {
+    result[i] = vec[i] + vec1[i];
+  }
+</code></pre><ol start="3">
+<li>lambda and fun</li>
+</ol>
+<pre><code>
+// 322ns
+int add(int &amp;a, int &amp;b) {
+  auto result = a + b;
+  return result;
+}
+
+// 233ns
+inline int add_inline(int &amp;a, int &amp;b) {
+  auto result = a + b;
+  return result;
+}
+
+// 233ns
+auto l = [](int &amp;a, int &amp;b) { return a + b; }; // 使用lambda函数的效率与使用函数对象是一样的，都要快于函数指针。他们都能够在编译期将代码内联展开，减少函数调用的时间。
+// 编译为类
+class __lambda_6_11
+  {
+    public:
+    inline /*constexpr */ int operator()(int a, int b) const
+    {
+      return a + b;
+    }
+
+    using retType_6_11 = int (*)(int, int);
+    inline /*constexpr */ operator retType_6_11 () const noexcept
+    {
+      return __invoke;
+    };
+
+    private:
+    static inline int __invoke(int a, int b)
+    {
+      return a + b;
+    }
+  }</code></pre><p>4 for and memset</p>
+<pre><code>  int a[800000];
+  __TIC__(M1);
+  memset(a, 0, 800000 * sizeof(int)); // memset 只能用于连续内存，不能用于vector
+  __TOC__(M1);
+
+  __TIC__(M2);
+  for (auto i = 0u; i &lt; 800000; ++i) {
+    a[i] = 0;
+  }
+  __TOC__(M2);
+
+M1 : 1401us
+M2 : 1908us</code></pre><ol start="5">
+<li>for, transform, push_back, emplace_back(少用 push_back, emplace_back)</li>
+</ol>
+<pre><code>vector&lt;float&gt; vec(1000000, -1235.23);
+
+  __TIC__(FOR)
+  vector&lt;float&gt; result_for(1000000, 0);
+  for (auto i = 0u; i &lt; result_for.size(); ++i) {
+    result_for[i] = vec[i];
+  }
+  __TOC__(FOR)
+
+  __TIC__(TRANSFORM)
+  vector&lt;float&gt; result_trans(1000000, 0);
+  std::transform(vec.begin(), vec.end(), result_trans.begin(),
+                 [](auto i) -&gt; float { return i; });
+  __TOC__(TRANSFORM)
+
+  __TIC__(PUSH_BACK)
+  vector&lt;float&gt; result0;
+  for (auto i : vec) {
+    result0.push_back(i);
+  }
+  __TOC__(PUSH_BACK)
+
+  __TIC__(PUSH_BACK1)
+  vector&lt;float&gt; result;
+  for (auto i : vec) {
+    result.push_back(std::move(i));
+  }
+  __TOC__(PUSH_BACK1)
+
+  __TIC__(EMPLACE_BACK)
+  vector&lt;float&gt; result1;
+  for (auto i : vec) {
+    result1.emplace_back(i);
+  }
+  __TOC__(EMPLACE_BACK)
+
+  __TIC__(EMPLACE_BACK2)
+  vector&lt;float&gt; result2;
+  for (auto &amp;i : vec) {
+    result2.emplace_back(i);
+  }
+  __TOC__(EMPLACE_BACK2)
+
+  __TIC__(EMPLACE_BACK3)
+  vector&lt;float&gt; result3;
+  for (auto &amp;i : vec) {
+    result3.emplace_back(std::move(i));
+  }
+  __TOC__(EMPLACE_BACK3)
+
+  cout &lt;&lt; vec[0] &lt;&lt; endl;
+
+  for (auto &amp;i : vec) {
+    // cout &lt;&lt; i &lt;&lt; &quot; &quot;;
+  }
+  return 0;
+
+FOR : 2042us
+TRANSFORM : 2161us
+PUSH_BACK : 4369us
+PUSH_BACK1 : 5835us
+EMPLACE_BACK : 5175us
+EMPLACE_BACK2 : 5075us
+EMPLACE_BACK3 : 5364us
+</code></pre><ol>
+<li>struct bindings(多用引用)</li>
+</ol>
+<pre><code>  vector&lt;float&gt; vec(1000000, -1235.23);
+  auto tup = std::make_tuple(vec, vec, vec);
+  __TIC__(TUP1)
+  auto [x, y, z] = tup;
+  __TOC__(TUP1)
+
+  __TIC__(TUP2)
+  auto &amp;[l, m, n] = tup;
+  __TOC__(TUP2)
+
+TUP1 : 6940us
+TUP2 : 0us
+</code></pre><pre><code>// 三种方式等价
+  vector&lt;float&gt; vec(1000000, -1235.23);
+  __TIC__(TUP1)
+  auto tup = std::make_tuple(vec, vec, vec);
+  auto [x, y, z] = std::move(tup);
+  __TOC__(TUP1)
+
+  __TIC__(TUP2)
+  auto tup2 = std::make_tuple(vec, vec, vec);
+  auto &amp;[x2, y2, z2] = tup;
+  __TOC__(TUP2)
+
+  __TIC__(TUP3)
+  auto [x1, y1, z1] = std::make_tuple(vec, vec, vec);
+  __TOC__(TUP3)
+
+TUP1 : 10087us
+TUP2 : 10126us
+TUP3 : 10127us</code></pre><pre><code>// 构造时能用Move用move
+tuple&lt;vector&lt;float&gt;, vector&lt;float&gt;, vector&lt;float&gt;&gt; get_tup() {
+  vector&lt;float&gt; vec1(1000000, -1235.23);
+  vector&lt;float&gt; vec2(1000000, -1235.23);
+  vector&lt;float&gt; vec3(1000000, -1235.23);
+  return {vec1, vec2, vec3};
+}
+
+tuple&lt;vector&lt;float&gt;, vector&lt;float&gt;, vector&lt;float&gt;&gt; get_tup1() {
+  vector&lt;float&gt; vec1(1000000, -1235.23);
+  vector&lt;float&gt; vec2(1000000, -1235.23);
+  vector&lt;float&gt; vec3(1000000, -1235.23);
+  return {std::move(vec1), std::move(vec2), std::move(vec3)};
+}
+
+  __TIC__(TUP3)
+  auto [x1, y1, z1] = get_tup();
+  __TOC__(TUP3)
+
+  __TIC__(TUP4)
+  auto [x4, y4, z4] = get_tup1();
+  __TOC__(TUP4)
+
+TUP3 : 18522us
+TUP4 : 6687us</code></pre><ol>
+<li>if and std::max (简单比较用 if，无函数调用)</li>
+</ol>
+<pre><code>vector&lt;int&gt; test(100000, 0);
+  for (auto i = 0u; i &lt; 100000; i++) {
+    test[i] = rand();
+  }
+
+  __TIC__(TEST)
+  int max_value = 0;
+  for (auto i = 0u; i &lt; 100000; ++i) {
+    if (test[i] &gt; max_value) {
+      max_value = test[i];
+    }
+  }
+  __TOC__(TEST)
+
+  __TIC__(TEST2)
+  int max_value2 = 0;
+  for (auto i = 0u; i &lt; 100000; ++i) {
+    max_value2 = std::max(max_value2, test[i]);
+  }
+  __TOC__(TEST2)
+
+TEST : 570us
+TEST2 : 994us
+</code></pre><h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/33638344" target="_blank" rel="noopener">C++性能优化</a></li>
+<li><a href="https://segmentfault.com/a/1190000040755126" target="_blank" rel="noopener">C++性能调优</a></li>
+</ol>
+<h2 id="优化的问题"><a href="#优化的问题" class="headerlink" title="优化的问题"></a>优化的问题</h2><ol>
+<li>j5 模型定点对齐输出， 后处理在需要的地方进行定浮点转换与取有效数据</li>
+<li>模型输出 chw， 按 c 取最大值，形成 h*w mask；如果按 for i j k 来取，不连续。解决方法：设置第一层为最大值，后续 k-1 层没一层和第 k-1 层做对比，最大值保存在第一层，max 对应的 index 存起来</li>
+</ol>
+<pre><code>  // net_output: NCHW; net_output_shape: NHWC
+  auto frame_w = net_output_shape[0][2];
+  auto frame_h = net_output_shape[0][1];
+  auto channel_num = net_output_shape[0][3];
+  // cv::Mat mask_mat(frame_h,frame_w, CV_8UC1);
+  cv::Mat mask_mat = cv::Mat::zeros(frame_h, frame_w, CV_8UC1);
+  unsigned char *maskdata = mask_mat.data;
+  // for(int i=0; i&lt;frame_h; i++){
+  //   for(int j=0; j&lt;frame_w; j++){
+  //     int index = i*frame_w+j;
+  //     float tmp = net_output[index];
+  //     int maxk = 0;
+  //     for(int k=1; k&lt;channel_num; k++){
+  //       int index1 = k*frame_h*frame_w+index;
+  //       if (tmp &lt; net_output[index1]) {
+  //         tmp = net_output[index1];
+  //         maxk = k;
+  //       }
+  //     }
+  //     maskdata[index] = maxk;
+  //   }
+  // }
+
+  // net_output 和 maskdata 都连续访存, 提高cache命中率
+  int wxh = frame_h *frame_w;
+  // set layer 0 to max_value;
+  std::vector&lt;float&gt; max_value(wxh, 0);
+  memcpy(&amp;max_value[0], net_output, wxh * sizeof(float));
+  // get max index from layer 1
+  int index = wxh;
+  for (auto k = 1u; k &lt; channel_num; ++k) {
+    for (auto offset = 0u; offset &lt; wxh; ++offset) {
+      if (net_output[index] &gt; max_value[offset]) {
+        max_value[offset] = net_output[index];
+        maskdata[offset] = k;
+      }
+      index++;
+    }
+  }
+
+  // // not copy: 7ms
+  // int index = wxh;
+  // for (auto k = 1u; k &lt; channel_num; ++k) {
+  //   for (auto offset = 0u; offset &lt; wxh; ++offset) {
+  //     if (net_output[index] &gt; net_output[offset]) {
+  //       net_output[offset] = net_output[index];
+  //       maskdata[offset] = k;
+  //     }
+  //     index++;
+  //   }
+  // }</code></pre>
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 jiaxiyangbit@126.com </span>
+    </div>
+</article>
+
+
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">
+    ©2016-2024 Jia Xiyang
+</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full" data-title="切换全屏 快捷键 s"><span class="min "></span></button>
+<a class="" id="rocket" ></a>
+
+    </div>
+</div>
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.1.0" ></script>
+
+<script src="/js/script.js?v=1.1.0" ></script>
+<script>
+    var img_resize = 'default';
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $("#post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+
+        /*高亮代码块行号*/
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 540px;
+    }
+    .nav.fullscreen {
+        margin-left: -540px;
+    }
+    .nav-left {
+        width: 150px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>
