@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+    var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
   <meta name="description" content="锁设计原则 所有操作都可分为增删改查，改可用删除和增加来实现，但改更快并且具有原子性。 只有获得锁才能对锁进行删和改。 注意区分又状态和无状态。凡是涉及到有状态的API(lock, unlock)要特别小心。要与无状态API(圆的面积)模块区分开。 系统状态尽可能的少，太多状态容易出问题。  基于Redis的分布式锁 Redis Lua脚本具有原子性  实现思想： 获取锁的时候，使用setnx加锁">
@@ -439,7 +439,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%81%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-text">锁设计原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="nav-text">基于Redis的分布式锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%80%9D%E6%83%B3%EF%BC%9A"><span class="nav-text">实现思想：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B6%85%E6%97%B6%E5%90%8E%E5%8F%88%E5%A4%9A%E4%B8%AA%E7%A8%8B%E5%BA%8F%E8%8E%B7%E5%BE%97%E9%94%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-text">超时后又多个程序获得锁解决方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B%E7%89%B9%E7%82%B9"><span class="nav-text">使用守护线程特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-server"><span class="nav-text">Redis server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-client"><span class="nav-text">Redis client</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hiredis-just-a-C-client-not-include-server"><span class="nav-text">hiredis (just a C client; not include server)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Links"><span class="nav-text">Links</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%81%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-number">1.</span> <span class="nav-text">锁设计原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8ERedis%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="nav-number">2.</span> <span class="nav-text">基于Redis的分布式锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%80%9D%E6%83%B3%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">实现思想：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B6%85%E6%97%B6%E5%90%8E%E5%8F%88%E5%A4%9A%E4%B8%AA%E7%A8%8B%E5%BA%8F%E8%8E%B7%E5%BE%97%E9%94%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.</span> <span class="nav-text">超时后又多个程序获得锁解决方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AE%88%E6%8A%A4%E7%BA%BF%E7%A8%8B%E7%89%B9%E7%82%B9"><span class="nav-number">2.3.</span> <span class="nav-text">使用守护线程特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-server"><span class="nav-number">3.</span> <span class="nav-text">Redis server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-client"><span class="nav-number">4.</span> <span class="nav-text">Redis client</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hiredis-just-a-C-client-not-include-server"><span class="nav-number">5.</span> <span class="nav-text">hiredis (just a C client; not include server)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Links"><span class="nav-number">6.</span> <span class="nav-text">Links</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -538,13 +538,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">348k</span>
+    <span title="站点总字数">390k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:16</span>
+    <span title="站点阅读时长">5:55</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
@@ -642,7 +642,7 @@ setInterval("createtime()",250);
 if (document.querySelectorAll('pre.mermaid').length) {
   NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
     mermaid.initialize({
-      theme    : 'dark',
+      theme    : '[object Object]',
       logLevel : 3,
       flowchart: { curve     : 'linear' },
       gantt    : { axisFormat: '%m/%d/%Y' },
@@ -696,5 +696,20 @@ NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
 });
 </script>
 
+  
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+
+ 
 </body>
 </html>
+
