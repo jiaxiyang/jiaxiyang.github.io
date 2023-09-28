@@ -222,10 +222,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-09-21 14:11:28 / 修改时间：15:09:37" itemprop="dateCreated datePublished" datetime="2023-09-21T14:11:28+08:00">2023-09-21</time>
+              <time title="创建时间：2023-09-21 14:11:28" itemprop="dateCreated datePublished" datetime="2023-09-21T14:11:28+08:00">2023-09-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-09-28 12:22:21" itemprop="dateModified" datetime="2023-09-28T12:22:21+08:00">2023-09-28</time>
+              </span>
 
           
   
@@ -247,7 +253,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>49</span>
+              <span>994</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -266,9 +272,31 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+          <h2 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h2><h3 id="hello-world"><a href="#hello-world" class="headerlink" title="hello world"></a>hello world</h3><ol>
+<li>code</li>
+</ol>
+<figure class="highlight plaintext"><figcaption><span>test.s</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">.section .data</span><br><span class="line">hello_message:</span><br><span class="line">    .asciz &quot;Hello, World!\n&quot;</span><br><span class="line"></span><br><span class="line">.section .text</span><br><span class="line">.globl _start</span><br><span class="line"></span><br><span class="line">_start:</span><br><span class="line">    # Write hello_message to stdout</span><br><span class="line">    mov x8, #64            // syscall: write</span><br><span class="line">    mov x0, #1             // file descriptor: stdout</span><br><span class="line">    ldr x1, =hello_message // pointer to hello_message</span><br><span class="line">    mov x2, #13            // message length</span><br><span class="line">    svc #0                 // invoke syscall</span><br><span class="line"></span><br><span class="line">    # Exit the program</span><br><span class="line">    mov x8, #93            // syscall: exit</span><br><span class="line">    mov x0, #0             // exit status 0</span><br><span class="line">    svc #0                 // invoke syscall</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>compile command</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">as test.s -o test.o</span><br><span class="line">ld test.o -o test</span><br><span class="line">./test</span><br><span class="line">objdump -dw test #查看生成的汇编</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><a target="_blank" rel="noopener" href="https://arm64.syscall.sh/">write 系统调用寄存器配置</a></li>
+</ol>
+<h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
+<li>ARMv8-A：<ul>
+<li>前 8 个整数参数传递给函数时，使用寄存器 x0 到 x7。如果有更多的整数参数，它们会通过堆栈传递。前 8 个浮点参数使用浮点寄存器 v0 到 v7 传递。整数或指针返回值使用寄存器 x0（和 x1，如果需要返回更大的值，例如 128 位的值）。浮点数或向量返回值通过 v0 和 v1 返回。</li>
+<li>系统调用主要使用 x0 到 x8 这 9 个寄存器，其中 x8 存储系统调用号，x0 到 x7 用于参数传递和返回值。</li>
+</ul>
+</li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://winddoing.github.io/post/7190.html">ARMv8-aarch64 寄存器和指令集</a></li>
 <li><a target="_blank" rel="noopener" href="https://armv8-doc.readthedocs.io/en/latest/02.html">Armv8&#x2F;armv9 架构入门指南</a></li>
+<li><a target="_blank" rel="noopener" href="https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md">Linux System Call Table 多个平台</a></li>
+<li><a target="_blank" rel="noopener" href="https://syscall.sh/">不同平台系统调用寄存器配置</a></li>
 </ol>
 
       
@@ -1552,13 +1580,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">390k</span>
+    <span title="站点总字数">391k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:55</span>
+    <span title="站点阅读时长">5:56</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
