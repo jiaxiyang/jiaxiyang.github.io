@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pic2.zhimg.com/964f7a10ac8a4158896500858efb4a55_b.png">
 <meta property="article:published_time" content="2021-09-30T01:48:34.000Z">
-<meta property="article:modified_time" content="2023-09-24T04:15:25.615Z">
+<meta property="article:modified_time" content="2023-09-28T05:13:45.979Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="Emacs">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-24 12:15:25" itemprop="dateModified" datetime="2023-09-24T12:15:25+08:00">2023-09-24</time>
+                <time title="修改时间：2023-09-28 13:13:45" itemprop="dateModified" datetime="2023-09-28T13:13:45+08:00">2023-09-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -278,14 +278,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.1k</span>
+              <span>4.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -310,12 +310,12 @@
 <li>gcc emacs 性能提升</li>
 <li>vnc x11 meta<a target="_blank" rel="noopener" href="https://www.emacswiki.org/emacs/MetaKeyProblems#:~:text=There%20is%20no%20mention%20of%20Meta%20for%20any,may%20want%20Meta%20to%20be%20distinct%20from%20Alt.">问题</a></li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">% </span><span class="language-bash">xmodmap</span></span><br><span class="line"><span class="meta prompt_">% </span><span class="language-bash">xmodmap -e <span class="string">&quot;clear mod4&quot;</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">% xmodmap</span><br><span class="line">% xmodmap -e <span class="string">&quot;clear mod4&quot;</span></span><br></pre></td></tr></table></figure>
 
 <ol>
 <li>windows terminal 透明, 启动配置里加</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(defun on-after-init ()</span><br><span class="line">  (unless (display-graphic-p (selected-frame))</span><br><span class="line">    (set-face-background &#x27;default &quot;unspecified-bg&quot; (selected-frame))))</span><br><span class="line"></span><br><span class="line">(add-hook &#x27;window-setup-hook &#x27;on-after-init)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(defun on-after-init ()</span><br><span class="line">  (unless (display-graphic-p (selected-frame))</span><br><span class="line">    (set-face-background <span class="string">&#x27;default &quot;unspecified-bg&quot; (selected-frame))))</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">(add-hook &#x27;</span>window-setup-hook <span class="string">&#x27;on-after-init)</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
 
 <ol>
 <li><a target="_blank" rel="noopener" href="https://emacs-china.org/t/topic/17035">固定创建一个窗口</a></li>
@@ -403,7 +403,7 @@
 <li><code>C-M-j</code> ivy-immediate-done, when you call find-file to create a new file, but the desired name matches an existing file.</li>
 <li>利用好 lsp</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(setq lsp-ui-doc-enable nil) ;; lsp关闭弹窗</span><br><span class="line">(setq lsp-ui-sideline-mode nil) ;; lsp 关闭右侧错误提示</span><br><span class="line">(setq lsp-signature-mode nil) ;; 防止M-n被占用</span><br><span class="line">(setq lsp-enable-symbol-highlighting nil)) ;; lsp 不高亮</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(setq lsp-ui-doc-enable nil) ;; lsp关闭弹窗</span><br><span class="line">(setq lsp-ui-sideline-mode nil) ;; lsp 关闭右侧错误提示</span><br><span class="line">(setq lsp-signature-mode nil) ;; 防止M-n被占用</span><br><span class="line">(setq lsp-enable-symbol-highlighting nil)) ;; lsp 不高亮</span><br></pre></td></tr></table></figure>
 
 <h2 id="编程操作"><a href="#编程操作" class="headerlink" title="编程操作"></a>编程操作</h2><ol>
 <li>symbol-overlay 高亮选中后可以用 t 切换 scope，然后 r 重命名。废弃： <code>narrow</code> &#x3D;&gt; <code>symbol-overlay-put</code> &#x3D;&gt; <code>n or r</code>跳转或替换 &#x3D;&gt; <code>fancy-widen</code></li>
@@ -728,13 +728,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">391k</span>
+    <span title="站点总字数">350k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:56</span>
+    <span title="站点阅读时长">5:18</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

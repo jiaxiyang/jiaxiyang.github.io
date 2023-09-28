@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/2icOarNW84W7BnJpVvdnUeOgJYHibeWJbd4z0KJu556ykzgnjl7MHm5YWyjWDqR7eMPmXIWSWCFy8KG3dJQD8O8A/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1">
 <meta property="article:published_time" content="2021-08-24T14:30:52.000Z">
-<meta property="article:modified_time" content="2023-09-24T04:12:33.380Z">
+<meta property="article:modified_time" content="2023-09-28T05:13:33.199Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="Profiling">
 <meta property="article:tag" content="Perf">
@@ -236,7 +236,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-24 12:12:33" itemprop="dateModified" datetime="2023-09-24T12:12:33+08:00">2023-09-24</time>
+                <time title="修改时间：2023-09-28 13:13:33" itemprop="dateModified" datetime="2023-09-28T13:13:33+08:00">2023-09-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -279,14 +279,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>43k</span>
+              <span>38k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>39 分钟</span>
+              <span>34 分钟</span>
             </span>
 
         </div>
@@ -883,12 +883,12 @@
 <h4 id="callgrind"><a href="#callgrind" class="headerlink" title="callgrind"></a><a target="_blank" rel="noopener" href="https://learnku.com/articles/46663">callgrind</a></h4><ol>
 <li>callgrind</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">valgrind –tool=callgrind ./tmp</span><br><span class="line">callgrind_annotate callgrind.out.XXX</span><br><span class="line">gprof2dot.py -f callgrind callgrind.out.XXX |dot -Tpng -o report.png</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">valgrind –tool=callgrind ./tmp</span><br><span class="line">callgrind_annotate callgrind.out.XXX</span><br><span class="line">gprof2dot.py -f callgrind callgrind.out.XXX |dot -Tpng -o report.png</span><br></pre></td></tr></table></figure>
 
 <h3 id="pmu-tools"><a href="#pmu-tools" class="headerlink" title="pmu-tools"></a><a target="_blank" rel="noopener" href="https://github.com/andikleen/pmu-tools">pmu-tools</a></h3><h3 id="good-pprof"><a href="#good-pprof" class="headerlink" title="(good)pprof"></a><a target="_blank" rel="noopener" href="https://github.com/google/pprof">(good)pprof</a></h3><ol>
 <li><code>-g</code>和<code>sudo</code>可能有问题</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo perf record -F 99 -a -g -- ./bandwidth64</span><br><span class="line">pprof -svg perf.datap</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo perf record -F 99 -a -g -- ./bandwidth64</span><br><span class="line">pprof -svg perf.datap</span><br></pre></td></tr></table></figure>
 
 <ol>
 <li>perf 结果可视化</li>
@@ -913,7 +913,7 @@
 <h3 id="源码安装"><a href="#源码安装" class="headerlink" title="源码安装"></a>源码安装</h3><ol>
 <li></li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone --depth=1 https://github.com/torvalds/linux.git</span><br><span class="line">cd tools/perf/</span><br><span class="line">make -j4</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/torvalds/linux.git</span><br><span class="line"><span class="built_in">cd</span> tools/perf/</span><br><span class="line">make -j4</span><br></pre></td></tr></table></figure>
 
 <ol start="2">
 <li><a target="_blank" rel="noopener" href="https://www.cs.rice.edu/~la5/doc/perf-doc/de/df8/builtin-record_8c.html">docxgen</a></li>
@@ -932,7 +932,7 @@
 <li><code>likwid-perfctr -e</code> 列出所有 PMC</li>
 <li><code>likwid-perfctr -e | grep MEM</code>列出所有内存相关 PMC, <code>perf stat -e r013,r066,r067</code> r + mask + eventsel 监控对应事件</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">nvidia@miivii-tegra:~$ likwid-perfctr -e | grep MEM</span><br><span class="line">MEM_ACCESS, 0x13, 0x0, PMC</span><br><span class="line">MEMORY_ERROR, 0x1A, 0x0, PMC</span><br><span class="line">MEM_ACCESS_LD, 0x66, 0x0, PMC</span><br><span class="line">MEM_ACCESS_ST, 0x67, 0x0, PMC</span><br><span class="line"></span><br><span class="line">nvidia@miivii-tegra:~$ perf stat -e r013,r066,r067 -- ls</span><br><span class="line">Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos</span><br><span class="line"></span><br><span class="line"> Performance counter stats for &#x27;ls&#x27;:</span><br><span class="line"></span><br><span class="line">           156,045      r013:u</span><br><span class="line">           118,079      r066:u</span><br><span class="line">            37,966      r067:u</span><br><span class="line"></span><br><span class="line">       0.003111539 seconds time elapsed</span><br><span class="line"></span><br><span class="line">       0.003294000 seconds user</span><br><span class="line">       0.000000000 seconds sys</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">nvidia@miivii-tegra:~$ likwid-perfctr -e | grep MEM</span><br><span class="line">MEM_ACCESS, 0x13, 0x0, PMC</span><br><span class="line">MEMORY_ERROR, 0x1A, 0x0, PMC</span><br><span class="line">MEM_ACCESS_LD, 0x66, 0x0, PMC</span><br><span class="line">MEM_ACCESS_ST, 0x67, 0x0, PMC</span><br><span class="line"></span><br><span class="line">nvidia@miivii-tegra:~$ perf <span class="built_in">stat</span> -e r013,r066,r067 -- <span class="built_in">ls</span></span><br><span class="line">Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos</span><br><span class="line"></span><br><span class="line"> Performance counter stats <span class="keyword">for</span> <span class="string">&#x27;ls&#x27;</span>:</span><br><span class="line"></span><br><span class="line">           156,045      r013:u</span><br><span class="line">           118,079      r066:u</span><br><span class="line">            37,966      r067:u</span><br><span class="line"></span><br><span class="line">       0.003111539 seconds time elapsed</span><br><span class="line"></span><br><span class="line">       0.003294000 seconds user</span><br><span class="line">       0.000000000 seconds sys</span><br></pre></td></tr></table></figure>
 
 <h4 id="record"><a href="#record" class="headerlink" title="record"></a>record</h4><ol>
 <li><code>perf record ./test</code></li>
@@ -1066,18 +1066,18 @@
 <li><p>火焰图结合 perf(on-cpu) 实际使用方法</p>
 </li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">sudo apt install linux-tools-generic</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">sudo <span class="built_in">rm</span> /usr/bin/perf</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">sudo <span class="built_in">ln</span> -s /usr/lib/linux-tools/4.15.0-162-generic/perf /usr/bin/perf</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/brendangregg/FlameGraph.git</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">cd</span> FlameGraph</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">perf record -F 99 -p <span class="variable">$&#123;PID&#125;</span> -a -g -- <span class="built_in">sleep</span> 60</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">perf script &gt; out.perf</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">./stackcollapse-perf.pl out.perf &gt; out.folded</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">./stackcollapse-perf.pl out.perf | c++flit &gt; out.folded</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">./flamegraph.pl out.folded &gt; out.svg</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sudo apt install linux-tools-generic</span></span><br><span class="line"><span class="comment"># sudo rm /usr/bin/perf</span></span><br><span class="line"><span class="comment"># sudo ln -s /usr/lib/linux-tools/4.15.0-162-generic/perf /usr/bin/perf</span></span><br><span class="line"><span class="comment"># git clone https://github.com/brendangregg/FlameGraph.git</span></span><br><span class="line"><span class="comment"># cd FlameGraph</span></span><br><span class="line"><span class="comment"># perf record -F 99 -p $&#123;PID&#125; -a -g -- sleep 60</span></span><br><span class="line"><span class="comment"># perf script &gt; out.perf</span></span><br><span class="line"><span class="comment"># ./stackcollapse-perf.pl out.perf &gt; out.folded</span></span><br><span class="line"><span class="comment"># ./stackcollapse-perf.pl out.perf | c++flit &gt; out.folded</span></span><br><span class="line"><span class="comment"># ./flamegraph.pl out.folded &gt; out.svg</span></span><br></pre></td></tr></table></figure>
 
 <ol>
 <li>很轻松的分析出，哪些代码会经常性的触发 pagefault，以及比重。</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/lrita/lrita.github.io/blob/master/_posts/2019-09-27-systemtap-profiling-pagefault.md#L29">page-faults</a> flamegraph 作者给的例子有些错误,<br>map, vector clear 会调用 explicit_bzero，容易产生 pagefault</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">perf record -e page-faults -p <span class="variable">$1</span> -g -- <span class="built_in">sleep</span> 60</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">perf script &gt; out.perf</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">./stackcollapse-perf.pl out.perf &gt; out.folded</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">./flamegraph.pl out.folded &gt; out.svg</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># perf record -e page-faults -p $1 -g -- sleep 60</span></span><br><span class="line"><span class="comment"># perf script &gt; out.perf</span></span><br><span class="line"><span class="comment"># ./stackcollapse-perf.pl out.perf &gt; out.folded</span></span><br><span class="line"><span class="comment"># ./flamegraph.pl out.folded &gt; out.svg</span></span><br></pre></td></tr></table></figure>
 
 <ol>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/bandaoyu/article/details/108765693">出现 e 大量 unknown</a> 加<code>--call-graph dwarf</code>, 而 -g 就相当于 –call-graph fp. fp 就是 Frame Pointer，即 x86 中的 EBP 寄存器，fp 指向当前栈帧栈底地址，此地址保存着上一栈帧的 EBP 值</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo perf record -F 99 -p 81163 --call-graph dwarf -- sleep 60</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo perf record -F 99 -p 81163 --call-graph dwarf -- <span class="built_in">sleep</span> 60</span><br></pre></td></tr></table></figure>
 
 <ol>
 <li>问题：<ul>
@@ -1413,13 +1413,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">391k</span>
+    <span title="站点总字数">350k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:56</span>
+    <span title="站点阅读时长">5:18</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

@@ -266,7 +266,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.8k</span>
+              <span>1.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -412,7 +412,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>385</span>
+              <span>358</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -502,7 +502,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-08-30 19:28:27" itemprop="dateModified" datetime="2023-08-30T19:28:27+08:00">2023-08-30</time>
+                <time title="修改时间：2023-09-28 13:13:59" itemprop="dateModified" datetime="2023-09-28T13:13:59+08:00">2023-09-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -538,14 +538,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>19k</span>
+              <span>17k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>18 分钟</span>
+              <span>16 分钟</span>
             </span>
 
         </div>
@@ -618,7 +618,7 @@
 <li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/36233927">cmake 自带打印颜色</a> <code>cmake -E cmake_echo_color --green &quot;&gt;&gt;&gt;&gt;&gt; Download doxygen&quot;</code></li>
 <li>put make function in .bashrc</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">make()</span><br><span class="line">&#123;</span><br><span class="line">  pathpat=&quot;(/[^/]*)+:[0-9]+&quot;</span><br><span class="line">  ccred=$(echo -e &quot;\033[0;31m&quot;)</span><br><span class="line">  ccyellow=$(echo -e &quot;\033[0;33m&quot;)</span><br><span class="line">  ccend=$(echo -e &quot;\033[0m&quot;)</span><br><span class="line">  make &quot;$@&quot; 2&gt;&amp;1 | sed -E -e &quot;/[Ee]rror[: ]/ s%$pathpat%$ccred&amp;$ccend%g&quot; -e &quot;/[Ww]arning[: ]/ s%$pathpat%$ccyellow&amp;$ccend%g&quot;</span><br><span class="line">  return $&#123;PIPESTATUS[0]&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">make</span></span>()</span><br><span class="line">&#123;</span><br><span class="line">  pathpat=<span class="string">&quot;(/[^/]*)+:[0-9]+&quot;</span></span><br><span class="line">  ccred=$(<span class="built_in">echo</span> -e <span class="string">&quot;\033[0;31m&quot;</span>)</span><br><span class="line">  ccyellow=$(<span class="built_in">echo</span> -e <span class="string">&quot;\033[0;33m&quot;</span>)</span><br><span class="line">  ccend=$(<span class="built_in">echo</span> -e <span class="string">&quot;\033[0m&quot;</span>)</span><br><span class="line">  make <span class="string">&quot;<span class="variable">$@</span>&quot;</span> 2&gt;&amp;1 | sed -E -e <span class="string">&quot;/[Ee]rror[: ]/ s%<span class="variable">$pathpat</span>%<span class="variable">$ccred</span>&amp;<span class="variable">$ccend</span>%g&quot;</span> -e <span class="string">&quot;/[Ww]arning[: ]/ s%<span class="variable">$pathpat</span>%<span class="variable">$ccyellow</span>&amp;<span class="variable">$ccend</span>%g&quot;</span></span><br><span class="line">  <span class="built_in">return</span> <span class="variable">$&#123;PIPESTATUS[0]&#125;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
 <li>内置函数获取名字</li>
@@ -644,7 +644,7 @@
 <ol>
 <li>build script</li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir Release</span><br><span class="line">cd Release</span><br><span class="line">cmake -DCMAKE_BUILD_TYPE=Release ..</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> Release</span><br><span class="line"><span class="built_in">cd</span> Release</span><br><span class="line">cmake -DCMAKE_BUILD_TYPE=Release ..</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
 
 <ol>
 <li><code>set(CMAKE_CXX_COMPILER &quot;g++&quot;)</code> 选择编译器</li>
@@ -891,7 +891,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.5k</span>
+              <span>4.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1103,14 +1103,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.4k</span>
+              <span>4.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -1254,7 +1254,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.6k</span>
+              <span>2.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1399,7 +1399,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.6k</span>
+              <span>1.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1689,7 +1689,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>594</span>
+              <span>551</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1823,7 +1823,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>910</span>
+              <span>864</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -2039,13 +2039,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">391k</span>
+    <span title="站点总字数">350k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:56</span>
+    <span title="站点阅读时长">5:18</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
