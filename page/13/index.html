@@ -128,17 +128,17 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">147</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">146</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">37</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">40</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">47</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">52</span></a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -195,123 +195,6 @@
 
           <div class="content index posts-expand">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/03/22/Actix/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/22/Actix/" class="post-title-link" itemprop="url">Actix</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-22 09:53:35" itemprop="dateCreated datePublished" datetime="2021-03-22T09:53:35+08:00">2021-03-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Rust/" itemprop="url" rel="index"><span itemprop="name">Rust</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/03/22/Actix/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/22/Actix/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>931</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> actix_web::&#123;get, post, web, App, HttpResponse, HttpServer, Responder&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[get(<span class="string">&quot;/&quot;</span>)]</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">fn</span> <span class="title function_">hello</span>() <span class="punctuation">-&gt;</span> <span class="keyword">impl</span> <span class="title class_">Responder</span> &#123;</span><br><span class="line">    HttpResponse::<span class="title function_ invoke__">Ok</span>().<span class="title function_ invoke__">body</span>(<span class="string">&quot;Hello world!&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[post(<span class="string">&quot;/echo&quot;</span>)]</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">fn</span> <span class="title function_">echo</span>(req_body: <span class="type">String</span>) <span class="punctuation">-&gt;</span> <span class="keyword">impl</span> <span class="title class_">Responder</span> &#123;</span><br><span class="line">    HttpResponse::<span class="title function_ invoke__">Ok</span>().<span class="title function_ invoke__">body</span>(req_body)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">fn</span> <span class="title function_">manual_hello</span>() <span class="punctuation">-&gt;</span> <span class="keyword">impl</span> <span class="title class_">Responder</span> &#123;</span><br><span class="line">    HttpResponse::<span class="title function_ invoke__">Ok</span>().<span class="title function_ invoke__">body</span>(<span class="string">&quot;Hey there!&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[actix_web::main]</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">fn</span> <span class="title function_">main</span>() <span class="punctuation">-&gt;</span> std::io::<span class="type">Result</span>&lt;()&gt; &#123;</span><br><span class="line">    HttpServer::<span class="title function_ invoke__">new</span>(|| &#123;</span><br><span class="line">        App::<span class="title function_ invoke__">new</span>()</span><br><span class="line">            .<span class="title function_ invoke__">service</span>(hello)</span><br><span class="line">            .<span class="title function_ invoke__">service</span>(echo)</span><br><span class="line">            .<span class="title function_ invoke__">route</span>(<span class="string">&quot;/hey&quot;</span>, web::<span class="title function_ invoke__">get</span>().<span class="title function_ invoke__">to</span>(manual_hello))</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_ invoke__">bind</span>(<span class="string">&quot;127.0.0.1:8080&quot;</span>)?</span><br><span class="line">    .<span class="title function_ invoke__">run</span>()</span><br><span class="line">    .<span class="keyword">await</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>Use App::service for the handlersusing routing <code>macros</code> and App::route for <code>manually</code> routed handlers, declaring the <code>path</code> and <code>method</code>.</li>
-<li><code>path</code>: http URL,例如：<a target="_blank" rel="noopener" href="http://github.com/xxx/xx/xx">http://github.com/xxx/xx/xx</a></li>
-<li><code>method</code>: path的响应</li>
-<li>All actix-web servers are built around the <code>App</code> instance.</li>
-</ol>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://actix.rs/docs/">official docs</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
       
   
   
@@ -1570,6 +1453,190 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/11/16/Python-grammar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/16/Python-grammar/" class="post-title-link" itemprop="url">Python-grammar</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-16 21:39:20" itemprop="dateCreated datePublished" datetime="2020-11-16T21:39:20+08:00">2020-11-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-28 17:42:49" itemprop="dateModified" datetime="2023-08-28T17:42:49+08:00">2023-08-28</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/11/16/Python-grammar/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/16/Python-grammar/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.python.org/3/tutorial/">python tutorial</a></li>
+</ol>
+<h2 id="data-structure"><a href="#data-structure" class="headerlink" title="data structure"></a><a target="_blank" rel="noopener" href="https://docs.python.org/3/tutorial/datastructures.html">data structure</a></h2><ol>
+<li>list[-1] 最后一个元素，负号表示倒着索引</li>
+<li>squares[-3:] slice: 创建新的索引，包含最后三个 value</li>
+<li>slice 是浅拷贝</li>
+<li>list1 + list2 表示 concat</li>
+<li>letters[2:5] &#x3D; [‘C’, ‘D’, ‘E’] 批量赋值</li>
+<li>letters[2:5] &#x3D; [] remove 第 3 个到第 5 个元素</li>
+</ol>
+<h2 id="虚拟环境"><a href="#虚拟环境" class="headerlink" title="虚拟环境"></a>虚拟环境</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python3 -m venv myenv</span><br><span class="line">source myenv/<span class="built_in">bin</span>/activate</span><br><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<h2 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h2><ol>
+<li><code>python -m trace --trackcalls pyscript.py</code></li>
+<li><code>python -m trace --trace pyscript.py</code></li>
+</ol>
+<h2 id="pip"><a href="#pip" class="headerlink" title="pip"></a>pip</h2><ol>
+<li>set source</li>
+</ol>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install pip -U -i https://pypi.tuna.tsinghua.edu.<span class="keyword">cn</span>/simple</span><br><span class="line">pip config <span class="keyword">set</span> <span class="keyword">global</span>.<span class="built_in">index</span>-url https://pypi.tuna.tsinghua.edu.<span class="keyword">cn</span>/simple</span><br></pre></td></tr></table></figure>
+
+<h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
+<li><code>unset all_proxy</code> 不能使用代理，可能出现 install 错误 <a target="_blank" rel="noopener" href="https://blog.csdn.net/whatday/article/details/109287343">link</a></li>
+<li><a target="_blank" rel="noopener" href="https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa">install python from deadsnakes</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/deadsnakes/docs/blob/main/Building-Deadsnakes-Packages-from-Git.rst">build python from source</a> 编译之后需要前一级目录 <code>sudo dpkg -i *.deb</code></li>
+<li><code>pip freeze | grep pytorch</code>: 查看库版本</li>
+<li>python3 -c “import torch; print(torch.<strong>version</strong>)”</li>
+<li><a target="_blank" rel="noopener" href="https://elpy.readthedocs.io/en/latest/ide.html#other-useful-snippets">useful-snippets</a></li>
+<li>默认引用语义</li>
+<li><code>import copy; x = copy.deepcopy(y)</code></li>
+<li>print(“x: “, x, type(x), x.shape) <a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_28576553/article/details/81154912">link</a></li>
+<li>print(‘{:.2f} ms’.format(xxx))</li>
+<li>pytorch tensor to binary file: <code>tensor.cpu().numpy().astype(np.float32).tofile(&quot;test.bin&quot;)</code>; c++ read binary file</li>
+<li>print(‘type : {}’.format(type(xxx)))</li>
+<li>print(‘size : {}’.format(len(xxx)))</li>
+</ol>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">static std::vector&lt;<span class="built_in">float</span>&gt; read<span class="constructor">_from_bin_file(<span class="params">std</span>::<span class="params">string</span> <span class="params">file</span>)</span> &#123;</span><br><span class="line">  auto result_size = std::filesystem::file<span class="constructor">_size(<span class="params">file</span>)</span>;</span><br><span class="line">  std::vector&lt;<span class="built_in">float</span>&gt; result(result_size<span class="operator"> / </span><span class="number">4</span>);</span><br><span class="line">  <span class="constructor">CHECK(<span class="params">std</span>::<span class="params">ifstream</span>(<span class="params">file</span>)</span>.read((<span class="built_in">char</span>*)&amp;result<span class="literal">[<span class="number">0</span>]</span>, result_size).good<span class="literal">()</span>)</span><br><span class="line">      &lt;&lt; <span class="string">&quot;failed to read baseline from &quot;</span> &lt;&lt; file;</span><br><span class="line">  return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void mywritefile(T* src, <span class="built_in">int</span> size1, std::<span class="built_in">string</span> filename) &#123;</span><br><span class="line">  ofstream Tout;</span><br><span class="line">  <span class="module-access"><span class="module"><span class="identifier">Tout</span>.</span></span><span class="keyword">open</span>(filename, ios_base::out <span class="pattern-match">| ios<span class="constructor">_base</span>::binary);</span></span><br><span class="line"><span class="pattern-match">  <span class="keyword">if</span> (!<span class="constructor">Tout</span>) &#123;</span></span><br><span class="line"><span class="pattern-match">    cout &lt;&lt; &quot;<span class="constructor">Can</span>&#x27;t <span class="keyword">open</span> the file! &quot; &lt;&lt; filename &lt;&lt; &quot;\n&quot;;</span></span><br><span class="line"><span class="pattern-match">    return;</span></span><br><span class="line"><span class="pattern-match">  &#125;</span></span><br><span class="line"><span class="pattern-match">  <span class="constructor">Tout</span>.write((<span class="built_in">char</span><span class="operator">*</span>)src, size1 <span class="operator">*</span> sizeof(<span class="constructor">T</span>));</span></span><br><span class="line"><span class="pattern-match">  <span class="operator">/</span><span class="operator">/</span> <span class="constructor">CHECK(<span class="params">std</span>::<span class="params">ofstream</span>(<span class="params">filename</span>)</span>.write((<span class="built_in">char</span><span class="operator">*</span>)data.data, size).good()) &lt;&lt;</span></span><br><span class="line"><span class="pattern-match">&#125;</span></span><br><span class="line"><span class="pattern-match"></span></span><br><span class="line"><span class="pattern-match">template void mywritefile(int8<span class="constructor">_t</span><span class="operator">*</span> src, <span class="built_in">int</span> size1, std::<span class="built_in">string</span> filename);</span></span><br><span class="line"><span class="pattern-match"></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="profiling"><a href="#profiling" class="headerlink" title="profiling"></a>profiling</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/gaogaotiantian/viztracer">viztracer</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/24495603">cprofile</a><br><code>gprof2dot -f pstats mkm_run.prof | dot -Tpng -o mkm_run.png</code></li>
+<li>profile 库</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> profile</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>():</span><br><span class="line">    fps = profile.fps()</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        xxxxxxxxxxxxxxxxxxx</span><br><span class="line">        logging.info(<span class="string">&#x27;fps:&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(fps.compute()))</span><br></pre></td></tr></table></figure>
+
+<h2 id="Logging"><a href="#Logging" class="headerlink" title="Logging"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/360306588">Logging</a></h2><ol>
+<li>基本配置：</li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import<span class="built_in"> logging</span></span><br><span class="line"><span class="built_in"></span></span><br><span class="line"><span class="comment">#默认的warning级别，只输出warning以上的</span></span><br><span class="line"><span class="comment">#使用basicConfig()来指定日志级别和相关信息</span></span><br><span class="line"></span><br><span class="line">logging.basicConfig(<span class="attribute">level</span>=logging.DEBUG #设置日志输出格式</span><br><span class="line">                    ,<span class="attribute">filename</span>=<span class="string">&quot;demo.log&quot;</span> #log日志输出的文件位置和文件名</span><br><span class="line">                    ,<span class="attribute">filemode</span>=<span class="string">&quot;w&quot;</span> #文件的写入格式，w为重新写入文件，默认是追加</span><br><span class="line">                    ,<span class="attribute">format</span>=<span class="string">&quot;%(asctime)s - %(name)s - %(levelname)-9s - %(filename)-8s : %(lineno)s line - %(message)s&quot;</span> #日志输出的格式</span><br><span class="line">                    # -8表示占位符，让输出左对齐，输出长度都为8位</span><br><span class="line">                    ,<span class="attribute">datefmt</span>=<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span> #时间输出的格式</span><br><span class="line">                    )</span><br><span class="line"></span><br><span class="line">logging.<span class="built_in">debug</span>(<span class="string">&quot;This is  DEBUG !!&quot;</span>)</span><br><span class="line">logging.<span class="built_in">info</span>(<span class="string">&quot;This is  INFO !!&quot;</span>)</span><br><span class="line">logging.<span class="built_in">warning</span>(<span class="string">&quot;This is  WARNING !!&quot;</span>)</span><br><span class="line">logging.<span class="built_in">error</span>(<span class="string">&quot;This is  ERROR !!&quot;</span>)</span><br><span class="line">logging.critical(<span class="string">&quot;This is  CRITICAL !!&quot;</span>)</span><br><span class="line"></span><br><span class="line">logging.<span class="built_in">info</span>(<span class="string">&quot;timestamp &#123;&#125;, &#123;&#125;, &#123;&#125; &quot;</span>.format(i, bufs[i].timestamp.tv_sec, bufs[i].timestamp.tv_usec))</span><br></pre></td></tr></table></figure>
+
+<h2 id="Debug-方法"><a href="#Debug-方法" class="headerlink" title="Debug 方法"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38542085/article/details/78562458">Debug 方法</a></h2><ol>
+<li>elpy-pdb-debug-buffer</li>
+<li>logging</li>
+<li>pdb</li>
+<li>print</li>
+</ol>
+<h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_20663229/article/details/94484526">多线程返回值</a></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading <span class="keyword">as</span> th</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">print_time</span>(<span class="params">arg</span>):</span><br><span class="line">    pname = mp.current_process().name</span><br><span class="line">    pid = os.getpid()</span><br><span class="line">    tname = th.current_thread().getName()</span><br><span class="line">    LOGW(<span class="string">&#x27;print time  [&#123;&#125;] &#123;&#125; : &#123;&#125; : &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(pid, pname, tname, arg))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dequeue_multibuffer1</span>():</span><br><span class="line">    threads_test = []</span><br><span class="line">    threads_test.append(th.Thread(name=<span class="string">&quot;thread 0&quot;</span>, target=print_time, args=(<span class="number">1</span>, ))) <span class="comment"># 线程的args是个元组，只有一个元素要加逗号</span></span><br><span class="line">    threads_test.append(th.Thread(name=<span class="string">&quot;thread 1&quot;</span>, target=print_time, args=(<span class="number">2</span>, )))</span><br><span class="line">    threads_test[<span class="number">0</span>].start()</span><br><span class="line">    threads_test[<span class="number">1</span>].start()</span><br><span class="line">    threads_test[<span class="number">0</span>].join()</span><br><span class="line">    threads_test[<span class="number">1</span>].join()</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 功能， 每个线程通过v4l2获取图片，多个线程拼接并同步，然后供其他模块使用</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dequeue_buffer</span>(<span class="params">fd, buf, mems, shape, que</span>):</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">if</span> que.empty():</span><br><span class="line">            fcntl.ioctl(fd, v4l2.VIDIOC_DQBUF, buf)</span><br><span class="line">            frame = cv.cvtColor(mems[buf.index].reshape(shape), cv.COLOR_YUV2RGB_YUYV)</span><br><span class="line">            fcntl.ioctl(fd, v4l2.VIDIOC_QBUF, buf)</span><br><span class="line">            que.put_nowait((frame, buf.timestamp))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dequeue_multibuffer</span>(<span class="params">fds, bufs, mems_list, shape, que</span>):</span><br><span class="line">    queues = []</span><br><span class="line">    num = <span class="built_in">len</span>(fd2)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(num):</span><br><span class="line">         queues.append(queue.Queue(maxsize=<span class="number">10</span>))</span><br><span class="line"></span><br><span class="line">    threads_test = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(num):</span><br><span class="line">        threads_test.append(th.Thread(name=<span class="built_in">str</span>(i), target=dequeue_buffer, args=(fds[i], bufs[i], mems_list[i], shape, queues[i])))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(num):</span><br><span class="line">        threads_test[i].start()</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        datas = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(num):</span><br><span class="line">            frame, timestamp = queues[i].get()</span><br><span class="line">            logging.info(<span class="string">&quot;timestamp &#123;&#125;, &#123;&#125;, &#123;&#125; &quot;</span>.<span class="built_in">format</span>(i, timestamp.tv_sec, timestamp.tv_usec))</span><br><span class="line">            mems = mems_list[i]</span><br><span class="line">            datas.append(frame)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(datas):</span><br><span class="line">            que.put(datas)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>()</span><br><span class="line">    frame_queue = queue.Queue(maxsize=<span class="number">10</span>)</span><br><span class="line">    get_frame_thread = th.Thread(name=<span class="string">&quot;dequeue_multibuffer&quot;</span>, target=dequeue_multibuffer, args=([vd_r, vd_l], [buf_r, buf_l], [mems_r, mems_l], (h, w, -<span class="number">1</span>), frame_queue))</span><br><span class="line">    get_frame_thread.start()</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">         frames = frame_queue.get()</span><br><span class="line">         do.....</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="numpy"><a href="#numpy" class="headerlink" title="numpy"></a><a target="_blank" rel="noopener" href="https://numpy.org/doc/stable/index.html">numpy</a></h2><ol>
+<li><code>np.testing.assert_allclose(out_np, out_tvm.numpy(), rtol=1e-3)</code> check result</li>
+<li>float_array &#x3D; double_array.astype(np.float32)</li>
+<li>reshape (-1 自适应)</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = x.reshape(<span class="number">2</span>, -<span class="number">1</span>)</span><br><span class="line">x = x.reshape(<span class="number">1</span>,-<span class="number">1</span>) <span class="comment"># 展开为1行</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>nchw -&gt; nhwc</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">input_file = sys.argv[<span class="number">1</span>]</span><br><span class="line">output_file = sys.argv[<span class="number">2</span>]</span><br><span class="line">N, C, H, W = sys.argv[<span class="number">3</span>:<span class="number">7</span>]</span><br><span class="line">a = np.fromfile(sys.argv[<span class="number">1</span>], dtype=np.float32)</span><br><span class="line">a = a.reshape((<span class="built_in">int</span>(N), <span class="built_in">int</span>(C), <span class="built_in">int</span>(H), <span class="built_in">int</span>(W)))</span><br><span class="line">a = a.transpose(<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line">a.tofile(output_file)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>nhwc -&gt; nchw</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">input_file = sys.argv[<span class="number">1</span>]</span><br><span class="line">output_file = sys.argv[<span class="number">2</span>]</span><br><span class="line">N, H, W, C = sys.argv[<span class="number">3</span>:<span class="number">7</span>]</span><br><span class="line">a = np.fromfile(sys.argv[<span class="number">1</span>], dtype=np.float32)</span><br><span class="line">a = a.reshape((<span class="built_in">int</span>(N), <span class="built_in">int</span>(H), <span class="built_in">int</span>(W), <span class="built_in">int</span>(C)))</span><br><span class="line">a = a.transpose(<span class="number">0</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">a.tofile(output_file)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>截取数据</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.fromfile(<span class="string">&quot;inputs/total_flow_predictions.bin&quot;</span>, dtype=np.float32)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(a))</span><br><span class="line">a = np.resize(a, [<span class="built_in">len</span>(a)//<span class="number">7</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(a))</span><br><span class="line">b = np.fromfile(<span class="string">&quot;output/disparity.bin&quot;</span>, dtype=np.float32)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(b))</span><br><span class="line">b = np.resize(b, [<span class="built_in">len</span>(b)//<span class="number">2</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(b))</span><br><span class="line">diff1 = a - b</span><br><span class="line">diff =  np.<span class="built_in">abs</span>(diff1)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;max diff is &#123;&#125;&quot;</span>.<span class="built_in">format</span>(diff.<span class="built_in">max</span>()))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;mean diff is &#123;&#125;&quot;</span>.<span class="built_in">format</span>(diff.mean()))</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>误差</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">a = np.fromfile(sys.argv[<span class="number">1</span>], dtype=np.float32)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;file1: &#123;&#125;, len: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(sys.argv[<span class="number">1</span>], <span class="built_in">len</span>(a)))</span><br><span class="line">b = np.fromfile(sys.argv[<span class="number">2</span>], dtype=np.float32)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;file2: &#123;&#125;, len: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(sys.argv[<span class="number">2</span>], <span class="built_in">len</span>(b)))</span><br><span class="line">diff1 = a - b</span><br><span class="line">diff =  np.<span class="built_in">abs</span>(diff1)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;max diff is &#123;&#125;&quot;</span>.<span class="built_in">format</span>(diff.<span class="built_in">max</span>()))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;mean diff is &#123;&#125;&quot;</span>.<span class="built_in">format</span>(diff.mean()))</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
@@ -1641,20 +1708,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">147</span>
+          <span class="site-state-item-count">146</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">40</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1724,13 +1791,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">350k</span>
+    <span title="站点总字数">351k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:18</span>
+    <span title="站点阅读时长">5:19</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

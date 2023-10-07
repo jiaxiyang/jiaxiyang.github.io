@@ -28,7 +28,7 @@
 <meta property="og:description" content="NOTE gcc&#x2F;g++  --verbose显示编译过程 strip 是一个在 Unix-like 操作系统中用于删除或剥离目标文件或对象文件的符号信息的工具。 删除符号表信息：符号表包含了源代码中的函数和变量的名称。 删除调试信息：debug section 被删除   function tracing 只需要 symbols，不需要 debug symbols（gcc -g）。strip 之">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-03T09:02:35.000Z">
-<meta property="article:modified_time" content="2023-09-27T01:32:57.881Z">
+<meta property="article:modified_time" content="2023-10-07T04:09:59.297Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="Debug">
 <meta name="twitter:card" content="summary">
@@ -131,17 +131,17 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">147</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">146</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">37</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">40</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">47</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">52</span></a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -233,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-27 09:32:57" itemprop="dateModified" datetime="2023-09-27T09:32:57+08:00">2023-09-27</time>
+                <time title="修改时间：2023-10-07 12:09:59" itemprop="dateModified" datetime="2023-10-07T12:09:59+08:00">2023-10-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -541,6 +541,7 @@
 <li>emacs gdb-many-window, gdb 多窗口调试</li>
 </ol>
 <h3 id="汇编调试"><a href="#汇编调试" class="headerlink" title="汇编调试"></a><a target="_blank" rel="noopener" href="https://wizardforcel.gitbooks.io/100-gdb-tips/content/patch-program.html">汇编调试</a></h3><ol>
+<li>trick: <code>layout split</code> &#x3D;&gt; <code>layout regs</code> &#x3D;&gt; <code>info files</code> &#x3D;&gt; <code>b *start_adress</code> &#x3D;&gt; <code>ni</code> 一步一步查看寄存器</li>
 <li><code>ni</code> 下一条汇编指令</li>
 <li><code>si</code> step by machine instructions rather than source lines</li>
 <li><code>disassemble</code> 显示汇编</li>
@@ -558,7 +559,6 @@
 <li><code>p $pc</code>显示 PC 值</li>
 <li><code>set var $pc=0x11111</code>设置 PC 值 or <code>jump line or jump *address</code></li>
 <li><code>set write on</code> and <code>disassemble /mr drawing</code> and <code>set variable *(short*)0x400651=0x0ceb</code> 修改二进制</li>
-<li>trick: <code>layout split</code> &#x3D;&gt; <code>layout regs</code> &#x3D;&gt; <code>info files</code> &#x3D;&gt; <code>b *start_adress</code> &#x3D;&gt; <code>ni</code> 一步一步查看寄存器</li>
 <li><code>info registers </code> or <code>info all-registers</code> all 也显示向量寄存器</li>
 </ol>
 <h3 id="gdbinit"><a href="#gdbinit" class="headerlink" title="~&#x2F;.gdbinit"></a><a target="_blank" rel="noopener" href="https://github.com/gdbinit/Gdbinit/blob/master/gdbinit">~&#x2F;.gdbinit</a></h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 保存历史命令</span></span><br><span class="line"><span class="built_in">set</span> history filename ~/.gdb_history</span><br><span class="line"><span class="built_in">set</span> history save on</span><br><span class="line"></span><br><span class="line"><span class="comment"># 退出时不显示提示信息</span></span><br><span class="line"><span class="built_in">set</span> confirm off</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按照派生类型打印对象</span></span><br><span class="line"><span class="built_in">set</span> <span class="built_in">print</span> object on</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印数组的索引下标</span></span><br><span class="line"><span class="built_in">set</span> <span class="built_in">print</span> array-indexes on</span><br><span class="line"></span><br><span class="line"><span class="comment"># 每行打印一个结构体成员</span></span><br><span class="line"><span class="built_in">set</span> <span class="built_in">print</span> pretty on</span><br></pre></td></tr></table></figure>
@@ -911,20 +911,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">147</span>
+          <span class="site-state-item-count">146</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">40</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -994,13 +994,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">350k</span>
+    <span title="站点总字数">351k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:18</span>
+    <span title="站点阅读时长">5:19</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
