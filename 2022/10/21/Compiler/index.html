@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdn.net/20160718211639694?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
 <meta property="article:published_time" content="2022-10-21T04:08:03.000Z">
-<meta property="article:modified_time" content="2023-09-24T04:13:12.114Z">
+<meta property="article:modified_time" content="2023-10-07T09:29:05.973Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20160718211639694?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
@@ -132,17 +132,17 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">146</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">147</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">40</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">41</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">52</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">53</span></a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-24 12:13:12" itemprop="dateModified" datetime="2023-09-24T12:13:12+08:00">2023-09-24</time>
+                <time title="修改时间：2023-10-07 17:29:05" itemprop="dateModified" datetime="2023-10-07T17:29:05+08:00">2023-10-07</time>
               </span>
 
           
@@ -379,7 +379,7 @@
 </li>
 <li><strong>重要性</strong>：不同的编译器，或同一编译器的不同版本，可能会有不同的 ABI。如果两个模块有不同的 ABI 并且它们尝试相互交互，那么可能会出现不可预知的行为。</li>
 </ol>
-<h4 id="API-例子"><a href="#API-例子" class="headerlink" title="API 例子"></a>API 例子</h4><p>ABI（应用程序二进制接口）是特定于架构和操作系统的，用于确保在二进制层面上的软件组件可以正确地相互交互。以下是一些常见的 ABI 的例子：</p>
+<h4 id="ABI-例子"><a href="#ABI-例子" class="headerlink" title="ABI 例子"></a>ABI 例子</h4><p>ABI（应用程序二进制接口）是特定于架构和操作系统的，用于确保在二进制层面上的软件组件可以正确地相互交互。以下是一些常见的 ABI 的例子：</p>
 <ol>
 <li><strong>System V ABI</strong>：这是 Unix 系统上最常见的 ABI，被多个 Unix-like 操作系统所采用，包括 Solaris、HP-UX、AIX 以及其他的系统。</li>
 <li><strong>Microsoft x64 calling convention</strong>：这是 Windows 在 x64 架构上使用的 ABI。</li>
@@ -413,7 +413,7 @@
 </li>
 <li><strong>关系</strong>:<ul>
 <li>ARM ABI 确保应用程序的正确执行，而 Linux ABI 则确保应用程序与内核的正确交互。</li>
-<li>Linux 在 ARM 平台上运行时，用户空间的应用程序和库会遵循 ARM ABI 的规范。这确保了应用程序和库在 ARM 硬件上的正确执行。同时，这些应用程序和库与 Linux 内核交互时会使用 Linux ABI 定义的系统调用。</li>
+<li><code>Linux 在 ARM 平台上运行时，用户空间的应用程序和库会遵循 ARM ABI 的规范。这确保了应用程序和库在 ARM 硬件上的正确执行。同时，这些应用程序和库与 Linux 内核交互时会使用 Linux ABI 定义的系统调用</code>。</li>
 <li>当一个应用程序运行在这样的系统上时，它与操作系统内核通信时使用 Linux ABI。而应用程序内部，或者它与其他库和组件通信时，可能遵循 ARM ABI。</li>
 <li>实际上，应用程序或库在被编译和链接为 ARM Linux 系统上的二进制时，编译器和链接器会确保它们遵循这两种 ABI。</li>
 </ul>
@@ -432,12 +432,12 @@
 </ol>
 <h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><ul>
 <li><strong>级别</strong>：ABI 在更高的层次上定义了如何在二进制级别进行交互，而指令集是关于 CPU 可以执行哪些基本操作的描述。</li>
-<li><strong>目标</strong>：ABI 主要关注软件之间的互操作性，而指令集关注硬件（CPU）如何执行特定的操作。</li>
-<li><strong>应用场景</strong>：开发者在为特定平台编写程序或编译代码时需要关心 ABI。而在设计或实现 CPU 时，会关心指令集。</li>
+<li><strong>目标</strong>：<code>ABI 主要关注软件之间的互操作性，而指令集关注硬件（CPU）如何执行特定的操作</code></li>
+<li><strong>应用场景</strong>：<code>开发者在为特定平台编写程序或编译代码时需要关心 ABI。而在设计或实现 CPU 时，会关心指令集</code></li>
 </ul>
 <h2 id="link"><a href="#link" class="headerlink" title="link"></a>link</h2><ol>
 <li>链接就像拼积木，有凹槽，也有凸槽，有一定的规则，满足规则凹凸部分才能拼合。</li>
-<li>程序段和代码段为什么分开？<ul>
+<li>数据段段和代码段为什么分开？<ul>
 <li>程序运行多次可以共享只读内容， 包括代码段，只读数据段等，可以节省大量内存。</li>
 <li>权限可以不同：代码自读， 数据可以读写</li>
 <li>提高 cache 命中率</li>
@@ -481,6 +481,10 @@
 </ol>
 <h2 id="Binary-Utils"><a href="#Binary-Utils" class="headerlink" title="Binary Utils"></a>Binary Utils</h2><h3 id="Google-bloaty-https-github-com-google-bloaty"><a href="#Google-bloaty-https-github-com-google-bloaty" class="headerlink" title="Google bloaty(https://github.com/google/bloaty)"></a>Google bloaty(<a target="_blank" rel="noopener" href="https://github.com/google/bloaty">https://github.com/google/bloaty</a>)</h3><ol>
 <li>查看二进制大的原因</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/google/bloaty/blob/main/doc/using.md">guide</a></li>
+<li><code>bloaty -d symbols ./test</code></li>
+<li><code>bloaty -d compileunits ./test</code></li>
+<li><code>bloaty -v -d sections ./test</code></li>
 </ol>
 <h3 id="ghidra"><a href="#ghidra" class="headerlink" title="ghidra"></a><a target="_blank" rel="noopener" href="https://github.com/NationalSecurityAgency/ghidra">ghidra</a></h3><ol>
 <li>可以查看各个段内容</li>
@@ -690,7 +694,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8%E4%B8%80%E8%88%AC%E6%9E%84%E6%88%90"><span class="nav-number">1.</span> <span class="nav-text">编译器一般构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">2.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ABI-%E5%92%8C%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="nav-number">3.</span> <span class="nav-text">ABI 和指令集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ABI-Application-Binary-Interface"><span class="nav-number">3.1.</span> <span class="nav-text">ABI (Application Binary Interface)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#API-%E4%BE%8B%E5%AD%90"><span class="nav-number">3.1.1.</span> <span class="nav-text">API 例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#linux-ABI-%E5%92%8C-ARM-ABI-%E5%85%B3%E7%B3%BB"><span class="nav-number">3.1.2.</span> <span class="nav-text">linux ABI 和 ARM ABI 关系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E9%9B%86-Instruction-Set-Architecture-ISA"><span class="nav-number">3.2.</span> <span class="nav-text">指令集 (Instruction Set Architecture, ISA)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%88%AB"><span class="nav-number">3.3.</span> <span class="nav-text">区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#link"><span class="nav-number">4.</span> <span class="nav-text">link</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">4.1.</span> <span class="nav-text">环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LD-PRELOAD"><span class="nav-number">4.1.1.</span> <span class="nav-text">LD_PRELOAD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LD-LIBRARY-PATH"><span class="nav-number">4.1.2.</span> <span class="nav-text">LD_LIBRARY_PATH</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LD-DEBUG"><span class="nav-number">4.1.3.</span> <span class="nav-text">LD_DEBUG</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binary-Utils"><span class="nav-number">5.</span> <span class="nav-text">Binary Utils</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Google-bloaty-https-github-com-google-bloaty"><span class="nav-number">5.1.</span> <span class="nav-text">Google bloaty(https:&#x2F;&#x2F;github.com&#x2F;google&#x2F;bloaty)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ghidra"><span class="nav-number">5.2.</span> <span class="nav-text">ghidra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#elfutils"><span class="nav-number">5.3.</span> <span class="nav-text">elfutils</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GNU-binutils"><span class="nav-number">5.4.</span> <span class="nav-text">GNU binutils</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#glibc-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">6.</span> <span class="nav-text">glibc 初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GCC-%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9"><span class="nav-number">7.</span> <span class="nav-text">GCC 编译选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#other"><span class="nav-number">8.</span> <span class="nav-text">other</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#buildid"><span class="nav-number">9.</span> <span class="nav-text">buildid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">10.</span> <span class="nav-text">links</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#books"><span class="nav-number">11.</span> <span class="nav-text">books</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8%E4%B8%80%E8%88%AC%E6%9E%84%E6%88%90"><span class="nav-number">1.</span> <span class="nav-text">编译器一般构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">2.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ABI-%E5%92%8C%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="nav-number">3.</span> <span class="nav-text">ABI 和指令集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ABI-Application-Binary-Interface"><span class="nav-number">3.1.</span> <span class="nav-text">ABI (Application Binary Interface)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ABI-%E4%BE%8B%E5%AD%90"><span class="nav-number">3.1.1.</span> <span class="nav-text">ABI 例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#linux-ABI-%E5%92%8C-ARM-ABI-%E5%85%B3%E7%B3%BB"><span class="nav-number">3.1.2.</span> <span class="nav-text">linux ABI 和 ARM ABI 关系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E9%9B%86-Instruction-Set-Architecture-ISA"><span class="nav-number">3.2.</span> <span class="nav-text">指令集 (Instruction Set Architecture, ISA)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%88%AB"><span class="nav-number">3.3.</span> <span class="nav-text">区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#link"><span class="nav-number">4.</span> <span class="nav-text">link</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">4.1.</span> <span class="nav-text">环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LD-PRELOAD"><span class="nav-number">4.1.1.</span> <span class="nav-text">LD_PRELOAD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LD-LIBRARY-PATH"><span class="nav-number">4.1.2.</span> <span class="nav-text">LD_LIBRARY_PATH</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LD-DEBUG"><span class="nav-number">4.1.3.</span> <span class="nav-text">LD_DEBUG</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binary-Utils"><span class="nav-number">5.</span> <span class="nav-text">Binary Utils</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Google-bloaty-https-github-com-google-bloaty"><span class="nav-number">5.1.</span> <span class="nav-text">Google bloaty(https:&#x2F;&#x2F;github.com&#x2F;google&#x2F;bloaty)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ghidra"><span class="nav-number">5.2.</span> <span class="nav-text">ghidra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#elfutils"><span class="nav-number">5.3.</span> <span class="nav-text">elfutils</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GNU-binutils"><span class="nav-number">5.4.</span> <span class="nav-text">GNU binutils</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#glibc-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">6.</span> <span class="nav-text">glibc 初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GCC-%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9"><span class="nav-number">7.</span> <span class="nav-text">GCC 编译选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#other"><span class="nav-number">8.</span> <span class="nav-text">other</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#buildid"><span class="nav-number">9.</span> <span class="nav-text">buildid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">10.</span> <span class="nav-text">links</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#books"><span class="nav-number">11.</span> <span class="nav-text">books</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -706,20 +710,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">146</span>
+          <span class="site-state-item-count">147</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">41</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -739,6 +743,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2023/10/07/GPU/" title="2023&#x2F;10&#x2F;07&#x2F;GPU&#x2F;">GPU</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/09/21/test/" title="2023&#x2F;09&#x2F;21&#x2F;test&#x2F;">test</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -749,9 +756,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/09/13/Reverse-Engineering/" title="2023&#x2F;09&#x2F;13&#x2F;Reverse-Engineering&#x2F;">Reverse-Engineering</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/09/04/go/" title="2023&#x2F;09&#x2F;04&#x2F;go&#x2F;">go</a>
         </li>
     </ul>
   </div>
@@ -789,13 +793,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">351k</span>
+    <span title="站点总字数">352k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:19</span>
+    <span title="站点阅读时长">5:20</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

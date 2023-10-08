@@ -128,17 +128,17 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">146</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">147</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">40</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">41</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">52</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">53</span></a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -195,6 +195,215 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/09/05/How-to-use-org-mode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/05/How-to-use-org-mode/" class="post-title-link" itemprop="url">How to use org mode</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-05 23:05:33" itemprop="dateCreated datePublished" datetime="2020-09-05T23:05:33+08:00">2020-09-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Emacs/" itemprop="url" rel="index"><span itemprop="name">Emacs</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/05/How-to-use-org-mode/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/05/How-to-use-org-mode/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Shortkeys"><a href="#Shortkeys" class="headerlink" title="Shortkeys"></a>Shortkeys</h2><ol>
+<li>next&#x2F;previous heading <code>C-c C-n/p</code></li>
+<li>next&#x2F;previous heading, same level <code>C-c C-f/b</code></li>
+<li><code>org-agenda-list</code> show agenda list</li>
+<li><code>org-open-at-point</code> <code>C-c C-o</code> open links</li>
+</ol>
+<h2 id="capture-refile-archiving"><a href="#capture-refile-archiving" class="headerlink" title="capture -&gt; refile -&gt; archiving"></a>capture -&gt; refile -&gt; archiving</h2><ol>
+<li>C-c c capture a new item (C-u C-u &#x3D; goto last)</li>
+<li>C-c C-w refile subtree (C-u C-u &#x3D; goto last)</li>
+<li>C-c C-x C-a archive subtree using the default command</li>
+<li>C-c C-x C-s move subtree to archive file</li>
+<li>C-c C-x a&#x2F;A toggle ARCHIVE tag &#x2F; to ARCHIVE sibling</li>
+</ol>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><ol>
+<li><code>&lt;src</code> to insert src block</li>
+<li><code>(org-babel-do-load-languages &#39;org-babel-load-languages &#39;((shell . t)))</code> enable sh</li>
+<li><code>(org-babel-do-load-languages &#39;org-babel-load-languages &#39;((C . t)))</code> enable c++</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#+begin_src cpp</span><br><span class="line">    <span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;hello world!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">#+end_src</span><br><span class="line"></span><br><span class="line">#+RESULTS:</span><br><span class="line">: hello world!</span><br></pre></td></tr></table></figure>
+
+<h2 id="Table"><a href="#Table" class="headerlink" title="Table"></a>Table</h2><ol>
+<li><code>|------+-----------|</code> 是 row 0</li>
+<li><code>org-table-export</code> test.csv 导出 csv</li>
+<li>公式<ul>
+<li><code>:=</code> 只对当前单元格起作用</li>
+<li><code>=</code> 对一行或一列起作用</li>
+<li><code>@</code> 指定行</li>
+<li><code>$</code> 指定列</li>
+<li><code>C-c &#39;</code> 编辑公式</li>
+<li><code>C-u C-c *</code> 整个表格求公式</li>
+<li>show line, column, formula reference <code>C-c ?</code></li>
+<li>toggle table coordinate grid <code>C-c &#125;</code></li>
+</ul>
+</li>
+<li><code>C-c -</code> insert hline below (C-u : above) current row</li>
+<li><code>C-c RET</code> insert hline and move to line below it</li>
+<li>convert region to table <code>C-c |</code></li>
+<li>move the current column left <code>M-LEFT/RIGHT</code></li>
+<li>move the current row up&#x2F;down <code>M-UP/DOWN</code></li>
+<li>sum numbers in current column&#x2F;rectangle <code>C-c +</code></li>
+<li>re-align the table without moving the cursor <code>C-c C-c</code></li>
+<li>re-align the table, move to next field <code>TAB</code></li>
+<li>move to previous field <code>S-TAB</code></li>
+<li>re-align the table, move to next row <code>RET</code></li>
+</ol>
+<h2 id="Tags"><a href="#Tags" class="headerlink" title="Tags"></a>Tags</h2><ol>
+<li>set tags for current heading <code>C-c C-q</code></li>
+<li>create sparse tree with matching tags <code>C-c \</code></li>
+<li><code>#+FILETAGS: :work</code> all the item in file has work tag</li>
+<li>globally (agenda) match tags at cursor <code>C-c C-o</code></li>
+</ol>
+<h2 id="Priority"><a href="#Priority" class="headerlink" title="Priority"></a>Priority</h2><ol>
+<li>raise&#x2F;lower priority of current item <code>S-UP/DOWN</code></li>
+<li>select next&#x2F;previous state <code>S-LEFT/RIGHT</code></li>
+<li><code>C-c , [ABC]</code> set the priority of the current item</li>
+<li><code>C-c , SPC</code> remove priority cookie from current item</li>
+</ol>
+<h2 id="checkbox"><a href="#checkbox" class="headerlink" title="checkbox"></a><a target="_blank" rel="noopener" href="https://orgmode.org/manual/Checkboxes.html">checkbox</a></h2><ol>
+<li><code>- [ ]</code></li>
+<li><code>C-c C-c</code> org-toggle-checkbox</li>
+<li>…..[&#x2F;] show [1&#x2F;5]</li>
+<li>…..[%] show [20%]</li>
+</ol>
+<h2 id="agenda"><a href="#agenda" class="headerlink" title="agenda"></a>agenda</h2><ol>
+<li><code>calfw-org-mode</code> M-c</li>
+<li><code>tab</code> open on other window</li>
+<li>start&#x2F;stop&#x2F;cancel the <code>clock</code> on current item <code>I / O / X</code></li>
+<li>view mode dispatcher <code>v</code></li>
+<li>add&#x2F;move current file to front of agenda <code>C-c [</code></li>
+<li>remove current file from your agenda <code>C-c ]</code></li>
+<li>cycle through agenda file list <code>C-’</code></li>
+<li>display next&#x2F;previous day,week,… <code>f / b</code></li>
+<li>goto today &#x2F; some date (prompt) <code>. / j</code></li>
+<li><code>d</code> org-agenda-day-view</li>
+<li><code>w</code> org-agenda-week-view</li>
+<li>toggle entry text &#x2F; clock report <code>E / R</code></li>
+</ol>
+<h2 id="clock"><a href="#clock" class="headerlink" title="clock"></a>clock</h2><ol>
+<li>start&#x2F;stop&#x2F;cancel the <code>clock</code> on current item <code>I / O / X</code></li>
+<li>start clock on current item <code>C-c C-x C-i</code></li>
+<li>stop&#x2F;cancel clock on current item <code>C-c C-x C-o/x</code></li>
+</ol>
+<h3 id="Calfw-org-mode"><a href="#Calfw-org-mode" class="headerlink" title="Calfw-org-mode"></a><a target="_blank" rel="noopener" href="https://github.com/kiwanami/emacs-calfw">Calfw-org-mode</a></h3><h2 id="Timestamp"><a href="#Timestamp" class="headerlink" title="Timestamp"></a>Timestamp</h2><ol>
+<li>prompt for date and insert timestamp <code>C-c .</code></li>
+<li>insert DEADLINE timestamp <code>C-c C-d</code></li>
+<li>insert SCHEDULED timestamp <code>C-c C-s</code>. <code>.</code> goto today</li>
+<li>stampe: <code>+1 20:00+1</code> +1day and 20:00-21:00</li>
+<li>change timestamp at cursor ±1 day <code>S-RIGHT/LEFT</code></li>
+<li>change year&#x2F;month&#x2F;day at cursor by ±1 <code>S-UP/DOWN</code></li>
+</ol>
+<h1 id="startup"><a href="#startup" class="headerlink" title="startup"></a><a target="_blank" rel="noopener" href="https://orgmode.org/manual/Initial-visibility.html">startup</a></h1><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#+STARTUP: overview</span></span><br><span class="line"><span class="meta">#+STARTUP: content</span></span><br><span class="line"><span class="meta">#+STARTUP: showall</span></span><br><span class="line"><span class="meta">#+STARTUP: show2levels</span></span><br><span class="line"><span class="meta">#+STARTUP: show3levels</span></span><br><span class="line"><span class="meta">#+STARTUP: show4levels</span></span><br><span class="line"><span class="meta">#+STARTUP: show5levels</span></span><br><span class="line"><span class="meta">#+STARTUP: showeverything</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Configs"><a href="#Configs" class="headerlink" title="Configs"></a>Configs</h1><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">global-set-key</span> (<span class="name">kbd</span> <span class="string">&quot;&lt;f9&gt;&quot;</span>) &#x27;org-clock-jump-to-current-clock)</span><br><span class="line">(<span class="name">global-set-key</span> (<span class="name">kbd</span> <span class="string">&quot;&lt;f12&gt;&quot;</span>) &#x27;org-agenda-list)</span><br><span class="line">(<span class="name">global-set-key</span> (<span class="name">kbd</span> <span class="string">&quot;C-c l&quot;</span>) &#x27;org-store-link)</span><br><span class="line">(<span class="name">global-set-key</span> (<span class="name">kbd</span> <span class="string">&quot;C-c a&quot;</span>) &#x27;org-agenda)</span><br><span class="line">(<span class="name">global-set-key</span> (<span class="name">kbd</span> <span class="string">&quot;C-c c&quot;</span>) &#x27;org-capture)</span><br><span class="line"></span><br><span class="line">(<span class="name">setq</span> org-clock-out-remove-zero-time-clocks <span class="literal">t</span>)</span><br><span class="line">(<span class="name">setq</span> org-startup-folded &#x27;content</span><br><span class="line">      org-agenda-span &#x27;day</span><br><span class="line">      org-agenda-window-setup &#x27;current-window</span><br><span class="line">      org-agenda-start-on-weekday <span class="literal">nil</span>)</span><br><span class="line">(<span class="name">setq</span> org-agenda-inhibit-startup <span class="literal">t</span>) <span class="comment">;; ~50x speedup</span></span><br><span class="line"><span class="comment">;;(setq org-agenda-use-tag-inheritance nil) ;; 3-4x speedup</span></span><br><span class="line">(<span class="name">setq</span> org-tags-column <span class="number">80</span>)</span><br><span class="line">(<span class="name">set-time-zone-rule</span> <span class="string">&quot;Asia/Shanghai&quot;</span>) <span class="comment">;; show china time zone</span></span><br><span class="line">(<span class="name">add-hook</span> &#x27;org-agenda-mode-hook</span><br><span class="line">            (<span class="name">lambda</span> () (<span class="name">add-hook</span> &#x27;window-configuration-change-hook</span><br><span class="line">                                 &#x27;org-agenda-align-tags <span class="literal">nil</span> <span class="literal">t</span>)))</span><br><span class="line"></span><br><span class="line">(<span class="name">setq</span> org-directory <span class="string">&quot;~/org&quot;</span>)</span><br><span class="line">(<span class="name">setq</span> org-default-notes-file (<span class="name">concat</span> org-directory <span class="string">&quot;/notes.org&quot;</span>))</span><br><span class="line">(<span class="name">setq</span> org-agenda-files &#x27;(<span class="string">&quot;~/org/gtd.org&quot;</span></span><br><span class="line">			 <span class="string">&quot;~/org/daily.org&quot;</span></span><br><span class="line">			 <span class="string">&quot;~/org/weekly.org&quot;</span></span><br><span class="line">			 <span class="string">&quot;~/org/ideas.org&quot;</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(<span class="name">setq</span> org-highest-priority ?A)</span><br><span class="line">(<span class="name">setq</span> org-lowest-priority  ?D)</span><br><span class="line">(<span class="name">setq</span> org-default-priority ?D)</span><br><span class="line">(<span class="name">setq</span> org-priority-faces</span><br><span class="line">      &#x27;((?A . (:background <span class="string">&quot;red&quot;</span> :foreground <span class="string">&quot;white&quot;</span> :weight bold))</span><br><span class="line">        (?B . (:background <span class="string">&quot;DarkOrange&quot;</span> :foreground <span class="string">&quot;white&quot;</span> :weight bold))</span><br><span class="line">        (?C . (:background <span class="string">&quot;yellow&quot;</span> :foreground <span class="string">&quot;DarkGreen&quot;</span> :weight bold))</span><br><span class="line">        (?D . (:background <span class="string">&quot;DodgerBlue&quot;</span> :foreground <span class="string">&quot;black&quot;</span> :weight bold))</span><br><span class="line">        ))</span><br><span class="line">(<span class="name">setq</span> org-todo-keywords</span><br><span class="line">      &#x27;((sequence <span class="string">&quot;TODO(t)&quot;</span> <span class="string">&quot;|&quot;</span> <span class="string">&quot;DONE(d)&quot;</span> <span class="string">&quot;CANCELED(c@/!)&quot;</span>)))</span><br><span class="line">        <span class="comment">;; (sequence &quot;|&quot; &quot;CANCELED(c)&quot;)))</span></span><br><span class="line">(<span class="name">setq</span> org-todo-keyword-faces &#x27;(</span><br><span class="line">                               ;; (<span class="string">&quot;TODO&quot;</span> . org-warning)</span><br><span class="line">                               ;; (<span class="string">&quot;DONE&quot;</span> . <span class="string">&quot;green&quot;</span>)</span><br><span class="line">                               (<span class="string">&quot;CANCELED&quot;</span> . <span class="string">&quot;grey&quot;</span>)</span><br><span class="line">                               ))</span><br><span class="line">(<span class="name">setq</span> org-agenda-prefix-format</span><br><span class="line">      (<span class="name">quote</span></span><br><span class="line">       ((<span class="name">agenda</span> . <span class="string">&quot; %-10:c%?-12t% s&quot;</span>))))</span><br><span class="line">(<span class="name">defun</span> my<span class="symbol">:open-org-calendar</span> ()</span><br><span class="line">  <span class="string">&quot;Open an org schedule calendar in the new buffer.&quot;</span></span><br><span class="line">  (<span class="name">interactive</span>)</span><br><span class="line">  (<span class="name">save-excursion</span></span><br><span class="line">    (<span class="name">let*</span> ((<span class="name">source1</span> (<span class="name">cfw</span><span class="symbol">:org-create-source</span>))</span><br><span class="line">           (<span class="name">curr-keymap</span> (<span class="name">if</span> cfw<span class="symbol">:org-overwrite-default-keybinding</span> cfw<span class="symbol">:org-custom-map</span> cfw<span class="symbol">:org-schedule-map</span>))</span><br><span class="line">           (<span class="name">cp</span> (<span class="name">cfw</span><span class="symbol">:create-calendar-component-buffer</span></span><br><span class="line">                <span class="symbol">:view</span> &#x27;week</span><br><span class="line">                <span class="symbol">:contents-sources</span> (<span class="name">list</span> source1)</span><br><span class="line">                <span class="symbol">:custom-map</span> curr-keymap</span><br><span class="line">                <span class="symbol">:sorter</span> &#x27;cfw<span class="symbol">:org-schedule-sorter</span>)))</span><br><span class="line">      (<span class="name">switch-to-buffer</span> (<span class="name">cfw</span><span class="symbol">:cp-get-buffer</span> cp))</span><br><span class="line">      (<span class="name">when</span> (<span class="name">not</span> org-todo-keywords-for-agenda)</span><br><span class="line">        (<span class="name">message</span> <span class="string">&quot;Warn : open org-agenda buffer first.&quot;</span>)))))</span><br><span class="line"></span><br><span class="line">(<span class="name">defun</span> calfw-org-mode()</span><br><span class="line">  <span class="string">&quot;Open calfw org&quot;</span></span><br><span class="line">  (<span class="name">interactive</span>)</span><br><span class="line">  (<span class="name">load-file</span> <span class="string">&quot;~/.emacs.d/straight/build/calfw-org/calfw-org.el&quot;</span>)</span><br><span class="line">  (<span class="name">my</span><span class="symbol">:open-org-calendar</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(<span class="name">defun</span> get-pic-from-url (<span class="name">url</span> filename)</span><br><span class="line">  (<span class="name">shell-command</span> (<span class="name">concat</span> <span class="string">&quot;wget -O &quot;</span> filename <span class="string">&quot; &quot;</span> url)))</span><br><span class="line">(<span class="name">defun</span> org-pomodoro-get-pictures ()</span><br><span class="line">  <span class="string">&quot;Get pomodoro notification pictures&quot;</span></span><br><span class="line">  (<span class="name">interactive</span>)</span><br><span class="line">  <span class="comment">;; (get-pic-from-url &quot;https://pic3.zhimg.com/e76fc9f4120b9bd6ca2a7ae03a447f19_1440w.jpg?source=172ae18b&quot; &quot;~/begin_short_break.jpg&quot;)</span></span><br><span class="line">  (<span class="name">get-pic-from-url</span></span><br><span class="line">  <span class="string">&quot;https://previews.123rf.com/images/vaselena/vaselena1507/vaselena150700001/42287443-white-alarm-clock-with-red-clock-face-with-inscription-coffee-time-without-figures-on-white-backgrou.jpg&quot;</span></span><br><span class="line">  <span class="string">&quot;~/coffe_time.jpg&quot;</span>)</span><br><span class="line">  (<span class="name">get-pic-from-url</span></span><br><span class="line">  <span class="string">&quot;https://previews.123rf.com/images/vaselena/vaselena1510/vaselena151000045/47728782-white-alarm-clock-with-red-clock-face-with-inscription-work-time-without-figures-on-white-background.jpg&quot;</span></span><br><span class="line">  <span class="string">&quot;~/work_time.jpg&quot;</span>))</span><br><span class="line"></span><br><span class="line">(<span class="name">add-hook</span> &#x27;org-pomodoro-finished-hook</span><br><span class="line">          (<span class="name">lambda</span> ()</span><br><span class="line">            (<span class="name">w32-shell-execute</span> <span class="string">&quot;open&quot;</span> <span class="string">&quot;~/coffe_time.jpg&quot;</span>)))</span><br><span class="line">(<span class="name">add-hook</span> &#x27;org-pomodoro-break-finished-hook</span><br><span class="line">          (<span class="name">lambda</span> ()</span><br><span class="line">            (<span class="name">w32-shell-execute</span> <span class="string">&quot;open&quot;</span> <span class="string">&quot;~/work_time.jpg&quot;</span>)))</span><br><span class="line">(<span class="name">add-hook</span> &#x27;org-pomodoro-long-break-finished-hook</span><br><span class="line">          (<span class="name">lambda</span> ()</span><br><span class="line">            (<span class="name">w32-shell-execute</span> <span class="string">&quot;open&quot;</span> <span class="string">&quot;~/work_time.jpg&quot;</span>)))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="pdf"><a href="#pdf" class="headerlink" title="pdf"></a>pdf</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/melvincabatuan/350f86611bc012a5c1c6">link</a></li>
+<li><code>sudo yum -y --skip-broken install texlive-\*</code></li>
+<li>install texlive-full <a target="_blank" rel="noopener" href="https://baohaojun.github.io/blog/2016/12/13/0-How-to-export-Chinese-with-Org-mode-Latex-backend.html">link</a></li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.gnu.org/software/emacs/refcards/pdf/orgcard.pdf">cheatsheat</a></li>
+<li><a target="_blank" rel="noopener" href="https://orgmode.org/">Org Mode</a></li>
+<li><a target="_blank" rel="noopener" href="https://orgmode.org/worg/orgcard.html">org card</a></li>
+<li><a target="_blank" rel="noopener" href="https://orgmode.org/orgguide.pdf">Org Guide</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Open_Source/archive/2011/07/17/2108747.html">Org Mode Chinese Tutorial</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1053,124 +1262,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/08/03/Software-design/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/03/Software-design/" class="post-title-link" itemprop="url">Software design</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-08-03 09:31:41" itemprop="dateCreated datePublished" datetime="2020-08-03T09:31:41+08:00">2020-08-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-24 12:08:20" itemprop="dateModified" datetime="2023-09-24T12:08:20+08:00">2023-09-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Design/" itemprop="url" rel="index"><span itemprop="name">Design</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/08/03/Software-design/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/03/Software-design/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="roadmap"><a href="#roadmap" class="headerlink" title="roadmap"></a><a target="_blank" rel="noopener" href="https://github.com/stemmlerjs/software-design-and-architecture-roadmap">roadmap</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/donnemartin/system-design-primer">system-design-primer(200K star)</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/DovAmir/awesome-design-patterns">awesome-design-patterns</a></li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/08/03/Software-design/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1242,20 +1333,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">146</span>
+          <span class="site-state-item-count">147</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">41</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1275,6 +1366,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2023/10/07/GPU/" title="2023&#x2F;10&#x2F;07&#x2F;GPU&#x2F;">GPU</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/09/21/test/" title="2023&#x2F;09&#x2F;21&#x2F;test&#x2F;">test</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1285,9 +1379,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/09/13/Reverse-Engineering/" title="2023&#x2F;09&#x2F;13&#x2F;Reverse-Engineering&#x2F;">Reverse-Engineering</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/09/04/go/" title="2023&#x2F;09&#x2F;04&#x2F;go&#x2F;">go</a>
         </li>
     </ul>
   </div>
@@ -1325,13 +1416,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">351k</span>
+    <span title="站点总字数">352k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:19</span>
+    <span title="站点阅读时长">5:20</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
