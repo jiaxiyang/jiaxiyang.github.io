@@ -128,12 +128,12 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">147</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">148</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">41</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
@@ -195,6 +195,139 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/04/13/TensorRT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/04/13/TensorRT/" class="post-title-link" itemprop="url">TensorRT</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-13 21:35:32" itemprop="dateCreated datePublished" datetime="2021-04-13T21:35:32+08:00">2021-04-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/04/13/TensorRT/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/04/13/TensorRT/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>864</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="查看版本"><a href="#查看版本" class="headerlink" title="查看版本"></a>查看版本</h2><ol>
+<li>jtop</li>
+<li>jetson_release</li>
+<li>nvidia-smi</li>
+<li><code>cat /proc/driver/nvidia/gpus/0000\:02\:00.0/information</code> 查看硬件型号</li>
+</ol>
+<h2 id="op-支持"><a href="#op-支持" class="headerlink" title="op 支持"></a>op 支持</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/onnx/onnx-tensorrt/blob/main/docs/operators.md">onnx operators.md</a></li>
+</ol>
+<h2 id="TensorRT-CUDA-cuDNN"><a href="#TensorRT-CUDA-cuDNN" class="headerlink" title="TensorRT, CUDA, cuDNN"></a>TensorRT, CUDA, cuDNN</h2><ol>
+<li>CUDA 是<code>并行计算框架</code>，提供 API，可以运行在 Nvdia GPU 上</li>
+<li>cuDNN 是深度神经网络加速库，cuDNN 可大幅优化标准例程（例如用于前向传播和反向传播的卷积层、池化层、归一化层和激活层）的实施。世界各地的深度学习研究人员和框架开发者都依赖 cuDNN 实现高性能 GPU 加速。借助 cuDNN，研究人员和开发者可以<code>专注于训练神经网络及开发软件应用</code>，而不必花时间进行低层级的 GPU 性能调整。cuDNN 可加速广泛应用的深度学习框架，包括 Caffe2、Chainer、Keras、MATLAB、MxNet、PyTorch 和 TensorFlow。</li>
+<li>TensorRT 是用于高性能深度学习<code>推理</code>的 SDK。此 SDK 包含深度学习推理优化器和<code>运行时环境</code>，可为深度学习推理应用提供低延迟和高吞吐量。借助 TensorRT，开发者可专注于创建新颖的 AI 支持应用，无需费力调节性能来部署推理工作。</li>
+</ol>
+<h2 id="trtexec-转模型"><a href="#trtexec-转模型" class="headerlink" title="trtexec 转模型"></a>trtexec 转模型</h2><ol>
+<li>trtexec –onnx&#x3D;.&#x2F;bisenetv2_310102_1280x1920.onnx –shapes&#x3D;input:1x3x540x960 –saveEngine&#x3D;bisenetv2-xavier-fp16-540x960.engine –allowGPUFallback –fp16 –workspace&#x3D;16024</li>
+<li>使用 TensorRT 中的 trtexec 测性能</li>
+<li>onnx 模型转化为 engine 后运行</li>
+</ol>
+<h2 id="测性能"><a href="#测性能" class="headerlink" title="测性能"></a>测性能</h2><ol>
+<li><code>trtexec --loadEngine=test.trt</code></li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/wang-xinyu/tensorrtx">samples</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/tree/release/7.1/samples/opensource/trtexec">https://github.com/NVIDIA/TensorRT/tree/release/7.1/samples/opensource/trtexec</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1157,7 +1290,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-28 13:14:22" itemprop="dateModified" datetime="2023-09-28T13:14:22+08:00">2023-09-28</time>
+                <time title="修改时间：2023-10-08 17:00:56" itemprop="dateModified" datetime="2023-10-08T17:00:56+08:00">2023-10-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1193,7 +1326,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
+              <span>2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1264,6 +1397,12 @@
 <li>通常，一个仓库会包含同一个软件不同版本的镜像，而标签就常用于对应该软件的各个版本。我们可以通过 <code>&lt;仓库名&gt;:&lt;标签&gt;</code> 的格式来指定具体是这个软件哪个版本的镜像。如果不给出标签，将以 latest 作为默认标签。</li>
 </ol>
 <h2 id="传统虚拟化与-docker-虚拟化"><a href="#传统虚拟化与-docker-虚拟化" class="headerlink" title="传统虚拟化与 docker 虚拟化"></a>传统虚拟化与 docker 虚拟化</h2><p><img src="https://gblobscdn.gitbook.com/assets%2F-M5xTVjmK7ax94c8ZQcm%2F-M5xT_hHX2g5ldlyp9nm%2F-M5xTdXNYDmRWNH-Lqez%2Fvirtualization.png?alt=media" alt="传统虚拟化"><br><img src="https://gblobscdn.gitbook.com/assets%2F-M5xTVjmK7ax94c8ZQcm%2F-M5xT_hHX2g5ldlyp9nm%2F-M5xTdXP2scg0hxytUHA%2Fdocker.png?alt=media" alt="docker虚拟化"></p>
+<h2 id="VNC"><a href="#VNC" class="headerlink" title="VNC"></a>VNC</h2><ol>
+<li><code>vncserver :1</code></li>
+<li><code>vncserver -kill :1</code></li>
+<li><code>ps -ef | grep vnc</code>查看是否运行及端口号</li>
+<li><code>cat .vnc/password.txt</code> 查看密码(自己设置)</li>
+</ol>
 <h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/introduction/why">从入门到实践</a></li>
 <li><a target="_blank" rel="noopener" href="https://juejin.im/post/5cacbfd7e51d456e8833390c">30 分钟快速入门</a></li>
@@ -1425,151 +1564,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/01/11/Redis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/11/Redis/" class="post-title-link" itemprop="url">Redis</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-01-11 21:27:34" itemprop="dateCreated datePublished" datetime="2021-01-11T21:27:34+08:00">2021-01-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/01/11/Redis/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/11/Redis/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="锁设计原则"><a href="#锁设计原则" class="headerlink" title="锁设计原则"></a>锁设计原则</h2><ol>
-<li>所有操作都可分为增删改查，改可用删除和增加来实现，但改更快并且具有原子性。</li>
-<li>只有获得锁才能对锁进行删和改。</li>
-<li>注意区分又状态和无状态。凡是涉及到有状态的API(lock, unlock)要特别小心。要与无状态API(圆的面积)模块区分开。</li>
-<li>系统状态尽可能的少，太多状态容易出问题。</li>
-</ol>
-<h2 id="基于Redis的分布式锁"><a href="#基于Redis的分布式锁" class="headerlink" title="基于Redis的分布式锁"></a>基于Redis的分布式锁</h2><ol>
-<li>Redis Lua脚本具有原子性</li>
-</ol>
-<h3 id="实现思想："><a href="#实现思想：" class="headerlink" title="实现思想："></a>实现思想：</h3><ol>
-<li>获取锁的时候，使用setnx加锁，并使用expire命令为锁添加一个超时时间，超过该时间则自动释放锁，锁的value值为一个随机生成的UUID，通过此在释放锁的时候进行判断。</li>
-<li>获取锁的时候还设置一个获取的超时时间，若超过这个时间则放弃获取锁。</li>
-<li>释放锁的时候，通过UUID判断是不是该锁，若是该锁，则执行delete进行锁释放。</li>
-</ol>
-<h3 id="超时后又多个程序获得锁解决方法"><a href="#超时后又多个程序获得锁解决方法" class="headerlink" title="超时后又多个程序获得锁解决方法"></a>超时后又多个程序获得锁解决方法</h3><ol>
-<li>将过期时间设置足够长，确保代码逻辑在锁释放之前能够执行完成</li>
-<li><code>为获取锁的线程增加守护线程，为将要过期但未释放的锁增加有效时间</code></li>
-</ol>
-<h3 id="使用守护线程特点"><a href="#使用守护线程特点" class="headerlink" title="使用守护线程特点"></a><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000022935064">使用守护线程特点</a></h3><ol>
-<li><code>一定要用SET key value NX PX milliseconds 命令</code>:如果不用，先设置了值，再设置过期时间，这个不是原子性操作，有可能在设置过期时间之前宕机，会造成死锁(key永久存在)</li>
-<li><code>value要具有唯一性</code>:这个是为了在解锁的时候，需要验证value是和加锁的一致才删除key。这是避免了一种情况：假设A获取了锁，过期时间30s，此时35s之后，锁已经自动释放了，A去释放锁，但是此时可能B获取了锁。A客户端就不能删除B的锁了。</li>
-</ol>
-<h2 id="Redis-server"><a href="#Redis-server" class="headerlink" title="Redis server"></a>Redis server</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/redis/redis.git</span><br><span class="line">cd redis &amp;&amp; make</span><br><span class="line">cd src</span><br><span class="line">./redis-server</span><br></pre></td></tr></table></figure>
-
-<h2 id="Redis-client"><a href="#Redis-client" class="headerlink" title="Redis client"></a>Redis client</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">./redis-cli</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># cmd</span></span></span><br><span class="line">set foo bar</span><br><span class="line">get foo</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># change dump.rdb path</span></span></span><br><span class="line">config set dir /home/xxx</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">save data to dump.rdb</span></span><br><span class="line">save</span><br></pre></td></tr></table></figure>
-
-<h2 id="hiredis-just-a-C-client-not-include-server"><a href="#hiredis-just-a-C-client-not-include-server" class="headerlink" title="hiredis (just a C client; not include server)"></a>hiredis (just a C client; not include server)</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/redis/hiredis.git</span><br><span class="line">cd hiredis</span><br><span class="line">mkdir build; cd build; cmake ..; make;</span><br><span class="line">sudo make install</span><br><span class="line">./hiredis-test</span><br><span class="line"></span><br><span class="line">## NOTE: sample are easier than hiredis-test</span><br></pre></td></tr></table></figure>
-
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://bbs.huaweicloud.com/blogs/209955">redis lock华为漫画</a></li>
-<li><a target="_blank" rel="noopener" href="https://bbs.huaweicloud.com/blogs/209954">Zookeeper 华为漫画</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/xlgen157387/article/details/79036337">redis实现分布式锁</a></li>
-<li><a target="_blank" rel="noopener" href="https://xiaomi-info.github.io/2019/12/17/redis-distributed-lock/">小米解决方案</a></li>
-<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903830442737671">redis分布式锁</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/yuhanfang/redislock">redislock C++ sample</a></li>
-<li><a target="_blank" rel="noopener" href="https://redis.io/commands/set">Redis set command(note: NX)</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/redisson/redisson">Redisson</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1641,14 +1635,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">147</span>
+          <span class="site-state-item-count">148</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -1674,6 +1668,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2023/10/08/rerun/" title="2023&#x2F;10&#x2F;08&#x2F;rerun&#x2F;">rerun</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/10/07/GPU/" title="2023&#x2F;10&#x2F;07&#x2F;GPU&#x2F;">GPU</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1684,9 +1681,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/09/20/QEMU/" title="2023&#x2F;09&#x2F;20&#x2F;QEMU&#x2F;">QEMU</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/09/13/Reverse-Engineering/" title="2023&#x2F;09&#x2F;13&#x2F;Reverse-Engineering&#x2F;">Reverse-Engineering</a>
         </li>
     </ul>
   </div>
@@ -1724,13 +1718,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">352k</span>
+    <span title="站点总字数">355k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:20</span>
+    <span title="站点阅读时长">5:23</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
