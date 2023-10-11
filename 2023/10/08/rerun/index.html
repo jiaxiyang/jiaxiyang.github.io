@@ -28,7 +28,7 @@
 <meta property="og:description" content="base 日志重放工具 log-replay tools link 观察工具 what-is-a-seeingtool Seeing Spaces 它是 Figma、Webflow、Our World in Data 等许多项目的灵感来源 类似 rosbag 不链接 viewer 也不保存，相当于不操作？方便开启和关闭 log 使用 rerun 实时或回放监测的数据 rr.set_time_seq">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-08T07:12:52.000Z">
-<meta property="article:modified_time" content="2023-10-10T12:36:06.218Z">
+<meta property="article:modified_time" content="2023-10-11T11:17:50.758Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="Debug">
 <meta property="article:tag" content="DataView">
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-10 20:36:06" itemprop="dateModified" datetime="2023-10-10T20:36:06+08:00">2023-10-10</time>
+                <time title="修改时间：2023-10-11 19:17:50" itemprop="dateModified" datetime="2023-10-11T19:17:50+08:00">2023-10-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -277,7 +277,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.1k</span>
+              <span>3.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -314,7 +314,7 @@
 <li><a target="_blank" rel="noopener" href="https://www.rerun.io/docs/reference/sdk-operating-modes">4 sdk-operating-modes</a> Connnect: Connects to a remote Rerun Viewer and streams all the data via TCP.</li>
 <li>good: docker web live data<ul>
 <li><code>python3 -m rerun --web-viewer --web-viewer-port 5900 --ws-server-port 6080</code></li>
-<li><code>examples/python/clock/main.py --connect --addr=127.0.0.1:9876</code></li>
+<li><code>examples/python/clock/main.py --connect --addr=127.0.0.1:9876</code> example 用到的代码<code>rr.connect(127.0.0.1:9876)</code></li>
 <li><code>http://localhost:10087/?url=ws://localhost:10089</code> or <code>http://10.31.2.47:9090/?url=ws://10.31.2.47:9877</code> 注意两个 localhost 和端口号都要替换</li>
 </ul>
 </li>
@@ -323,7 +323,15 @@
 <li><code>examples/python/clock/main.py --connect --addr=127.0.0.1:9876</code></li>
 </ul>
 </li>
-<li><a target="_blank" rel="noopener" href="https://github.com/rerun-io/rerun/blob/0a2a594b1f9527e91400a0b1d2dbb4943080f385/rerun_py/README.md?plain=1#L50">connect sample</a> local 好使</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/rerun-io/rerun/blob/0a2a594b1f9527e91400a0b1d2dbb4943080f385/rerun_py/README.md?plain=1#L50">connect sample</a></li>
+<li>多次链接有多次数据</li>
+<li>python connect code</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> rerun <span class="keyword">as</span> rr  <span class="comment"># <span class="doctag">NOTE:</span> `rerun`, not `rerun-sdk`!</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">rr.init(<span class="string">&quot;rerun_example_my_data&quot;</span>, spawn=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">rr.connect(<span class="string">&quot;192.168.1.3:9876&quot;</span>)</span><br><span class="line"></span><br><span class="line">positions = np.zeros((<span class="number">10</span>, <span class="number">3</span>))</span><br><span class="line">positions[:,<span class="number">0</span>] = np.linspace(-<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>)</span><br><span class="line">colors = np.zeros((<span class="number">10</span>,<span class="number">3</span>), dtype=np.uint8)</span><br><span class="line">colors[:,<span class="number">0</span>] = np.linspace(<span class="number">0</span>,<span class="number">255</span>,<span class="number">10</span>)</span><br><span class="line">rr.log(<span class="string">&quot;my_points&quot;</span>,rr.Points3D(positions, colors=colors, radii=<span class="number">0.5</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><ol>
+<li><code>export RERUN=off</code>环境变量控制是否输出 log</li>
+<li><code>rerun --help</code>可以查看环境变量</li>
 </ol>
 <h2 id="install"><a href="#install" class="headerlink" title="install"></a>install</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://www.rerun.io/docs/getting-started/troubleshooting">troubleshooting</a></li>
@@ -348,9 +356,11 @@
 <li><a target="_blank" rel="noopener" href="https://github.com/rerun-io/rerun/tree/main/examples/python/live_depth_sensor">live-depth-sensor</a></li>
 </ol>
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://discord.com/invite/PXtCgFBSmH">rerun discord 在线信息 </a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/rerun-io/rerun">rerun-io&#x2F;rerun</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.rerun.io/docs">docs 示意图</a></li>
 <li><a target="_blank" rel="noopener" href="https://app.rerun.io/">online demo</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/rerun-io/rerun/milestones">rerun&#x2F;milestones</a></li>
 </ol>
 
     </div>
@@ -466,7 +476,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#install"><span class="nav-number">2.</span> <span class="nav-text">install</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#logging"><span class="nav-number">3.</span> <span class="nav-text">logging</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#samples"><span class="nav-number">4.</span> <span class="nav-text">samples</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#demos"><span class="nav-number">5.</span> <span class="nav-text">demos</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">6.</span> <span class="nav-text">links</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">2.</span> <span class="nav-text">环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#install"><span class="nav-number">3.</span> <span class="nav-text">install</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#logging"><span class="nav-number">4.</span> <span class="nav-text">logging</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#samples"><span class="nav-number">5.</span> <span class="nav-text">samples</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#demos"><span class="nav-number">6.</span> <span class="nav-text">demos</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">7.</span> <span class="nav-text">links</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -565,13 +575,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">356k</span>
+    <span title="站点总字数">357k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:23</span>
+    <span title="站点阅读时长">5:24</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
