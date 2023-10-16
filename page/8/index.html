@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">149</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">150</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,137 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/07/SOA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/07/SOA/" class="post-title-link" itemprop="url">SOA</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-07 10:45:11" itemprop="dateCreated datePublished" datetime="2022-09-07T10:45:11+08:00">2022-09-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/09/07/SOA/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/07/SOA/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><ol>
+<li><p>SOA 是一种架构风格</p>
+</li>
+<li><p>实际上 SOA 只是一种架构设计模式，而 SOAP、REST、RPC 就是为了实践这种设计模式而设计的数据通讯方式，其中 SOAP 通俗理解就是服务间通过 http+xml 的形式完成数据交换，REST 就是 http+json 的形式，RPC 是基于 socket 的形式。CXF 框架就是典型的 SOAP&#x2F;REST 框架，Dubbo 就是典型的 RPC 框架，而 SpringCloud 就是遵守 REST 规范的微服务生态系统。<br>1 .后来又有了微服务的概念，个人理解微服务和 SOA 就是孪生子。如今生产实践中提到的微服务，在 SOA 的基础上更进一层，引入了很多新的东西如服务治理、链路跟踪、配置管理等等可以帮助企业构建高可用高并发高性能的系统的组件。</p>
+</li>
+<li><p>为什么服务总是和以太网，DDS 或 SOME&#x2F;IP 绑定的呢？CAN 网络上是否可以实现完整的 SOA 架构？</p>
+<ul>
+<li>首先，以 SOME&#x2F;IP 举例，因为 SOME&#x2F;IP 的完整名称其实能回答上面的大多数问题，SOME&#x2F;IP &#x3D; Scalable service-Oriented Middleware over IP。即“运行于 IP 之上的可伸缩的面向服务的中间件”。可见，并不是 SOA 必须和 SOME&#x2F;IP 绑定，而是 SOME&#x2F;IP 天生就是为了 SOA 架构而生。</li>
+<li>SOME&#x2F;IP 的精华在于“Middleware 中间件”，这是一种独立的系统软件或服务程序，分布式应用软件可借助 Middleware 在不同的技术之间共享资源。分布式应用软件，在这里指的就是“服务”；不同的技术之间，在这里指的就是不同的平台或操作系统，比如 Linux 系统或 AUTOSAR OS OSEK 等。</li>
+<li>Scalable Middleware，顾名思义，则是“可伸缩中间件”，指的是该中间件能够适配于不同的平台及操作系统，其支撑的平台可大可小。</li>
+<li>简单来说，SOA 是软件架构的一种设计理念；SOME&#x2F;IP 是一种将软件接口进行打包的打包方式，是一种中间件。而汽车行业通常所指的”以太网”是泛化之后的概念，涵盖了基于以太网技术所实现的各种相关技术手段，包括 TCP&#x2F;IP 协议、DoIP 协议、SOME&#x2F;IP 协议等。当然若通过其他非以太网的通信方式来实现 SOA 也是可行的，但通常大家不那么用。比如基于 CAN 总线的架构，由于其基础的架构和通信协议栈里不存在 Middleware 中间层的概念，所以要实现 SOA 的代价是非常巨大的。</li>
+</ul>
+</li>
+<li><p>以服务导向的软件系统构架（SOA）将成为主流，以 SOA&#x2F;SOME-IP 为脉络支撑起汽车以服务为出发点和差异化竞争的整车 E&#x2F;E 架构。</p>
+</li>
+<li><p><code>SOA</code>（Service-Oriented Architecture，面向服务的架构）</p>
+</li>
+<li><p>SOA 的软件架构<br><img src="https://mmbiz.qpic.cn/mmbiz_png/dgmES0HFW0utCXbf5mDOFepsQSA2wVFPBqzgGf38bkxsJOlMEkjvHG3H5ibs5ZW9Mw968jLxgOOpVk8iaKNRdABg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="SOA的软件架构"></p>
+</li>
+<li><p><img src="https://mmbiz.qpic.cn/mmbiz_png/dgmES0HFW0utCXbf5mDOFepsQSA2wVFPBqzgGf38bkxsJOlMEkjvHG3H5ibs5ZW9Mw968jLxgOOpVk8iaKNRdABg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="SOA汽车分层模型"></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040618603">SOA 所解决的核心问题</a></p>
+<ul>
+<li>系统集成：站在系统的角度，解决企业系统间的通信问 题，把原先散乱、无规划的系统间的网状结构，梳理成规整、可治理的系统间星形结构，这一步往往需要引入 一些产品，比如 ESB、以及技术规范、服务管理规范；这一步解决的核心问题是【有序】</li>
+<li>系统的服务化：站在功能的角度，把业务逻辑抽象成可复用、可组装的服务，通过服务的编排实现业务的快速再生。目的：把原先固有的业务功能转变为通用的业务服务，实现业务逻辑的快速复用；这一步解决的核心问题是【复用】</li>
+<li>业务的服务化：站在企业的角度，把企业职能抽象成可复用、可组装的服务；把原先职能化的企业架构转变为服务化的企业架构，进一步提升企业的对外服务能力；前面两步都是从技术层面来解决系统调用、系统功能复用的问题。第三步，则是以业务驱动把一个 业务单元封装成一项服务。这一步解决的核心问题是 【高效】</li>
+</ul>
+</li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.kdocs.cn/l/sbWWKnW352t2">车载 SOA 软件架构技术规范 1.0</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.3cst.cn/Information/info/RHcujT3VVDQD11ea8d6300163e0473d8">“域”测未来 “域”见 SOA</a></li>
+<li><a target="_blank" rel="noopener" href="https://bbs.huaweicloud.com/blogs/315752">什么是 SOA？什么是微服务？SOA 和微服务有什么区别？</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.sohu.com/a/523519503_560178">面向 SOA 服务的智能汽车高性能计算平台布局与测试方案</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.3cst.cn/Information/info/ALwsiHASP99L11ea8d6300163e0473d8">SOA 中的软件架构设计及软硬件解耦方法论</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/48839b7d0050">MVC、 RPC、SOA 和 微服务架构异同</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1460,176 +1591,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/08/18/OpenCV/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/08/18/OpenCV/" class="post-title-link" itemprop="url">OpenCV</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-08-18 19:43:20" itemprop="dateCreated datePublished" datetime="2022-08-18T19:43:20+08:00">2022-08-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/08/18/OpenCV/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/08/18/OpenCV/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="doc"><a href="#doc" class="headerlink" title="doc"></a>doc</h2><ol>
-<li>注意 doc 中函数说明下面有 examples</li>
-<li><a target="_blank" rel="noopener" href="https://docs.opencv.org/4.6.0/d3/d63/classcv_1_1Mat.html">Mat</a></li>
-</ol>
-<h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><ol>
-<li>debug opencv:<code>OPENCV_LOG_LEVEL=DEBUG</code></li>
-<li>nv12 type 是 <code>CV_8UC1， h = real_h * 3 / 2</code></li>
-<li>opencv 不支持 nv12 resize， 需要 <code>to rgb -&gt; resize -&gt; to nv12</code> 或 <a target="_blank" rel="noopener" href="https://github.com/lemenkov/libyuv">libyuv</a> 来 resize</li>
-</ol>
-<h2 id="Mat"><a href="#Mat" class="headerlink" title="Mat"></a><a target="_blank" rel="noopener" href="https://docs.opencv.org/4.6.0/d3/d63/classcv_1_1Mat.html">Mat</a></h2><ol>
-<li><code>mata.mul(matb)</code> 矩阵相乘</li>
-<li><code>cv::Mat Z_c2 = Z_w * std::cos(phi) + hc * std::sin(phi);</code> Z_w 为 Mat，直接做运算</li>
-<li><a target="_blank" rel="noopener" href="https://fossies.org/dox/opencv-4.6.0/classcv_1_1Mat.html">fossies 依赖关系</a> 点图右上角能展开图片</li>
-<li>(代理模式？) opencv 接口使用代理类 <em>InputArray，This is the proxy class for passing read-only input arrays into OpenCV functions. _InputArray is a class that can be constructed from Mat, Mat</em><T>, Matx&lt;T, m, n&gt;, std::vector<T>, std::vector&lt;std::vector<T> &gt;, std::vector<Mat>, std::vector&lt;Mat_<T> &gt;, UMat, std::vector<UMat> or double. It can also be constructed from a matrix expression.</li>
-<li><a target="_blank" rel="noopener" href="https://fossies.org/dox/opencv-4.6.0/classcv_1_1__InputArray.html">_InputArray</a></li>
-<li>cv::resize 等接口用的都是(InputArray..) <code>cv::resize (InputArray src, OutputArray dst, Size dsize, double fx=0, double fy=0, int interpolation=INTER_LINEAR)</code></li>
-</ol>
-<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/dcrmg/article/details/52294259">Opencv Mat 矩阵中 data、size、depth、elemSize、step 等属性的理解</a></li>
-<li><code>flags</code></li>
-<li><code>dims</code> Mat 矩阵的维度，若 Mat 是一个二维矩阵，则 dims&#x3D;2，三维则 dims&#x3D;3</li>
-<li><code>rows</code> Mat 矩阵的行数。</li>
-<li><code>cols</code> Mat 矩阵的列数。</li>
-<li><code>data</code> uchar 类型的指针，指向 Mat 数据矩阵的首地址。</li>
-<li><code>size</code> 首先 size 是一个结构体，定义了 Mat 矩阵内数据的分布形式，数值上有关系式：image.size().width&#x3D;&#x3D;image.cols; image.size().height&#x3D;&#x3D;image.rows</li>
-<li><code>step</code> 可以理解为 Mat 矩阵中每一行的“步长”，以字节为基本单位，每一行中所有元素的字节总量，是累计了一行中所有元素、所有通道、所有通道的 elemSize1 之后的值；</li>
-<li><code>channels()</code>：Mat 矩阵元素拥有的通道数。例如常见的 RGB 彩色图像，channels&#x3D;&#x3D;3；而灰度图像只有一个灰度分量信息 channels&#x3D;&#x3D;1。</li>
-<li><code>type()</code> Mat 矩阵的类型</li>
-<li><code>depth()</code> 用来度量每一个像素中每一个通道的精度，但它本身与图像的通道数无关！depth 数值越大，精度越高。Opencv 中，Mat.depth()得到的是一个 0~6 的数字，分别代表不同的位数，对应关系如下：enum{CV_8U&#x3D;0,CV_8S&#x3D;1,CV_16U&#x3D;2,CV_16S&#x3D;3,CV_32S&#x3D;4,CV_32F&#x3D;5,CV_64F&#x3D;6}</li>
-<li><code>elemSize()</code> elem 是 element(元素)的缩写，表示矩阵中每一个元素的数据大小，如果 Mat 中的数据类型是 CV_8UC1，那么 elemSize&#x3D;&#x3D;1；如果是 CV_8UC3 或 CV_8SC3，那么 elemSize&#x3D;&#x3D;3；如果是 CV_16UC3 或者 CV_16SC3，那么 elemSize&#x3D;&#x3D;6；即 elemSize 是以 8 位（一个字节）为一个单位，乘以通道数和 8 位的整数倍；</li>
-<li><code>total()</code>: the total number of array elements. <code>mat data size: total() * elemSize()</code></li>
-</ol>
-<h2 id="functions"><a href="#functions" class="headerlink" title="functions"></a>functions</h2><h3 id="构造"><a href="#构造" class="headerlink" title="构造"></a>构造</h3><ol>
-<li>Mat array &#x3D; (Mat_<double>(3, 3) &lt;&lt; 0, -1, 5, -1, 5, -1, 0, -1, 0);</li>
-</ol>
-<h3 id="imread"><a href="#imread" class="headerlink" title="imread"></a>imread</h3><ol>
-<li><code>Mat cv::imread(const String &amp;filename, int flags = IMREAD_COLOR);</code></li>
-<li><a target="_blank" rel="noopener" href="https://fossies.org/dox/opencv-4.6.0/group__imgcodecs__flags.html#ga61d9b0126a3e57d9277ac48327799c80">flags list</a></li>
-<li>IMREAD_COLOR(value is 1): If set, always convert image to the 3 channel BGR color image.</li>
-<li>IMREAD_GRAYSCALE(vaule is 0): If set, always convert image to the single channel grayscale image (codec internal conversion).</li>
-</ol>
-<h3 id="imwrite"><a href="#imwrite" class="headerlink" title="imwrite"></a>imwrite</h3><ol>
-<li><code>bool cv::imwrite (const String&amp; filename, InputArray img, const std::vector&lt;int&gt; &amp; params = std::vector&lt;int&gt;())</code></li>
-<li><code>params</code> Format-specific parameters encoded as pairs (paramId_1, paramValue_1, paramId_2, paramValue_2, … .) see <a target="_blank" rel="noopener" href="https://fossies.org/dox/opencv-4.6.0/group__imgcodecs__flags.html#ga292d81be8d76901bff7988d18d2b42ac">cv::ImwriteFlags</a></li>
-</ol>
-<h3 id="resize"><a href="#resize" class="headerlink" title="resize"></a>resize</h3><ol>
-<li>不支持 nv12 resize <a target="_blank" rel="noopener" href="https://github.com/lemenkov/libyuv">libyuv</a>来做 yuv resize</li>
-</ol>
-<h3 id="crop"><a href="#crop" class="headerlink" title="crop"></a>crop</h3><ol>
-<li>使用 cv::Rect (x, y, w, h)</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">cv::Rect <span class="title">crop_region</span><span class="params">(<span class="number">250</span>, <span class="number">10</span>,<span class="number">400</span>, <span class="number">400</span>)</span></span>;</span><br><span class="line"><span class="keyword">auto</span> mat2=<span class="built_in">mat1</span>(crop_region);</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/lemenkov/libyuv/blob/6900494d90ae095d44405cd4cc3f346971fa69c9/include/libyuv/convert.h#L900">libyuv crop</a></li>
-</ol>
-<h3 id="cvtColor"><a href="#cvtColor" class="headerlink" title="cvtColor"></a>cvtColor</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://docs.opencv.org/4.6.0/d8/d01/group__imgproc__color__conversions.html">列表</a></li>
-<li><code>cv::cvtColor(src, dst, cv::COLOR_YUV2BGR_YVYU)</code></li>
-<li><code>cv::cvtColor(src, dst, cv::COLOR_BGR2GRAY)</code></li>
-<li><code>cv::cvtColor(src, dst, cv::COLOR_GRAY2BGR)</code></li>
-<li><code>cv::cvtColor(origin_image, image_rgb, cv::COLOR_YUV2RGB_NV12);</code></li>
-<li>不支持 yuv 转 rbg, 可以参考<a target="_blank" rel="noopener" href="https://github.com/mhomola/AutonomousFlight/blob/422de6ccbbd3ec290a16c8d919fd23d4503ad62f/CV_scripts/opencv-4.x/modules/gapi/test/streaming/gapi_streaming_tests.cpp#L208-L208">代码</a></li>
-</ol>
-<h3 id="permute-transpose-通道转换"><a href="#permute-transpose-通道转换" class="headerlink" title="permute &#x2F; transpose 通道转换"></a>permute &#x2F; transpose 通道转换</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gab1b1274b4a563be34cdfa55b8919a4ec">transposeND</a>： Transpose for n-dimensional matrices.</li>
-</ol>
-<h3 id="cv-FileStorage-序列化与反序列化"><a href="#cv-FileStorage-序列化与反序列化" class="headerlink" title="cv::FileStorage 序列化与反序列化"></a>cv::FileStorage 序列化与反序列化</h3><ol>
-<li><code>cv2.FileStorage(&quot;output.yml&quot;, cv2.FILE_STORAGE_WRITE).write(&quot;mat&quot;, mat)</code></li>
-<li>test</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">cv::FileStorage <span class="title">file</span><span class="params">(<span class="string">&quot;test.yml&quot;</span>, cv::FileStorage::READ)</span></span>;</span><br><span class="line">cv::Mat left_image, right_image;</span><br><span class="line"><span class="type">int</span> out_hei, out_wid;</span><br><span class="line">cv::Mat Q;</span><br><span class="line"><span class="type">float</span> phi, hc, traj_center, traj_wid, traj_near, traj_far;</span><br><span class="line"><span class="type">bool</span> affine;</span><br><span class="line"></span><br><span class="line">file[<span class="string">&quot;left_image&quot;</span>] &gt;&gt; left_image;</span><br><span class="line">file[<span class="string">&quot;right_image&quot;</span>] &gt;&gt; right_image;</span><br><span class="line">out_hei = (<span class="type">int</span>)file[<span class="string">&quot;out_hei&quot;</span>];</span><br><span class="line">out_wid = (<span class="type">int</span>)file[<span class="string">&quot;out_wid&quot;</span>];</span><br><span class="line">file[<span class="string">&quot;Q&quot;</span>] &gt;&gt; Q;</span><br><span class="line">phi = (<span class="type">float</span>)file[<span class="string">&quot;phi&quot;</span>];</span><br><span class="line">hc = (<span class="type">float</span>)file[<span class="string">&quot;hc&quot;</span>];</span><br><span class="line"><span class="type">int</span> int_affine = (<span class="type">int</span>)file[<span class="string">&quot;affine&quot;</span>];</span><br><span class="line">affine = int_affine == <span class="number">0</span> ? <span class="literal">false</span> : <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.51cto.com/SpaceVision/5071910">Mat 常见属性</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1701,7 +1662,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">149</span>
+          <span class="site-state-item-count">150</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1734,6 +1695,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2023/10/12/MLIR/" title="2023&#x2F;10&#x2F;12&#x2F;MLIR&#x2F;">MLIR</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/10/10/Mojo/" title="2023&#x2F;10&#x2F;10&#x2F;Mojo&#x2F;">Mojo</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1744,9 +1708,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/09/21/test/" title="2023&#x2F;09&#x2F;21&#x2F;test&#x2F;">test</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/09/21/assembly/" title="2023&#x2F;09&#x2F;21&#x2F;assembly&#x2F;">assembly</a>
         </li>
     </ul>
   </div>
@@ -1784,13 +1745,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">357k</span>
+    <span title="站点总字数">358k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:24</span>
+    <span title="站点阅读时长">5:26</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">149</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">150</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,114 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/01/13/Cpp20/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/13/Cpp20/" class="post-title-link" itemprop="url">Cpp20</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-13 15:31:55" itemprop="dateCreated datePublished" datetime="2023-01-13T15:31:55+08:00">2023-01-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/01/13/Cpp20/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/01/13/Cpp20/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>713</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="module"><a href="#module" class="headerlink" title="module"></a>module</h2><h2 id="coroutine"><a href="#coroutine" class="headerlink" title="coroutine"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/172471249">coroutine</a></h2><ol>
+<li>协程并没有增加线程数量，只是在线程的基础之上通过分时复用的方式运行多个协程，而且协程的切换在用户态完成，切换的代价比线程从用户态到内核态的代价小很多。</li>
+<li>协程对计算密集型的任务也没有太大的好处，计算密集型的任务本身不需要大量的线程切换，因此协程的作用也十分有限，反而还增加了协程切换的开销。</li>
+<li>因此在协程中不能调用导致线程阻塞的操作。也就是说，协程只有和异步 IO 结合起来，才能发挥最大的威力。</li>
+<li>协程只有和异步 IO 结合起来才能发挥出最大的威力。</li>
+<li>协程可以通过 yield（取其“让步”之义而非“出产”）来调用其它协程，接下来的每次协程被调用时，从协程上次 yield，返回的位置接着执行，通过 yield 方式转移执行权的协程之间不是调用者与被调用者的关系，而是彼此对称、平等的。</li>
+<li>协程非常类似于线程。但是协程是协作式多任务的，而线程典型是抢占式多任务的。这意味着协程提供并发性而非并行性。协程超过线程的好处是它们可以用于硬性实时的语境（在协程之间的切换不需要涉及任何系统调用或任何阻塞调用），这里不需要用来守卫关键区块的同步性原语（primitive）比如互斥锁、信号量等，并且不需要来自操作系统的支持。有可能以一种对调用代码透明的方式，使用抢占式调度的线程实现协程，但是会失去某些利益（特别是对硬性实时操作的适合性和相对廉价的相互之间切换）。</li>
+<li>协程的核心竞争力在于：它能简化异步并发任务，以同步方式写异步代码, 这也是为什么要引入协程的原因了：简化异步并发任务</li>
+<li>线程是操作系统层面的概念，协程是语言层面的概念, 线程与协程最大的区别在于：线程是被动挂起恢复，协程是主动挂起恢复</li>
+</ol>
+<h3 id="link"><a href="#link" class="headerlink" title="link"></a>link</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%8D%8F%E7%A8%8B">wikipedia</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6973650934664527885">进程、线程和协程的区别</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1258,121 +1366,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/09/v4l2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/09/v4l2/" class="post-title-link" itemprop="url">v4l2</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-10-09 17:22:03" itemprop="dateCreated datePublished" datetime="2022-10-09T17:22:03+08:00">2022-10-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/10/09/v4l2/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/09/v4l2/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="v4l2"><a href="#v4l2" class="headerlink" title="v4l2"></a><a target="_blank" rel="noopener" href="http://zhaoxuhui.top/blog/2021/09/23/v4l2-introduction-and-usb-camera-bayer-raw-data.html">v4l2</a></h2><ol>
-<li><code>media-ctl -p</code></li>
-<li><code>v4l2-ctl --all</code></li>
-<li><code>v4l2-ctl -d /dev/video0 --list-formats-ext</code> 列出&#x2F;dev&#x2F;video0 支持的格式</li>
-<li><code>yavta /dev/video0 -n3 -c10 -f YUYV -s1920x1282 --skip 9 -Fvideo0_#.yuv &amp;</code> 从&#x2F;dev&#x2F;video0 拿图, 保存未.yuv</li>
-<li><code>v4l2-ctl --set-fmt-video=width=1920,height=1282,pixelformat=YUYV --stream-mmap --stream-count=1 -d /dev/video0 --stream-to=camera_0_1920_1282_0.yuv</code></li>
-<li><a target="_blank" rel="noopener" href="https://askubuntu.com/a/881341">send video to &#x2F;dev&#x2F;video0</a></li>
-<li><code>ffmpeg -y -t 15 -f video4linux2 -video_size 1920x1080 -input_format nv12 -timestamps abs -use_libv4l2 1 -i /dev/video0 out.mov</code> ffmpeg <a target="_blank" rel="noopener" href="https://superuser.com/q/1449252">link</a></li>
-</ol>
-<h2 id="sample"><a href="#sample" class="headerlink" title="sample"></a>sample</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/wuhanstudio/capturev4l2">wuhanstudio&#x2F;capturev4l2</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/html/v4.9/media/uapi/v4l/capture.c.html">C++ sample</a> <code>gcc -o v4l2_test v4l2_test.c</code></li>
-<li>simple opencv sample</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;opencv2/opencv.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;iostream&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span>, <span class="type">char</span>**)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// open the first webcam plugged in the computer</span></span><br><span class="line">    <span class="function">cv::VideoCapture <span class="title">camera</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line">    <span class="keyword">if</span> (!camera.<span class="built_in">isOpened</span>()) &#123;</span><br><span class="line">        std::cerr &lt;&lt; <span class="string">&quot;ERROR: Could not open camera&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// create a window to display the images from the webcam</span></span><br><span class="line">    cv::<span class="built_in">namedWindow</span>(<span class="string">&quot;Webcam&quot;</span>, CV_WINDOW_AUTOSIZE);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// this will contain the image from the webcam</span></span><br><span class="line">    cv::Mat frame;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// capture the next frame from the webcam</span></span><br><span class="line">    camera &gt;&gt; frame;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// display the frame until you press a key</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment">// show the image on the window</span></span><br><span class="line">        cv::<span class="built_in">imshow</span>(<span class="string">&quot;Webcam&quot;</span>, frame);</span><br><span class="line">        <span class="comment">// wait (10ms) for a key to be pressed</span></span><br><span class="line">        <span class="keyword">if</span> (cv::<span class="built_in">waitKey</span>(<span class="number">10</span>) &gt;= <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="issue"><a href="#issue" class="headerlink" title="issue"></a>issue</h2><ol>
-<li><code>OPENCV_LOG_LEVEL=DEBUG ./demo</code> 打开 opencv debug 信息</li>
-<li>注意<code>/dev/video*</code> 权限</li>
-<li>双目摄像头可能需要同时打开 <code>/dev/video0</code> 和 <code>/dev/video1</code></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1444,7 +1437,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">149</span>
+          <span class="site-state-item-count">150</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1477,6 +1470,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2023/10/12/MLIR/" title="2023&#x2F;10&#x2F;12&#x2F;MLIR&#x2F;">MLIR</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/10/10/Mojo/" title="2023&#x2F;10&#x2F;10&#x2F;Mojo&#x2F;">Mojo</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1487,9 +1483,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/09/21/test/" title="2023&#x2F;09&#x2F;21&#x2F;test&#x2F;">test</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/09/21/assembly/" title="2023&#x2F;09&#x2F;21&#x2F;assembly&#x2F;">assembly</a>
         </li>
     </ul>
   </div>
@@ -1527,13 +1520,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">357k</span>
+    <span title="站点总字数">358k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:24</span>
+    <span title="站点阅读时长">5:26</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
