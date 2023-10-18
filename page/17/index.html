@@ -128,17 +128,17 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">150</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">152</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">42</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">44</span></a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">53</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">55</span></a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -195,6 +195,483 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/03/03/Doxygen/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/03/Doxygen/" class="post-title-link" itemprop="url">Doxygen</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-03 03:58:22" itemprop="dateCreated datePublished" datetime="2022-03-03T03:58:22+08:00">2022-03-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-09-28 13:13:39" itemprop="dateModified" datetime="2023-09-28T13:13:39+08:00">2023-09-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/03/03/Doxygen/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/03/03/Doxygen/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>markdown 添加 [toc] 为 html 生成目录</li>
+<li>参考 opencv</li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/57979732">multi projects</a></li>
+<li>可以用 cmake 生成 doxygen 配置 <a target="_blank" rel="noopener" href="https://github.com/opencv/opencv/blob/17234f82d025e3bbfbf611089637e5aa2038e7b8/doc/Doxyfile.in">link</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/doxygen/doxygen/tree/master/templates">templates</a></li>
+</ol>
+<h2 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/jothepro/doxygen-awesome-css">doxygen-awesome-css</a></li>
+<li><a target="_blank" rel="noopener" href="https://jothepro.github.io/doxygen-awesome-css/index.html">效果</a></li>
+</ol>
+<h2 id="doxygen-config"><a href="#doxygen-config" class="headerlink" title="doxygen config"></a>doxygen config</h2><ol>
+<li><code>sudo apt install doxygen</code></li>
+<li><code>doxygen -g &lt;config-name&gt;</code> 产生配置文件，默认为 Doxyfile <code>-s</code> 生成不带注释的配置文件</li>
+<li><code>doxygen &lt;config-name&gt;</code> 生成文档</li>
+<li>UML 生成 svg 图片</li>
+<li>生成 UML, 需要修改配置文件, 以下改为 YES</li>
+</ol>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RECURSIVE</span><br><span class="line">HAVE<span class="emphasis">_DOT</span></span><br><span class="line"><span class="emphasis">UML_LOOK</span></span><br><span class="line"><span class="emphasis">EXTRACT_</span>ALL</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>INLINE_SOURCES</code>标签。如果设置为 YES，可以将源代码直接包含到文档中。</li>
+<li><code>OUTPUT_LANGUAGE</code> &#x3D; 改为 Chinese</li>
+<li><code>HTML_TIMESTAMP</code>标签设置为 YES，则每个生成的 HTML 页面的页脚将包含生成页面的日期和时间。将此设置为“是”有助于显示上次运行 doxygen 的时间，从而显示文档是否最新。</li>
+<li><code>GENERATE_TREEVIEW</code> 标签用于指定是否应生成树状索引结构以显示分层信息。</li>
+<li><code>PROJECT_NAME</code></li>
+<li><code>PROJECT_NUMBER</code></li>
+<li><code>PROJECT_LOGO</code> 首页左侧图标</li>
+<li><code>EXTRACT_STATIC</code> 如果设置为 YES，一个文件的所有静态成员都将包含在文档中。</li>
+<li><code>EXTRACT_PRIVATE</code> 如果设置为 YES，一个类的所有私有成员都将包含在文档中。</li>
+<li><code>IMAGE_PATH</code> 修复 markdown 生成网页时 doc 出错问题</li>
+<li><code>INPUT</code> 标签是输入的源码文件的目录, 空格分开 例如： <code>INPUT = README.md include/pg</code></li>
+<li>输出 color <a target="_blank" rel="noopener" href="https://github.com/jothepro/doxygen-awesome-css/blob/main/docs/customization.md#doxygen-generator">link</a></li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HTML_COLORSTYLE_HUE    = 209</span><br><span class="line">HTML_COLORSTYLE_SAT    = 255</span><br><span class="line">HTML_COLORSTYLE_GAMMA  = 113</span><br></pre></td></tr></table></figure>
+
+<h2 id="pdf"><a href="#pdf" class="headerlink" title="pdf"></a>pdf</h2><ol>
+<li><code>sudo apt-get install texlive-full texlive-latex-base</code> <a target="_blank" rel="noopener" href="https://tex.stackexchange.com/a/481681">link</a></li>
+<li><code>cd latex &amp;&amp; make</code></li>
+<li><code>doxygen -w latex header.tex footer.tex doxygen.sty</code> 先生成默认配置，修改 doxygen.config 指定<code>LATEX_HEADER = header.tex</code> <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/16222657">link</a></li>
+<li>修改 refman.tex 来改变 pdf 生成</li>
+<li><code>sed -i &quot;s/Doxygen/xx xx/&quot; refman.tex</code>修改制作者名字</li>
+<li>中文问题 <code>\begin&#123;CJK&#125;&#123;UTF8&#125;</code> 换成 <code>\begin&#123;CJK&#125;&#123;gbsn&#125;</code> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/zyl910/archive/2013/06/02/doxygen_pdf_chinese.html">link</a></li>
+<li>空页问题： <code>COMPACT_LATEX</code> to YES</li>
+<li>换页问题： <code>\doxysection</code> 之前加 <code>\newpage</code></li>
+<li>refman.tex 处理</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sed -i <span class="string">&quot;/fancyfoot/d&quot;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&quot;/fancyhead/d&quot;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&#x27;/&#123;fancyplain&#125;/a\\\cfoot&#123;\\thepage&#125;&#x27;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&#x27;/&#123;fancyplain&#125;/a\\\rhead&#123;&#125;&#x27;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&#x27;/&#123;fancyplain&#125;/a\\\lhead&#123;&#125;&#x27;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&#x27;/doxysection/i\\\newpage&#x27;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&quot;s/Doxygen 1.8.17/PhiGent Robotics/&quot;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&quot;s/&#123;min&#125;/&#123;gbsn&#125;/&quot;</span> latex/refman.tex</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>\pagestyle&#123;fancyplain&#125;</code> 删除之后页眉页脚不再有横杠 <code>\pagestyle&#123;plain&#125;</code></li>
+</ol>
+<h2 id="notes"><a href="#notes" class="headerlink" title="notes"></a>notes</h2><ol>
+<li>不要在有 build 的目录下</li>
+<li>如果想生成详细的 UML 图，需要设置<code>EXTRACT_STATIC</code> <code>EXTRACT_PRIVATE</code>为 YES</li>
+</ol>
+<h2 id="文档解析"><a href="#文档解析" class="headerlink" title="文档解析"></a>文档解析</h2><ol>
+<li>Class Hierarchy 可以查看类层级关系</li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://fossies.org/dox/all.html">fossies doxygen lists</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.doxygen.nl/manual/starting.html">getting start</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.guyuehome.com/35640">参数详解</a></li>
+<li><a target="_blank" rel="noopener" href="https://doxygen.nl/projects.html">使用 doxygen 的项目</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/metropolis/deepstream/sdk-api/index.html">deepstream doxygen</a></li>
+<li><a target="_blank" rel="noopener" href="https://google.github.io/ion/base_2logging_8h.html">ion</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.opencv.org/4.x/d9/df8/tutorial_root.html">opencv tutorial</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/opencv/opencv/blob/17234f82d025e3bbfbf611089637e5aa2038e7b8/doc/Doxyfile.in">opencv config</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/doxygen/doxygen/tree/master/templates">templates</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/03/03/UML/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/03/UML/" class="post-title-link" itemprop="url">UML</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-03 02:32:22" itemprop="dateCreated datePublished" datetime="2022-03-03T02:32:22+08:00">2022-03-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-10-07 13:50:16" itemprop="dateModified" datetime="2023-10-07T13:50:16+08:00">2023-10-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/03/03/UML/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/03/03/UML/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="UML-介绍"><a href="#UML-介绍" class="headerlink" title="UML 介绍"></a>UML 介绍</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.visual-paradigm.com/cn/guide/uml-unified-modeling-language/what-is-uml/">历史</a></li>
+<li>图表可大致分为结构性图表和行为性图表两种。结构性图表显示了系统在不同抽象层次和实现层次上的静态结构以及它们之间的相互关系。结构性图表中的元素表示系统中具意义的概念，可能包括抽象的、现实的和實作的概念。</li>
+<li>结构性图表有七种类型：<ul>
+<li>类图 (Class Diagram)</li>
+<li>组件图 (Component Diagram)</li>
+<li>部署图 (Deployment Diagram)</li>
+<li>对象图 (Object Diagram)-</li>
+<li>包图 (Package Diagram)</li>
+<li>复合结构图 (Composite Structure Diagram)</li>
+<li>轮廓图 (Profile Diagram)</li>
+</ul>
+</li>
+<li>行为性图表显示了系统中对象的动态行为 ，可用以表达系统随时间的变化。行为性图表有七种类型：<ul>
+<li>用例图 (Use Case Diagram)</li>
+<li>活动图 (Activity Diagram)</li>
+<li>状态机图 (State Machine Diagram)</li>
+<li>序列图 (Sequence Diagram)</li>
+<li>通訊圖 (Communication Diagram)</li>
+<li>交互概述图 (Interaction Overview Diagram)</li>
+<li>时间图 (Timing Diagram)</li>
+</ul>
+</li>
+</ol>
+<h2 id="图种类"><a href="#图种类" class="headerlink" title="图种类"></a>图种类</h2><ol>
+<li>class diagram 类图</li>
+<li>sequence diagram 时序图</li>
+<li>flow chart 流程图</li>
+</ol>
+<h3 id="class-diagram"><a href="#class-diagram" class="headerlink" title="class diagram"></a>class diagram</h3><h3 id="sequence-diagram"><a href="#sequence-diagram" class="headerlink" title="sequence diagram"></a><a target="_blank" rel="noopener" href="https://www.woshipm.com/ucd/607593.html">sequence diagram</a></h3><h4 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h4><p><img src="https://pica.zhimg.com/v2-941a070601f399d992125ef31261637e_1440w.jpg?source=172ae18b" alt="关系"></p>
+<!-- prettier-ignore -->
+<table>
+<thead>
+<tr>
+<th align="left">名字</th>
+<th align="left">图形</th>
+<th align="left">说明</th>
+<th align="left">其他</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">实现关系</td>
+<td align="left">空心三角和虚线组成的箭头</td>
+<td align="left">实现类指向接口</td>
+<td align="left">类似 rust trait</td>
+</tr>
+<tr>
+<td align="left">泛化关系</td>
+<td align="left">空心三角和实线组成的箭头</td>
+<td align="left">从子类指向父类</td>
+<td align="left">“is a”</td>
+</tr>
+<tr>
+<td align="left">关联关系</td>
+<td align="left">带箭头的实线</td>
+<td align="left">指向被关联的对象</td>
+<td align="left">一个对象含有另一个对象的引用</td>
+</tr>
+<tr>
+<td align="left">依赖关系</td>
+<td align="left">带虚线的箭头</td>
+<td align="left">使用方指向被使用方</td>
+<td align="left">“use a”, 弱关联关系,<br>构造器或方法中的局部变量、方法或构造器的参数、方法的返回值</td>
+</tr>
+<tr>
+<td align="left">聚合关系</td>
+<td align="left">空心菱形加实线箭头</td>
+<td align="left">空心菱形在整体一方，箭头指向部分一方</td>
+<td align="left">“has a”, 具有各自的生命周期</td>
+</tr>
+<tr>
+<td align="left">组合关系</td>
+<td align="left">实心菱形加实线箭头</td>
+<td align="left">实心菱形在整体一方，箭头指向部分一方</td>
+<td align="left">“contains a” 强聚合, 作为整体的对象负责部分的对象的生命周期</td>
+</tr>
+</tbody></table>
+<!-- prettier-ignore -->
+<h2 id="mermaid"><a href="#mermaid" class="headerlink" title="mermaid"></a>mermaid</h2><h2 id="mermaid-1"><a href="#mermaid-1" class="headerlink" title="mermaid"></a><a target="_blank" rel="noopener" href="https://github.com/mermaid-js/mermaid">mermaid</a></h2><ol>
+<li><a target="_blank" rel="noopener" href="https://mermaid.live/">在线 server</a></li>
+<li><a target="_blank" rel="noopener" href="https://jojozhuang.github.io/tutorial/mermaid-cheat-sheet/">cheat sheet</a></li>
+<li>markdown 支持</li>
+<li>theme <code>%%&#123;init: &#123;&#39;theme&#39;: &#39;base&#39;, &#39;themeVariables&#39;: &#123; &#39;primaryColor&#39;: &#39;#ffcccc&#39;, &#39;edgeLabelBackground&#39;:&#39;#ffffee&#39;, &#39;tertiaryColor&#39;: &#39;#fff0f0&#39;, &#39;fontFamily&#39;: &#39;verdana&#39;&#125;&#125;&#125;%%</code></li>
+<li><a target="_blank" rel="noopener" href="https://mermaid-js.github.io/mermaid/#/theming">theming</a></li>
+<li>可以用 graph 画关系图<a target="_blank" rel="noopener" href="https://github.com/bitcoin/bitcoin/blob/master/doc/design/libraries.md#L36">bitcoin sample</a></li>
+<li>gatte 图也好用</li>
+<li>github 用 chrome 插件<a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/markdown-diagrams/pmoglnmodacnbbofbgcagndelmgaclel">markdown-diagrams</a>可以生成图片, 密集图片截屏效果不好</li>
+<li><code>%%&#123;init: &#123;&#39;securityLevel&#39;: &#39;loose&#39;, &#39;theme&#39;:&#39;base&#39;&#125;&#125;%%</code> 设置主题</li>
+<li><code>%%&#123;init:&#123;&quot;themeVariables&quot;: &#123; &quot;fontSize&quot;: &quot;30px&quot; &#125;&#125;&#125;%%</code> 设置字体大小</li>
+<li><code>%%&#123;init:&#123;&#39;theme&#39;:&#39;neutral&#39;, &quot;themeVariables&quot;: &#123; &quot;fontSize&quot;: &quot;20px&quot; &#125;&#125;&#125;%%</code></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mermaid-js/mermaid/issues/3033">字体设置只支持几种图，其他不支持</a></li>
+<li>sequence</li>
+</ol>
+<pre><code class="highlight mermaid">&#123;% mermaid sequenceDiagram %&#125;
+Alice-&gt;&gt;John: Hello John, how are you?
+loop Healthcheck
+    John-&gt;&gt;John: Fight against hypochondria
+end
+Note right of John: Rational thoughts!
+John--&gt;&gt;Alice: Great!
+John-&gt;&gt;Bob: How about you?
+Bob--&gt;&gt;John: Jolly good!
+&#123;% endmermaid %&#125;</code></pre>
+
+<ol>
+<li>flow chart 支持 <a target="_blank" rel="noopener" href="https://fontawesome.com/icons">fontawesome</a></li>
+</ol>
+<pre><code class="highlight mermaid">classDiagram
+    user ..&gt; image
+    image ..&gt; MediaProc
+    MediaProc &lt;|-- ImgProcImpl
+    ImgProcImpl ..&gt; ImageFrame : 代理
+    ImageFrame &lt;|-- ImageFrameImpl
+    ImageFrameImpl &lt;|-- BpuImageFrame
+
+    class MediaProc&#123;
+      &lt;&lt;interface&gt;&gt;
+      +Crop()
+      +Resize()
+      +CvtColor()
+      +Decode()
+      +Encode()
+    &#125;
+
+    class ImgProcImpl&#123;
+      +Crop()
+      +Resize()
+      +CvtColor()
+      +Decode()
+      +Encode()
+    &#125;
+
+    class ImageFrame&#123;
+      &lt;&lt;interface&gt;&gt;
+      +Crop()
+      +Resize()
+      +CvtColor()
+    &#125;
+
+    class ImageFrameImpl&#123;
+      +Crop()
+      +Resize()
+      +CvtColor()
+    &#125;
+
+    class BpuImageFrame&#123;
+      +Crop()
+      +Resize()
+      +CvtColor()
+    &#125;
+</code></pre>
+
+<ol>
+<li>samples<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/tiangolo/fastapi/blob/master/docs/en/docs/tutorial/dependencies/dependencies-with-yield.md#dependencies-with-yield-and-httpexception">fastapi</a></li>
+<li><a target="_blank" rel="noopener" href="https://mermaid.live/edit#pako:eNqdVFFr01AU_iuX-6QYW9vabuvDQLoNYVKGKYIaH26Tk-ZCkhtvbqe1FMQndZsOhogwNycMBWHTFwU39M_YrG_-BW9605rNZk7zkNDvnPud85379XSxySzAVRzC3Tb4JsxR0uLEM3wkn4BwQU0aEF-gmkvBF3_iOvBl4ArnYArEW81zxXJZQ8VScfg6r4J1JgBx2nIEYnZCV0X9w4f9dyuoUVtC0fOd6MmKSlbhi7Ozir6q36yrADEFXSaSKd2PSpLZCavMvnCltnjiRLpTCyYSnSw7Jknlp2nAt04ql6Jj9X_TLQUrvUcHG9Hr7Z-Hq_311ejlZzWP_sHXow8rjWv64PtW9Gx3cnMJgK6C67J_mE4CqHMaqoG8TJua8piWhBahM3_fdIjfGkPD5DnmQwbn_8AZlzBx0hnij3VaG35rNHCA6wGYGlqgPg0dsDI4ToUzrvxsIz5eOEPoZPck_5tyOe0fF-yhfUYtSmsg5Q1lldg_Q-dELz5Ga3s_Dt8Mvm1kyJur6yja3h3svx3sf4k-PTpF18Ta0eZa_-lO_9V7RZLL5TKG8LtQbPKtzbMNY1iTxQZVYW1Ut7-3Gj1eT7EavjoxerCGPeAeoZZcaN04ZmDhgAcGlpeKbcYhFAbWUpEbhFPSdCGMU7qKLs70xQLxqNuJ4dujKgZuUA9CVId76DrziJ9wqZjO2twceoXaaIkzA6vYHS1Nq9MHSTuFQiBUTs_we7J30hZM7_gmrgreBg23A0sOKVnIuGoTNxyj8xYVjI9BlxEL5M8uFp0gXuctGgpJaTLfpq0Yb3NXwo4QQVjN5-NwrkWF027mTOblQ2o5cqc7yzOVfKVYmSbFElSmSqRcKllmszAzbRcvF2xr6lKhSHCvp2G5-m8xNuqq9ws-JjhZ">三次握手 config 中有中文支持</a></li>
+</ul>
+</li>
+</ol>
+<h2 id="plantuml"><a href="#plantuml" class="headerlink" title="plantuml"></a><a target="_blank" rel="noopener" href="https://github.com/plantuml/plantuml">plantuml</a></h2><ol>
+<li><p><a target="_blank" rel="noopener" href="http://www.plantuml.com/plantuml/uml/">在线 server</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/plantuml/plantuml-server">本地 plantuml-server</a></p>
+<ul>
+<li><code>docker run -d -p 10093:8080 plantuml/plantuml-server:jetty</code></li>
+<li><code>docker run -d -p 10093:8080 -e THE_ENV_VARIABLE=THE_ENV_VALUE plantuml/plantuml-server:jetty</code></li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://plantuml.com/zh/guide">pdf guide</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://plantuml.com/zh/class-diagram">class</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://plantuml.com/zh/sequence-diagram">时序图</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/iluwatar/java-design-patterns">java-design-patterns</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/iluwatar/java-design-patterns/blob/master/factory-method/etc/factory-method.urm.puml">puml config file demo</a></p>
+</li>
+<li><p>markdown gitlab github 不支持， 用<a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/markdown-diagrams/pmoglnmodacnbbofbgcagndelmgaclel">markdown-diagrams</a>来支持浏览器显示</p>
+</li>
+<li><p>test plantuml</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">@startuml</span><br><span class="line">object Object01</span><br><span class="line">object Object02</span><br><span class="line">object Object03</span><br><span class="line">object Object04</span><br><span class="line">object Object05</span><br><span class="line">object Object06</span><br><span class="line">object Object07</span><br><span class="line">object Object08</span><br><span class="line"></span><br><span class="line">Object01 &lt;|-- Object02</span><br><span class="line">Object03 *-- Object04</span><br><span class="line">Object05 o-- &quot;4&quot; Object06</span><br><span class="line">Object07 .. Object08 : some labels</span><br><span class="line">@enduml</span><br></pre></td></tr></table></figure>
+
+<h2 id="dot-language"><a href="#dot-language" class="headerlink" title="dot language"></a><a target="_blank" rel="noopener" href="https://graphviz.org/doc/info/lang.html">dot language</a></h2><ol>
+<li><a target="_blank" rel="noopener" href="https://gitlab.com/graphviz/graphviz/-/tree/main/cmd/dot">dot 命令源码</a></li>
+<li><code>sudo apt-get install graphviz</code></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-cn/DOT%E8%AF%AD%E8%A8%80">维基介绍</a></li>
+<li><a target="_blank" rel="noopener" href="https://itopic.org/graphviz.html">属性</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.graphviz.org/gallery/">samples</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zywvvd.com/notes/tools/graphviz/graphviz/">Graphviz 使用教程</a></li>
+<li>sample</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">digraph test123 &#123;</span><br><span class="line">        pack=8</span><br><span class="line">        subgraph cluster0 &#123;</span><br><span class="line">          packmode=array</span><br><span class="line">          x y x0 y0 x1</span><br><span class="line">          subgraph cluster1 &#123;</span><br><span class="line">            m n</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        b [shape=box];</span><br><span class="line">        c [label=&quot;helloenworld&quot;,color=blue,fontsize=24,</span><br><span class="line">             fontname=&quot;Palatino-Italic&quot;,fontcolor=red,style=filled];</span><br><span class="line">        a -&gt; z</span><br><span class="line">        x -&gt; z</span><br><span class="line">        a -&gt; b -&gt; c;</span><br><span class="line">        a -&gt; &#123;x y&#125;;</span><br><span class="line">        edge [style=dashed,color=red];</span><br><span class="line">        b -&gt; x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="doxygen-生成-UML"><a href="#doxygen-生成-UML" class="headerlink" title="doxygen 生成 UML"></a>doxygen 生成 UML</h2><h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/shindo/p/5579191.html">关系</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.51fusa.com/client/information/informationdetail/id/1561.html">基于 SOME&#x2F;IP 的 AP AUTOSAR 实战</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904039902085134">适合程序员的 UML 绘图工具</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -834,233 +1311,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/11/29/Links/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/11/29/Links/" class="post-title-link" itemprop="url">Links</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-11-29 12:48:48" itemprop="dateCreated datePublished" datetime="2021-11-29T12:48:48+08:00">2021-11-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-12 16:52:30" itemprop="dateModified" datetime="2023-10-12T16:52:30+08:00">2023-10-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Summary/" itemprop="url" rel="index"><span itemprop="name">Summary</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/11/29/Links/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/11/29/Links/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Usefull-Tools"><a href="#Usefull-Tools" class="headerlink" title="Usefull Tools"></a>Usefull Tools</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://sourcegraph.com/"><code>搜代码</code>：sourcegrah</a></li>
-<li><a target="_blank" rel="noopener" href="https://readthedocs.org/"><code>搜文档</code>：readthedocs</a></li>
-<li><a target="_blank" rel="noopener" href="https://unbug.github.io/codelf/"><code>搜名字</code>：codelf</a></li>
-<li><a target="_blank" rel="noopener" href="http://libgen.rs/"><code>搜图书</code>：创世纪图书馆</a></li>
-<li><a target="_blank" rel="noopener" href="https://sci-hub.se/"><code>搜文章</code>：SCI Hub</a></li>
-<li><a target="_blank" rel="noopener" href="https://unsplash.com/"><code>搜图片</code>：unsplash</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.programmingfonts.org/#ubuntu"><code>搜主题</code>：programmingfonts</a></li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/11/29/Links/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/10/05/resume/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/10/05/resume/" class="post-title-link" itemprop="url">resume</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-10-05 12:24:06" itemprop="dateCreated datePublished" datetime="2021-10-05T12:24:06+08:00">2021-10-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/10/05/resume/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/10/05/resume/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>146</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://rxresu.me/">rxresu.me</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/AmruthPillai/Reactive-Resume">Reactive-Resume</a> 填写内容，自动生成简历</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/resumejob/awesome-resume">简历用语</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/xriley/Orbit-Theme">Orbit-Theme</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/posquit0/Awesome-CV">Awesome-CV</a> CV: Curriculum Vitae 个人简历</li>
-<li><a target="_blank" rel="noopener" href="https://www.overleaf.com/latex/templates/awesome-cv/dfnvtnhzhhbm">overleaf awesome-cv template</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/jankapunkt/latexcv/tree/master/sidebar">latexcv</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/dyweb/awesome-resume-for-chinese">awesome-resume-for-chinese</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/16/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="extend next" rel="next" href="/page/18/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/16/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="extend next" rel="next" href="/page/18/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1128,20 +1382,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">150</span>
+          <span class="site-state-item-count">152</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-count">55</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1161,6 +1415,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2023/10/16/IREE/" title="2023&#x2F;10&#x2F;16&#x2F;IREE&#x2F;">IREE</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2023/10/16/SPIR-V/" title="2023&#x2F;10&#x2F;16&#x2F;SPIR-V&#x2F;">SPIR-V</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/10/12/MLIR/" title="2023&#x2F;10&#x2F;12&#x2F;MLIR&#x2F;">MLIR</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1168,12 +1428,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/10/08/rerun/" title="2023&#x2F;10&#x2F;08&#x2F;rerun&#x2F;">rerun</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/10/07/GPU/" title="2023&#x2F;10&#x2F;07&#x2F;GPU&#x2F;">GPU</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/09/21/test/" title="2023&#x2F;09&#x2F;21&#x2F;test&#x2F;">test</a>
         </li>
     </ul>
   </div>
@@ -1211,7 +1465,7 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">358k</span>
+    <span title="站点总字数">359k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
