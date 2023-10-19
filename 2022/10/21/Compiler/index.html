@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="base llvm VS gcc 解释， 编译， 字节码(JIT) 传统的编译器通常分为三个部分，前端(frontEnd)，优化器(Optimizer)和后端(backEnd)。在编译过程中，前端主要负责词法和语法分析，将源代码转化为抽象语法树；优化器则是在前端的基础上，对得到的中间代码进行优化，使代码更加高效；后端则是将已经优化的中间代码转化为针对各自平台的机器代码 llvm 和 clang 关">
+  <meta name="description" content="base LLVM（Low-Level Virtual Machine) llvm VS gcc 解释， 编译， 字节码(JIT) 传统的编译器通常分为三个部分，前端(frontEnd)，优化器(Optimizer)和后端(backEnd)。在编译过程中，前端主要负责词法和语法分析，将源代码转化为抽象语法树；优化器则是在前端的基础上，对得到的中间代码进行优化，使代码更加高效；后端则是将已经优化的中">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Compiler">
 <meta property="og:url" content="https://jiaxiyang.github.io/2022/10/21/Compiler/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="base llvm VS gcc 解释， 编译， 字节码(JIT) 传统的编译器通常分为三个部分，前端(frontEnd)，优化器(Optimizer)和后端(backEnd)。在编译过程中，前端主要负责词法和语法分析，将源代码转化为抽象语法树；优化器则是在前端的基础上，对得到的中间代码进行优化，使代码更加高效；后端则是将已经优化的中间代码转化为针对各自平台的机器代码 llvm 和 clang 关">
+<meta property="og:description" content="base LLVM（Low-Level Virtual Machine) llvm VS gcc 解释， 编译， 字节码(JIT) 传统的编译器通常分为三个部分，前端(frontEnd)，优化器(Optimizer)和后端(backEnd)。在编译过程中，前端主要负责词法和语法分析，将源代码转化为抽象语法树；优化器则是在前端的基础上，对得到的中间代码进行优化，使代码更加高效；后端则是将已经优化的中">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdn.net/20160718211639694?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
 <meta property="article:published_time" content="2022-10-21T04:08:03.000Z">
-<meta property="article:modified_time" content="2023-10-17T10:08:20.312Z">
+<meta property="article:modified_time" content="2023-10-18T11:31:45.762Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20160718211639694?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-17 18:08:20" itemprop="dateModified" datetime="2023-10-17T18:08:20+08:00">2023-10-17</time>
+                <time title="修改时间：2023-10-18 19:31:45" itemprop="dateModified" datetime="2023-10-18T19:31:45+08:00">2023-10-18</time>
               </span>
 
           
@@ -264,14 +264,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>13k</span>
+              <span>14k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>12 分钟</span>
+              <span>13 分钟</span>
             </span>
 
         </div>
@@ -284,6 +284,7 @@
 
       
         <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>LLVM（Low-Level Virtual Machine)</li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/OB7JJHgknJgDFjXKI3jOcA">llvm VS gcc</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/AH7tdFR_QGTMg2wxaj0sog">解释， 编译， 字节码(JIT)</a></li>
 <li>传统的编译器通常分为三个部分，前端(frontEnd)，优化器(Optimizer)和后端(backEnd)。在编译过程中，前端主要负责词法和语法分析，将源代码转化为抽象语法树；优化器则是在前端的基础上，对得到的中间代码进行优化，使代码更加高效；后端则是将已经优化的中间代码转化为针对各自平台的机器代码</li>
@@ -363,6 +364,36 @@
 </ul>
 </li>
 </ol>
+<h2 id="LLVM"><a href="#LLVM" class="headerlink" title="LLVM"></a>LLVM</h2><ol>
+<li><code>.c --frontend--&gt; AST --frontend--&gt; LLVM IR --LLVM opt--&gt; LLVM IR --LLVM llc--&gt; .s Assembly --OS Assembler--&gt; .o --OS Linker--&gt; executable</code></li>
+</ol>
+<h3 id="MLIR（Multi-Level-Intermediate-Representation）和-LLVM-IR（LLVM-Intermediate-Representation）区别："><a href="#MLIR（Multi-Level-Intermediate-Representation）和-LLVM-IR（LLVM-Intermediate-Representation）区别：" class="headerlink" title="MLIR（Multi-Level Intermediate Representation）和 LLVM IR（LLVM Intermediate Representation）区别："></a>MLIR（Multi-Level Intermediate Representation）和 LLVM IR（LLVM Intermediate Representation）区别：</h3><ol>
+<li><code>多层次表示 vs 单层次表示</code>:<ul>
+<li><code>MLIR</code> 是多层次的中间表示，它允许表示不同层次的抽象，从高级语言特定领域语言（DSL）到底层硬件描述。这使得 MLIR 在各种领域和应用中非常灵活。</li>
+<li><code>LLVM IR</code> 是单层次的中间表示，更专注于从高级源代码到目标机器代码的转换。它不支持多层次抽象或领域特定语言的内置支持。</li>
+</ul>
+</li>
+<li><code>领域特定语言支持</code>:<ul>
+<li><code>MLIR</code> 提供了内置支持领域特定语言（DSLs）的机制，这使得开发者可以更容易地在 MLIR 中定义和优化特定领域的代码。</li>
+<li><code>LLVM IR</code> 不提供直接的 DSL 支持，尽管可以通过 LLVM 的扩展来实现某些领域特定的优化。</li>
+</ul>
+</li>
+<li><code>生态系统和用途</code>:<ul>
+<li><code>MLIR</code> 被设计为通用的多领域中间表示，适用于编译器、机器学习、图形处理器编程等多个领域。</li>
+<li><code>LLVM IR</code> 在开始时更专注于编译器优化和代码生成，但它的生态系统也在不断扩展，包括用于 WebAssembly、GPU 等不同领域的扩展。</li>
+</ul>
+</li>
+<li><code>设计目标</code>:<ul>
+<li><code>MLIR</code> 的设计目标之一是提供灵活性和可扩展性，以适应不同领域的编译和代码生成需求，包括优化和分析。</li>
+<li><code>LLVM IR</code> 更侧重于提供优化编译器的中间表示，以便在各种目标平台上生成高性能代码。</li>
+</ul>
+</li>
+<li><code>历史和成熟度</code>:<ul>
+<li><code>LLVM IR</code> 已经存在更长时间，拥有更成熟的生态系统和广泛的应用。它是众多编程语言的编译器后端的首选中间表示。</li>
+<li><code>MLIR</code> 是相对较新的项目，尚未在广泛的生产环境中获得与 LLVM IR 相似的广泛应用。<br>总之，MLIR 和 LLVM IR 都是强大的中间表示语言，用于编译器和代码生成领域，但它们的设计和用途有所不同。MLIR 更注重灵活性和多领域支持，而 LLVM IR 则更注重编译器优化和生成高性能代码。选择使用哪个中间表示取决于项目的需求和目标。有些项目甚至可以同时使用两者，以充分利用它们的不同特性。</li>
+</ul>
+</li>
+</ol>
 <h2 id="Just-in-Time-JiT-和-Ahead-of-Time-AoT"><a href="#Just-in-Time-JiT-和-Ahead-of-Time-AoT" class="headerlink" title="Just-in-Time (JiT) 和 Ahead-of-Time (AoT)"></a>Just-in-Time (JiT) 和 Ahead-of-Time (AoT)</h2><h3 id="Just-in-Time-JiT-编译："><a href="#Just-in-Time-JiT-编译：" class="headerlink" title="Just-in-Time (JiT) 编译："></a>Just-in-Time (JiT) 编译：</h3><ol>
 <li><code>定义</code>: JiT 编译是在运行时，即代码执行时进行的编译。一个常见的例子是 Java 虚拟机(JVM)，它将字节码在运行时转换为机器代码。</li>
 <li><code>优点</code>:<ul>
@@ -398,7 +429,10 @@
 <h2 id="FFI"><a href="#FFI" class="headerlink" title="FFI"></a><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/news/607788">FFI</a></h2><ol>
 <li>FFI（Foreign Function Interface）是这样一种机制：用一种编程语言写的程序能调用另一种编程语言写的函数（routines）。</li>
 </ol>
-<h2 id="ABI-和指令集"><a href="#ABI-和指令集" class="headerlink" title="ABI 和指令集"></a>ABI 和指令集</h2><p>ABI (Application Binary Interface) 和指令集是两个在计算领域中经常被提及的概念，它们是相关的，但各自有其定义和用途。下面是对两者的简要描述和区别：</p>
+<h2 id="ABI-和指令集"><a href="#ABI-和指令集" class="headerlink" title="ABI 和指令集"></a>ABI 和指令集</h2><ol>
+<li>CPU–vendor–OS 这三者决定了一个平台，只要这三者一致，我们生成的二进制程序往往就可以确定了。这三者就被称为一个「目标三元组」（Target Triple）。x86_64-unknown-linux-gnu，这里 x86_64 指的是 CPU 架构，unknown 是 vendor，对于 Linux 环境，往往不太重要</li>
+<li>ABI (Application Binary Interface) 和指令集是两个在计算领域中经常被提及的概念，它们是相关的，但各自有其定义和用途。下面是对两者的简要描述和区别：</li>
+</ol>
 <h3 id="ABI-Application-Binary-Interface"><a href="#ABI-Application-Binary-Interface" class="headerlink" title="ABI (Application Binary Interface)"></a>ABI (Application Binary Interface)</h3><ol>
 <li>为什么 ABI 很重要？<ul>
 <li>如果你有一个预编译的库，并想在不同的环境中使用它，那么 ABI 的兼容性就非常重要。如果编译应用程序的编译器产生与库不兼容的 ABI，那么该应用程序可能无法正确地链接或运行。</li>
@@ -636,6 +670,8 @@
 <li><a target="_blank" rel="noopener" href="https://github.com/ksco/BuildYourOwnLispCn">BuildYourOwnLispCn</a></li>
 <li><a target="_blank" rel="noopener" href="https://norasandler.com/archive/">Writing a C Compiler</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.craftinginterpreters.com/">craftinginterpreters</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Evian-Zhang/llvm-ir-tutorial">llvm-ir-tutorial</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/401766029/answer/2733700454">机器学习编译器的前世今生</a></li>
 </ol>
 <h2 id="books"><a href="#books" class="headerlink" title="books"></a>books</h2><ol>
 <li>深入理解计算机系统</li>
@@ -742,7 +778,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Just-in-Time-JiT-%E5%92%8C-Ahead-of-Time-AoT"><span class="nav-number">2.</span> <span class="nav-text">Just-in-Time (JiT) 和 Ahead-of-Time (AoT)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Just-in-Time-JiT-%E7%BC%96%E8%AF%91%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">Just-in-Time (JiT) 编译：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ahead-of-Time-AoT-%E7%BC%96%E8%AF%91%EF%BC%9A"><span class="nav-number">2.2.</span> <span class="nav-text">Ahead-of-Time (AoT) 编译：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="nav-number">2.3.</span> <span class="nav-text">总结：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FFI"><span class="nav-number">3.</span> <span class="nav-text">FFI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ABI-%E5%92%8C%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="nav-number">4.</span> <span class="nav-text">ABI 和指令集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ABI-Application-Binary-Interface"><span class="nav-number">4.1.</span> <span class="nav-text">ABI (Application Binary Interface)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ABI-%E4%BE%8B%E5%AD%90"><span class="nav-number">4.1.1.</span> <span class="nav-text">ABI 例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#linux-ABI-%E5%92%8C-ARM-ABI-%E5%85%B3%E7%B3%BB"><span class="nav-number">4.1.2.</span> <span class="nav-text">linux ABI 和 ARM ABI 关系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E9%9B%86-Instruction-Set-Architecture-ISA"><span class="nav-number">4.2.</span> <span class="nav-text">指令集 (Instruction Set Architecture, ISA)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%88%AB"><span class="nav-number">4.3.</span> <span class="nav-text">区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#link"><span class="nav-number">5.</span> <span class="nav-text">link</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">5.1.</span> <span class="nav-text">环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LD-PRELOAD"><span class="nav-number">5.1.1.</span> <span class="nav-text">LD_PRELOAD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LD-LIBRARY-PATH"><span class="nav-number">5.1.2.</span> <span class="nav-text">LD_LIBRARY_PATH</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LD-DEBUG"><span class="nav-number">5.1.3.</span> <span class="nav-text">LD_DEBUG</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binary-Utils"><span class="nav-number">6.</span> <span class="nav-text">Binary Utils</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Google-bloaty-https-github-com-google-bloaty"><span class="nav-number">6.1.</span> <span class="nav-text">Google bloaty(https:&#x2F;&#x2F;github.com&#x2F;google&#x2F;bloaty)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ghidra"><span class="nav-number">6.2.</span> <span class="nav-text">ghidra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#elfutils"><span class="nav-number">6.3.</span> <span class="nav-text">elfutils</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GNU-binutils"><span class="nav-number">6.4.</span> <span class="nav-text">GNU binutils</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#glibc-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">7.</span> <span class="nav-text">glibc 初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GCC-%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9"><span class="nav-number">8.</span> <span class="nav-text">GCC 编译选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#other"><span class="nav-number">9.</span> <span class="nav-text">other</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#buildid"><span class="nav-number">10.</span> <span class="nav-text">buildid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">11.</span> <span class="nav-text">links</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#books"><span class="nav-number">12.</span> <span class="nav-text">books</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LLVM"><span class="nav-number">2.</span> <span class="nav-text">LLVM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MLIR%EF%BC%88Multi-Level-Intermediate-Representation%EF%BC%89%E5%92%8C-LLVM-IR%EF%BC%88LLVM-Intermediate-Representation%EF%BC%89%E5%8C%BA%E5%88%AB%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">MLIR（Multi-Level Intermediate Representation）和 LLVM IR（LLVM Intermediate Representation）区别：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Just-in-Time-JiT-%E5%92%8C-Ahead-of-Time-AoT"><span class="nav-number">3.</span> <span class="nav-text">Just-in-Time (JiT) 和 Ahead-of-Time (AoT)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Just-in-Time-JiT-%E7%BC%96%E8%AF%91%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">Just-in-Time (JiT) 编译：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ahead-of-Time-AoT-%E7%BC%96%E8%AF%91%EF%BC%9A"><span class="nav-number">3.2.</span> <span class="nav-text">Ahead-of-Time (AoT) 编译：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="nav-number">3.3.</span> <span class="nav-text">总结：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FFI"><span class="nav-number">4.</span> <span class="nav-text">FFI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ABI-%E5%92%8C%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="nav-number">5.</span> <span class="nav-text">ABI 和指令集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ABI-Application-Binary-Interface"><span class="nav-number">5.1.</span> <span class="nav-text">ABI (Application Binary Interface)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ABI-%E4%BE%8B%E5%AD%90"><span class="nav-number">5.1.1.</span> <span class="nav-text">ABI 例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#linux-ABI-%E5%92%8C-ARM-ABI-%E5%85%B3%E7%B3%BB"><span class="nav-number">5.1.2.</span> <span class="nav-text">linux ABI 和 ARM ABI 关系</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E9%9B%86-Instruction-Set-Architecture-ISA"><span class="nav-number">5.2.</span> <span class="nav-text">指令集 (Instruction Set Architecture, ISA)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%88%AB"><span class="nav-number">5.3.</span> <span class="nav-text">区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#link"><span class="nav-number">6.</span> <span class="nav-text">link</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">6.1.</span> <span class="nav-text">环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#LD-PRELOAD"><span class="nav-number">6.1.1.</span> <span class="nav-text">LD_PRELOAD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LD-LIBRARY-PATH"><span class="nav-number">6.1.2.</span> <span class="nav-text">LD_LIBRARY_PATH</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LD-DEBUG"><span class="nav-number">6.1.3.</span> <span class="nav-text">LD_DEBUG</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binary-Utils"><span class="nav-number">7.</span> <span class="nav-text">Binary Utils</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Google-bloaty-https-github-com-google-bloaty"><span class="nav-number">7.1.</span> <span class="nav-text">Google bloaty(https:&#x2F;&#x2F;github.com&#x2F;google&#x2F;bloaty)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ghidra"><span class="nav-number">7.2.</span> <span class="nav-text">ghidra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#elfutils"><span class="nav-number">7.3.</span> <span class="nav-text">elfutils</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GNU-binutils"><span class="nav-number">7.4.</span> <span class="nav-text">GNU binutils</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#glibc-%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">8.</span> <span class="nav-text">glibc 初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GCC-%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9"><span class="nav-number">9.</span> <span class="nav-text">GCC 编译选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#other"><span class="nav-number">10.</span> <span class="nav-text">other</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#buildid"><span class="nav-number">11.</span> <span class="nav-text">buildid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">12.</span> <span class="nav-text">links</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#books"><span class="nav-number">13.</span> <span class="nav-text">books</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -841,13 +877,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">359k</span>
+    <span title="站点总字数">360k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:26</span>
+    <span title="站点阅读时长">5:27</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
