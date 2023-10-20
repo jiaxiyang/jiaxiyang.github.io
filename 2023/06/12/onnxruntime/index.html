@@ -27,10 +27,12 @@
 <meta property="og:site_name" content="Xiyang">
 <meta property="og:description" content="conceptONNX Runtime 是一个性能优秀的跨平台推理（inference）引擎，用于 ONNX（Open Neural Network Exchange）模型。它具有灵活的支持和高效的性能，可用于各种硬件设备（包括在边缘设备上）和操作系统。 以下是关于 ONNX Runtime 的一些基本概念：  ONNX 模型执行：ONNX Runtime 提供了执行 ONNX 模型的能力。你可以">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://developer-blogs.nvidia.com/wp-content/uploads/2022/12/image3-2.png">
 <meta property="article:published_time" content="2023-06-12T06:39:10.000Z">
-<meta property="article:modified_time" content="2023-06-27T09:54:58.039Z">
+<meta property="article:modified_time" content="2023-10-19T09:39:03.046Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://developer-blogs.nvidia.com/wp-content/uploads/2022/12/image3-2.png">
 
 <link rel="canonical" href="https://jiaxiyang.github.io/2023/06/12/onnxruntime/">
 
@@ -232,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-27 17:54:58" itemprop="dateModified" datetime="2023-06-27T17:54:58+08:00">2023-06-27</time>
+                <time title="修改时间：2023-10-19 17:39:03" itemprop="dateModified" datetime="2023-10-19T17:39:03+08:00">2023-10-19</time>
               </span>
 
           
@@ -262,14 +264,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.2k</span>
+              <span>4.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -281,7 +283,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="concept"><a href="#concept" class="headerlink" title="concept"></a>concept</h2><p>ONNX Runtime 是一个性能优秀的跨平台推理（inference）引擎，用于 ONNX（Open Neural Network Exchange）模型。它具有灵活的支持和高效的性能，可用于各种硬件设备（包括在边缘设备上）和操作系统。</p>
+        <h2 id="concept"><a href="#concept" class="headerlink" title="concept"></a>concept</h2><p><img src="https://developer-blogs.nvidia.com/wp-content/uploads/2022/12/image3-2.png" alt="ONNX 运行时高级架构"><br>ONNX Runtime 是一个性能优秀的跨平台推理（inference）引擎，用于 ONNX（Open Neural Network Exchange）模型。它具有灵活的支持和高效的性能，可用于各种硬件设备（包括在边缘设备上）和操作系统。</p>
 <p>以下是关于 ONNX Runtime 的一些基本概念：</p>
 <ol>
 <li><strong>ONNX 模型执行</strong>：ONNX Runtime 提供了执行 ONNX 模型的能力。你可以加载一个 ONNX 模型，然后使用 ONNX Runtime 来进行推理。</li>
@@ -316,15 +318,32 @@
 <li><a target="_blank" rel="noopener" href="https://github.com/microsoft/onnxruntime/releases">c++直接下载编译好的库</a></li>
 </ol>
 <h2 id="sample"><a href="#sample" class="headerlink" title="sample"></a><a target="_blank" rel="noopener" href="https://github.com/microsoft/onnxruntime-inference-examples/tree/main/c_cxx">sample</a></h2><ol>
-<li>model-explore 可直接用</li>
+<li>测试</li>
 </ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/microsoft/onnxruntime-inference-examples.git</span><br><span class="line"><span class="built_in">cd</span> onnxruntime-inference-examples/c_cxx/</span><br><span class="line">make -p build</span><br><span class="line"><span class="built_in">cd</span> build</span><br><span class="line">cmake -DONNXRUNTIME_ROOTDIR=/xxx/onnxruntime-linux-x64-1.15.1 ..</span><br><span class="line">make -j4</span><br><span class="line">curl https://media.githubusercontent.com/media/onnx/models/main/vision/classification/squeezenet/model/squeezenet1.0-7.onnx --output squeezenet.onnx</span><br><span class="line">./build/model-explorer/model-explorer squeezenet.onnx</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/onnxruntime-inference-examples/blob/main/c_cxx/model-explorer/model-explorer.cpp">c++ sample code</a></li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;onnxruntime_cxx_api.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Load the model and create InferenceSession</span></span><br><span class="line">Ort::Env env;</span><br><span class="line">std::string model_path = <span class="string">&quot;path/to/your/onnx/model&quot;</span>;</span><br><span class="line"><span class="function">Ort::Session <span class="title">session</span><span class="params">(env, model_path, Ort::SessionOptions&#123; <span class="literal">nullptr</span> &#125;)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Load and preprocess the input image to</span></span><br><span class="line"><span class="comment">// inputTensor, inputNames, and outputNames</span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment">// Run inference</span></span><br><span class="line">std::vector outputTensors =</span><br><span class="line"> session.<span class="built_in">Run</span>(Ort::RunOptions&#123;<span class="literal">nullptr</span>&#125;,</span><br><span class="line"> 			inputNames.<span class="built_in">data</span>(),</span><br><span class="line">			&amp;inputTensor,</span><br><span class="line">			inputNames.<span class="built_in">size</span>(),</span><br><span class="line">			outputNames.<span class="built_in">data</span>(),</span><br><span class="line">			outputNames.<span class="built_in">size</span>());</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">float</span>* outputDataPtr = outputTensors[<span class="number">0</span>].<span class="built_in">GetTensorMutableData</span>();</span><br><span class="line">std::cout &lt;&lt; outputDataPtr[<span class="number">0</span>] &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>sample 解析<ul>
+<li>Session 处理各种环境信息，比如模型信息， 环境变量等，同时也进行调度， 不负责管理模型输入输出数据</li>
+<li>由 Ort::Value::CreateTensor 申请模型输入输出的内存， 所有权归上层应用</li>
+</ul>
+</li>
+</ol>
+<h2 id="模型优化"><a href="#模型优化" class="headerlink" title="模型优化"></a>模型优化</h2><h3 id="sample-1"><a href="#sample-1" class="headerlink" title="sample"></a>sample</h3><h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://onnxruntime.ai/index.html#getStartedTable">支持的平台选择</a></li>
 <li><a target="_blank" rel="noopener" href="https://onnxruntime.ai/docs/execution-providers/">onnxruntime.ai</a></li>
 <li><a target="_blank" rel="noopener" href="https://onnxruntime.ai/docs/execution-providers/">docs</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/microsoft/onnxruntime/tree/eed02a3f782407e569c29a8a86c58a4d398d0b0e/onnxruntime/core/providers">onnxruntime&#x2F;core&#x2F;providers</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-AI/tree/c55b7565bde608dd65dda94abea154ad7db4d594/examples/vai_library/samples_onnx">vitis ai onnxruntime samples</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/search?q=repo:microsoft/onnxruntime%20USE_VITISAI&type=code">onnxruntime vitis support</a></li>
+<li><a target="_blank" rel="noopener" href="https://software-dl.ti.com/jacinto7/esd/processor-sdk-rtos-jacinto7/07_03_00_07/exports/docs/tidl_j7_02_00_00_07/ti_dl/docs/user_guide_html/md_tidl_osr_onnxrt_tidl.html">tda4 onnx runtime</a></li>
+<li><a target="_blank" rel="noopener" href="https://onnxruntime.ai/docs/api/c/struct_ort_1_1_session.html">doxygen</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/582974246">推理模型部署(一)：ONNX runtime 实践</a></li>
 </ol>
 
     </div>
@@ -426,7 +445,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#concept"><span class="nav-number">1.</span> <span class="nav-text">concept</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Providers"><span class="nav-number">1.1.</span> <span class="nav-text">Providers</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TVM-and-onnxruntime"><span class="nav-number">2.</span> <span class="nav-text">TVM and onnxruntime</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#install"><span class="nav-number">3.</span> <span class="nav-text">install</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sample"><span class="nav-number">4.</span> <span class="nav-text">sample</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">5.</span> <span class="nav-text">links</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#concept"><span class="nav-number">1.</span> <span class="nav-text">concept</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Providers"><span class="nav-number">1.1.</span> <span class="nav-text">Providers</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TVM-and-onnxruntime"><span class="nav-number">2.</span> <span class="nav-text">TVM and onnxruntime</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#install"><span class="nav-number">3.</span> <span class="nav-text">install</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sample"><span class="nav-number">4.</span> <span class="nav-text">sample</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E4%BC%98%E5%8C%96"><span class="nav-number">5.</span> <span class="nav-text">模型优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sample-1"><span class="nav-number">5.1.</span> <span class="nav-text">sample</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">6.</span> <span class="nav-text">links</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -525,13 +544,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">360k</span>
+    <span title="站点总字数">362k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:27</span>
+    <span title="站点阅读时长">5:29</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
