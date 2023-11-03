@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">152</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">153</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,140 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/05/10/3d_detection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/10/3d_detection/" class="post-title-link" itemprop="url">3d Detection</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-10 12:48:48" itemprop="dateCreated datePublished" datetime="2021-05-10T12:48:48+08:00">2021-05-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/AI/" itemprop="url" rel="index"><span itemprop="name">AI</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/05/10/3d_detection/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/05/10/3d_detection/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>551</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="lidar-data"><a href="#lidar-data" class="headerlink" title="lidar data"></a>lidar data</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.shuangyi-tech.com/news_161.html">format</a></li>
+<li>pts、LAS、PCD、.xyz 和.pcap</li>
+</ol>
+<h2 id="PCL"><a href="#PCL" class="headerlink" title="PCL"></a>PCL</h2><ol>
+<li>install pcl and pcl-dev or install from source</li>
+<li><a target="_blank" rel="noopener" href="https://pcl.readthedocs.io/projects/tutorials/en/latest/compiling_pcl_posix.html">dependency</a></li>
+<li>pcl version &gt; 1.10 否则匹配不上 vtk</li>
+<li>notes: update yum source when dependency error</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/a464057216/article/details/54864591">pcd</a></li>
+<li>yum search boost; yum infoe boost;</li>
+<li>yum install boost169 boost169-devel libusbx-devel</li>
+<li><code>cmake -DBOOST_INCLUDEDIR=/usr/include/boost169 -DBOOST_LIBRARYDIR=/usr/lib64/boost169 ..</code></li>
+<li>rm find_package(openni) and rm with_openni</li>
+<li><a target="_blank" rel="noopener" href="https://pointclouds.org/documentation/tutorials/passthrough.html">passthrough 例子</a></li>
+</ol>
+<h2 id="ouster-lidar"><a href="#ouster-lidar" class="headerlink" title="ouster lidar"></a>ouster lidar</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://forum.ouster.at/">forum</a></li>
+<li>不支持 pcd 格式输出，支持 pcap 格式</li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9127813">survey</a></li>
+<li><a href="A_Survey_on_3D_Object_Detection_Methods_for_Autonomous_Driving_Applications">A_Survey_on_3D_Object_Detection_Methods_for_Autonomous_Driving_Applications</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/traveller59/second.pytorch">SECOND</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/W1995S/article/details/114498082?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-0.no_search_link&spm=1001.2101.3001.4242">pointpillars</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/75103748">点云目标检测之 VoxelNet、SECOND、PointPillars、PV-RCNN</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -909,123 +1043,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/03/05/git-biset-to-debug/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/05/git-biset-to-debug/" class="post-title-link" itemprop="url">Git bisect to debug</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-05 09:51:13" itemprop="dateCreated datePublished" datetime="2021-03-05T09:51:13+08:00">2021-03-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/03/05/git-biset-to-debug/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/05/git-biset-to-debug/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>599</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h2><ol>
-<li>Use binary search to find the commit that introduced a bug</li>
-</ol>
-<h2 id="Command"><a href="#Command" class="headerlink" title="Command"></a>Command</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect start</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect bad                 <span class="comment"># Current version is bad</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect good v2.6.13-rc2    <span class="comment"># v2.6.13-rc2 is known to be good</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect <span class="built_in">log</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect skip                 <span class="comment"># Current version cannot be tested</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect reset</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">run script</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect run my_script arguments</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> ~/test.sh</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line">make || exit 125                     # this skips broken builds</span><br><span class="line">~/check_test_case.sh                 # does the test case pass?</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect start HEAD v1.3.1 --      <span class="comment"># HEAD is bad, v1.2 is good</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect run ~/test.sh</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">git bisect run sh -c <span class="string">&quot;make || exit 125; ~/check_test_case.sh&quot;</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect reset                   <span class="comment"># quit the bisect session</span></span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://git-scm.com/docs/git-bisect">git bisect</a></li>
-<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903537860673544">Git 二分调试法，火速定位疑难Bug</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1097,7 +1114,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">152</span>
+          <span class="site-state-item-count">153</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1130,6 +1147,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2023/11/03/pixi/" title="2023&#x2F;11&#x2F;03&#x2F;pixi&#x2F;">pixi</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/10/16/IREE/" title="2023&#x2F;10&#x2F;16&#x2F;IREE&#x2F;">IREE</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1140,9 +1160,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/10/10/Mojo/" title="2023&#x2F;10&#x2F;10&#x2F;Mojo&#x2F;">Mojo</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/10/08/rerun/" title="2023&#x2F;10&#x2F;08&#x2F;rerun&#x2F;">rerun</a>
         </li>
     </ul>
   </div>
@@ -1180,13 +1197,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">365k</span>
+    <span title="站点总字数">367k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:32</span>
+    <span title="站点阅读时长">5:33</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

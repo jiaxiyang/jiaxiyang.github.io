@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">152</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">153</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,144 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/03/10/Cuda/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/10/Cuda/" class="post-title-link" itemprop="url">Cuda</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-10 02:17:38" itemprop="dateCreated datePublished" datetime="2022-03-10T02:17:38+08:00">2022-03-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/Cuda/" itemprop="url" rel="index"><span itemprop="name">Cuda</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/03/10/Cuda/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/03/10/Cuda/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><ol>
+<li>CUDA 流表示一个 GPU 操作队列，该队列中的操作将以添加到流中的先后顺序而依次执行。</li>
+<li>stream 作用：在 Stream 的帮助下，CUDA 程序可以有效地将内存读取和数值运算并行，从而提升数据的吞吐量。 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/51402722">link</a><br>由于 GPU 和 CPU 不能直接读取对方的内存，CUDA 程序一般会有一下三个步骤：1）将数据从 CPU 内存转移到 GPU 内存，2）GPU 进行运算并将结果保存在 GPU 内存，3）将结果从 GPU 内存拷贝到 CPU 内存。</li>
+<li>cuda7 可以开启每个线程有一个默认 stream, 之前每个设备有一个 stream <a target="_blank" rel="noopener" href="https://developer.nvidia.com/zh-cn/blog/gpu-pro-tip-cuda-7-streams-simplify-concurrency/">gpu-pro-tip-cuda-7-streams-simplify-concurrency&#x2F;</a></li>
+<li>GPU 函数耗时统计不能只记录一次的，GPU 可能做一些准备工作，教训： nppiResize_8u_C3R 不管大小第一次运行耗时都很大 The cuda context is lazily initialized</li>
+<li>unified memory cpu 访问时需要同一个线程。不同线程会 bus error。</li>
+</ol>
+<h2 id="cuda-grammer"><a href="#cuda-grammer" class="headerlink" title="cuda grammer"></a>cuda grammer</h2><ol>
+<li><code>&lt;&lt;&lt; M , T &gt;&gt;&gt;</code> Which indicate that a kernel launches with a grid of M thread blocks. Each thread block has T parallel threads.</li>
+<li><code>vectorAdd&lt;&lt;&lt;blocksPerGrid, threadsPerBlock&gt;&gt;&gt;</code></li>
+<li>可以认为 M, T 对应图片的 H, W; 一个 thread 对应一个像素点；一个 block 对应一行，一个 grid 对应一张图片</li>
+<li><code>int tid = blockIdx.x * blockDim.x + threadIdx.x; =&gt; int index = h * W + w;</code></li>
+</ol>
+<h2 id="cuda-info"><a href="#cuda-info" class="headerlink" title="cuda info"></a>cuda info</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://linuxconfig.org/how-to-get-cuda-cores-count-on-linux">查看 cuda core</a><br><code>cd /usr/local/cuda-11.4/samples/1_Utilities/deviceQuery &amp;&amp; make &amp;&amp; ./deviceQuery</code></li>
+<li>bandwith test<br><code>cd /usr/local/cuda-11.4/samples/1_Utilities/bandwidthTest &amp;&amp; make &amp;&amp; ./bandwidthTest</code></li>
+</ol>
+<h2 id="samples"><a href="#samples" class="headerlink" title="samples"></a>samples</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://cuda-tutorial.readthedocs.io/en/latest/tutorials/tutorial01/">hello world</a></li>
+<li><code>/usr/local/cuda-11.4/samples</code> tree -L 2</li>
+<li><code>/usr/local/cuda-10.2/samples/0_Simple/vectorAdd</code></li>
+<li><code>nvprof ./vectorAdd</code> 查看 kenerl 耗时</li>
+</ol>
+<h2 id="profiling"><a href="#profiling" class="headerlink" title="profiling"></a>profiling</h2><ol>
+<li><code>nvprof</code></li>
+<li>nsight: <code>nsys profile</code></li>
+</ol>
+<h2 id="link"><a href="#link" class="headerlink" title="link"></a>link</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/blog/unified-memory-cuda-beginners/">Unified Memory for CUDA Beginners</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/blog/maximizing-unified-memory-performance-cuda/">Maximizing Unified Memory Performance in CUDA</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1167,7 +1305,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-28 13:13:59" itemprop="dateModified" datetime="2023-09-28T13:13:59+08:00">2023-09-28</time>
+                <time title="修改时间：2023-11-03 15:10:43" itemprop="dateModified" datetime="2023-11-03T15:10:43+08:00">2023-11-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1203,7 +1341,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>17k</span>
+              <span>18k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1228,7 +1366,17 @@
 <h2 id="版本升级"><a href="#版本升级" class="headerlink" title="版本升级"></a>版本升级</h2><ol>
 <li>下载 sh 脚本，本地升级。<a target="_blank" rel="noopener" href="https://github.com/Kitware/CMake/releases">link</a></li>
 </ol>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><ol>
+<li><code>CMAKE_SOURCE_DIR</code>: project</li>
+<li><code>CMAKE_CURRENT_SOURCE_DIR</code> 当前 CMakeLists.txt 所在目录</li>
+<li><code>CMAKE_BINARY_DIR</code>: 编译目录</li>
+<li><code>CMAKE_CURRENT_BINARY_DIR</code>: 指向当前正在处理的 CMakeLists.txt 文件对应的构建目录。</li>
+</ol>
 <h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><ol>
+<li><code>-DCMAKE_BUILD_TYPE=RelWithDebInfo</code> release 模式编译，带 debug info</li>
+<li><code>-DCMAKE_VERBOSE_MAKEFILE=ON</code> 显示详细信息</li>
+<li><code>cmake -S . -B build --trace-source=CMakeLists.txt</code> trace CMakeLists.txt</li>
+<li><code>cmake -S . -B build --debug-find</code> trace find</li>
 <li>osqp</li>
 </ol>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(CMAKE_BUILD_TYPE <span class="keyword">STREQUAL</span> <span class="string">&quot;Debug&quot;</span>)                                                                                                                                                                                                                             <span class="keyword">set</span>(OSQP_ENABLE_DEBUG <span class="keyword">ON</span>)</span><br><span class="line">  <span class="keyword">set</span>(CMAKE_VERBOSE_MAKEFILE <span class="keyword">ON</span>)</span><br><span class="line">  <span class="keyword">set</span>(CMAKE_EXPORT_COMPILE_COMMANDS <span class="keyword">ON</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
@@ -1272,7 +1420,11 @@
 <li><a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/module/FetchContent.html">FetchContent</a></li>
 <li>CPM.cmake 封装了 FetchContent</li>
 <li>导入已经编译好的库</li>
-<li>导入三方库参考 cmake export 出的 cmake file。</li>
+<li>导入三方库参考 cmake export 出的 cmake file。参见 cpp_sandbox&#x2F;cmake&#x2F;export; 查看生成的 cmake 文件，主要两个步骤<ul>
+<li>add_library(xxx::xxx STATIC IMPORTED) 导入库</li>
+<li>set_target_properties 设置 include 和 link 依赖</li>
+</ul>
+</li>
 <li>参考 vitis ai 导入 xrt</li>
 </ol>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(gflags_ADDED)</span><br><span class="line">  <span class="keyword">add_library</span>(gflags INTERFACE IMPORTED GLOBAL) <span class="comment">## global导入， 解决cpm local scope include_directories不工作问题</span></span><br><span class="line">  <span class="keyword">add_library</span>(gflags::gflags ALIAS gflags)</span><br><span class="line">  <span class="keyword">set_target_properties</span>(</span><br><span class="line">    gflags PROPERTIES IMPORTED_LOCATION <span class="string">&quot;$&#123;gflags_SOURCE_DIR&#125;/lib/libgflags.so&quot;</span>)</span><br><span class="line">  <span class="keyword">target_include_directories</span>(gflags INTERFACE <span class="string">&quot;$&#123;gflags_SOURCE_DIR&#125;/include&quot;</span>)</span><br><span class="line">  <span class="comment"># target_link_directories(gflags INTERFACE &quot;$&#123;gflags_SOURCE_DIR&#125;/lib&quot;)</span></span><br><span class="line"><span class="keyword">endif</span>()</span><br></pre></td></tr></table></figure>
@@ -1408,10 +1560,10 @@
 
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># common-project-info.in</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> ( project_version 1.2.3 )</span><br><span class="line"><span class="built_in">set</span> ( project_description <span class="string">&quot;test....&quot;</span> )</span><br><span class="line"><span class="built_in">set</span> ( project_homepage <span class="string">&quot;https://www....&quot;</span> )</span><br></pre></td></tr></table></figure>
 
-<h2 id="find-package"><a href="#find-package" class="headerlink" title="find_package"></a>find_package</h2><ol>
+<h2 id="find-package"><a href="#find-package" class="headerlink" title="find_package"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/658727351">find_package</a></h2><ol>
 <li>find_package 采用两种模式搜索库：<ul>
 <li><code>Module模式</code>：搜索 CMAKE_MODULE_PATH 指定路径下的 FindXXX.cmake 文件，执行该文件从而找到 XXX 库。其中，具体查找库并给 XXX_INCLUDE_DIRS 和 XXX_LIBRARIES 两个变量赋值的操作由 FindXXX.cmake 模块完成。</li>
-<li><code>Config模式</code>：搜索 XXX_DIR 指定路径下的 XXXConfig.cmake 文件，执行该文件从而找到 XXX 库。其中具体查找库并给 XXX_INCLUDE_DIRS 和 XXX_LIBRARIES 两个变量赋值的操作由 XXXConfig.cmake 模块完成。</li>
+<li><code>Config模式</code>：搜索 XXX_DIR 指定路径下的 XXXConfig.cmake 文件，执行该文件从而找到 XXX 库。其中具体查找库并给 XXX_INCLUDE_DIRS 和 XXX_LIBRARIES 两个变量赋值的操作由 XXXConfig.cmake 模块完成。The “better” way to do things is to have an installed package provide its own details to CMake; <a target="_blank" rel="noopener" href="https://hsf-training.github.io/hsf-training-cmake-webpage/09-findingpackages/index.html#findpackage">link</a></li>
 </ul>
 </li>
 <li>两种模式看起来似乎差不多，不过 cmake 默认采取 Module 模式，如果 Module 模式未找到库，才会采取 Config 模式。如果 XXX_DIR 路径下找不到 XXXConfig.cmake 文件，则会找&#x2F;usr&#x2F;local&#x2F;lib&#x2F;cmake&#x2F;XXX&#x2F;中的 XXXConfig.cmake 文件。总之，Config 模式是一个备选策略。通常，库安装时会拷贝一份 XXXConfig.cmake 到系统目录中，因此在没有显式指定搜索路径时也可以顺利找到。</li>
@@ -1454,11 +1606,11 @@
 <figure class="highlight leaf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">cmake_minimum_required(VERSION 3.8)</span><br><span class="line">project(QUICKSORT)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">#</span><span class="title">SET_TARGET_PROPERTIES</span><span class="params">(<span class="variable">quicksort</span> <span class="variable">PROPERTIES</span> <span class="variable">CLEAN_DIRECT_OUTPUT</span> 1)</span></span></span><br><span class="line"><span class="function"><span class="keyword">#</span><span class="title">SET_TARGET_PROPERTIES</span><span class="params">(<span class="variable">quicksort_static</span> <span class="variable">PROPERTIES</span> <span class="variable">CLEAN_DIRECT_OUTPUT</span> 1)</span></span></span><br><span class="line"><span class="function"><span class="keyword">#</span><span class="title">install</span><span class="params">(<span class="variable">TARGETS</span> <span class="variable">quicksort</span> <span class="variable">LIBRARY</span> <span class="variable">DESTINATION</span> <span class="variable">lib</span>)</span></span></span><br><span class="line"><span class="function"><span class="keyword">#</span><span class="title">install</span><span class="params">(<span class="variable">TARGETS</span> <span class="variable">quicksort_static</span> <span class="variable">ARCHIVE</span> <span class="variable">DESTINATION</span> <span class="variable">lib</span>)</span></span></span><br><span class="line"><span class="function"><span class="keyword">#</span><span class="title">install</span><span class="params">(<span class="variable">FILES</span> <span class="variable">include</span>/<span class="variable">quicksort</span>.<span class="variable">hpp</span> <span class="variable">DESTINATION</span> <span class="variable">include</span>)</span></span></span><br><span class="line"></span><br><span class="line">#add target</span><br><span class="line">set(SRC_LIST src/main.cpp)</span><br><span class="line">add_definitions(&quot;-DNDEBUG&quot; &quot;-O3&quot; &quot;-std=c++11&quot;)</span><br><span class="line"><span class="function"><span class="keyword">#</span><span class="title">set</span><span class="params">(<span class="variable">CMAKE_CXX_FLAGS</span> <span class="string">&quot;$&#123;CMAKE_CXX_FLAGS&#125; -std=c++11&quot;</span>)</span></span></span><br><span class="line">add_executable(main $&#123;SRC_LIST&#125;)</span><br><span class="line"></span><br><span class="line">#link library</span><br><span class="line">include_directories(/home/jiaxiyang/workspace/algorithm/quicksort1/include /home/jiaxiyang/workspace/glog/lib/include) #添加glog include目录</span><br><span class="line">link_directories(/home/jiaxiyang/workspace/glog/lib/lib) #添加glog库安装路径</span><br><span class="line"><span class="function"><span class="keyword">#</span><span class="title">link_directories</span><span class="params">(/<span class="variable">home</span>/<span class="variable">jiaxiyang</span>/<span class="variable">workspace</span>/<span class="variable">algorithm</span>/<span class="variable">quicksort1</span>/<span class="variable">lib</span>)</span></span> #添加glog库安装路径   如果没有find_library，出现在add_executable后面会出错 建议用find_library</span><br><span class="line">find_library(LIBQUICKSORT_PATH quicksort ./lib)</span><br><span class="line">MESSAGE(STATUS $&#123;LIBQUICKSORT_PATH&#125; &quot; found&quot;)</span><br><span class="line"></span><br><span class="line">target_link_libraries(main $&#123;LIBQUICKSORT_PATH&#125; glog)</span><br><span class="line">install(TARGETS main RUNTIME DESTINATION bin)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://hsf-training.github.io/hsf-training-cmake-webpage/">More Modern CMake</a></li>
 <li><a target="_blank" rel="noopener" href="https://bazel.build/reference?hl=zh-cn">参考文档: 构建百科全书， 测试百科全书，命令行参考文档，查询参考文档</a></li>
 <li><a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/guide/tutorial/index.html">Cmake Tutorial</a></li>
 <li><a target="_blank" rel="noopener" href="https://discourse.cmake.org/">Cmake Forum</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/jiaxiyang/documents/blob/master/pcmake.pdf">Professional CMake pdf</a></li>
-<li><a target="_blank" rel="noopener" href="https://hsf-training.github.io/hsf-training-cmake-webpage/">More Modern CMake</a></li>
 <li><a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html">Cmake Buildsystem</a></li>
 <li><a target="_blank" rel="noopener" href="https://gist.github.com/mbinna/c61dbb39bca0e4fb7d1f73b0d66a4fd1">Effective Modern Cmake</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=bsXLMQ6WgIk">Effective Modern Cmake video</a></li>
@@ -1710,158 +1862,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/06/27/Elisp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/27/Elisp/" class="post-title-link" itemprop="url">Elisp</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-27 22:37:13" itemprop="dateCreated datePublished" datetime="2021-06-27T22:37:13+08:00">2021-06-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-12 19:22:48" itemprop="dateModified" datetime="2023-10-12T19:22:48+08:00">2023-10-12</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/06/27/Elisp/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/27/Elisp/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Useful-Command"><a href="#Useful-Command" class="headerlink" title="Useful Command"></a>Useful Command</h2><ol>
-<li>C-u before command to insert the result into the current buffer.</li>
-<li>crux-eval-and-replace 将表达式替换为结果， 例如(+ 1 1) -&gt; 2</li>
-<li>创建新 buffer: switch-to-buffer</li>
-<li>需要到命令行工作时，不用关闭 emacs, 使用 suspend-frame(C-z) 回到命令行，使用 fg 命令返回 emacs</li>
-</ol>
-<h2 id="grammer"><a href="#grammer" class="headerlink" title="grammer"></a>grammer</h2><ol>
-<li>(car list) first element</li>
-<li>(nth n list) nth element</li>
-<li>(car (last list)) last element</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(car (list &quot;a&quot; &quot;b&quot; &quot;c&quot;) )   ; &quot;a&quot;</span><br><span class="line">(nth 1 (list &quot;a&quot; &quot;b&quot; &quot;c&quot;) ) ; &quot;b&quot;</span><br><span class="line">(car (last (list &quot;a&quot; &quot;b&quot; &quot;c&quot;)) )   ; &quot;c&quot;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><code>(setq temp (append temp (list 1)))</code> addpend to list temp</li>
-<li>loop list</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(dolist (element (extract-rectangle start end)) ;; extract-rectangle to lists</span><br><span class="line">  (setq LIST (append LIST (split-string element)))) ;; apend to list</span><br></pre></td></tr></table></figure>
-
-<h2 id="functions"><a href="#functions" class="headerlink" title="functions"></a>functions</h2><ol>
-<li><code>(message &quot;%s=%d&quot; &quot;test&quot; 1)</code> minibuf 打印</li>
-<li><code> (split-string &quot;1 2 3 4&quot;)</code> &#x3D;&gt; (“1” “2” “3” “4”)</li>
-<li><code> (seq-map &#39;string-to-number (split-string &quot;1 2 3 4&quot;))</code> &#x3D;&gt; (1 2 3 4)</li>
-<li><code>(vconcat [] (split-string &quot;1.2.3&quot; &quot;\\.&quot;))</code> &#x3D;&gt; [“1” “2” “3”]</li>
-<li>max, min, sum and mean</li>
-<li><code>(extract-rectangle start end)</code> extract-rectangle to lists</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">(defun count-of-nums (xs)</span><br><span class="line">  (length xs))</span><br><span class="line"></span><br><span class="line">(defun min-of-nums (xs)</span><br><span class="line">  (apply #&#x27;min xs))</span><br><span class="line"></span><br><span class="line">(defun max-of-nums (xs)</span><br><span class="line">  (apply #&#x27;max xs))</span><br><span class="line"></span><br><span class="line">(defun sum-of-nums (xs)</span><br><span class="line">  (apply #&#x27;+ xs))</span><br><span class="line"></span><br><span class="line">(defun mean-of-nums (xs)</span><br><span class="line">  (float (/ (float (sum-of-nums xs))</span><br><span class="line">            (count-of-nums xs))))</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>对 region 进行统计，注意不能是 rectangle <a href="link">http://sugano-nu.github.io/emacs-lisp-stat-attitude/</a></li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">(defun statistics-in-region (start end)</span><br><span class="line">  (interactive &quot;r&quot;)</span><br><span class="line">  (setq LIST (split-string (buffer-substring start end)))</span><br><span class="line">  (setq LIST (mapcar* #&#x27;(lambda (X) (math-read-number X)) LIST))</span><br><span class="line">  (message &quot;length:%s, mean:%s, variance:%s, standard deviation:%s, meidan:%s, max:%s, min:%s&quot;</span><br><span class="line">           (length LIST)</span><br><span class="line">           (math-format-number (calcFunc-vmean (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vvar (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vsdev (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmedian (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmax (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmin (cons &#x27;vec LIST)))))</span><br><span class="line"></span><br><span class="line">;; not chose a string with character, it will be as 0</span><br><span class="line">(defun statistics-in-rectangle (start end)</span><br><span class="line">  &quot;statistics-in-rectangle.&quot;</span><br><span class="line">  (interactive &quot;r&quot;)</span><br><span class="line">  (setq LIST nil)</span><br><span class="line">  (dolist (element (extract-rectangle start end)) ;; extract-rectangle to lists</span><br><span class="line">    (setq LIST (append LIST (split-string element)))) ;; apend to list</span><br><span class="line">  ;; (setq LIST (seq-map &#x27;string-to-number LIST)) ;;  convert to num</span><br><span class="line">  (setq LIST (mapcar* #&#x27;(lambda (X) (math-read-number X)) LIST))</span><br><span class="line">  (message &quot;length:%s, mean:%s, variance:%s, standard deviation:%s, meidan:%s, max:%s, min:%s&quot;</span><br><span class="line">           (length LIST)</span><br><span class="line">           (math-format-number (calcFunc-vmean (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vvar (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vsdev (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmedian (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmax (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmin (cons &#x27;vec LIST)))))</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>toggle function: cycle status</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">;; http://xahlee.info/emacs/emacs/elisp_toggle_command.html</span><br><span class="line">(defun company-toggle-delay (@n)</span><br><span class="line">  &quot;Company toggle idle delay.&quot;</span><br><span class="line">  (interactive &quot;p&quot;)</span><br><span class="line">  (let* (</span><br><span class="line">         ($values [0.2 nil])</span><br><span class="line">         ($index-before</span><br><span class="line">          (if (get &#x27;company-toggle-delay &#x27;state)</span><br><span class="line">              (get &#x27;company-toggle-delay &#x27;state)</span><br><span class="line">            0))</span><br><span class="line">         ($index-after (% (+ $index-before (length $values) @n) (length $values)))</span><br><span class="line">         ($next-value (aref $values $index-after)))</span><br><span class="line"></span><br><span class="line">    (put &#x27;company-toggle-delay &#x27;state $index-after)</span><br><span class="line">    (setq company-idle-delay  $next-value)</span><br><span class="line">    (message &quot;company idle delay to %s&quot; $next-value)))</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>if mode then</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(if (derived-mode-p &#x27;c++-mode)</span><br><span class="line">    (message &quot;The mode is on&quot;)</span><br><span class="line">    (message &quot;The mode is off&quot;)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>yes or no</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(if (yes-or-no-p &quot;Do you really want to remove everything?&quot;)</span><br><span class="line">    (message &quot;yes&quot;)</span><br><span class="line">    (message &quot;no&quot;))</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>auto add, commit and push</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">(defun aborn/simple-git-commit-push ()</span><br><span class="line">  &quot;Simple commit current git project and push to its upstream.&quot;</span><br><span class="line">  ;; (interactive &quot;sCommit Message: &quot;)</span><br><span class="line">  (interactive)</span><br><span class="line">  (when (and buffer-file-name</span><br><span class="line">             (buffer-modified-p))</span><br><span class="line">    (save-buffer))                   ;; save it first if modified.</span><br><span class="line">  (magit-diff-unstaged)</span><br><span class="line">  (when (yes-or-no-p &quot;Do you really want to commit everything?&quot;)</span><br><span class="line">    (magit-stage-modified)</span><br><span class="line">    ;; (magit-mode-bury-buffer)</span><br><span class="line">    (magit-diff-staged)</span><br><span class="line">    (setq msg (read-string &quot;Commit Message: &quot;))</span><br><span class="line">    (when (= 0 (length msg))</span><br><span class="line">      (setq msg (format-time-string &quot;commit by magit in emacs@%Y-%m-%d %H:%M:%S&quot;</span><br><span class="line">                                    (current-time))))</span><br><span class="line">    (message &quot;commit message is %s&quot; msg)</span><br><span class="line">    ;;(magit-commit (list &quot;-m&quot; msg))</span><br><span class="line">    (magit-call-git &quot;commit&quot; &quot;-m&quot; msg)</span><br><span class="line">    (magit-push-current-to-upstream nil)</span><br><span class="line">    (message &quot;now do async push to %s&quot; (magit-get &quot;remote&quot; &quot;origin&quot; &quot;url&quot;)))</span><br><span class="line">  (magit-mode-bury-buffer))</span><br></pre></td></tr></table></figure>
-
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a target="_blank" rel="noopener" href="http://ergoemacs.org/emacs/elisp_basics.html">Xah 教程</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/ksco/BuildYourOwnLispCn">BuildYourOwnLispCn</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1933,7 +1933,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">152</span>
+          <span class="site-state-item-count">153</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1966,6 +1966,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2023/11/03/pixi/" title="2023&#x2F;11&#x2F;03&#x2F;pixi&#x2F;">pixi</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/10/16/IREE/" title="2023&#x2F;10&#x2F;16&#x2F;IREE&#x2F;">IREE</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1976,9 +1979,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/10/10/Mojo/" title="2023&#x2F;10&#x2F;10&#x2F;Mojo&#x2F;">Mojo</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/10/08/rerun/" title="2023&#x2F;10&#x2F;08&#x2F;rerun&#x2F;">rerun</a>
         </li>
     </ul>
   </div>
@@ -2016,13 +2016,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">365k</span>
+    <span title="站点总字数">367k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:32</span>
+    <span title="站点阅读时长">5:33</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
