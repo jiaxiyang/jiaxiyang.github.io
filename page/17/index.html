@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">153</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">154</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,113 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/03/18/samba/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/18/samba/" class="post-title-link" itemprop="url">samba</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-18 01:43:12" itemprop="dateCreated datePublished" datetime="2022-03-18T01:43:12+08:00">2022-03-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-09-28 13:13:37" itemprop="dateModified" datetime="2023-09-28T13:13:37+08:00">2023-09-28</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/03/18/samba/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/03/18/samba/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>481</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="install"><a href="#install" class="headerlink" title="install"></a>install</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install samba</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="config"><a href="#config" class="headerlink" title="config"></a>config</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/samba/smb.conf</span><br><span class="line"></span><br><span class="line">[share]</span><br><span class="line">     path = /home/jiaxiyang/share</span><br><span class="line">     available = <span class="built_in">yes</span></span><br><span class="line">     valid <span class="built_in">users</span> = jiaxiyang</span><br><span class="line">     <span class="built_in">read</span> only = no</span><br><span class="line">     browsable = <span class="built_in">yes</span></span><br><span class="line">     public = <span class="built_in">yes</span></span><br><span class="line">     writable = <span class="built_in">yes</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="add-user"><a href="#add-user" class="headerlink" title="add user"></a>add user</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo smbpasswd -<span class="selector-tag">a</span> jiaxiyang</span><br></pre></td></tr></table></figure>
+
+<h2 id="restart"><a href="#restart" class="headerlink" title="restart"></a>restart</h2><h3 id="ubuntu"><a href="#ubuntu" class="headerlink" title="ubuntu"></a>ubuntu</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="regexp">/etc/i</span>nit.d/samba restart</span><br><span class="line">sudo <span class="regexp">/etc/i</span>nit.d/smbd restart</span><br></pre></td></tr></table></figure>
+
+<h3 id="centos"><a href="#centos" class="headerlink" title="centos"></a>centos</h3><figure class="highlight nsis"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="params">system</span>ctl start smb.service</span><br><span class="line">sudo <span class="params">system</span>ctl restart smb</span><br></pre></td></tr></table></figure>
+
+<h2 id="link"><a href="#link" class="headerlink" title="link"></a>link</h2><h3 id="ubuntu-1"><a href="#ubuntu-1" class="headerlink" title="ubuntu"></a>ubuntu</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount.cifs <span class="regexp">//</span><span class="number">10.10</span>.<span class="number">0.61</span><span class="regexp">/jiaxiyang/</span> samba_16 -o user=jiaxiyang</span><br></pre></td></tr></table></figure>
+
+<h3 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h3><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">映射网络驱动器</span><br><span class="line">\\ipaddr\share</span><br><span class="line"><span class="symbol">NOTE: </span>share is [share] in smb.conf</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1183,137 +1290,6 @@ Bob--&gt;&gt;John: Jolly good!
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/02/05/image_process/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/05/image_process/" class="post-title-link" itemprop="url">Image Process</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-02-05 20:05:33" itemprop="dateCreated datePublished" datetime="2022-02-05T20:05:33+08:00">2022-02-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/02/05/image_process/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/02/05/image_process/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><ol>
-<li>7yuv 可以直接显示二进制格式图片 图片命名为 xxxx_960_576.yuv, 可以直接打开不用再输入尺寸</li>
-</ol>
-<h2 id="视差图与深度图"><a href="#视差图与深度图" class="headerlink" title="视差图与深度图"></a>视差图与深度图</h2><h3 id="视差图"><a href="#视差图" class="headerlink" title="视差图"></a>视差图</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/ppdyhappy/article/details/113618409">原理</a></li>
-</ol>
-<h3 id="深度图"><a href="#深度图" class="headerlink" title="深度图"></a>深度图</h3><h3 id="视差图转深度图"><a href="#视差图转深度图" class="headerlink" title="视差图转深度图"></a>视差图转深度图</h3><ol>
-<li>公式: <code>depth[i] = f * b / disp[i]; </code> f 为焦距，b 为基线</li>
-<li><a target="_blank" rel="noopener" href="https://blog.nowcoder.net/n/947d9e8e6e3d41aa95d25e2daa9d14f6?from=nowcoder_improve">视差转深度</a></li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;opencv2/highgui.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;opencv2/imgcodecs.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;opencv2/imgproc.hpp&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">double</span> fx = <span class="number">6.9972691554787775e+02</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">double</span> baseline = <span class="number">1</span> / <span class="number">4.9899299400374328</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>** argv)</span> </span>&#123;</span><br><span class="line">  Mat img = <span class="built_in">imread</span>(<span class="string">&quot;disparity.png&quot;</span>, <span class="number">0</span>);</span><br><span class="line">  cout &lt;&lt; img.<span class="built_in">type</span>() &lt;&lt; endl;</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;fx: &quot;</span> &lt;&lt; fx &lt;&lt; endl;</span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;baseline: &quot;</span> &lt;&lt; baseline &lt;&lt; endl;</span><br><span class="line">  <span class="function">Mat <span class="title">depth</span><span class="params">(img.rows, img.cols, CV_32F)</span></span>;  <span class="comment">//深度图</span></span><br><span class="line">  cout &lt;&lt; depth.<span class="built_in">type</span>() &lt;&lt; endl;</span><br><span class="line">  <span class="comment">//视差图转深度图</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> row = <span class="number">0</span>; row &lt; depth.rows; row++) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> col = <span class="number">0</span>; col &lt; depth.cols; col++) &#123;</span><br><span class="line">      <span class="type">float</span> d = img.<span class="built_in">ptr</span>&lt;uchar&gt;(row)[col];</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (d == <span class="number">0</span>) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">      depth.<span class="built_in">ptr</span>&lt;<span class="type">float</span>&gt;(row)[col] = fx * baseline / d;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">imwrite</span>(<span class="string">&quot;depth.png&quot;</span>, depth);</span><br><span class="line">  <span class="comment">// Mat depth_8u1 = depth.clone();</span></span><br><span class="line">  Mat depth_8u1;</span><br><span class="line">  depth.<span class="built_in">convertTo</span>(depth_8u1, CV_8U);</span><br><span class="line">  Mat color_mat;</span><br><span class="line">  <span class="built_in">applyColorMap</span>(depth_8u1, color_mat, COLORMAP_TURBO);</span><br><span class="line">  <span class="built_in">imwrite</span>(<span class="string">&quot;color_depth.png&quot;</span>, color_mat);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="opencv-函数"><a href="#opencv-函数" class="headerlink" title="opencv 函数"></a>opencv 函数</h2><ol>
-<li><code>.convert</code>类型转换 <code>depth.convertTo(depth_8u1, CV_8U);</code></li>
-<li><code>applyColorMap</code> 灰度图转彩色(深度彩色输出) <code>applyColorMap(depth_8u1, color_mat, COLORMAP_TURBO);</code></li>
-<li>获取 cv::Mat 矩阵元素 <code> mat.ptr&lt;float&gt;(row)[col] = camera_f * camera_b / d;</code></li>
-</ol>
-<h2 id="vector-to-rgb-jpg"><a href="#vector-to-rgb-jpg" class="headerlink" title="vector to rgb jpg"></a>vector to rgb jpg</h2><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;<span class="built_in">char</span>&gt; source<span class="constructor">_out(<span class="params">w</span> <span class="operator">*</span> <span class="params">h</span> <span class="operator">*</span> 3)</span></span><br><span class="line">cv::Mat img(h, w, CV_8UC3);</span><br><span class="line"><span class="keyword">for</span> (unsigned <span class="built_in">int</span> row_ind = <span class="number">0</span>; row_ind &lt; h; ++row_ind) &#123;</span><br><span class="line">  <span class="keyword">for</span> (unsigned <span class="built_in">int</span> col_ind = <span class="number">0</span>; col_ind &lt; w; ++col_ind) &#123;</span><br><span class="line">    img.at&lt;cv::Vec3b&gt;(row_ind, col_ind) =</span><br><span class="line">        cv::<span class="constructor">Vec3b(<span class="params">source_out</span>[(<span class="params">row_ind</span> <span class="operator">*</span> <span class="params">w</span> + <span class="params">col_ind</span>)</span><span class="operator"> * </span><span class="number">3</span> + <span class="number">2</span>],</span><br><span class="line">                  source_out<span class="literal">[(<span class="identifier">row_ind</span> <span class="operator">*</span> <span class="identifier">w</span> + <span class="identifier">col_ind</span>) <span class="operator">*</span> <span class="number">3</span> + <span class="number">1</span>]</span>,</span><br><span class="line">                  source_out<span class="literal">[(<span class="identifier">row_ind</span> <span class="operator">*</span> <span class="identifier">w</span> + <span class="identifier">col_ind</span>) <span class="operator">*</span> <span class="number">3</span> + <span class="number">0</span>]</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">cv::imwrite(<span class="string">&quot;output.jpg&quot;</span>, img);</span><br></pre></td></tr></table></figure>
-
-<h2 id="opencv-多张图片同事显示"><a href="#opencv-多张图片同事显示" class="headerlink" title="opencv 多张图片同事显示"></a>opencv 多张图片同事显示</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://python.iitter.com/other/302393.html">OpenCV 一个窗口同时显示多张图片</a></li>
-</ol>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">static</span> cv::Mat <span class="title">concat_images</span><span class="params">(std::vector&lt;cv::Mat&gt; imgs)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line">  <span class="type">const</span> <span class="type">int</span> MAX_PIXEL = <span class="number">540</span>;</span><br><span class="line">  <span class="type">int</span> imgs_num = imgs.<span class="built_in">size</span>();</span><br><span class="line">  <span class="keyword">auto</span> sqrt_value = std::<span class="built_in">sqrt</span>(imgs_num);</span><br><span class="line">  Size first_img_size = imgs[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">  <span class="type">int</span> max_pixel = std::<span class="built_in">max</span>(first_img_size.height, first_img_size.width);</span><br><span class="line">  <span class="type">double</span> prop = max_pixel &lt; MAX_PIXEL ? (<span class="type">double</span>)max_pixel / (<span class="type">double</span>)MAX_PIXEL</span><br><span class="line">                                      : (<span class="type">double</span>)MAX_PIXEL / (<span class="type">double</span>)max_pixel;</span><br><span class="line">  <span class="function">Size <span class="title">std_size</span><span class="params">(first_img_size.width * prop, first_img_size.height * prop)</span></span>;</span><br><span class="line">  <span class="built_in">VLOG</span>(<span class="number">1</span>) &lt;&lt; <span class="string">&quot;std size: &quot;</span> &lt;&lt; std_size;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> img_cols = (sqrt_value - (<span class="type">int</span>)sqrt_value == <span class="number">0.0</span>)</span><br><span class="line">                     ? std::<span class="built_in">floor</span>(sqrt_value)</span><br><span class="line">                     : std::<span class="built_in">floor</span>(sqrt_value) + <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">VLOG</span>(<span class="number">1</span>) &lt;&lt; <span class="string">&quot;img_cols:  &quot;</span> &lt;&lt; img_cols;</span><br><span class="line">  Mat tmp_img;</span><br><span class="line">  <span class="function">Point2i <span class="title">location</span><span class="params">(<span class="number">0</span>, <span class="number">0</span>)</span></span>;</span><br><span class="line">  <span class="function">Mat <span class="title">result</span><span class="params">(std_size.height * ((imgs_num - <span class="number">1</span>) / img_cols + <span class="number">1</span>),</span></span></span><br><span class="line"><span class="params"><span class="function">             std_size.width * img_cols, imgs[<span class="number">0</span>].type())</span></span>;</span><br><span class="line">  <span class="built_in">VLOG</span>(<span class="number">1</span>) &lt;&lt; <span class="string">&quot;concat image size: &quot;</span> &lt;&lt; result.<span class="built_in">size</span>();</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; imgs_num; i++) &#123;</span><br><span class="line">    location.x = (i % img_cols) * std_size.width;</span><br><span class="line">    location.y = (i / img_cols) * std_size.height;</span><br><span class="line">    <span class="built_in">resize</span>(imgs[i], tmp_img, std_size, prop, prop, INTER_LINEAR);</span><br><span class="line">    tmp_img.<span class="built_in">copyTo</span>(<span class="built_in">result</span>(<span class="built_in">Rect</span>(location, std_size)));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="双线性-resize"><a href="#双线性-resize" class="headerlink" title="双线性 resize"></a>双线性 resize</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://excalidraw.com/#json=eOxeValvEDgQU1IrMOjU_,arZv-AnyFoupAOXfEKY1-w">示意图</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.freesion.com/article/6921829775/">双线性插值算法（C++实现）</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1385,7 +1361,7 @@ Bob--&gt;&gt;John: Jolly good!
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">153</span>
+          <span class="site-state-item-count">154</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1418,6 +1394,9 @@ Bob--&gt;&gt;John: Jolly good!
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2023/11/05/package-manager/" title="2023&#x2F;11&#x2F;05&#x2F;package-manager&#x2F;">package manager</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/11/03/pixi/" title="2023&#x2F;11&#x2F;03&#x2F;pixi&#x2F;">pixi</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1428,9 +1407,6 @@ Bob--&gt;&gt;John: Jolly good!
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/10/12/MLIR/" title="2023&#x2F;10&#x2F;12&#x2F;MLIR&#x2F;">MLIR</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/10/10/Mojo/" title="2023&#x2F;10&#x2F;10&#x2F;Mojo&#x2F;">Mojo</a>
         </li>
     </ul>
   </div>
@@ -1468,13 +1444,13 @@ Bob--&gt;&gt;John: Jolly good!
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">367k</span>
+    <span title="站点总字数">368k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:33</span>
+    <span title="站点阅读时长">5:34</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
