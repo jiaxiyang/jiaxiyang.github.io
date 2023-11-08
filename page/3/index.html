@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-05 20:57:46" itemprop="dateModified" datetime="2023-11-05T20:57:46+08:00">2023-11-05</time>
+                <time title="修改时间：2023-11-08 11:12:32" itemprop="dateModified" datetime="2023-11-08T11:12:32+08:00">2023-11-08</time>
               </span>
 
           
@@ -253,14 +253,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>717</span>
+              <span>1.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -279,15 +279,39 @@
 <li>Supports multiple languages including Python, C++, and R using Conda packages.</li>
 <li>可用于 github actions, 只需要配置 pixi，不用手动安装各种环境</li>
 <li>参考写 task <a target="_blank" rel="noopener" href="https://github.com/prefix-dev/pixi/blob/main/examples/cpp-sdl/pixi.toml">example</a></li>
-<li>如果下载不了 package， 可以删除~&#x2F;.cache&#x2F;rattler&#x2F;试试</li>
+<li>如果下载不了 package， 可以删除~&#x2F;.cache&#x2F;rattler&#x2F;cache&#x2F;repodata 试试</li>
+<li>执行命令在 repo 下都行</li>
+<li><code>pixi global install &lt;cmake&gt;</code>在机器上安装 cmake; 安装到<del>&#x2F;.pixi&#x2F;bin， 需要需改.zshrc &#96;export PATH&#x3D;</del>&#x2F;.pixi&#x2F;bin:$PATH&#96;</li>
+<li><code>pixi shell</code>中可以用 pixi 安装的最新命令</li>
+<li><code>pixi add gxx clangxx</code> install g++ and clang++； ++符号不允许</li>
+<li>下载的时候 VPN 设置为 global， 用 rule 可能识别为本地， 下载出问题</li>
+<li>python 需要先安装 pip</li>
 </ol>
 <h2 id="command"><a href="#command" class="headerlink" title="command"></a><a target="_blank" rel="noopener" href="https://prefix.dev/docs/pixi/cli">command</a></h2><ol>
 <li><code>pixi init &lt;name&gt;</code> 初始化工程, 添加 pixi.toml 和 gitignore 信息</li>
 <li><code>pixi add cmake ninja opencv glog</code>添加依赖库</li>
+<li><code>pixi add &quot;clang-tools&lt;=15.0.0,&gt;13.0&quot;</code></li>
 <li><code>pixi run &lt;task&gt;</code> run task</li>
 <li><code>pixi search glog</code> search package</li>
 <li><code>pixi info</code> 查看各种信息， cache 位置：~&#x2F;.cache&#x2F;rattler&#x2F;</li>
+<li><code>pixi global list</code> list global package</li>
+<li><code>pixi shell</code> 进入 pixi shell， 执行&#x2F;tmp&#x2F;pixi_env_xxx.sh 脚本设置环境变量， 可以在配置文件 activate 脚本中使用</li>
 </ol>
+<h2 id="config"><a href="#config" class="headerlink" title="config"></a><a target="_blank" rel="noopener" href="https://prefix.dev/docs/pixi/configuration">config</a></h2><ol>
+<li>pixi shell 可以查看环境变量</li>
+<li>channels &#x3D; [“conda-forge”, “robostack”, “bioconda”, “nvidia”, “pytorch”]; 设置源 <a target="_blank" rel="noopener" href="https://prefix.dev/channels">link</a></li>
+<li>env set, 可以设置 LD_LIBRARY_PATH</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">activation</span>]</span><br><span class="line"><span class="string">scripts</span> <span class="string">=</span> [<span class="string">&quot;env_setup.sh&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="env"><a href="#env" class="headerlink" title="env"></a>env</h2><ol>
+<li><code>PIXI_PACKAGE_ROOT</code> repo 目录</li>
+<li><code>CONDA_PREFIX</code> pixi env 目录 ${PIXI_PACKAGE_ROOT}&#x2F;.pixi&#x2F;env</li>
+<li><code>PIXI_PACKAGE_PLATFORMS</code> platform 类型</li>
+<li><code>PATH</code> 只有 PATH, 没有 LD_LIBRARY_PATH, 需要自己在配置文件 activate 脚本里设置</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">export</span> <span class="string">LD_LIBRARY_PATH=$&#123;CONDA_PREFIX&#125;/lib</span>  <span class="comment"># for run app</span></span><br><span class="line"><span class="string">export</span> <span class="string">CMAKE_PREFIX_PATH=$&#123;CONDA_PREFIX&#125;/lib</span>  <span class="comment"># for cmake find_package</span></span><br><span class="line"><span class="string">export</span> <span class="string">PKG_CONFIG_PATH=$&#123;CONDA_PREFIX&#125;/share/pkgconfig:$&#123;CONDA_PREFIX&#125;/lib/pkgconfig</span>  <span class="comment"># for pkg-config</span></span><br></pre></td></tr></table></figure>
+
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://github.com/prefix-dev/pixi">pixi</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.rerun.io/docs/howto/arrow-cpp-install">cpp using example</a></li>
@@ -1523,13 +1547,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">368k</span>
+    <span title="站点总字数">370k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:34</span>
+    <span title="站点阅读时长">5:37</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="actions fork 的 repo 需要手动在 actions 里 enable disabling-and-enabling-a-workflow actions doc  links readme show build status taskflow samples 基于 Github Action 的 CI&#x2F;CD 流程">
+  <meta name="description" content="actions fork 的 repo 需要手动在 actions 里 enable disabling-and-enabling-a-workflow actions doc  sample use 可以连续用  12345678910111213141516name: Ubuntuon: pushjobs:  release-test:    name: dataflow build on u">
 <meta property="og:type" content="article">
 <meta property="og:title" content="github-ci">
 <meta property="og:url" content="https://jiaxiyang.github.io/2022/10/30/github-ci/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="actions fork 的 repo 需要手动在 actions 里 enable disabling-and-enabling-a-workflow actions doc  links readme show build status taskflow samples 基于 Github Action 的 CI&#x2F;CD 流程">
+<meta property="og:description" content="actions fork 的 repo 需要手动在 actions 里 enable disabling-and-enabling-a-workflow actions doc  sample use 可以连续用  12345678910111213141516name: Ubuntuon: pushjobs:  release-test:    name: dataflow build on u">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-10-30T13:35:59.000Z">
-<meta property="article:modified_time" content="2023-06-20T07:37:37.567Z">
+<meta property="article:modified_time" content="2023-11-08T07:56:04.001Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+                <time title="修改时间：2023-11-08 15:56:04" itemprop="dateModified" datetime="2023-11-08T15:56:04+08:00">2023-11-08</time>
               </span>
 
           
@@ -262,7 +262,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>146</span>
+              <span>686</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -285,6 +285,22 @@
 <li>fork 的 repo 需要手动在 actions 里 enable</li>
 <li><a target="_blank" rel="noopener" href="https://docs.github.com/en/actions/managing-workflow-runs/disabling-and-enabling-a-workflow">disabling-and-enabling-a-workflow</a></li>
 <li><a target="_blank" rel="noopener" href="https://docs.github.com/cn/actions">actions doc</a></li>
+</ol>
+<h2 id="sample"><a href="#sample" class="headerlink" title="sample"></a>sample</h2><ol>
+<li>use 可以连续用</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Ubuntu</span></span><br><span class="line"><span class="attr">on:</span> <span class="string">push</span></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">release-test:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">dataflow</span> <span class="string">build</span> <span class="string">on</span> <span class="string">ubuntu</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span> <span class="comment">## checkout到分支</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">prefix-dev/setup-pixi@v0.3.0</span> <span class="comment">## 安装pixi</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">run</span> <span class="string">all</span> <span class="string">test</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">pixi</span> <span class="string">run</span> <span class="string">all</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;Upload Artifact&quot;</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/upload-artifact@v3</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">my-artifact</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">.gitignore</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="upload-artifact"><a href="#upload-artifact" class="headerlink" title="upload-artifact"></a><a target="_blank" rel="noopener" href="https://github.com/actions/upload-artifact#zipped-artifact-downloads">upload-artifact</a></h2><ol>
+<li>config</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;Upload Artifact&quot;</span></span><br><span class="line">  <span class="attr">uses:</span> <span class="string">actions/upload-artifact@v3</span></span><br><span class="line">  <span class="attr">with:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">my-artifact</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">.gitignore</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>ci job 左侧 summary 可以下载 artifacts</li>
+</ol>
+<h2 id="upload-release-asset"><a href="#upload-release-asset" class="headerlink" title="upload-release-asset"></a><a target="_blank" rel="noopener" href="https://github.com/actions/upload-release-asset">upload-release-asset</a></h2><ol>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/75995802/resource-not-accessible-by-integration-github-action-fails-for-pushed-commit">push 失败问题： 需要设置 repo read_and_write 权限</a></li>
 </ol>
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://github.com/microsoft/onnxruntime/blob/main/README.md">readme show build status</a></li>
@@ -391,7 +407,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#actions"><span class="nav-number">1.</span> <span class="nav-text">actions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">2.</span> <span class="nav-text">links</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#actions"><span class="nav-number">1.</span> <span class="nav-text">actions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sample"><span class="nav-number">2.</span> <span class="nav-text">sample</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#upload-artifact"><span class="nav-number">3.</span> <span class="nav-text">upload-artifact</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#upload-release-asset"><span class="nav-number">4.</span> <span class="nav-text">upload-release-asset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">5.</span> <span class="nav-text">links</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -490,13 +506,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">368k</span>
+    <span title="站点总字数">370k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:34</span>
+    <span title="站点阅读时长">5:37</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

@@ -895,7 +895,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-03 15:10:43" itemprop="dateModified" datetime="2023-11-03T15:10:43+08:00">2023-11-03</time>
+                <time title="修改时间：2023-11-07 11:39:02" itemprop="dateModified" datetime="2023-11-07T11:39:02+08:00">2023-11-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -938,7 +938,7 @@
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>16 分钟</span>
+              <span>17 分钟</span>
             </span>
 
         </div>
@@ -963,6 +963,7 @@
 <li><code>CMAKE_CURRENT_BINARY_DIR</code>: 指向当前正在处理的 CMakeLists.txt 文件对应的构建目录。</li>
 </ol>
 <h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><ol>
+<li><code>-DCMAKE_TOOLCHAIN_FILE=path/to/toolchain-clang.cmake</code> 设置 toolchain</li>
 <li><code>-DCMAKE_BUILD_TYPE=RelWithDebInfo</code> release 模式编译，带 debug info</li>
 <li><code>-DCMAKE_VERBOSE_MAKEFILE=ON</code> 显示详细信息</li>
 <li><code>cmake -S . -B build --trace-source=CMakeLists.txt</code> trace CMakeLists.txt</li>
@@ -1151,12 +1152,16 @@
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># common-project-info.in</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> ( project_version 1.2.3 )</span><br><span class="line"><span class="built_in">set</span> ( project_description <span class="string">&quot;test....&quot;</span> )</span><br><span class="line"><span class="built_in">set</span> ( project_homepage <span class="string">&quot;https://www....&quot;</span> )</span><br></pre></td></tr></table></figure>
 
 <h2 id="find-package"><a href="#find-package" class="headerlink" title="find_package"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/658727351">find_package</a></h2><ol>
-<li>find_package 采用两种模式搜索库：<ul>
+<li><p><code>export CMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu:/usr/local/lib/x86_64-linux-gnu</code> or <code>set(CMAKE_FIND_ROOT_PATH /usr/lib/x86_64-linux-gnu /usr/local/lib/x86_64-linux-gnu)</code>设置查找路径</p>
+</li>
+<li><p>find_package 采用两种模式搜索库：The “better” way(Config 模式) to do things is to have an installed package provide its own details to CMake; <a target="_blank" rel="noopener" href="https://hsf-training.github.io/hsf-training-cmake-webpage/09-findingpackages/index.html#findpackage">link</a></p>
+<ul>
 <li><code>Module模式</code>：搜索 CMAKE_MODULE_PATH 指定路径下的 FindXXX.cmake 文件，执行该文件从而找到 XXX 库。其中，具体查找库并给 XXX_INCLUDE_DIRS 和 XXX_LIBRARIES 两个变量赋值的操作由 FindXXX.cmake 模块完成。</li>
-<li><code>Config模式</code>：搜索 XXX_DIR 指定路径下的 XXXConfig.cmake 文件，执行该文件从而找到 XXX 库。其中具体查找库并给 XXX_INCLUDE_DIRS 和 XXX_LIBRARIES 两个变量赋值的操作由 XXXConfig.cmake 模块完成。The “better” way to do things is to have an installed package provide its own details to CMake; <a target="_blank" rel="noopener" href="https://hsf-training.github.io/hsf-training-cmake-webpage/09-findingpackages/index.html#findpackage">link</a></li>
+<li><code>Config模式</code>：搜索 XXX_DIR 指定路径下的 XXXConfig.cmake 文件，执行该文件从而找到 XXX 库。其中具体查找库并给 XXX_INCLUDE_DIRS 和 XXX_LIBRARIES 两个变量赋值的操作由 XXXConfig.cmake 模块完成</li>
 </ul>
 </li>
-<li>两种模式看起来似乎差不多，不过 cmake 默认采取 Module 模式，如果 Module 模式未找到库，才会采取 Config 模式。如果 XXX_DIR 路径下找不到 XXXConfig.cmake 文件，则会找&#x2F;usr&#x2F;local&#x2F;lib&#x2F;cmake&#x2F;XXX&#x2F;中的 XXXConfig.cmake 文件。总之，Config 模式是一个备选策略。通常，库安装时会拷贝一份 XXXConfig.cmake 到系统目录中，因此在没有显式指定搜索路径时也可以顺利找到。</li>
+<li><p>两种模式看起来似乎差不多，不过 cmake 默认采取 Module 模式，如果 Module 模式未找到库，才会采取 Config 模式。如果 XXX_DIR 路径下找不到 XXXConfig.cmake 文件，则会找&#x2F;usr&#x2F;local&#x2F;lib&#x2F;cmake&#x2F;XXX&#x2F;中的 XXXConfig.cmake 文件。总之，Config 模式是一个备选策略。通常，库安装时会拷贝一份 XXXConfig.cmake 到系统目录中，因此在没有显式指定搜索路径时也可以顺利找到。</p>
+</li>
 </ol>
 <h2 id="find-path-and-include"><a href="#find-path-and-include" class="headerlink" title="find_path and include"></a>find_path and include</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">find_path</span>(XRT_INCLUDE_DIRS</span><br><span class="line">    NAMES xrt<span class="selector-class">.h</span></span><br><span class="line">    PATH_SUFFIXES xrt</span><br><span class="line">    )</span><br><span class="line"><span class="function"><span class="title">message</span><span class="params">(<span class="string">&quot;config types: $&#123;XRT_INCLUDE_DIRS&#125;&quot;</span>)</span></span></span><br></pre></td></tr></table></figure>
 
@@ -1381,13 +1386,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">368k</span>
+    <span title="站点总字数">370k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:34</span>
+    <span title="站点阅读时长">5:37</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
