@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">154</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">156</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,252 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/05/09/hightway/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/05/09/hightway/" class="post-title-link" itemprop="url">hightway</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-09 20:33:10" itemprop="dateCreated datePublished" datetime="2023-05-09T20:33:10+08:00">2023-05-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/05/09/hightway/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/05/09/hightway/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>431</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/google/highway/tree/master">highway</a></li>
+<li><a target="_blank" rel="noopener" href="https://google.github.io/highway/en/master/faq.html#getting-started">getting-started</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/libjxl/libjxl">libjxl reference implementation of JPEG XL (encoder and decoder)</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/chromium/chromium/blob/22b51215052e84b7c4ee35ba2d4d21638b906b35/third_party/distributed_point_functions/code/dpf/internal/get_hwy_mode.cc">hello_world</a></li>
+<li><a target="_blank" rel="noopener" href="https://google.github.io/highway/en/master/impl_details.html#adding-a-new-op">adding-a-new-op</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/google/highway/blob/6c285d64ae50e0f48866072ed3a476fc12df5ab6/hwy/print-inl.h#L59-L59">print simd</a></li>
+</ol>
+<h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
+<li>可以打印 V.raw</li>
+<li>源码编译 build 目录下工具<code>hwy_list_targets</code>可以显示 cpu 支持的加速硬件 <a target="_blank" rel="noopener" href="https://github.com/google/highway/blob/master/hwy/tests/list_targets.cc">src</a>; HWY_STATIC_TARGET: SSE2 显示默认支持</li>
+<li>具体运行程序见 cpp_sandbox&#x2F;highway</li>
+<li>Advanced Encryption Standard (AES); NEON_WITHOUT_AES</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/google/highway/blob/f86369577e9f884f9156dddbf03ee786493c67f9/hwy/examples/benchmark.cc#LL245C5-L245C31">获取支持的加速硬件</a><ul>
+<li><code>cat /proc/cpuinfo</code> 看 flags</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/google/highway/blob/33d7d0a6651bd783f97534c936bc9733a3117478/hwy/nanobenchmark.cc#L736">获取函数运行 cycle</a></li>
+</ol>
+<h2 id="simd-library"><a href="#simd-library" class="headerlink" title="simd library"></a><a target="_blank" rel="noopener" href="https://www.reddit.com/r/cpp/comments/106ivke/simd_intrinsics_and_the_possibility_of_a_standard/">simd library</a></h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/google/highway">highway cpu 向量加速库 SIMD</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jfalcou/eve">eve</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/xtensor-stack/xsimd">xsimd</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ermig1979/Simd">图像处理与机器学习 Simd</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/experimental/simd">parallelism TS v2</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/simd-everywhere/simde">simde</a> 如果平台不存在硬件加速，使用模拟函数，如在 x86 上运行 neon</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/03/23/neon/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/03/23/neon/" class="post-title-link" itemprop="url">neon</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-23 16:55:28" itemprop="dateCreated datePublished" datetime="2023-03-23T16:55:28+08:00">2023-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-18 18:27:16" itemprop="dateModified" datetime="2023-08-18T18:27:16+08:00">2023-08-18</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/03/23/neon/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/03/23/neon/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>新的 Armv8a 架构有 32 个 128bit 向量寄存器，老的 ArmV7a 架构有 32 个 64bit（可当作 16 个 128bit）向量寄存器，编码时记得数一下占用多少个专用寄存器（例如 1 个 float32x4 就占用 1 个 128bit 寄存器），别用过量了，避免寄存器溢出 (Register Spilling）(<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41112170/article/details/90286091">https://blog.csdn.net/qq_41112170/article/details/90286091</a>) 导致的负优化。</li>
+<li>armv8: 一条 Neon 指令最多可以计算 4 个 float32，或者 8 个 float16，或者 16 个 int8。</li>
+<li><code>uint8x16_t</code> 表示 16 个 uint8</li>
+<li><code>float32x4_t</code> 表示 4 个 float32</li>
+</ol>
+<h2 id="要使用-NEON-加速步骤："><a href="#要使用-NEON-加速步骤：" class="headerlink" title="要使用 NEON 加速步骤："></a>要使用 NEON 加速步骤：</h2><ol>
+<li><code>load</code> 将相关数组数据加载到 NEON 寄存器。</li>
+<li><code>calculate</code> 使用 NEON 指令对多个数据元素进行并行操作。</li>
+<li><code>store</code> 将结果从 NEON 寄存器存储回主存储器。</li>
+</ol>
+<h2 id="编译选项"><a href="#编译选项" class="headerlink" title="编译选项"></a>编译选项</h2><ol>
+<li>j5 需要 <code>-ftree-vectorize -funroll-loops</code> 组合才能优化，单独不行</li>
+<li><code>-mfpu=neon</code> 此选项告诉编译器要为 NEON 浮点单元生成代码。这适用于较老的 ARM 架构和编译器版本。</li>
+<li><code>-march</code> 使用此选项指定目标架构，例如<code>-march=armv8-a</code>。这可以确保编译器针对特定的 ARM 版本生成优化代码。</li>
+<li><code>-mfloat-abi</code> 该选项定义了浮点数应该如何在函数调用中传递。有三个选项可以选择：soft、softfp 和 hard。使用 NEON 时，通常建议使用-mfloat-abi&#x3D;hard。</li>
+<li><code>-ftree-vectorize</code> 这是一个优化选项，允许编译器自动将循环转换为使用向量指令。虽然这不是直接与 NEON 相关的，但它可以帮助自动利用 NEON 功能。</li>
+<li><code>-funroll-loops</code>这也是一个优化选项，用于循环展开，可能有助于提高 NEON 代码的性能。</li>
+</ol>
+<h2 id="SVE-Scalable-Vector-Extension"><a href="#SVE-Scalable-Vector-Extension" class="headerlink" title="SVE(Scalable Vector Extension)"></a>SVE(Scalable Vector Extension)</h2><ol>
+<li>是 arm AArch64 架构下的下一代 SIMD 指令集，旨在加速高性能计算，SVE 引入了很多新的架构特点</li>
+<li>SVE（可扩展矢量指令 Scalable Vector Extension）是针对高性能计算（HPC）和机器学习等领域开发的一套全新的矢量指令集，它是下一代 SIMD 指令集实现，而不是 NEON 指令集的简单扩展。SVE 指令集中有很多概念与 NEON 指令集类似，例如矢量、通道、数据元素等。SVE 指令集也提出了一个全新的概念：可变矢量长度编程模型(VectorLength Agnostic，VLA)。</li>
+<li>SVE 指令集的矢量寄存器的长度最小支持 128 位，最大可以支持 2048 位，以 128 位为增量。</li>
+<li>SVE 指令集是在 A64 指令集的基础上新增的一组指令集，而 SVE2 是在 ARMv9 架构上发布的，它是 SVE 指令集的一个超集和扩充。</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/399686472">ARMv9 的 SVE&#x2F;SVE2 入门教程</a></li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://www.armadeus.org/wiki/index.php?title=NEON_HelloWorld">hello world</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ewenwan/MVision/blob/master/CNN/HighPerformanceComputing/ARM_NEON_CNN%E7%BC%96%E7%A8%8B.md">ARM_NEON_CNN 编程</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/441686632">CPU 优化技术-NEON 指令介绍</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1128,229 +1374,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/30/github-ci/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/30/github-ci/" class="post-title-link" itemprop="url">github-ci</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-10-30 21:35:59" itemprop="dateCreated datePublished" datetime="2022-10-30T21:35:59+08:00">2022-10-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-08 15:56:04" itemprop="dateModified" datetime="2023-11-08T15:56:04+08:00">2023-11-08</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/10/30/github-ci/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/30/github-ci/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>686</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="actions"><a href="#actions" class="headerlink" title="actions"></a>actions</h2><ol>
-<li>fork 的 repo 需要手动在 actions 里 enable</li>
-<li><a target="_blank" rel="noopener" href="https://docs.github.com/en/actions/managing-workflow-runs/disabling-and-enabling-a-workflow">disabling-and-enabling-a-workflow</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.github.com/cn/actions">actions doc</a></li>
-</ol>
-<h2 id="sample"><a href="#sample" class="headerlink" title="sample"></a>sample</h2><ol>
-<li>use 可以连续用</li>
-</ol>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Ubuntu</span></span><br><span class="line"><span class="attr">on:</span> <span class="string">push</span></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">release-test:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">dataflow</span> <span class="string">build</span> <span class="string">on</span> <span class="string">ubuntu</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span> <span class="comment">## checkout到分支</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">prefix-dev/setup-pixi@v0.3.0</span> <span class="comment">## 安装pixi</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">run</span> <span class="string">all</span> <span class="string">test</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">pixi</span> <span class="string">run</span> <span class="string">all</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;Upload Artifact&quot;</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/upload-artifact@v3</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">my-artifact</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">.gitignore</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="upload-artifact"><a href="#upload-artifact" class="headerlink" title="upload-artifact"></a><a target="_blank" rel="noopener" href="https://github.com/actions/upload-artifact#zipped-artifact-downloads">upload-artifact</a></h2><ol>
-<li>config</li>
-</ol>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;Upload Artifact&quot;</span></span><br><span class="line">  <span class="attr">uses:</span> <span class="string">actions/upload-artifact@v3</span></span><br><span class="line">  <span class="attr">with:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">my-artifact</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">.gitignore</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>ci job 左侧 summary 可以下载 artifacts</li>
-</ol>
-<h2 id="upload-release-asset"><a href="#upload-release-asset" class="headerlink" title="upload-release-asset"></a><a target="_blank" rel="noopener" href="https://github.com/actions/upload-release-asset">upload-release-asset</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/75995802/resource-not-accessible-by-integration-github-action-fails-for-pushed-commit">push 失败问题： 需要设置 repo read_and_write 权限</a></li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/onnxruntime/blob/main/README.md">readme show build status</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/taskflow/taskflow/tree/master/.github/workflows">taskflow samples</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/250534172">基于 Github Action 的 CI&#x2F;CD 流程</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/25/Coroutine/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/25/Coroutine/" class="post-title-link" itemprop="url">Coroutine</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-10-25 19:55:32" itemprop="dateCreated datePublished" datetime="2022-10-25T19:55:32+08:00">2022-10-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/10/25/Coroutine/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/25/Coroutine/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>231</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>协程并没有增加线程数量，只是在线程的基础之上通过分时复用的方式运行多个协程，而且协程的切换在用户态完成，切换的代价比线程从用户态到内核态的代价小很多。</li>
-<li>协程对计算密集型的任务也没有太大的好处，计算密集型的任务本身不需要大量的线程切换，因此协程的作用也十分有限，反而还增加了协程切换的开销。</li>
-<li>因此在协程中不能调用导致线程阻塞的操作。也就是说，协程只有和异步 IO 结合起来，才能发挥最大的威力。</li>
-<li>协程只有和异步 IO 结合起来才能发挥出最大的威力。</li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/172471249">什么是协程？</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1422,7 +1445,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">154</span>
+          <span class="site-state-item-count">156</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1455,6 +1478,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2023/11/15/shareX/" title="2023&#x2F;11&#x2F;15&#x2F;shareX&#x2F;">shareX</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2023/11/10/nvidia/" title="2023&#x2F;11&#x2F;10&#x2F;nvidia&#x2F;">nvidia</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/11/05/package-manager/" title="2023&#x2F;11&#x2F;05&#x2F;package-manager&#x2F;">package manager</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1462,12 +1491,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/10/16/IREE/" title="2023&#x2F;10&#x2F;16&#x2F;IREE&#x2F;">IREE</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/10/16/SPIR-V/" title="2023&#x2F;10&#x2F;16&#x2F;SPIR-V&#x2F;">SPIR-V</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/10/12/MLIR/" title="2023&#x2F;10&#x2F;12&#x2F;MLIR&#x2F;">MLIR</a>
         </li>
     </ul>
   </div>
@@ -1505,13 +1528,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">370k</span>
+    <span title="站点总字数">372k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:37</span>
+    <span title="站点阅读时长">5:38</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

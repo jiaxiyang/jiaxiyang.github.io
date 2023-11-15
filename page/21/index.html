@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">154</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">156</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,312 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/06/22/Haskell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/22/Haskell/" class="post-title-link" itemprop="url">Haskell</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-22 10:47:46" itemprop="dateCreated datePublished" datetime="2021-06-22T10:47:46+08:00">2021-06-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/22/Haskell/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/22/Haskell/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Higher-Order-Functions"><a href="#Higher-Order-Functions" class="headerlink" title="Higher Order Functions"></a>Higher Order Functions</h2><ol>
+<li>Haskell functions can take functions as parameters and return functions as return values. A function that does either of those is called a higher order function.</li>
+<li>Every function in Haskell officially only takes one parameter.</li>
+<li><code>map</code> takes a function and a list and applies that function to every element in the list, producing a new list.</li>
+<li><code>filter</code> is a function that takes a predicate (a predicate is a function that tells whether something is true or not, so in our case, a function that returns a boolean value) and a list and then returns the list of elements that satisfy the predicate.</li>
+<li><code>folds</code> They’re sort of like the map function, only they reduce the list to some <code>single value</code>.<br>1.<a target="_blank" rel="noopener" href="https://excalidraw.com/#json=5033777575231488,ixM2dP13DMyzxCvIDEpzqg">map, filter, fold 示意图</a></li>
+<li>map是一种抽象，屏蔽了对list操作的具体实现，不用关心是迭代或是递归实现的，只能感受到list每个元素都经过了转化，不用考虑控制结构，只需要考虑策略。(link: SICP)</li>
+</ol>
+<h2 id="Functors-Applicatives-And-Monads"><a href="#Functors-Applicatives-And-Monads" class="headerlink" title="Functors, Applicatives And Monads"></a>Functors, Applicatives And Monads</h2><ol>
+<li>defination</li>
+</ol>
+<figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class Functor f <span class="keyword">where</span></span><br><span class="line">    <span class="function"><span class="title">fmap</span> :: (a -&gt;</span> <span class="function"><span class="title">b</span>) -&gt;</span> <span class="function"><span class="title">f</span> a -&gt;</span> f b</span><br><span class="line"></span><br><span class="line">class (Functor f) =&gt; Applicative f <span class="keyword">where</span></span><br><span class="line">    <span class="function"><span class="title">pure</span> :: a -&gt;</span> f a</span><br><span class="line">    (&lt;*&gt;) :: <span class="function"><span class="title">f</span> (a -&gt;</span> <span class="function"><span class="title">b</span>) -&gt;</span> <span class="function"><span class="title">f</span> a -&gt;</span> f b</span><br><span class="line"></span><br><span class="line">class (Applicative m) =&gt; Monad m <span class="keyword">where</span></span><br><span class="line">    <span class="function"><span class="title">return</span> :: a -&gt;</span> m a</span><br><span class="line">    (&gt;&gt;=) :: <span class="function"><span class="title">m</span> a -&gt;</span> (<span class="function"><span class="title">a</span> -&gt;</span> <span class="function"><span class="title">m</span> b) -&gt;</span> m b</span><br><span class="line">    (&gt;&gt;) :: <span class="function"><span class="title">m</span> a -&gt;</span> <span class="function"><span class="title">m</span> b -&gt;</span> m b</span><br><span class="line">    <span class="function"><span class="title">x</span> &gt;&gt; y = x &gt;&gt;= \_ -&gt;</span> y</span><br><span class="line">    <span class="function"><span class="title">fail</span> :: String -&gt;</span> m a</span><br><span class="line">    fail msg = error msg</span><br><span class="line"></span><br><span class="line">class Monoid m <span class="keyword">where</span>  -- 注意是Monoid不是Monad</span><br><span class="line">    mempty :: m</span><br><span class="line">    <span class="function"><span class="title">mappend</span> :: m -&gt;</span> <span class="function"><span class="title">m</span> -&gt;</span> m</span><br><span class="line">    <span class="function"><span class="title">mconcat</span> :: [m] -&gt;</span> m</span><br><span class="line">    mconcat = foldr mappend mempty</span><br></pre></td></tr></table></figure>
+<ol>
+<li>type of fmap, (&lt;*&gt;) and (&gt;&gt;&#x3D;)</li>
+</ol>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fmap :: <span class="function"><span class="params">(Functor f)</span> =&gt; <span class="params">(a -&gt; b)</span> -&gt;</span> f a -&gt; f b           -- 先解f a封装到a, a -&gt; b, b再封装到f b; 操作<span class="number">2</span>次封装</span><br><span class="line"><span class="function"><span class="params">(&lt;*&gt;)</span> :: <span class="params">(Applicative f)</span> =&gt; <span class="title">f</span> <span class="params">(a -&gt; b)</span> -&gt;</span> f a -&gt; f b    -- 先解f a封装到a, 解f(a -&gt; b)封装， a -&gt; b, b再封装到f b; 操作<span class="number">3</span>次封装</span><br><span class="line"><span class="function"><span class="params">(&gt;&gt;=)</span> :: <span class="params">(Monad m)</span> =&gt; <span class="title">m</span> <span class="title">a</span> -&gt;</span> <span class="function"><span class="params">(a -&gt; m b)</span> -&gt;</span> m b          -- 先解m a封装到a, a -&gt; mb; 操作<span class="number">1</span>次封装</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Functor, Applicative and Monad都是封装，可以封装原始类型。</li>
+<li>&lt;$&gt; 是 fmap 的中缀表达式版本</li>
+<li>functors: you apply a function to a wrapped value using fmap or &lt;$&gt;</li>
+<li>applicatives: you apply a wrapped function to a wrapped value using &lt;*&gt; or liftA</li>
+<li>monads: you apply a function that returns a wrapped value, to a wrapped value using &gt;&gt;&#x3D; or liftM</li>
+<li>conclusion</li>
+</ol>
+<ul>
+<li>A functor is a data type that implements the Functor typeclass.</li>
+<li>An applicative is a data type that implements the Applicative typeclass.</li>
+<li>A monad is a data type that implements the Monad typeclass.</li>
+<li>A Maybe implements all three, so it is a functor, an applicative, and a monad.</li>
+</ul>
+<ol start="9">
+<li>区别</li>
+</ol>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://learnyouahaskell.com/chapters">Learn you haskell book</a></li>
+<li><a target="_blank" rel="noopener" href="https://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html">Functors, Applicatives, And Monads In Pictures</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/05/21/Chrome-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/21/Chrome-config/" class="post-title-link" itemprop="url">Chrome shortcuts</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-21 15:56:05" itemprop="dateCreated datePublished" datetime="2021-05-21T15:56:05+08:00">2021-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-10-12 12:11:02" itemprop="dateModified" datetime="2023-10-12T12:11:02+08:00">2023-10-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/Chrome/" itemprop="url" rel="index"><span itemprop="name">Chrome</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/05/21/Chrome-config/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/05/21/Chrome-config/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="shortcuts"><a href="#shortcuts" class="headerlink" title="shortcuts"></a><a target="_blank" rel="noopener" href="https://support.google.com/chrome/answer/157179?hl=zh-Hans&co=GENIE.Platform=Desktop">shortcuts</a></h2><ol>
+<li><code>C-l</code>或<code>M-d</code>: 地址栏</li>
+<li><code>M-Enter</code>: open another tab when search: it’s very usefull</li>
+<li><code>C-k</code> 或 <code>C-e</code>: 搜索</li>
+<li><code>Tab</code>: 下一个可点击项</li>
+<li><code>M-left</code>: 后退浏览历史</li>
+<li><code>M-right</code>: 前进浏览历史</li>
+<li><code>C-r</code>: 刷新网页</li>
+<li><code>Space</code>: pgDn</li>
+<li><code>S-Space</code>: pgUp</li>
+<li><code>C-t</code>: 新标签</li>
+<li><code>C-n</code>: 新窗口</li>
+<li><code>C-w</code>: 关闭当前标签</li>
+<li><code>C-Tab</code>: 切换标签</li>
+<li><code>C-S-t</code>: 恢复关闭的标签</li>
+<li><code>C-h</code>: history</li>
+<li><code>C-j</code>: download</li>
+<li><code>C-1</code>: 跳转到第一个标签</li>
+<li><code>C-9</code>: 跳转到第一个标签</li>
+<li><code>C-Backspace</code>: 删除一个单词</li>
+<li><code>S-Esc</code>: 任务管理器</li>
+<li><code>C-S-b</code>: 显示或隐藏书签栏</li>
+<li><code>C-f</code> + <code>C-g</code>: 查找与跳转</li>
+</ol>
+<h2 id="自定义-shortcuts"><a href="#自定义-shortcuts" class="headerlink" title="自定义 shortcuts"></a><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/shortkeys-custom-keyboard/logpjaacgmcbpdkdchjiaagddngobkck?hl=zh-CN">自定义 shortcuts</a></h2><ol>
+<li><code>M-h</code>：Select previous tab</li>
+<li><code>M-l</code>：Select next tab</li>
+<li><code>M-k</code>：Select last tab</li>
+<li><code>M-b</code>: 后退浏览历史</li>
+<li><code>M-f</code>: 前进浏览历史</li>
+<li><code>M-s</code>: fullscreen</li>
+<li><code>M-3</code>：new tab</li>
+<li><code>M-8</code>：close tab</li>
+<li><code>M-w</code>：Duplicate current tab</li>
+</ol>
+<h2 id="vimium-快捷键"><a href="#vimium-快捷键" class="headerlink" title="vimium 快捷键"></a><a target="_blank" rel="noopener" href="https://vimium.github.io/">vimium 快捷键</a></h2><ol>
+<li><code>yy</code>: copy URL to clipboard</li>
+<li><code>/</code>: find</li>
+<li><code>j</code>: Scroll down</li>
+<li><code>k</code>: Scroll up</li>
+<li><code>h</code>: Scroll left</li>
+<li><code>l</code>: Scroll right</li>
+<li><code>gg</code>: Scroll to the top of the page</li>
+<li><code>G</code>: Scroll to the bottom of the page</li>
+</ol>
+<h2 id="搜索设置"><a href="#搜索设置" class="headerlink" title="搜索设置"></a>搜索设置</h2><ol>
+<li>chrome 快捷搜索设置</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">gitlab l https:<span class="regexp">//gi</span>tlab.phigent.io/?sort=name_asc&amp;name=%s&amp;sort=name_asc</span><br><span class="line">github g https:<span class="regexp">//gi</span>thub.com/search?q=%s</span><br><span class="line">cppreference cpp https:<span class="regexp">//</span>duckduckgo.com/?sites=cppreference.com&amp;q=%s&amp;ia=web</span><br><span class="line">translate t https:<span class="regexp">//</span>translate.google.cn/?source=osdd&amp;who=test&amp;sl=en&amp;tl=zh-CN&amp;text=%s&amp;op=translate</span><br><span class="line">blog blog https:<span class="regexp">//gi</span>thub.com<span class="regexp">/jiaxiyang/</span>blog<span class="regexp">/tree/m</span>aster<span class="regexp">/source/</span>_posts</span><br><span class="line">links links https:<span class="regexp">//</span>jiaxiyang.github.io<span class="regexp">/2020/</span><span class="number">06</span><span class="regexp">/29/</span>Links/</span><br><span class="line"><span class="number">100</span>ms <span class="number">100</span>ms https:<span class="regexp">//gi</span>thub.com<span class="regexp">/jiaxiyang/</span><span class="number">100</span>ms_dot_emacs<span class="regexp">/blob/m</span>aster/init.el</span><br><span class="line">lead lead https:<span class="regexp">//gi</span>thub.com<span class="regexp">/jiaxiyang/</span>leader-key-mode<span class="regexp">/blob/m</span>aster/leader-key-mode.el</span><br><span class="line">melpa m https:<span class="regexp">//m</span>elpa.org<span class="regexp">/#/</span>?q=test&amp;sort=downloads&amp;asc=false</span><br><span class="line">excalidraw e https:<span class="regexp">//</span>excalidraw.com/</span><br><span class="line">baidu b https:<span class="regexp">//</span>www.baidu.com/<span class="comment">#ie=&#123;inputEncoding&#125;&amp;wd=%s</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/onetab/chphlpgkkbolifaimnlloiipkdnihall">onetab 节省内存</a> 快捷键<code>alt+shift+1</code> 改为 <code>alt+1</code>。 <code>alt+2</code>发送当前标签页至 OneTab</li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/adblocker-ultimate/ohahllgiabjaoigichmmfljhkcfikeof/related?hl=zh-CN">广告屏蔽</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/sourcegraph/dgjhfomjieaadpoljlnidmbgkdffpack">sourcegraph 插件</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/octotree-github-code-tree/bkhaagjahfmjljalopjnoealnfndnagc?hl=zh-CN">octotree</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/gitzip-for-github/ffabmkklhbepgcgfonabamgnfafbdlkn">gitzip 插件</a></li>
+<li><a target="_blank" rel="noopener" href="https://vimium.github.io/">vimiu</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/shortkeys-custom-keyboard/logpjaacgmcbpdkdchjiaagddngobkck/related?hl=zh-CN">shortkeys</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/magical-text-expansion/iibninhmiggehlcdolcilmhacighjamp/related?hl=zh-CN">magical</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/colorzilla/bhlhnicpbhignbdhedgjhgdocnmhomnp?hl=zh-CN">colorzilla</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb/related?hl=en">google translate</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/alyssaxuu/omni">omni</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/easy-auto-refresh/aabcgdmkeabbnleenpncegpcngjpnjkc/related">easy-auto-refresh</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/markdown-diagrams/pmoglnmodacnbbofbgcagndelmgaclel">markdown-diagrams</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/svg-export/naeaaedieihlkmdajjefioajbbdbdjgp/related?hl=zh-CN">svg-export</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/whatfont/jabopobgcpjmedljpbcaablpmlmfcogm/related?hl=zh-CN">whatfont</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -481,7 +787,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-30 16:30:13" itemprop="dateModified" datetime="2023-10-30T16:30:13+08:00">2023-10-30</time>
+                <time title="修改时间：2023-11-13 15:19:12" itemprop="dateModified" datetime="2023-11-13T15:19:12+08:00">2023-11-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -517,14 +823,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.4k</span>
+              <span>3.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -586,6 +892,16 @@
 <li><code>dpkg-query -W tensorrt</code> tensorrt 版本</li>
 <li><code>cat /proc/driver/nvidia/gpus/0000\:02\:00.0/information</code> 查看硬件型号</li>
 </ol>
+<h2 id="查看模型信息"><a href="#查看模型信息" class="headerlink" title="查看模型信息"></a>查看模型信息</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/tree/main/tools/Polygraphy/examples/cli/inspect/">polygraph</a><ul>
+<li><code>polygraphy inspect model tensorrt/resnet50/model.onnx</code></li>
+<li><code>polygraphy inspect capability model.onnx</code> Inspecting TensorRT ONNX Support</li>
+<li><code>polygraphy inspect model op16_iter7_refine_filter_fb.trt --model-type=engine --show layers</code></li>
+<li><code>polygraphy run dynamic_identity.onnx --trt --onnxrt</code> Comparing TensorRT And ONNX-Runtime Outputs</li>
+<li><code>polygraphy run dynamic_identity.onnx --trt --fp16 --onnxrt --input-shapes X:[1,2,4,4]</code> Comparing TensorRT Precisions</li>
+</ul>
+</li>
+</ol>
 <h2 id="op-支持"><a href="#op-支持" class="headerlink" title="op 支持"></a>op 支持</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://github.com/onnx/onnx-tensorrt/blob/main/docs/operators.md">onnx operators.md</a></li>
 </ol>
@@ -594,7 +910,7 @@
 <li>cuDNN 是深度神经网络加速库，cuDNN 可大幅优化标准例程（例如用于前向传播和反向传播的卷积层、池化层、归一化层和激活层）的实施。世界各地的深度学习研究人员和框架开发者都依赖 cuDNN 实现高性能 GPU 加速。借助 cuDNN，研究人员和开发者可以<code>专注于训练神经网络及开发软件应用</code>，而不必花时间进行低层级的 GPU 性能调整。cuDNN 可加速广泛应用的深度学习框架，包括 Caffe2、Chainer、Keras、MATLAB、MxNet、PyTorch 和 TensorFlow。</li>
 <li>TensorRT 是用于高性能深度学习<code>推理</code>的 SDK。此 SDK 包含深度学习推理优化器和<code>运行时环境</code>，可为深度学习推理应用提供低延迟和高吞吐量。借助 TensorRT，开发者可专注于创建新颖的 AI 支持应用，无需费力调节性能来部署推理工作。</li>
 </ol>
-<h2 id="trtexec"><a href="#trtexec" class="headerlink" title="trtexec"></a>trtexec</h2><h3 id="转模型"><a href="#转模型" class="headerlink" title="转模型"></a>转模型</h3><ol>
+<h2 id="trt-engine-explorer"><a href="#trt-engine-explorer" class="headerlink" title="trt-engine-explorer"></a><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/tree/main/tools/experimental/trt-engine-explorer">trt-engine-explorer</a></h2><h2 id="trtexec"><a href="#trtexec" class="headerlink" title="trtexec"></a>trtexec</h2><h3 id="转模型"><a href="#转模型" class="headerlink" title="转模型"></a>转模型</h3><ol>
 <li>trtexec –onnx&#x3D;.&#x2F;bisenetv2_310102_1280x1920.onnx –shapes&#x3D;input:1x3x540x960 –saveEngine&#x3D;bisenetv2-xavier-fp16-540x960.engine –allowGPUFallback –fp16 –workspace&#x3D;16024</li>
 <li>onnx 模型转化为 engine or trt 后运行</li>
 <li>trtexec 在转换模型时做了一些优化，以提高模型的推理性能。这些优化包括：<ul>
@@ -612,6 +928,7 @@
 </li>
 </ol>
 <h3 id="推理"><a href="#推理" class="headerlink" title="推理"></a>推理</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/tree/main/tools/Polygraphy/examples/cli/run/01_comparing_frameworks#comparing-tensorrt-and-onnx-runtime-outputs">Comparing TensorRT And ONNX-Runtime Outputs</a></li>
 <li>推理时可以看各种信息：<ul>
 <li>Build Options：<ul>
 <li>输入输出 name</li>
@@ -784,263 +1101,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/03/16/Web/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/16/Web/" class="post-title-link" itemprop="url">Web</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-16 22:27:02" itemprop="dateCreated datePublished" datetime="2021-03-16T22:27:02+08:00">2021-03-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/03/16/Web/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/16/Web/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前端开发"><a href="#前端开发" class="headerlink" title="前端开发"></a>前端开发</h2><ol>
-<li>HTML: Markup Language 构建网页，例如：建筑骨架</li>
-<li>CSS: Styling Language 网页样式: 例如： 建筑外观，墙的颜色</li>
-<li>JavaScript: Programming Language 网页功能 例如：建筑功能，电梯</li>
-<li>常用库： REACT, ANGULAE, VUE</li>
-</ol>
-<h2 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/MVC">维基百科</a></li>
-<li>MVC 模式在概念上强调 Model, View, Controller 的分离，各个模块也遵循着由 Controller 来处理消息，Model 掌管数据源，View 负责资料显示的职责分离原则，因此在实现上，MVC 模式的 Framework 通常会将 MVC 三个部分分离实现</li>
-<li>View 负责格式化数据并把它们呈现给用户，业务逻辑和表示层分离，同一个 Model 可以被不同的 View 重用，所以大大提高了代码的可重用性。</li>
-</ol>
-<h2 id="Controller-Service-and-Repository"><a href="#Controller-Service-and-Repository" class="headerlink" title="Controller, Service, and Repository"></a>Controller, Service, and Repository</h2><h2 id="增删改查（CRUD"><a href="#增删改查（CRUD" class="headerlink" title="增删改查（CRUD)"></a>增删改查（CRUD)</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%A2%9E%E5%88%AA%E6%9F%A5%E6%94%B9">维基百科</a></li>
-<li>增删查改（英语：CRUD[注 1]），全称增加（Create，意为“创建”）、删除（Delete）、查询（Read，意为“读取”）、改正（Update，意为“更新”），在计算机程序语言中是一连串常见的动作行为，而其行为通常是为了针对某个特定资源所作出的举动（例如：创建资料、读取资料等）。这四个行为最常见的用途是在使用 SQL 数据库与网站的 API 端口口的时候。</li>
-</ol>
-<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/80e25cb1d81a">简介</a></li>
-<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods">http methods</a></li>
-</ol>
-<h2 id="URI"><a href="#URI" class="headerlink" title="URI"></a>URI</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%BB%9F%E4%B8%80%E8%B5%84%E6%BA%90%E6%A0%87%E5%BF%97%E7%AC%A6">维基百科</a></li>
-<li>统一资源标识符（英语：Uniform Resource Identifier，缩写：URI）在电脑术语中是一个用于标识某一互联网资源名称的字符串。</li>
-<li>URL 是一种 URI</li>
-<li><code>URI = scheme “://” authority “/” path [ “?” query ][ “#” fragment ]</code></li>
-<li>scheme: 指底层用的协议，如 http、https、ftp<br>host: 服务器的 IP 地址或者域名<br>port: 端口，http 中默认 80, https 中默认 443<br>path: 访问资源的路径，就是咱们各种 web 框架中定义的 route 路由<br>query: 为发送给服务器的参数<br>fragment: 锚点，定位到页面的资源，锚点为资源 id</li>
-<li></li>
-</ol>
-<h2 id="CORS-跨域资源共享"><a href="#CORS-跨域资源共享" class="headerlink" title="CORS 跨域资源共享"></a>CORS 跨域资源共享</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/53996160">所有人都应该知道的跨域及 CORS</a></li>
-</ol>
-<h2 id="CGI-通用网关接口"><a href="#CGI-通用网关接口" class="headerlink" title="CGI 通用网关接口"></a>CGI 通用网关接口</h2><ol>
-<li>Restful 风格 API 的出现，让 CGI 获得了续命。CGI 解析前端请求，再转发给对应后端；然后从后端取回数据，给前端返回 XML 或 JSON。然后前端 JS 利用 XML&#x2F;JSON 中的数据来进行填充。可以绘制出丰富的界面或用作他用。JS 可以使用 Ajax 技术来向后台 CGI 发起数据请求。Ajax 完成的是不需要刷新整个页面就可以加载后端数据（比如从数据库中取出）。</li>
-<li>请注意区分 Web Server 和后台 Server。</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/25013398">图解</a></li>
-<li><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/CGI/607810">百科</a></li>
-</ol>
-<h2 id="REST-API"><a href="#REST-API" class="headerlink" title="REST API"></a>REST API</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://learning.postman.com/docs/getting-started/installation-and-updates/#installing-postman-on-windows">postman</a></li>
-<li><a target="_blank" rel="noopener" href="https://reqbin.com/">online test</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=7YcW25PHnAA">youtube samples</a></li>
-<li><a target="_blank" rel="noopener" href="https://i6448038.github.io/2017/06/28/rest-%E6%8E%A5%E5%8F%A3%E8%A7%84%E8%8C%83/">接口规范</a></li>
-<li><a target="_blank" rel="noopener" href="https://api.github.com/">github API</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.github.com/en/rest">github REST API</a></li>
-</ol>
-<h2 id="OpenAPI"><a href="#OpenAPI" class="headerlink" title="OpenAPI"></a>OpenAPI</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://swagger.io/docs/specification/about/">openapi</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/03/15/Pybind11/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/15/Pybind11/" class="post-title-link" itemprop="url">Pybind11</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-15 11:33:25" itemprop="dateCreated datePublished" datetime="2021-03-15T11:33:25+08:00">2021-03-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/03/15/Pybind11/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/15/Pybind11/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>80</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Pybind11"><a href="#Pybind11" class="headerlink" title="Pybind11"></a>Pybind11</h2><ol>
-<li>python与C&#x2F;C++相互调用</li>
-<li>轻量级，只含有头文件</li>
-</ol>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://pybind11.readthedocs.io/en/latest/">tutorial</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/pybind/pybind11">github</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/fitzzhang/article/details/78988682">python调用C++之pybind11入门</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1112,7 +1172,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">154</span>
+          <span class="site-state-item-count">156</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1145,6 +1205,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2023/11/15/shareX/" title="2023&#x2F;11&#x2F;15&#x2F;shareX&#x2F;">shareX</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2023/11/10/nvidia/" title="2023&#x2F;11&#x2F;10&#x2F;nvidia&#x2F;">nvidia</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/11/05/package-manager/" title="2023&#x2F;11&#x2F;05&#x2F;package-manager&#x2F;">package manager</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1152,12 +1218,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/10/16/IREE/" title="2023&#x2F;10&#x2F;16&#x2F;IREE&#x2F;">IREE</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/10/16/SPIR-V/" title="2023&#x2F;10&#x2F;16&#x2F;SPIR-V&#x2F;">SPIR-V</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/10/12/MLIR/" title="2023&#x2F;10&#x2F;12&#x2F;MLIR&#x2F;">MLIR</a>
         </li>
     </ul>
   </div>
@@ -1195,13 +1255,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">370k</span>
+    <span title="站点总字数">372k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:37</span>
+    <span title="站点阅读时长">5:38</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
