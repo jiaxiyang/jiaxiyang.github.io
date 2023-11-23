@@ -240,7 +240,7 @@ mjx-container[display="true"] + br {
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">157</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">158</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -307,6 +307,163 @@ mjx-container[display="true"] + br {
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/07/01/Clang-format-usage/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/01/Clang-format-usage/" class="post-title-link" itemprop="url">Clang-format-usage</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-01 13:16:38" itemprop="dateCreated datePublished" datetime="2020-07-01T13:16:38+08:00">2020-07-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-23 13:42:00" itemprop="dateModified" datetime="2023-11-23T13:42:00+08:00">2023-11-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/Clang/" itemprop="url" rel="index"><span itemprop="name">Clang</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/01/Clang-format-usage/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/01/Clang-format-usage/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><ol>
+<li>不同版本的 clang-format 输出格式可能不同，需要统一团队版本</li>
+<li>文件中有编码错误的字符不能被 format</li>
+</ol>
+<h2 id="format-check"><a href="#format-check" class="headerlink" title="format check"></a>format check</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/Sarcasm/run-clang-format/tree/master">run-clang-format</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/clang-format-check">github clang-format-check</a></li>
+<li><a target="_blank" rel="noopener" href="https://developers.redhat.com/articles/2022/02/25/enforce-code-consistency-clang-format#enforce_the_new_coding_rules">enforce-code-consistency-clang-format#enforce_the_new_coding_rules</a></li>
+<li><code>clang-format --Werror -n --verbose test.cpp</code> 可以检测是否符合 clang-format</li>
+<li>cpplint</li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/69362305">gitlab check</a></li>
+<li><a target="_blank" rel="noopener" href="https://gitlab.com/daverona/pre-commit/cpp">pre-commit</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/zmlovelx/article/details/105196415">git pre commit</a></li>
+</ol>
+<h2 id="Install-clang"><a href="#Install-clang" class="headerlink" title="Install clang"></a>Install clang</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://clang.llvm.org/get_started.html">Build clang from source</a></li>
+<li><a target="_blank" rel="noopener" href="http://clang.llvm.org/docs/ClangFormat.html">Clang format doc</a></li>
+</ol>
+<h2 id="format-config"><a href="#format-config" class="headerlink" title="format config"></a>format config</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://clang.llvm.org/docs/ClangFormatStyleOptions.html">Clang format style</a></li>
+<li><a target="_blank" rel="noopener" href="https://zed0.co.uk/clang-format-configurator/">clang format config 试验</a></li>
+<li><code>AllowShortFunctionsOnASingleLine: None</code> 函数不在一行</li>
+<li><code>SortIncludes: false</code> 头文件不排序</li>
+</ol>
+<h2 id="Bash-Command"><a href="#Bash-Command" class="headerlink" title="Bash Command"></a>Bash Command</h2><ol>
+<li>generate .clang-format<br><code>clang-format -style=llvm -dump-config &gt; .clang-format</code></li>
+<li>Format one cpp file:<br><code>clang-format --style=Google -i test.cpp</code></li>
+<li>Format all cpp files:<br><code>fd &quot;.cpp$&quot; | xargs clang-format --style=Google -i</code></li>
+</ol>
+<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><ol>
+<li><code>git-clang-format-12 or git clang-format-12</code> format staged files</li>
+<li><code>git-clang-format-12 --diff</code> 查看要 format 的变化</li>
+</ol>
+<h2 id="Vim-Config"><a href="#Vim-Config" class="headerlink" title="Vim Config"></a>Vim Config</h2><ol>
+<li>Find clang-format.py in your system and copy the file path.</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> ~ : find /usr -iname <span class="string">&quot;clang-format.py&quot;</span></span><br><span class="line">/usr/local/share/clang/clang-format.py</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Put the following config in your .vimrc. It will automaticly format the c++ file when the file is saved.</li>
+</ol>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function!</span> <span class="title">Formatonsave</span><span class="params">()</span></span><br><span class="line">  <span class="keyword">let</span> <span class="variable">l:lines</span> = <span class="string">&#x27;all&#x27;</span></span><br><span class="line">  <span class="keyword">let</span> <span class="variable">l:formatdiff</span> = <span class="number">1</span></span><br><span class="line">  <span class="keyword">let</span> <span class="variable">g:clang_format_fallback_style</span> = <span class="string">&#x27;Google&#x27;</span></span><br><span class="line">  <span class="comment">&quot; Remember to repalce the path of clang-format.py</span></span><br><span class="line">  <span class="keyword">pyfile</span> /usr/local/share/clang/clang-format.<span class="keyword">py</span></span><br><span class="line">  <span class="comment">&quot; py3file /usr/local/share/clang/clang-format.py</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br><span class="line"><span class="keyword">autocmd</span> BufWritePre *.h,*.hpp,*.<span class="keyword">cc</span>,*.cpp <span class="keyword">call</span> Formatonsave()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Emacs-Config"><a href="#Emacs-Config" class="headerlink" title="Emacs Config"></a>Emacs Config</h2><ol>
+<li>use package config</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(use-package clang-format</span><br><span class="line">  :after (cc-mode)</span><br><span class="line">  :config</span><br><span class="line">  (set-default &#x27;clang-format-fallback-style &quot;Google&quot;)</span><br><span class="line">  (add-hook &#x27;c-mode-common-hook #&#x27;(lambda()</span><br><span class="line">                                    (add-hook &#x27;before-save-hook</span><br><span class="line">                                              &#x27;clang-format-buffer t t))))</span><br></pre></td></tr></table></figure>
+
+<h2 id="Config"><a href="#Config" class="headerlink" title="Config"></a>Config</h2><p>Clang-format understands also special comments that switch formatting in a delimited range. The code between a comment <code>// clang-format off or /* clang-format off */ </code>up to a comment <code>// clang-format on or /* clang-format on */ </code>will not be formatted. The comments themselves will be formatted (aligned) normally.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> formatted_code;</span><br><span class="line"><span class="comment">// clang-format off</span></span><br><span class="line">    <span class="type">void</span>    unformatted_code  ;</span><br><span class="line"><span class="comment">// clang-format on</span></span><br><span class="line"><span class="type">void</span> formatted_code_again;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -570,7 +727,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">157</span>
+          <span class="site-state-item-count">158</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -603,6 +760,9 @@ mjx-container[display="true"] + br {
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2023/11/21/transformer/" title="2023&#x2F;11&#x2F;21&#x2F;transformer&#x2F;">transformer</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/11/21/LLM/" title="2023&#x2F;11&#x2F;21&#x2F;LLM&#x2F;">LLM</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -613,9 +773,6 @@ mjx-container[display="true"] + br {
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/11/05/package-manager/" title="2023&#x2F;11&#x2F;05&#x2F;package-manager&#x2F;">package manager</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/11/03/pixi/" title="2023&#x2F;11&#x2F;03&#x2F;pixi&#x2F;">pixi</a>
         </li>
     </ul>
   </div>
@@ -653,13 +810,13 @@ mjx-container[display="true"] + br {
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">373k</span>
+    <span title="站点总字数">374k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:39</span>
+    <span title="站点阅读时长">5:40</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
