@@ -476,7 +476,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-09 14:14:12" itemprop="dateModified" datetime="2023-11-09T14:14:12+08:00">2023-11-09</time>
+                <time title="修改时间：2023-11-28 14:56:00" itemprop="dateModified" datetime="2023-11-28T14:56:00+08:00">2023-11-28</time>
               </span>
 
           
@@ -499,7 +499,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>731</span>
+              <span>802</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -522,11 +522,13 @@
 <li>fork 的 repo 需要手动在 actions 里 enable</li>
 <li><a target="_blank" rel="noopener" href="https://docs.github.com/en/actions/managing-workflow-runs/disabling-and-enabling-a-workflow">disabling-and-enabling-a-workflow</a></li>
 <li><a target="_blank" rel="noopener" href="https://docs.github.com/cn/actions">actions doc</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/dorny/test-reporter">test-reporter</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/test-summary/">test-summary</a></li>
 </ol>
 <h2 id="sample"><a href="#sample" class="headerlink" title="sample"></a>sample</h2><ol>
 <li>use 可以连续用</li>
 </ol>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Ubuntu</span></span><br><span class="line"><span class="attr">on:</span> <span class="string">push</span></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">release-test:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">dataflow</span> <span class="string">build</span> <span class="string">on</span> <span class="string">ubuntu</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span> <span class="comment">## checkout到分支</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">prefix-dev/setup-pixi@v0.3.0</span> <span class="comment">## 安装pixi</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">run</span> <span class="string">all</span> <span class="string">test</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">pixi</span> <span class="string">run</span> <span class="string">all</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;Upload Artifact&quot;</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/upload-artifact@v3</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">my-artifact</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">.gitignore</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Ubuntu</span></span><br><span class="line"><span class="attr">on:</span> <span class="string">push</span></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">release-test:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">dataflow</span> <span class="string">build</span> <span class="string">on</span> <span class="string">ubuntu</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span> <span class="comment">## checkout到分支</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">prefix-dev/setup-pixi@v0.3.0</span> <span class="comment">## 安装pixi</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">install</span> <span class="string">deps</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">apt</span> <span class="string">install</span> <span class="string">-y</span> <span class="string">libc6-dbg</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">run</span> <span class="string">all</span> <span class="string">test</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">pixi</span> <span class="string">run</span> <span class="string">all</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;Upload Artifact&quot;</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/upload-artifact@v3</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">my-artifact</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">.gitignore</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="upload-artifact"><a href="#upload-artifact" class="headerlink" title="upload-artifact"></a><a target="_blank" rel="noopener" href="https://github.com/actions/upload-artifact#zipped-artifact-downloads">upload-artifact</a></h2><ol>
 <li>config</li>
@@ -1553,13 +1555,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">374k</span>
+    <span title="站点总字数">375k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:40</span>
+    <span title="站点阅读时长">5:41</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

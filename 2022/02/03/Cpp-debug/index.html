@@ -28,7 +28,7 @@
 <meta property="og:description" content="NOTE 没 link 报undefined reference to, link 但没 found target was not found 二进制依赖时， 需要先 find_package(glog REQUIRED), 否则 op PRIVATE 依赖 glog: undefined reference to 错误, 未传递出 glog 依赖 （静态链接的可以 PRIVATE 依赖) op">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-03T09:02:35.000Z">
-<meta property="article:modified_time" content="2023-11-24T10:04:38.205Z">
+<meta property="article:modified_time" content="2023-11-27T07:53:39.309Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="Debug">
 <meta name="twitter:card" content="summary">
@@ -233,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-24 18:04:38" itemprop="dateModified" datetime="2023-11-24T18:04:38+08:00">2023-11-24</time>
+                <time title="修改时间：2023-11-27 15:53:39" itemprop="dateModified" datetime="2023-11-27T15:53:39+08:00">2023-11-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -721,7 +721,7 @@
 </ul>
 </li>
 <li><code>-fsanitize=thread</code> 多线程数据竞争编译之后运行会报警告 <a target="_blank" rel="noopener" href="https://github.com/jiaxiyang/cpp_sandbox/blob/d2e077877f1a3dae47215540429b679bcf032c54/concurrency/atomic/atomic1.cpp">sample</a></li>
-<li><code>-DCMAKE_CXX_FLAGS=&quot;-fsanitize=address(thread) -g -lasan&quot;</code> cmake 编译选项, 加了-lasan 就不需要 LD_PRELOAD</li>
+<li><code>-DCMAKE_CXX_FLAGS=&quot;-fsanitize=address(thread) -g -lasan(-static-libasan)&quot;</code> cmake 编译选项, 加了-lasan 就不需要 LD_PRELOAD</li>
 </ol>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">LD_PRELOAD</span>=libasan.so</span><br></pre></td></tr></table></figure>
 
@@ -756,8 +756,8 @@
 
 <h3 id="command"><a href="#command" class="headerlink" title="command"></a>command</h3><ol>
 <li><code>valgrind --log-file=test_memcheck.log --tool=memcheck --leak-check=full ls</code> : no summary</li>
-<li><code>valgrind --log-file=test_memcheck.log --leak-check=full ls</code></li>
-<li><code>valgrind --log-file=test_memcheck.log --leak-check=full --show-leak-kinds=all ls</code></li>
+<li><code>valgrind --log-file=test_memcheck.log --leak-check=full ls</code> 只显示 submary</li>
+<li><code>valgrind --log-file=test_memcheck.log --leak-check=full --show-leak-kinds=all ls</code> 显示详细内容</li>
 </ol>
 <h2 id="procrank"><a href="#procrank" class="headerlink" title="procrank"></a>procrank</h2><ol>
 <li>VSS - Virtual Set Size 虚拟耗用内存（包含共享库占用的内存）</li>
@@ -1019,13 +1019,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">374k</span>
+    <span title="站点总字数">375k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:40</span>
+    <span title="站点阅读时长">5:41</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
