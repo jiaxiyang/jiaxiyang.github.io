@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="concept 大模型（Large Language Model，LLM） 模型大小 7B(billion), 7B 表示 70 亿个可训练参数。吉比（gigabyte）是一个信息技术单位，。十亿（billion）是一个计数单位， 参数类型(float, int8)和数量(billion)决定模型的大小(gigabyte) Bard 是由 Google 开发的生成式人工智能聊天机器人，最初基于大型">
+  <meta name="description" content="concept embeddings:在某种程度上，就是用来降维的，降维的原理就是矩阵乘法 一文读懂 Embedding 的概念 tokenizer tokenizer 是将文本进行分词,通常分为单词(word)或子词(subword)单元。它的目标是划分语料的基本符号。embeddings 是将语料库中的词或字符映射到 dense 向量表示。通常先经过 tokenizer 得到词单元,然后再映射">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LLM">
 <meta property="og:url" content="https://jiaxiyang.github.io/2023/11/21/LLM/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="concept 大模型（Large Language Model，LLM） 模型大小 7B(billion), 7B 表示 70 亿个可训练参数。吉比（gigabyte）是一个信息技术单位，。十亿（billion）是一个计数单位， 参数类型(float, int8)和数量(billion)决定模型的大小(gigabyte) Bard 是由 Google 开发的生成式人工智能聊天机器人，最初基于大型">
+<meta property="og:description" content="concept embeddings:在某种程度上，就是用来降维的，降维的原理就是矩阵乘法 一文读懂 Embedding 的概念 tokenizer tokenizer 是将文本进行分词,通常分为单词(word)或子词(subword)单元。它的目标是划分语料的基本符号。embeddings 是将语料库中的词或字符映射到 dense 向量表示。通常先经过 tokenizer 得到词单元,然后再映射">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/1_Welcome_GenerativeMeena_CL_V02_150521_v2_720_25fps.gif">
 <meta property="article:published_time" content="2023-11-21T08:24:03.000Z">
-<meta property="article:modified_time" content="2023-11-29T05:15:39.628Z">
+<meta property="article:modified_time" content="2023-12-07T07:27:26.525Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/1_Welcome_GenerativeMeena_CL_V02_150521_v2_720_25fps.gif">
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-29 13:15:39" itemprop="dateModified" datetime="2023-11-29T13:15:39+08:00">2023-11-29</time>
+                <time title="修改时间：2023-12-07 15:27:26" itemprop="dateModified" datetime="2023-12-07T15:27:26+08:00">2023-12-07</time>
               </span>
 
           
@@ -264,7 +264,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>535</span>
+              <span>1.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -284,11 +284,45 @@
 
       
         <h2 id="concept"><a href="#concept" class="headerlink" title="concept"></a>concept</h2><ol>
+<li>embeddings:在某种程度上，就是用来降维的，降维的原理就是矩阵乘法 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/164502624">一文读懂 Embedding 的概念</a></li>
+<li><a target="_blank" rel="noopener" href="https://platform.openai.com/tokenizer">tokenizer</a></li>
+<li>tokenizer 是将文本进行分词,通常分为单词(word)或子词(subword)单元。它的目标是划分语料的基本符号。embeddings 是将语料库中的词或字符映射到 dense 向量表示。通常先经过 tokenizer 得到词单元,然后再映射为稠密词向量。tokenizer 侧重文本符号的划分,主要方法是基于词典或规则进行分割。embeddings 侧重语义信息的编码,主要方法是基于语料训练词向量。</li>
+<li>AGI (Artificial General Intelligence): 人工通用智能或通用人工智能，是指在任何智能任务上都能表现得与人类智能相媲美的人工智能系统。</li>
+<li>AIGC (AI-Generated Content): 人工智能生成内容，指的是通过人工智能算法和模型自动或半自动生成的内容。这包括文本、图像、音乐、视频和其他媒体形式。</li>
 <li>大模型（Large Language Model，LLM）<br><img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/1_Welcome_GenerativeMeena_CL_V02_150521_v2_720_25fps.gif" alt="示意"></li>
 <li>模型大小 7B(billion), 7B 表示 70 亿个可训练参数。吉比（gigabyte）是一个信息技术单位，。十亿（billion）是一个计数单位， 参数类型(float, int8)和数量(billion)决定模型的大小(gigabyte)</li>
 <li>Bard 是由 Google 开发的生成式人工智能聊天机器人，最初基于大型语言模型的 LaMDA 系列，后来基于 PaLM2。</li>
 <li>基础架构 transformer</li>
 <li><a target="_blank" rel="noopener" href="https://claude.ai/chats">claude</a> chatgpt 主要竞争对手</li>
+</ol>
+<h3 id="多任务学习-Multi-Task-Learning-和多模态学习-Multimodal-Learning"><a href="#多任务学习-Multi-Task-Learning-和多模态学习-Multimodal-Learning" class="headerlink" title="多任务学习(Multi-Task Learning)和多模态学习(Multimodal Learning)"></a>多任务学习(Multi-Task Learning)和多模态学习(Multimodal Learning)</h3><ol>
+<li><p>目标差异</p>
+<ul>
+<li>多任务学习的目标是同时学习多个相关的任务,在不同任务间实现知识迁移,从而 mutually improve 模型的泛化性能。</li>
+<li>而多模态学习是为了建模和理解包含多个模态(文本、图像、语音等)的单一任务或场景。</li>
+</ul>
+</li>
+<li><p>方法差异</p>
+<ul>
+<li>多任务学习通常是共享底层特征表示,在顶层分出多个 task-specific 的输出层。</li>
+<li>多模态学习则更关注不同模态间的交互建模、对齐、融合,学习联合的媒体表征。</li>
+</ul>
+</li>
+<li><p>应用差异</p>
+<ul>
+<li>多任务学习的应用更广泛,从计算机视觉、NLP 到健康领域都有。</li>
+<li>多模态应用更集中在人机交互、信息检索、场景理解等领域。</li>
+</ul>
+</li>
+<li><p>总结</p>
+<ul>
+<li>多任务学习 optimize 同一模型在不同任务上的泛化性能</li>
+<li>多模态学习 optimize 不同媒体表征的融合,用于理解复杂的多模态场景或问题。</li>
+</ul>
+</li>
+</ol>
+<h3 id="多模态"><a href="#多模态" class="headerlink" title="多模态"></a>多模态</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://openai.com/research/clip">clip</a> <a target="_blank" rel="noopener" href="https://imzhanghao.com/2022/10/27/multimodal-learning/">multimodal-learning 中文解析</a></li>
 </ol>
 <h2 id="排名"><a href="#排名" class="headerlink" title="排名"></a>排名</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://github.com/CLUEbenchmark/SuperCLUE">SuperCLUE 中文通用大模型综合性基准</a></li>
@@ -312,6 +346,9 @@
 </ol>
 <h2 id="gpt"><a href="#gpt" class="headerlink" title="gpt"></a>gpt</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://github.com/run-llama/rags">rags</a> RAGs is a Streamlit app that lets you create a RAG pipeline from a data source using natural language.</li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://openai.com/research/clip">openai.com&#x2F;research</a></li>
 </ol>
 
     </div>
@@ -413,7 +450,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#concept"><span class="nav-number">1.</span> <span class="nav-text">concept</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%92%E5%90%8D"><span class="nav-number">2.</span> <span class="nav-text">排名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#huggine-face"><span class="nav-number">3.</span> <span class="nav-text">huggine face</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sota-models"><span class="nav-number">4.</span> <span class="nav-text">sota models</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#llama"><span class="nav-number">5.</span> <span class="nav-text">llama</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gpt"><span class="nav-number">6.</span> <span class="nav-text">gpt</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#concept"><span class="nav-number">1.</span> <span class="nav-text">concept</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0-Multi-Task-Learning-%E5%92%8C%E5%A4%9A%E6%A8%A1%E6%80%81%E5%AD%A6%E4%B9%A0-Multimodal-Learning"><span class="nav-number">1.1.</span> <span class="nav-text">多任务学习(Multi-Task Learning)和多模态学习(Multimodal Learning)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E6%A8%A1%E6%80%81"><span class="nav-number">1.2.</span> <span class="nav-text">多模态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%92%E5%90%8D"><span class="nav-number">2.</span> <span class="nav-text">排名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#huggine-face"><span class="nav-number">3.</span> <span class="nav-text">huggine face</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sota-models"><span class="nav-number">4.</span> <span class="nav-text">sota models</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#llama"><span class="nav-number">5.</span> <span class="nav-text">llama</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gpt"><span class="nav-number">6.</span> <span class="nav-text">gpt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">7.</span> <span class="nav-text">links</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -512,13 +549,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">375k</span>
+    <span title="站点总字数">378k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:41</span>
+    <span title="站点阅读时长">5:43</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
