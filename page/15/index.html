@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">158</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">161</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,468 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/02/23/Gstreamer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/23/Gstreamer/" class="post-title-link" itemprop="url">Gstreamer</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-23 08:43:01" itemprop="dateCreated datePublished" datetime="2021-02-23T08:43:01+08:00">2021-02-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/Gstreamer/" itemprop="url" rel="index"><span itemprop="name">Gstreamer</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/02/23/Gstreamer/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/02/23/Gstreamer/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Why-Gstreamer"><a href="#Why-Gstreamer" class="headerlink" title="Why Gstreamer"></a>Why Gstreamer</h2><ol>
+<li>构建一个视频分析应用，需要考虑的内容有：视频流获取、视频流解码、预处理、算法推理、数据编码、数据显示、数据传输等。常常需要引入一些第三方的开发包，如 OpenCV，FFmpeg，Caffe，TensorRT，OpenGL 等。GStreamer 是一个用于开发流式多媒体应用的跨平台开源框架，应用程序可以通过管道(Pipeline)的方式，<code>将多媒体处理的各个步骤串联起来</code>，达到预期的效果。</li>
+</ol>
+<h2 id="Gstreamer"><a href="#Gstreamer" class="headerlink" title="Gstreamer"></a>Gstreamer</h2><ol>
+<li><code>核心</code>为<code>Pipeline</code>框架以及用于扩展功能的<code>Plugins</code>。plugin 负责实现音视频传输协议、音视频输入输出源、音视频编解转码等真实的媒体处理功能，而 plugin 之间通过 pipeline 关联在一起，pipeline 负责将上一个 plugin 的数据流(data flow)传输给下一个 plugin，最终形成一个完整的多媒体处理应用；</li>
+<li>原理：GStreamer 的程序通过连接数字媒体处理的元素注入管道（pipeline）。每个元素(element)是由一个插件提供。元素可组合为箱（bins），箱可以进一步聚合，从而形成架构图。元素沟通是透过垫（pads）。来源垫（source pad）上一个元素可以被连接到一个接收垫（sink pad）在另一个。当管道是在播放状态，数据缓冲流（data buffers flow）从来源垫（source pad）流向接收垫（sink pad）。</li>
+<li>箱柜(bin)是由多个 element 构成的容器，同时 bin 本身也是一种 element，所以能够像操作普通 element 一样操作一个 bin，改变 bin 的状态可以改变 bin 内部所有 elements 的状态。bin 可以发送总线消息给它的子集 elements ，包括：错误消息(error messages)，标签消息(tag messages)，EOS 消息(EOS messages)。</li>
+<li>管道(pipeline)是一个特殊的 bin，当设定管道暂停或播放状态的时候，数据流将开始流动，并且媒体数据处理也开始处理。</li>
+<li>element 被封装成 plugin 才能被 gstreamer 使用。</li>
+</ol>
+<h2 id="3-层架构（plugin-core-app"><a href="#3-层架构（plugin-core-app" class="headerlink" title="3 层架构（plugin, core, app)"></a>3 层架构（plugin, core, app)</h2><p><img src="https://gstreamer.freedesktop.org/documentation/application-development/introduction/images/gstreamer-overview.png" alt="overview"></p>
+<ol>
+<li>最底层：element(plugins)</li>
+<li>中间层：插件框架、pipeline 架构、媒体类型处理机制、等等，也就是处理 Elements 的方式方法.</li>
+<li>最上层：tools, 多媒体应用</li>
+</ol>
+<h2 id="GStreamer-plug-ins-could-be-classified"><a href="#GStreamer-plug-ins-could-be-classified" class="headerlink" title="GStreamer plug-ins could be classified"></a>GStreamer plug-ins could be classified</h2><ol>
+<li>protocols handling</li>
+<li>sources: for audio and video (involves protocol plugins)</li>
+<li>formats: parsers, formaters, muxers, demuxers, metadata, subtitles</li>
+<li>codecs: coders and decoders</li>
+<li>filters: converters, mixers, effects, …</li>
+<li>sinks: for audio and video (involves protocol plugins)</li>
+</ol>
+<h2 id="GStreamer-tools"><a href="#GStreamer-tools" class="headerlink" title="GStreamer tools"></a>GStreamer tools</h2><ol>
+<li>gst-launch-1.0: 命令行建立和运行 pipeline, 不用编写 C 代码； <code>gst-launch-1.0 videotestsrc ! autovideosink</code></li>
+<li>gst-inspect-1.0: 查看可用的插件和它们的相关信息； <code>gst-inspect-1.0 videotestsrc</code></li>
+<li>gst-discoverer-1.0: 查看媒体文件的内部结构； <code>gst-discoverer-1.0 /root/Desktop/video.mp4</code></li>
+<li>GST*DEBUG&#x3D;”GST_TRACER:7” GST_TRACERS&#x3D;”proctime” gst-launch-1.0 … <code>查看每个element性能</code> <a target="_blank" rel="noopener" href="https://developer.ridgerun.com/wiki/index.php?title=GstShark*-_Processing_Time_tracer">link</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/RidgeRun/gst-shark">gst-shark</a></li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://gstreamer.freedesktop.org/documentation/application-development/introduction/index.html?gi-language=c">About Gstreamer</a></li>
+<li><a target="_blank" rel="noopener" href="https://gstreamer.freedesktop.org/documentation/tutorials/basic/gstreamer-tools.html?gi-language=c">Gstreamer tools</a></li>
+<li><a target="_blank" rel="noopener" href="https://gstreamer.freedesktop.org/documentation/tutorials/basic/index.html?gi-language=c">Gstreamer tutorials</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/sdroege/gstreamer-rs/tree/master/tutorials">Gstreamer tutorials rust</a></li>
+<li><a target="_blank" rel="noopener" href="http://orangeamoy.com/2019/06/28/GStreamerAndDeepStream/">由 GStreamer 到 DeepStream</a></li>
+<li><a target="_blank" rel="noopener" href="http://ericnode.info/post/gstreamer_intro/">插件例子</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.shangyexinzhi.com/article/571316.html">中文基础概念</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/02/02/Docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/02/Docker/" class="post-title-link" itemprop="url">Docker</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-02 18:29:14" itemprop="dateCreated datePublished" datetime="2021-02-02T18:29:14+08:00">2021-02-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-06 15:26:09" itemprop="dateModified" datetime="2023-11-06T15:26:09+08:00">2023-11-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/02/02/Docker/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/02/02/Docker/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="NOTES"><a href="#NOTES" class="headerlink" title="NOTES"></a>NOTES</h2><ol>
+<li>wsl2 中设置<code>--net=host</code>会影响 port 设置</li>
+<li><code>docker image prune -a</code> 清理任何为用的的 image</li>
+<li><a target="_blank" rel="noopener" href="http://www.debugself.com/2018/01/17/docker_network/">docker build 以及 docker run 时使用 host 网络的方法</a></li>
+<li>docker 开发使用： docker image(路径无关) + docker.sh(路径相关)</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apache/tvm/blob/main/docker/bash.sh">tvm docker 启动 bash</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-containers">windwos wsl2 + docker 开发</a> docker desktop 需要启动</li>
+<li><code>docker attach CONTAINER</code></li>
+<li><code>docker info</code> 查看 docker 信息</li>
+<li><code>docker stats</code> 可以看哪个 container 占用率高</li>
+<li><code>sudo usermod -aG docker $USER</code> 将当前用户加入到 docker 组中，否则必须使用 sudo 来运行 docker</li>
+<li><code>--user root --gpus all</code> 使用 gpu</li>
+<li><code>--privileged</code> 使用 systemctl</li>
+<li><code>docker save -o fedora-all.tar fedora</code> 保存镜像</li>
+<li><code>docker commit my-container my-image</code> 保存 container 为镜像</li>
+<li><code>docker load --input fedora.tar</code> or <code>docker load &lt; busybox.tar.gz</code></li>
+<li><code>docker login --username=xiyang.jia hub.xxx.io</code> 登录后才能 push</li>
+<li><code>docker commit efb954281fd3 j5-dsp-xiyang-dev:v1</code></li>
+<li><code>docker tag [ImageId] hub.xx.io/avp/[ImageName]:[镜像版本号]</code></li>
+<li><code>docker push docker.io/my-username/my-image:v1.0.0</code></li>
+<li><code>docker docker image rm eb3f9d403e36</code> 删除 image</li>
+</ol>
+<h2 id="usefull-docker"><a href="#usefull-docker" class="headerlink" title="usefull docker"></a>usefull docker</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/_/gcc">gcc</a></li>
+</ol>
+<h2 id="Command"><a href="#Command" class="headerlink" title="Command"></a>Command</h2><ol>
+<li><p><img src="https://user-gold-cdn.xitu.io/2019/4/9/16a02cdbf14142a0?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="一图胜千言"></p>
+</li>
+<li></li>
+</ol>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="language-bash"> -<span class="built_in">id</span> --name gcc.xiyang -v /data0/users/teams/software/heterogeneous/xiyang.jia/:/data0/users/xiyang.jia -w /data0/users/xiyang.jia/d/working -p 10099:22 -v /etc/localtime:/etc/localtime gcc</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li></li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">% docker pull openexplorer/ai_toolchain_centos_7:v1.12.5</span><br><span class="line">% docker run -<span class="built_in">id</span> \</span><br><span class="line">    --name openexplorer.xiyang \</span><br><span class="line">    -v /data0/users/xiyang.jia:/data0/users/xiyang.jia \</span><br><span class="line">    -w /data0/users/xiyang.jia/d/working \</span><br><span class="line">    -p 10090:22 \</span><br><span class="line">    --privileged \</span><br><span class="line">    -v /etc/localtime:/etc/localtime \</span><br><span class="line">    openexplorer/ai_toolchain_centos_7:v1.12.5</span><br><span class="line"></span><br><span class="line">% docker <span class="built_in">exec</span> -it openexplorer.xiyang bash</span><br><span class="line">% docker ps</span><br><span class="line">% docker stop openexplorer.xiyang</span><br><span class="line">% docker <span class="built_in">rm</span> openexplorer.xiyang</span><br><span class="line">% docker images</span><br><span class="line">% docker image <span class="built_in">rm</span> xxx</span><br><span class="line">% docker logs openexplorer.xiyang</span><br><span class="line">% docker start &lt;name&gt; // start docker when it <span class="built_in">exit</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="docker-load"><a href="#docker-load" class="headerlink" title="docker load"></a><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/load/">docker load</a></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">% docker load &lt; busybox.tar.gz</span><br><span class="line">% docker load --input fedora.tar</span><br></pre></td></tr></table></figure>
+
+<h2 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h2><p>Docker 包括三个基本概念:</p>
+<ol>
+<li>镜像（Image）</li>
+<li>容器（Container）</li>
+<li>仓库（Repository）<br>理解了这三个概念，就理解了 Docker 的整个生命周期。</li>
+</ol>
+<h3 id="Image"><a href="#Image" class="headerlink" title="Image"></a><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/basic_concept/image">Image</a></h3><ol>
+<li>Docker 镜像（Image），就相当于是一个 root 文件系统</li>
+<li>Docker 镜像是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。镜像不包含任何动态数据，其内容在构建之后也不会被改变。</li>
+</ol>
+<h3 id="Container"><a href="#Container" class="headerlink" title="Container"></a><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/basic_concept/container">Container</a></h3><ol>
+<li>镜像（Image）和容器（Container）的关系，就像是面向对象程序设计中的 类 和 实例 一样，镜像是静态的定义，容器是镜像运行时的实体。容器可以被创建、启动、停止、删除、暂停等。</li>
+</ol>
+<h3 id="Repository"><a href="#Repository" class="headerlink" title="Repository"></a><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/basic_concept/repository">Repository</a></h3><ol>
+<li><code>Docker Registry</code>: 一个集中的存储、分发镜像的服务</li>
+<li>一个 Docker Registry 中可以包含多个 仓库（Repository）；每个仓库可以包含多个 标签（Tag）；每个标签对应一个镜像。</li>
+<li>通常，一个仓库会包含同一个软件不同版本的镜像，而标签就常用于对应该软件的各个版本。我们可以通过 <code>&lt;仓库名&gt;:&lt;标签&gt;</code> 的格式来指定具体是这个软件哪个版本的镜像。如果不给出标签，将以 latest 作为默认标签。</li>
+</ol>
+<h2 id="传统虚拟化与-docker-虚拟化"><a href="#传统虚拟化与-docker-虚拟化" class="headerlink" title="传统虚拟化与 docker 虚拟化"></a>传统虚拟化与 docker 虚拟化</h2><p><img src="https://gblobscdn.gitbook.com/assets%2F-M5xTVjmK7ax94c8ZQcm%2F-M5xT_hHX2g5ldlyp9nm%2F-M5xTdXNYDmRWNH-Lqez%2Fvirtualization.png?alt=media" alt="传统虚拟化"><br><img src="https://gblobscdn.gitbook.com/assets%2F-M5xTVjmK7ax94c8ZQcm%2F-M5xT_hHX2g5ldlyp9nm%2F-M5xTdXP2scg0hxytUHA%2Fdocker.png?alt=media" alt="docker虚拟化"></p>
+<h2 id="VNC"><a href="#VNC" class="headerlink" title="VNC"></a>VNC</h2><ol>
+<li><code>vncserver :1</code></li>
+<li><code>vncserver -kill :1</code></li>
+<li><code>ps -ef | grep vnc</code>查看是否运行及端口号</li>
+<li><code>cat .vnc/password.txt</code> 查看密码(自己设置)</li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/introduction/why">从入门到实践</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5cacbfd7e51d456e8833390c">30 分钟快速入门</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903450203914253">资源整理</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7224149297951195193">简单聊聊 k8s，和 docker 之间的关系</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/01/30/Kalman-Filters/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/30/Kalman-Filters/" class="post-title-link" itemprop="url">Kalman Filters</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-30 11:43:37" itemprop="dateCreated datePublished" datetime="2021-01-30T11:43:37+08:00">2021-01-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/Kalman/" itemprop="url" rel="index"><span itemprop="name">Kalman</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/01/30/Kalman-Filters/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/30/Kalman-Filters/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>576</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h2><ol>
+<li>卡尔曼滤波是一个递归的<code>估计</code>，只要获知<code>上一时刻的状态估计</code>和<code>当前状态的观测</code>就可以计算<code>当前状态的估计</code>。</li>
+<li>卡尔曼滤波器不需要观测&#x2F;估计的历史记录。</li>
+<li>卡尔曼滤波器是一个纯粹的<code>时域滤波器</code>，而不像低通滤波器那样，需要在频率设计，然后转到时域应用。</li>
+<li>两个阶段：<ul>
+<li><code>预测</code>：由上一状态的估计做出对当前状态的估计</li>
+<li><code>更新</code>：利用当前状态的观测值<code>优化</code>预测阶段的估计值，以获取一个<code>更精确的当前状态估计</code></li>
+</ul>
+</li>
+<li>两种数据：<ul>
+<li><code>估计值</code></li>
+<li><code>观测值</code>：传感器测量值，如GPS位置。</li>
+</ul>
+</li>
+<li>线性系统与非线性系统：<ul>
+<li>判断标准：能不能通过上一次系统估计状态直接乘以某个矩阵得到预测状态？ 矩阵都是具体的值，与估计状态相乘后只是估计状态的线性变换。（还是测量状态不能直接与估计状态求差？）</li>
+<li><code>线性系统</code>： 预测状态 &#x3D; F * 上一次估计状态。例如：预测汽车位置，传感器获得位置值，假设很短时间内，系统是匀速运动或匀加速运动（对应两种模型）。可以通过上一时刻状态乘以矩阵得到预测值。</li>
+<li><code>非线性系统</code>：预测状态不能直接由上一次估计状态乘以一个矩阵得到。 如雷达跟踪飞机，估计状态为(x, y). 测量状态为径向距离r和夹脚。</li>
+</ul>
+</li>
+</ol>
+<h2 id="Formulas"><a href="#Formulas" class="headerlink" title="Formulas"></a>Formulas</h2><ol>
+<li><img src="/images/kalman/formulas.jpg" alt="5 basic formulas"></li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/rlabbe/Kalman-and-Bayesian-Filters-in-Python">Kalman-and-Bayesian-Filters-in-Python</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/codesamer/article/details/81191487">Using in car</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d51a3a7736ca">基于Kalman滤波器的进行物体的跟踪</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/39912633">图说卡尔曼滤波</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=VFXf1lIZ3p8">Youtube Matlab tutorial</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1550,369 +2012,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/08/14/Effective-modern-cpp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/14/Effective-modern-cpp/" class="post-title-link" itemprop="url">Effective modern cpp</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-08-14 10:56:45" itemprop="dateCreated datePublished" datetime="2020-08-14T10:56:45+08:00">2020-08-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/08/14/Effective-modern-cpp/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/14/Effective-modern-cpp/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h2><ol>
-<li><code>右值</code>对应的是函数返回的临时对象，<code>左值</code>是可指涉的对象，可通过名字，指针等来标识。</li>
-<li>判断左值右值方法： 判断是否能取得地址。如果能取得地址则是左值，不能则为右值。例如<code>Widget(Widget&amp;&amp; rhs);</code>其中rhs为左值，因为函数体内对rhs取地址没有问题。相当于rhs被右值初始化，接受了右值。</li>
-<li>函数中，<code>实参</code>是用来初始化<code>形参</code>的。</li>
-<li>形参都是左值，而作为其初始化依据的实参，既能是右值，也可能是左值。例：<code>Widget(Widget&amp; rhs);</code>rhs是左值，传入的实参也是左值。<code>Widget(Widget&amp;&amp; rhs);</code>rhs是左值，传入的实参是右值。</li>
-<li><code>声明</code>的作用是引入名字和类型，而不给出细节。如存储位置或具体实现。<code>定义</code>则会给存储位置和具体实现的细节。定义同时也可以当声明用。</li>
-<li><code>函数的签名</code>：只包含形参类别和返回值类别，不包含函数名字和形参名字。例如：<code>bool(const Widget&amp;)</code></li>
-</ol>
-<h2 id="第一章-类型推到"><a href="#第一章-类型推到" class="headerlink" title="第一章 类型推到"></a>第一章 类型推到</h2><ol>
-<li>C++98仅有一套类型推导规则，用于函数模板。C++11对其进行改进，并增加了两套，一套用于auto，一套用于decltype。C++14又扩展了使用语义。</li>
-</ol>
-<h3 id="条款1：-理解模板类别推导"><a href="#条款1：-理解模板类别推导" class="headerlink" title="条款1： 理解模板类别推导"></a>条款1： 理解模板类别推导</h3><ol>
-<li></li>
-</ol>
-<h2 id="第三章-转向现代C"><a href="#第三章-转向现代C" class="headerlink" title="第三章 转向现代C++"></a>第三章 转向现代C++</h2><h3 id="在创建对象时注意区分-和"><a href="#在创建对象时注意区分-和" class="headerlink" title="在创建对象时注意区分()和{}"></a>在创建对象时注意区分()和{}</h3><ol>
-<li>对象初始化的方式包括使用小括号，使用等号，或是使用大括号：<code>int x(0); int y = 0; int z&#123;0&#125;;</code> 等号加大括号等效于大括号<code>int z = &#123;0&#125;;</code></li>
-<li>大括号初始化又称为<code>统一初始化</code>。</li>
-<li>大括号可以用来对容器进行初始化，例如: <code>vector&lt;int&gt; v&#123;1, 2, 3, 4&#125;;</code></li>
-<li>类的成员变量在类的定义时可以用<code>&#123;&#125;</code>或者<code>=</code>进行初始化，不能使用<code>()</code></li>
-<li>不可复制对象(例如：std::atomic)可以使用<code>&#123;&#125;</code>或者<code>()</code>进行初始化，不能使用<code>=</code></li>
-<li>大括号初始化<code>禁止内建类型进行隐式窄化类型转化</code>。如：<code>double x, y; ... ; int sum&#123;x+y&#125;;</code>编译出错，double无法用int表示。</li>
-<li>C++规定，任何能够解析为声明的都要解析为声明。大括号初始化免疫。<code>Widget w1();</code>此处被解析为函数声明，而不是初始化w1调用构造函数。<code>Widget w2&#123;&#125;;</code>调用无形参的构造函数来构造w2。</li>
-<li>大括号初始化时如果形参出现std::initializer_list会优先调用，此时可以小括号。</li>
-<li>模板内容进行创建时，应该使用小括号还是大括号是一个棘手问题。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/08/11/Network/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/11/Network/" class="post-title-link" itemprop="url">Network</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-08-11 12:11:56" itemprop="dateCreated datePublished" datetime="2020-08-11T12:11:56+08:00">2020-08-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Computer/Network/" itemprop="url" rel="index"><span itemprop="name">Network</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/08/11/Network/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/11/Network/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/08/05/Cargo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/05/Cargo/" class="post-title-link" itemprop="url">Cargo</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-08-05 08:58:58" itemprop="dateCreated datePublished" datetime="2020-08-05T08:58:58+08:00">2020-08-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Rust/" itemprop="url" rel="index"><span itemprop="name">Rust</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/08/05/Cargo/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/05/Cargo/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>563</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Build-Scripts"><a href="#Build-Scripts" class="headerlink" title="Build Scripts"></a>Build Scripts</h2><ol>
-<li>有些库依赖第三方语言的库，例如需要C库，并且需要从源码编译，cargo目标并不是取代那些优化很好的第三方编译工具，所以cargo通过build脚本来集成其他工具。</li>
-<li>在crate包的根路径下创建一个名为<code>build.sh</code>的脚本，Cargo会在编译crate包之前先编译<code>build.sh</code>脚本然后执行该脚本。</li>
-<li>如果<code>build.sh</code>依赖的文件有任何改变，会被重新编译。</li>
-<li>build脚本的输入是通过环境变量传递的。</li>
-<li>环境变量中的当前路径就是<code>build.sh</code>源码所在路径。</li>
-<li>build脚本会将输出放入到<code>OUT_DIR</code>中的各个路径中。所以build脚本不应该改变这些输出路径中的文件。</li>
-<li>Cargo会解析那些以<code>cargo:</code>开头的行，其他行被忽略。</li>
-<li>build脚本的输出默认被隐藏，可以使用<code>-vv</code>(very verbose)来查看输出。如果依赖的文件没有被改变，什么都不会输出，因为不会重新执行编译脚本。</li>
-<li>build脚本的编译输出都会存在类似于<code>target/debug/build/&lt;pkg&gt;/output</code>文件中。</li>
-<li>…</li>
-<li><code>build.sh</code>中依赖的crates需要在Cargo.toml中的<code>[build-dependencies]</code>中指定依赖，<code>build.sh</code>可用的依赖见<a target="_blank" rel="noopener" href="https://crates.io/keywords/build-dependencies">crates.io build-dependencies crates</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1980,7 +2083,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">158</span>
+          <span class="site-state-item-count">161</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2013,19 +2116,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2023/12/19/multimodal/" title="2023&#x2F;12&#x2F;19&#x2F;multimodal&#x2F;">multimodal</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2023/12/19/diffusion/" title="2023&#x2F;12&#x2F;19&#x2F;diffusion&#x2F;">diffusion</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2023/12/18/ai-papers/" title="2023&#x2F;12&#x2F;18&#x2F;ai-papers&#x2F;">ai-papers</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/11/21/transformer/" title="2023&#x2F;11&#x2F;21&#x2F;transformer&#x2F;">transformer</a>
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/11/21/LLM/" title="2023&#x2F;11&#x2F;21&#x2F;LLM&#x2F;">LLM</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/11/15/shareX/" title="2023&#x2F;11&#x2F;15&#x2F;shareX&#x2F;">shareX</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/11/10/nvidia/" title="2023&#x2F;11&#x2F;10&#x2F;nvidia&#x2F;">nvidia</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/11/05/package-manager/" title="2023&#x2F;11&#x2F;05&#x2F;package-manager&#x2F;">package manager</a>
         </li>
     </ul>
   </div>
@@ -2063,13 +2166,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">380k</span>
+    <span title="站点总字数">381k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:46</span>
+    <span title="站点阅读时长">5:47</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

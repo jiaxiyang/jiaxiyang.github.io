@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">158</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">161</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,354 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/01/16/JFrog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/16/JFrog/" class="post-title-link" itemprop="url">JFrog</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-16 14:23:18" itemprop="dateCreated datePublished" datetime="2023-01-16T14:23:18+08:00">2023-01-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-09-28 13:13:30" itemprop="dateModified" datetime="2023-09-28T13:13:30+08:00">2023-09-28</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/01/16/JFrog/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/01/16/JFrog/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Artifactory"><a href="#Artifactory" class="headerlink" title="Artifactory"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/274996585">Artifactory</a></h2><ol>
+<li>上传最好不要用 sudo 用户，否则容易覆盖之前文件，不好管理</li>
+<li>guest 用户可以禁止 ui 登录，防止用户被锁</li>
+<li>可以通过界面上传文件</li>
+<li>作为一个二进制包管理工具，可以用于管理构建产物：即把生成的 jar 包存放到 JFrog，当在生产环境进行部署时，Jenkins 直接从 JFrog 中拉取对应的 jar 包即可。</li>
+<li>官方的介绍：JFrog Artifactory 是一个可扩展的通用二进制存储库管理器，可在整个应用程序开发和交付过程中自动管理你的工件和依赖项。一句话概括：Artifactory 是一个存放制品（Artifacts）的工具。</li>
+<li>左下角 getting started</li>
+<li>允许匿名用户，否则 wget curl 下载不下来， <a target="_blank" rel="noopener" href="https://juejin.cn/post/7080707817778184205">link</a></li>
+<li>先创建 repo，再上传</li>
+<li>repo 分为：local, remote 和 virtual</li>
+<li>monitoring -&gt; storage 可以看各 repo 存储大小</li>
+<li>Application -&gt; Artifactory -&gt; artifacts 右上角 Set me up 可以查看 deploy 和 resolve 命令</li>
+<li>set me up 中可以设置 configue 来隐藏密码</li>
+<li>artifacts 中的文件可以单独下载，右上角下载符号</li>
+<li>有些文件可以预览，右上角…展开, 或者选中文件，右击</li>
+<li>可以查看下载次数和被谁下载</li>
+<li><a target="_blank" rel="noopener" href="https://www.jfrog.com/confluence/display/JFROG/Repository+Layouts">artifacts 布局 layouts</a> 可以查看版本, 可以生成各种工具依赖的版本信息</li>
+<li>MD5 check：<code>echo 99 &gt; test.txt &amp;&amp; MD5=$(md5sum test.txt | awk &#39;&#123;print $1&#125;&#39;) &amp;&amp; curl -uxiyang.jia:APAQR97hg1swsSNZ -T test.txt -H &quot;X-Checksum-MD5:$&#123;MD5&#125;&quot; -L &quot;http://artifacts.phigent.io/artifactory/xiyang-test/test/test/test-1.0.3.txt&quot; -v</code></li>
+<li>可以通过 name, checksum, property 搜索 artifacts</li>
+<li><code>wget -O test.tar.gz --no-check-certificate  https://guest:Guest.123@xxx/artifactory/test.tar.gz</code> 下载, 覆盖原来文件</li>
+<li><code>curl -sSfLO https://guest:Guest.123@xxx/artifactory/test.tar.gz</code> 下载</li>
+</ol>
+<h2 id="with-gilab"><a href="#with-gilab" class="headerlink" title="with gilab"></a><a target="_blank" rel="noopener" href="https://jfrog.com/blog/gitlab-and-artifactory-on-your-mark-get-set-build/">with gilab</a></h2><h3 id="NOTE"><a href="#NOTE" class="headerlink" title="NOTE"></a>NOTE</h3><ol>
+<li>curl -L http:xxx 不加 -L 会自动转换为 https</li>
+<li>curl -v 查看中间过程</li>
+<li>shell</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">JFROG_USER=xiyang.jia</span><br><span class="line">JFROG_PASSWD=APAQR97hg1swsSNZ</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">push_to_jfrog</span></span>() &#123;</span><br><span class="line">        FILE=<span class="variable">$1</span></span><br><span class="line">        JFROG_PATH=http://artifacts.phigent.io/artifactory/<span class="variable">$2</span></span><br><span class="line">        MD5=$(<span class="built_in">md5sum</span> <span class="variable">$FILE</span> | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span>)</span><br><span class="line">        curl -u<span class="string">&quot;<span class="variable">$&#123;JFROG_USER&#125;</span>:<span class="variable">$&#123;JFROG_PASSWD&#125;</span>&quot;</span> -T <span class="variable">$FILE</span> -H <span class="string">&quot;X-Checksum-MD5:<span class="variable">$&#123;MD5&#125;</span>&quot;</span> -L <span class="string">&quot;<span class="variable">$&#123;JFROG_PATH&#125;</span>&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">push_dir_to_jfrog</span></span>()&#123;</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> $(find <span class="variable">$1</span> -<span class="built_in">type</span> f); <span class="keyword">do</span></span><br><span class="line">                push_to_jfrog <span class="variable">$&#123;file&#125;</span> <span class="variable">$2</span>/<span class="variable">$&#123;file&#125;</span></span><br><span class="line">        <span class="keyword">done</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -d <span class="variable">$1</span> ]; <span class="keyword">then</span></span><br><span class="line">        push_dir_to_jfrog <span class="variable">$1</span> <span class="variable">$2</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">        push_to_jfrog <span class="variable">$1</span> <span class="variable">$2</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/01/13/Cpp20/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/01/13/Cpp20/" class="post-title-link" itemprop="url">Cpp20</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-01-13 15:31:55" itemprop="dateCreated datePublished" datetime="2023-01-13T15:31:55+08:00">2023-01-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/01/13/Cpp20/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/01/13/Cpp20/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>713</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="module"><a href="#module" class="headerlink" title="module"></a>module</h2><h2 id="coroutine"><a href="#coroutine" class="headerlink" title="coroutine"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/172471249">coroutine</a></h2><ol>
+<li>协程并没有增加线程数量，只是在线程的基础之上通过分时复用的方式运行多个协程，而且协程的切换在用户态完成，切换的代价比线程从用户态到内核态的代价小很多。</li>
+<li>协程对计算密集型的任务也没有太大的好处，计算密集型的任务本身不需要大量的线程切换，因此协程的作用也十分有限，反而还增加了协程切换的开销。</li>
+<li>因此在协程中不能调用导致线程阻塞的操作。也就是说，协程只有和异步 IO 结合起来，才能发挥最大的威力。</li>
+<li>协程只有和异步 IO 结合起来才能发挥出最大的威力。</li>
+<li>协程可以通过 yield（取其“让步”之义而非“出产”）来调用其它协程，接下来的每次协程被调用时，从协程上次 yield，返回的位置接着执行，通过 yield 方式转移执行权的协程之间不是调用者与被调用者的关系，而是彼此对称、平等的。</li>
+<li>协程非常类似于线程。但是协程是协作式多任务的，而线程典型是抢占式多任务的。这意味着协程提供并发性而非并行性。协程超过线程的好处是它们可以用于硬性实时的语境（在协程之间的切换不需要涉及任何系统调用或任何阻塞调用），这里不需要用来守卫关键区块的同步性原语（primitive）比如互斥锁、信号量等，并且不需要来自操作系统的支持。有可能以一种对调用代码透明的方式，使用抢占式调度的线程实现协程，但是会失去某些利益（特别是对硬性实时操作的适合性和相对廉价的相互之间切换）。</li>
+<li>协程的核心竞争力在于：它能简化异步并发任务，以同步方式写异步代码, 这也是为什么要引入协程的原因了：简化异步并发任务</li>
+<li>线程是操作系统层面的概念，协程是语言层面的概念, 线程与协程最大的区别在于：线程是被动挂起恢复，协程是主动挂起恢复</li>
+</ol>
+<h3 id="link"><a href="#link" class="headerlink" title="link"></a>link</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%8D%8F%E7%A8%8B">wikipedia</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6973650934664527885">进程、线程和协程的区别</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/12/26/BPF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/26/BPF/" class="post-title-link" itemprop="url">BPF</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-12-26 16:52:00" itemprop="dateCreated datePublished" datetime="2022-12-26T16:52:00+08:00">2022-12-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-12-03 18:24:06" itemprop="dateModified" datetime="2023-12-03T18:24:06+08:00">2023-12-03</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/12/26/BPF/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/12/26/BPF/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>372</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="tools"><a href="#tools" class="headerlink" title="tools"></a>tools</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_23662505/article/details/125427689?spm=1001.2101.3001.6650.7&utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-7-125427689-blog-119563743.pc_relevant_aa2&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-7-125427689-blog-119563743.pc_relevant_aa2&utm_relevant_index=8">各种 tools</a></li>
+</ol>
+<h2 id="BCC"><a href="#BCC" class="headerlink" title="BCC"></a>BCC</h2><ol>
+<li>需要 sudo 来执行命令</li>
+<li>各命令有 man 手册</li>
+<li><code>sudo apt-get install bpfcc-tools</code></li>
+<li><code> &#39;./include/linux/kconfig.h&#39; file not found</code> &#x3D;&gt; <code>cd /lib/modules/5.10.104-tegra/build/ &amp;&amp; ln -s /lib/modules/5.10.104-tegra/build/kernel-5.10/include .</code></li>
+<li></li>
+</ol>
+<h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/iovisor/bcc/blob/master/QUICKSTART.md">docker</a> 需要用宿主机上的内核源码</li>
+</ol>
+<h2 id="bpftrace"><a href="#bpftrace" class="headerlink" title="bpftrace"></a>bpftrace</h2><ol>
+<li><code>mount -t debugfs none /sys/kernel/debug/</code></li>
+</ol>
+<h3 id="install-1"><a href="#install-1" class="headerlink" title="install"></a>install</h3><ol>
+<li><code>sudo apt-get install -y bpftrace</code></li>
+<li>需要内核开启一些选项</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/iovisor/bpftrace/blob/master/INSTALL.md#ubuntu-packages">ubuntu</a></li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/eunomia-bpf/bpf-developer-tutorial">bpf-developer-tutorial</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1039,372 +1387,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/14/Markdown/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/14/Markdown/" class="post-title-link" itemprop="url">Markdown</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-10-14 15:38:52" itemprop="dateCreated datePublished" datetime="2022-10-14T15:38:52+08:00">2022-10-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-22 16:37:39" itemprop="dateModified" datetime="2023-11-22T16:37:39+08:00">2023-11-22</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/10/14/Markdown/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/14/Markdown/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>724</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/73613628">color</a></li>
-<li>page break: <code>&lt;div style=&quot;page-break-after: always; break-after: page;&quot;&gt;&lt;/div&gt;</code></li>
-<li>check box <code>- [x]</code>: 好好利用，写好 worklog</li>
-<li><code>&gt;</code> 注意符号</li>
-<li>diff</li>
-</ol>
-<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Hello1</span><br><span class="line">&#123;</span><br><span class="line">   public static void Main()</span><br><span class="line">   &#123;</span><br><span class="line"><span class="deletion">-      System.Console.WriteLine(&quot;Hello, World!&quot;);</span></span><br><span class="line"><span class="addition">+      System.Console.WriteLine(&quot;Rock all night long!&quot;);</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="emoji"><a href="#emoji" class="headerlink" title="emoji"></a>emoji</h2><ol>
-<li>直接复制就能用</li>
-<li><a target="_blank" rel="noopener" href="https://www.webfx.com/tools/emoji-cheat-sheet/">webfx</a></li>
-<li><a target="_blank" rel="noopener" href="https://emojipedia.org/">emojipedia</a></li>
-<li><a target="_blank" rel="noopener" href="https://gist.github.com/rxaviers/7360908">总结</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/ikatyang/emoji-cheat-sheet#table-of-contents">cheatsheet</a></li>
-<li>✅ 🔥 😀</li>
-</ol>
-<h2 id="Keybindings-emacs"><a href="#Keybindings-emacs" class="headerlink" title="Keybindings(emacs)"></a>Keybindings(emacs)</h2><ol>
-<li>stying test: C-c C-s</li>
-<li>toggle: C-c C-x</li>
-<li>help: C-c C-h</li>
-<li>outline navigation: same as org-mode</li>
-<li>running: C-c C-c</li>
-</ol>
-<h3 id="Links-and-Images"><a href="#Links-and-Images" class="headerlink" title="Links and Images"></a>Links and Images</h3><ol>
-<li>C-c C-l: insert link</li>
-<li>C-c C-i: insert image</li>
-</ol>
-<h3 id="Text-Styles-C-c-C-s"><a href="#Text-Styles-C-c-C-s" class="headerlink" title="Text Styles C-c C-s"></a>Text Styles C-c C-s</h3><ol>
-<li>C-c C-s i: <em>italic</em></li>
-<li>C-c C-s b: <strong>bold</strong></li>
-<li>C-c C-s c: <code>inline code</code></li>
-<li>C-c C-s C: code block</li>
-</ol>
-<h3 id="Headings-C-c-C-s"><a href="#Headings-C-c-C-s" class="headerlink" title="Headings C-c C-s"></a>Headings C-c C-s</h3><h3 id="Horizontal-Rules-C-c-C-s"><a href="#Horizontal-Rules-C-c-C-s" class="headerlink" title="Horizontal Rules C-c C-s -"></a>Horizontal Rules C-c C-s -</h3><h3 id="Footnodes-C-c-C-s-f"><a href="#Footnodes-C-c-C-s-f" class="headerlink" title="Footnodes: C-c C-s f"></a>Footnodes: C-c C-s f</h3><h3 id="Wiki-Links"><a href="#Wiki-Links" class="headerlink" title="Wiki Links"></a>Wiki Links</h3><h3 id="…TODO"><a href="#…TODO" class="headerlink" title="…TODO"></a>…TODO</h3><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://eblog.gitee.io/posts/hexo/hexo-writing-skills.html">(good)markdown 教程</a></li>
-<li><a target="_blank" rel="noopener" href="https://eblog.gitee.io/posts/hexo/hexo-theme-beautify.html">写的好的 markdown, 供参考</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/jrblevin/markdown-mode">markdown mode tutorial</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/09/v4l2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/09/v4l2/" class="post-title-link" itemprop="url">v4l2</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-10-09 17:22:03" itemprop="dateCreated datePublished" datetime="2022-10-09T17:22:03+08:00">2022-10-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-09 17:06:28" itemprop="dateModified" datetime="2023-11-09T17:06:28+08:00">2023-11-09</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/10/09/v4l2/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/09/v4l2/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.5k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="usb-双目"><a href="#usb-双目" class="headerlink" title="usb 双目"></a>usb 双目</h2><ol>
-<li>只能打开一个原因 <a target="_blank" rel="noopener" href="https://www.21xrx.com/Articles/read_article/259051">link</a> <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32900237/article/details/102392445">link2</a></li>
-<li>保存到同一画面上的优势：解决同步问题, 通过板载芯片来进行同步</li>
-</ol>
-<h2 id="v4l2"><a href="#v4l2" class="headerlink" title="v4l2"></a><a target="_blank" rel="noopener" href="http://zhaoxuhui.top/blog/2021/09/23/v4l2-introduction-and-usb-camera-bayer-raw-data.html">v4l2</a></h2><ol>
-<li><code>sudo v4l2-ctl --list-devices</code>获取相机列表</li>
-<li><code>media-ctl -p</code></li>
-<li><code>v4l2-ctl --all -d /dev/video</code></li>
-<li><code>v4l2-ctl -d /dev/video0 --list-formats-ext</code> 列出&#x2F;dev&#x2F;video0 支持的格式</li>
-<li><code>yavta /dev/video0 -n3 -c10 -f YUYV -s1920x1282 --skip 9 -Fvideo0_#.yuv &amp;</code> 从&#x2F;dev&#x2F;video0 拿图, 保存未.yuv</li>
-<li><code>v4l2-ctl --set-fmt-video=width=1920,height=1282,pixelformat=YUYV --stream-mmap --stream-count=1 -d /dev/video0 --stream-to=camera_0_1920_1282_0.yuv</code> 获取一张图片</li>
-<li><a target="_blank" rel="noopener" href="https://askubuntu.com/a/881341">send video to &#x2F;dev&#x2F;video0</a></li>
-<li><code>ffmpeg -y -t 15 -f video4linux2 -video_size 1920x1080 -input_format nv12 -timestamps abs -use_libv4l2 1 -i /dev/video0 out.mov</code> ffmpeg <a target="_blank" rel="noopener" href="https://superuser.com/q/1449252">link</a></li>
-</ol>
-<h2 id="sample"><a href="#sample" class="headerlink" title="sample"></a>sample</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/wuhanstudio/capturev4l2">wuhanstudio&#x2F;capturev4l2</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/html/v4.9/media/uapi/v4l/capture.c.html">C++ sample</a> <code>gcc -o v4l2_test v4l2_test.c</code></li>
-<li>simple opencv sample</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;opencv2/opencv.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;iostream&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span>, <span class="type">char</span>**)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// open the first webcam plugged in the computer</span></span><br><span class="line">    <span class="function">cv::VideoCapture <span class="title">camera</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line">    <span class="keyword">if</span> (!camera.<span class="built_in">isOpened</span>()) &#123;</span><br><span class="line">        std::cerr &lt;&lt; <span class="string">&quot;ERROR: Could not open camera&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// create a window to display the images from the webcam</span></span><br><span class="line">    cv::<span class="built_in">namedWindow</span>(<span class="string">&quot;Webcam&quot;</span>, CV_WINDOW_AUTOSIZE);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// this will contain the image from the webcam</span></span><br><span class="line">    cv::Mat frame;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// capture the next frame from the webcam</span></span><br><span class="line">    camera &gt;&gt; frame;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// display the frame until you press a key</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment">// show the image on the window</span></span><br><span class="line">        cv::<span class="built_in">imshow</span>(<span class="string">&quot;Webcam&quot;</span>, frame);</span><br><span class="line">        <span class="comment">// wait (10ms) for a key to be pressed</span></span><br><span class="line">        <span class="keyword">if</span> (cv::<span class="built_in">waitKey</span>(<span class="number">10</span>) &gt;= <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="issue"><a href="#issue" class="headerlink" title="issue"></a>issue</h2><ol>
-<li><code>OPENCV_LOG_LEVEL=DEBUG ./demo</code> 打开 opencv debug 信息</li>
-<li>注意<code>/dev/video*</code> 权限</li>
-<li>双目摄像头可能需要同时打开 <code>/dev/video0</code> 和 <code>/dev/video1</code></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/09/Life-experience/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/09/Life-experience/" class="post-title-link" itemprop="url">Life-experience</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-10-09 10:13:03" itemprop="dateCreated datePublished" datetime="2022-10-09T10:13:03+08:00">2022-10-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/10/09/Life-experience/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/09/Life-experience/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>745</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li><code>找到内心的召唤</code>， 做事要培养兴趣，不然很难做好 <code>Hackers write better code when it&#39;s for their own satisfaction instead of for pay.</code></li>
-<li><code>多尝试</code>，别怕出错</li>
-<li><code>不要用反问</code> 老板要是换个说法，说“这个文件需要打印两份”。你觉得哪种说法更容易接受呢？明显后者听起来舒服多了。 比如你打印文件，老板跟你说“你怎么只打印一份啊？老板要是换个说法，说“这个文件需要打印两份”。你觉得哪种说法更容易接受呢？明显后者听起来舒服多了。老板要是换个说法，说“这个文件需要打印两份”。你觉得哪种说法更容易接受呢？明显后者听起来舒服多了。</li>
-<li><code>能够轻易得到答案的简单问题不要问出口</code>，那并不会显得你很好学，反而会显得你无知又懒惰。</li>
-<li><code>不经过思考后的答案不要脱口而出</code>，控制住嘴巴是你学会成熟的第一步。</li>
-<li><code>说话尽量不要带“吧”字</code>，好和好吧，行和行吧，听你的和听你的吧，前者是直接坦率的，后者是犹豫而无奈的。要做就做，干脆一点，不然为何答应</li>
-<li><code>要把自己当作一个公司去运营</code>，要有战略方向（你的人生目标），要有运营路径（你的行动方案），要有产品竞争力（你的个人能力维度），要有营销（你的公开表达），要有财务思维（你的收支平衡）</li>
-<li><code>职场没有功劳就没有苦劳</code> 只有建立在功劳基础上的苦劳，才有价值。</li>
-<li><code>远离抱怨的人</code></li>
-<li><code>生气时，学会闭嘴</code> 生气时，情绪完全被动物大脑控制，很容易得罪人。像钉子钉墙一样，就算把钉子拔出来，墙依然会有孔 最好的办法就是深呼吸，闭嘴。</li>
-<li><code>如果找不到热爱的事业，先做最擅长的工作</code></li>
-<li><code>别糊弄</code></li>
-<li>别人找你帮忙的时候，不要果断答应。如果对方是爽快之人，你可以同样爽快交往。但对大部分人，不要急于表露自己的热情好客，你的直爽只会把你的付出变得廉价，在他眼里你办这事没有任何难度，不会从心里感激你，只是把你当工具人。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1472,7 +1458,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">158</span>
+          <span class="site-state-item-count">161</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1505,19 +1491,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2023/12/19/multimodal/" title="2023&#x2F;12&#x2F;19&#x2F;multimodal&#x2F;">multimodal</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2023/12/19/diffusion/" title="2023&#x2F;12&#x2F;19&#x2F;diffusion&#x2F;">diffusion</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2023/12/18/ai-papers/" title="2023&#x2F;12&#x2F;18&#x2F;ai-papers&#x2F;">ai-papers</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/11/21/transformer/" title="2023&#x2F;11&#x2F;21&#x2F;transformer&#x2F;">transformer</a>
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/11/21/LLM/" title="2023&#x2F;11&#x2F;21&#x2F;LLM&#x2F;">LLM</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/11/15/shareX/" title="2023&#x2F;11&#x2F;15&#x2F;shareX&#x2F;">shareX</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/11/10/nvidia/" title="2023&#x2F;11&#x2F;10&#x2F;nvidia&#x2F;">nvidia</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/11/05/package-manager/" title="2023&#x2F;11&#x2F;05&#x2F;package-manager&#x2F;">package manager</a>
         </li>
     </ul>
   </div>
@@ -1555,13 +1541,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">380k</span>
+    <span title="站点总字数">381k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:46</span>
+    <span title="站点阅读时长">5:47</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
