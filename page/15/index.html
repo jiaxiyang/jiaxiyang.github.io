@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">161</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">162</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,176 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/02/23/FFmpeg/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/23/FFmpeg/" class="post-title-link" itemprop="url">FFmpeg</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-23 20:21:13" itemprop="dateCreated datePublished" datetime="2021-02-23T20:21:13+08:00">2021-02-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/FFmpeg/" itemprop="url" rel="index"><span itemprop="name">FFmpeg</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/02/23/FFmpeg/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/02/23/FFmpeg/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="视频处理基本概念"><a href="#视频处理基本概念" class="headerlink" title="视频处理基本概念"></a><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2020/01/ffmpeg.html">视频处理基本概念</a></h2><ol>
+<li><code>容器(封装)</code>：<code>ffmpeg-formats</code> 视频文件本身其实是一个容器（container），里面包括了视频和音频，也可能有字幕等其他内容。</li>
+<li><code>编码格式</code>：<code>ffmpeg-codecs</code> 视频和音频都需要经过编码，才能保存成文件。不同的编码格式（CODEC），有不同的压缩率，会导致文件大小和清晰度的差异。</li>
+<li><code>编码器</code>：<code>ffmpeg-encoders</code> 编码器（encoders）是实现某种编码格式的库文件。只有安装了某种格式的编码器，才能实现该格式视频&#x2F;音频的编码和解码。</li>
+</ol>
+<h2 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h2><ol>
+<li>ffmpeg的主要工作流程相对比较简单，具体如下。</li>
+</ol>
+<ul>
+<li>解封装（Demuxing）</li>
+<li>解码（Decoding）</li>
+<li>编码（Encoding）</li>
+<li>封装（Muxing）</li>
+</ul>
+<ol>
+<li>其中需要经过6个步骤，具体如下。</li>
+</ol>
+<ul>
+<li>读取输入源</li>
+<li>进行音视频的解封装</li>
+<li>解码每一帧音视频数据</li>
+<li>进行音视频的重新封装</li>
+<li>输出到目标</li>
+</ul>
+<p>1.<br>                _______              ______________<br>               |       |            |              |<br>               | input |  demuxer   | encoded data |   decoder<br>               | file  | ———&gt; | packets      | —–+<br>               |<em><strong><strong><strong>|            |</strong></strong></strong><strong><strong><strong><strong>|      |<br>                                                          v<br>                                                      _________<br>                                                     |         |<br>                                                     | decoded |<br>                                                     | frames  |<br>                                                     |</strong></strong></strong></strong></em>|<br>                ________             ______________       |<br>               |        |           |              |      |<br>               | output | &lt;——– | encoded data | &lt;—-+<br>               | file   |   muxer   | packets      |   encoder<br>               |<strong><strong><strong><strong>|           |</strong></strong></strong></strong>______|</p>
+<h2 id="ffmpeg"><a href="#ffmpeg" class="headerlink" title="ffmpeg"></a>ffmpeg</h2><ol>
+<li>FFmpeg框架的基本组成包含AVFormat、AVCodec、AVFilter、AVDevice、AVUtil等模块库</li>
+<li>主要命令</li>
+</ol>
+<ul>
+<li>ffmpeg主要用于音视频编解码</li>
+<li>ffprobe主要用于音视频内容分析</li>
+<li>ffplay主要用于音视频播放、可视化分析</li>
+</ul>
+<h3 id="ffmpeg-1"><a href="#ffmpeg-1" class="headerlink" title="ffmpeg"></a>ffmpeg</h3><ol>
+<li>总共分为5部分：<code>ffmpeg &#123;1&#125; &#123;2&#125; -i &#123;3&#125; &#123;4&#125; &#123;5&#125;</code></li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ffmpeg \</span><br><span class="line"><span class="selector-attr">[全局参数]</span> \</span><br><span class="line"><span class="selector-attr">[输入文件参数]</span> \</span><br><span class="line">-<span class="selector-tag">i</span> <span class="selector-attr">[输入文件]</span> \</span><br><span class="line"><span class="selector-attr">[输出文件参数]</span> \</span><br><span class="line"><span class="selector-attr">[输出文件]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ffplay"><a href="#ffplay" class="headerlink" title="ffplay"></a>ffplay</h3><ol>
+<li>FFmpeg不但可以提供转码、转封装等功能，同时还提供了播放器相关功能，使用FFmpeg的avformat与avcodec，可以播放各种媒体文件或者流。如果想要使用ffplay，那么系统首先需要有SDL来进行ffplay的基础支撑。</li>
+</ol>
+<h3 id="ffprobe"><a href="#ffprobe" class="headerlink" title="ffprobe"></a>ffprobe</h3><ol>
+<li>ffprobe也是FFmpeg源码编译后生成的一个可执行程序。ffprobe是一个非常强大的多媒体分析工具，可以从媒体文件或者媒体流中获得你想要了解的媒体信息，比如音频的参数、视频的参数、媒体容器的参数信息等。</li>
+<li><code>./ffprobe –show_streams output.mp4</code></li>
+</ol>
+<h2 id="ffmpeg硬编解码"><a href="#ffmpeg硬编解码" class="headerlink" title="ffmpeg硬编解码"></a>ffmpeg硬编解码</h2><ol>
+<li>当使用FFmpeg进行软编码时，常见的基于CPU进行H.264或H.265编码其相对成本会比较高，CPU编码时的性能也很低，所以出于编码效率及成本考虑，很多时候都会考虑采用硬编码，常见的硬编码包含Nvidia GPU与Intel QSV两种，还有常见的嵌入式平台，如树莓派、瑞芯微等</li>
+</ol>
+<h2 id="ffmpeg流媒体"><a href="#ffmpeg流媒体" class="headerlink" title="ffmpeg流媒体"></a>ffmpeg流媒体</h2><ol>
+<li>随着互联网、移动互联网的发展，人们获取信息的方式开始从纸质媒体转向互联网文字媒体，又从文字媒体转向音视频流媒体。音视频流媒体又称为流媒体，而用于处理流媒体的压缩、录制、编辑操作，开源并强大的工具屈指可数，FFmpeg就是常见的流媒体处理工具。</li>
+<li>流类型：RTMP, RTSP, HTTP, UDP&#x2F;TCP, HDS, DASH</li>
+</ol>
+<h2 id="ffmpeg-filter"><a href="#ffmpeg-filter" class="headerlink" title="ffmpeg filter"></a>ffmpeg filter</h2><ol>
+<li>FFmpeg除了具有强大的封装&#x2F;解封装、编&#x2F;解码功能之外，还包含了一个非常强大的组件——avfilter。avfilter组件经常用于进行多媒体的处理与编辑。例如加水印，画中画，多宫格视频等</li>
+</ol>
+<h2 id="ffmpeg视频采集"><a href="#ffmpeg视频采集" class="headerlink" title="ffmpeg视频采集"></a>ffmpeg视频采集</h2><ol>
+<li>可以使用FFmpeg采集本地的音视频采集设备的数据，然后进行编码、封装、传输等操作</li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://ffmpeg.org/documentation.html">Official Documents</a></li>
+<li><a target="_blank" rel="noopener" href="http://jxz1.j9p.com/pc/dgsdfhghgh.pdf">FFmpeg从入门到精通（书）</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1724,294 +1894,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/08/18/Bjarny-Stroustrup-Cpp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/18/Bjarny-Stroustrup-Cpp/" class="post-title-link" itemprop="url">Bjarny Stroustrup cpp</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-08-18 09:34:33" itemprop="dateCreated datePublished" datetime="2020-08-18T09:34:33+08:00">2020-08-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/08/18/Bjarny-Stroustrup-Cpp/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/18/Bjarny-Stroustrup-Cpp/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="What-is-C-20"><a href="#What-is-C-20" class="headerlink" title="What is C++20?"></a>What is C++20?</h2><ol>
-<li>The best approximation of C++’s ideals so far.</li>
-<li>As big an improvement over C++11 as C++11 was over C++98: A major “release”</li>
-<li>Lots of useful features<ul>
-<li>Simpler, more expressive, faster code that compiles faster</li>
-<li>Modeles</li>
-<li>Concepts</li>
-<li>Coroutines</li>
-<li>Ranges</li>
-<li>Dates</li>
-<li>Span</li>
-<li>Better compile-time programing support</li>
-<li>Many “minor features”</li>
-</ul>
-</li>
-<li>C++23 and C++26 is better than C++20, not the major “release”.</li>
-<li>Diretly learn C++20. It’s the outside layer of the onion.</li>
-<li>C++23:<ul>
-<li>“Completes C++20”</li>
-<li>Plus: standard modules, library support for coroutines, executors &amp; networking</li>
-<li>Maybe: static reflection, pattern matching</li>
-</ul>
-</li>
-</ol>
-<h2 id="Keys-C-“Rules-of-Thumb”"><a href="#Keys-C-“Rules-of-Thumb”" class="headerlink" title="Keys C++ “Rules of Thumb”"></a>Keys C++ “Rules of Thumb”</h2><ol>
-<li><code>A static type system</code> with equal support for build-in and user-defined types<ul>
-<li>A type: specifies the set of operations that can be applied to an object and specifies how an object is laid out in memory</li>
-<li>A static type system: the base of all</li>
-<li>static mean compile time will determine all the type(not the run-time).</li>
-<li>compile-time error detection</li>
-<li>performance</li>
-<li>flexibility through compile-time resolution(overloading, generic programming, metaprogramming…)</li>
-</ul>
-</li>
-<li><code>Value and reference semantics</code><ul>
-<li>value types: Inegers, characters, strings, containers,…</li>
-<li>Pointers&#x2F;references: T*, T&amp;, unique_ptr<T>, Forward_iterator</li>
-</ul>
-</li>
-<li><code>Direct use</code> of machine and operating system resources<ul>
-<li>bitset and span(modern c++)</li>
-<li>the onion principle: the more layers you peel off, the more control, the more error.</li>
-</ul>
-</li>
-<li>Systematic and general <code>resource management</code>(RAII)<ul>
-<li>manage heap, file…</li>
-<li>every resource must have an owner: responsible for its cleanup.</li>
-<li>control the complete object life cycle: creation, copy, move, destruction</li>
-</ul>
-</li>
-<li>Support <code>composition</code> of software from separately developed parts.<ul>
-<li>modules</li>
-<li>all major features support composition: moduls, classes, concepts, templates, functions, aliases</li>
-</ul>
-</li>
-<li>Support for <code>object-oriented programming</code></li>
-<li>Support for <code>generic programming</code><ul>
-<li>concepts</li>
-</ul>
-</li>
-<li>Support <code>compile-time programming</code><ul>
-<li>Move computation from run-time to compile-time(performace, do once)</li>
-<li>It’s everywhere: overloading and virtual functions, templates, variadic templates, constexp functions…</li>
-</ul>
-</li>
-<li><code>Concurency</code> through libraries supported by intrinsics</li>
-<li><code>Libraries</code><ul>
-<li>A user shouldn’t have to care whether a feature is implemented in the language or in a library</li>
-</ul>
-</li>
-</ol>
-<h2 id="Philosophy-CppCoreGuidelines"><a href="#Philosophy-CppCoreGuidelines" class="headerlink" title="Philosophy (CppCoreGuidelines)"></a>Philosophy (CppCoreGuidelines)</h2><ol>
-<li>Express ideas directly in code</li>
-<li>Write in ISO Stardard C++</li>
-<li>Express intent</li>
-<li>Ideally, a program should be statically type safe.</li>
-<li>Prefer compile-time checking to run-time checking.</li>
-<li>What cannot be checked at compile time should be checkable at run time</li>
-<li>Catch run-time errors early.</li>
-<li>Don’t leak any resources.</li>
-<li>Don’t waste time or space.</li>
-<li>Prefer immutable data to mutable data</li>
-<li>Encapsulate messy constructs, rather than spreading through the code.</li>
-<li>Use supporting tools as appropriate</li>
-<li>Use support libraries as appropriate</li>
-</ol>
-<h2 id="Lower-levels-of-abstaction"><a href="#Lower-levels-of-abstaction" class="headerlink" title="Lower levels of abstaction"></a>Lower levels of abstaction</h2><ol>
-<li>Samples:<ul>
-<li>Sizes</li>
-<li>Raw pointers</li>
-<li>Allocation and deallocation</li>
-<li>Loop-control variables</li>
-<li>Casts</li>
-<li>Macros</li>
-</ul>
-</li>
-<li>Except as implementation details and asides</li>
-<li>Don’t go to lower level if you have to.</li>
-</ol>
-<h2 id="What-really-matters"><a href="#What-really-matters" class="headerlink" title="What really matters?"></a>What really matters?</h2><ol>
-<li>People</li>
-<li>A programming language is a tool, not an end goal: peopeo want great systems, not programming languages.</li>
-<li>Software developers want great tools: not just programming language features.</li>
-</ol>
-<h2 id="Abstraction"><a href="#Abstraction" class="headerlink" title="Abstraction"></a>Abstraction</h2><ol>
-<li>Often, the software is more complicated than the hardware.</li>
-<li>abstraction in code:<ul>
-<li>resource mangement: vector</li>
-<li>generic programing: concepts: compile-time predicates.</li>
-</ul>
-</li>
-</ol>
-<h2 id="The-onion-principle"><a href="#The-onion-principle" class="headerlink" title="The onion principle"></a>The onion principle</h2><ol>
-<li>Mangagement of complexity: make simple thing simple.</li>
-<li>Layers of abstraction: the more layers you peel off, the more you cry.</li>
-</ol>
-<h2 id="An-engineering-approach"><a href="#An-engineering-approach" class="headerlink" title="An engineering approach"></a>An engineering approach</h2><ol>
-<li>Design c++ is not pure math.</li>
-<li>Principled and pragmatic design</li>
-<li>Progress gradually guided by feedback</li>
-<li>There are always many tradeoffs: choosing is hard</li>
-<li>Design decisions have consequences</li>
-</ol>
-<h2 id="C-in-two-lines"><a href="#C-in-two-lines" class="headerlink" title="C++ in two lines"></a>C++ in two lines</h2><ol>
-<li>Direct map to hardware<ul>
-<li>of instructions and fundamental data types</li>
-<li>initially from C</li>
-<li>Future: use novel hardware better(caches, multicores, GPUs, FPGAs, SIMD, …)</li>
-</ul>
-</li>
-<li>Zero-overhead abstraction<ul>
-<li>classes, inheritance, generic programming, …</li>
-<li>initially from Simula(where it wasn’t zero-overhead)</li>
-<li>Future: Type- and resouce-safety, concepts, modules, concurrency, …</li>
-</ul>
-</li>
-</ol>
-<h2 id="C-’s-role"><a href="#C-’s-role" class="headerlink" title="C++’s role"></a>C++’s role</h2><ol>
-<li>A language for<ul>
-<li>writing elegant and efficiaent programs</li>
-<li>for definning and using light-weight abstractions</li>
-<li>a language for resource-constrained applications</li>
-<li>building software infrastructure</li>
-</ul>
-</li>
-<li>Offers<ul>
-<li>a direct map to hardware</li>
-<li>Zero-overhead abstraction</li>
-</ul>
-</li>
-<li>No language is perfect<ul>
-<li>for everthing</li>
-<li>for everyone</li>
-</ul>
-</li>
-</ol>
-<h2 id="C-is-tunable"><a href="#C-is-tunable" class="headerlink" title="C++ is tunable"></a>C++ is tunable</h2><ol>
-<li>Make simple things simple<ul>
-<li>Don’t make complicated tasks impossible</li>
-<li>Don’t make complicated tasks unreasonable hard to do</li>
-<li>The onion principle</li>
-</ul>
-</li>
-<li>Don’t drop to lower levels of abstraction<ul>
-<li>Unless you really, really need to</li>
-<li>Hide messy code behind clean interfaces</li>
-</ul>
-</li>
-<li>Alwasy measure</li>
-</ol>
-<h2 id="Write-better-code"><a href="#Write-better-code" class="headerlink" title="Write better code"></a>Write better code</h2><ol>
-<li>Cleaner</li>
-<li>Simpler</li>
-<li>More readable</li>
-<li>More maintainable</li>
-<li>Faster</li>
-<li>Less clever</li>
-<li>More general</li>
-<li>More usable and re-usable</li>
-<li>Type safe</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2083,7 +1965,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">161</span>
+          <span class="site-state-item-count">162</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2116,6 +1998,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2023/12/21/deep-learning/" title="2023&#x2F;12&#x2F;21&#x2F;deep-learning&#x2F;">deep-learning</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/12/19/multimodal/" title="2023&#x2F;12&#x2F;19&#x2F;multimodal&#x2F;">multimodal</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -2126,9 +2011,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/11/21/transformer/" title="2023&#x2F;11&#x2F;21&#x2F;transformer&#x2F;">transformer</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/11/21/LLM/" title="2023&#x2F;11&#x2F;21&#x2F;LLM&#x2F;">LLM</a>
         </li>
     </ul>
   </div>
@@ -2166,13 +2048,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">381k</span>
+    <span title="站点总字数">382k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:47</span>
+    <span title="站点阅读时长">5:48</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
