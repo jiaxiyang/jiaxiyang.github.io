@@ -756,7 +756,7 @@
 <li>awk 按列过滤参数 ls -l test.sh | awk ‘{ print $5 }’ 输出：454</li>
 <li>shell 小程序<a target="_blank" rel="noopener" href="https://www.jb51.net/article/54488.htm">link</a></li>
 <li>shell 得到文件信息 <code>ll /var/log/messages | cut -d &quot; &quot; -f 5</code></li>
-<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#106;&#105;&#97;&#x78;&#105;&#x79;&#x61;&#110;&#x67;&#64;&#49;&#x30;&#46;&#49;&#48;&#x2e;&#x30;&#46;&#x31;&#x37;">&#106;&#105;&#97;&#x78;&#105;&#x79;&#x61;&#110;&#x67;&#64;&#49;&#x30;&#46;&#49;&#48;&#x2e;&#x30;&#46;&#x31;&#x37;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
+<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#x6a;&#105;&#x61;&#x78;&#x69;&#121;&#97;&#x6e;&#103;&#64;&#49;&#x30;&#x2e;&#49;&#x30;&#46;&#48;&#46;&#x31;&#55;">&#x6a;&#105;&#x61;&#x78;&#x69;&#121;&#97;&#x6e;&#103;&#64;&#49;&#x30;&#x2e;&#49;&#x30;&#46;&#48;&#46;&#x31;&#55;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
 <li>读文件内容，记录到变量中 var&#x3D;$(cat name.txt)</li>
 <li>计时 start&#x3D;$(date+%s) &amp;&amp; sleep 2 &amp;&amp; end&#x3D;$(date+%s)&amp;&amp; echo $(($end - $start)) <a target="_blank" rel="noopener" href="http://blog.csdn.net/gengshenghong/article/details/7583580">link</a></li>
 <li>sleep: sleep 1 睡眠 1 秒 sleep 1s 睡眠 1 秒 sleep 1m 睡眠 1 分 sleep 1h 睡眠 1 小时</li>
@@ -1803,7 +1803,7 @@ Bob--&gt;&gt;John: Jolly good!
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2023-12-21 13:18:24 / 修改时间：17:52:18" itemprop="dateCreated datePublished" datetime="2023-12-21T13:18:24+08:00">2023-12-21</time>
+              <time title="创建时间：2023-12-21 13:18:24 / 修改时间：20:08:32" itemprop="dateCreated datePublished" datetime="2023-12-21T13:18:24+08:00">2023-12-21</time>
             </span>
 
           
@@ -1826,14 +1826,14 @@ Bob--&gt;&gt;John: Jolly good!
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>493</span>
+              <span>3.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -1846,13 +1846,71 @@ Bob--&gt;&gt;John: Jolly good!
 
       
           <h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><ol>
-<li><code>Deep learning</code> is an approach to machine learning characterized by deep stacks of computations. This depth of computation is what has enabled deep learning models to disentangle the kinds of complex and hierarchical patterns found in the most challenging real-world datasets.</li>
-<li><code>SGD</code>: 全称为 Stochastic Gradient Descent 即随机梯度下降,是机器学习中常用的优化算法,用于训练各种模型(如神经网络)寻找最优参数</li>
-<li><code>dropout</code></li>
-<li><code>The Linear Unit</code>: y &#x3D; wx + b; w: weight, b: bias</li>
-<li><code>ReLU</code>: rectified linear unit</li>
-<li><code>Linear Unit + ReLU</code>: y &#x3D; max(0, w * x + b)</li>
-<li>Without activation functions, neural networks can only learn linear relationships.</li>
+<li><p><code>Deep learning</code> is an approach to machine learning characterized by deep stacks of computations. This depth of computation is what has enabled deep learning models to disentangle the kinds of complex and hierarchical patterns found in the most challenging real-world datasets.</p>
+</li>
+<li><p><code>SGD</code>: 全称为 Stochastic Gradient Descent 即随机梯度下降,是机器学习中常用的优化算法,用于训练各种模型(如神经网络)寻找最优参数, optimizer</p>
+</li>
+<li><p><code>neuron</code> : the Linear Unit y &#x3D; wx + b; w: weight, b: bias</p>
+</li>
+<li><p><code>layers</code>: Neural networks typically organize their neurons into layers. When we collect together linear units having a common set of inputs we get a <code>dense layer</code>.</p>
+</li>
+<li><p><code>ReLU</code>: rectified linear unit</p>
+</li>
+<li><p><code>Linear Unit + ReLU</code>: y &#x3D; max(0, w * x + b)</p>
+</li>
+<li><p>Without activation functions, neural networks can only learn linear relationships.</p>
+</li>
+<li><p>A <code>loss function</code> that measures how good the network’s predictions are.</p>
+</li>
+<li><p>An <code>optimizer</code> that can tell the network how to change its weights.</p>
+</li>
+<li><p><code>MAE</code>: mean absolute error; loss function, for regression</p>
+</li>
+<li><p>Each iteration’s sample of training data is called a <code>minibatch</code> (or often just “batch”), while a complete round of the training data is called an <code>epoch</code>.</p>
+</li>
+<li><p>The <code>learning rate</code> and the size of the <code>minibatches</code> are the two parameters that have the largest effect on how the SGD training proceeds.</p>
+</li>
+<li><p><code>Adam</code> is an SGD algorithm that has an adaptive learning rate that makes it suitable for most problems without any parameter tuning (it is “self tuning”, in a sense). Adam is a great general-purpose optimizer.</p>
+</li>
+<li><p><code>Underfitting the training set</code> is when the loss is not as low as it could be because the model hasn’t learned enough signal.</p>
+</li>
+<li><p><code>Overfitting the training set</code> is when the loss is not as low as it could be because the model learned too much noise. The trick to training deep learning models is finding the best balance between the two.</p>
+</li>
+<li><p><code>Early Stopping</code>: stop the training whenever it seems the validation loss isn’t decreasing anymore. Interrupting the training this way is called early stopping. Once we detect that the validation loss is starting to rise again, we can reset the weights back to where the minimum occured.</p>
+</li>
+<li><p><code>dropout layer</code> we randomly drop out some fraction of a layer’s input units every step of training, making it much harder for the network to learn those spurious patterns in the training data. Instead, it has to search for broad, general patterns, whose weight patterns tend to be more robust. 可以纠正过拟合</p>
+</li>
+<li><p><code>Batch Normalization layer</code></p>
+<ul>
+<li>why? Features that tend to produce activations of very different sizes can make for unstable training behavior.</li>
+<li>A batch normalization layer looks at each batch as it comes in, first normalizing the batch with its own mean and standard deviation, and then also putting the data on a new scale with two trainable rescaling parameters.</li>
+<li>做两次 normalize, 先基于输入的 batch 数据做， 后基于训练的均值和方差来做</li>
+<li>Models with batchnorm tend to need fewer epochs to complete training. Moreover, batchnorm can also fix various problems that can cause the training to get “stuck”.</li>
+<li>get better performance if you standardize your data before using it for training</li>
+</ul>
+</li>
+<li><p>The main difference regression and classification is in the loss function we use and in what kind of outputs we want the final layer to produce. 主要区别是损失函数和最后一层的输出类型</p>
+</li>
+<li><p><code>Accuracy</code> is one of the many metrics in use for measuring success on a classification problem. Accuracy is the ratio of correct predictions to total predictions: <code>accuracy = number_correct / total</code></p>
+</li>
+<li><p><code>Cross-Entropy</code> 交叉熵</p>
+<ul>
+<li>Cross-entropy is a sort of measure for the distance from one probability distribution to another.</li>
+<li>SGD needs a loss function that changes smoothly, but accuracy, being a ratio of counts, changes in “jumps”. So, we have to choose a substitute to act as the loss function. This substitute is the cross-entropy function.</li>
+<li>With regression, our goal was to minimize the distance between the expected outcome and the predicted outcome. We chose MAE to measure this distance.</li>
+<li>For classification, what we want instead is a distance between probabilities, and this is what cross-entropy provides.</li>
+</ul>
+</li>
+<li><p>softmax 也是激活函数， layer to layer; not functions of a single fold x;</p>
+</li>
+<li><p>relu 是 single x 的激活函数</p>
+</li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.kaggle.com/learn/intro-to-deep-learning">kaggle intro-to-deep-learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.kaggle.com/code/ryanholbrook/deep-learning-animations-and-illustrations/notebook">sgd 动画</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.kaggle.com/code/ryanholbrook/overfitting-and-underfitting">overfitting-and-underfitting</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Activation_function">激活函数</a></li>
 </ol>
 
       
@@ -2025,13 +2083,13 @@ Bob--&gt;&gt;John: Jolly good!
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">382k</span>
+    <span title="站点总字数">385k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:48</span>
+    <span title="站点阅读时长">5:50</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
