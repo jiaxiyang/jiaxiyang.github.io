@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">162</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">163</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,158 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/06/27/Elisp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/27/Elisp/" class="post-title-link" itemprop="url">Elisp</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-27 22:37:13" itemprop="dateCreated datePublished" datetime="2021-06-27T22:37:13+08:00">2021-06-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-10-12 19:22:48" itemprop="dateModified" datetime="2023-10-12T19:22:48+08:00">2023-10-12</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/27/Elisp/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/27/Elisp/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Useful-Command"><a href="#Useful-Command" class="headerlink" title="Useful Command"></a>Useful Command</h2><ol>
+<li>C-u before command to insert the result into the current buffer.</li>
+<li>crux-eval-and-replace 将表达式替换为结果， 例如(+ 1 1) -&gt; 2</li>
+<li>创建新 buffer: switch-to-buffer</li>
+<li>需要到命令行工作时，不用关闭 emacs, 使用 suspend-frame(C-z) 回到命令行，使用 fg 命令返回 emacs</li>
+</ol>
+<h2 id="grammer"><a href="#grammer" class="headerlink" title="grammer"></a>grammer</h2><ol>
+<li>(car list) first element</li>
+<li>(nth n list) nth element</li>
+<li>(car (last list)) last element</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(car (list &quot;a&quot; &quot;b&quot; &quot;c&quot;) )   ; &quot;a&quot;</span><br><span class="line">(nth 1 (list &quot;a&quot; &quot;b&quot; &quot;c&quot;) ) ; &quot;b&quot;</span><br><span class="line">(car (last (list &quot;a&quot; &quot;b&quot; &quot;c&quot;)) )   ; &quot;c&quot;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>(setq temp (append temp (list 1)))</code> addpend to list temp</li>
+<li>loop list</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(dolist (element (extract-rectangle start end)) ;; extract-rectangle to lists</span><br><span class="line">  (setq LIST (append LIST (split-string element)))) ;; apend to list</span><br></pre></td></tr></table></figure>
+
+<h2 id="functions"><a href="#functions" class="headerlink" title="functions"></a>functions</h2><ol>
+<li><code>(message &quot;%s=%d&quot; &quot;test&quot; 1)</code> minibuf 打印</li>
+<li><code> (split-string &quot;1 2 3 4&quot;)</code> &#x3D;&gt; (“1” “2” “3” “4”)</li>
+<li><code> (seq-map &#39;string-to-number (split-string &quot;1 2 3 4&quot;))</code> &#x3D;&gt; (1 2 3 4)</li>
+<li><code>(vconcat [] (split-string &quot;1.2.3&quot; &quot;\\.&quot;))</code> &#x3D;&gt; [“1” “2” “3”]</li>
+<li>max, min, sum and mean</li>
+<li><code>(extract-rectangle start end)</code> extract-rectangle to lists</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">(defun count-of-nums (xs)</span><br><span class="line">  (length xs))</span><br><span class="line"></span><br><span class="line">(defun min-of-nums (xs)</span><br><span class="line">  (apply #&#x27;min xs))</span><br><span class="line"></span><br><span class="line">(defun max-of-nums (xs)</span><br><span class="line">  (apply #&#x27;max xs))</span><br><span class="line"></span><br><span class="line">(defun sum-of-nums (xs)</span><br><span class="line">  (apply #&#x27;+ xs))</span><br><span class="line"></span><br><span class="line">(defun mean-of-nums (xs)</span><br><span class="line">  (float (/ (float (sum-of-nums xs))</span><br><span class="line">            (count-of-nums xs))))</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>对 region 进行统计，注意不能是 rectangle <a href="link">http://sugano-nu.github.io/emacs-lisp-stat-attitude/</a></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">(defun statistics-in-region (start end)</span><br><span class="line">  (interactive &quot;r&quot;)</span><br><span class="line">  (setq LIST (split-string (buffer-substring start end)))</span><br><span class="line">  (setq LIST (mapcar* #&#x27;(lambda (X) (math-read-number X)) LIST))</span><br><span class="line">  (message &quot;length:%s, mean:%s, variance:%s, standard deviation:%s, meidan:%s, max:%s, min:%s&quot;</span><br><span class="line">           (length LIST)</span><br><span class="line">           (math-format-number (calcFunc-vmean (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vvar (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vsdev (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmedian (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmax (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmin (cons &#x27;vec LIST)))))</span><br><span class="line"></span><br><span class="line">;; not chose a string with character, it will be as 0</span><br><span class="line">(defun statistics-in-rectangle (start end)</span><br><span class="line">  &quot;statistics-in-rectangle.&quot;</span><br><span class="line">  (interactive &quot;r&quot;)</span><br><span class="line">  (setq LIST nil)</span><br><span class="line">  (dolist (element (extract-rectangle start end)) ;; extract-rectangle to lists</span><br><span class="line">    (setq LIST (append LIST (split-string element)))) ;; apend to list</span><br><span class="line">  ;; (setq LIST (seq-map &#x27;string-to-number LIST)) ;;  convert to num</span><br><span class="line">  (setq LIST (mapcar* #&#x27;(lambda (X) (math-read-number X)) LIST))</span><br><span class="line">  (message &quot;length:%s, mean:%s, variance:%s, standard deviation:%s, meidan:%s, max:%s, min:%s&quot;</span><br><span class="line">           (length LIST)</span><br><span class="line">           (math-format-number (calcFunc-vmean (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vvar (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vsdev (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmedian (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmax (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmin (cons &#x27;vec LIST)))))</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>toggle function: cycle status</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">;; http://xahlee.info/emacs/emacs/elisp_toggle_command.html</span><br><span class="line">(defun company-toggle-delay (@n)</span><br><span class="line">  &quot;Company toggle idle delay.&quot;</span><br><span class="line">  (interactive &quot;p&quot;)</span><br><span class="line">  (let* (</span><br><span class="line">         ($values [0.2 nil])</span><br><span class="line">         ($index-before</span><br><span class="line">          (if (get &#x27;company-toggle-delay &#x27;state)</span><br><span class="line">              (get &#x27;company-toggle-delay &#x27;state)</span><br><span class="line">            0))</span><br><span class="line">         ($index-after (% (+ $index-before (length $values) @n) (length $values)))</span><br><span class="line">         ($next-value (aref $values $index-after)))</span><br><span class="line"></span><br><span class="line">    (put &#x27;company-toggle-delay &#x27;state $index-after)</span><br><span class="line">    (setq company-idle-delay  $next-value)</span><br><span class="line">    (message &quot;company idle delay to %s&quot; $next-value)))</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>if mode then</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(if (derived-mode-p &#x27;c++-mode)</span><br><span class="line">    (message &quot;The mode is on&quot;)</span><br><span class="line">    (message &quot;The mode is off&quot;)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>yes or no</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(if (yes-or-no-p &quot;Do you really want to remove everything?&quot;)</span><br><span class="line">    (message &quot;yes&quot;)</span><br><span class="line">    (message &quot;no&quot;))</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>auto add, commit and push</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">(defun aborn/simple-git-commit-push ()</span><br><span class="line">  &quot;Simple commit current git project and push to its upstream.&quot;</span><br><span class="line">  ;; (interactive &quot;sCommit Message: &quot;)</span><br><span class="line">  (interactive)</span><br><span class="line">  (when (and buffer-file-name</span><br><span class="line">             (buffer-modified-p))</span><br><span class="line">    (save-buffer))                   ;; save it first if modified.</span><br><span class="line">  (magit-diff-unstaged)</span><br><span class="line">  (when (yes-or-no-p &quot;Do you really want to commit everything?&quot;)</span><br><span class="line">    (magit-stage-modified)</span><br><span class="line">    ;; (magit-mode-bury-buffer)</span><br><span class="line">    (magit-diff-staged)</span><br><span class="line">    (setq msg (read-string &quot;Commit Message: &quot;))</span><br><span class="line">    (when (= 0 (length msg))</span><br><span class="line">      (setq msg (format-time-string &quot;commit by magit in emacs@%Y-%m-%d %H:%M:%S&quot;</span><br><span class="line">                                    (current-time))))</span><br><span class="line">    (message &quot;commit message is %s&quot; msg)</span><br><span class="line">    ;;(magit-commit (list &quot;-m&quot; msg))</span><br><span class="line">    (magit-call-git &quot;commit&quot; &quot;-m&quot; msg)</span><br><span class="line">    (magit-push-current-to-upstream nil)</span><br><span class="line">    (message &quot;now do async push to %s&quot; (magit-get &quot;remote&quot; &quot;origin&quot; &quot;url&quot;)))</span><br><span class="line">  (magit-mode-bury-buffer))</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://ergoemacs.org/emacs/elisp_basics.html">Xah 教程</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ksco/BuildYourOwnLispCn">BuildYourOwnLispCn</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -792,7 +944,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-13 15:19:12" itemprop="dateModified" datetime="2023-11-13T15:19:12+08:00">2023-11-13</time>
+                <time title="修改时间：2023-12-22 18:51:49" itemprop="dateModified" datetime="2023-12-22T18:51:49+08:00">2023-12-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -828,7 +980,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.9k</span>
+              <span>4.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -916,6 +1068,9 @@
 <li>TensorRT 是用于高性能深度学习<code>推理</code>的 SDK。此 SDK 包含深度学习推理优化器和<code>运行时环境</code>，可为深度学习推理应用提供低延迟和高吞吐量。借助 TensorRT，开发者可专注于创建新颖的 AI 支持应用，无需费力调节性能来部署推理工作。</li>
 </ol>
 <h2 id="trt-engine-explorer"><a href="#trt-engine-explorer" class="headerlink" title="trt-engine-explorer"></a><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/tree/main/tools/experimental/trt-engine-explorer">trt-engine-explorer</a></h2><h2 id="trtexec"><a href="#trtexec" class="headerlink" title="trtexec"></a>trtexec</h2><h3 id="转模型"><a href="#转模型" class="headerlink" title="转模型"></a>转模型</h3><ol>
+<li><code>trtexec --onnx=model.onnx --saveEngine=model.trt</code></li>
+<li><code>trtexec --onnx=model.onnx --saveEngine=model_fp16.trt --fp16</code></li>
+<li><code>trtexec --onnx=model.onnx --saveEngine=model_int8.trt --int8</code></li>
 <li>trtexec –onnx&#x3D;.&#x2F;bisenetv2_310102_1280x1920.onnx –shapes&#x3D;input:1x3x540x960 –saveEngine&#x3D;bisenetv2-xavier-fp16-540x960.engine –allowGPUFallback –fp16 –workspace&#x3D;16024</li>
 <li>onnx 模型转化为 engine or trt 后运行</li>
 <li>trtexec 在转换模型时做了一些优化，以提高模型的推理性能。这些优化包括：<ul>
@@ -951,6 +1106,8 @@
 </ul>
 </li>
 <li><code>trtexec --loadEngine=test.trt</code></li>
+<li><code>trtexec --loadEngine=model.trt --exportOutput=output.txt</code> dump model output</li>
+<li><code>trtexec --loadEngine=model.trt --exportLayerInfo=LayerInfo.txt</code> dump layer info； 如果出现<code>ForeignNode[onnx::MatMul_311</code>表示不支持; 使用<a target="_blank" rel="noopener" href="https://github.com/daquexian/onnx-simplifier">onnx-simplifier</a>试试</li>
 <li><code>trtexec --loadEngine=test.trt --plugins=lib/libtrtplugins.so --duration=10</code> 带 plugin</li>
 <li><code>trtexec --loadEngine=test.trt --plugins=lib/libtrtplugins.so --iterations=N --verbose=1</code></li>
 <li><code>trtexec --loadEngine=my_model.trt --dumpProfile=1</code>推理时显示每层耗时</li>
@@ -1482,123 +1639,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/03/05/git-biset-to-debug/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/05/git-biset-to-debug/" class="post-title-link" itemprop="url">Git bisect to debug</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-05 09:51:13" itemprop="dateCreated datePublished" datetime="2021-03-05T09:51:13+08:00">2021-03-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/03/05/git-biset-to-debug/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/05/git-biset-to-debug/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>599</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h2><ol>
-<li>Use binary search to find the commit that introduced a bug</li>
-</ol>
-<h2 id="Command"><a href="#Command" class="headerlink" title="Command"></a>Command</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect start</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect bad                 <span class="comment"># Current version is bad</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect good v2.6.13-rc2    <span class="comment"># v2.6.13-rc2 is known to be good</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect <span class="built_in">log</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect skip                 <span class="comment"># Current version cannot be tested</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect reset</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">run script</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect run my_script arguments</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> ~/test.sh</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line">make || exit 125                     # this skips broken builds</span><br><span class="line">~/check_test_case.sh                 # does the test case pass?</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect start HEAD v1.3.1 --      <span class="comment"># HEAD is bad, v1.2 is good</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect run ~/test.sh</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">git bisect run sh -c <span class="string">&quot;make || exit 125; ~/check_test_case.sh&quot;</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect reset                   <span class="comment"># quit the bisect session</span></span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://git-scm.com/docs/git-bisect">git bisect</a></li>
-<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903537860673544">Git 二分调试法，火速定位疑难Bug</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1670,7 +1710,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">162</span>
+          <span class="site-state-item-count">163</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1703,6 +1743,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2023/12/24/llama2-c/" title="2023&#x2F;12&#x2F;24&#x2F;llama2-c&#x2F;">llama2.c</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/12/21/deep-learning/" title="2023&#x2F;12&#x2F;21&#x2F;deep-learning&#x2F;">deep-learning</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1713,9 +1756,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/12/18/ai-papers/" title="2023&#x2F;12&#x2F;18&#x2F;ai-papers&#x2F;">ai-papers</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/11/21/transformer/" title="2023&#x2F;11&#x2F;21&#x2F;transformer&#x2F;">transformer</a>
         </li>
     </ul>
   </div>
@@ -1753,13 +1793,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">385k</span>
+    <span title="站点总字数">387k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:50</span>
+    <span title="站点阅读时长">5:52</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

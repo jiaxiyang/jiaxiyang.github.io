@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">162</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">163</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,123 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/03/22/Actix/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/22/Actix/" class="post-title-link" itemprop="url">Actix</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-22 09:53:35" itemprop="dateCreated datePublished" datetime="2021-03-22T09:53:35+08:00">2021-03-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/Rust/" itemprop="url" rel="index"><span itemprop="name">Rust</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/03/22/Actix/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/22/Actix/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>931</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> actix_web::&#123;get, post, web, App, HttpResponse, HttpServer, Responder&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[get(<span class="string">&quot;/&quot;</span>)]</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">fn</span> <span class="title function_">hello</span>() <span class="punctuation">-&gt;</span> <span class="keyword">impl</span> <span class="title class_">Responder</span> &#123;</span><br><span class="line">    HttpResponse::<span class="title function_ invoke__">Ok</span>().<span class="title function_ invoke__">body</span>(<span class="string">&quot;Hello world!&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[post(<span class="string">&quot;/echo&quot;</span>)]</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">fn</span> <span class="title function_">echo</span>(req_body: <span class="type">String</span>) <span class="punctuation">-&gt;</span> <span class="keyword">impl</span> <span class="title class_">Responder</span> &#123;</span><br><span class="line">    HttpResponse::<span class="title function_ invoke__">Ok</span>().<span class="title function_ invoke__">body</span>(req_body)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">fn</span> <span class="title function_">manual_hello</span>() <span class="punctuation">-&gt;</span> <span class="keyword">impl</span> <span class="title class_">Responder</span> &#123;</span><br><span class="line">    HttpResponse::<span class="title function_ invoke__">Ok</span>().<span class="title function_ invoke__">body</span>(<span class="string">&quot;Hey there!&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[actix_web::main]</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">fn</span> <span class="title function_">main</span>() <span class="punctuation">-&gt;</span> std::io::<span class="type">Result</span>&lt;()&gt; &#123;</span><br><span class="line">    HttpServer::<span class="title function_ invoke__">new</span>(|| &#123;</span><br><span class="line">        App::<span class="title function_ invoke__">new</span>()</span><br><span class="line">            .<span class="title function_ invoke__">service</span>(hello)</span><br><span class="line">            .<span class="title function_ invoke__">service</span>(echo)</span><br><span class="line">            .<span class="title function_ invoke__">route</span>(<span class="string">&quot;/hey&quot;</span>, web::<span class="title function_ invoke__">get</span>().<span class="title function_ invoke__">to</span>(manual_hello))</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_ invoke__">bind</span>(<span class="string">&quot;127.0.0.1:8080&quot;</span>)?</span><br><span class="line">    .<span class="title function_ invoke__">run</span>()</span><br><span class="line">    .<span class="keyword">await</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>Use App::service for the handlersusing routing <code>macros</code> and App::route for <code>manually</code> routed handlers, declaring the <code>path</code> and <code>method</code>.</li>
+<li><code>path</code>: http URL,例如：<a target="_blank" rel="noopener" href="http://github.com/xxx/xx/xx">http://github.com/xxx/xx/xx</a></li>
+<li><code>method</code>: path的响应</li>
+<li>All actix-web servers are built around the <code>App</code> instance.</li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://actix.rs/docs/">official docs</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -858,157 +975,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/02/23/Gstreamer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/23/Gstreamer/" class="post-title-link" itemprop="url">Gstreamer</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-02-23 08:43:01" itemprop="dateCreated datePublished" datetime="2021-02-23T08:43:01+08:00">2021-02-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Gstreamer/" itemprop="url" rel="index"><span itemprop="name">Gstreamer</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/02/23/Gstreamer/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/02/23/Gstreamer/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Why-Gstreamer"><a href="#Why-Gstreamer" class="headerlink" title="Why Gstreamer"></a>Why Gstreamer</h2><ol>
-<li>构建一个视频分析应用，需要考虑的内容有：视频流获取、视频流解码、预处理、算法推理、数据编码、数据显示、数据传输等。常常需要引入一些第三方的开发包，如 OpenCV，FFmpeg，Caffe，TensorRT，OpenGL 等。GStreamer 是一个用于开发流式多媒体应用的跨平台开源框架，应用程序可以通过管道(Pipeline)的方式，<code>将多媒体处理的各个步骤串联起来</code>，达到预期的效果。</li>
-</ol>
-<h2 id="Gstreamer"><a href="#Gstreamer" class="headerlink" title="Gstreamer"></a>Gstreamer</h2><ol>
-<li><code>核心</code>为<code>Pipeline</code>框架以及用于扩展功能的<code>Plugins</code>。plugin 负责实现音视频传输协议、音视频输入输出源、音视频编解转码等真实的媒体处理功能，而 plugin 之间通过 pipeline 关联在一起，pipeline 负责将上一个 plugin 的数据流(data flow)传输给下一个 plugin，最终形成一个完整的多媒体处理应用；</li>
-<li>原理：GStreamer 的程序通过连接数字媒体处理的元素注入管道（pipeline）。每个元素(element)是由一个插件提供。元素可组合为箱（bins），箱可以进一步聚合，从而形成架构图。元素沟通是透过垫（pads）。来源垫（source pad）上一个元素可以被连接到一个接收垫（sink pad）在另一个。当管道是在播放状态，数据缓冲流（data buffers flow）从来源垫（source pad）流向接收垫（sink pad）。</li>
-<li>箱柜(bin)是由多个 element 构成的容器，同时 bin 本身也是一种 element，所以能够像操作普通 element 一样操作一个 bin，改变 bin 的状态可以改变 bin 内部所有 elements 的状态。bin 可以发送总线消息给它的子集 elements ，包括：错误消息(error messages)，标签消息(tag messages)，EOS 消息(EOS messages)。</li>
-<li>管道(pipeline)是一个特殊的 bin，当设定管道暂停或播放状态的时候，数据流将开始流动，并且媒体数据处理也开始处理。</li>
-<li>element 被封装成 plugin 才能被 gstreamer 使用。</li>
-</ol>
-<h2 id="3-层架构（plugin-core-app"><a href="#3-层架构（plugin-core-app" class="headerlink" title="3 层架构（plugin, core, app)"></a>3 层架构（plugin, core, app)</h2><p><img src="https://gstreamer.freedesktop.org/documentation/application-development/introduction/images/gstreamer-overview.png" alt="overview"></p>
-<ol>
-<li>最底层：element(plugins)</li>
-<li>中间层：插件框架、pipeline 架构、媒体类型处理机制、等等，也就是处理 Elements 的方式方法.</li>
-<li>最上层：tools, 多媒体应用</li>
-</ol>
-<h2 id="GStreamer-plug-ins-could-be-classified"><a href="#GStreamer-plug-ins-could-be-classified" class="headerlink" title="GStreamer plug-ins could be classified"></a>GStreamer plug-ins could be classified</h2><ol>
-<li>protocols handling</li>
-<li>sources: for audio and video (involves protocol plugins)</li>
-<li>formats: parsers, formaters, muxers, demuxers, metadata, subtitles</li>
-<li>codecs: coders and decoders</li>
-<li>filters: converters, mixers, effects, …</li>
-<li>sinks: for audio and video (involves protocol plugins)</li>
-</ol>
-<h2 id="GStreamer-tools"><a href="#GStreamer-tools" class="headerlink" title="GStreamer tools"></a>GStreamer tools</h2><ol>
-<li>gst-launch-1.0: 命令行建立和运行 pipeline, 不用编写 C 代码； <code>gst-launch-1.0 videotestsrc ! autovideosink</code></li>
-<li>gst-inspect-1.0: 查看可用的插件和它们的相关信息； <code>gst-inspect-1.0 videotestsrc</code></li>
-<li>gst-discoverer-1.0: 查看媒体文件的内部结构； <code>gst-discoverer-1.0 /root/Desktop/video.mp4</code></li>
-<li>GST*DEBUG&#x3D;”GST_TRACER:7” GST_TRACERS&#x3D;”proctime” gst-launch-1.0 … <code>查看每个element性能</code> <a target="_blank" rel="noopener" href="https://developer.ridgerun.com/wiki/index.php?title=GstShark*-_Processing_Time_tracer">link</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/RidgeRun/gst-shark">gst-shark</a></li>
-</ol>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://gstreamer.freedesktop.org/documentation/application-development/introduction/index.html?gi-language=c">About Gstreamer</a></li>
-<li><a target="_blank" rel="noopener" href="https://gstreamer.freedesktop.org/documentation/tutorials/basic/gstreamer-tools.html?gi-language=c">Gstreamer tools</a></li>
-<li><a target="_blank" rel="noopener" href="https://gstreamer.freedesktop.org/documentation/tutorials/basic/index.html?gi-language=c">Gstreamer tutorials</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/sdroege/gstreamer-rs/tree/master/tutorials">Gstreamer tutorials rust</a></li>
-<li><a target="_blank" rel="noopener" href="http://orangeamoy.com/2019/06/28/GStreamerAndDeepStream/">由 GStreamer 到 DeepStream</a></li>
-<li><a target="_blank" rel="noopener" href="http://ericnode.info/post/gstreamer_intro/">插件例子</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.shangyexinzhi.com/article/571316.html">中文基础概念</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/22/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><span class="page-number current">23</span><a class="page-number" href="/page/24/">24</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" href="/page/24/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1076,7 +1046,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">162</span>
+          <span class="site-state-item-count">163</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1109,6 +1079,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2023/12/24/llama2-c/" title="2023&#x2F;12&#x2F;24&#x2F;llama2-c&#x2F;">llama2.c</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/12/21/deep-learning/" title="2023&#x2F;12&#x2F;21&#x2F;deep-learning&#x2F;">deep-learning</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1119,9 +1092,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/12/18/ai-papers/" title="2023&#x2F;12&#x2F;18&#x2F;ai-papers&#x2F;">ai-papers</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/11/21/transformer/" title="2023&#x2F;11&#x2F;21&#x2F;transformer&#x2F;">transformer</a>
         </li>
     </ul>
   </div>
@@ -1159,13 +1129,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">385k</span>
+    <span title="站点总字数">387k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:50</span>
+    <span title="站点阅读时长">5:52</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
