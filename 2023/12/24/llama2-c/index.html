@@ -28,7 +28,7 @@
 <meta property="og:description" content="llama2.c build and run  1234567git clone https:&#x2F;&#x2F;github.com&#x2F;karpathy&#x2F;llama2.c.gitcd llama2.cmake run; make rundebugwget https:&#x2F;&#x2F;huggingface.co&#x2F;karpathy&#x2F;tinyllamas&#x2F;resolve&#x2F;main&#x2F;stories15M.bin.&#x2F;run stor">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-12-24T10:23:45.000Z">
-<meta property="article:modified_time" content="2023-12-24T10:55:28.155Z">
+<meta property="article:modified_time" content="2023-12-24T14:47:05.550Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 
@@ -226,7 +226,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2023-12-24 18:23:45 / 修改时间：18:55:28" itemprop="dateCreated datePublished" datetime="2023-12-24T18:23:45+08:00">2023-12-24</time>
+              <time title="创建时间：2023-12-24 18:23:45 / 修改时间：22:47:05" itemprop="dateCreated datePublished" datetime="2023-12-24T18:23:45+08:00">2023-12-24</time>
             </span>
 
           
@@ -256,14 +256,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>991</span>
+              <span>2.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -281,15 +281,45 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/karpathy/llama2.c.git</span><br><span class="line"><span class="built_in">cd</span> llama2.c</span><br><span class="line">make run; make rundebug</span><br><span class="line">wget https://huggingface.co/karpathy/tinyllamas/resolve/main/stories15M.bin</span><br><span class="line">./run stories15M.bin</span><br><span class="line">make runfast  <span class="comment"># 加速运行， 80 tok/s =&gt; 180 tok/s</span></span><br><span class="line">make runomp &amp;&amp; OMP_NUM_THREADS=4 ./run out/model.bin <span class="comment"># 多核加速， from 80 tok/s =&gt; 320 tok/s 主要加速matmul</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="代码理解"><a href="#代码理解" class="headerlink" title="代码理解"></a>代码理解</h2><ol>
-<li>重要结构体： Transformer, Tokenizer, Sampler</li>
+<li><code>Tokenizer, Transformer, Sampler</code> 三大部分</li>
 <li>tokenizer 也是一个模型，需要训练</li>
 <li>Tokenizer 的主要作用是将自然语言文本转换为机器学习模型可以理解的格式。这通常意味着将文本拆分成词汇、子词或字符单元（即 tokens），然后将这些 tokens 转换为数字 ID。这些 ID 对应于模型的词汇表中的索引。</li>
 <li>当有 prompt 时，有预热过程，从第一个 prompt_tokens 开始推理，if we are still processing the input prompt, force the next prompt token， otherwise sample the next token from the logits</li>
+<li>Sampler 的主要作用是根据模型输出的 logits（未归一化的概率对数）来决定下一个生成的 token</li>
+<li>Temperature Scaling：通过温度参数调整 logits。温度较低（&lt;1）会使输出分布更加尖锐（更确定），温度较高（&gt;1）则使分布更平滑（更随机）</li>
+<li>采样策略对生成文本的质量和多样性有显著影响。例如，argmax 采样可能导致非常重复和可预测的文本，而合适的随机采样可以增加多样性和创造性，同时保持文本的连贯性和可读性。通过合理配置 temperature 和 topp 参数，可以在随机性和确定性之间找到平衡，生成符合预期的文本。</li>
+<li>top-p 采样：<ul>
+<li>模型输出的 logits（未归一化的概率对数），转换为 softmax 概率</li>
+<li>创建一个结构体数组，每个元素包含 token 的索引和对应的概率。</li>
+<li>概率小于 cutoff 过滤掉</li>
+<li>排序</li>
+<li>计算累计概率， 累计概率超过 topp 后不选择</li>
+<li>随机数*累计概率；找到这个随机数对应的累积概率区间内的 token。</li>
+<li>返回所选 token 的索引</li>
+<li>控制生成质量：通过调整 p 的值，可以控制生成文本的随机性和确定性。较低的 p 值会导致更确定性的输出（更少的 token 可供选择），而较高的 p 值会增加输出的多样性。</li>
+<li>避免不合理的 token：Top-p 采样可以有效地避免选择那些极不可能的 token，这对于生成更加连贯和自然的文本至关重要。</li>
+</ul>
+</li>
+<li>前馈神经网络（Feed-Forward Neural Network, <code>FFN</code>）</li>
+<li><code>forward</code> 跟 all you need is attention 论文描述的结构非常像</li>
+<li>相对位置编码（RoPE）：模型利用 RoPE 来给序列中的每个 token 引入位置信息。这种方式与原始 Transformer 中的绝对位置编码不同。</li>
+</ol>
+<h3 id="embedding-和-tokenizer-的区别"><a href="#embedding-和-tokenizer-的区别" class="headerlink" title="embedding 和 tokenizer 的区别"></a>embedding 和 tokenizer 的区别</h3><ol>
+<li>Tokenizer 是第一步：它将原始文本转换为一系列的 token 索引。Embedding 是第二步：利用这些索引在 embedding 层中查找或生成每个 token 的向量表示。互补关系：Tokenizer 和 embedding 层一起工作，将自然语言文本转换为机器学习模型可以有效处理的数值形式。</li>
+<li>tokenizer 负责将文本转换为一系列的 token，而 embedding 则负责将这些 token 转换为机器学习模型可以理解的语义向量。</li>
+<li>通过 token_embedding_table 查找 token 对应的的向量</li>
+</ol>
+<h3 id="模型基本结构"><a href="#模型基本结构" class="headerlink" title="模型基本结构"></a>模型基本结构</h3><ol>
+<li>层的堆叠：模型由多个相同的层堆叠而成，每层包含两个主要子模块：多头自注意力（Multi-Head Self-Attention）和前馈神经网络（Feed-Forward Neural Network, FFN）。</li>
 </ol>
 <h2 id="others"><a href="#others" class="headerlink" title="others"></a>others</h2><ol>
 <li>openmp 加速会获得较大加速比, 编译选项加<code>-fopenmp -march=native</code></li>
 </ol>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">matmul</span><span class="params">(<span class="type">float</span>* xout, <span class="type">float</span>* x, <span class="type">float</span>* w, <span class="type">int</span> n, <span class="type">int</span> d)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// W (d,n) @ x (n,) -&gt; xout (d,)</span></span><br><span class="line">    <span class="comment">// by far the most amount of time is spent inside this little function</span></span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="meta">#<span class="keyword">pragma</span> omp parallel for private(i)</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; d; i++) &#123;</span><br><span class="line">        <span class="type">float</span> val = <span class="number">0.0f</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">            val += w[i * n + j] * x[j];</span><br><span class="line">        &#125;</span><br><span class="line">        xout[i] = val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://chat.openai.com/c/4e520557-e827-40c5-9357-db76b5a5e6ba">chatgpt 解释</a></li>
+</ol>
 
     </div>
 
@@ -387,7 +417,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#llama2-c"><span class="nav-number">1.</span> <span class="nav-text">llama2.c</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%90%86%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">代码理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#others"><span class="nav-number">3.</span> <span class="nav-text">others</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#llama2-c"><span class="nav-number">1.</span> <span class="nav-text">llama2.c</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%90%86%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">代码理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#embedding-%E5%92%8C-tokenizer-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.1.</span> <span class="nav-text">embedding 和 tokenizer 的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="nav-number">2.2.</span> <span class="nav-text">模型基本结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#others"><span class="nav-number">3.</span> <span class="nav-text">others</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">4.</span> <span class="nav-text">links</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -486,13 +516,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">387k</span>
+    <span title="站点总字数">388k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:52</span>
+    <span title="站点阅读时长">5:53</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
