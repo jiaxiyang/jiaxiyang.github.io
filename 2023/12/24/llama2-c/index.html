@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="llama2.c build and run  1234567git clone https:&#x2F;&#x2F;github.com&#x2F;karpathy&#x2F;llama2.c.gitcd llama2.cmake run; make rundebugwget https:&#x2F;&#x2F;huggingface.co&#x2F;karpathy&#x2F;tinyllamas&#x2F;resolve&#x2F;main&#x2F;stories15M.bin.&#x2F;run stor">
+  <meta name="description" content="llama2.c Intro to Large Language Models ka python 推理代码 Coding LLaMA 2 from scratch in PyTorch - KV Cache, Grouped Query Attention, Rotary PE, RMSNorm build and run  1234567git clone https:&#x2F;&#x2F;github.com">
 <meta property="og:type" content="article">
 <meta property="og:title" content="llama2.c">
 <meta property="og:url" content="https://jiaxiyang.github.io/2023/12/24/llama2-c/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="llama2.c build and run  1234567git clone https:&#x2F;&#x2F;github.com&#x2F;karpathy&#x2F;llama2.c.gitcd llama2.cmake run; make rundebugwget https:&#x2F;&#x2F;huggingface.co&#x2F;karpathy&#x2F;tinyllamas&#x2F;resolve&#x2F;main&#x2F;stories15M.bin.&#x2F;run stor">
+<meta property="og:description" content="llama2.c Intro to Large Language Models ka python 推理代码 Coding LLaMA 2 from scratch in PyTorch - KV Cache, Grouped Query Attention, Rotary PE, RMSNorm build and run  1234567git clone https:&#x2F;&#x2F;github.com">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-12-24T10:23:45.000Z">
-<meta property="article:modified_time" content="2023-12-24T14:47:05.550Z">
+<meta property="article:modified_time" content="2023-12-25T09:15:49.628Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 
@@ -224,10 +224,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-12-24 18:23:45 / 修改时间：22:47:05" itemprop="dateCreated datePublished" datetime="2023-12-24T18:23:45+08:00">2023-12-24</time>
+              <time title="创建时间：2023-12-24 18:23:45" itemprop="dateCreated datePublished" datetime="2023-12-24T18:23:45+08:00">2023-12-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-12-25 17:15:49" itemprop="dateModified" datetime="2023-12-25T17:15:49+08:00">2023-12-25</time>
+              </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -256,7 +262,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.1k</span>
+              <span>2.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -276,6 +282,9 @@
 
       
         <h2 id="llama2-c"><a href="#llama2-c" class="headerlink" title="llama2.c"></a><a target="_blank" rel="noopener" href="https://github.com/karpathy/llama2.c">llama2.c</a></h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=zjkBMFhNj_g">Intro to Large Language Models</a> ka</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/llama/blob/main/llama/model.py">python 推理代码</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=oM4VmoabDAI">Coding LLaMA 2 from scratch in PyTorch - KV Cache, Grouped Query Attention, Rotary PE, RMSNorm</a></li>
 <li>build and run</li>
 </ol>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/karpathy/llama2.c.git</span><br><span class="line"><span class="built_in">cd</span> llama2.c</span><br><span class="line">make run; make rundebug</span><br><span class="line">wget https://huggingface.co/karpathy/tinyllamas/resolve/main/stories15M.bin</span><br><span class="line">./run stories15M.bin</span><br><span class="line">make runfast  <span class="comment"># 加速运行， 80 tok/s =&gt; 180 tok/s</span></span><br><span class="line">make runomp &amp;&amp; OMP_NUM_THREADS=4 ./run out/model.bin <span class="comment"># 多核加速， from 80 tok/s =&gt; 320 tok/s 主要加速matmul</span></span><br></pre></td></tr></table></figure>
@@ -303,6 +312,12 @@
 <li>前馈神经网络（Feed-Forward Neural Network, <code>FFN</code>）</li>
 <li><code>forward</code> 跟 all you need is attention 论文描述的结构非常像</li>
 <li>相对位置编码（RoPE）：模型利用 RoPE 来给序列中的每个 token 引入位置信息。这种方式与原始 Transformer 中的绝对位置编码不同。</li>
+<li>对于每个输入 token， 生成 q, k, v, q 用来和之前的 k 做 attention 得到 scores, scores 和 k 做加权得到多头输出; 缓存 k, v 用于之后的推理</li>
+<li>q 和之前所有 k 做 attension, 结果在和 v 做加权</li>
+<li><a target="_blank" rel="noopener" href="https://paperswithcode.com/method/grouped-query-attention">grouped-query-attention</a></li>
+<li>Config 中通过 n_heads 和 n_kv_heads 可以看出是 multi-head, group-query, multi-query； 相同时（不为 1）是 multi-head, 都为 1 时是 multi-query; n_kv_heads &lt; n_heads 时是 group_query</li>
+<li>MQA，全称 Multi Query Attention, 而 GQA 则是前段时间 Google 提出的 MQA 变种，全称 Group-Query Attention。MHA（Multi-head Attention）是标准的多头注意力机制，h 个 Query、Key 和 Value 矩阵。</li>
+<li>推理的过程是一个自回归的过程，也就是说前 i 次的 token 会作为第 i+1 次的预测数据送入模型，拿到第 i+1 次的推理 token。</li>
 </ol>
 <h3 id="embedding-和-tokenizer-的区别"><a href="#embedding-和-tokenizer-的区别" class="headerlink" title="embedding 和 tokenizer 的区别"></a>embedding 和 tokenizer 的区别</h3><ol>
 <li>Tokenizer 是第一步：它将原始文本转换为一系列的 token 索引。Embedding 是第二步：利用这些索引在 embedding 层中查找或生成每个 token 的向量表示。互补关系：Tokenizer 和 embedding 层一起工作，将自然语言文本转换为机器学习模型可以有效处理的数值形式。</li>
@@ -516,13 +531,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">388k</span>
+    <span title="站点总字数">390k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:53</span>
+    <span title="站点阅读时长">5:54</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
