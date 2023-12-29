@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-27 11:08:27" itemprop="dateModified" datetime="2023-12-27T11:08:27+08:00">2023-12-27</time>
+                <time title="修改时间：2023-12-27 19:38:39" itemprop="dateModified" datetime="2023-12-27T19:38:39+08:00">2023-12-27</time>
               </span>
 
           
@@ -274,7 +274,7 @@
       
           <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><h3 id="llama2-参数量计算"><a href="#llama2-参数量计算" class="headerlink" title="llama2 参数量计算"></a>llama2 参数量计算</h3><ol>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/649125936">LLAMA2 的参数计算</a></li>
-<li><code>窗口长度(Context Length)</code>指的是模型在做预测时能够看到的上下文单词的数量。具体来说,在 transformer 等注意力机制的模型中,输入是一个定长的窗口,窗口中的每个词会通过自注意力机制关联到窗口中的其他词。这个窗口的长度就是上下文长度。</li>
+<li><code>窗口长度, 上下文长度(Context Length)</code>指的是模型在做预测时能够看到的上下文单词的数量。具体来说,在 transformer 等注意力机制的模型中,输入是一个定长的窗口,窗口中的每个词会通过自注意力机制关联到窗口中的其他词。这个窗口的长度就是上下文长度。</li>
 <li><code>词向量</code>：embeding 层的输出就是词向量</li>
 <li>推理时间复杂度：整体级别是 l<em>n</em>d^2+l<em>d</em>n^2，其中：d 是词向量维度，n 是窗口或序列长度，l：层数<ul>
 <li>无论是窗口长度还是词向量维度，都会让推理时间呈平方指数级上升。</li>
@@ -404,7 +404,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-26 11:39:13" itemprop="dateModified" datetime="2023-12-26T11:39:13+08:00">2023-12-26</time>
+                <time title="修改时间：2023-12-29 15:25:14" itemprop="dateModified" datetime="2023-12-29T15:25:14+08:00">2023-12-29</time>
               </span>
 
           
@@ -427,14 +427,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.7k</span>
+              <span>4.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -510,7 +510,31 @@
 </li>
 <li><p><code>MLP, CNN, RNN, Transformer</code> 四大深度学习架构 Multilayer Perceptron(MLP)</p>
 </li>
-<li><p>样本和特征</p>
+<li><p>样本和特征, batch 是样本</p>
+</li>
+<li><p><code>正则化(Regularization)</code> 指的是在训练过程中添加额外信息以防止模型过度拟合的技术。</p>
+<ul>
+<li>L1 正则化:在损失函数中添加模型权重参数绝对值的和,使权重 decay 到 0,从而使模型更稀疏。</li>
+<li>L2 正则化:在损失函数中添加模型权重参数平方和,惩罚大的参数值,使权重较为平均分布,避免个别权重参数过大。也称为权重衰减(weight decay)。</li>
+<li>Early Stopping:在模型测试指标不再改善时中止训练,防止过拟合。</li>
+<li>Dropout:以一定概率随机置部分节点为 0,增加模型泛化能力</li>
+<li>Data Augmentation:人工生成更多训练数据,改善模型泛化能力。</li>
+<li>Batch Normalization: 通过调整网络中间层的激活值，使其在训练时保持一个更稳定的分布。虽然其主要目的是加快训练过程，但它也有一定的正则化效果。</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_convolutional-modern/batch-norm.html">Batch Normalization 计算</a></p>
+<ul>
+<li>全连接层<br>仿射变换和激活函数之间;对 minibatch 整体做 normalization</li>
+<li>卷积<br>卷积层之后和非线性激活函数之前; 对每个通道分别做 normalization; NCHW, 固定 C; 对于 RGB， 相当于 R, G, B 单独做 normalization</li>
+<li>预测时：均值和方差为整个训练数据集的样本均值和方差(或者学习的均值和方差)</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/LXP-Never/p/11566064.html">各种 normlization 方法， 带图</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.tensorflow.org/2022/11/whats-new-in-tensorflow-211.html">文本 normalization 图示</a></p>
+<ul>
+<li>layer norm:输入一句话直接对其输出做 norm，不用管其他句子</li>
+</ul>
 </li>
 </ol>
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
@@ -767,7 +791,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-26 11:36:37" itemprop="dateModified" datetime="2023-12-26T11:36:37+08:00">2023-12-26</time>
+                <time title="修改时间：2023-12-28 11:14:24" itemprop="dateModified" datetime="2023-12-28T11:14:24+08:00">2023-12-28</time>
               </span>
 
           
@@ -790,7 +814,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>497</span>
+              <span>614</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -818,16 +842,22 @@
 <h2 id="resnet"><a href="#resnet" class="headerlink" title="resnet"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1512.03385">resnet</a></h2><ol>
 <li>加残差， 能训练很深，计算量未增加</li>
 </ol>
-<h2 id="unet"><a href="#unet" class="headerlink" title="unet"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1505.04597">unet</a></h2><h2 id="transformer"><a href="#transformer" class="headerlink" title="transformer"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.03762">transformer</a></h2><h2 id="diffusion"><a href="#diffusion" class="headerlink" title="diffusion"></a>diffusion</h2><h2 id="stable-diffusion"><a href="#stable-diffusion" class="headerlink" title="stable diffusion"></a>stable diffusion</h2><h2 id="PagedAttention"><a href="#PagedAttention" class="headerlink" title="PagedAttention"></a><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2309.06180.pdf">PagedAttention</a></h2><ol>
+<h2 id="unet"><a href="#unet" class="headerlink" title="unet"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1505.04597">unet</a></h2><h2 id="transformer"><a href="#transformer" class="headerlink" title="transformer"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.03762">transformer</a></h2><h2 id="ViT-Vision-Transformer"><a href="#ViT-Vision-Transformer" class="headerlink" title="ViT Vision Transformer,"></a>ViT Vision Transformer,</h2><h2 id="flash-attention"><a href="#flash-attention" class="headerlink" title="flash attention"></a>flash attention</h2><h2 id="PagedAttention"><a href="#PagedAttention" class="headerlink" title="PagedAttention"></a><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2309.06180.pdf">PagedAttention</a></h2><ol>
 <li>分块 KV 缓存通过消除 KV 缓存引起的内存碎片化，增加了潜在的序列并发量，从而增加了系统吞吐量。</li>
 <li>没有减少 KV cache</li>
 <li>类似于现有的框架如 TRT-LLM、TGI 和 vLLM，DeepSpeed-FastGen 的目标是利用连续批处理和非连续 KV 缓存技术，以提升数据中心服务大型语言模型（LLM）的硬件利用率和响应速度。为了实现更高的性能，DeepSpeed-FastGen 提出了 SplitFuse 技术，它利用动态提示和生成分解, 统一来进一步改善连续批处理和系统吞吐量。</li>
 </ol>
-<h2 id="如何使用-arxiv"><a href="#如何使用-arxiv" class="headerlink" title="如何使用 arxiv"></a>如何使用 arxiv</h2><h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<h2 id="diffusion"><a href="#diffusion" class="headerlink" title="diffusion"></a>diffusion</h2><h2 id="stable-diffusion"><a href="#stable-diffusion" class="headerlink" title="stable diffusion"></a>stable diffusion</h2><h2 id="如何使用-arxiv"><a href="#如何使用-arxiv" class="headerlink" title="如何使用 arxiv"></a>如何使用 arxiv</h2><h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/labmlai/annotated_deep_learning_paper_implementations">labml.ai Deep Learning Paper Implementations</a><ul>
+<li>colab 中有测试代码</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/labmlai/annotated_deep_learning_paper_implementations/tree/master?tab=readme-ov-file#highlighted-research-paper-pdfs">papers 画了重点</a></li>
 <li><a target="_blank" rel="noopener" href="https://paperswithcode.com/">paperwithcode</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLFXJ6jwg0qW-7UM8iUTj3qKqdhbQULP5I">李沐论文精度</a></li>
 <li><a target="_blank" rel="noopener" href="https://zh.d2l.ai/">李沐《动手学深度学习》</a></li>
 <li><a target="_blank" rel="noopener" href="https://zh-v2.d2l.ai/d2l-zh.pdf">《动手学深度学习》pdf</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/huggingface/pytorch-image-models">images-models-papaers</a></li>
 </ol>
 
       
@@ -881,7 +911,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-27 10:35:35" itemprop="dateModified" datetime="2023-12-27T10:35:35+08:00">2023-12-27</time>
+                <time title="修改时间：2023-12-28 11:44:51" itemprop="dateModified" datetime="2023-12-28T11:44:51+08:00">2023-12-28</time>
               </span>
 
           
@@ -904,7 +934,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
+              <span>2.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -937,13 +967,13 @@
 <li>transformer: 需要对每个输入向量做 3 次 transform, Wq, Wk, Wv，转换矩阵都是学习得到的</li>
 <li>score matrix:自相关矩阵</li>
 <li>预测时就相当于使用编码器(输入)和之前的输出来预测下一个输出； 考虑了输入和输出信息 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=4Bdc55j80l8">Illustrated Guide to Transformers Neural Network: A step by step explanation</a> 图示非常好</li>
-<li>decode 训练时加掩码并行，同时输出； 推理时自回归一步一步输出?</li>
 <li>多头是想模拟卷积，可以输出多个通道 由多个 feature，识别多个模式</li>
 <li>模型训练好之后，推理时每个 token 对应的 q,k,v 都固定了，因为 token embedding 后的词向量是固定的，Q,K V 矩阵也是固定的</li>
 <li>每一个 token 都会生成 q,k,v，用 q 去和所有 token 的 k 做相关，根据结果从 k 中提取特征; 例如： how are you How 的 q 会和每个 token 中的 k 提取出一些信息，根据这些信息决定下一个生成的字符，比如 you 中的 k 和 I 很相关（embeding 和训练 决定），从 you 中很可能提取出 I, 然后再根据 how are you I 中重复上一步动作，这就是为什么 token 要和自己做相关，所有 token 相关性是由 embeding 和训练一起决定的?</li>
 <li>kv cache 的长度分别为 <code>head 长度 * 每个 head 向量维度 * token 个数 * 层数</code></li>
 <li>transform llama 各层 shape 参数量和计算量</li>
-<li>训练时用相关矩阵(下三角)一步算出所有输出，推理时每次算出当前值与之前 token 注意力，相当于在下三角矩阵加一层，只输出一个预测 token</li>
+<li>推理时才自回归；训练时用相关矩阵(下三角)一步算出所有输出，推理时每次算出当前值与之前 token 注意力，相当于在下三角矩阵加一层，只输出一个预测 token;</li>
+<li>decode 训练时加掩码并行，同时输出； 推理时自回归一步一步输出</li>
 <li>encode decoder 架构推理直接有输入和起始符输出，decode only 需要预热</li>
 </ol>
 <h3 id="关键操作"><a href="#关键操作" class="headerlink" title="关键操作"></a>关键操作</h3><ol>
@@ -955,8 +985,21 @@
 <li>concat</li>
 <li>linear(生成 q, k, v) Q, K, V</li>
 </ol>
+<h2 id="hugging-face-transformers"><a href="#hugging-face-transformers" class="headerlink" title="hugging face transformers"></a><a target="_blank" rel="noopener" href="https://github.com/huggingface/transformers">hugging face transformers</a></h2><ol>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/index">doc</a></li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/installation#offline-mode">offline-model</a></li>
+<li>模型文件页面右侧有对应使用方法</li>
+<li>模型里有 onnx</li>
+<li>只需要模型和对应的 config.json</li>
+<li>sample: <a target="_blank" rel="noopener" href="https://huggingface.co/Xenova/llama2.c-stories15M/tree/main">llama2.c-stories15M</a></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoTokenizer, AutoModelForCausalLM</span><br><span class="line">tokenizer = AutoTokenizer.from_pretrained(<span class="string">&quot;/home/xiyang/d/working/transformers/models/&quot;</span>)</span><br><span class="line">model = AutoModelForCausalLM.from_pretrained(<span class="string">&quot;/home/xiyang/d/working/transformers/models/&quot;</span>)</span><br><span class="line">model <span class="comment"># 查看模型结构</span></span><br></pre></td></tr></table></figure>
+
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/transformer_tutorial.html">pytorch transformer_tutorial</a></li>
+<li><a target="_blank" rel="noopener" href="https://nn.labml.ai/transformers/mha.html">nn.labml.ai&#x2F;transformers&#x2F;mha</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=4Bdc55j80l8">Illustrated Guide to Transformers Neural Network: A step by step explanation</a> 图示非常好</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/harvardnlp/annotated-transformer">harvardnlp&#x2F;annotated-transformer</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=nzqlFIcCSWQ">Transformer 论文逐段精读</a></li>
 <li><a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_attention-mechanisms/transformer.html">transformer 代码带解说 李沐</a></li>
 <li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/quicktour">quicktour</a> can run in colab</li>
@@ -1023,7 +1066,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-26 11:39:00" itemprop="dateModified" datetime="2023-12-26T11:39:00+08:00">2023-12-26</time>
+                <time title="修改时间：2023-12-29 18:39:55" itemprop="dateModified" datetime="2023-12-29T18:39:55+08:00">2023-12-29</time>
               </span>
 
           
@@ -1066,6 +1109,7 @@
 
       
           <h2 id="concept"><a href="#concept" class="headerlink" title="concept"></a>concept</h2><ol>
+<li><code>General Matrix Multiply (GeMM)</code></li>
 <li>奇怪的话可以放到 midjouney(or dell-e) 画出图像，助于理解</li>
 <li>token(令牌?) 是某个领域中一个抽象的语法或逻辑单元的称呼。在自然语言处理中,token 指一个文本串中基本的符号。比如一个句子可以被切分为多个词(word),每个词就是一个 token。</li>
 <li>prompt 提示很重要</li>
@@ -1686,13 +1730,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">395k</span>
+    <span title="站点总字数">399k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:59</span>
+    <span title="站点阅读时长">6:03</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

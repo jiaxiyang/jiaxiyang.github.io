@@ -28,7 +28,7 @@
 <meta property="og:description" content="base 硬 train 一发 attention What exactly are keys, queries, and values in attention mechanisms? The key&#x2F;value&#x2F;query concept is analogous to retrieval systems. For example, when you search for">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-11-21T09:20:45.000Z">
-<meta property="article:modified_time" content="2023-12-27T02:35:35.650Z">
+<meta property="article:modified_time" content="2023-12-28T03:44:51.683Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-27 10:35:35" itemprop="dateModified" datetime="2023-12-27T10:35:35+08:00">2023-12-27</time>
+                <time title="修改时间：2023-12-28 11:44:51" itemprop="dateModified" datetime="2023-12-28T11:44:51+08:00">2023-12-28</time>
               </span>
 
           
@@ -262,7 +262,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
+              <span>2.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -295,13 +295,13 @@
 <li>transformer: 需要对每个输入向量做 3 次 transform, Wq, Wk, Wv，转换矩阵都是学习得到的</li>
 <li>score matrix:自相关矩阵</li>
 <li>预测时就相当于使用编码器(输入)和之前的输出来预测下一个输出； 考虑了输入和输出信息 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=4Bdc55j80l8">Illustrated Guide to Transformers Neural Network: A step by step explanation</a> 图示非常好</li>
-<li>decode 训练时加掩码并行，同时输出； 推理时自回归一步一步输出?</li>
 <li>多头是想模拟卷积，可以输出多个通道 由多个 feature，识别多个模式</li>
 <li>模型训练好之后，推理时每个 token 对应的 q,k,v 都固定了，因为 token embedding 后的词向量是固定的，Q,K V 矩阵也是固定的</li>
 <li>每一个 token 都会生成 q,k,v，用 q 去和所有 token 的 k 做相关，根据结果从 k 中提取特征; 例如： how are you How 的 q 会和每个 token 中的 k 提取出一些信息，根据这些信息决定下一个生成的字符，比如 you 中的 k 和 I 很相关（embeding 和训练 决定），从 you 中很可能提取出 I, 然后再根据 how are you I 中重复上一步动作，这就是为什么 token 要和自己做相关，所有 token 相关性是由 embeding 和训练一起决定的?</li>
 <li>kv cache 的长度分别为 <code>head 长度 * 每个 head 向量维度 * token 个数 * 层数</code></li>
 <li>transform llama 各层 shape 参数量和计算量</li>
-<li>训练时用相关矩阵(下三角)一步算出所有输出，推理时每次算出当前值与之前 token 注意力，相当于在下三角矩阵加一层，只输出一个预测 token</li>
+<li>推理时才自回归；训练时用相关矩阵(下三角)一步算出所有输出，推理时每次算出当前值与之前 token 注意力，相当于在下三角矩阵加一层，只输出一个预测 token;</li>
+<li>decode 训练时加掩码并行，同时输出； 推理时自回归一步一步输出</li>
 <li>encode decoder 架构推理直接有输入和起始符输出，decode only 需要预热</li>
 </ol>
 <h3 id="关键操作"><a href="#关键操作" class="headerlink" title="关键操作"></a>关键操作</h3><ol>
@@ -313,8 +313,21 @@
 <li>concat</li>
 <li>linear(生成 q, k, v) Q, K, V</li>
 </ol>
+<h2 id="hugging-face-transformers"><a href="#hugging-face-transformers" class="headerlink" title="hugging face transformers"></a><a target="_blank" rel="noopener" href="https://github.com/huggingface/transformers">hugging face transformers</a></h2><ol>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/index">doc</a></li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/installation#offline-mode">offline-model</a></li>
+<li>模型文件页面右侧有对应使用方法</li>
+<li>模型里有 onnx</li>
+<li>只需要模型和对应的 config.json</li>
+<li>sample: <a target="_blank" rel="noopener" href="https://huggingface.co/Xenova/llama2.c-stories15M/tree/main">llama2.c-stories15M</a></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoTokenizer, AutoModelForCausalLM</span><br><span class="line">tokenizer = AutoTokenizer.from_pretrained(<span class="string">&quot;/home/xiyang/d/working/transformers/models/&quot;</span>)</span><br><span class="line">model = AutoModelForCausalLM.from_pretrained(<span class="string">&quot;/home/xiyang/d/working/transformers/models/&quot;</span>)</span><br><span class="line">model <span class="comment"># 查看模型结构</span></span><br></pre></td></tr></table></figure>
+
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/transformer_tutorial.html">pytorch transformer_tutorial</a></li>
+<li><a target="_blank" rel="noopener" href="https://nn.labml.ai/transformers/mha.html">nn.labml.ai&#x2F;transformers&#x2F;mha</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=4Bdc55j80l8">Illustrated Guide to Transformers Neural Network: A step by step explanation</a> 图示非常好</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/harvardnlp/annotated-transformer">harvardnlp&#x2F;annotated-transformer</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=nzqlFIcCSWQ">Transformer 论文逐段精读</a></li>
 <li><a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_attention-mechanisms/transformer.html">transformer 代码带解说 李沐</a></li>
 <li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/quicktour">quicktour</a> can run in colab</li>
@@ -429,7 +442,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%93%8D%E4%BD%9C"><span class="nav-number">1.1.</span> <span class="nav-text">关键操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">2.</span> <span class="nav-text">links</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E5%AE%8F%E6%AF%85"><span class="nav-number">2.1.</span> <span class="nav-text">李宏毅</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%93%8D%E4%BD%9C"><span class="nav-number">1.1.</span> <span class="nav-text">关键操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hugging-face-transformers"><span class="nav-number">2.</span> <span class="nav-text">hugging face transformers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">3.</span> <span class="nav-text">links</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E5%AE%8F%E6%AF%85"><span class="nav-number">3.1.</span> <span class="nav-text">李宏毅</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -528,13 +541,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">395k</span>
+    <span title="站点总字数">399k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:59</span>
+    <span title="站点阅读时长">6:03</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
