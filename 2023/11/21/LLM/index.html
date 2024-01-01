@@ -20,19 +20,20 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="concept General Matrix Multiply (GeMM) 奇怪的话可以放到 midjouney(or dell-e) 画出图像，助于理解 token(令牌?) 是某个领域中一个抽象的语法或逻辑单元的称呼。在自然语言处理中,token 指一个文本串中基本的符号。比如一个句子可以被切分为多个词(word),每个词就是一个 token。 prompt 提示很重要 机器来找 promp">
+  <meta name="description" content="LLM 进化树 concept General Matrix Multiply (GeMM) 奇怪的话可以放到 midjouney(or dell-e) 画出图像，助于理解 token(令牌?) 是某个领域中一个抽象的语法或逻辑单元的称呼。在自然语言处理中,token 指一个文本串中基本的符号。比如一个句子可以被切分为多个词(word),每个词就是一个 token。 prompt 提示很重要 机器">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LLM">
 <meta property="og:url" content="https://jiaxiyang.github.io/2023/11/21/LLM/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="concept General Matrix Multiply (GeMM) 奇怪的话可以放到 midjouney(or dell-e) 画出图像，助于理解 token(令牌?) 是某个领域中一个抽象的语法或逻辑单元的称呼。在自然语言处理中,token 指一个文本串中基本的符号。比如一个句子可以被切分为多个词(word),每个词就是一个 token。 prompt 提示很重要 机器来找 promp">
+<meta property="og:description" content="LLM 进化树 concept General Matrix Multiply (GeMM) 奇怪的话可以放到 midjouney(or dell-e) 画出图像，助于理解 token(令牌?) 是某个领域中一个抽象的语法或逻辑单元的称呼。在自然语言处理中,token 指一个文本串中基本的符号。比如一个句子可以被切分为多个词(word),每个词就是一个 token。 prompt 提示很重要 机器">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/Mooler0410/LLMsPracticalGuide/raw/main/imgs/tree.jpg">
 <meta property="og:image" content="https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/1_Welcome_GenerativeMeena_CL_V02_150521_v2_720_25fps.gif">
 <meta property="article:published_time" content="2023-11-21T08:24:03.000Z">
-<meta property="article:modified_time" content="2023-12-29T10:39:55.858Z">
+<meta property="article:modified_time" content="2024-01-01T13:29:40.526Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/1_Welcome_GenerativeMeena_CL_V02_150521_v2_720_25fps.gif">
+<meta name="twitter:image" content="https://github.com/Mooler0410/LLMsPracticalGuide/raw/main/imgs/tree.jpg">
 
 <link rel="canonical" href="https://jiaxiyang.github.io/2023/11/21/LLM/">
 
@@ -132,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">164</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">166</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -234,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-29 18:39:55" itemprop="dateModified" datetime="2023-12-29T18:39:55+08:00">2023-12-29</time>
+                <time title="修改时间：2024-01-01 21:29:40" itemprop="dateModified" datetime="2024-01-01T21:29:40+08:00">2024-01-01</time>
               </span>
 
           
@@ -264,7 +265,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.9k</span>
+              <span>4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -283,7 +284,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="concept"><a href="#concept" class="headerlink" title="concept"></a>concept</h2><ol>
+        <h2 id="LLM-进化树"><a href="#LLM-进化树" class="headerlink" title="LLM 进化树"></a>LLM 进化树</h2><p><img src="https://github.com/Mooler0410/LLMsPracticalGuide/raw/main/imgs/tree.jpg" alt="LLM 进化树"></p>
+<h2 id="concept"><a href="#concept" class="headerlink" title="concept"></a>concept</h2><ol>
 <li><code>General Matrix Multiply (GeMM)</code></li>
 <li>奇怪的话可以放到 midjouney(or dell-e) 画出图像，助于理解</li>
 <li>token(令牌?) 是某个领域中一个抽象的语法或逻辑单元的称呼。在自然语言处理中,token 指一个文本串中基本的符号。比如一个句子可以被切分为多个词(word),每个词就是一个 token。</li>
@@ -337,6 +339,7 @@
 </li>
 <li>fintuning 和 reinforcement lerning 效果很好 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2203.02155">Training language models to follow instructions with human feedback</a> 小模型也可以胜大模型</li>
 <li>openai 收齐了很多问题，所以即使 chatgpt 模型不那么大，也比更大模型好</li>
+<li><code>MoE(Mixture of Experts)</code>模型指的是专家混合模型,是一类将多个模型专家进行混合的组合结构。例如： Mixtral 8x7B</li>
 </ol>
 <h2 id="生成内容"><a href="#生成内容" class="headerlink" title="生成内容"></a>生成内容</h2><ol>
 <li>文本</li>
@@ -432,7 +435,17 @@
 <li>chatgpt 评价是增强学习</li>
 <li>chatgpt: gpt -&gt; 监督学习 -&gt; 增强学习</li>
 </ol>
-<h2 id="bing-copilot"><a href="#bing-copilot" class="headerlink" title="bing copilot"></a><a target="_blank" rel="noopener" href="https://www.bing.com/">bing copilot</a></h2><h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<h2 id="bing-copilot"><a href="#bing-copilot" class="headerlink" title="bing copilot"></a><a target="_blank" rel="noopener" href="https://www.bing.com/">bing copilot</a></h2><h2 id="precision-精度"><a href="#precision-精度" class="headerlink" title="precision 精度"></a>precision 精度</h2><ol>
+<li>float32</li>
+<li>float16</li>
+<li>bfloat16</li>
+<li>8bit</li>
+<li>4bit</li>
+<li>GPTQ</li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/Mooler0410/LLMsPracticalGuide">LLMsPracticalGuide</a></li>
+<li><a target="_blank" rel="noopener" href="https://z7nobhiey2.feishu.cn/file/JTa0bZ38RohzwTx9zjucuDmunVe">oneflow 技术年货 2023</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=yiY4nPOzJEg&list=PLJV_el3uVTsOePyfmkfivYZ7Rqr2nMk3W">李宏毅 生成式 AI</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=zjkBMFhNj_g">Intro to Large Language Models</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLFXJ6jwg0qW-7UM8iUTj3qKqdhbQULP5I">李沐论文精度</a></li>
@@ -538,7 +551,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#concept"><span class="nav-number">1.</span> <span class="nav-text">concept</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%86%85%E5%AE%B9"><span class="nav-number">2.</span> <span class="nav-text">生成内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">生成方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0-Multi-Task-Learning-%E5%92%8C%E5%A4%9A%E6%A8%A1%E6%80%81%E5%AD%A6%E4%B9%A0-Multimodal-Learning"><span class="nav-number">3.1.</span> <span class="nav-text">多任务学习(Multi-Task Learning)和多模态学习(Multimodal Learning)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E6%A8%A1%E6%80%81"><span class="nav-number">3.2.</span> <span class="nav-text">多模态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%92%E5%90%8D"><span class="nav-number">4.</span> <span class="nav-text">排名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">5.</span> <span class="nav-text">数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#huggine-face"><span class="nav-number">6.</span> <span class="nav-text">huggine face</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sota-models"><span class="nav-number">7.</span> <span class="nav-text">sota models</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#llama"><span class="nav-number">8.</span> <span class="nav-text">llama</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gpt"><span class="nav-number">9.</span> <span class="nav-text">gpt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bing-copilot"><span class="nav-number">10.</span> <span class="nav-text">bing copilot</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">11.</span> <span class="nav-text">links</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#LLM-%E8%BF%9B%E5%8C%96%E6%A0%91"><span class="nav-number">1.</span> <span class="nav-text">LLM 进化树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#concept"><span class="nav-number">2.</span> <span class="nav-text">concept</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%86%85%E5%AE%B9"><span class="nav-number">3.</span> <span class="nav-text">生成内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%96%B9%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">生成方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%AD%A6%E4%B9%A0-Multi-Task-Learning-%E5%92%8C%E5%A4%9A%E6%A8%A1%E6%80%81%E5%AD%A6%E4%B9%A0-Multimodal-Learning"><span class="nav-number">4.1.</span> <span class="nav-text">多任务学习(Multi-Task Learning)和多模态学习(Multimodal Learning)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E6%A8%A1%E6%80%81"><span class="nav-number">4.2.</span> <span class="nav-text">多模态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%92%E5%90%8D"><span class="nav-number">5.</span> <span class="nav-text">排名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">6.</span> <span class="nav-text">数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#huggine-face"><span class="nav-number">7.</span> <span class="nav-text">huggine face</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sota-models"><span class="nav-number">8.</span> <span class="nav-text">sota models</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#llama"><span class="nav-number">9.</span> <span class="nav-text">llama</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gpt"><span class="nav-number">10.</span> <span class="nav-text">gpt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bing-copilot"><span class="nav-number">11.</span> <span class="nav-text">bing copilot</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#precision-%E7%B2%BE%E5%BA%A6"><span class="nav-number">12.</span> <span class="nav-text">precision 精度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">13.</span> <span class="nav-text">links</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -554,7 +567,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">164</span>
+          <span class="site-state-item-count">166</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -587,6 +600,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/01/tensorrt-llm/" title="2024&#x2F;01&#x2F;01&#x2F;tensorrt-llm&#x2F;">tensorrt-llm</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2023/12/30/gpt/" title="2023&#x2F;12&#x2F;30&#x2F;gpt&#x2F;">gpt</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/12/26/jupyter/" title="2023&#x2F;12&#x2F;26&#x2F;jupyter&#x2F;">jupyter</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -594,12 +613,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/12/21/deep-learning/" title="2023&#x2F;12&#x2F;21&#x2F;deep-learning&#x2F;">deep-learning</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/12/19/multimodal/" title="2023&#x2F;12&#x2F;19&#x2F;multimodal&#x2F;">multimodal</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/12/19/diffusion/" title="2023&#x2F;12&#x2F;19&#x2F;diffusion&#x2F;">diffusion</a>
         </li>
     </ul>
   </div>
@@ -627,7 +640,7 @@
 <div class="copyright">
   
   &copy; 2021 – 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -637,13 +650,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">399k</span>
+    <span title="站点总字数">403k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:03</span>
+    <span title="站点阅读时长">6:06</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">164</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">166</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,261 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/07/07/Clang/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/07/Clang/" class="post-title-link" itemprop="url">Clang</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-07 13:58:12" itemprop="dateCreated datePublished" datetime="2022-07-07T13:58:12+08:00">2022-07-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-22 13:05:50" itemprop="dateModified" datetime="2023-11-22T13:05:50+08:00">2023-11-22</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/07/07/Clang/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/07/07/Clang/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>762</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li><code>-Wall</code>：启用大多数警告。这是开发中常用的选项，可以帮助发现潜在的代码问题。</li>
+<li><code>-Wextra</code>：启用额外的警告，比 -Wall 更严格。</li>
+<li><code>-Werror</code>：将所有警告当作错误处理。这意味着任何警告都会导致编译失败，迫使开发者修复这些潜在的问题</li>
+</ol>
+<h2 id="clang-VS-gcc"><a href="#clang-VS-gcc" class="headerlink" title="clang VS gcc"></a>clang VS gcc</h2><ol>
+<li>clang 优势<ul>
+<li>编译速度更快</li>
+<li>编译产出更小</li>
+<li>出错提示更友好</li>
+<li>内置有静态分析工具</li>
+<li>专注</li>
+</ul>
+</li>
+</ol>
+<h2 id="cmake-使用"><a href="#cmake-使用" class="headerlink" title="cmake 使用"></a>cmake 使用</h2><ol>
+<li>env</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> CC=clang</span><br><span class="line"><span class="built_in">export</span> CXX=clang++</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>cmake</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -DCMAKE_C_COMPILER=clang  -DCMAKE_CXX_COMPILER=clang++ ..</span><br></pre></td></tr></table></figure>
+
+<h2 id="include-what-you-use"><a href="#include-what-you-use" class="headerlink" title="include-what-you-use"></a><a target="_blank" rel="noopener" href="https://github.com/include-what-you-use/include-what-you-use">include-what-you-use</a></h2><ol>
+<li>检查在头文件中用了哪些 symbol</li>
+<li><code>sudo ln -s /usr/bin/python3 /usr/bin/python</code></li>
+<li><code>iwyu_tool.py -p build/</code> build 下有 compile_commands.json, 分析工程</li>
+<li>fix_includes.py 修复 include</li>
+<li>build</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># git clone git@github.com:include-what-you-use/include-what-you-use.git</span></span><br><span class="line"><span class="comment"># cd include-what-you-use</span></span><br><span class="line"><span class="comment"># git checkout 0.14</span></span><br><span class="line"><span class="comment"># mkdir build &amp;&amp; cd build</span></span><br><span class="line"><span class="comment"># cmake -G &quot;Unix Makefiles&quot; -DCMAKE_PREFIX_PATH=/usr/lib/llvm-10 ../</span></span><br><span class="line"><span class="comment"># make &amp;&amp; make install</span></span><br><span class="line"><span class="comment"># bin/include-what-you-use ../../cpp_sandbox/io/read_shape/test.cpp</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1449757">linux 下 Clang 和 gcc 的区别</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/07/05/Bazel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/05/Bazel/" class="post-title-link" itemprop="url">Bazel</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-05 20:48:35" itemprop="dateCreated datePublished" datetime="2022-07-05T20:48:35+08:00">2022-07-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-10-07 14:54:09" itemprop="dateModified" datetime="2023-10-07T14:54:09+08:00">2023-10-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/Bazel/" itemprop="url" rel="index"><span itemprop="name">Bazel</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/07/05/Bazel/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/07/05/Bazel/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>157</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h2><ol>
+<li><code>docker pull cockroachdb/bazel:latest-do-not-use</code></li>
+<li><a target="_blank" rel="noopener" href="https://bazel.build/install/ubuntu?hl=zh-cn#run-installer">安装脚本</a></li>
+</ol>
+<h2 id="tutorial"><a href="#tutorial" class="headerlink" title="tutorial"></a>tutorial</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://bazel.build/start/cpp?hl=zh-cn">c++ base samples</a></li>
+<li><a target="_blank" rel="noopener" href="https://bazel.build/tutorials/cpp-use-cases?hl=zh-cn">c++ tutorials</a></li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://bazel.build/reference?hl=zh-cn">参考文档: 构建百科全书， 测试百科全书，命令行参考文档，查询参考文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://bazel.build/about/intro?hl=zh-cn">简介</a></li>
+<li><a target="_blank" rel="noopener" href="https://bazel.build/basics?hl=zh-cn">build system</a></li>
+<li><a target="_blank" rel="noopener" href="https://bazel.build/concepts/build-ref?hl=zh-cn">概念</a></li>
+<li><a target="_blank" rel="noopener" href="https://bazel.build/build/style-guide?hl=zh-cn">基础知识</a></li>
+<li><a target="_blank" rel="noopener" href="https://bazel.build/configure/best-practices?hl=zh-cn">最佳做法</a></li>
+<li><a target="_blank" rel="noopener" href="https://bazel.build/configure/attributes?hl=zh-cn">配置 BUILD</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1102,254 +1357,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/04/26/docker-windows/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/26/docker-windows/" class="post-title-link" itemprop="url">windows WSL2</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-04-26 13:16:59" itemprop="dateCreated datePublished" datetime="2022-04-26T13:16:59+08:00">2022-04-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/04/26/docker-windows/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/04/26/docker-windows/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>58</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="install-WSL2"><a href="#install-WSL2" class="headerlink" title="install WSL2"></a><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/wsl/install">install WSL2</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package">update kernel</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/wsl/install-manual">install manual</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-CN/windows/terminal/install">install windows terminal</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/04/26/windows-WSL2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/26/windows-WSL2/" class="post-title-link" itemprop="url">windows WSL2</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-04-26 13:16:59" itemprop="dateCreated datePublished" datetime="2022-04-26T13:16:59+08:00">2022-04-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-22 11:19:47" itemprop="dateModified" datetime="2023-11-22T11:19:47+08:00">2023-11-22</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/04/26/windows-WSL2/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/04/26/windows-WSL2/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>900</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="NOTE"><a href="#NOTE" class="headerlink" title="NOTE"></a>NOTE</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/hubisan/emacs-wsl#run-emacs-in-graphical-display">run-emacs-in-graphical-display</a></li>
-<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows/wsl/tutorials/gui-apps">gui-apps</a></li>
-<li>wsl 里可以直接显示，如 opencv show， gpuplot</li>
-<li><a target="_blank" rel="noopener" href="https://solidspoon.xyz/2021/02/17/%E9%85%8D%E7%BD%AEWSL2%E4%BD%BF%E7%94%A8Windows%E4%BB%A3%E7%90%86%E4%B8%8A%E7%BD%91/">WSL 2 配置代理 clash</a> 配置 WSL2 使用 Windows 代理上网 有用</li>
-</ol>
-<h2 id="install-WSL2"><a href="#install-WSL2" class="headerlink" title="install WSL2"></a><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/wsl/install">install WSL2</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package">update kernel</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/wsl/install-manual">install manual</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-CN/windows/terminal/install">install windows terminal</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yyfh/p/16526955.html">内存限制</a></li>
-</ol>
-<h2 id="WSL2-ubuntu-usage"><a href="#WSL2-ubuntu-usage" class="headerlink" title="WSL2 ubuntu usage"></a>WSL2 ubuntu usage</h2><ol>
-<li><code>/mnt/c</code> windows C 盘 mount 路径</li>
-<li><code>explorer.exe .</code> 在 wsl 中打开 windows 资源管理器</li>
-<li><code>cd ~/ &amp;&amp; explorer.exe .</code> 查看 wsl 路径</li>
-<li><code>explorer.exe *.jpg</code> 查看图片</li>
-<li>explorer.exe 可以用默认方式打开各类文件 <code>alias open=&#39;explorer.exe&#39;</code></li>
-<li>samba mount(fast)</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">mkdir</span> -p /data0/users/xiyang.jia/d</span><br><span class="line">sudo mount.cifs //10.31.1.225/share /data0/users/xiyang.jia/d -o user=xiyang.jia</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><a target="_blank" rel="noopener" href="https://linuxnightly.com/mount-and-access-hard-drives-in-windows-subsystem-for-linux-wsl/">mount(slow)</a></li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">mkdir</span> -p /data0/users/xiyang.jia/</span><br><span class="line">sudo mount -t drvfs Z: /data0/users/xiyang.jia/</span><br></pre></td></tr></table></figure>
-
-<h2 id="windows-terminal-美化"><a href="#windows-terminal-美化" class="headerlink" title="windows terminal 美化"></a><a target="_blank" rel="noopener" href="https://github.com/microsoft/terminal">windows terminal</a> 美化</h2><ol>
-<li>超高效： win + ` 打开一半 windows terminal, 然后使用 win + f 全屏，后边切换都是全屏， 使用 tmux，可以连接服务器<ul>
-<li>windows terminl</li>
-<li>wsl + tmux</li>
-<li>server</li>
-<li>sevver + docker</li>
-<li>需要解决 ssh 经常断开问题 <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_15505637/article/details/80881770">link</a><ul>
-<li><code>sudo /etc/init.d/ssh restart</code></li>
-</ul>
-</li>
-<li>tmux-resurrect 回复环境</li>
-</ul>
-</li>
-<li>如何设置 win 快捷键？</li>
-<li>C– and C-+ 放大或缩小</li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-CN/windows/terminal/install">官方设置教程</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/agkozak/windows-terminal-zenburn">zenburn 主题</a></li>
-<li><a target="_blank" rel="noopener" href="https://wallpaperaccess.com/full/1644661.jpg">口袋妖怪适合 zenburn 背景的壁纸</a></li>
-<li><a target="_blank" rel="noopener" href="https://wallpaperaccess.com/awesome-gengar">口袋妖怪壁纸</a></li>
-<li><a target="_blank" rel="noopener" href="https://wallpaperaccess.com/black-pokemon">口袋妖怪壁纸黑</a></li>
-<li><a target="_blank" rel="noopener" href="http://ubuntu.ecchi.ca/wallpapers/">ubuntu 每一版壁纸汇总</a></li>
-<li><a target="_blank" rel="noopener" href="https://wallpaperaccess.com/ubuntu">ubuntu 壁纸</a></li>
-<li><a target="_blank" rel="noopener" href="https://wallpaperhub.app/creators/genrolecaspe">windows 壁纸</a></li>
-<li><a target="_blank" rel="noopener" href="https://wallpaperhub.app/wallpapers/?tags=windows">windows 壁纸 2</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/terminal/issues/3878#issuecomment-735253417">close scroll bar</a></li>
-<li><a target="_blank" rel="noopener" href="https://windowsterminalthemes.dev/">themes</a></li>
-<li><a target="_blank" rel="noopener" href="https://wallpapers.com/wallpapers/4k-programming-codes-in-black-screen-cl72lv0j7uvh4bmy.html">programmer backgroud</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1421,7 +1428,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">164</span>
+          <span class="site-state-item-count">166</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1454,6 +1461,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/01/tensorrt-llm/" title="2024&#x2F;01&#x2F;01&#x2F;tensorrt-llm&#x2F;">tensorrt-llm</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2023/12/30/gpt/" title="2023&#x2F;12&#x2F;30&#x2F;gpt&#x2F;">gpt</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/12/26/jupyter/" title="2023&#x2F;12&#x2F;26&#x2F;jupyter&#x2F;">jupyter</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1461,12 +1474,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/12/21/deep-learning/" title="2023&#x2F;12&#x2F;21&#x2F;deep-learning&#x2F;">deep-learning</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/12/19/multimodal/" title="2023&#x2F;12&#x2F;19&#x2F;multimodal&#x2F;">multimodal</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/12/19/diffusion/" title="2023&#x2F;12&#x2F;19&#x2F;diffusion&#x2F;">diffusion</a>
         </li>
     </ul>
   </div>
@@ -1494,7 +1501,7 @@
 <div class="copyright">
   
   &copy; 2021 – 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1504,13 +1511,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">399k</span>
+    <span title="站点总字数">403k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:03</span>
+    <span title="站点阅读时长">6:06</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

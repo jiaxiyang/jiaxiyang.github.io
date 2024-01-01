@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">164</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">166</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,253 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/11/10/nvidia/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/10/nvidia/" class="post-title-link" itemprop="url">nvidia</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-10 11:45:20" itemprop="dateCreated datePublished" datetime="2023-11-10T11:45:20+08:00">2023-11-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-01 21:13:30" itemprop="dateModified" datetime="2024-01-01T21:13:30+08:00">2024-01-01</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/11/10/nvidia/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/11/10/nvidia/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="vpi"><a href="#vpi" class="headerlink" title="vpi"></a><a target="_blank" rel="noopener" href="https://docs.nvidia.com/vpi/algorithms.html">vpi</a></h2><ol>
+<li>支持多种硬件做前处理, 如 resize, convert color, remap (VIC 都支持，可以释放 GPU 资源)</li>
+</ol>
+<h2 id="查看-GPU-info"><a href="#查看-GPU-info" class="headerlink" title="查看 GPU info"></a>查看 GPU info</h2><h3 id="server"><a href="#server" class="headerlink" title="server"></a>server</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/michaelcjl/p/16657548.html">nvidia-smi 命令参数含义</a></li>
+<li><code>nvidia-smi</code> 可以看出每个 GPU 的显存总量和使用量 还可以看到 cuda 版本</li>
+<li><code>nvidia-smi -L</code>列出 GPU 列表, 查看 GPU 先开显卡型号</li>
+<li><code>nvidia-smi -q</code> 查看 GPU 信息</li>
+<li><code>free -h</code> 看内存，注意服务器上内存和显存不一样, 不共享; PCIe 接在服务器上。 服务器市场的需求与集成设备（如 Jetson 系列）不同。服务器用户通常需要高度定制化的解决方案，可以独立升级和优化各个组件，而集成设备则更注重成本效益和空间效率。</li>
+<li>加速器：不包含 arm</li>
+</ol>
+<h2 id="edge"><a href="#edge" class="headerlink" title="edge"></a>edge</h2><ol>
+<li>SOC: 包含 arm</li>
+<li>NVIDIA Jetson 系列设备，包括像 Jetson Nano、Jetson TX1&#x2F;TX2、Jetson Xavier、 Jetson Orin 等，使用的是 NVIDIA 的 <code>Tegra</code> 架构。在这种架构中，CPU 和 GPU 确实共享内存，这被称为统一内存（Unified Memory）或共享内存。</li>
+<li>tegra 是 SOC 架构</li>
+<li><code>jtop</code> <a target="_blank" rel="noopener" href="https://github.com/rbonghi/jetson_stats">jetson_stats</a> jetson-stats is a package for monitoring and control your NVIDIA Jetson [Orin, Xavier, Nano, TX] series.</li>
+<li><code>jetson_release</code></li>
+</ol>
+<h2 id="产品"><a href="#产品" class="headerlink" title="产品"></a>产品</h2><ol>
+<li>性能参数：产品 -&gt; 规格</li>
+<li><a target="_blank" rel="noopener" href="https://www.nvidia.cn/autonomous-machines/embedded-systems/">边缘计算产品</a> 查看模组对比， 可以看到各个芯片的参数<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/embedded/develop/roadmap">jetson roadmap</a></li>
+</ul>
+</li>
+<li>数据中心： A, H, L, V 系列<ul>
+<li><a target="_blank" rel="noopener" href="https://www.nvidia.cn/data-center/h100/">H100 性能参数</a> 游戏：RTX, GTX</li>
+<li>RTX: Ray Tracing eXtreme</li>
+<li>GTX: Graphics Processor protoType eXtreme</li>
+<li><a target="_blank" rel="noopener" href="https://www.nvidia.cn/geforce/graphics-cards/compare/?section=compare-specs">GeForce 显卡比较</a></li>
+<li>在 NVIDIA 的 GeForce 系列显卡中，Ti 是一个特殊的标识，用来表示某个型号的改进或升级版。从本意来讲，TI 属于’Titanium’的缩写，和太空金属’钛’是一个意思，在显卡中他代表着更高级版本。</li>
+</ul>
+</li>
+</ol>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/kunhe0512/article/details/126247243">https://blog.csdn.net/kunhe0512/article/details/126247243</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/394352476">NVIDIA GPU 架构梳理</a></li>
+<li>天梯图</li>
+<li>架构演进</li>
+<li>tegra 是 SOC 架构, tesla 是 GPU 架构</li>
+<li>NVIDIA GeForce RTX 3090 使用的是 NVIDIA 的 Ampere 架构</li>
+<li>NVIDIA Jetson Orin 是基于 NVIDIA 的 Ampere 架构的高性能 AI 计算平台</li>
+<li>CUDA_ARCHS 是指定 CUDA 代码编译目标 NVIDIA GPU 架构的编译标志。 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/631850036">为各种 NVIDIA 架构匹配 CUDA arch 和 CUDA gencode</a></li>
+<li>架构历史</li>
+<li><a target="_blank" rel="noopener" href="https://www.baseten.co/blog/understanding-nvidias-datacenter-gpu-line/">understanding-nvidias-datacenter-gpu-line</a><br><img src="https://i.ibb.co/hZVxQFd/ZEI0-D9zw-C5.png" alt="历史"></li>
+</ol>
+<h2 id="JetPack"><a href="#JetPack" class="headerlink" title="JetPack"></a><a target="_blank" rel="noopener" href="https://docs.nvidia.com/jetson/jetpack/introduction/index.html">JetPack</a></h2><ol>
+<li>NVIDIA JetPack SDK is the most comprehensive solution for building AI applications. JetPack SDK provides a full development environment for hardware-accelerated AI-at-the-edge development.JetPack SDK includes Jetson Linux Driver Package with bootloader, Linux kernel, Ubuntu desktop environment, and a complete set of libraries for acceleration of GPU computing, multimedia, graphics, and computer vision. It also includes samples, documentation, and developer tools for both host computer and developer kit, and supports higher level SDKs such as DeepStream for streaming video analytics, Isaac for robotics and Riva for conversational AI.</li>
+</ol>
+<h2 id="tenosr-core-和-cuda-core"><a href="#tenosr-core-和-cuda-core" class="headerlink" title="tenosr core 和 cuda core"></a>tenosr core 和 cuda core</h2><ol>
+<li>CUDA Core 是为通用计算设计，而 Tensor Core 是为特定类型的计算（主要是深度学习中的矩阵运算）优化。</li>
+<li>在 NVIDIA 的某些 GPU 架构中，例如 Volta、Turing 和 Ampere，CUDA Core 和 Tensor Core 共同存在。它们可以根据计算任务的性质协同工作，提高整体的计算效率。</li>
+<li>在执行深度学习任务时，Tensor Core 可以显著加速计算过程，相较于仅使用 CUDA Core，能实现更快的训练和推理速度。</li>
+<li>Tensor Core 依赖 CUDA Core 并行架构。多个 CUDA Core 会组成一个 Tensor Core,实际运算还是需要 CUDA Core 并行执行。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/11/05/package-manager/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/05/package-manager/" class="post-title-link" itemprop="url">package manager</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-05 11:01:42" itemprop="dateCreated datePublished" datetime="2023-11-05T11:01:42+08:00">2023-11-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-12-06 11:10:28" itemprop="dateModified" datetime="2023-12-06T11:10:28+08:00">2023-12-06</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/11/05/package-manager/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/11/05/package-manager/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>694</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><h3 id="CPM"><a href="#CPM" class="headerlink" title="CPM"></a><a target="_blank" rel="noopener" href="https://github.com/cpm-cmake/CPM.cmake">CPM</a></h3><h2 id="python"><a href="#python" class="headerlink" title="python"></a>python</h2><h3 id="virtual-environments"><a href="#virtual-environments" class="headerlink" title="virtual-environments"></a><a target="_blank" rel="noopener" href="https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/">virtual-environments</a></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install python3-venv</span><br><span class="line">python3 -m venv .venv</span><br><span class="line"><span class="built_in">source</span> .venv/bin/activate</span><br><span class="line">deactivate</span><br><span class="line">pip install pip -U -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">pip config <span class="built_in">set</span> global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">pip install -r requirements.txt</span><br><span class="line">python3 -m pip install --upgrade pip</span><br><span class="line">python3 -m pip install <span class="string">&#x27;requests==2.18.4&#x27;</span></span><br><span class="line">python3 -m pip install <span class="string">&#x27;requests&gt;=2.0.0,&lt;3.0.0&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="miniconda-选择对应-python-版本-install-时可以选路径"><a href="#miniconda-选择对应-python-版本-install-时可以选路径" class="headerlink" title="miniconda 选择对应 python 版本, install 时可以选路径"></a><a target="_blank" rel="noopener" href="https://docs.conda.io/en/latest/miniconda.html#linux-installers">miniconda</a> 选择对应 python 版本, install 时可以选路径</h3><h3 id="anaconda"><a href="#anaconda" class="headerlink" title="anaconda"></a><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/">anaconda</a></h3><h3 id="mamba"><a href="#mamba" class="headerlink" title="mamba"></a><a target="_blank" rel="noopener" href="https://github.com/mamba-org/mamba">mamba</a></h3><h2 id="rust"><a href="#rust" class="headerlink" title="rust"></a>rust</h2><h3 id="cargo"><a href="#cargo" class="headerlink" title="cargo"></a>cargo</h3><h2 id="multi"><a href="#multi" class="headerlink" title="multi"></a>multi</h2><h3 id="pixi"><a href="#pixi" class="headerlink" title="pixi"></a><a target="_blank" rel="noopener" href="https://github.com/prefix-dev/pixi">pixi</a></h3><ol>
+<li>pixi is a cross-platform, multi-language package manager and workflow tool built on the foundation of the conda ecosystem. It provides developers with an exceptional experience similar to popular package managers like cargo or yarn, but for any language.</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1170,243 +1417,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/09/21/assembly/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/21/assembly/" class="post-title-link" itemprop="url">assembly</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-09-21 14:11:28" itemprop="dateCreated datePublished" datetime="2023-09-21T14:11:28+08:00">2023-09-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-10 12:16:35" itemprop="dateModified" datetime="2023-10-10T12:16:35+08:00">2023-10-10</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/09/21/assembly/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/09/21/assembly/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h2><h3 id="hello-world"><a href="#hello-world" class="headerlink" title="hello world"></a>hello world</h3><ol>
-<li>code</li>
-</ol>
-<figure class="highlight plaintext"><figcaption><span>test.s</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">.section .data   # 指示汇编器开始一个数据段，通常用于存储变量和常量。</span><br><span class="line">hello_message:   # 定义了一个名为 hello_message 的标签，其内容是 &quot;Hello, World!\n&quot; 字符串。.asciz 指令告诉汇编器创建一个以零结尾的 ASCII 字符串（即 C 字符串）。</span><br><span class="line">    .asciz &quot;Hello, World!\n&quot;</span><br><span class="line">.section .text   # 指示汇编器开始一个代码段，通常用于存储程序代码。</span><br><span class="line">.globl _start    # 告诉链接器 _start 标签是一个全局符号，意味着它可以在其他文件中被引用。对于这个程序，_start 是程序的入口点。</span><br><span class="line"></span><br><span class="line">_start:</span><br><span class="line">    # Write hello_message to stdout</span><br><span class="line">    mov x8, #64            // syscall: write</span><br><span class="line">    mov x0, #1             // file descriptor: stdout</span><br><span class="line">    ldr x1, =hello_message // pointer to hello_message</span><br><span class="line">    mov x2, #13            // message length</span><br><span class="line">    svc #0                 // invoke syscall</span><br><span class="line"></span><br><span class="line">    # Exit the program</span><br><span class="line">    mov x8, #93            // syscall: exit</span><br><span class="line">    mov x0, #0             // exit status 0</span><br><span class="line">    svc #0                 // invoke syscall</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>compile command</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">as test.s -o test.o</span><br><span class="line">ld test.o -o <span class="built_in">test</span></span><br><span class="line">./test</span><br><span class="line">objdump -dw <span class="built_in">test</span> <span class="comment">#查看生成的汇编</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="vector-sample"><a href="#vector-sample" class="headerlink" title="vector sample"></a>vector sample</h3><ol>
-<li>code</li>
-</ol>
-<figure class="highlight plaintext"><figcaption><span>test.s</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">.global _start      // 声明全局标签，这是程序的起始点</span><br><span class="line"></span><br><span class="line">.section .data      // 开始数据段，用于定义初始化的变量</span><br><span class="line">.align 3            // 确保32位对齐</span><br><span class="line">a:      .int 1, 2, 3, 4    // 定义整数数组a</span><br><span class="line">b:      .int 5, 6, 7, 8    // 定义整数数组b</span><br><span class="line">result: .int 0, 0, 0, 0    // 定义整数数组result用于存储结果</span><br><span class="line">msg:    .asciz &quot;Result: [%d, %d, %d, %d]\n&quot;   // 定义用于打印的字符串格式</span><br><span class="line"></span><br><span class="line">.section .text      // 开始文本段，用于定义代码</span><br><span class="line"></span><br><span class="line">vector_add:</span><br><span class="line">    ld1 &#123;v0.4s&#125;, [x0]   // 从x0指向的地址加载向量到v0寄存器</span><br><span class="line">    ld1 &#123;v1.4s&#125;, [x1]   // 从x1指向的地址加载向量到v1寄存器</span><br><span class="line">    add v2.4s, v0.4s, v1.4s  // 将v0和v1的内容相加，结果存放在v2中</span><br><span class="line">    st1 &#123;v2.4s&#125;, [x2]   // 将v2的内容存储到x2指向的地址</span><br><span class="line">    ret                 // 返回到调用此函数的位置</span><br><span class="line"></span><br><span class="line">_start:</span><br><span class="line">    adr x0, a           // 将数组a的地址加载到x0寄存器</span><br><span class="line">    adr x1, b           // 将数组b的地址加载到x1寄存器</span><br><span class="line">    adr x2, result      // 将数组result的地址加载到x2寄存器</span><br><span class="line">    bl vector_add       // 调用vector_add函数</span><br><span class="line"></span><br><span class="line">    adr x0, msg         // 加载字符串格式的地址到x0寄存器</span><br><span class="line">    adr x5, result      // 将数组result的地址加载到x5寄存器</span><br><span class="line">    ldr w1, [x5]        // 加载result数组的第一个元素到x1寄存器</span><br><span class="line">    ldr w2, [x5, #4]    // 加载result数组的第二个元素到x2寄存器</span><br><span class="line">    ldr w3, [x5, #8]    // 加载result数组的第三个元素到x3寄存器</span><br><span class="line">    ldr w4, [x5, #12]   // 加载result数组的第四个元素到x4寄存器</span><br><span class="line">    bl printf           // 调用printf函数打印结果</span><br><span class="line"></span><br><span class="line">    mov x8, #93         // 加载系统调用号到x8寄存器，93是exit的调用号</span><br><span class="line">    mov x0, #0          // 设置退出状态为0</span><br><span class="line">    svc 0               // 进行系统调用</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>compile command</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">as -o test.o test.s</span><br><span class="line">ld -o <span class="built_in">test</span> test.o -lc <span class="comment"># 需要链接C库</span></span><br><span class="line">./test</span><br><span class="line">objdump -dw <span class="built_in">test</span> <span class="comment">#查看生成的汇编</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><a target="_blank" rel="noopener" href="https://arm64.syscall.sh/">系统调用寄存器配置</a></li>
-</ol>
-<h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
-<li>ARMv8-A：<ul>
-<li>前 8 个整数参数传递给函数时，使用寄存器 x0 到 x7。如果有更多的整数参数，它们会通过堆栈传递。前 8 个浮点参数使用浮点寄存器 v0 到 v7 传递。整数或指针返回值使用寄存器 x0（和 x1，如果需要返回更大的值，例如 128 位的值）。浮点数或向量返回值通过 v0 和 v1 返回。</li>
-<li>系统调用主要使用 x0 到 x8 这 9 个寄存器，其中 x8 存储系统调用号，x0 到 x7 用于参数传递和返回值。</li>
-</ul>
-</li>
-<li>指令、伪指令、寄存器都可以全部是大写或者小写，GNU 风格是小写。</li>
-</ol>
-<h2 id="伪指令"><a href="#伪指令" class="headerlink" title="伪指令"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/533821145">伪指令</a></h2><ol>
-<li>伪指令就是对汇编器发出的指令。它在源程序汇编期间由汇编器处理。伪指令是由汇编器预处理的指令。它可以分解为几条指令的集合。</li>
-<li>伪指令可以实现一下功能 - 符号定义 - 数据定义和对齐 - 汇编控制 - 汇编宏 - 段描述</li>
-</ol>
-<h2 id="WebAssembly-abbreviated-Wasm"><a href="#WebAssembly-abbreviated-Wasm" class="headerlink" title="WebAssembly (abbreviated Wasm)"></a><a target="_blank" rel="noopener" href="https://webassembly.org/">WebAssembly (abbreviated Wasm)</a></h2><ol>
-<li>WebAssembly 是一种运行在现代网络浏览器中的新型代码，并且提供新的性能特性和效果。它设计的目的不是为了手写代码,而是为诸如 C、C++和 Rust 等低级源语言提供一个高效的编译目标。</li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://winddoing.github.io/post/7190.html">ARMv8-aarch64 寄存器和指令集</a></li>
-<li><a target="_blank" rel="noopener" href="https://armv8-doc.readthedocs.io/en/latest/02.html">Armv8&#x2F;armv9 架构入门指南</a></li>
-<li><a target="_blank" rel="noopener" href="https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md">Linux System Call Table 多个平台</a></li>
-<li><a target="_blank" rel="noopener" href="https://syscall.sh/">不同平台系统调用寄存器配置</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/09/20/QEMU/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/20/QEMU/" class="post-title-link" itemprop="url">QEMU</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-09-20 15:23:44" itemprop="dateCreated datePublished" datetime="2023-09-20T15:23:44+08:00">2023-09-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-28 13:13:57" itemprop="dateModified" datetime="2023-09-28T13:13:57+08:00">2023-09-28</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/09/20/QEMU/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/09/20/QEMU/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>123</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="arm-simulation"><a href="#arm-simulation" class="headerlink" title="arm simulation"></a>arm simulation</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install qemu-system-aarch64</span><br><span class="line"></span><br><span class="line"><span class="comment">## download image</span></span><br><span class="line"><span class="comment">## https://cloud-images.ubuntu.com/releases/</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/FontThrone/article/details/104157859">QEMU 入门指南</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1478,7 +1488,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">164</span>
+          <span class="site-state-item-count">166</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1511,6 +1521,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/01/tensorrt-llm/" title="2024&#x2F;01&#x2F;01&#x2F;tensorrt-llm&#x2F;">tensorrt-llm</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2023/12/30/gpt/" title="2023&#x2F;12&#x2F;30&#x2F;gpt&#x2F;">gpt</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2023/12/26/jupyter/" title="2023&#x2F;12&#x2F;26&#x2F;jupyter&#x2F;">jupyter</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1518,12 +1534,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/12/21/deep-learning/" title="2023&#x2F;12&#x2F;21&#x2F;deep-learning&#x2F;">deep-learning</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/12/19/multimodal/" title="2023&#x2F;12&#x2F;19&#x2F;multimodal&#x2F;">multimodal</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/12/19/diffusion/" title="2023&#x2F;12&#x2F;19&#x2F;diffusion&#x2F;">diffusion</a>
         </li>
     </ul>
   </div>
@@ -1551,7 +1561,7 @@
 <div class="copyright">
   
   &copy; 2021 – 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1561,13 +1571,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">399k</span>
+    <span title="站点总字数">403k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:03</span>
+    <span title="站点阅读时长">6:06</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
