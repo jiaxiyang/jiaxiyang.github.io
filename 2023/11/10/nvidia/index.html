@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="vpi 支持多种硬件做前处理, 如 resize, convert color, remap (VIC 都支持，可以释放 GPU 资源)  查看 GPU infoserver nvidia-smi 命令参数含义 nvidia-smi 可以看出每个 GPU 的显存总量和使用量 还可以看到 cuda 版本 nvidia-smi -L列出 GPU 列表, 查看 GPU 先开显卡型号 nvidia-smi">
+  <meta name="description" content="note export CUDA_VISIBLE_DEVICES&#x3D;0,1强制使用哪几个 GPU 上  查看 GPU infoserver nvidia-smi 命令参数含义 nvidia-smi 可以看出每个 GPU 的显存总量和使用量 还可以看到 cuda 版本 nvidia-smi -L列出 GPU 列表, 查看 GPU 先开显卡型号 nvidia-smi -l 1 会每秒更新一次显示信息。w">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nvidia">
 <meta property="og:url" content="https://jiaxiyang.github.io/2023/11/10/nvidia/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="vpi 支持多种硬件做前处理, 如 resize, convert color, remap (VIC 都支持，可以释放 GPU 资源)  查看 GPU infoserver nvidia-smi 命令参数含义 nvidia-smi 可以看出每个 GPU 的显存总量和使用量 还可以看到 cuda 版本 nvidia-smi -L列出 GPU 列表, 查看 GPU 先开显卡型号 nvidia-smi">
+<meta property="og:description" content="note export CUDA_VISIBLE_DEVICES&#x3D;0,1强制使用哪几个 GPU 上  查看 GPU infoserver nvidia-smi 命令参数含义 nvidia-smi 可以看出每个 GPU 的显存总量和使用量 还可以看到 cuda 版本 nvidia-smi -L列出 GPU 列表, 查看 GPU 先开显卡型号 nvidia-smi -l 1 会每秒更新一次显示信息。w">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.ibb.co/hZVxQFd/ZEI0-D9zw-C5.png">
 <meta property="article:published_time" content="2023-11-10T03:45:20.000Z">
-<meta property="article:modified_time" content="2024-01-01T13:13:30.444Z">
+<meta property="article:modified_time" content="2024-01-03T08:20:11.424Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.ibb.co/hZVxQFd/ZEI0-D9zw-C5.png">
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-01 21:13:30" itemprop="dateModified" datetime="2024-01-01T21:13:30+08:00">2024-01-01</time>
+                <time title="修改时间：2024-01-03 16:20:11" itemprop="dateModified" datetime="2024-01-03T16:20:11+08:00">2024-01-03</time>
               </span>
 
           
@@ -264,7 +264,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2k</span>
+              <span>2.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -283,13 +283,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="vpi"><a href="#vpi" class="headerlink" title="vpi"></a><a target="_blank" rel="noopener" href="https://docs.nvidia.com/vpi/algorithms.html">vpi</a></h2><ol>
-<li>支持多种硬件做前处理, 如 resize, convert color, remap (VIC 都支持，可以释放 GPU 资源)</li>
+        <h2 id="note"><a href="#note" class="headerlink" title="note"></a>note</h2><ol>
+<li><code>export CUDA_VISIBLE_DEVICES=0,1</code>强制使用哪几个 GPU 上</li>
 </ol>
 <h2 id="查看-GPU-info"><a href="#查看-GPU-info" class="headerlink" title="查看 GPU info"></a>查看 GPU info</h2><h3 id="server"><a href="#server" class="headerlink" title="server"></a>server</h3><ol>
 <li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/michaelcjl/p/16657548.html">nvidia-smi 命令参数含义</a></li>
 <li><code>nvidia-smi</code> 可以看出每个 GPU 的显存总量和使用量 还可以看到 cuda 版本</li>
 <li><code>nvidia-smi -L</code>列出 GPU 列表, 查看 GPU 先开显卡型号</li>
+<li><code>nvidia-smi -l 1</code> 会每秒更新一次显示信息。<code>watch -n 1 nvidia-smi</code> 类似 top</li>
 <li><code>nvidia-smi -q</code> 查看 GPU 信息</li>
 <li><code>free -h</code> 看内存，注意服务器上内存和显存不一样, 不共享; PCIe 接在服务器上。 服务器市场的需求与集成设备（如 Jetson 系列）不同。服务器用户通常需要高度定制化的解决方案，可以独立升级和优化各个组件，而集成设备则更注重成本效益和空间效率。</li>
 <li>加速器：不包含 arm</li>
@@ -336,6 +337,9 @@
 <li>在 NVIDIA 的某些 GPU 架构中，例如 Volta、Turing 和 Ampere，CUDA Core 和 Tensor Core 共同存在。它们可以根据计算任务的性质协同工作，提高整体的计算效率。</li>
 <li>在执行深度学习任务时，Tensor Core 可以显著加速计算过程，相较于仅使用 CUDA Core，能实现更快的训练和推理速度。</li>
 <li>Tensor Core 依赖 CUDA Core 并行架构。多个 CUDA Core 会组成一个 Tensor Core,实际运算还是需要 CUDA Core 并行执行。</li>
+</ol>
+<h2 id="vpi"><a href="#vpi" class="headerlink" title="vpi"></a><a target="_blank" rel="noopener" href="https://docs.nvidia.com/vpi/algorithms.html">vpi</a></h2><ol>
+<li>支持多种硬件做前处理, 如 resize, convert color, remap (VIC 都支持，可以释放 GPU 资源)</li>
 </ol>
 
     </div>
@@ -437,7 +441,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vpi"><span class="nav-number">1.</span> <span class="nav-text">vpi</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-GPU-info"><span class="nav-number">2.</span> <span class="nav-text">查看 GPU info</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#server"><span class="nav-number">2.1.</span> <span class="nav-text">server</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#edge"><span class="nav-number">3.</span> <span class="nav-text">edge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A7%E5%93%81"><span class="nav-number">4.</span> <span class="nav-text">产品</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84"><span class="nav-number">5.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JetPack"><span class="nav-number">6.</span> <span class="nav-text">JetPack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tenosr-core-%E5%92%8C-cuda-core"><span class="nav-number">7.</span> <span class="nav-text">tenosr core 和 cuda core</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#note"><span class="nav-number">1.</span> <span class="nav-text">note</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-GPU-info"><span class="nav-number">2.</span> <span class="nav-text">查看 GPU info</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#server"><span class="nav-number">2.1.</span> <span class="nav-text">server</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#edge"><span class="nav-number">3.</span> <span class="nav-text">edge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A7%E5%93%81"><span class="nav-number">4.</span> <span class="nav-text">产品</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84"><span class="nav-number">5.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JetPack"><span class="nav-number">6.</span> <span class="nav-text">JetPack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tenosr-core-%E5%92%8C-cuda-core"><span class="nav-number">7.</span> <span class="nav-text">tenosr core 和 cuda core</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vpi"><span class="nav-number">8.</span> <span class="nav-text">vpi</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -536,13 +540,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">403k</span>
+    <span title="站点总字数">405k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:06</span>
+    <span title="站点阅读时长">6:08</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
