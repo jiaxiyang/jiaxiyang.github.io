@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">166</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">167</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,258 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/02/15/Gitlab-CI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/02/15/Gitlab-CI/" class="post-title-link" itemprop="url">Gitlab-CI</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-15 23:27:31" itemprop="dateCreated datePublished" datetime="2022-02-15T23:27:31+08:00">2022-02-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-23 13:40:05" itemprop="dateModified" datetime="2023-11-23T13:40:05+08:00">2023-11-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/CI/" itemprop="url" rel="index"><span itemprop="name">CI</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/02/15/Gitlab-CI/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/02/15/Gitlab-CI/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="badges"><a href="#badges" class="headerlink" title="badges"></a>badges</h2><ol>
+<li>显示 build 状态</li>
+<li><a target="_blank" rel="noopener" href="https://www.benjaminrancourt.ca/what-are-gitlab-badges/">what-are-gitlab-badges</a></li>
+</ol>
+<h2 id="format-check"><a href="#format-check" class="headerlink" title="format check"></a>format check</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">check-format:</span><br><span class="line">  image:</span><br><span class="line">    name: witekio/clang-format-checker</span><br><span class="line">    entrypoint: [&quot;&quot;]</span><br><span class="line">  script:</span><br><span class="line">    - run-clang-format.py -r src</span><br></pre></td></tr></table></figure>
+
+<h2 id="include"><a href="#include" class="headerlink" title="include"></a><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/yaml/#includelocal">include</a></h2><ol>
+<li>可以 include local file, private project and remote file。</li>
+</ol>
+<h2 id="release-artifacts"><a href="#release-artifacts" class="headerlink" title="release artifacts"></a><a target="_blank" rel="noopener" href="https://gitlab.phigent.io/help/user/project/releases/index">release artifacts</a></h2><ol>
+<li><a target="_blank" rel="noopener" href="https://crypt.codemancers.com/posts/2021-08-31-release-artifacts-using-gitlab-cicd/#generating-the-artifacts">release-artifacts-using-gitlab-cicd</a></li>
+<li><a target="_blank" rel="noopener" href="https://gitlab.phigent.io/help/user/project/releases/index#use-a-generic-package-for-attaching-binaries">gitlab release 和 artifactory 结合</a><ul>
+<li>notes: 注意 tag-name， ci 跑完之后会打 tag，然后又会运行 ci, 总共会跑两次</li>
+<li>不能缺少 tag-name， 使用 rules: - if: $CI_COMMIT_TAG, 只有打 tag 的时候才运行</li>
+<li><a target="_blank" rel="noopener" href="https://kinsta.com/knowledgebase/401-error/">401 error</a></li>
+</ul>
+</li>
+<li>删除 tag 就能删除 release 对应内容</li>
+<li>gitlab release comment 支持 markdown 和 mermaid</li>
+</ol>
+<h2 id="pipeline"><a href="#pipeline" class="headerlink" title="pipeline"></a>pipeline</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/triggers/">trigger other pipeline</a></li>
+<li>前面加 dot，可以隐藏 job <a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/jobs/#hide-jobs">link</a></li>
+</ol>
+<h2 id="ssh"><a href="#ssh" class="headerlink" title="ssh"></a><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/ssh_keys/">ssh</a></h2><ol>
+<li>区分多种执行方式：<ul>
+<li>shell: 需要 runenr</li>
+<li>docker: 在 docker 下执行，不需要指定 runner</li>
+<li>ssh</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://gitlab.com/gitlab-examples/ssh-private-key/-/blob/master/.gitlab-ci.yml">example</a></li>
+<li><a target="_blank" rel="noopener" href="https://gitlab.com/gitlab-examples/ssh-private-key/-/issues/1#note_48526556">ssh-key 要求</a></li>
+<li>需要在 deploy 机器上生成 ssh， private key 作为变量传入配置中</li>
+<li>shell 需要在 runner 机器上秘钥对，把公钥复制到部署板子上 <code>ssh-copy-id -i ~/.ssh/id_rsa.pub xxx@xxx</code></li>
+</ol>
+<h2 id="runner"><a href="#runner" class="headerlink" title="runner"></a><a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/configuration/advanced-configuration.html#the-runners-section">runner</a></h2><ol>
+<li>可以 reset token <a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/commands/#gitlab-runner-reset-token">link</a></li>
+<li>gitlab repo ci 配置可以显示安装 runner 命令</li>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/commands/">commands</a></li>
+<li><code>gitlab-ci-multi-runner list</code> list runners</li>
+<li><code>gitlab-ci-multi-runner status</code></li>
+<li><code>/etc/gitlab-runner/</code> 配置路径</li>
+<li>注册 project for runner:<ul>
+<li><code>gitlab-runner register</code></li>
+<li><code>gitlab-runner verify</code> 如果是感叹号执行这条命令</li>
+<li><code>gitlab-runner unregister --name test-runner</code> 删除 runner</li>
+</ul>
+</li>
+<li>使用 <a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/runners/runners_scope.html">shared runner</a>:<ul>
+<li>需要 admin 用户</li>
+<li>group 下默认有</li>
+</ul>
+</li>
+<li>Group runners:This project does not belong to a group and cannot make use of group runners. 只需要 group tocken 就好</li>
+</ol>
+<h2 id="script"><a href="#script" class="headerlink" title="script"></a>script</h2><ol>
+<li>所有 job 都执行</li>
+</ol>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">default:</span></span><br><span class="line"><span class="symbol">  before_script:</span></span><br><span class="line">    - echo <span class="string">&quot;Execute this script in all jobs that don&#x27;t already have a before_script section.&quot;</span></span><br><span class="line"><span class="symbol"></span></span><br><span class="line"><span class="symbol">job1:</span></span><br><span class="line"><span class="symbol">  script:</span></span><br><span class="line">    - echo <span class="string">&quot;This script executes after the global before_script.&quot;</span></span><br><span class="line"><span class="symbol"></span></span><br><span class="line"><span class="symbol">job:</span></span><br><span class="line"><span class="symbol">  before_script:</span></span><br><span class="line">    - echo <span class="string">&quot;Execute this script instead of the global before_script.&quot;</span></span><br><span class="line"><span class="symbol">  script:</span></span><br><span class="line">    - echo <span class="string">&quot;This script executes after the job&#x27;s `before_script`&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="deploy"><a href="#deploy" class="headerlink" title="deploy"></a>deploy</h2><ol>
+<li><code>sshpass -p $PASSWORD scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r ./build $CUSTOM_USERNAME@$CUSTOM_IP:/var/www/html</code> sshpass 设置 ci 变量</li>
+<li><code>sshpass -p $PASSWORD sshpass -p root rsync -avz -e &quot;ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null&quot; -r ./build $CUSTOM_USERNAME@$CUSTOM_IP:/var/www/html</code></li>
+</ol>
+<h2 id="prefill-variables"><a href="#prefill-variables" class="headerlink" title="prefill variables"></a>prefill variables</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://gitlab.com/gitlab-org/gitlab/-/issues/300106">how to use prefill variables</a></li>
+<li>两种方式：<ul>
+<li>yml 文件中<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">variables:</span></span><br><span class="line"><span class="attr">PASSWORD:</span></span><br><span class="line">  <span class="attr">value:</span> <span class="string">&quot;123456&quot;</span></span><br><span class="line">  <span class="attr">pdescription:</span> <span class="string">&quot;password&quot;</span></span><br><span class="line"><span class="attr">CUSTOM_USERNAME:</span></span><br><span class="line">  <span class="attr">value:</span> <span class="string">&quot;petalinux&quot;</span></span><br><span class="line">  <span class="attr">description:</span> <span class="string">&quot;username&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li>project CI&#x2F;CD variable settings</li>
+</ul>
+</li>
+</ol>
+<h2 id="workflow"><a href="#workflow" class="headerlink" title="workflow"></a><a target="_blank" rel="noopener" href="https://docs.gitlab.com/14.8/ee/ci/yaml/workflow.html">workflow</a></h2><h2 id="keys"><a href="#keys" class="headerlink" title="keys"></a>keys</h2><h3 id="needs"><a href="#needs" class="headerlink" title="needs"></a>needs</h3><ol>
+<li>可以用来串联 stage</li>
+<li>传递 stage 文件需要 <a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/yaml/index.html#needsartifacts">link</a></li>
+<li>可以看 pipeline efficiency <a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/pipelines/pipeline_efficiency.html">link</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/directed_acyclic_graph/">DAG</a></li>
+</ol>
+<h2 id="rules"><a href="#rules" class="headerlink" title="rules"></a>rules</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/gitlabhq/gitlabhq/blob/2ea638391497c495798e0bab7c704af112789299/.gitlab/ci/rules.gitlab-ci.yml">rules 模板</a></li>
+<li>只手动编译， 有个按键可以执行所有 job</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">.rules:if-tag-or-manual:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">&lt;&lt;:</span> <span class="string">*if-tag</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">when:</span> <span class="string">manual</span></span><br><span class="line"></span><br><span class="line"><span class="string">.rules:always:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">when:</span> <span class="string">always</span></span><br><span class="line">      <span class="attr">allow_failure:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## fix mr detach issue</span></span><br><span class="line"><span class="attr">workflow:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">if:</span> <span class="string">&#x27;$CI_PIPELINE_SOURCE == &quot;merge_request_event&quot;&#x27;</span></span><br><span class="line">      <span class="attr">when:</span> <span class="string">never</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">when:</span> <span class="string">always</span></span><br><span class="line"></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">build</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">test</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Build::GPU_ubuntu20.04:</span></span><br><span class="line">  <span class="attr">extends:</span></span><br><span class="line">    <span class="string">.rules:if-tag-or-manual</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>在 mr 时自动运行全流程，or 手动选择要编译的平台</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="string">.if-tag:</span> <span class="string">&amp;if-tag</span></span><br><span class="line">  <span class="attr">if:</span> <span class="string">&#x27;$CI_COMMIT_TAG&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="string">.if-merge-request:</span> <span class="string">&amp;if-merge-request</span></span><br><span class="line">  <span class="attr">if:</span> <span class="string">$CI_PIPELINE_SOURCE</span> <span class="string">==</span> <span class="string">&quot;merge_request_event&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="string">.if-tag-or-mr:</span> <span class="string">&amp;if-tag-or-mr</span></span><br><span class="line">  <span class="attr">if:</span> <span class="string">&#x27;$CI_COMMIT_TAG&#x27;</span></span><br><span class="line">  <span class="attr">if:</span> <span class="string">$CI_PIPELINE_SOURCE</span> <span class="string">==</span> <span class="string">&quot;merge_request_event&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="string">.rules:if-tag-or-mr-or-manual:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">&lt;&lt;:</span> <span class="string">*if-tag-or-mr</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">when:</span> <span class="string">manual</span></span><br><span class="line"></span><br><span class="line"><span class="string">.rules:always:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">when:</span> <span class="string">always</span></span><br><span class="line"></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">build</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">test</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Build::GPU_ubuntu20.04:</span></span><br><span class="line">  <span class="attr">extends:</span></span><br><span class="line">    <span class="string">.rules:if-tag-or-mr-or-manual</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Build::Vitis:</span></span><br><span class="line">  <span class="attr">extends:</span></span><br><span class="line">    <span class="string">.rules:if-tag-or-mr-or-manual</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/yaml/#workflowrules">workflowrules 控制整个 pipeline</a></li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">workflow:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">if:</span> <span class="string">$CI_COMMIT_TITLE</span> <span class="string">=~</span> <span class="string">/-draft$/</span></span><br><span class="line">      <span class="attr">when:</span> <span class="string">never</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">if:</span> <span class="string">$CI_PIPELINE_SOURCE</span> <span class="string">==</span> <span class="string">&quot;merge_request_event&quot;</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">if:</span> <span class="string">$CI_COMMIT_BRANCH</span> <span class="string">==</span> <span class="string">$CI_DEFAULT_BRANCH</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>when, can only be always or never when used with workflow. 不能 when: manual, 不支持</li>
+<li>可以设置一个伪 job， manual 触发，后续 job 依赖伪 job</li>
+<li>完善解决方案： 使用 <a target="_blank" rel="noopener" href="https://github.com/GNOME/gnome-shell/blob/4bbf6d497d34793693e5ac24fbe23854b481002b/.gitlab-ci.yml#L41">temlate</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/jobs/job_control.html#avoid-duplicate-pipelines">avoid-duplicate-pipelines</a></li>
+</ol>
+<figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rules:</span><br><span class="line">   - <span class="keyword">if</span>: &#x27;<span class="built_in">$CI</span>_PIPELINE_SOURCE == <span class="string">&quot;merge_request_event&quot;</span>&#x27;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/jobs/job_control.html#reuse-rules-in-different-jobs">default-rules(&gt;&#x3D;14.3)</a></li>
+</ol>
+<h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/yaml/script.html#split-long-commands">split-long-commands</a></li>
+<li>gtest 结果 xml 可以显示到 ci pipeline 结果中去 <a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/unit_test_reports.html">link</a></li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">test</span></span><br><span class="line"></span><br><span class="line"><span class="attr">cpp:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">test</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">./gtxxx</span> <span class="string">--gtest_output=xml:report.xml</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">artifacts:</span></span><br><span class="line">    <span class="attr">when:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">reports:</span></span><br><span class="line">      <span class="attr">junit:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">report.xml</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">fail.xml</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>cache 时相同的 Key path 文件内容要完全一样，否则不能 cache</li>
+<li>deploy 两种方式：<ul>
+<li>runner shell Executor: 交叉编译后传到板子上执行</li>
+<li>runner ssh Executor: 登录到板子，Mount 服务器执行(板子存储受限，不可重复，慢)</li>
+</ul>
+</li>
+<li><code>sudo su - gitlab-runner</code> ssh board 时要进入 runner 服务器 gitlab-runner 用户</li>
+<li>如果想在板子上运行脚本，需要 ssh 执行器<a target="_blank" rel="noopener" href="https://blog.csdn.net/lihao21/article/details/109820904">link</a></li>
+<li>ssh 后跟在远端执行的命令</li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">script:</span><br><span class="line">    - echo <span class="string">&quot;ssh board......................&quot;</span></span><br><span class="line">    - ssh -o <span class="attribute">StrictHostKeyChecking</span>=<span class="literal">no</span> -o <span class="attribute">UserKnownHostsFile</span>=/dev/null root@10.31.1.170 <span class="string">&quot;whoami&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/configuration/advanced-configuration.html#the-runners-section">修改 runner build 位置 builds_dir</a> 配置路径<code>/etc/gitlab-runner/</code>或<code>~/.gitlab-runner/</code></li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/184936276">Gitlab-ci:从零开始的前端自动化部署</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/">GitLab CI&#x2F;CD</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/variables/index.html#enable-debug-logging">Enable Debug logging</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/variables/index.html#list-all-environment-variables">List all environment variables</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/examples/#cicd-templates">CI&#x2F;CD templates</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/ssh_keys/">Using SSH keys with GitLab CI&#x2F;CD</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000006120164">概念</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.cn/jh/ci/variables/">gitlab 中文文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://gitlab.phigent.io/help/ci/unit_test_reports">test reports</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6847902219837292558">搭建一个使用 GitLab CI 的项目</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/yejingtao703/article/details/83065591">Gitlab-Runner 原理与实现</a></li>
+</ol>
+<h2 id="samples"><a href="#samples" class="headerlink" title="samples"></a>samples</h2><ol>
+<li>gitlab release + jfrog artifactory（如果 docker 有问题，通过 artifacts 传递文件， 在 release 传文件和配置链接）</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">build</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">release</span></span><br><span class="line"></span><br><span class="line"><span class="attr">variables:</span></span><br><span class="line">  <span class="attr">TEST_FILE0:</span> <span class="string">&quot;test0-$&#123;PACKAGE_VERSION&#125;-$&#123;CI_COMMIT_TAG&#125;&quot;</span></span><br><span class="line">  <span class="attr">TEST_FILE1:</span> <span class="string">&quot;test1-$&#123;PACKAGE_VERSION&#125;-$&#123;CI_COMMIT_TAG&#125;&quot;</span></span><br><span class="line">  <span class="attr">PACKAGE_VERSION:</span> <span class="string">&quot;1.2.3&quot;</span></span><br><span class="line">  <span class="attr">PACKAGE_REGISTRY_URL:</span> <span class="string">&quot;http://artifacts.xxx.io/artifactory/dcv-cpp&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">default:</span></span><br><span class="line">  <span class="attr">before_script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">JFROG_USER=release</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">JFROG_PASSWD=xxx</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">|</span></span><br><span class="line"><span class="string">      push_to_jfrog() &#123;</span></span><br><span class="line"><span class="string">          FILE=$1;</span></span><br><span class="line"><span class="string">          JFROG_PATH=http://artifacts.xxx.io/artifactory/$2;</span></span><br><span class="line"><span class="string">          MD5=$(md5sum $FILE | awk &#x27;&#123;print $1&#125;&#x27;);</span></span><br><span class="line"><span class="string">          curl -u&quot;$&#123;JFROG_USER&#125;:$&#123;JFROG_PASSWD&#125;&quot; -T $FILE -H &quot;X-Checksum-MD5:$&#123;MD5&#125;&quot; -L &quot;$&#123;JFROG_PATH&#125;&quot;;</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="attr">build:</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">hub.xxx.io/avp/cuda11.3.1-trt8.0.3.4-ros2-desktop-ubuntu20.04:v2.0</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">phigent_runner_gpu</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">echo</span> <span class="string">$CI_COMMIT_TAG</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">mkdir</span> <span class="string">bin</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">echo</span> <span class="string">&quot;$&#123;TEST_FILE0&#125;&quot;</span> <span class="string">&gt;</span> <span class="string">bin/$&#123;TEST_FILE0&#125;</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">echo</span> <span class="string">&quot;$&#123;TEST_FILE1&#125;&quot;</span> <span class="string">&gt;</span> <span class="string">bin/$&#123;TEST_FILE1&#125;</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">|</span></span><br><span class="line"><span class="string">      if [ &quot;$CI_COMMIT_TAG&quot; != &#x27;&#x27; ]; then</span></span><br><span class="line"><span class="string">        push_to_jfrog bin/$&#123;TEST_FILE0&#125; dcv-cpp/$&#123;CI_COMMIT_TAG&#125;/$&#123;TEST_FILE0&#125;</span></span><br><span class="line"><span class="string">        push_to_jfrog bin/$&#123;TEST_FILE1&#125; dcv-cpp/$&#123;CI_COMMIT_TAG&#125;/$&#123;TEST_FILE1&#125;; fi</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="attr">release:</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">phigent_runner_gpu</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">release</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">registry.gitlab.com/gitlab-org/release-cli:latest</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">if:</span> <span class="string">$CI_COMMIT_TAG</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">|</span></span><br><span class="line"><span class="string">      release-cli create --name &quot;Release $CI_COMMIT_TAG&quot; --tag-name $CI_COMMIT_TAG \</span></span><br><span class="line"><span class="string">        --assets-link &quot;&#123;\&quot;name\&quot;:\&quot;$&#123;TEST_FILE0&#125;\&quot;,\&quot;url\&quot;:\&quot;$&#123;PACKAGE_REGISTRY_URL&#125;/$&#123;CI_COMMIT_TAG&#125;/$&#123;TEST_FILE0&#125;\&quot;&#125;&quot; \</span></span><br><span class="line"><span class="string">        --assets-link &quot;&#123;\&quot;name\&quot;:\&quot;$&#123;TEST_FILE1&#125;\&quot;,\&quot;url\&quot;:\&quot;$&#123;PACKAGE_REGISTRY_URL&#125;/$&#123;CI_COMMIT_TAG&#125;/$&#123;TEST_FILE1&#125;\&quot;&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -361,7 +613,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-21 10:27:03" itemprop="dateModified" datetime="2023-12-21T10:27:03+08:00">2023-12-21</time>
+                <time title="修改时间：2024-01-07 21:39:50" itemprop="dateModified" datetime="2024-01-07T21:39:50+08:00">2024-01-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -733,7 +985,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-31 11:39:05" itemprop="dateModified" datetime="2023-12-31T11:39:05+08:00">2023-12-31</time>
+                <time title="修改时间：2024-01-07 22:19:18" itemprop="dateModified" datetime="2024-01-07T22:19:18+08:00">2024-01-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -853,127 +1105,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/09/30/Amazing-emacs/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/30/Amazing-emacs/" class="post-title-link" itemprop="url">Amazing emacs</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-09-30 09:48:34" itemprop="dateCreated datePublished" datetime="2021-09-30T09:48:34+08:00">2021-09-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-10 17:37:04" itemprop="dateModified" datetime="2023-11-10T17:37:04+08:00">2023-11-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/Emacs/" itemprop="url" rel="index"><span itemprop="name">Emacs</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/09/30/Amazing-emacs/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/09/30/Amazing-emacs/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Emacs-Architecture"><a href="#Emacs-Architecture" class="headerlink" title="Emacs Architecture"></a>Emacs Architecture</h2><p><img src="https://pic2.zhimg.com/964f7a10ac8a4158896500858efb4a55_b.png" alt="Emacs Architecture 《架构之美》"></p>
-<h2 id="NOTE"><a href="#NOTE" class="headerlink" title="NOTE"></a>NOTE</h2><ol>
-<li><code>ln -s build-debug/compile_commands.json</code> 设置软连接</li>
-<li><code>lsp</code>提示时按 i, 否则不能补全</li>
-<li><code>list-face-display and list-colors-display</code> 列出颜色</li>
-<li><code>(add-hook &#39;window-setup-hook &#39;on-after-init)</code> 启动时防止 buffer 模糊不通透</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/30/Amazing-emacs/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1045,7 +1176,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">166</span>
+          <span class="site-state-item-count">167</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1078,6 +1209,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/04/huggingface/" title="2024&#x2F;01&#x2F;04&#x2F;huggingface&#x2F;">huggingface</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/01/tensorrt-llm/" title="2024&#x2F;01&#x2F;01&#x2F;tensorrt-llm&#x2F;">tensorrt-llm</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1088,9 +1222,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/12/24/llama2-c/" title="2023&#x2F;12&#x2F;24&#x2F;llama2-c&#x2F;">llama2</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/12/21/deep-learning/" title="2023&#x2F;12&#x2F;21&#x2F;deep-learning&#x2F;">deep-learning</a>
         </li>
     </ul>
   </div>
@@ -1128,13 +1259,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">405k</span>
+    <span title="站点总字数">410k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:08</span>
+    <span title="站点阅读时长">6:13</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

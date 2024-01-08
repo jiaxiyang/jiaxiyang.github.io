@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">166</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">167</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,148 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/01/01/tensorrt-llm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/01/tensorrt-llm/" class="post-title-link" itemprop="url">tensorrt-llm</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-01-01 20:33:30" itemprop="dateCreated datePublished" datetime="2024-01-01T20:33:30+08:00">2024-01-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-08 13:45:20" itemprop="dateModified" datetime="2024-01-08T13:45:20+08:00">2024-01-08</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/01/01/tensorrt-llm/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/01/01/tensorrt-llm/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>TensorRT-LLM wraps TensorRT’s deep learning compiler—which includes optimized kernels from FasterTransformer, pre- and post-processing, and multi-GPU and multi-node communication—in a simple open-source Python API for defining, optimizing, and executing LLMs for inference in production.</li>
+<li><a target="_blank" rel="noopener" href="https://nvidia.github.io/TensorRT-LLM/gpt_runtime.html#generation">generation</a></li>
+<li><a target="_blank" rel="noopener" href="https://nvidia.github.io/TensorRT-LLM/batch_manager.html#gptmanager-design">gptmanager</a></li>
+<li>TensorRT-LLM provides users with an easy-to-use Python API to define Large Language Models (LLMs) and build TensorRT engines that contain state-of-the-art optimizations to perform inference efficiently on NVIDIA GPUs. TensorRT-LLM also contains components to create Python and C++ runtimes that execute those TensorRT engines.</li>
+<li><a target="_blank" rel="noopener" href="https://nvidia.github.io/TensorRT-LLM/">doc</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/tree/main?tab=readme-ov-file#key-features">key-features 可学习如何优化</a></li>
+</ol>
+<h2 id="deubg"><a href="#deubg" class="headerlink" title="deubg"></a>deubg</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/blob/6cc5e177ff2fb60b1aab3b03fa0534b5181cf0f1/cpp/tensorrt_llm/common/logger.cpp#L32">TLLM_LOG_LEVEL&#x3D;TRACE</a></li>
+<li>打开 trace， 跟踪代码执行</li>
+</ol>
+<h2 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/search?q=tensorrt_llm">docker hubs</a></li>
+</ol>
+<h2 id="install"><a href="#install" class="headerlink" title="install"></a>install</h2><ol>
+<li>使用 docker <a target="_blank" rel="noopener" href="https://hub.docker.com/r/baseten/tensorrt_llm-release">baseten&#x2F;tensorrt_llm-release</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/blob/v0.7.1/docs/source/installation.md#fetch-the-sources">fetch-the-sources</a> in docker</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/blob/v0.7.1/docs/source/installation.md#build-tensorrt-llm">build-tensorrt-llm</a></li>
+<li>可能需要先卸载 <code>pip uninstall tensorrt_llm</code>， 重新安装</li>
+</ol>
+<h2 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h2><h3 id="ccdv-cnn-dailymail"><a href="#ccdv-cnn-dailymail" class="headerlink" title="ccdv&#x2F;cnn_dailymail"></a><a target="_blank" rel="noopener" href="https://huggingface.co/datasets/ccdv/cnn_dailymail">ccdv&#x2F;cnn_dailymail</a></h3><ol>
+<li>gitee 镜像版本不太好使</li>
+<li>下载之后传到服务器</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/abisee/cnn-dailymail/tree/master/url_lists">clone txt</a></li>
+<li>修改 summarize.py；从本地 load 数据集</li>
+<li><code>dataset = load_dataset(&quot;/mnt/data-2/home/xiyang.jia/TensorRT-LLM/examples/bloom/cnn_dailymail/cnn_dailymail.py&quot;, &quot;3.0.0&quot;)</code> 从本地加载数据集</li>
+</ol>
+<h2 id="vscode-setting"><a href="#vscode-setting" class="headerlink" title="vscode setting"></a>vscode setting</h2><ol>
+<li>env settings</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;env&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;PYDEVD_WARN_EVALUATION_TIMEOUT&quot;</span><span class="punctuation">:</span> <span class="string">&quot;500&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION&quot;</span><span class="punctuation">:</span> <span class="string">&quot;python&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;OPAL_PREFIX&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/opt/hpcx/ompi&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h2><ol>
+<li><code>build.py</code> 每个 example 独占，用于构建模型和编译成 engine 模型; 需要模型配置：权重等</li>
+<li>In addition, there are two shared files in the parent folder examples for inference and evaluation:<ul>
+<li><code>run.py</code> to run the inference on an input text;</li>
+<li><code>summarize.py</code> to summarize the articles in the cnn_dailymail dataset.</li>
+</ul>
+</li>
+<li>需要 hf model; 例:llama-7B-hf; hf 是 Huggingface 对原始 llama-7B 模型的打包版本,</li>
+<li>TensorRT-LLM LLaMA builds TensorRT engine(s) from HF checkpoint. If no checkpoint directory is specified, TensorRT-LLM will build engine(s) with dummy weights. 如果不设置 <code>--model_dir</code>, 使用随机权重</li>
+<li>llama sample 运行时需要 config.json, <code>--tokenizer_dir</code>指定</li>
+<li><a target="_blank" rel="noopener" href="https://gitee.com/hf-models/Llama-2-7b-hf">gitee.com&#x2F;hf-models&#x2F;Llama-2-7b-hf</a> gitee 下载要快很多 <code>git lfs clone https://gitee.com/hf-models/Llama-2-7b-hf</code></li>
+<li>run 的时候加参数<code>--temperature=0.6 --top_k=5</code>可生成不一样内容</li>
+<li><code>/usr/local/tensorrt/bin/trtexec --loadEngine=tmp/llama/7B/trt_engines/fp16/1-gpu/llama_float16_tp1_rank0.engine</code>会出错，未解决</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/hpcaitech/SwiftInfer?tab=readme-ov-file">tensorrt llm llama</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -415,7 +557,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-27 19:38:39" itemprop="dateModified" datetime="2023-12-27T19:38:39+08:00">2023-12-27</time>
+                <time title="修改时间：2024-01-08 16:01:14" itemprop="dateModified" datetime="2024-01-08T16:01:14+08:00">2024-01-08</time>
               </span>
 
           
@@ -438,7 +580,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.6k</span>
+              <span>3.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -459,6 +601,7 @@
       
           <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><h3 id="llama2-参数量计算"><a href="#llama2-参数量计算" class="headerlink" title="llama2 参数量计算"></a>llama2 参数量计算</h3><ol>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/649125936">LLAMA2 的参数计算</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/@saratbhargava/mastering-llama-math-part-1-a-step-by-step-guide-to-counting-parameters-in-llama-2-b3d73bc3ae31">Mastering Llama Math (Part-1): A Step-by-Step Guide to Counting Parameters in Llama-2</a></li>
 <li><code>窗口长度, 上下文长度(Context Length)</code>指的是模型在做预测时能够看到的上下文单词的数量。具体来说,在 transformer 等注意力机制的模型中,输入是一个定长的窗口,窗口中的每个词会通过自注意力机制关联到窗口中的其他词。这个窗口的长度就是上下文长度。</li>
 <li><code>词向量</code>：embeding 层的输出就是词向量</li>
 <li>推理时间复杂度：整体级别是 l<em>n</em>d^2+l<em>d</em>n^2，其中：d 是词向量维度，n 是窗口或序列长度，l：层数<ul>
@@ -481,6 +624,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/karpathy/llama2.c.git</span><br><span class="line"><span class="built_in">cd</span> llama2.c</span><br><span class="line">make run; make rundebug</span><br><span class="line">wget https://huggingface.co/karpathy/tinyllamas/resolve/main/stories15M.bin</span><br><span class="line">./run stories15M.bin</span><br><span class="line">make runfast  <span class="comment"># 加速运行， 80 tok/s =&gt; 180 tok/s</span></span><br><span class="line">make runomp &amp;&amp; OMP_NUM_THREADS=4 ./run out/model.bin <span class="comment"># 多核加速， from 80 tok/s =&gt; 320 tok/s 主要加速matmul</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="代码理解"><a href="#代码理解" class="headerlink" title="代码理解"></a>代码理解</h2><ol>
+<li>固定长 n 的 kv cache, 并且最大支持 n 的序列，使用 for 循环计算 attention，没有使用矩阵乘， 不用移动 kv cache; 矩阵乘时需要 kv cache 是矩阵，如果 kv cache 矩阵 padding, 是固定长, 需要移动 cache</li>
 <li><code>Tokenizer, Transformer, Sampler</code> 三大部分</li>
 <li>tokenizer 也是一个模型，需要训练</li>
 <li>Tokenizer 的主要作用是将自然语言文本转换为机器学习模型可以理解的格式。这通常意味着将文本拆分成词汇、子词或字符单元（即 tokens），然后将这些 tokens 转换为数字 ID。这些 ID 对应于模型的词汇表中的索引。</li>
@@ -536,6 +680,9 @@
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/651248009">一文看懂 llama2(原理,模型,训练)</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/83814532">Embedding 的作用</a></li>
 <li><a target="_blank" rel="noopener" href="https://kexue.fm/archives/9529">为什么现在的 LLM 都是 Decoder-only 的架构？</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ggerganov/ggml/blob/master/docs/gguf.md">gguf doc</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mit-han-lab/streaming-llm">pytorch llama</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/hpcaitech/SwiftInfer?tab=readme-ov-file">tensorrt llm llama</a></li>
 </ol>
 
       
@@ -589,7 +736,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-29 15:25:14" itemprop="dateModified" datetime="2023-12-29T15:25:14+08:00">2023-12-29</time>
+                <time title="修改时间：2024-01-05 17:11:15" itemprop="dateModified" datetime="2024-01-05T17:11:15+08:00">2024-01-05</time>
               </span>
 
           
@@ -612,7 +759,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.3k</span>
+              <span>4.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -720,6 +867,10 @@
 <ul>
 <li>layer norm:输入一句话直接对其输出做 norm，不用管其他句子</li>
 </ul>
+</li>
+<li><p><code>SiLU: f(x) = s * sigmoid(x)</code></p>
+</li>
+<li><p>图神经网络（Graph Neural Networks，GNN)</p>
 </li>
 </ol>
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
@@ -976,7 +1127,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-28 11:14:24" itemprop="dateModified" datetime="2023-12-28T11:14:24+08:00">2023-12-28</time>
+                <time title="修改时间：2024-01-05 16:52:27" itemprop="dateModified" datetime="2024-01-05T16:52:27+08:00">2024-01-05</time>
               </span>
 
           
@@ -999,7 +1150,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>614</span>
+              <span>637</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1032,7 +1183,13 @@
 <li>没有减少 KV cache</li>
 <li>类似于现有的框架如 TRT-LLM、TGI 和 vLLM，DeepSpeed-FastGen 的目标是利用连续批处理和非连续 KV 缓存技术，以提升数据中心服务大型语言模型（LLM）的硬件利用率和响应速度。为了实现更高的性能，DeepSpeed-FastGen 提出了 SplitFuse 技术，它利用动态提示和生成分解, 统一来进一步改善连续批处理和系统吞吐量。</li>
 </ol>
-<h2 id="diffusion"><a href="#diffusion" class="headerlink" title="diffusion"></a>diffusion</h2><h2 id="stable-diffusion"><a href="#stable-diffusion" class="headerlink" title="stable diffusion"></a>stable diffusion</h2><h2 id="如何使用-arxiv"><a href="#如何使用-arxiv" class="headerlink" title="如何使用 arxiv"></a>如何使用 arxiv</h2><h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<h2 id="diffusion"><a href="#diffusion" class="headerlink" title="diffusion"></a>diffusion</h2><h2 id="stable-diffusion"><a href="#stable-diffusion" class="headerlink" title="stable diffusion"></a>stable diffusion</h2><h2 id="UniAD"><a href="#UniAD" class="headerlink" title="UniAD"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2212.10156">UniAD</a></h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/OpenDriveLab/UniAD">github</a></li>
+</ol>
+<h2 id="BEVFormer"><a href="#BEVFormer" class="headerlink" title="BEVFormer"></a><a target="_blank" rel="noopener" href="https://github.com/fundamentalvision/BEVFormer">BEVFormer</a></h2><ol>
+<li><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1dKnD6gUHhBXZ8gT733cIU_A7dHEEzNTP/view">中文版</a></li>
+</ol>
+<h2 id="如何使用-arxiv"><a href="#如何使用-arxiv" class="headerlink" title="如何使用 arxiv"></a>如何使用 arxiv</h2><h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://github.com/labmlai/annotated_deep_learning_paper_implementations">labml.ai Deep Learning Paper Implementations</a><ul>
 <li>colab 中有测试代码</li>
 </ul>
@@ -1096,7 +1253,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-01 11:07:10" itemprop="dateModified" datetime="2024-01-01T11:07:10+08:00">2024-01-01</time>
+                <time title="修改时间：2024-01-08 17:49:58" itemprop="dateModified" datetime="2024-01-08T17:49:58+08:00">2024-01-08</time>
               </span>
 
           
@@ -1119,14 +1276,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.1k</span>
+              <span>7.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -1158,6 +1315,7 @@
 <li>kv cache 的长度分别为 <code>head 长度 * 每个 head 向量维度 * token 个数 * 层数</code></li>
 <li>transform llama 各层 shape 参数量和计算量</li>
 <li>推理时才自回归；训练时用相关矩阵(下三角)一步算出所有输出，推理时每次算出当前值与之前 token 注意力，相当于在下三角矩阵加一层，只输出一个预测 token;</li>
+<li>添加 position 信息在输入之后，attention 之前</li>
 <li>decode 训练时加掩码并行，同时输出； 推理时自回归一步一步输出</li>
 <li>encode decoder 架构推理直接有输入和起始符输出，decode only 需要预热</li>
 <li>batch 指的是在模型训练或推理的时候,同时输入模型的样本数量。<ul>
@@ -1171,8 +1329,84 @@
 <li>前几层专注于理解句子的语法,后面的层则致力于对整个段落的高层次理解。</li>
 <li><code>注意力层</code>从提示的较早部分检索信息，而<code>前馈层</code>使语言模型能够“记住”未在提示中出现的信息。事实上，可以将前馈层视为模型从训练数据中学到的信息的数据库。记忆力在前馈层。靠前的前馈层更可能编码与特定单词相关的简单事实，例如“特朗普经常在唐纳德之后出现”。靠后的层则编码更复杂的关系，如“添加这个向量以将一个国家转换为其首都。</li>
 <li>LLM 的一个关键创新之处在于，它们不需要显式标记的数据。相反，它们通过尝试预测文本段落中下一个单词来学习。几乎任何书面材料都适用于训练这些模型——从维基百科页面到新闻文章再到计算机代码。</li>
+<li>multi head 可能也是一维 把一维 head 当作多维 head</li>
+<li>Perplexity (PPL) 是一个衡量语言模型预测能力的指标。当评估大型语言模型时，PPL 是一个关键指标，因为它直接关系到模型对语言的处理能力。它反映了模型对语言的理解程度，特别是在预测下一个词时的不确定性。PPL 通常是通过在测试集上计算模型的交叉熵损失（cross-entropy loss）并将其转换为 PPL 来得到的。数学上，PPL 定义为交叉熵的指数。<ul>
+<li>低 PPL：意味着模型对数据的预测更准确，对语言的理解更深入。</li>
+<li>高 PPL：表明模型预测不准确，对语言的理解较浅。</li>
+</ul>
+</li>
 </ol>
-<h3 id="关键操作"><a href="#关键操作" class="headerlink" title="关键操作"></a>关键操作</h3><ol>
+<h2 id="attention-种类"><a href="#attention-种类" class="headerlink" title="attention 种类"></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/t4ytOIuPx0799kkjFs5lbQ">attention 种类</a></h2><h2 id="kv-cache"><a href="#kv-cache" class="headerlink" title="kv cache"></a>kv cache</h2><p><img src="https://i.ibb.co/XCJ85TL/p3k-B45-Mhaj.png" alt="四种attention策略"></p>
+<ol>
+<li>多种 attention 策略<ul>
+<li>dense attention: 计算复杂度为 O(T*T), 缓存 T cache; 当句子超过训练长度时，PPL 增大, 计算复杂度：因为句子长为 T, 需要计算 T 次，每次需要和前 T 个 token 做 attention</li>
+<li>window attention: 计算复杂度为 O(T*L), 缓存 L cache，当句子大于窗口长度时， 模型的 PPL 会急速变大, 因为前几个 token 非常重要， 被换出后影响模型性能</li>
+<li>sliding window attention with re-computing : 计算复杂度为 O(T<em>L</em>L), T 个字符，L 窗口内类似 dense attention, 重新计算 L kv, 相当于缓存 L cache; 每层中会为每个生成的 token 重建最近 token 的 KV 状态。这种方法虽然性能强大，但由于需要在窗口内计算 quadratic attention，因此速度明显较慢; <a target="_blank" rel="noopener" href="https://github.com/mit-han-lab/streaming-llm/issues/33#issuecomment-1758597666">和 window attention 区别</a> The critical distinction is that in sliding window with re-computation, some key states are treated as initial tokens, whereas in window attention, all previous tokens’ KV are computed as if they were middle tokens.<ul>
+<li>re-computation 重置了状态，窗口第一个 token 位置变为 0(位置改变，kv cache 需要重新计算)， 可以扩展为无限长输出，但没有记住无限长; 窗口应该会添加 BOS</li>
+</ul>
+</li>
+<li>sliding window attention:(和 re-computing 有较大区别) 计算复杂度为 O(T*L), 这种方法类似卷积， 一层一层增加感受范围，<ul>
+<li>对于 m 层的 Transformer，receptive field 的大小为 m * L； 增加了感知范围，但没有到无限长， decoder only 时注意有掩码，看不到之前节点的(这条不需要专门处理，多层 decoder 自动有这个特性)<br><img src="https://i.ibb.co/r2c3DLY/p5h-Alp-Fh-TT.png" alt="类似卷积"></li>
+<li><a target="_blank" rel="noopener" href="https://ahelhady.medium.com/understanding-longformers-sliding-window-attention-mechanism-f5d61048a907">Understanding LongFormer’s Sliding Window Attention Mechanism</a> 有图</li>
+</ul>
+</li>
+<li>streaming LLM: 计算复杂度为 O(T*L)</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mit-han-lab/streaming-llm">streaming-llm</a><ul>
+<li>这个方法并没有增加 LLM 的对上文的记忆，只是让它输入输出无限长</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mit-han-lab/streaming-llm/blob/main/assets/StreamingLLM.pdf">slides</a></li>
+<li>介绍了多种 cache 方法</li>
+<li>上下文窗口保持不变。只保留最近的标记和注意力汇，丢弃中间的标记。这意味着模型只能处理最新的标记。需要重新计算 position</li>
+<li>StreamingLLM 的优势在于无需刷新缓存就能从最近的标记生成流畅的文本</li>
+<li>利用了 attention sink 现象, 由于 softmax，训练时前几个 token 对最终生成的内容非常关键，是生成内容稳定的关键 token, 如果保留前几个 token， 加上 window attention, 长文本时生成的内容就比较稳定</li>
+<li>这文章感觉就是之前 softmax 的 bug 带来的; 如果流式推理保证 system prompt 不被换出 不就没问题了…</li>
+<li>如何处理后面窗口位置信息的？有技巧，了解一下</li>
+</ul>
+</li>
+<li>llama kv cache<br><img src="https://i.ibb.co/88sYM2f/Cnc1i7-G0qy.png" alt="llama-2-7B"></li>
+<li>在基于 Transformer 的 decoder-only 模型中，包括<code>起始符号</code>在内的每个标记都有与之对应的键值（KV）缓存。</li>
+<li>decoder-only 推理过程，假设 prompt 为 how are you; 先输入 bos token, 生成对应 kv cache, 输入 how, 和 bos 做 attention, 不用管预测，将 are 作为输入，和之前做 attention， 不用管输出，将 you 作为输入， 输出为 I, 将 I 作为输入……<ul>
+<li>注意，如果有随机，每次 bos 生成的 kv cache 不同，对后面结果都有影响</li>
+<li>只要有输出不一样， 每一层的 kv cache 也不同， 会传递</li>
+</ul>
+</li>
+</ol>
+<h4 id="变长矩阵乘"><a href="#变长矩阵乘" class="headerlink" title="变长矩阵乘"></a>变长矩阵乘</h4><ol>
+<li>预先申请长为 n 的 kv cache 内存, 使用 for 循环或变长矩阵乘计算 attention，<ul>
+<li>kv cache 长度小于 n 时， 不用移动 kv cache; <a target="_blank" rel="noopener" href="https://chat.openai.com/c/405fe374-fd46-4ec2-85be-ce08e32912ce">link</a></li>
+<li>大于 n 时，<ul>
+<li>环形缓冲区, 先放入到最早的 cache 位置; 不用关心顺序； 然后和所有 kv cache 做 attention; 和 q 直接矩阵乘; 由于每个 KV 对都与序列中的特定位置相关联，移除操作不会改变剩余 KV 对之间的相对位置关系。</li>
+<li>当前 kv 放到 cache 中的末尾，之前的 kv cache 需要向前移动</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="定长矩阵乘"><a href="#定长矩阵乘" class="headerlink" title="定长矩阵乘"></a>定长矩阵乘</h4><ol>
+<li>矩阵乘时需要 kv cache 是固定长的矩阵，刚开始 kv cache 矩阵需要 padding, 如果分配固定长的 kv cache 矩阵</li>
+<li>padding 利用优化的定长矩阵乘法来加速, 会浪费一些计算</li>
+</ol>
+<h2 id="decode-only-推理过程-prompt（“how-are-you”）"><a href="#decode-only-推理过程-prompt（“how-are-you”）" class="headerlink" title="decode only 推理过程: prompt（“how are you”）"></a>decode only 推理过程: prompt（“how are you”）</h2><ol>
+<li>BOS Token：<ul>
+<li>开始：推理过程以输入一个特殊的开始标记（BOS, Begin Of Sentence）开始。</li>
+<li>生成 KV 缓存：对于 BOS 标记，模型计算出对应的键（Key）和值（Value），并将它们存储在 KV 缓存中。</li>
+</ul>
+</li>
+<li>逐个处理 Prompt 中的词：<ul>
+<li>对于 prompt 中的每个词（如”how”, “are”, “you”），模型依次进行处理。在处理每个词时，会使用到目前为止累积的 KV 缓存来进行注意力计算。例如，处理”how”时，它会与 BOS 的 KV 进行注意力计算；处理”are”时，它会与 BOS 和”how”的 KV 进行注意力计算，以此类推。<br>每个新词的处理结果也会生成新的 KV 对，这些新的 KV 对被添加到缓存中。</li>
+</ul>
+</li>
+<li>生成响应：<ul>
+<li>当处理完 prompt 中的所有词后，模型开始生成响应。假设首个生成的词是”I”。生成”I”时，会利用到目前为止（包括 BOS 标记和 prompt 中所有词）的所有 KV 缓存。</li>
+</ul>
+</li>
+<li>递归生成：<ul>
+<li>随后，模型继续基于累积的 KV 缓存和已生成的词（如”I”）来生成下一个词。这个过程会持续进行，直到生成一个完整的响应或达到某个终止条件（如特殊的结束标记或达到最大长度限制）。</li>
+</ul>
+</li>
+</ol>
+<h2 id="关键操作"><a href="#关键操作" class="headerlink" title="关键操作"></a>关键操作</h2><ol>
 <li>multi head attention</li>
 <li>feed forward</li>
 <li>layernorm</li>
@@ -1181,8 +1415,47 @@
 <li>concat</li>
 <li>linear(生成 q, k, v) Q, K, V</li>
 </ol>
-<h2 id="计算和内存统计"><a href="#计算和内存统计" class="headerlink" title="计算和内存统计"></a>计算和内存统计</h2><ol>
+<h2 id="参数、计算和-cache-统计"><a href="#参数、计算和-cache-统计" class="headerlink" title="参数、计算和 cache 统计"></a>参数、计算和 cache 统计</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://kipp.ly/transformer-inference-arithmetic/">transformer-inference-arithmetic</a></li>
+</ol>
+<h3 id="llama2-7b"><a href="#llama2-7b" class="headerlink" title="llama2-7b"></a><a target="_blank" rel="noopener" href="https://huggingface.co/meta-llama/Llama-2-7b-hf/blob/main/config.json">llama2-7b</a></h3><ol>
+<li>model info</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">LlamaForCausalLM(</span><br><span class="line">  (model): LlamaModel(</span><br><span class="line">    (embed_tokens): Embedding(32000, 4096, padding_idx=0)</span><br><span class="line">    (layers): ModuleList(</span><br><span class="line">      (0-31): 32 x LlamaDecoderLayer(</span><br><span class="line">        (self_attn): LlamaAttention(</span><br><span class="line">          (q_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (k_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (v_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (o_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (rotary_emb): LlamaRotaryEmbedding()</span><br><span class="line">        )</span><br><span class="line">        (mlp): LlamaMLP(</span><br><span class="line">          (gate_proj): Linear(in_features=4096, out_features=11008, bias=False) <span class="comment"># 输入是 in_features, 输出为 out_features, 矩阵参数shape为（out_features, in_features); 因为矩阵乘法：(out_features, in_features)(in_features, 1) = (out_features, 1)</span></span><br><span class="line">          (up_proj): Linear(in_features=4096, out_features=11008, bias=False)</span><br><span class="line">          (down_proj): Linear(in_features=11008, out_features=4096, bias=False)</span><br><span class="line">          (act_fn): SiLUActivation()</span><br><span class="line">        )</span><br><span class="line">        (input_layernorm): LlamaRMSNorm()</span><br><span class="line">        (post_attention_layernorm): LlamaRMSNorm()</span><br><span class="line">      )</span><br><span class="line">    )</span><br><span class="line">    (norm): LlamaRMSNorm()</span><br><span class="line">  )</span><br><span class="line">  (lm_head): Linear(in_features=4096, out_features=32000, bias=False)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>参数: 见 pytorch params 计算，<a target="_blank" rel="noopener" href="https://medium.com/@saratbhargava/mastering-llama-math-part-1-a-step-by-step-guide-to-counting-parameters-in-llama-2-b3d73bc3ae31">link</a></p>
+<ul>
+<li>total: 131072000 + 6476267520 + 4096 + 131072000 &#x3D; 6738415616 &#x3D; 6.7B<ul>
+<li>embed_tokens: (32000, 4096) &#x3D; 131072000</li>
+<li>attention block x 32 &#x3D; 202383360 x 32 &#x3D; 6476267520<ul>
+<li>attention layer:4 x (4096, 4096) &#x3D; 67108864</li>
+<li>mlp: 2 x (11008, 4096) + (4096, 11008) &#x3D; 135266304 (占比最大)</li>
+<li>input layernorm: (4096) &#x3D; 4096</li>
+<li>post_attention_layernorm: (4096) &#x3D; 4096</li>
+</ul>
+</li>
+<li>norm: (4096) &#x3D; 4096</li>
+<li>lm_head:(32000, 4096) &#x3D; 131072000</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>计算复杂度：</p>
+<ul>
+<li>total: O(l(n^2 x d + ndd’ + nd)) ; l 为层数; 不要考虑 kv cache 更好理解, 加掩码的矩阵乘<ul>
+<li>Multi-head self-attention 层 计算复杂度主要来自注意力机制的计算。对于序列长度为 n,hidden size 为 d 的 self-attention,其复杂度为 O(n^2 x d)；（n, d)(d, n) &#x3D;&gt; O(n^2 x d); 包含 cache 的也等价矩阵乘</li>
+<li>前馈全连接层 这一层包含两个仿射变换,如果其 width 为 d’,那么复杂度为 O(n x d x d’)； (n, d)(d, d’) &#x3D;&gt; O(ndd’)</li>
+<li>Layer normalization 对序列长度为 n, 向量维度为 d,其复杂度为 O(n x d)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>kv cache</p>
+<ul>
+<li><code>BS * layers * kv-heads * heads-d * N * 2(kv) * sizeof(fp16) = BS * 32 * 32 * 128 * N * 2 * 2 = 0.5MB * BS * N</code> 注：128 &#x3D; 4096 &#x2F; 32</li>
+</ul>
+</li>
 </ol>
 <h2 id="hugging-face-transformers"><a href="#hugging-face-transformers" class="headerlink" title="hugging face transformers"></a><a target="_blank" rel="noopener" href="https://github.com/huggingface/transformers">hugging face transformers</a></h2><ol>
 <li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/index">doc</a></li>
@@ -1491,112 +1764,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/11/15/shareX/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/15/shareX/" class="post-title-link" itemprop="url">shareX</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-11-15 14:11:38" itemprop="dateCreated datePublished" datetime="2023-11-15T14:11:38+08:00">2023-11-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-16 10:47:54" itemprop="dateModified" datetime="2023-11-16T10:47:54+08:00">2023-11-16</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/11/15/shareX/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/11/15/shareX/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>66</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>设置上传 url<br><img src="https://i.ibb.co/3C66vgd/UQTv-UKxj-Vi.png" alt="设置上传url"></li>
-</ol>
-<h2 id="设置自定义服务器"><a href="#设置自定义服务器" class="headerlink" title="设置自定义服务器"></a>设置自定义服务器</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://api.imgbb.com/">imagebb 生成 key</a><br><img src="https://i.ibb.co/Dz3Xkyn/Jf4m-Fd-WXg-F.png" alt="生成key"></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/ShareX/CustomUploaders/blob/master/imgbb.com.sxcu">自定义目标设置贴入，修改 key</a><br><img src="https://i.ibb.co/MM2mLg5/2z4l9e-PS2x.png" alt="修改key"><br><img src="https://i.ibb.co/TwmGMk8/BUHj-Zwd0ke.png" alt="key"></li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://getsharex.com/">shareX</a></li>
-<li><a target="_blank" rel="noopener" href="https://imgbb.com/">图片共享</a></li>
-<li><a target="_blank" rel="noopener" href="https://imgur.com/">imgur</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1668,7 +1835,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">166</span>
+          <span class="site-state-item-count">167</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1701,6 +1868,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/04/huggingface/" title="2024&#x2F;01&#x2F;04&#x2F;huggingface&#x2F;">huggingface</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/01/tensorrt-llm/" title="2024&#x2F;01&#x2F;01&#x2F;tensorrt-llm&#x2F;">tensorrt-llm</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1711,9 +1881,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/12/24/llama2-c/" title="2023&#x2F;12&#x2F;24&#x2F;llama2-c&#x2F;">llama2</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/12/21/deep-learning/" title="2023&#x2F;12&#x2F;21&#x2F;deep-learning&#x2F;">deep-learning</a>
         </li>
     </ul>
   </div>
@@ -1751,13 +1918,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">405k</span>
+    <span title="站点总字数">410k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:08</span>
+    <span title="站点阅读时长">6:13</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

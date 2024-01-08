@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">166</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">167</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,144 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/01/30/Kalman-Filters/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/30/Kalman-Filters/" class="post-title-link" itemprop="url">Kalman Filters</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-30 11:43:37" itemprop="dateCreated datePublished" datetime="2021-01-30T11:43:37+08:00">2021-01-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/Kalman/" itemprop="url" rel="index"><span itemprop="name">Kalman</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/01/30/Kalman-Filters/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/30/Kalman-Filters/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>576</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h2><ol>
+<li>卡尔曼滤波是一个递归的<code>估计</code>，只要获知<code>上一时刻的状态估计</code>和<code>当前状态的观测</code>就可以计算<code>当前状态的估计</code>。</li>
+<li>卡尔曼滤波器不需要观测&#x2F;估计的历史记录。</li>
+<li>卡尔曼滤波器是一个纯粹的<code>时域滤波器</code>，而不像低通滤波器那样，需要在频率设计，然后转到时域应用。</li>
+<li>两个阶段：<ul>
+<li><code>预测</code>：由上一状态的估计做出对当前状态的估计</li>
+<li><code>更新</code>：利用当前状态的观测值<code>优化</code>预测阶段的估计值，以获取一个<code>更精确的当前状态估计</code></li>
+</ul>
+</li>
+<li>两种数据：<ul>
+<li><code>估计值</code></li>
+<li><code>观测值</code>：传感器测量值，如GPS位置。</li>
+</ul>
+</li>
+<li>线性系统与非线性系统：<ul>
+<li>判断标准：能不能通过上一次系统估计状态直接乘以某个矩阵得到预测状态？ 矩阵都是具体的值，与估计状态相乘后只是估计状态的线性变换。（还是测量状态不能直接与估计状态求差？）</li>
+<li><code>线性系统</code>： 预测状态 &#x3D; F * 上一次估计状态。例如：预测汽车位置，传感器获得位置值，假设很短时间内，系统是匀速运动或匀加速运动（对应两种模型）。可以通过上一时刻状态乘以矩阵得到预测值。</li>
+<li><code>非线性系统</code>：预测状态不能直接由上一次估计状态乘以一个矩阵得到。 如雷达跟踪飞机，估计状态为(x, y). 测量状态为径向距离r和夹脚。</li>
+</ul>
+</li>
+</ol>
+<h2 id="Formulas"><a href="#Formulas" class="headerlink" title="Formulas"></a>Formulas</h2><ol>
+<li><img src="/images/kalman/formulas.jpg" alt="5 basic formulas"></li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/rlabbe/Kalman-and-Bayesian-Filters-in-Python">Kalman-and-Bayesian-Filters-in-Python</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/codesamer/article/details/81191487">Using in car</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d51a3a7736ca">基于Kalman滤波器的进行物体的跟踪</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/39912633">图说卡尔曼滤波</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=VFXf1lIZ3p8">Youtube Matlab tutorial</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -586,7 +724,7 @@
 <li>awk 按列过滤参数 ls -l test.sh | awk ‘{ print $5 }’ 输出：454</li>
 <li>shell 小程序<a target="_blank" rel="noopener" href="https://www.jb51.net/article/54488.htm">link</a></li>
 <li>shell 得到文件信息 <code>ll /var/log/messages | cut -d &quot; &quot; -f 5</code></li>
-<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#106;&#x69;&#97;&#120;&#105;&#x79;&#x61;&#110;&#x67;&#64;&#x31;&#48;&#x2e;&#x31;&#x30;&#46;&#48;&#46;&#x31;&#x37;">&#106;&#x69;&#97;&#120;&#105;&#x79;&#x61;&#110;&#x67;&#64;&#x31;&#48;&#x2e;&#x31;&#x30;&#46;&#48;&#46;&#x31;&#x37;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
+<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#106;&#105;&#x61;&#120;&#x69;&#121;&#x61;&#x6e;&#x67;&#64;&#49;&#x30;&#x2e;&#49;&#x30;&#46;&#48;&#x2e;&#x31;&#55;">&#106;&#105;&#x61;&#120;&#x69;&#121;&#x61;&#x6e;&#x67;&#64;&#49;&#x30;&#x2e;&#49;&#x30;&#46;&#48;&#x2e;&#x31;&#55;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
 <li>读文件内容，记录到变量中 var&#x3D;$(cat name.txt)</li>
 <li>计时 start&#x3D;$(date+%s) &amp;&amp; sleep 2 &amp;&amp; end&#x3D;$(date+%s)&amp;&amp; echo $(($end - $start)) <a target="_blank" rel="noopener" href="http://blog.csdn.net/gengshenghong/article/details/7583580">link</a></li>
 <li>sleep: sleep 1 睡眠 1 秒 sleep 1s 睡眠 1 秒 sleep 1m 睡眠 1 分 sleep 1h 睡眠 1 小时</li>
@@ -671,7 +809,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-31 19:46:22" itemprop="dateModified" datetime="2023-12-31T19:46:22+08:00">2023-12-31</time>
+                <time title="修改时间：2024-01-05 11:49:18" itemprop="dateModified" datetime="2024-01-05T11:49:18+08:00">2024-01-05</time>
               </span>
 
           
@@ -694,14 +832,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7.3k</span>
+              <span>3.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -739,6 +877,7 @@
 <li><code>python -m trace --trace pyscript.py</code></li>
 </ol>
 <h2 id="pip"><a href="#pip" class="headerlink" title="pip"></a>pip</h2><ol>
+<li><code>pip freeze &gt; requirements.txt</code> 导出 requirements</li>
 <li>注意 conda 源和 pip 源的区别，并不是共用</li>
 <li>set source</li>
 </ol>
@@ -753,6 +892,11 @@
 <li><a target="_blank" rel="noopener" href="https://github.com/prefix-dev/pixi">pixi</a></li>
 </ol>
 <h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
+<li>python repl 里运行 py 文件</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exec</span>(<span class="built_in">open</span>(<span class="string">&quot;test.py&quot;</span>).read()) <span class="comment"># python3</span></span><br><span class="line"><span class="built_in">exec</span>(<span class="built_in">open</span>(<span class="string">&quot;filename.py&quot;</span>).read()) <span class="comment"># python2</span></span><br></pre></td></tr></table></figure>
+
+<ol>
 <li><code>print(cls.__class__.__name__)</code>打印 cls 实例类的名字</li>
 <li>print 到文件</li>
 </ol>
@@ -790,49 +934,8 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> profile</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>():</span><br><span class="line">    fps = profile.fps()</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        xxxxxxxxxxxxxxxxxxx</span><br><span class="line">        logging.info(<span class="string">&#x27;fps:&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(fps.compute()))</span><br></pre></td></tr></table></figure>
 
 <h2 id="Logging"><a href="#Logging" class="headerlink" title="Logging"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/360306588">Logging</a></h2><ol>
-<li>基本配置：</li>
+<li>format 配置: &#96;’[%(asctime)s]</li>
 </ol>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import<span class="built_in"> logging</span></span><br><span class="line"><span class="built_in"></span></span><br><span class="line"><span class="comment">#默认的warning级别，只输出warning以上的</span></span><br><span class="line"><span class="comment">#使用basicConfig()来指定日志级别和相关信息</span></span><br><span class="line"></span><br><span class="line">logging.basicConfig(<span class="attribute">level</span>=logging.DEBUG #设置日志输出格式</span><br><span class="line">                    ,<span class="attribute">filename</span>=<span class="string">&quot;demo.log&quot;</span> #log日志输出的文件位置和文件名</span><br><span class="line">                    ,<span class="attribute">filemode</span>=<span class="string">&quot;w&quot;</span> #文件的写入格式，w为重新写入文件，默认是追加</span><br><span class="line">                    ,<span class="attribute">format</span>=<span class="string">&quot;%(asctime)s - %(name)s - %(levelname)-9s - %(filename)-8s : %(lineno)s line - %(message)s&quot;</span> #日志输出的格式</span><br><span class="line">                    # -8表示占位符，让输出左对齐，输出长度都为8位</span><br><span class="line">                    ,<span class="attribute">datefmt</span>=<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span> #时间输出的格式</span><br><span class="line">                    )</span><br><span class="line"></span><br><span class="line">logging.<span class="built_in">debug</span>(<span class="string">&quot;This is  DEBUG !!&quot;</span>)</span><br><span class="line">logging.<span class="built_in">info</span>(<span class="string">&quot;This is  INFO !!&quot;</span>)</span><br><span class="line">logging.<span class="built_in">warning</span>(<span class="string">&quot;This is  WARNING !!&quot;</span>)</span><br><span class="line">logging.<span class="built_in">error</span>(<span class="string">&quot;This is  ERROR !!&quot;</span>)</span><br><span class="line">logging.critical(<span class="string">&quot;This is  CRITICAL !!&quot;</span>)</span><br><span class="line"></span><br><span class="line">logging.<span class="built_in">info</span>(<span class="string">&quot;timestamp &#123;&#125;, &#123;&#125;, &#123;&#125; &quot;</span>.format(i, bufs[i].timestamp.tv_sec, bufs[i].timestamp.tv_usec))</span><br></pre></td></tr></table></figure>
-
-<h2 id="Debug-方法"><a href="#Debug-方法" class="headerlink" title="Debug 方法"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38542085/article/details/78562458">Debug 方法</a></h2><ol>
-<li>elpy-pdb-debug-buffer</li>
-<li>logging</li>
-<li>pdb</li>
-<li>print</li>
-</ol>
-<h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_20663229/article/details/94484526">多线程返回值</a></li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading <span class="keyword">as</span> th</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">print_time</span>(<span class="params">arg</span>):</span><br><span class="line">    pname = mp.current_process().name</span><br><span class="line">    pid = os.getpid()</span><br><span class="line">    tname = th.current_thread().getName()</span><br><span class="line">    LOGW(<span class="string">&#x27;print time  [&#123;&#125;] &#123;&#125; : &#123;&#125; : &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(pid, pname, tname, arg))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dequeue_multibuffer1</span>():</span><br><span class="line">    threads_test = []</span><br><span class="line">    threads_test.append(th.Thread(name=<span class="string">&quot;thread 0&quot;</span>, target=print_time, args=(<span class="number">1</span>, ))) <span class="comment"># 线程的args是个元组，只有一个元素要加逗号</span></span><br><span class="line">    threads_test.append(th.Thread(name=<span class="string">&quot;thread 1&quot;</span>, target=print_time, args=(<span class="number">2</span>, )))</span><br><span class="line">    threads_test[<span class="number">0</span>].start()</span><br><span class="line">    threads_test[<span class="number">1</span>].start()</span><br><span class="line">    threads_test[<span class="number">0</span>].join()</span><br><span class="line">    threads_test[<span class="number">1</span>].join()</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 功能， 每个线程通过v4l2获取图片，多个线程拼接并同步，然后供其他模块使用</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dequeue_buffer</span>(<span class="params">fd, buf, mems, shape, que</span>):</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">if</span> que.empty():</span><br><span class="line">            fcntl.ioctl(fd, v4l2.VIDIOC_DQBUF, buf)</span><br><span class="line">            frame = cv.cvtColor(mems[buf.index].reshape(shape), cv.COLOR_YUV2RGB_YUYV)</span><br><span class="line">            fcntl.ioctl(fd, v4l2.VIDIOC_QBUF, buf)</span><br><span class="line">            que.put_nowait((frame, buf.timestamp))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dequeue_multibuffer</span>(<span class="params">fds, bufs, mems_list, shape, que</span>):</span><br><span class="line">    queues = []</span><br><span class="line">    num = <span class="built_in">len</span>(fd2)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(num):</span><br><span class="line">         queues.append(queue.Queue(maxsize=<span class="number">10</span>))</span><br><span class="line"></span><br><span class="line">    threads_test = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(num):</span><br><span class="line">        threads_test.append(th.Thread(name=<span class="built_in">str</span>(i), target=dequeue_buffer, args=(fds[i], bufs[i], mems_list[i], shape, queues[i])))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(num):</span><br><span class="line">        threads_test[i].start()</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        datas = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(num):</span><br><span class="line">            frame, timestamp = queues[i].get()</span><br><span class="line">            logging.info(<span class="string">&quot;timestamp &#123;&#125;, &#123;&#125;, &#123;&#125; &quot;</span>.<span class="built_in">format</span>(i, timestamp.tv_sec, timestamp.tv_usec))</span><br><span class="line">            mems = mems_list[i]</span><br><span class="line">            datas.append(frame)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(datas):</span><br><span class="line">            que.put(datas)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>()</span><br><span class="line">    frame_queue = queue.Queue(maxsize=<span class="number">10</span>)</span><br><span class="line">    get_frame_thread = th.Thread(name=<span class="string">&quot;dequeue_multibuffer&quot;</span>, target=dequeue_multibuffer, args=([vd_r, vd_l], [buf_r, buf_l], [mems_r, mems_l], (h, w, -<span class="number">1</span>), frame_queue))</span><br><span class="line">    get_frame_thread.start()</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">         frames = frame_queue.get()</span><br><span class="line">         do.....</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="numpy"><a href="#numpy" class="headerlink" title="numpy"></a><a target="_blank" rel="noopener" href="https://numpy.org/doc/stable/index.html">numpy</a></h2><ol>
-<li><code>np.testing.assert_allclose(out_np, out_tvm.numpy(), rtol=1e-3)</code> check result</li>
-<li>float_array &#x3D; double_array.astype(np.float32)</li>
-<li>reshape (-1 自适应)</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = x.reshape(<span class="number">2</span>, -<span class="number">1</span>)</span><br><span class="line">x = x.reshape(<span class="number">1</span>,-<span class="number">1</span>) <span class="comment"># 展开为1行</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>nchw -&gt; nhwc</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">input_file = sys.argv[<span class="number">1</span>]</span><br><span class="line">output_file = sys.argv[<span class="number">2</span>]</span><br><span class="line">N, C, H, W = sys.argv[<span class="number">3</span>:<span class="number">7</span>]</span><br><span class="line">a = np.fromfile(sys.argv[<span class="number">1</span>], dtype=np.float32)</span><br><span class="line">a = a.reshape((<span class="built_in">int</span>(N), <span class="built_in">int</span>(C), <span class="built_in">int</span>(H), <span class="built_in">int</span>(W)))</span><br><span class="line">a = a.transpose(<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>)</span><br><span class="line">a.tofile(output_file)</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>nhwc -&gt; nchw</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">input_file = sys.argv[<span class="number">1</span>]</span><br><span class="line">output_file = sys.argv[<span class="number">2</span>]</span><br><span class="line">N, H, W, C = sys.argv[<span class="number">3</span>:<span class="number">7</span>]</span><br><span class="line">a = np.fromfile(sys.argv[<span class="number">1</span>], dtype=np.float32)</span><br><span class="line">a = a.reshape((<span class="built_in">int</span>(N), <span class="built_in">int</span>(H), <span class="built_in">int</span>(W), <span class="built_in">int</span>(C)))</span><br><span class="line">a = a.transpose(<span class="number">0</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">a.tofile(output_file)</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>截取数据</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">a = np.fromfile(<span class="string">&quot;inputs/total_flow_predictions.bin&quot;</span>, dtype=np.float32)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(a))</span><br><span class="line">a = np.resize(a, [<span class="built_in">len</span>(a)//<span class="number">7</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(a))</span><br><span class="line">b = np.fromfile(<span class="string">&quot;output/disparity.bin&quot;</span>, dtype=np.float32)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(b))</span><br><span class="line">b = np.resize(b, [<span class="built_in">len</span>(b)//<span class="number">2</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(b))</span><br><span class="line">diff1 = a - b</span><br><span class="line">diff =  np.<span class="built_in">abs</span>(diff1)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;max diff is &#123;&#125;&quot;</span>.<span class="built_in">format</span>(diff.<span class="built_in">max</span>()))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;mean diff is &#123;&#125;&quot;</span>.<span class="built_in">format</span>(diff.mean()))</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>误差</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">a = np.fromfile(sys.argv[<span class="number">1</span>], dtype=np.float32)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;file1: &#123;&#125;, len: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(sys.argv[<span class="number">1</span>], <span class="built_in">len</span>(a)))</span><br><span class="line">b = np.fromfile(sys.argv[<span class="number">2</span>], dtype=np.float32)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;file2: &#123;&#125;, len: &#123;&#125;&quot;</span>.<span class="built_in">format</span>(sys.argv[<span class="number">2</span>], <span class="built_in">len</span>(b)))</span><br><span class="line">diff1 = a - b</span><br><span class="line">diff =  np.<span class="built_in">abs</span>(diff1)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;max diff is &#123;&#125;&quot;</span>.<span class="built_in">format</span>(diff.<span class="built_in">max</span>()))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;mean diff is &#123;&#125;&quot;</span>.<span class="built_in">format</span>(diff.mean()))</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -964,137 +1067,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/09/30/Emacs-on-Windows10/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/30/Emacs-on-Windows10/" class="post-title-link" itemprop="url">Emacs on Windows10</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-09-30 08:05:00" itemprop="dateCreated datePublished" datetime="2020-09-30T08:05:00+08:00">2020-09-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/Emacs/" itemprop="url" rel="index"><span itemprop="name">Emacs</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/09/30/Emacs-on-Windows10/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/30/Emacs-on-Windows10/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>524</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Install-msys2-on-windindows"><a href="#Install-msys2-on-windindows" class="headerlink" title="Install msys2 on windindows"></a>Install msys2 on windindows</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/msys2/distrib/x86_64/">Tsing hua source</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.msys2.org/">Official web</a></li>
-</ol>
-<h2 id="Config-msys2"><a href="#Config-msys2" class="headerlink" title="Config msys2"></a>Config msys2</h2><ol>
-<li>Theme: dracula</li>
-<li>Font: Consolas 14</li>
-<li>Transparency: Medium</li>
-<li>Right mouse: paste</li>
-<li>Terminal Type: xterm-256color</li>
-<li>Cursor: bold, not blinking</li>
-</ol>
-<h2 id="Install-git-vim-oh-my-zsh-emacs"><a href="#Install-git-vim-oh-my-zsh-emacs" class="headerlink" title="Install git vim oh-my-zsh emacs"></a>Install git vim oh-my-zsh emacs</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013938484/article/details/83539008">Tutorial</a></li>
-<li>Note: Change package source. No vim at first, you can edit the file on windows</li>
-<li>Emacs install: <code>pacman -S mingw-w64-x86_64-emacs</code></li>
-<li>Libs install: <code>pacman -S mingw-w64-x86_64-libpng &amp;&amp; pacman -S mingw-w64-x86_64-libjpeg-turbo</code></li>
-<li>Config .bashrc and .zshrc</li>
-</ol>
-<h2 id="Build-emacs-plugins-in-Ubuntu-on-VMvare"><a href="#Build-emacs-plugins-in-Ubuntu-on-VMvare" class="headerlink" title="Build emacs plugins in Ubuntu on VMvare"></a>Build emacs plugins in Ubuntu on VMvare</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/jiaxiyang/100ms_dot_emacs">100ms emacs</a></li>
-<li>build and copy the tar package to msys2</li>
-<li>install package on msys2</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1166,7 +1138,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">166</span>
+          <span class="site-state-item-count">167</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1199,6 +1171,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/04/huggingface/" title="2024&#x2F;01&#x2F;04&#x2F;huggingface&#x2F;">huggingface</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/01/tensorrt-llm/" title="2024&#x2F;01&#x2F;01&#x2F;tensorrt-llm&#x2F;">tensorrt-llm</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1209,9 +1184,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/12/24/llama2-c/" title="2023&#x2F;12&#x2F;24&#x2F;llama2-c&#x2F;">llama2</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/12/21/deep-learning/" title="2023&#x2F;12&#x2F;21&#x2F;deep-learning&#x2F;">deep-learning</a>
         </li>
     </ul>
   </div>
@@ -1249,13 +1221,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">405k</span>
+    <span title="站点总字数">410k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:08</span>
+    <span title="站点阅读时长">6:13</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
