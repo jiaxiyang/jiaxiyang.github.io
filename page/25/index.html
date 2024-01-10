@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">168</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">169</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,153 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/02/23/Gstreamer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/23/Gstreamer/" class="post-title-link" itemprop="url">Gstreamer</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-23 08:43:01" itemprop="dateCreated datePublished" datetime="2021-02-23T08:43:01+08:00">2021-02-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/Gstreamer/" itemprop="url" rel="index"><span itemprop="name">Gstreamer</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/02/23/Gstreamer/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/02/23/Gstreamer/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Why-Gstreamer"><a href="#Why-Gstreamer" class="headerlink" title="Why Gstreamer"></a>Why Gstreamer</h2><ol>
+<li>构建一个视频分析应用，需要考虑的内容有：视频流获取、视频流解码、预处理、算法推理、数据编码、数据显示、数据传输等。常常需要引入一些第三方的开发包，如 OpenCV，FFmpeg，Caffe，TensorRT，OpenGL 等。GStreamer 是一个用于开发流式多媒体应用的跨平台开源框架，应用程序可以通过管道(Pipeline)的方式，<code>将多媒体处理的各个步骤串联起来</code>，达到预期的效果。</li>
+</ol>
+<h2 id="Gstreamer"><a href="#Gstreamer" class="headerlink" title="Gstreamer"></a>Gstreamer</h2><ol>
+<li><code>核心</code>为<code>Pipeline</code>框架以及用于扩展功能的<code>Plugins</code>。plugin 负责实现音视频传输协议、音视频输入输出源、音视频编解转码等真实的媒体处理功能，而 plugin 之间通过 pipeline 关联在一起，pipeline 负责将上一个 plugin 的数据流(data flow)传输给下一个 plugin，最终形成一个完整的多媒体处理应用；</li>
+<li>原理：GStreamer 的程序通过连接数字媒体处理的元素注入管道（pipeline）。每个元素(element)是由一个插件提供。元素可组合为箱（bins），箱可以进一步聚合，从而形成架构图。元素沟通是透过垫（pads）。来源垫（source pad）上一个元素可以被连接到一个接收垫（sink pad）在另一个。当管道是在播放状态，数据缓冲流（data buffers flow）从来源垫（source pad）流向接收垫（sink pad）。</li>
+<li>箱柜(bin)是由多个 element 构成的容器，同时 bin 本身也是一种 element，所以能够像操作普通 element 一样操作一个 bin，改变 bin 的状态可以改变 bin 内部所有 elements 的状态。bin 可以发送总线消息给它的子集 elements ，包括：错误消息(error messages)，标签消息(tag messages)，EOS 消息(EOS messages)。</li>
+<li>管道(pipeline)是一个特殊的 bin，当设定管道暂停或播放状态的时候，数据流将开始流动，并且媒体数据处理也开始处理。</li>
+<li>element 被封装成 plugin 才能被 gstreamer 使用。</li>
+</ol>
+<h2 id="3-层架构（plugin-core-app"><a href="#3-层架构（plugin-core-app" class="headerlink" title="3 层架构（plugin, core, app)"></a>3 层架构（plugin, core, app)</h2><p><img src="https://gstreamer.freedesktop.org/documentation/application-development/introduction/images/gstreamer-overview.png" alt="overview"></p>
+<ol>
+<li>最底层：element(plugins)</li>
+<li>中间层：插件框架、pipeline 架构、媒体类型处理机制、等等，也就是处理 Elements 的方式方法.</li>
+<li>最上层：tools, 多媒体应用</li>
+</ol>
+<h2 id="GStreamer-plug-ins-could-be-classified"><a href="#GStreamer-plug-ins-could-be-classified" class="headerlink" title="GStreamer plug-ins could be classified"></a>GStreamer plug-ins could be classified</h2><ol>
+<li>protocols handling</li>
+<li>sources: for audio and video (involves protocol plugins)</li>
+<li>formats: parsers, formaters, muxers, demuxers, metadata, subtitles</li>
+<li>codecs: coders and decoders</li>
+<li>filters: converters, mixers, effects, …</li>
+<li>sinks: for audio and video (involves protocol plugins)</li>
+</ol>
+<h2 id="GStreamer-tools"><a href="#GStreamer-tools" class="headerlink" title="GStreamer tools"></a>GStreamer tools</h2><ol>
+<li>gst-launch-1.0: 命令行建立和运行 pipeline, 不用编写 C 代码； <code>gst-launch-1.0 videotestsrc ! autovideosink</code></li>
+<li>gst-inspect-1.0: 查看可用的插件和它们的相关信息； <code>gst-inspect-1.0 videotestsrc</code></li>
+<li>gst-discoverer-1.0: 查看媒体文件的内部结构； <code>gst-discoverer-1.0 /root/Desktop/video.mp4</code></li>
+<li>GST*DEBUG&#x3D;”GST_TRACER:7” GST_TRACERS&#x3D;”proctime” gst-launch-1.0 … <code>查看每个element性能</code> <a target="_blank" rel="noopener" href="https://developer.ridgerun.com/wiki/index.php?title=GstShark*-_Processing_Time_tracer">link</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/RidgeRun/gst-shark">gst-shark</a></li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://gstreamer.freedesktop.org/documentation/application-development/introduction/index.html?gi-language=c">About Gstreamer</a></li>
+<li><a target="_blank" rel="noopener" href="https://gstreamer.freedesktop.org/documentation/tutorials/basic/gstreamer-tools.html?gi-language=c">Gstreamer tools</a></li>
+<li><a target="_blank" rel="noopener" href="https://gstreamer.freedesktop.org/documentation/tutorials/basic/index.html?gi-language=c">Gstreamer tutorials</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/sdroege/gstreamer-rs/tree/master/tutorials">Gstreamer tutorials rust</a></li>
+<li><a target="_blank" rel="noopener" href="http://orangeamoy.com/2019/06/28/GStreamerAndDeepStream/">由 GStreamer 到 DeepStream</a></li>
+<li><a target="_blank" rel="noopener" href="http://ericnode.info/post/gstreamer_intro/">插件例子</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.shangyexinzhi.com/article/571316.html">中文基础概念</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -904,7 +1051,7 @@
 <li>awk 按列过滤参数 ls -l test.sh | awk ‘{ print $5 }’ 输出：454</li>
 <li>shell 小程序<a target="_blank" rel="noopener" href="https://www.jb51.net/article/54488.htm">link</a></li>
 <li>shell 得到文件信息 <code>ll /var/log/messages | cut -d &quot; &quot; -f 5</code></li>
-<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#x6a;&#x69;&#97;&#120;&#x69;&#121;&#97;&#x6e;&#103;&#x40;&#49;&#48;&#46;&#49;&#x30;&#x2e;&#48;&#x2e;&#49;&#55;">&#x6a;&#x69;&#97;&#120;&#x69;&#121;&#97;&#x6e;&#103;&#x40;&#49;&#48;&#46;&#49;&#x30;&#x2e;&#48;&#x2e;&#49;&#55;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
+<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#x6a;&#105;&#97;&#120;&#x69;&#121;&#x61;&#110;&#x67;&#64;&#x31;&#48;&#x2e;&#49;&#x30;&#46;&#x30;&#46;&#49;&#x37;">&#x6a;&#105;&#97;&#120;&#x69;&#121;&#x61;&#110;&#x67;&#64;&#x31;&#48;&#x2e;&#49;&#x30;&#46;&#x30;&#46;&#49;&#x37;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
 <li>读文件内容，记录到变量中 var&#x3D;$(cat name.txt)</li>
 <li>计时 start&#x3D;$(date+%s) &amp;&amp; sleep 2 &amp;&amp; end&#x3D;$(date+%s)&amp;&amp; echo $(($end - $start)) <a target="_blank" rel="noopener" href="http://blog.csdn.net/gengshenghong/article/details/7583580">link</a></li>
 <li>sleep: sleep 1 睡眠 1 秒 sleep 1s 睡眠 1 秒 sleep 1m 睡眠 1 分 sleep 1h 睡眠 1 小时</li>
@@ -954,192 +1101,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/11/16/Python-grammar/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/16/Python-grammar/" class="post-title-link" itemprop="url">Python-grammar</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-11-16 21:39:20" itemprop="dateCreated datePublished" datetime="2020-11-16T21:39:20+08:00">2020-11-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-09 16:19:22" itemprop="dateModified" datetime="2024-01-09T16:19:22+08:00">2024-01-09</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/11/16/Python-grammar/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/16/Python-grammar/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://docs.python.org/3/tutorial/">python tutorial</a></li>
-</ol>
-<h2 id="data-structure"><a href="#data-structure" class="headerlink" title="data structure"></a><a target="_blank" rel="noopener" href="https://docs.python.org/3/tutorial/datastructures.html">data structure</a></h2><ol>
-<li>Python 为我们提供了三种常用数据结构，列表(Lists),字典（Dictionary）,元组（Tuple）</li>
-</ol>
-<h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><ol>
-<li>list[-1] 最后一个元素，负号表示倒着索引</li>
-<li>squares[-3:] slice: 创建新的索引，包含最后三个 value</li>
-<li>slice 是浅拷贝</li>
-<li>list1 + list2 表示 concat</li>
-<li>letters[2:5] &#x3D; [‘C’, ‘D’, ‘E’] 批量赋值</li>
-<li>letters[2:5] &#x3D; [] remove 第 3 个到第 5 个元素</li>
-</ol>
-<h3 id="dict"><a href="#dict" class="headerlink" title="dict"></a>dict</h3><h3 id="tuple"><a href="#tuple" class="headerlink" title="tuple"></a>tuple</h3><h2 id="Comprehension"><a href="#Comprehension" class="headerlink" title="Comprehension"></a>Comprehension</h2><ol>
-<li>Python 列表推导(List Comprehension)是 Python 中一个非常有用且常被使用的语法结构。它可以用简洁的语法代替循环语句,从一个可迭代对象中创建一个新的列表。</li>
-<li><code>[ expr for val in collection [if condition] ]</code></li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 简单推导</span></span><br><span class="line">nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">squares = [x ** <span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> nums] <span class="comment"># [1, 4, 9, 16]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 带判断条件</span></span><br><span class="line">even_squares = [x ** <span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> nums <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>] <span class="comment"># [4, 16]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字典推导</span></span><br><span class="line">dict_1 = &#123;<span class="string">&#x27;a&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;b&#x27;</span>: <span class="number">2</span>&#125;</span><br><span class="line">dict_2 = &#123;k:v**<span class="number">2</span> <span class="keyword">for</span> k,v <span class="keyword">in</span> dict_1.items()&#125; <span class="comment"># &#123;&#x27;a&#x27;: 1, &#x27;b&#x27;: 4&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="虚拟环境"><a href="#虚拟环境" class="headerlink" title="虚拟环境"></a>虚拟环境</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python3 -m venv myenv</span><br><span class="line">source myenv/<span class="built_in">bin</span>/activate</span><br><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
-
-<h2 id="输出表格"><a href="#输出表格" class="headerlink" title="输出表格"></a>输出表格</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> prettytable <span class="keyword">import</span> PrettyTable</span><br><span class="line"></span><br><span class="line">table = PrettyTable([<span class="string">&#x27;Name&#x27;</span>, <span class="string">&#x27;Age&#x27;</span>, <span class="string">&#x27;Gender&#x27;</span>])</span><br><span class="line">table.add_row([<span class="string">&#x27;Bob&#x27;</span>, <span class="number">18</span>, <span class="string">&#x27;Male&#x27;</span>])</span><br><span class="line"><span class="built_in">print</span>(table)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h2><ol>
-<li><code>python -m trace --trackcalls pyscript.py</code></li>
-<li><code>python -m trace --trace pyscript.py</code></li>
-</ol>
-<h2 id="pip"><a href="#pip" class="headerlink" title="pip"></a>pip</h2><ol>
-<li><code>pip freeze &gt; requirements.txt</code> 导出 requirements</li>
-<li>注意 conda 源和 pip 源的区别，并不是共用</li>
-<li>set source</li>
-</ol>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install pip -U -i https://pypi.tuna.tsinghua.edu.<span class="keyword">cn</span>/simple</span><br><span class="line">pip config <span class="keyword">set</span> <span class="keyword">global</span>.<span class="built_in">index</span>-url https://pypi.tuna.tsinghua.edu.<span class="keyword">cn</span>/simple</span><br><span class="line">pip3 install tensorrt_llm -U --extra-<span class="built_in">index</span>-url https://pypi.nvidia.<span class="keyword">com</span> # 可以追加<span class="keyword">source</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>install from source <code>pip install git+https://github.com/huggingface/transformers</code></li>
-</ol>
-<h2 id="package-management"><a href="#package-management" class="headerlink" title="package management"></a>package management</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/582651418">基于 pyproject.toml 的包管理</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/python-poetry/poetry">poetry</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/prefix-dev/pixi">pixi</a></li>
-</ol>
-<h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
-<li>python repl 里运行 py 文件</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exec</span>(<span class="built_in">open</span>(<span class="string">&quot;test.py&quot;</span>).read()) <span class="comment"># python3</span></span><br><span class="line"><span class="built_in">exec</span>(<span class="built_in">open</span>(<span class="string">&quot;filename.py&quot;</span>).read()) <span class="comment"># python2</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><code>print(cls.__class__.__name__)</code>打印 cls 实例类的名字</li>
-<li>print 到文件</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;output.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Hello, world!&#x27;</span>, file=file)</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><code>help(torch.ones)</code> 显示函数 help</li>
-<li><code>print(dir(list))</code> python 的 dir()函数可以用来获取对象的属性和方法。</li>
-<li><code>unset all_proxy</code> 不能使用代理，可能出现 install 错误 <a target="_blank" rel="noopener" href="https://blog.csdn.net/whatday/article/details/109287343">link</a></li>
-<li><a target="_blank" rel="noopener" href="https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa">install python from deadsnakes</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/deadsnakes/docs/blob/main/Building-Deadsnakes-Packages-from-Git.rst">build python from source</a> 编译之后需要前一级目录 <code>sudo dpkg -i *.deb</code></li>
-<li><code>pip freeze | grep torch</code>: 查看库版本</li>
-<li><code>python3 -c &quot;import torch; print(torch.__version__)&quot;</code></li>
-<li><code>python3 -c &quot;import tensorrt_llm; print(tensorrt_llm.__version__)&quot;</code></li>
-<li><code>print(&quot;Numpy version:&quot;, numpy.__version__)</code></li>
-<li><a target="_blank" rel="noopener" href="https://elpy.readthedocs.io/en/latest/ide.html#other-useful-snippets">useful-snippets</a></li>
-<li>默认引用语义</li>
-<li><code>import copy; x = copy.deepcopy(y)</code></li>
-<li>print(“x: “, x, type(x), x.shape) <a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_28576553/article/details/81154912">link</a></li>
-<li>print(‘{:.2f} ms’.format(xxx))</li>
-<li>pytorch tensor to binary file: <code>tensor.cpu().numpy().astype(np.float32).tofile(&quot;test.bin&quot;)</code>; c++ read binary file</li>
-<li>print(‘type : {}’.format(type(xxx)))</li>
-<li>print(‘size : {}’.format(len(xxx)))</li>
-</ol>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">static std::vector&lt;<span class="built_in">float</span>&gt; read<span class="constructor">_from_bin_file(<span class="params">std</span>::<span class="params">string</span> <span class="params">file</span>)</span> &#123;</span><br><span class="line">  auto result_size = std::filesystem::file<span class="constructor">_size(<span class="params">file</span>)</span>;</span><br><span class="line">  std::vector&lt;<span class="built_in">float</span>&gt; result(result_size<span class="operator"> / </span><span class="number">4</span>);</span><br><span class="line">  <span class="constructor">CHECK(<span class="params">std</span>::<span class="params">ifstream</span>(<span class="params">file</span>)</span>.read((<span class="built_in">char</span>*)&amp;result<span class="literal">[<span class="number">0</span>]</span>, result_size).good<span class="literal">()</span>)</span><br><span class="line">      &lt;&lt; <span class="string">&quot;failed to read baseline from &quot;</span> &lt;&lt; file;</span><br><span class="line">  return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void mywritefile(T* src, <span class="built_in">int</span> size1, std::<span class="built_in">string</span> filename) &#123;</span><br><span class="line">  ofstream Tout;</span><br><span class="line">  <span class="module-access"><span class="module"><span class="identifier">Tout</span>.</span></span><span class="keyword">open</span>(filename, ios_base::out <span class="pattern-match">| ios<span class="constructor">_base</span>::binary);</span></span><br><span class="line"><span class="pattern-match">  <span class="keyword">if</span> (!<span class="constructor">Tout</span>) &#123;</span></span><br><span class="line"><span class="pattern-match">    cout &lt;&lt; &quot;<span class="constructor">Can</span>&#x27;t <span class="keyword">open</span> the file! &quot; &lt;&lt; filename &lt;&lt; &quot;\n&quot;;</span></span><br><span class="line"><span class="pattern-match">    return;</span></span><br><span class="line"><span class="pattern-match">  &#125;</span></span><br><span class="line"><span class="pattern-match">  <span class="constructor">Tout</span>.write((<span class="built_in">char</span><span class="operator">*</span>)src, size1 <span class="operator">*</span> sizeof(<span class="constructor">T</span>));</span></span><br><span class="line"><span class="pattern-match">  <span class="operator">/</span><span class="operator">/</span> <span class="constructor">CHECK(<span class="params">std</span>::<span class="params">ofstream</span>(<span class="params">filename</span>)</span>.write((<span class="built_in">char</span><span class="operator">*</span>)data.data, size).good()) &lt;&lt;</span></span><br><span class="line"><span class="pattern-match">&#125;</span></span><br><span class="line"><span class="pattern-match"></span></span><br><span class="line"><span class="pattern-match">template void mywritefile(int8<span class="constructor">_t</span><span class="operator">*</span> src, <span class="built_in">int</span> size1, std::<span class="built_in">string</span> filename);</span></span><br><span class="line"><span class="pattern-match"></span></span><br></pre></td></tr></table></figure>
-
-<h2 id="profiling"><a href="#profiling" class="headerlink" title="profiling"></a>profiling</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/24495603">cprofile</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/gaogaotiantian/viztracer">viztracer</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/nvdv/vprof">vprof</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/pyutils/line_profiler">line_profiler</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/pythonprofilers/memory_profiler/tree/master">memory_profiler</a><br><code>gprof2dot -f pstats mkm_run.prof | dot -Tpng -o mkm_run.png</code></li>
-<li>profile 库</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> profile</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>():</span><br><span class="line">    fps = profile.fps()</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        xxxxxxxxxxxxxxxxxxx</span><br><span class="line">        logging.info(<span class="string">&#x27;fps:&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(fps.compute()))</span><br></pre></td></tr></table></figure>
-
-<h2 id="Logging"><a href="#Logging" class="headerlink" title="Logging"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/360306588">Logging</a></h2><ol>
-<li>format 配置: &#96;’[%(asctime)s]</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/24/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" href="/page/26/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/24/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/26/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1207,7 +1172,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">168</span>
+          <span class="site-state-item-count">169</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1240,6 +1205,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/10/llama-cpp/" title="2024&#x2F;01&#x2F;10&#x2F;llama-cpp&#x2F;">llama.cpp</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/10/model-compression/" title="2024&#x2F;01&#x2F;10&#x2F;model-compression&#x2F;">model-compression</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1250,9 +1218,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/12/30/gpt/" title="2023&#x2F;12&#x2F;30&#x2F;gpt&#x2F;">gpt</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/12/26/jupyter/" title="2023&#x2F;12&#x2F;26&#x2F;jupyter&#x2F;">jupyter</a>
         </li>
     </ul>
   </div>
@@ -1290,13 +1255,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">415k</span>
+    <span title="站点总字数">420k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:18</span>
+    <span title="站点阅读时长">6:22</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">168</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">169</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,144 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/04/14/onnx-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/14/onnx-md/" class="post-title-link" itemprop="url">onnx</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-14 13:45:11" itemprop="dateCreated datePublished" datetime="2022-04-14T13:45:11+08:00">2022-04-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-05 12:16:24" itemprop="dateModified" datetime="2024-01-05T12:16:24+08:00">2024-01-05</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/04/14/onnx-md/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/04/14/onnx-md/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>onnx: 奥尼克死</li>
+<li>vscode 打开 onnx 文件，可以看出 op 生成所依赖的文件路径</li>
+<li>onnx 支持设置明确 batch size. By default, TensorFlow does not set an explicit batch size. <a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/tensorrt/archives/tensorrt-861/quick-start-guide/index.html#onnx-export">link</a></li>
+<li>why onnx?<br><img src="https://pic2.zhimg.com/80/v2-3214168ce95096026d2079623342317d_720w.webp" alt="onnx 流程"></li>
+<li>ONNX （Open Neural Network Exchange）</li>
+<li>ONNX 文件不仅仅存储了神经网络模型的权重，同时也存储了模型的结构信息以及网络中每一层的输入输出和一些其它的辅助信息。</li>
+<li>ONNX 使用的是 Protobuf 这个序列化数据结构去存储神经网络的权重信息。</li>
+<li>onnx 实现了一个 python 运行时，可用于评估 ONNX 模型和评估 ONNX 操作。目的是阐明 ONNX 的语义并帮助理解和调试 ONNX 工具和转换器。它无意用于生产，性能也不是目标</li>
+<li>ONNX 是强类型的，其定义不支持隐式强制转换。</li>
+</ol>
+<h2 id="tools"><a href="#tools" class="headerlink" title="tools"></a>tools</h2><h3 id="netron"><a href="#netron" class="headerlink" title="netron"></a>netron</h3><ol>
+<li>netron 查看 weights 需要点击+</li>
+<li>netron 点击 input 或 output 可以显示模型整体信息</li>
+<li>netron 左侧菜单栏可以点击 toggle names, weights, attributes</li>
+<li>Netron supports ONNX, TensorFlow Lite, Core ML, Keras, Caffe, Darknet, MXNet, PaddlePaddle, ncnn, MNN and TensorFlow.js. Netron has experimental support for PyTorch, TorchScript, TensorFlow, OpenVINO, RKNN, MediaPipe, ML.NET and scikit-learn.</li>
+</ol>
+<h3 id="PaddlePaddle-VisualDL"><a href="#PaddlePaddle-VisualDL" class="headerlink" title="PaddlePaddle&#x2F;VisualDL"></a><a target="_blank" rel="noopener" href="https://github.com/PaddlePaddle/VisualDL/tree/develop">PaddlePaddle&#x2F;VisualDL</a></h3><h3 id="zetane"><a href="#zetane" class="headerlink" title="zetane"></a><a target="_blank" rel="noopener" href="https://github.com/zetane/viewer">zetane</a></h3><ol>
+<li>can load onnx model and show intermediate results when the model is executed. 查看模型中间结果</li>
+</ol>
+<h3 id="onnx2py-py"><a href="#onnx2py-py" class="headerlink" title="onnx2py.py"></a><a target="_blank" rel="noopener" href="https://github.com/microsoft/onnxconverter-common/blob/master/onnxconverter_common/onnx2py.py">onnx2py.py</a></h3><ol>
+<li>creates a python file from an ONNX graph. This script can create the same graph. It may be modified by a user to change the graph.</li>
+</ol>
+<h3 id="onnx-tool-可以统计计算量，每层输出-shape"><a href="#onnx-tool-可以统计计算量，每层输出-shape" class="headerlink" title="onnx-tool 可以统计计算量，每层输出 shape"></a><a target="_blank" rel="noopener" href="https://github.com/ThanatosShinji/onnx-tool/blob/main/README_CN.md">onnx-tool 可以统计计算量，每层输出 shape</a></h3><ol>
+<li><code>python3 -m onnx_tool -m profile -i tensorrt/resnet50/model.onnx</code></li>
+</ol>
+<h3 id="pytorch-OpCounter"><a href="#pytorch-OpCounter" class="headerlink" title="pytorch-OpCounter"></a><a target="_blank" rel="noopener" href="https://github.com/Lyken17/pytorch-OpCounter">pytorch-OpCounter</a></h3><h3 id="polygraph"><a href="#polygraph" class="headerlink" title="polygraph"></a><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/tree/main/tools/Polygraphy/">polygraph</a></h3><ol>
+<li><code>polygraphy inspect model tensorrt/resnet50/model.onnx</code></li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://onnx.ai/onnx/intro/concepts.html">官方介绍</a></li>
+<li><a target="_blank" rel="noopener" href="https://netron.app/">netron.app</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/346511883">onnx 介绍</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/onnx/models">onnx&#x2F;models</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/onnx/onnx/blob/main/docs/Operators.md">Operators</a></li>
+<li><a target="_blank" rel="noopener" href="https://onnx.ai/onnx/operators/index.html">ops 变化</a></li>
+<li><a target="_blank" rel="noopener" href="https://onnx.ai/supported-tools.html#deployModel">支持 onnx 的训练和推理框架</a></li>
+</ol>
+<h2 id="model-conver5"><a href="#model-conver5" class="headerlink" title="model conver5"></a>model conver5</h2><h3 id="pytorch"><a href="#pytorch" class="headerlink" title="pytorch"></a>pytorch</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/r/pytorch/pytorch">pytorch docker</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/advanced/super_resolution_with_onnxruntime.html">(OPTIONAL) EXPORTING A MODEL FROM PYTORCH TO ONNX AND RUNNING IT USING ONNX RUNTIME</a></li>
+<li>需要!pip install onnx onnxruntime Pillow</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import torchvision.models as models</span><br><span class="line">model = models.resnet50(pretrained=True)</span><br><span class="line">    <span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">        model.cuda()</span><br><span class="line">torch.onnx.export(......)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -902,136 +1040,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/03/31/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E4%B8%93%E4%B8%9A%E6%9C%AF%E8%AF%AD/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/31/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E4%B8%93%E4%B8%9A%E6%9C%AF%E8%AF%AD/" class="post-title-link" itemprop="url">自动驾驶专业术语</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-03-31 02:24:23" itemprop="dateCreated datePublished" datetime="2022-03-31T02:24:23+08:00">2022-03-31</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/03/31/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E4%B8%93%E4%B8%9A%E6%9C%AF%E8%AF%AD/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/03/31/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E4%B8%93%E4%B8%9A%E6%9C%AF%E8%AF%AD/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>905</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="缩写"><a href="#缩写" class="headerlink" title="缩写"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/LEON1741/article/details/89510034">缩写</a></h2><ol>
-<li><code>OTA</code>: over the air</li>
-<li><code>FCW</code>: forward collision warning 前车碰撞预警</li>
-<li><code>TTC</code>: time to collision 碰撞时间</li>
-<li><code>NVS</code>: Night Vision System 夜视系统</li>
-<li><code>NOA</code> “自动辅助导航驾驶（Navigate on Autopilot）”的中文翻译也有人叫“按导航辅助驾驶”或“领航辅助功能”，本质意思是，把“导航”和“辅助驾驶”结合。在原来 L2 辅助驾驶的基础上（如车道线保持、自动跟车），加上车机的导航信息（如百度地图），自动变道，实现从 A 点到 B 点的自动驾驶。</li>
-<li><code>OEM</code> 又称主机厂，OEM 是英文 Original equipment manufacturer 的缩写。</li>
-<li><code>DCU</code> (Domain Control Unit）域控制器</li>
-<li><code>ECU</code>（Electronic Control Unit）电子控制单元</li>
-<li><code>V2X</code>（Vehicle to everything）</li>
-<li><code>TSN</code>（Time-Sensitive Network）</li>
-<li><code>AUTOSAR</code>（AUTomotive Open System Architecture）</li>
-<li><code>EEA</code> (Electrical&#x2F;Electronic Architecture) 电子电气架构</li>
-<li><code>SOME/IP</code> Scalable service-Oriented Middleware over IP。即“运行于 IP 之上的可伸缩的面向服务的中间件”</li>
-<li><code>AUTOSAR</code> (AUTomotive Open System ARchitecture)</li>
-<li><code>DDS</code> (Data Distribution Service,数据分发服务)</li>
-<li><code>RTPS</code> (Real-Time Publish Subscribe)</li>
-<li><code>FOV</code> (field of view) 视场; 在光学仪器或传感器的情况下，视场是检测器对电磁辐射敏感的立体角 <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_33358099/article/details/112102463?spm=1001.2101.3001.6650.6&utm_medium=distribut">link</a></li>
-</ol>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ol>
-<li>标定：</li>
-</ol>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://pdf.dfcfw.com/pdf/H3_AP202202221548462770_1.pdf?1645518929000.pdf">汽车软件研报</a></li>
-<li><a target="_blank" rel="noopener" href="https://www-file.huawei.com/-/media/corporate/pdf/news/intelligent-driving-computing-platform-whitepaper-new.pdf?la=zh">华为 MDC 智能驾驶计算平台白皮书</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/261291971">软件定义汽车（2）-软件中间件（Autosar 为例）</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/561699068">国内主机整车 EEA 架构汇总</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/460683077">深度分析汽车芯片的现状与发展（一）汽车电子电气架构的变革</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/461714692">深度分析汽车芯片的现状与发展（二）域控制器时代</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/462675111">深度分析汽车芯片的现状与发展（三）ADAS&#x2F;AD 域控制器及芯片平台分析</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/464930132">深度分析汽车芯片的现状与发展（四）整车控制域</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1099,7 +1111,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">168</span>
+          <span class="site-state-item-count">169</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1132,6 +1144,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/10/llama-cpp/" title="2024&#x2F;01&#x2F;10&#x2F;llama-cpp&#x2F;">llama.cpp</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/10/model-compression/" title="2024&#x2F;01&#x2F;10&#x2F;model-compression&#x2F;">model-compression</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1142,9 +1157,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/12/30/gpt/" title="2023&#x2F;12&#x2F;30&#x2F;gpt&#x2F;">gpt</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/12/26/jupyter/" title="2023&#x2F;12&#x2F;26&#x2F;jupyter&#x2F;">jupyter</a>
         </li>
     </ul>
   </div>
@@ -1182,13 +1194,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">415k</span>
+    <span title="站点总字数">420k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:18</span>
+    <span title="站点阅读时长">6:22</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
