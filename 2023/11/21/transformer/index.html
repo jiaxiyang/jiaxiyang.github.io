@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://i.ibb.co/r2c3DLY/p5h-Alp-Fh-TT.png">
 <meta property="og:image" content="https://i.ibb.co/88sYM2f/Cnc1i7-G0qy.png">
 <meta property="article:published_time" content="2023-11-21T09:20:45.000Z">
-<meta property="article:modified_time" content="2024-01-08T09:49:58.889Z">
+<meta property="article:modified_time" content="2024-01-09T08:12:29.978Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.ibb.co/XCJ85TL/p3k-B45-Mhaj.png">
@@ -236,7 +236,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-08 17:49:58" itemprop="dateModified" datetime="2024-01-08T17:49:58+08:00">2024-01-08</time>
+                <time title="修改时间：2024-01-09 16:12:29" itemprop="dateModified" datetime="2024-01-09T16:12:29+08:00">2024-01-09</time>
               </span>
 
           
@@ -266,14 +266,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7.7k</span>
+              <span>11k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
+              <span>10 分钟</span>
             </span>
 
         </div>
@@ -361,6 +361,7 @@
 <li>只要有输出不一样， 每一层的 kv cache 也不同， 会传递</li>
 </ul>
 </li>
+<li>encoder 也要存多有</li>
 </ol>
 <h4 id="变长矩阵乘"><a href="#变长矩阵乘" class="headerlink" title="变长矩阵乘"></a>变长矩阵乘</h4><ol>
 <li>预先申请长为 n 的 kv cache 内存, 使用 for 循环或变长矩阵乘计算 attention，<ul>
@@ -396,6 +397,34 @@
 </ul>
 </li>
 </ol>
+<h2 id="encoder-only-推理过程"><a href="#encoder-only-推理过程" class="headerlink" title="encoder only 推理过程"></a>encoder only 推理过程</h2><ol>
+<li>在 encoder-only 模型中的推理过程与 decoder-only 模型有所不同。encoder-only 模型，如 BERT，通常用于理解、分析或分类文本，而不是像 decoder-only 模型那样用于生成文本。以下是 encoder-only 模型的典型推理过程</li>
+<li><code>输入处理</code>：<ul>
+<li><code>完整的输入</code>：与 decoder-only 模型不同，encoder-only 模型在推理时接收完整的输入序列，如一个句子或段落。这个输入通常包括特殊的标记，如开始（BOS）和结束（EOS）标记。</li>
+<li><code>预处理</code>：输入文本经过标记化（tokenization），转换成模型能够理解的标记序列。</li>
+</ul>
+</li>
+<li><code>通过Encoder层传递</code>：<ul>
+<li><code>编码</code>：整个输入序列被送入模型的多个 encoder 层。在每一层中，通过自注意力机制和前馈神经网络，模型学习到输入中每个标记的上下文表示。</li>
+<li><code>自注意力计算</code>：在自注意力阶段，每个标记都考虑到序列中所有其他标记的信息，以捕捉内部的上下文关系。</li>
+</ul>
+</li>
+<li><code>输出提取</code>：<ul>
+<li><code>特定任务的输出</code>：根据任务的不同，模型的输出被相应地处理。例如，对于分类任务，模型可能只使用特定标记（如[CLS]）的最终隐藏状态；对于命名实体识别或问答任务，模型可能输出每个标记的特征表示。</li>
+</ul>
+</li>
+<li><code>后处理</code>：<ul>
+<li><code>映射到任务</code>：模型输出被映射到具体任务的要求上，如将隐藏状态映射到类别标签或其他输出格式。</li>
+<li><code>生成最终结果</code>：模型的输出经过适当的后处理步骤（如 softmax 层，用于分类任务），以生成最终的推理结果。</li>
+</ul>
+</li>
+<li>推理特点<ul>
+<li><code>不生成文本</code>：encoder-only 模型通常不用于生成文本，而是用于理解或分类输入文本。</li>
+<li><code>全局上下文</code>：模型在处理输入时同时考虑所有标记的上下文，与 decoder-only 模型逐步生成的方式不同。</li>
+<li><code>特定任务适用</code>：这类模型通常针对特定的 NLP 任务进行训练和优化，如情感分析、文本分类、实体识别等。</li>
+</ul>
+</li>
+</ol>
 <h2 id="关键操作"><a href="#关键操作" class="headerlink" title="关键操作"></a>关键操作</h2><ol>
 <li>multi head attention</li>
 <li>feed forward</li>
@@ -405,13 +434,24 @@
 <li>concat</li>
 <li>linear(生成 q, k, v) Q, K, V</li>
 </ol>
-<h2 id="参数、计算和-cache-统计"><a href="#参数、计算和-cache-统计" class="headerlink" title="参数、计算和 cache 统计"></a>参数、计算和 cache 统计</h2><ol>
+<h2 id="参数、计算复杂度和-cache-统计"><a href="#参数、计算复杂度和-cache-统计" class="headerlink" title="参数、计算复杂度和 cache 统计"></a>参数、计算复杂度和 cache 统计</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://epochai.org/mlinputs/visualization?yAxis=Parameters">Model Size of Notable Machine Learning Systems Over Time</a> 可交互, 右上角 option 可搜索，可直接到论文</li>
 <li><a target="_blank" rel="noopener" href="https://kipp.ly/transformer-inference-arithmetic/">transformer-inference-arithmetic</a></li>
+</ol>
+<h3 id="transformer-all-you-need-is-attention"><a href="#transformer-all-you-need-is-attention" class="headerlink" title="transformer(all you need is attention)"></a>transformer(all you need is attention)</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/harvardnlp/annotated-transformer">harvardnlp&#x2F;annotated-transformer</a></li>
+<li>注意：模型结构定义并不决定 forward 流程，可以有多个函数，使用网络中不同的部分</li>
+<li>base model info: embeding 参数可能会共享</li>
+</ol>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line">EncoderDecoder(</span><br><span class="line">  (encoder): Encoder(</span><br><span class="line">    (layers): ModuleList(</span><br><span class="line">      (0-5): EncoderLayer(</span><br><span class="line">        (self_attn): MultiHeadedAttention(</span><br><span class="line">          (linears): ModuleList(</span><br><span class="line">            (0): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (1): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (2): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (3): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">          )</span><br><span class="line">          (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">        )</span><br><span class="line">        (feed_forward): PositionwiseFeedForward(</span><br><span class="line">          (w_1): Linear(in_features=512, out_features=2048, bias=True)</span><br><span class="line">          (w_2): Linear(in_features=2048, out_features=512, bias=True)</span><br><span class="line">          (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">        )</span><br><span class="line">        (sublayer): ModuleList(</span><br><span class="line">          (0): SublayerConnection(</span><br><span class="line">            (norm): LayerNorm()</span><br><span class="line">            (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">          )</span><br><span class="line">          (1): SublayerConnection(</span><br><span class="line">            (norm): LayerNorm()</span><br><span class="line">            (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">          )</span><br><span class="line">        )</span><br><span class="line">      )</span><br><span class="line">    (norm): LayerNorm()</span><br><span class="line">  )</span><br><span class="line">  (decoder): Decoder(</span><br><span class="line">    (layers): ModuleList(</span><br><span class="line">      (0-5): DecoderLayer(</span><br><span class="line">        (self_attn): MultiHeadedAttention(</span><br><span class="line">          (linears): ModuleList(</span><br><span class="line">            (0): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (1): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (2): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (3): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">          )</span><br><span class="line">          (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">        )</span><br><span class="line">        (src_attn): MultiHeadedAttention(</span><br><span class="line">          (linears): ModuleList(</span><br><span class="line">            (0): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (1): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (2): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (3): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">          )</span><br><span class="line">          (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">        )</span><br><span class="line">        (feed_forward): PositionwiseFeedForward(</span><br><span class="line">          (w_1): Linear(in_features=512, out_features=2048, bias=True)</span><br><span class="line">          (w_2): Linear(in_features=2048, out_features=512, bias=True)</span><br><span class="line">          (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">        )</span><br><span class="line">        (sublayer): ModuleList(</span><br><span class="line">          (0): SublayerConnection(</span><br><span class="line">            (norm): LayerNorm()</span><br><span class="line">            (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">          )</span><br><span class="line">          (1): SublayerConnection(</span><br><span class="line">            (norm): LayerNorm()</span><br><span class="line">            (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">          )</span><br><span class="line">          (2): SublayerConnection(</span><br><span class="line">            (norm): LayerNorm()</span><br><span class="line">            (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">          )</span><br><span class="line">        )</span><br><span class="line">      )</span><br><span class="line">    (norm): LayerNorm()</span><br><span class="line">  )</span><br><span class="line">  (src_embed): Sequential(</span><br><span class="line">    (0): Embeddings(</span><br><span class="line">      (lut): Embedding(32000, 512)</span><br><span class="line">    )</span><br><span class="line">    (1): PositionalEncoding(</span><br><span class="line">      (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line">  (tgt_embed): Sequential(</span><br><span class="line">    (0): Embeddings(</span><br><span class="line">      (lut): Embedding(32000, 512)</span><br><span class="line">    )</span><br><span class="line">    (1): PositionalEncoding(</span><br><span class="line">      (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line">  (generator): Generator(</span><br><span class="line">    (proj): Linear(in_features=512, out_features=32000, bias=True)</span><br><span class="line">  )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>参数总量：65M,论文中有提及</li>
 </ol>
 <h3 id="llama2-7b"><a href="#llama2-7b" class="headerlink" title="llama2-7b"></a><a target="_blank" rel="noopener" href="https://huggingface.co/meta-llama/Llama-2-7b-hf/blob/main/config.json">llama2-7b</a></h3><ol>
 <li>model info</li>
 </ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">LlamaForCausalLM(</span><br><span class="line">  (model): LlamaModel(</span><br><span class="line">    (embed_tokens): Embedding(32000, 4096, padding_idx=0)</span><br><span class="line">    (layers): ModuleList(</span><br><span class="line">      (0-31): 32 x LlamaDecoderLayer(</span><br><span class="line">        (self_attn): LlamaAttention(</span><br><span class="line">          (q_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (k_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (v_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (o_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (rotary_emb): LlamaRotaryEmbedding()</span><br><span class="line">        )</span><br><span class="line">        (mlp): LlamaMLP(</span><br><span class="line">          (gate_proj): Linear(in_features=4096, out_features=11008, bias=False) <span class="comment"># 输入是 in_features, 输出为 out_features, 矩阵参数shape为（out_features, in_features); 因为矩阵乘法：(out_features, in_features)(in_features, 1) = (out_features, 1)</span></span><br><span class="line">          (up_proj): Linear(in_features=4096, out_features=11008, bias=False)</span><br><span class="line">          (down_proj): Linear(in_features=11008, out_features=4096, bias=False)</span><br><span class="line">          (act_fn): SiLUActivation()</span><br><span class="line">        )</span><br><span class="line">        (input_layernorm): LlamaRMSNorm()</span><br><span class="line">        (post_attention_layernorm): LlamaRMSNorm()</span><br><span class="line">      )</span><br><span class="line">    )</span><br><span class="line">    (norm): LlamaRMSNorm()</span><br><span class="line">  )</span><br><span class="line">  (lm_head): Linear(in_features=4096, out_features=32000, bias=False)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">LlamaForCausalLM(</span><br><span class="line">  (model): LlamaModel(</span><br><span class="line">    (embed_tokens): Embedding(32000, 4096, padding_idx=0)</span><br><span class="line">    (layers): ModuleList(</span><br><span class="line">      (0-31): 32 x LlamaDecoderLayer(</span><br><span class="line">        (self_attn): LlamaAttention(</span><br><span class="line">          (q_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (k_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (v_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (o_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (rotary_emb): LlamaRotaryEmbedding()</span><br><span class="line">        )</span><br><span class="line">        (mlp): LlamaMLP(</span><br><span class="line">          (gate_proj): Linear(in_features=4096, out_features=11008, bias=False) # 输入是 in_features, 输出为 out_features, 矩阵参数shape为（out_features, in_features); 因为矩阵乘法：(out_features, in_features)(in_features, 1) = (out_features, 1)</span><br><span class="line">          (up_proj): Linear(in_features=4096, out_features=11008, bias=False)</span><br><span class="line">          (down_proj): Linear(in_features=11008, out_features=4096, bias=False)</span><br><span class="line">          (act_fn): SiLUActivation()</span><br><span class="line">        )</span><br><span class="line">        (input_layernorm): LlamaRMSNorm()</span><br><span class="line">        (post_attention_layernorm): LlamaRMSNorm()</span><br><span class="line">      )</span><br><span class="line">    )</span><br><span class="line">    (norm): LlamaRMSNorm()</span><br><span class="line">  )</span><br><span class="line">  (lm_head): Linear(in_features=4096, out_features=32000, bias=False)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 
 <ol>
 <li><p>参数: 见 pytorch params 计算，<a target="_blank" rel="noopener" href="https://medium.com/@saratbhargava/mastering-llama-math-part-1-a-step-by-step-guide-to-counting-parameters-in-llama-2-b3d73bc3ae31">link</a></p>
@@ -575,7 +615,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attention-%E7%A7%8D%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">attention 种类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kv-cache"><span class="nav-number">3.</span> <span class="nav-text">kv cache</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%98%E9%95%BF%E7%9F%A9%E9%98%B5%E4%B9%98"><span class="nav-number">3.0.1.</span> <span class="nav-text">变长矩阵乘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E9%95%BF%E7%9F%A9%E9%98%B5%E4%B9%98"><span class="nav-number">3.0.2.</span> <span class="nav-text">定长矩阵乘</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#decode-only-%E6%8E%A8%E7%90%86%E8%BF%87%E7%A8%8B-prompt%EF%BC%88%E2%80%9Chow-are-you%E2%80%9D%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">decode only 推理过程: prompt（“how are you”）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%93%8D%E4%BD%9C"><span class="nav-number">5.</span> <span class="nav-text">关键操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E3%80%81%E8%AE%A1%E7%AE%97%E5%92%8C-cache-%E7%BB%9F%E8%AE%A1"><span class="nav-number">6.</span> <span class="nav-text">参数、计算和 cache 统计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#llama2-7b"><span class="nav-number">6.1.</span> <span class="nav-text">llama2-7b</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hugging-face-transformers"><span class="nav-number">7.</span> <span class="nav-text">hugging face transformers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">8.</span> <span class="nav-text">links</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E5%AE%8F%E6%AF%85"><span class="nav-number">8.1.</span> <span class="nav-text">李宏毅</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attention-%E7%A7%8D%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">attention 种类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kv-cache"><span class="nav-number">3.</span> <span class="nav-text">kv cache</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%98%E9%95%BF%E7%9F%A9%E9%98%B5%E4%B9%98"><span class="nav-number">3.0.1.</span> <span class="nav-text">变长矩阵乘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E9%95%BF%E7%9F%A9%E9%98%B5%E4%B9%98"><span class="nav-number">3.0.2.</span> <span class="nav-text">定长矩阵乘</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#decode-only-%E6%8E%A8%E7%90%86%E8%BF%87%E7%A8%8B-prompt%EF%BC%88%E2%80%9Chow-are-you%E2%80%9D%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">decode only 推理过程: prompt（“how are you”）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#encoder-only-%E6%8E%A8%E7%90%86%E8%BF%87%E7%A8%8B"><span class="nav-number">5.</span> <span class="nav-text">encoder only 推理过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%93%8D%E4%BD%9C"><span class="nav-number">6.</span> <span class="nav-text">关键操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E3%80%81%E8%AE%A1%E7%AE%97%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%92%8C-cache-%E7%BB%9F%E8%AE%A1"><span class="nav-number">7.</span> <span class="nav-text">参数、计算复杂度和 cache 统计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#transformer-all-you-need-is-attention"><span class="nav-number">7.1.</span> <span class="nav-text">transformer(all you need is attention)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#llama2-7b"><span class="nav-number">7.2.</span> <span class="nav-text">llama2-7b</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hugging-face-transformers"><span class="nav-number">8.</span> <span class="nav-text">hugging face transformers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">9.</span> <span class="nav-text">links</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E5%AE%8F%E6%AF%85"><span class="nav-number">9.1.</span> <span class="nav-text">李宏毅</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -674,13 +714,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">410k</span>
+    <span title="站点总字数">415k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:13</span>
+    <span title="站点阅读时长">6:17</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
