@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">167</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">168</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,151 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/01/11/Redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/11/Redis/" class="post-title-link" itemprop="url">Redis</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-11 21:27:34" itemprop="dateCreated datePublished" datetime="2021-01-11T21:27:34+08:00">2021-01-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/01/11/Redis/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/11/Redis/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="锁设计原则"><a href="#锁设计原则" class="headerlink" title="锁设计原则"></a>锁设计原则</h2><ol>
+<li>所有操作都可分为增删改查，改可用删除和增加来实现，但改更快并且具有原子性。</li>
+<li>只有获得锁才能对锁进行删和改。</li>
+<li>注意区分又状态和无状态。凡是涉及到有状态的API(lock, unlock)要特别小心。要与无状态API(圆的面积)模块区分开。</li>
+<li>系统状态尽可能的少，太多状态容易出问题。</li>
+</ol>
+<h2 id="基于Redis的分布式锁"><a href="#基于Redis的分布式锁" class="headerlink" title="基于Redis的分布式锁"></a>基于Redis的分布式锁</h2><ol>
+<li>Redis Lua脚本具有原子性</li>
+</ol>
+<h3 id="实现思想："><a href="#实现思想：" class="headerlink" title="实现思想："></a>实现思想：</h3><ol>
+<li>获取锁的时候，使用setnx加锁，并使用expire命令为锁添加一个超时时间，超过该时间则自动释放锁，锁的value值为一个随机生成的UUID，通过此在释放锁的时候进行判断。</li>
+<li>获取锁的时候还设置一个获取的超时时间，若超过这个时间则放弃获取锁。</li>
+<li>释放锁的时候，通过UUID判断是不是该锁，若是该锁，则执行delete进行锁释放。</li>
+</ol>
+<h3 id="超时后又多个程序获得锁解决方法"><a href="#超时后又多个程序获得锁解决方法" class="headerlink" title="超时后又多个程序获得锁解决方法"></a>超时后又多个程序获得锁解决方法</h3><ol>
+<li>将过期时间设置足够长，确保代码逻辑在锁释放之前能够执行完成</li>
+<li><code>为获取锁的线程增加守护线程，为将要过期但未释放的锁增加有效时间</code></li>
+</ol>
+<h3 id="使用守护线程特点"><a href="#使用守护线程特点" class="headerlink" title="使用守护线程特点"></a><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000022935064">使用守护线程特点</a></h3><ol>
+<li><code>一定要用SET key value NX PX milliseconds 命令</code>:如果不用，先设置了值，再设置过期时间，这个不是原子性操作，有可能在设置过期时间之前宕机，会造成死锁(key永久存在)</li>
+<li><code>value要具有唯一性</code>:这个是为了在解锁的时候，需要验证value是和加锁的一致才删除key。这是避免了一种情况：假设A获取了锁，过期时间30s，此时35s之后，锁已经自动释放了，A去释放锁，但是此时可能B获取了锁。A客户端就不能删除B的锁了。</li>
+</ol>
+<h2 id="Redis-server"><a href="#Redis-server" class="headerlink" title="Redis server"></a>Redis server</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/redis/redis.git</span><br><span class="line">cd redis &amp;&amp; make</span><br><span class="line">cd src</span><br><span class="line">./redis-server</span><br></pre></td></tr></table></figure>
+
+<h2 id="Redis-client"><a href="#Redis-client" class="headerlink" title="Redis client"></a>Redis client</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">./redis-cli</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># cmd</span></span></span><br><span class="line">set foo bar</span><br><span class="line">get foo</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># change dump.rdb path</span></span></span><br><span class="line">config set dir /home/xxx</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">save data to dump.rdb</span></span><br><span class="line">save</span><br></pre></td></tr></table></figure>
+
+<h2 id="hiredis-just-a-C-client-not-include-server"><a href="#hiredis-just-a-C-client-not-include-server" class="headerlink" title="hiredis (just a C client; not include server)"></a>hiredis (just a C client; not include server)</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/redis/hiredis.git</span><br><span class="line">cd hiredis</span><br><span class="line">mkdir build; cd build; cmake ..; make;</span><br><span class="line">sudo make install</span><br><span class="line">./hiredis-test</span><br><span class="line"></span><br><span class="line">## NOTE: sample are easier than hiredis-test</span><br></pre></td></tr></table></figure>
+
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://bbs.huaweicloud.com/blogs/209955">redis lock华为漫画</a></li>
+<li><a target="_blank" rel="noopener" href="https://bbs.huaweicloud.com/blogs/209954">Zookeeper 华为漫画</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/xlgen157387/article/details/79036337">redis实现分布式锁</a></li>
+<li><a target="_blank" rel="noopener" href="https://xiaomi-info.github.io/2019/12/17/redis-distributed-lock/">小米解决方案</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903830442737671">redis分布式锁</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/yuhanfang/redislock">redislock C++ sample</a></li>
+<li><a target="_blank" rel="noopener" href="https://redis.io/commands/set">Redis set command(note: NX)</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/redisson/redisson">Redisson</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1758,137 +1903,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/07/27/Cpp-to-c-interface/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/27/Cpp-to-c-interface/" class="post-title-link" itemprop="url">Cpp to c interface</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-27 22:43:02" itemprop="dateCreated datePublished" datetime="2020-07-27T22:43:02+08:00">2020-07-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/07/27/Cpp-to-c-interface/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/27/Cpp-to-c-interface/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>如果给 c++程序 dlopen 用，只需要 create 和 release 接口，c++程序可以拿到 C++头文件定义，可以将 create 指针强转成类对象，用完之后调用 free。</li>
-<li>shared_ptr 两种解决方法(堆上手动管理智能指针，栈由系统自动管理)<ul>
-<li>struct 存 graph</li>
-<li>创建 shared_ptr 的指针，指针不释放 (已经创建栈上的 shared_ptr,没法调用 new)</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/jiaxiyang/cpp_sandbox/tree/master/cpp2c">自建 sample</a></li>
-</ul>
-</li>
-</ol>
-<h3 id="extern-“C”-作用"><a href="#extern-“C”-作用" class="headerlink" title="extern “C” 作用"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiangtingshen/p/10980055.html">extern “C” 作用</a></h3><ol>
-<li>extern “C”的主要作用就是为了能够正确实现 C++代码调用其他 C 语言代码。加上 extern “C”后，会指示编译器这部分代码按 C 语言（而不是 C++）的方式进行编译。由于 C++支持函数重载，因此编译器编译函数的过程中会将函数的参数类型也加到编译后的代码中，而不仅仅是函数名；而 C 语言并不支持函数重载，因此编译 C 语言代码的函数时不会带上函数的参数类型，一般只包括函数名。</li>
-<li><code>extern &quot;C&quot; &#123;&#125;</code> 作用是阻止 C++ name mangling, 生成 C 格式符号表</li>
-</ol>
-<h2 id="method-hpp"><a href="#method-hpp" class="headerlink" title="method.hpp"></a>method.hpp</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line">Class Method &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> std::unique_ptr&lt;Method&gt; <span class="title">create</span><span class="params">(std::string name)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">const</span> std::string <span class="title">get_name</span><span class="params">()</span> <span class="type">const</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="method-imp-hpp"><a href="#method-imp-hpp" class="headerlink" title="method_imp.hpp"></a>method_imp.hpp</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;method.hpp&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line">Class MethodImp : <span class="keyword">public</span> Method &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MethodImp</span>(std::string name);</span><br><span class="line">    <span class="function"><span class="type">const</span> std::string <span class="title">get_name</span><span class="params">()</span> <span class="type">const</span> <span class="keyword">override</span></span>;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> name_;</span><br><span class="line">    <span class="type">int</span> value_;</span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> <span class="title class_">c_api</span>;  <span class="comment">// the purpose is to get the private member which can not get from the public interface</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="method-cpp"><a href="#method-cpp" class="headerlink" title="method.cpp"></a>method.cpp</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;method.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;method_imp.hpp&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line"></span><br><span class="line"><span class="function">std::unique_ptr&lt;Method&gt; <span class="title">Method::create</span><span class="params">(std::string name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> std::unique_ptr&lt;Method&gt;&#123;<span class="built_in">static_cast</span>&lt;Method*&gt;(<span class="keyword">new</span> Method&#123;name&#125;)&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="method-imp-cpp"><a href="#method-imp-cpp" class="headerlink" title="method_imp.cpp"></a>method_imp.cpp</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;method_imp.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;c.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line"></span><br><span class="line">MethodImp::<span class="built_in">MethodImp</span>(std::string name)</span><br><span class="line">    : name_&#123;name&#125;,</span><br><span class="line">      value_&#123;<span class="number">1</span>&#125;&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">const</span> std::string <span class="title">MethodImp::get_name</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> name_;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;  <span class="comment">// namespace jia</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* C API implementations */</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;c.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">c_api</span> &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">int</span> <span class="title">get_value</span><span class="params">(<span class="type">c_method_t</span> method)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> self = <span class="built_in">static_cast</span>&lt;jia::Method*&gt;(method);</span><br><span class="line">        <span class="keyword">return</span> self-&gt;value_;  <span class="comment">// to get value_; c_api need to be friend class of MethodImp</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">c_method_t</span> <span class="title">c_create</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> m = jia::Method::<span class="built_in">create</span>(std::<span class="built_in">string</span>(name));</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">static_cast</span>&lt;<span class="type">c_method_t</span>&gt;(m.<span class="built_in">realse</span>());  <span class="comment">// release will move unique_ptr ownership</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">int</span> <span class="title">c_destroyed</span><span class="params">(<span class="type">c_method_t</span> method)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> m = <span class="built_in">static_cast</span>&lt;jia::Method*&gt;(method);</span><br><span class="line">    <span class="keyword">delete</span> m;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">const</span> <span class="type">char</span>* <span class="title">c_get_name</span><span class="params">(<span class="type">c_method_t</span> method)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> self = <span class="built_in">static_cast</span>&lt;jia::Method*&gt;(method);</span><br><span class="line">    <span class="keyword">return</span> self-&gt;<span class="built_in">get_name</span>().<span class="built_in">cstr</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">int</span> <span class="title">c_get_value</span><span class="params">(<span class="type">c_method_t</span> method)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> jia::c_api::<span class="built_in">get_value</span>(method);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="c-h"><a href="#c-h" class="headerlink" title="c.h"></a>c.h</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus  <span class="comment">// c++ will use and c not use</span></span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> &#123;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">void</span>* <span class="type">c_method_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">c_method_t</span> <span class="title">c_create</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* name)</span></span>;  <span class="comment">// create an instance</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">c_destroyed</span><span class="params">(<span class="type">c_method_t</span>)</span></span>;            <span class="comment">// destroy the instance</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">const</span> <span class="type">char</span>* <span class="title">c_get_name</span><span class="params">(<span class="type">c_method_t</span> method)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">c_get_value</span><span class="params">(<span class="type">c_method_t</span> method)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-
-<h2 id="test-c"><a href="#test-c" class="headerlink" title="test.c"></a>test.c</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;c.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">c_method_t</span> m = <span class="built_in">c_create</span>(<span class="string">&quot;c_test&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;name:  %s&quot;</span>, m-&gt;<span class="built_in">c_get_name</span>());</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;value: %d&quot;</span>, m-&gt;<span class="built_in">get_value</span>());</span><br><span class="line">    <span class="built_in">c_destroyed</span>(m);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1960,7 +1974,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">167</span>
+          <span class="site-state-item-count">168</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1993,6 +2007,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/10/model-compression/" title="2024&#x2F;01&#x2F;10&#x2F;model-compression&#x2F;">model-compression</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/04/huggingface/" title="2024&#x2F;01&#x2F;04&#x2F;huggingface&#x2F;">huggingface</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -2003,9 +2020,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/12/26/jupyter/" title="2023&#x2F;12&#x2F;26&#x2F;jupyter&#x2F;">jupyter</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/12/24/llama2-c/" title="2023&#x2F;12&#x2F;24&#x2F;llama2-c&#x2F;">llama2</a>
         </li>
     </ul>
   </div>
@@ -2049,7 +2063,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:17</span>
+    <span title="站点阅读时长">6:18</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

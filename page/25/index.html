@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">167</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">168</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,186 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/02/02/Docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/02/Docker/" class="post-title-link" itemprop="url">Docker</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-02 18:29:14" itemprop="dateCreated datePublished" datetime="2021-02-02T18:29:14+08:00">2021-02-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-02 22:40:16" itemprop="dateModified" datetime="2024-01-02T22:40:16+08:00">2024-01-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/02/02/Docker/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/02/02/Docker/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="NOTES"><a href="#NOTES" class="headerlink" title="NOTES"></a>NOTES</h2><ol>
+<li>dockerhub 下载 images 到磁盘, 传到服务器: docker pull and docker save</li>
+<li>wsl2 中设置<code>--net=host</code>会影响 docker port 设置</li>
+<li><code>docker image prune -a</code> 清理任何为用的的 image</li>
+<li><a target="_blank" rel="noopener" href="http://www.debugself.com/2018/01/17/docker_network/">docker build 以及 docker run 时使用 host 网络的方法</a></li>
+<li>docker 开发使用： docker image(路径无关) + docker.sh(路径相关)</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apache/tvm/blob/main/docker/bash.sh">tvm docker 启动 bash</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-containers">windwos wsl2 + docker 开发</a> docker desktop 需要启动</li>
+<li><code>docker attach CONTAINER</code></li>
+<li><code>docker info</code> 查看 docker 信息</li>
+<li><code>docker stats</code> 可以看哪个 container 占用率高</li>
+<li><code>sudo usermod -aG docker $USER</code> 将当前用户加入到 docker 组中，否则必须使用 sudo 来运行 docker</li>
+<li><code>--user root --gpus all</code> 使用 gpu</li>
+<li><code>--privileged</code> 使用 systemctl</li>
+<li><code>docker save -o fedora-all.tar fedora</code> 保存镜像到磁盘；container 需要先 commit 才能保存到磁盘</li>
+<li><code>docker commit my-container my-image</code> 保存 container 为镜像</li>
+<li><code>docker load --input fedora.tar</code> or <code>docker load &lt; busybox.tar.gz</code></li>
+<li><code>docker login --username=xiyang.jia hub.xxx.io</code> 登录后才能 push</li>
+<li><code>docker commit efb954281fd3 j5-dsp-xiyang-dev:v1</code></li>
+<li><code>docker tag [ImageId] hub.xx.io/avp/[ImageName]:[镜像版本号]</code></li>
+<li><code>docker push docker.io/my-username/my-image:v1.0.0</code></li>
+<li><code>docker docker image rm eb3f9d403e36</code> 删除 image</li>
+</ol>
+<h2 id="docker-container-install-ssh-server"><a href="#docker-container-install-ssh-server" class="headerlink" title="docker container install ssh server"></a>docker container install ssh server</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install -y openssh-server</span><br><span class="line">/etc/init.d/ssh start</span><br><span class="line"><span class="comment"># vi /etc/ssh/sshd_config</span></span><br><span class="line"><span class="comment"># 设置 PermitRootLogin yes和 PasswordAuthentication yes</span></span><br><span class="line">/etc/init.d/ssh restart</span><br><span class="line">passwd <span class="comment"># 设置密码</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="usefull-docker"><a href="#usefull-docker" class="headerlink" title="usefull docker"></a>usefull docker</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/_/gcc">gcc</a></li>
+</ol>
+<h2 id="Command"><a href="#Command" class="headerlink" title="Command"></a>Command</h2><ol>
+<li><p><img src="https://user-gold-cdn.xitu.io/2019/4/9/16a02cdbf14142a0?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="一图胜千言"></p>
+</li>
+<li></li>
+</ol>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="language-bash"> -<span class="built_in">id</span> --name gcc.xiyang -v /data0/users/teams/software/heterogeneous/xiyang.jia/:/data0/users/xiyang.jia -w /data0/users/xiyang.jia/d/working -p 10099:22 -v /etc/localtime:/etc/localtime gcc</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li></li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">% docker pull openexplorer/ai_toolchain_centos_7:v1.12.5</span><br><span class="line">% docker run -<span class="built_in">id</span> \</span><br><span class="line">    --name openexplorer.xiyang \</span><br><span class="line">    -v /data0/users/xiyang.jia:/data0/users/xiyang.jia \</span><br><span class="line">    -w /data0/users/xiyang.jia/d/working \</span><br><span class="line">    -p 10090:22 \</span><br><span class="line">    --privileged \</span><br><span class="line">    -v /etc/localtime:/etc/localtime \</span><br><span class="line">    openexplorer/ai_toolchain_centos_7:v1.12.5</span><br><span class="line"></span><br><span class="line">% docker <span class="built_in">exec</span> -it openexplorer.xiyang bash</span><br><span class="line">% docker ps</span><br><span class="line">% docker stop openexplorer.xiyang</span><br><span class="line">% docker <span class="built_in">rm</span> openexplorer.xiyang</span><br><span class="line">% docker images</span><br><span class="line">% docker image <span class="built_in">rm</span> xxx</span><br><span class="line">% docker logs openexplorer.xiyang</span><br><span class="line">% docker start &lt;name&gt; // start docker when it <span class="built_in">exit</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="docker-load"><a href="#docker-load" class="headerlink" title="docker load"></a><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/load/">docker load</a></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">% docker load &lt; busybox.tar.gz</span><br><span class="line">% docker load --input fedora.tar</span><br></pre></td></tr></table></figure>
+
+<h2 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h2><p>Docker 包括三个基本概念:</p>
+<ol>
+<li>镜像（Image）</li>
+<li>容器（Container）</li>
+<li>仓库（Repository）<br>理解了这三个概念，就理解了 Docker 的整个生命周期。</li>
+</ol>
+<h3 id="Image"><a href="#Image" class="headerlink" title="Image"></a><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/basic_concept/image">Image</a></h3><ol>
+<li>Docker 镜像（Image），就相当于是一个 root 文件系统</li>
+<li>Docker 镜像是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。镜像不包含任何动态数据，其内容在构建之后也不会被改变。</li>
+</ol>
+<h3 id="Container"><a href="#Container" class="headerlink" title="Container"></a><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/basic_concept/container">Container</a></h3><ol>
+<li>镜像（Image）和容器（Container）的关系，就像是面向对象程序设计中的 类 和 实例 一样，镜像是静态的定义，容器是镜像运行时的实体。容器可以被创建、启动、停止、删除、暂停等。</li>
+</ol>
+<h3 id="Repository"><a href="#Repository" class="headerlink" title="Repository"></a><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/basic_concept/repository">Repository</a></h3><ol>
+<li><code>Docker Registry</code>: 一个集中的存储、分发镜像的服务</li>
+<li>一个 Docker Registry 中可以包含多个 仓库（Repository）；每个仓库可以包含多个 标签（Tag）；每个标签对应一个镜像。</li>
+<li>通常，一个仓库会包含同一个软件不同版本的镜像，而标签就常用于对应该软件的各个版本。我们可以通过 <code>&lt;仓库名&gt;:&lt;标签&gt;</code> 的格式来指定具体是这个软件哪个版本的镜像。如果不给出标签，将以 latest 作为默认标签。</li>
+</ol>
+<h2 id="传统虚拟化与-docker-虚拟化"><a href="#传统虚拟化与-docker-虚拟化" class="headerlink" title="传统虚拟化与 docker 虚拟化"></a>传统虚拟化与 docker 虚拟化</h2><p><img src="https://gblobscdn.gitbook.com/assets%2F-M5xTVjmK7ax94c8ZQcm%2F-M5xT_hHX2g5ldlyp9nm%2F-M5xTdXNYDmRWNH-Lqez%2Fvirtualization.png?alt=media" alt="传统虚拟化"><br><img src="https://gblobscdn.gitbook.com/assets%2F-M5xTVjmK7ax94c8ZQcm%2F-M5xT_hHX2g5ldlyp9nm%2F-M5xTdXP2scg0hxytUHA%2Fdocker.png?alt=media" alt="docker虚拟化"></p>
+<h2 id="VNC"><a href="#VNC" class="headerlink" title="VNC"></a>VNC</h2><ol>
+<li><code>vncserver :1</code></li>
+<li><code>vncserver -kill :1</code></li>
+<li><code>ps -ef | grep vnc</code>查看是否运行及端口号</li>
+<li><code>cat .vnc/password.txt</code> 查看密码(自己设置)</li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/introduction/why">从入门到实践</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5cacbfd7e51d456e8833390c">30 分钟快速入门</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903450203914253">资源整理</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7224149297951195193">简单聊聊 k8s，和 docker 之间的关系</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -724,7 +904,7 @@
 <li>awk 按列过滤参数 ls -l test.sh | awk ‘{ print $5 }’ 输出：454</li>
 <li>shell 小程序<a target="_blank" rel="noopener" href="https://www.jb51.net/article/54488.htm">link</a></li>
 <li>shell 得到文件信息 <code>ll /var/log/messages | cut -d &quot; &quot; -f 5</code></li>
-<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#x6a;&#105;&#97;&#x78;&#x69;&#x79;&#x61;&#110;&#x67;&#x40;&#x31;&#x30;&#x2e;&#49;&#x30;&#x2e;&#48;&#46;&#49;&#x37;">&#x6a;&#105;&#97;&#x78;&#x69;&#x79;&#x61;&#110;&#x67;&#x40;&#x31;&#x30;&#x2e;&#49;&#x30;&#x2e;&#48;&#46;&#49;&#x37;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
+<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#x6a;&#x69;&#97;&#120;&#x69;&#121;&#97;&#x6e;&#103;&#x40;&#49;&#48;&#46;&#49;&#x30;&#x2e;&#48;&#x2e;&#49;&#55;">&#x6a;&#x69;&#97;&#120;&#x69;&#121;&#97;&#x6e;&#103;&#x40;&#49;&#48;&#46;&#49;&#x30;&#x2e;&#48;&#x2e;&#49;&#55;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
 <li>读文件内容，记录到变量中 var&#x3D;$(cat name.txt)</li>
 <li>计时 start&#x3D;$(date+%s) &amp;&amp; sleep 2 &amp;&amp; end&#x3D;$(date+%s)&amp;&amp; echo $(($end - $start)) <a target="_blank" rel="noopener" href="http://blog.csdn.net/gengshenghong/article/details/7583580">link</a></li>
 <li>sleep: sleep 1 睡眠 1 秒 sleep 1s 睡眠 1 秒 sleep 1m 睡眠 1 分 sleep 1h 睡眠 1 小时</li>
@@ -956,120 +1136,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/10/06/Eclipse-Cpp-IDE-on-Windows10/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/06/Eclipse-Cpp-IDE-on-Windows10/" class="post-title-link" itemprop="url">Eclipse Cpp</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-10-06 09:32:38" itemprop="dateCreated datePublished" datetime="2020-10-06T09:32:38+08:00">2020-10-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/10/06/Eclipse-Cpp-IDE-on-Windows10/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/10/06/Eclipse-Cpp-IDE-on-Windows10/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>103</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="install-Eclipse-IDE-for-C-C-Developers"><a href="#install-Eclipse-IDE-for-C-C-Developers" class="headerlink" title="install Eclipse IDE for C&#x2F;C++ Developers"></a>install Eclipse IDE for C&#x2F;C++ Developers</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.eclipse.org/downloads/packages/release/kepler/sr2/eclipse-ide-cc-developers">Officail Download</a></li>
-</ol>
-<h2 id="install-compiler-MinGW"><a href="#install-compiler-MinGW" class="headerlink" title="install compiler MinGW"></a>install compiler MinGW</h2><ol>
-<li><a target="_blank" rel="noopener" href="http://mingw.org/wiki/InstallationHOWTOforMinGW">Official Install</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/done1182818968/article/details/105385382">Lose Packages</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1141,7 +1207,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">167</span>
+          <span class="site-state-item-count">168</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1174,6 +1240,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/10/model-compression/" title="2024&#x2F;01&#x2F;10&#x2F;model-compression&#x2F;">model-compression</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/04/huggingface/" title="2024&#x2F;01&#x2F;04&#x2F;huggingface&#x2F;">huggingface</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1184,9 +1253,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/12/26/jupyter/" title="2023&#x2F;12&#x2F;26&#x2F;jupyter&#x2F;">jupyter</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/12/24/llama2-c/" title="2023&#x2F;12&#x2F;24&#x2F;llama2-c&#x2F;">llama2</a>
         </li>
     </ul>
   </div>
@@ -1230,7 +1296,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:17</span>
+    <span title="站点阅读时长">6:18</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

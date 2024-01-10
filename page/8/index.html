@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">167</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">168</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,150 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/12/02/unix/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/02/unix/" class="post-title-link" itemprop="url">unix</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-12-02 09:14:27" itemprop="dateCreated datePublished" datetime="2022-12-02T09:14:27+08:00">2022-12-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/12/02/unix/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/12/02/unix/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>954</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="UNIX-环境高级编程"><a href="#UNIX-环境高级编程" class="headerlink" title="UNIX 环境高级编程"></a><a target="_blank" rel="noopener" href="http://www.apuebook.com/apue3e.html">UNIX 环境高级编程</a></h2><ol>
+<li><p>ID</p>
+<ul>
+<li>文件(文件描述符)</li>
+<li>进程</li>
+<li>错误处理(errno)</li>
+<li>用户标识(用户 ID, 组 ID)</li>
+<li>信号(SIG)</li>
+</ul>
+</li>
+<li><p><code>stat</code>: 获取文件各种信息</p>
+<ul>
+<li><code>stat -c %s file</code> 查看文件长度</li>
+</ul>
+</li>
+<li><p><code>strace - trace system calls and signals</code></p>
+</li>
+</ol>
+<h2 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h2><h2 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h2><h2 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h2><ol>
+<li>信号是软件中断。</li>
+<li>终端键盘上有两种信号方法：<ul>
+<li>SIGINT 中断键：C-c</li>
+<li>SIGQUIT 退出键：C-\</li>
+</ul>
+</li>
+<li>使用 system 而不是直接用 fork 和 exec 的优点是： system 有各种错误处理和各种信号处理</li>
+</ol>
+<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><ol>
+<li>进程 ID 用 pid_t 数据类型来表示，是一个非负整数。 线程 ID 是用 pthread_t 数据类型来表示， 是一个结构体， 不同系统类型不同。</li>
+<li>如果进程中的任意线程调用了 exit, _Exit 或者_exit, 那么整个进程就会终止。</li>
+<li><code>nm -C test | grep GLIBC_</code>可以看出 c++程序用 thread 和 mutex 最终调用了 pthread_create 和 pthread_mutex*</li>
+<li>守护进程出错记录使用 syslog，log 位置 &#x2F;var&#x2F;log&#x2F;syslog</li>
+</ol>
+<h4 id="进程间通信-InterProcess-Communication-IPC"><a href="#进程间通信-InterProcess-Communication-IPC" class="headerlink" title="进程间通信 InterProcess Communication IPC"></a>进程间通信 InterProcess Communication IPC</h4><ol>
+<li>同一机器：管道，FIFO, 消息队列，信号量，共享内存。</li>
+<li>不同机器：socket</li>
+</ol>
+<h4 id="线程间通信"><a href="#线程间通信" class="headerlink" title="线程间通信"></a>线程间通信</h4><ol>
+<li>mutex, 读写锁，自旋锁， 条件变量</li>
+<li>mutex 保护的是 lock 和 unlock 之间的代码</li>
+<li>如果线程对一个互斥量加锁两次，那么它自身就会陷入死锁。</li>
+<li>线程间循环依赖锁也会死锁，解决办法：1. 控制互斥量加锁的顺序避免死锁。2. try_lock 如果获得不了想要的锁， 先释放已占有的锁，过一段时间再试试。</li>
+<li>自旋锁与互斥量类似， 但自旋锁获取锁之前线程是非阻塞状态。适用于锁持有时间段，线程不希望在重新调度上花费太多成本。自旋锁在非抢占式内核中非常有用，在用户层，自旋锁并不是很有用。</li>
+<li>很多互斥量实现非常高效，有些互斥量的实现在试图获取互斥量的时候会自选一小段时间，只有自旋计数达到某一阈值的时候才会休眠。</li>
+</ol>
+<h3 id="linux-下源码编译问题"><a href="#linux-下源码编译问题" class="headerlink" title="linux 下源码编译问题"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_29116917/article/details/103786194">linux 下源码编译问题</a></h3><ol>
+<li>minor 找不到： filedir&#x2F;devrdev.c <code>#include &lt;sys/sysmacros.h&gt;</code></li>
+<li><code>sudo apt install libbsd-dev</code></li>
+<li>err_sys 找不到问题， error.c 源码复制到 apue.h 中</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1257,113 +1401,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/30/log/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/30/log/" class="post-title-link" itemprop="url">log</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-09-30 10:46:58" itemprop="dateCreated datePublished" datetime="2022-09-30T10:46:58+08:00">2022-09-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-28 13:13:09" itemprop="dateModified" datetime="2023-09-28T13:13:09+08:00">2023-09-28</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/09/30/log/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/30/log/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="glog"><a href="#glog" class="headerlink" title="glog"></a>glog</h2><ol>
-<li><code>GLOG_colorlogtostderr=1 ./test</code> 输出彩色</li>
-<li><code>GLOG_alsologtostderr=false</code> 关闭 log</li>
-<li>export GLOG_log_dir&#x3D;.&#x2F;log_tmp 输入 log 到 log_tmp 目录下</li>
-</ol>
-<h2 id="logrotate"><a href="#logrotate" class="headerlink" title="logrotate"></a>logrotate</h2><ol>
-<li>使用 logrotate 实现 log 循环覆盖功能，将 log 文件限制在一定大小。由于 logrotate 程序不能解决多文件未知变量名的情况，讨论了一下解决办法，设置环境变量 GLOG_max_log_size&#x3D;1，使得程序输出的 log 被分片，每片最大为 1M,然后使用脚本保留最新的几片 log，从而控制 log 的大小在一定范围内。</li>
-</ol>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kevingrace/p/6307298.html">https://www.cnblogs.com/kevingrace/p/6307298.html</a> 配置</p>
-<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/hxh129/article/details/8178647">http://blog.csdn.net/hxh129/article/details/8178647</a> 指定文件大小，超过就转存</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">size=`ll /var/log/messages | <span class="built_in">cut</span> -d <span class="string">&quot; &quot;</span> -f 5`</span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$size</span> -ge xxxxx ];</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">logrotate  /xxx/xxx.conf;</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="logrotate-功能"><a href="#logrotate-功能" class="headerlink" title="logrotate 功能"></a>logrotate 功能</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /tmp</span><br><span class="line"><span class="keyword">while</span> <span class="built_in">sleep</span> 15; <span class="keyword">do</span></span><br><span class="line">        file_num=`<span class="built_in">ls</span> -l |grep <span class="string">&quot;^-&quot;</span>|<span class="built_in">wc</span> -l`</span><br><span class="line">        <span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$file_num</span>&quot;</span> -gt 8 ]; <span class="keyword">then</span></span><br><span class="line">                rm_num=$((<span class="variable">$file_num</span> - <span class="number">8</span>))</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> `<span class="built_in">ls</span> -t /tmp | <span class="built_in">tail</span> -n <span class="variable">$rm_num</span>`; <span class="keyword">do</span></span><br><span class="line">                        <span class="built_in">rm</span> <span class="string">&quot;<span class="variable">$i</span>&quot;</span></span><br><span class="line">                <span class="keyword">done</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /tmp</span><br><span class="line"><span class="keyword">while</span> <span class="built_in">sleep</span> 15; <span class="keyword">do</span></span><br><span class="line">        file_num=`<span class="built_in">ls</span> -l |grep <span class="string">&quot;^-&quot;</span>|<span class="built_in">wc</span> -l`</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$file_num</span>&quot;</span></span><br><span class="line">        <span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$file_num</span>&quot;</span> -gt 8 ]; <span class="keyword">then</span></span><br><span class="line">                rm_num=$((<span class="variable">$file_num</span> - <span class="number">8</span>))</span><br><span class="line">                <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$rm_num</span>&quot;</span></span><br><span class="line">                <span class="built_in">ls</span> -lt</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> `<span class="built_in">ls</span> -t /tmp | <span class="built_in">tail</span> -n <span class="variable">$rm_num</span>`; <span class="keyword">do</span></span><br><span class="line">                        <span class="built_in">echo</span> <span class="string">&quot;clear log file <span class="variable">$i</span>&quot;</span>;</span><br><span class="line">                        <span class="built_in">rm</span> <span class="string">&quot;<span class="variable">$i</span>&quot;</span> || <span class="built_in">echo</span> ok</span><br><span class="line">                <span class="keyword">done</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">alive_counter=0</span><br><span class="line">prog=run_smartsv</span><br><span class="line"><span class="built_in">cd</span> /tmp</span><br><span class="line"><span class="keyword">while</span> <span class="built_in">sleep</span> 5; <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">if</span> [ $((alive_counter % <span class="number">5</span> )) -eq 0 ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="built_in">test</span></span><br><span class="line">        file_num=`<span class="built_in">ls</span> -l |grep <span class="string">&quot;^-&quot;</span>|<span class="built_in">wc</span> -l`</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$file_num</span>&quot;</span></span><br><span class="line">        <span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$file_num</span>&quot;</span> -gt 6 ]; <span class="keyword">then</span></span><br><span class="line">                rm_num=$((<span class="variable">$file_num</span> - <span class="number">6</span>))</span><br><span class="line">                <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$rm_num</span>&quot;</span></span><br><span class="line">                <span class="built_in">ls</span> -lt</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> `<span class="built_in">ls</span> -t /tmp | <span class="built_in">tail</span> -n <span class="variable">$rm_num</span>`; <span class="keyword">do</span></span><br><span class="line">                        <span class="built_in">echo</span> <span class="string">&quot;clear log file <span class="variable">$i</span>&quot;</span>;</span><br><span class="line">                        <span class="built_in">rm</span> <span class="string">&quot;<span class="variable">$i</span>&quot;</span> || <span class="built_in">echo</span> ok</span><br><span class="line">                <span class="keyword">done</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1435,7 +1472,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">167</span>
+          <span class="site-state-item-count">168</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1468,6 +1505,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/10/model-compression/" title="2024&#x2F;01&#x2F;10&#x2F;model-compression&#x2F;">model-compression</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/04/huggingface/" title="2024&#x2F;01&#x2F;04&#x2F;huggingface&#x2F;">huggingface</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1478,9 +1518,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/12/26/jupyter/" title="2023&#x2F;12&#x2F;26&#x2F;jupyter&#x2F;">jupyter</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/12/24/llama2-c/" title="2023&#x2F;12&#x2F;24&#x2F;llama2-c&#x2F;">llama2</a>
         </li>
     </ul>
   </div>
@@ -1524,7 +1561,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:17</span>
+    <span title="站点阅读时长">6:18</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

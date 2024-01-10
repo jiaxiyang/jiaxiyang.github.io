@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">167</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">168</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,137 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/01/04/huggingface/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/04/huggingface/" class="post-title-link" itemprop="url">huggingface</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-01-04 11:22:30" itemprop="dateCreated datePublished" datetime="2024-01-04T11:22:30+08:00">2024-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-08 17:58:42" itemprop="dateModified" datetime="2024-01-08T17:58:42+08:00">2024-01-08</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/01/04/huggingface/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/01/04/huggingface/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="pipeline"><a href="#pipeline" class="headerlink" title="pipeline"></a><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/main_classes/pipelines">pipeline</a></h2><ol>
+<li>The pipelines are a great and easy way to use models for inference.</li>
+<li>llama2</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Use a pipeline as a high-level helper</span></span><br><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> pipeline</span><br><span class="line">pipe = pipeline(<span class="string">&quot;text-generation&quot;</span>, model=<span class="string">&quot;./Llama-2-7b-hf&quot;</span>)</span><br><span class="line">pipe(<span class="string">&quot;how are you&quot;</span>)</span><br><span class="line"><span class="comment"># 查看帮助</span></span><br><span class="line"><span class="built_in">help</span>(pipeline)</span><br><span class="line"><span class="built_in">help</span>(pipe)</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看模型信息"><a href="#查看模型信息" class="headerlink" title="查看模型信息"></a>查看模型信息</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/saratbhargava/ai-blog-resources/blob/main/LLM/Llama_2_param_count.ipynb">基础信息</a></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Load model directly</span></span><br><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoTokenizer, AutoModelForCausalLM</span><br><span class="line"></span><br><span class="line">model = AutoModelForCausalLM.from_pretrained(<span class="string">&quot;./Llama-2-7b-hf&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(model)</span><br><span class="line"><span class="keyword">from</span> prettytable <span class="keyword">import</span> PrettyTable</span><br><span class="line"></span><br><span class="line">table = PrettyTable([<span class="string">&#x27;Name&#x27;</span>, <span class="string">&#x27;Shape&#x27;</span>, <span class="string">&#x27;Param&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> name, param <span class="keyword">in</span> model.named_parameters():</span><br><span class="line">    param_count = param.numel()</span><br><span class="line">    table.add_row([name, param.shape, param_count])</span><br><span class="line"><span class="built_in">print</span>(table)</span><br><span class="line">num_parameters = <span class="built_in">sum</span>(p.numel() <span class="keyword">for</span> p <span class="keyword">in</span> model.parameters())</span><br><span class="line"><span class="built_in">print</span>(num_parameters)</span><br></pre></td></tr></table></figure>
+
+<h2 id="models"><a href="#models" class="headerlink" title="models"></a><a target="_blank" rel="noopener" href="https://huggingface.co/models">models</a></h2><ol>
+<li>repo 包含<ul>
+<li>config.json 每个架构一个 config.json <a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/main/model_doc/llama2#transformers.LlamaConfig">llama config</a></li>
+</ul>
+</li>
+</ol>
+<h2 id="模型文件类型"><a href="#模型文件类型" class="headerlink" title="模型文件类型"></a><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/620641385/answer/3230090109">模型文件类型</a></h2><ol>
+<li>支持 bin 或 safetensors 文件</li>
+<li>safetensors 是谷歌开发的一种 TensorFlow Lite 模型文件格式，用于在移动设备上运行模型</li>
+<li>bin 文件自存储模型的参数，不包含</li>
+<li>pytorch 两种方式<ul>
+<li>保存整个模型：保存整个模型的结构（代码）、参数 <code>torch.save(model, &#39;model.pth&#39;)</code></li>
+<li>保存模型参数：仅保存模型的参数，而不保存模型的结构（代码）。<code>torch.save(model.state_dict(), &#39;model_params.pth&#39;</code></li>
+</ul>
+</li>
+<li>有些模型保存未 gguf 格式，需要专门推理引擎才能使用</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ggerganov/ggml/blob/master/docs/gguf.md">gguf doc</a></li>
+<li>gguf：It is a successor file format to GGML, GGMF and GGJT, and is designed to be unambiguous by containing all the information needed to load a model. It is also designed to be extensible, so that new features can be added to GGML without breaking compatibility with older models.</li>
+<li>The .bin files that are used by llama.cpp allow users to easily share models in a single file. Except they had one big problem: lack of flexibility. You could not add additional information about the model.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ggerganov/llama.cpp/discussions/2948">hugging face models to gguf</a></li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/v4.36.1/zh/index">transformers 中文文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/blog/zh/llama2">blog</a></li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/blog/zh/llama2">Llama 2 来袭 - 在 Hugging Face 上玩转它</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1552,274 +1683,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/11/21/LLM/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/21/LLM/" class="post-title-link" itemprop="url">LLM</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-11-21 16:24:03" itemprop="dateCreated datePublished" datetime="2023-11-21T16:24:03+08:00">2023-11-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-09 19:57:52" itemprop="dateModified" datetime="2024-01-09T19:57:52+08:00">2024-01-09</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/11/21/LLM/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/11/21/LLM/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="LLM-进化树"><a href="#LLM-进化树" class="headerlink" title="LLM 进化树"></a>LLM 进化树</h2><p><img src="https://github.com/Mooler0410/LLMsPracticalGuide/raw/main/imgs/tree.jpg" alt="LLM 进化树"></p>
-<h2 id="concept"><a href="#concept" class="headerlink" title="concept"></a>concept</h2><ol>
-<li><code>General Matrix Multiply (GeMM)</code><ul>
-<li><code>C = αAB + βC</code></li>
-<li>GEMM 是一种更通用的矩阵乘法操作。它不仅包括两个矩阵的乘法，还可以包括对这两个矩阵进行转置或共轭转置，以及将结果乘以一个标量或与另一个矩阵的和。</li>
-<li>在函数接口上,GEMM 通常需要传入更多的参数,包括缩放因子、转置选项等。而 matmul 接口更加简洁。</li>
-<li>在一些深度学习框架如 TensorFlow 和 PyTorch 中,matmul 是矩阵乘法的默认操作。而 GEMM 则由于其优化,常被用在需要高性能的场景。</li>
-</ul>
-</li>
-<li>奇怪的话可以放到 midjouney(or dell-e) 画出图像，助于理解</li>
-<li>token(令牌?) 是某个领域中一个抽象的语法或逻辑单元的称呼。在自然语言处理中,token 指一个文本串中基本的符号。比如一个句子可以被切分为多个词(word),每个词就是一个 token。</li>
-<li>prompt 提示很重要</li>
-<li>机器来找 prompt(提示)： hard prompt, soft prompt(adpter 放在 input), using reinforcement learning(加 generator), 让 llm 自己产生自己 prompt</li>
-<li>toolformer: 使用工具</li>
-<li>token 中文是字， 英文是 word piece, word 太多; unbreakable -&gt; un break able</li>
-<li>model 本质是函数</li>
-<li>prompting 给 chatgpt 催眠，设置限制，让 chatgpt 回答某方便问题，如设置中文聊天</li>
-<li>neural editing 训练好模型改参数</li>
-<li>machine unlearning 忘记曾经学过的东西， 遗忘某些涉密问题</li>
-<li>hyperparameter 超参数，学习算法的参数，不是神经网络的参数</li>
-<li>文字冒险游戏： chatgpt + midjourney + 语音</li>
-<li>腾讯语音情感 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2301.13662">https://arxiv.org/abs/2301.13662</a> <a target="_blank" rel="noopener" href="https://dongchaoyang.top/InstructTTS/">https://dongchaoyang.top/InstructTTS/</a></li>
-<li>embeddings:在某种程度上，就是用来降维的，降维的原理就是矩阵乘法 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/164502624">一文读懂 Embedding 的概念</a></li>
-<li><a target="_blank" rel="noopener" href="https://platform.openai.com/tokenizer">tokenizer</a></li>
-<li>tokenizer 是将文本进行分词,通常分为单词(word)或子词(subword)单元。它的目标是划分语料的基本符号。embeddings 是将语料库中的词或字符映射到 dense 向量表示。通常先经过 tokenizer 得到词单元,然后再映射为稠密词向量。tokenizer 侧重文本符号的划分,主要方法是基于词典或规则进行分割。embeddings 侧重语义信息的编码,主要方法是基于语料训练词向量。</li>
-<li>AGI (Artificial General Intelligence): 人工通用智能或通用人工智能，是指在任何智能任务上都能表现得与人类智能相媲美的人工智能系统。</li>
-<li>AIGC (AI-Generated Content): 人工智能生成内容，指的是通过人工智能算法和模型自动或半自动生成的内容。这包括文本、图像、音乐、视频和其他媒体形式。</li>
-<li>大模型（Large Language Model，LLM）<br><img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/1_Welcome_GenerativeMeena_CL_V02_150521_v2_720_25fps.gif" alt="示意"></li>
-<li>模型大小 7B(billion), 7B 表示 70 亿个可训练参数。吉比（gigabyte）是一个信息技术单位，。十亿（billion）是一个计数单位， 参数类型(float, int8)和数量(billion)决定模型的大小(gigabyte)</li>
-<li>Bard 是由 Google 开发的生成式人工智能聊天机器人，最初基于大型语言模型的 LaMDA 系列，后来基于 PaLM2。</li>
-<li>基础架构 transformer</li>
-<li><a target="_blank" rel="noopener" href="https://claude.ai/chats">claude</a> chatgpt 主要竞争对手</li>
-<li>webgpt: 产生的内容带引用网址, 先 gpt 处理文字， 得到关键字用于搜索引擎搜索，得到各网页结果，然后处理搜索结果，然后点选，处理网页中的内容，关联的收藏起来， 可以产生多个关键字， 多次搜索， 最终有多个收藏， 只处理这些收藏</li>
-<li>chatgpt 文字接龙， bert 文字填空</li>
-<li>大模型可以帮助完成强有力的事情 “A mouse riding on the head of an elephant, using reins to steer the giant creature.” (powered by Midjourney )</li>
-<li>对于大模型的期待：专才(finetune, adapter)，通才(instruction learning， in-context learning)</li>
-<li>finetune: update network parameters by gradient descent</li>
-<li>adapter(efficient fine tuning): 大模型加入插件(例如：加一层)， 只调整新添加插件参数, 优势：不用调整大模型原始参数</li>
-<li>in-context learning(示例学习): 给一些例子， 例子可能只是用于启动任务, 唤醒记忆。 更大的模型可能从例子学习到信息更多, 输入一些分类 feature 例子(直接给数字和 label)，可以将大模型变为一个分类器</li>
-<li>learing in-context learning: 学习示例学习结果更好，但数据难收集</li>
-<li>instruction learning</li>
-<li>chain-of-thought(CoT) prompting: 训练时给出推论再给结果， 结果正确率会高很多。多次推论有不同的答案再投票.。 （chatgpt 默认列出计算过程，如果不让列详细过程， 结果可能会差）</li>
-<li>参数越多，数据越多， 效果越好</li>
-<li>emergent ability 顿悟时刻 <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2206.07682.pdf">Emergent Abilities of Large Language Models</a> 10B</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2207.05221">Language Models (Mostly) Know What They Know</a></li>
-<li>calibration: 大模型 softmax 分数越高，正确率越高，大模型知道知己是否在瞎掰</li>
-<li>模型越大结果越差例子： <a target="_blank" rel="noopener" href="https://github.com/inverse-scaling/prize">inverse-scaling&#x2F;prize</a>, 更大的模型可能会顿悟，结果会更好; U-shaped U 型曲线</li>
-<li><a target="_blank" rel="noopener" href="https://www.jmlr.org/papers/v23/21-0998.html">Switch Transformers</a> 训练时用所有参数，推理时只用部分参数，加快推理运行</li>
-<li>从数据中学习语言：世界知识(尝试)， 语言知识</li>
-<li>data preparation: 数据处理<ul>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2112.11446">Scaling Language Models: Methods, Analysis &amp; Insights from Training Gopher</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2107.06499">Deduplicating Training Data Makes Language Models Better</a></li>
-</ul>
-</li>
-<li>固定算力资源情况下：模型参数(思考)， data(学习) 成反比； 大模型小数据(思而不学)， 小模型大数据(学而不思); 学思应该平衡<ul>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2203.15556">Training Compute-Optimal Large Language Models</a> 给出算力，参数量和数据量如何确定</li>
-<li>LLaMa 使用了这个知识</li>
-</ul>
-</li>
-<li>fintuning 和 reinforcement lerning 效果很好 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2203.02155">Training language models to follow instructions with human feedback</a> 小模型也可以胜大模型</li>
-<li>openai 收齐了很多问题，所以即使 chatgpt 模型不那么大，也比更大模型好</li>
-<li><code>MoE(Mixture of Experts)</code>模型指的是专家混合模型,是一类将多个模型专家进行混合的组合结构。例如： Mixtral 8x7B</li>
-</ol>
-<h2 id="生成内容"><a href="#生成内容" class="headerlink" title="生成内容"></a>生成内容</h2><ol>
-<li>文本</li>
-<li>语音</li>
-<li>声音</li>
-<li>图像</li>
-<li>视频</li>
-</ol>
-<h2 id="生成方式"><a href="#生成方式" class="headerlink" title="生成方式"></a>生成方式</h2><ol>
-<li><p>各个击破 Autoregressive(AR) model</p>
-<ul>
-<li>速度慢 无法并行</li>
-<li>质量高</li>
-<li>常用于文字生成</li>
-</ul>
-</li>
-<li><p>一次到位 Non-autoregressive(NAR) model</p>
-<ul>
-<li>速度快</li>
-<li>质量较差</li>
-<li>冲用于图片生成</li>
-</ul>
-</li>
-<li><p>各个击破和一次到位结合</p>
-<ul>
-<li>先各个击破产生中间产物(先决定大方向)，再一次到位</li>
-<li>一次到位改成 N 次到位(先一次到位再各个击破) diffusion model</li>
-</ul>
-</li>
-</ol>
-<h3 id="多任务学习-Multi-Task-Learning-和多模态学习-Multimodal-Learning"><a href="#多任务学习-Multi-Task-Learning-和多模态学习-Multimodal-Learning" class="headerlink" title="多任务学习(Multi-Task Learning)和多模态学习(Multimodal Learning)"></a>多任务学习(Multi-Task Learning)和多模态学习(Multimodal Learning)</h3><ol>
-<li><p>目标差异</p>
-<ul>
-<li>多任务学习的目标是同时学习多个相关的任务,在不同任务间实现知识迁移,从而 mutually improve 模型的泛化性能。</li>
-<li>而多模态学习是为了建模和理解包含多个模态(文本、图像、语音等)的单一任务或场景。</li>
-</ul>
-</li>
-<li><p>方法差异</p>
-<ul>
-<li>多任务学习通常是共享底层特征表示,在顶层分出多个 task-specific 的输出层。</li>
-<li>多模态学习则更关注不同模态间的交互建模、对齐、融合,学习联合的媒体表征。</li>
-</ul>
-</li>
-<li><p>应用差异</p>
-<ul>
-<li>多任务学习的应用更广泛,从计算机视觉、NLP 到健康领域都有。</li>
-<li>多模态应用更集中在人机交互、信息检索、场景理解等领域。</li>
-</ul>
-</li>
-<li><p>总结</p>
-<ul>
-<li>多任务学习 optimize 同一模型在不同任务上的泛化性能</li>
-<li>多模态学习 optimize 不同媒体表征的融合,用于理解复杂的多模态场景或问题。</li>
-</ul>
-</li>
-</ol>
-<h3 id="多模态"><a href="#多模态" class="headerlink" title="多模态"></a>多模态</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://openai.com/research/clip">clip</a> <a target="_blank" rel="noopener" href="https://imzhanghao.com/2022/10/27/multimodal-learning/">multimodal-learning 中文解析</a></li>
-</ol>
-<h2 id="排名"><a href="#排名" class="headerlink" title="排名"></a>排名</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/CLUEbenchmark/SuperCLUE">SuperCLUE 中文通用大模型综合性基准</a></li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard">open_llm_leaderboard</a></li>
-<li><a target="_blank" rel="noopener" href="https://arena.lmsys.org/">UC 伯克利发布大模型排行榜 需要查看 leaderboard</a></li>
-</ol>
-<h2 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://laion.ai/">laion</a> 5B images, 图像生成训练集<ul>
-<li><a target="_blank" rel="noopener" href="https://rom1504.github.io/clip-retrieval/?back=https://knn.laion.ai&index=laion5B-H-14&useMclip=false">online search</a></li>
-</ul>
-</li>
-</ol>
-<h2 id="huggine-face"><a href="#huggine-face" class="headerlink" title="huggine face"></a>huggine face</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/models">models</a></li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard">open_llm_leaderboard</a></li>
-<li><code>dataset = load_dataset(&quot;/mnt/data-2/home/xiyang.jia/TensorRT-LLM/examples/bloom/cnn_dailymail/cnn_dailymail.py&quot;, &quot;3.0.0&quot;)</code> 从本地加载数据集</li>
-</ol>
-<h2 id="sota-models"><a href="#sota-models" class="headerlink" title="sota models"></a>sota models</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://openai.com/gpt-4">gpt-4</a></li>
-<li><a target="_blank" rel="noopener" href="https://ai.meta.com/llama/">llama</a></li>
-<li><a target="_blank" rel="noopener" href="https://ai.google/discover/palm2/">palm2</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.anthropic.com/index/claude-2">claude-2</a></li>
-</ol>
-<h2 id="llama"><a href="#llama" class="headerlink" title="llama"></a><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/llama">llama</a></h2><ol>
-<li>读音： 拉马（西班牙语通话的意思)</li>
-<li>clone 之后执行 download.sh, 需要官网申请的 url</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/llama-recipes/tree/main/demo_apps">demo_apps</a></li>
-</ol>
-<h2 id="gpt"><a href="#gpt" class="headerlink" title="gpt"></a>gpt</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=kCc8FmEb1nY">Let’s build GPT: from scratch, in code, spelled out.</a></li>
-<li>GPT(generative pre-trained transformer)</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/run-llama/rags">rags</a> RAGs is a Streamlit app that lets you create a RAG pipeline from a data source using natural language.</li>
-<li>chatgpt：文字接龙</li>
-<li>gpt 自监督学习(pre train)得到的模型(基础模型)，chatgpt 在 gpt 基础上监督学习(finetune)</li>
-<li>chatgpt 实际是分类问题， 从使用者角度是生成式学习（生成句子：多个分类问题）</li>
-<li>chatgpt 评价是增强学习</li>
-<li>chatgpt: gpt -&gt; 监督学习 -&gt; 增强学习</li>
-</ol>
-<h2 id="bing-copilot"><a href="#bing-copilot" class="headerlink" title="bing copilot"></a><a target="_blank" rel="noopener" href="https://www.bing.com/">bing copilot</a></h2><h2 id="precision-精度"><a href="#precision-精度" class="headerlink" title="precision 精度"></a>precision 精度</h2><ol>
-<li>float32</li>
-<li>float16</li>
-<li>bfloat16</li>
-<li>8bit</li>
-<li>4bit</li>
-<li>GPTQ</li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/Mooler0410/LLMsPracticalGuide">LLMsPracticalGuide</a></li>
-<li><a target="_blank" rel="noopener" href="https://z7nobhiey2.feishu.cn/file/JTa0bZ38RohzwTx9zjucuDmunVe">oneflow 技术年货 2023</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=yiY4nPOzJEg&list=PLJV_el3uVTsOePyfmkfivYZ7Rqr2nMk3W">李宏毅 生成式 AI</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=zjkBMFhNj_g">Intro to Large Language Models</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLFXJ6jwg0qW-7UM8iUTj3qKqdhbQULP5I">李沐论文精度</a></li>
-<li><a target="_blank" rel="noopener" href="https://openai.com/research/clip">openai.com&#x2F;research</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1891,7 +1754,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">167</span>
+          <span class="site-state-item-count">168</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1924,6 +1787,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/10/model-compression/" title="2024&#x2F;01&#x2F;10&#x2F;model-compression&#x2F;">model-compression</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/04/huggingface/" title="2024&#x2F;01&#x2F;04&#x2F;huggingface&#x2F;">huggingface</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1934,9 +1800,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2023/12/26/jupyter/" title="2023&#x2F;12&#x2F;26&#x2F;jupyter&#x2F;">jupyter</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/12/24/llama2-c/" title="2023&#x2F;12&#x2F;24&#x2F;llama2-c&#x2F;">llama2</a>
         </li>
     </ul>
   </div>
@@ -1980,7 +1843,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:17</span>
+    <span title="站点阅读时长">6:18</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
