@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">169</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">170</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,294 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/08/18/Bjarny-Stroustrup-Cpp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/18/Bjarny-Stroustrup-Cpp/" class="post-title-link" itemprop="url">Bjarny Stroustrup cpp</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-18 09:34:33" itemprop="dateCreated datePublished" datetime="2020-08-18T09:34:33+08:00">2020-08-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/08/18/Bjarny-Stroustrup-Cpp/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/18/Bjarny-Stroustrup-Cpp/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="What-is-C-20"><a href="#What-is-C-20" class="headerlink" title="What is C++20?"></a>What is C++20?</h2><ol>
+<li>The best approximation of C++’s ideals so far.</li>
+<li>As big an improvement over C++11 as C++11 was over C++98: A major “release”</li>
+<li>Lots of useful features<ul>
+<li>Simpler, more expressive, faster code that compiles faster</li>
+<li>Modeles</li>
+<li>Concepts</li>
+<li>Coroutines</li>
+<li>Ranges</li>
+<li>Dates</li>
+<li>Span</li>
+<li>Better compile-time programing support</li>
+<li>Many “minor features”</li>
+</ul>
+</li>
+<li>C++23 and C++26 is better than C++20, not the major “release”.</li>
+<li>Diretly learn C++20. It’s the outside layer of the onion.</li>
+<li>C++23:<ul>
+<li>“Completes C++20”</li>
+<li>Plus: standard modules, library support for coroutines, executors &amp; networking</li>
+<li>Maybe: static reflection, pattern matching</li>
+</ul>
+</li>
+</ol>
+<h2 id="Keys-C-“Rules-of-Thumb”"><a href="#Keys-C-“Rules-of-Thumb”" class="headerlink" title="Keys C++ “Rules of Thumb”"></a>Keys C++ “Rules of Thumb”</h2><ol>
+<li><code>A static type system</code> with equal support for build-in and user-defined types<ul>
+<li>A type: specifies the set of operations that can be applied to an object and specifies how an object is laid out in memory</li>
+<li>A static type system: the base of all</li>
+<li>static mean compile time will determine all the type(not the run-time).</li>
+<li>compile-time error detection</li>
+<li>performance</li>
+<li>flexibility through compile-time resolution(overloading, generic programming, metaprogramming…)</li>
+</ul>
+</li>
+<li><code>Value and reference semantics</code><ul>
+<li>value types: Inegers, characters, strings, containers,…</li>
+<li>Pointers&#x2F;references: T*, T&amp;, unique_ptr<T>, Forward_iterator</li>
+</ul>
+</li>
+<li><code>Direct use</code> of machine and operating system resources<ul>
+<li>bitset and span(modern c++)</li>
+<li>the onion principle: the more layers you peel off, the more control, the more error.</li>
+</ul>
+</li>
+<li>Systematic and general <code>resource management</code>(RAII)<ul>
+<li>manage heap, file…</li>
+<li>every resource must have an owner: responsible for its cleanup.</li>
+<li>control the complete object life cycle: creation, copy, move, destruction</li>
+</ul>
+</li>
+<li>Support <code>composition</code> of software from separately developed parts.<ul>
+<li>modules</li>
+<li>all major features support composition: moduls, classes, concepts, templates, functions, aliases</li>
+</ul>
+</li>
+<li>Support for <code>object-oriented programming</code></li>
+<li>Support for <code>generic programming</code><ul>
+<li>concepts</li>
+</ul>
+</li>
+<li>Support <code>compile-time programming</code><ul>
+<li>Move computation from run-time to compile-time(performace, do once)</li>
+<li>It’s everywhere: overloading and virtual functions, templates, variadic templates, constexp functions…</li>
+</ul>
+</li>
+<li><code>Concurency</code> through libraries supported by intrinsics</li>
+<li><code>Libraries</code><ul>
+<li>A user shouldn’t have to care whether a feature is implemented in the language or in a library</li>
+</ul>
+</li>
+</ol>
+<h2 id="Philosophy-CppCoreGuidelines"><a href="#Philosophy-CppCoreGuidelines" class="headerlink" title="Philosophy (CppCoreGuidelines)"></a>Philosophy (CppCoreGuidelines)</h2><ol>
+<li>Express ideas directly in code</li>
+<li>Write in ISO Stardard C++</li>
+<li>Express intent</li>
+<li>Ideally, a program should be statically type safe.</li>
+<li>Prefer compile-time checking to run-time checking.</li>
+<li>What cannot be checked at compile time should be checkable at run time</li>
+<li>Catch run-time errors early.</li>
+<li>Don’t leak any resources.</li>
+<li>Don’t waste time or space.</li>
+<li>Prefer immutable data to mutable data</li>
+<li>Encapsulate messy constructs, rather than spreading through the code.</li>
+<li>Use supporting tools as appropriate</li>
+<li>Use support libraries as appropriate</li>
+</ol>
+<h2 id="Lower-levels-of-abstaction"><a href="#Lower-levels-of-abstaction" class="headerlink" title="Lower levels of abstaction"></a>Lower levels of abstaction</h2><ol>
+<li>Samples:<ul>
+<li>Sizes</li>
+<li>Raw pointers</li>
+<li>Allocation and deallocation</li>
+<li>Loop-control variables</li>
+<li>Casts</li>
+<li>Macros</li>
+</ul>
+</li>
+<li>Except as implementation details and asides</li>
+<li>Don’t go to lower level if you have to.</li>
+</ol>
+<h2 id="What-really-matters"><a href="#What-really-matters" class="headerlink" title="What really matters?"></a>What really matters?</h2><ol>
+<li>People</li>
+<li>A programming language is a tool, not an end goal: peopeo want great systems, not programming languages.</li>
+<li>Software developers want great tools: not just programming language features.</li>
+</ol>
+<h2 id="Abstraction"><a href="#Abstraction" class="headerlink" title="Abstraction"></a>Abstraction</h2><ol>
+<li>Often, the software is more complicated than the hardware.</li>
+<li>abstraction in code:<ul>
+<li>resource mangement: vector</li>
+<li>generic programing: concepts: compile-time predicates.</li>
+</ul>
+</li>
+</ol>
+<h2 id="The-onion-principle"><a href="#The-onion-principle" class="headerlink" title="The onion principle"></a>The onion principle</h2><ol>
+<li>Mangagement of complexity: make simple thing simple.</li>
+<li>Layers of abstraction: the more layers you peel off, the more you cry.</li>
+</ol>
+<h2 id="An-engineering-approach"><a href="#An-engineering-approach" class="headerlink" title="An engineering approach"></a>An engineering approach</h2><ol>
+<li>Design c++ is not pure math.</li>
+<li>Principled and pragmatic design</li>
+<li>Progress gradually guided by feedback</li>
+<li>There are always many tradeoffs: choosing is hard</li>
+<li>Design decisions have consequences</li>
+</ol>
+<h2 id="C-in-two-lines"><a href="#C-in-two-lines" class="headerlink" title="C++ in two lines"></a>C++ in two lines</h2><ol>
+<li>Direct map to hardware<ul>
+<li>of instructions and fundamental data types</li>
+<li>initially from C</li>
+<li>Future: use novel hardware better(caches, multicores, GPUs, FPGAs, SIMD, …)</li>
+</ul>
+</li>
+<li>Zero-overhead abstraction<ul>
+<li>classes, inheritance, generic programming, …</li>
+<li>initially from Simula(where it wasn’t zero-overhead)</li>
+<li>Future: Type- and resouce-safety, concepts, modules, concurrency, …</li>
+</ul>
+</li>
+</ol>
+<h2 id="C-’s-role"><a href="#C-’s-role" class="headerlink" title="C++’s role"></a>C++’s role</h2><ol>
+<li>A language for<ul>
+<li>writing elegant and efficiaent programs</li>
+<li>for definning and using light-weight abstractions</li>
+<li>a language for resource-constrained applications</li>
+<li>building software infrastructure</li>
+</ul>
+</li>
+<li>Offers<ul>
+<li>a direct map to hardware</li>
+<li>Zero-overhead abstraction</li>
+</ul>
+</li>
+<li>No language is perfect<ul>
+<li>for everthing</li>
+<li>for everyone</li>
+</ul>
+</li>
+</ol>
+<h2 id="C-is-tunable"><a href="#C-is-tunable" class="headerlink" title="C++ is tunable"></a>C++ is tunable</h2><ol>
+<li>Make simple things simple<ul>
+<li>Don’t make complicated tasks impossible</li>
+<li>Don’t make complicated tasks unreasonable hard to do</li>
+<li>The onion principle</li>
+</ul>
+</li>
+<li>Don’t drop to lower levels of abstraction<ul>
+<li>Unless you really, really need to</li>
+<li>Hide messy code behind clean interfaces</li>
+</ul>
+</li>
+<li>Alwasy measure</li>
+</ol>
+<h2 id="Write-better-code"><a href="#Write-better-code" class="headerlink" title="Write better code"></a>Write better code</h2><ol>
+<li>Cleaner</li>
+<li>Simpler</li>
+<li>More readable</li>
+<li>More maintainable</li>
+<li>Faster</li>
+<li>Less clever</li>
+<li>More general</li>
+<li>More usable and re-usable</li>
+<li>Type safe</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -891,137 +1179,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/07/27/Cpp-to-c-interface/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/27/Cpp-to-c-interface/" class="post-title-link" itemprop="url">Cpp to c interface</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-27 22:43:02" itemprop="dateCreated datePublished" datetime="2020-07-27T22:43:02+08:00">2020-07-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/07/27/Cpp-to-c-interface/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/27/Cpp-to-c-interface/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>如果给 c++程序 dlopen 用，只需要 create 和 release 接口，c++程序可以拿到 C++头文件定义，可以将 create 指针强转成类对象，用完之后调用 free。</li>
-<li>shared_ptr 两种解决方法(堆上手动管理智能指针，栈由系统自动管理)<ul>
-<li>struct 存 graph</li>
-<li>创建 shared_ptr 的指针，指针不释放 (已经创建栈上的 shared_ptr,没法调用 new)</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/jiaxiyang/cpp_sandbox/tree/master/cpp2c">自建 sample</a></li>
-</ul>
-</li>
-</ol>
-<h3 id="extern-“C”-作用"><a href="#extern-“C”-作用" class="headerlink" title="extern “C” 作用"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiangtingshen/p/10980055.html">extern “C” 作用</a></h3><ol>
-<li>extern “C”的主要作用就是为了能够正确实现 C++代码调用其他 C 语言代码。加上 extern “C”后，会指示编译器这部分代码按 C 语言（而不是 C++）的方式进行编译。由于 C++支持函数重载，因此编译器编译函数的过程中会将函数的参数类型也加到编译后的代码中，而不仅仅是函数名；而 C 语言并不支持函数重载，因此编译 C 语言代码的函数时不会带上函数的参数类型，一般只包括函数名。</li>
-<li><code>extern &quot;C&quot; &#123;&#125;</code> 作用是阻止 C++ name mangling, 生成 C 格式符号表</li>
-</ol>
-<h2 id="method-hpp"><a href="#method-hpp" class="headerlink" title="method.hpp"></a>method.hpp</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line">Class Method &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> std::unique_ptr&lt;Method&gt; <span class="title">create</span><span class="params">(std::string name)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">const</span> std::string <span class="title">get_name</span><span class="params">()</span> <span class="type">const</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="method-imp-hpp"><a href="#method-imp-hpp" class="headerlink" title="method_imp.hpp"></a>method_imp.hpp</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;method.hpp&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line">Class MethodImp : <span class="keyword">public</span> Method &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MethodImp</span>(std::string name);</span><br><span class="line">    <span class="function"><span class="type">const</span> std::string <span class="title">get_name</span><span class="params">()</span> <span class="type">const</span> <span class="keyword">override</span></span>;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> name_;</span><br><span class="line">    <span class="type">int</span> value_;</span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> <span class="title class_">c_api</span>;  <span class="comment">// the purpose is to get the private member which can not get from the public interface</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="method-cpp"><a href="#method-cpp" class="headerlink" title="method.cpp"></a>method.cpp</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;method.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;method_imp.hpp&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line"></span><br><span class="line"><span class="function">std::unique_ptr&lt;Method&gt; <span class="title">Method::create</span><span class="params">(std::string name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> std::unique_ptr&lt;Method&gt;&#123;<span class="built_in">static_cast</span>&lt;Method*&gt;(<span class="keyword">new</span> Method&#123;name&#125;)&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="method-imp-cpp"><a href="#method-imp-cpp" class="headerlink" title="method_imp.cpp"></a>method_imp.cpp</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;method_imp.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;c.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line"></span><br><span class="line">MethodImp::<span class="built_in">MethodImp</span>(std::string name)</span><br><span class="line">    : name_&#123;name&#125;,</span><br><span class="line">      value_&#123;<span class="number">1</span>&#125;&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">const</span> std::string <span class="title">MethodImp::get_name</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> name_;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;  <span class="comment">// namespace jia</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* C API implementations */</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;c.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">c_api</span> &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">int</span> <span class="title">get_value</span><span class="params">(<span class="type">c_method_t</span> method)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> self = <span class="built_in">static_cast</span>&lt;jia::Method*&gt;(method);</span><br><span class="line">        <span class="keyword">return</span> self-&gt;value_;  <span class="comment">// to get value_; c_api need to be friend class of MethodImp</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">c_method_t</span> <span class="title">c_create</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> m = jia::Method::<span class="built_in">create</span>(std::<span class="built_in">string</span>(name));</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">static_cast</span>&lt;<span class="type">c_method_t</span>&gt;(m.<span class="built_in">realse</span>());  <span class="comment">// release will move unique_ptr ownership</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">int</span> <span class="title">c_destroyed</span><span class="params">(<span class="type">c_method_t</span> method)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> m = <span class="built_in">static_cast</span>&lt;jia::Method*&gt;(method);</span><br><span class="line">    <span class="keyword">delete</span> m;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">const</span> <span class="type">char</span>* <span class="title">c_get_name</span><span class="params">(<span class="type">c_method_t</span> method)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> self = <span class="built_in">static_cast</span>&lt;jia::Method*&gt;(method);</span><br><span class="line">    <span class="keyword">return</span> self-&gt;<span class="built_in">get_name</span>().<span class="built_in">cstr</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">int</span> <span class="title">c_get_value</span><span class="params">(<span class="type">c_method_t</span> method)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> jia::c_api::<span class="built_in">get_value</span>(method);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="c-h"><a href="#c-h" class="headerlink" title="c.h"></a>c.h</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus  <span class="comment">// c++ will use and c not use</span></span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> &#123;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">void</span>* <span class="type">c_method_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">c_method_t</span> <span class="title">c_create</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* name)</span></span>;  <span class="comment">// create an instance</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">c_destroyed</span><span class="params">(<span class="type">c_method_t</span>)</span></span>;            <span class="comment">// destroy the instance</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">const</span> <span class="type">char</span>* <span class="title">c_get_name</span><span class="params">(<span class="type">c_method_t</span> method)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">c_get_value</span><span class="params">(<span class="type">c_method_t</span> method)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-
-<h2 id="test-c"><a href="#test-c" class="headerlink" title="test.c"></a>test.c</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;c.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">c_method_t</span> m = <span class="built_in">c_create</span>(<span class="string">&quot;c_test&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;name:  %s&quot;</span>, m-&gt;<span class="built_in">c_get_name</span>());</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;value: %d&quot;</span>, m-&gt;<span class="built_in">get_value</span>());</span><br><span class="line">    <span class="built_in">c_destroyed</span>(m);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1093,7 +1250,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">169</span>
+          <span class="site-state-item-count">170</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1126,6 +1283,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/11/blas/" title="2024&#x2F;01&#x2F;11&#x2F;blas&#x2F;">blas</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/10/llama-cpp/" title="2024&#x2F;01&#x2F;10&#x2F;llama-cpp&#x2F;">llama.cpp</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1136,9 +1296,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/01/tensorrt-llm/" title="2024&#x2F;01&#x2F;01&#x2F;tensorrt-llm&#x2F;">tensorrt-llm</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/12/30/gpt/" title="2023&#x2F;12&#x2F;30&#x2F;gpt&#x2F;">gpt</a>
         </li>
     </ul>
   </div>
@@ -1176,13 +1333,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">421k</span>
+    <span title="站点总字数">422k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:23</span>
+    <span title="站点阅读时长">6:24</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

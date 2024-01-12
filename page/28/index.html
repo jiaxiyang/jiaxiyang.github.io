@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">169</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">170</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -199,6 +199,137 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/07/27/Cpp-to-c-interface/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/27/Cpp-to-c-interface/" class="post-title-link" itemprop="url">Cpp to c interface</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-27 22:43:02" itemprop="dateCreated datePublished" datetime="2020-07-27T22:43:02+08:00">2020-07-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/27/Cpp-to-c-interface/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/27/Cpp-to-c-interface/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>如果给 c++程序 dlopen 用，只需要 create 和 release 接口，c++程序可以拿到 C++头文件定义，可以将 create 指针强转成类对象，用完之后调用 free。</li>
+<li>shared_ptr 两种解决方法(堆上手动管理智能指针，栈由系统自动管理)<ul>
+<li>struct 存 graph</li>
+<li>创建 shared_ptr 的指针，指针不释放 (已经创建栈上的 shared_ptr,没法调用 new)</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jiaxiyang/cpp_sandbox/tree/master/cpp2c">自建 sample</a></li>
+</ul>
+</li>
+</ol>
+<h3 id="extern-“C”-作用"><a href="#extern-“C”-作用" class="headerlink" title="extern “C” 作用"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiangtingshen/p/10980055.html">extern “C” 作用</a></h3><ol>
+<li>extern “C”的主要作用就是为了能够正确实现 C++代码调用其他 C 语言代码。加上 extern “C”后，会指示编译器这部分代码按 C 语言（而不是 C++）的方式进行编译。由于 C++支持函数重载，因此编译器编译函数的过程中会将函数的参数类型也加到编译后的代码中，而不仅仅是函数名；而 C 语言并不支持函数重载，因此编译 C 语言代码的函数时不会带上函数的参数类型，一般只包括函数名。</li>
+<li><code>extern &quot;C&quot; &#123;&#125;</code> 作用是阻止 C++ name mangling, 生成 C 格式符号表</li>
+</ol>
+<h2 id="method-hpp"><a href="#method-hpp" class="headerlink" title="method.hpp"></a>method.hpp</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line">Class Method &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> std::unique_ptr&lt;Method&gt; <span class="title">create</span><span class="params">(std::string name)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">const</span> std::string <span class="title">get_name</span><span class="params">()</span> <span class="type">const</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="method-imp-hpp"><a href="#method-imp-hpp" class="headerlink" title="method_imp.hpp"></a>method_imp.hpp</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;method.hpp&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line">Class MethodImp : <span class="keyword">public</span> Method &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MethodImp</span>(std::string name);</span><br><span class="line">    <span class="function"><span class="type">const</span> std::string <span class="title">get_name</span><span class="params">()</span> <span class="type">const</span> <span class="keyword">override</span></span>;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> name_;</span><br><span class="line">    <span class="type">int</span> value_;</span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> <span class="title class_">c_api</span>;  <span class="comment">// the purpose is to get the private member which can not get from the public interface</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="method-cpp"><a href="#method-cpp" class="headerlink" title="method.cpp"></a>method.cpp</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;method.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;method_imp.hpp&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line"></span><br><span class="line"><span class="function">std::unique_ptr&lt;Method&gt; <span class="title">Method::create</span><span class="params">(std::string name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> std::unique_ptr&lt;Method&gt;&#123;<span class="built_in">static_cast</span>&lt;Method*&gt;(<span class="keyword">new</span> Method&#123;name&#125;)&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="method-imp-cpp"><a href="#method-imp-cpp" class="headerlink" title="method_imp.cpp"></a>method_imp.cpp</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;method_imp.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;c.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line"></span><br><span class="line">MethodImp::<span class="built_in">MethodImp</span>(std::string name)</span><br><span class="line">    : name_&#123;name&#125;,</span><br><span class="line">      value_&#123;<span class="number">1</span>&#125;&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">const</span> std::string <span class="title">MethodImp::get_name</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> name_;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;  <span class="comment">// namespace jia</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* C API implementations */</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;c.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">c_api</span> &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">int</span> <span class="title">get_value</span><span class="params">(<span class="type">c_method_t</span> method)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> self = <span class="built_in">static_cast</span>&lt;jia::Method*&gt;(method);</span><br><span class="line">        <span class="keyword">return</span> self-&gt;value_;  <span class="comment">// to get value_; c_api need to be friend class of MethodImp</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">c_method_t</span> <span class="title">c_create</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> m = jia::Method::<span class="built_in">create</span>(std::<span class="built_in">string</span>(name));</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">static_cast</span>&lt;<span class="type">c_method_t</span>&gt;(m.<span class="built_in">realse</span>());  <span class="comment">// release will move unique_ptr ownership</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">int</span> <span class="title">c_destroyed</span><span class="params">(<span class="type">c_method_t</span> method)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> m = <span class="built_in">static_cast</span>&lt;jia::Method*&gt;(method);</span><br><span class="line">    <span class="keyword">delete</span> m;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">const</span> <span class="type">char</span>* <span class="title">c_get_name</span><span class="params">(<span class="type">c_method_t</span> method)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> self = <span class="built_in">static_cast</span>&lt;jia::Method*&gt;(method);</span><br><span class="line">    <span class="keyword">return</span> self-&gt;<span class="built_in">get_name</span>().<span class="built_in">cstr</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">int</span> <span class="title">c_get_value</span><span class="params">(<span class="type">c_method_t</span> method)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> jia::c_api::<span class="built_in">get_value</span>(method);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="c-h"><a href="#c-h" class="headerlink" title="c.h"></a>c.h</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus  <span class="comment">// c++ will use and c not use</span></span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> &#123;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">void</span>* <span class="type">c_method_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">c_method_t</span> <span class="title">c_create</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* name)</span></span>;  <span class="comment">// create an instance</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">c_destroyed</span><span class="params">(<span class="type">c_method_t</span>)</span></span>;            <span class="comment">// destroy the instance</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">const</span> <span class="type">char</span>* <span class="title">c_get_name</span><span class="params">(<span class="type">c_method_t</span> method)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">c_get_value</span><span class="params">(<span class="type">c_method_t</span> method)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="test-c"><a href="#test-c" class="headerlink" title="test.c"></a>test.c</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;c.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">c_method_t</span> m = <span class="built_in">c_create</span>(<span class="string">&quot;c_test&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;name:  %s&quot;</span>, m-&gt;<span class="built_in">c_get_name</span>());</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;value: %d&quot;</span>, m-&gt;<span class="built_in">get_value</span>());</span><br><span class="line">    <span class="built_in">c_destroyed</span>(m);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/07/26/Memory-concept-and-issues/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -230,7 +361,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-23 17:41:29" itemprop="dateModified" datetime="2023-10-23T17:41:29+08:00">2023-10-23</time>
+                <time title="修改时间：2024-01-12 13:17:23" itemprop="dateModified" datetime="2024-01-12T13:17:23+08:00">2024-01-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -285,7 +416,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+          <h2 id="内存层次结构"><a href="#内存层次结构" class="headerlink" title="内存层次结构"></a>内存层次结构</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://excalidraw.com/#json=-N7aomrQGRUYrTHm4dwLn,GMKTL34P4PREDfV9iTQi4w">示意图</a><br><img src="https://i.ibb.co/M2KRtV9/6-Lx-Su-Yv-CJI.png" alt="示意图"></li>
+</ol>
+<h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://github.com/freelancer-leon/notes/blob/master/kernel/mm/meminfo.md">&#x2F;proc&#x2F;meminfo</a></li>
 <li>RES&#x3D;CODE+DATA 进程使用的、未被换出的物理内存大小</li>
 <li>内存主要关注物理内存, 虚拟内存表示程序文件及链接库大小，并不是所有的都加载到内存</li>
@@ -296,15 +430,15 @@
 <li>进程内存不增长， 系统整体内存一直增长可能是 log 文件写到&#x2F;tmp 目录下</li>
 </ol>
 <h2 id="内存墙"><a href="#内存墙" class="headerlink" title="内存墙"></a>内存墙</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/P6rlEFZGZ6jZqhldmH5UKg">英伟达、高通、特斯拉、Mobileye 芯片真实算力大比拼</a><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/P6rlEFZGZ6jZqhldmH5UKg">英伟达、高通、特斯拉、Mobileye 芯片真实算力大比拼</a> 包含各种内存芯片参数<ul>
 <li>芯片和内存分开， 芯片有最高支持的内存类型。开发板上 ddr 类型才是确认的。所以开发板和实际用的产品可能性能不一样。</li>
 </ul>
 </li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/tSTRBtdNG55COBlUWyCDIg">汽车领域拥抱 Transformer 需要多少算力？1200TOPS 都不够</a></li>
-<li>内存墙是指随着计算能力的持续增长，内存的访问速度相对于处理器的速度提升相对滞后，导致处理器频繁地等待数据。这个不平衡造成的性能瓶颈常常被称为“内存墙”。</li>
+<li><code>内存墙</code>是指随着计算能力的持续增长，内存的访问速度相对于处理器的速度提升相对滞后，导致处理器频繁地等待数据。这个不平衡造成的性能瓶颈常常被称为“内存墙”。</li>
 <li><code>处理器速度的增长</code>：在过去的几十年里，处理器的速度增长迅速，遵循摩尔定律（每 18-24 个月，晶体管的数量翻倍）。这导致了处理器每秒可以执行的指令数大幅增加。</li>
 <li><code>内存速度的增长相对较慢</code>：尽管 DRAM 技术也在不断进步，但与处理器的增速相比，其访问速度和带宽的增长较为缓慢。</li>
-<li><code>访问延迟</code>：当处理器需要从主内存中读取数据时，它经常需要等待几个周期才能获取数据。由于处理器的速度比内存快得多，这种等待成为了一个瓶颈，限制了性能。</li>
+<li><code>访问延迟</code>：当处理器需要从主内存中读取数据时，它经常需要等待几百个周期才能获取数据。由于处理器的速度比内存快得多，这种等待成为了一个瓶颈，限制了性能。</li>
 <li><code>缓存的引入</code>：为了缓解这个问题，现代计算机系统引入了缓存（L1、L2、L3 等）来存储频繁访问的数据。这些缓存比主内存快得多，但容量较小。当缓存未命中时，处理器必须从主内存中获取数据，这会引入延迟。</li>
 <li><code>带宽与延迟</code>：除了访问延迟外，带宽也是一个问题。<code>即使内存的延迟得到改善，处理器仍然可能会被大量的并发内存访问操作所限制，导致带宽成为瓶颈</code></li>
 <li><code>解决方案</code>：有许多方法被提出来试图克服内存墙的问题，包括更智能的缓存策略、预取策略、多线程、多核处理器设计等。此外，新的内存技术，如 HBM (High Bandwidth Memory) 和 3D 堆叠内存，也被引入来提供更高的带宽。<br>总的来说，内存墙描述了一个关键的挑战：随着处理器速度的增长，如何确保它们能够及时地获取所需的数据。这是计算机架构领域的一个核心问题，研究者持续致力于开发新的技术和策略来解决这个问题。</li>
@@ -343,6 +477,8 @@
 <li>Rust 通过所有权系统管理内存，编译器在编译时会根据一系列规则进行检查，拥有数据所有者在离开作用域后自动清除其数据</li>
 </ol>
 <h2 id="内存信息"><a href="#内存信息" class="headerlink" title="内存信息"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wardensky/p/4274180.html">内存信息</a></h2><ol>
+<li><p><code>lshw -class memory</code></p>
+</li>
 <li><p><code>dmidecode|grep Speed</code></p>
 </li>
 <li><p><a target="_blank" rel="noopener" href="https://www.aida64.com/downloads/YWY1MWUxM2E=">windows aida64</a></p>
@@ -1014,167 +1150,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/07/01/Clang-format-usage/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/01/Clang-format-usage/" class="post-title-link" itemprop="url">Clang-format-usage</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-01 13:16:38" itemprop="dateCreated datePublished" datetime="2020-07-01T13:16:38+08:00">2020-07-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-24 11:26:50" itemprop="dateModified" datetime="2023-11-24T11:26:50+08:00">2023-11-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/Clang/" itemprop="url" rel="index"><span itemprop="name">Clang</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/07/01/Clang-format-usage/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/01/Clang-format-usage/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><ol>
-<li>不同版本的 clang-format 输出格式可能不同，需要统一团队版本</li>
-<li>文件中有编码错误的字符不能被 format</li>
-</ol>
-<h2 id="format-check"><a href="#format-check" class="headerlink" title="format check"></a>format check</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/Sarcasm/run-clang-format/tree/master">run-clang-format</a><ul>
-<li><code>-r samples</code> 文件夹</li>
-<li><code>-i</code> 修改</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/clang-format-check">github clang-format-check</a></li>
-<li><a target="_blank" rel="noopener" href="https://developers.redhat.com/articles/2022/02/25/enforce-code-consistency-clang-format#enforce_the_new_coding_rules">enforce-code-consistency-clang-format#enforce_the_new_coding_rules</a></li>
-<li><code>clang-format --Werror -n --verbose test.cpp</code> 可以检测是否符合 clang-format</li>
-<li>cpplint</li>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/69362305">gitlab check</a></li>
-<li><a target="_blank" rel="noopener" href="https://gitlab.com/daverona/pre-commit/cpp">pre-commit</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/zmlovelx/article/details/105196415">git pre commit</a></li>
-</ol>
-<h2 id="Install-clang"><a href="#Install-clang" class="headerlink" title="Install clang"></a>Install clang</h2><ol>
-<li><a target="_blank" rel="noopener" href="http://clang.llvm.org/get_started.html">Build clang from source</a></li>
-<li><a target="_blank" rel="noopener" href="http://clang.llvm.org/docs/ClangFormat.html">Clang format doc</a></li>
-</ol>
-<h2 id="format-config"><a href="#format-config" class="headerlink" title="format config"></a>format config</h2><ol>
-<li><a target="_blank" rel="noopener" href="http://clang.llvm.org/docs/ClangFormatStyleOptions.html">Clang format style</a></li>
-<li><a target="_blank" rel="noopener" href="https://zed0.co.uk/clang-format-configurator/">clang format config 试验</a></li>
-<li><code>AllowShortFunctionsOnASingleLine: None</code> 函数不在一行</li>
-<li><code>SortIncludes: false</code> 头文件不排序</li>
-</ol>
-<h2 id="Bash-Command"><a href="#Bash-Command" class="headerlink" title="Bash Command"></a>Bash Command</h2><ol>
-<li>generate .clang-format<br><code>clang-format -style=llvm -dump-config &gt; .clang-format</code></li>
-<li>Format one cpp file:<br><code>clang-format --style=Google -i test.cpp</code></li>
-<li>Format all cpp files:<br><code>fd &quot;.cpp$&quot; | xargs clang-format --style=Google -i</code></li>
-</ol>
-<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><ol>
-<li><code>git-clang-format-12 or git clang-format-12</code> format staged files</li>
-<li><code>git-clang-format-12 --diff</code> 查看要 format 的变化</li>
-</ol>
-<h2 id="Vim-Config"><a href="#Vim-Config" class="headerlink" title="Vim Config"></a>Vim Config</h2><ol>
-<li>Find clang-format.py in your system and copy the file path.</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> ~ : find /usr -iname <span class="string">&quot;clang-format.py&quot;</span></span><br><span class="line">/usr/local/share/clang/clang-format.py</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>Put the following config in your .vimrc. It will automaticly format the c++ file when the file is saved.</li>
-</ol>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function!</span> <span class="title">Formatonsave</span><span class="params">()</span></span><br><span class="line">  <span class="keyword">let</span> <span class="variable">l:lines</span> = <span class="string">&#x27;all&#x27;</span></span><br><span class="line">  <span class="keyword">let</span> <span class="variable">l:formatdiff</span> = <span class="number">1</span></span><br><span class="line">  <span class="keyword">let</span> <span class="variable">g:clang_format_fallback_style</span> = <span class="string">&#x27;Google&#x27;</span></span><br><span class="line">  <span class="comment">&quot; Remember to repalce the path of clang-format.py</span></span><br><span class="line">  <span class="keyword">pyfile</span> /usr/local/share/clang/clang-format.<span class="keyword">py</span></span><br><span class="line">  <span class="comment">&quot; py3file /usr/local/share/clang/clang-format.py</span></span><br><span class="line"><span class="keyword">endfunction</span></span><br><span class="line"><span class="keyword">autocmd</span> BufWritePre *.h,*.hpp,*.<span class="keyword">cc</span>,*.cpp <span class="keyword">call</span> Formatonsave()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="Emacs-Config"><a href="#Emacs-Config" class="headerlink" title="Emacs Config"></a>Emacs Config</h2><ol>
-<li>use package config</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(use-package clang-format</span><br><span class="line">  :after (cc-mode)</span><br><span class="line">  :config</span><br><span class="line">  (set-default &#x27;clang-format-fallback-style &quot;Google&quot;)</span><br><span class="line">  (add-hook &#x27;c-mode-common-hook #&#x27;(lambda()</span><br><span class="line">                                    (add-hook &#x27;before-save-hook</span><br><span class="line">                                              &#x27;clang-format-buffer t t))))</span><br></pre></td></tr></table></figure>
-
-<h2 id="Config"><a href="#Config" class="headerlink" title="Config"></a>Config</h2><p>Clang-format understands also special comments that switch formatting in a delimited range. The code between a comment <code>// clang-format off or /* clang-format off */ </code>up to a comment <code>// clang-format on or /* clang-format on */ </code>will not be formatted. The comments themselves will be formatted (aligned) normally.</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> formatted_code;</span><br><span class="line"><span class="comment">// clang-format off</span></span><br><span class="line">    <span class="type">void</span>    unformatted_code  ;</span><br><span class="line"><span class="comment">// clang-format on</span></span><br><span class="line"><span class="type">void</span> formatted_code_again;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1246,7 +1221,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">169</span>
+          <span class="site-state-item-count">170</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1279,6 +1254,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/11/blas/" title="2024&#x2F;01&#x2F;11&#x2F;blas&#x2F;">blas</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/10/llama-cpp/" title="2024&#x2F;01&#x2F;10&#x2F;llama-cpp&#x2F;">llama.cpp</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1289,9 +1267,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/01/tensorrt-llm/" title="2024&#x2F;01&#x2F;01&#x2F;tensorrt-llm&#x2F;">tensorrt-llm</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/12/30/gpt/" title="2023&#x2F;12&#x2F;30&#x2F;gpt&#x2F;">gpt</a>
         </li>
     </ul>
   </div>
@@ -1329,13 +1304,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">421k</span>
+    <span title="站点总字数">422k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:23</span>
+    <span title="站点阅读时长">6:24</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

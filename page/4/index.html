@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">169</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">170</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,1118 +195,6 @@
 
           <div class="content index posts-expand">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/11/21/transformer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/21/transformer/" class="post-title-link" itemprop="url">transformer</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-11-21 17:20:45" itemprop="dateCreated datePublished" datetime="2023-11-21T17:20:45+08:00">2023-11-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-11 14:28:17" itemprop="dateModified" datetime="2024-01-11T14:28:17+08:00">2024-01-11</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/11/21/transformer/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/11/21/transformer/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>12k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>11 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>硬 train 一发</li>
-<li><a target="_blank" rel="noopener" href="https://zhouyifan.net/2022/11/12/20220925-Transformer/">attention</a></li>
-<li><a target="_blank" rel="noopener" href="https://stats.stackexchange.com/a/424127">What exactly are keys, queries, and values in attention mechanisms?</a><ul>
-<li>The key&#x2F;value&#x2F;query concept is analogous to retrieval systems. For example, when you search for videos on Youtube, the search engine will map your query (text in the search bar) against a set of keys (video title, description, etc.) associated with candidate videos in their database, then present you the best matched videos (values).</li>
-<li>搜索是 query, 每个视频的信息是 key, query 和所有视频 key 做相关， 然后推荐最相关的视频(value)</li>
-</ul>
-</li>
-<li>只不过解码器的输入是编码器的状态的加权和，而不再是一个简单的中间状态。每一个输出对每一个输入的权重叫做注意力，注意力的大小取决于输出和输入的相关关系</li>
-<li>注意力机制能够无视序列的先后顺序，捕捉序列间的关系</li>
-<li>RNN 本轮的输入状态取决于上一轮的输出状态，这使 RNN 的计算必须串行执行。因此，RNN 的训练通常比较缓慢。</li>
-<li>transformer: 需要对每个输入向量做 3 次 transform, Wq, Wk, Wv，转换矩阵都是学习得到的</li>
-<li>score matrix:自相关矩阵</li>
-<li>预测时就相当于使用编码器(输入)和之前的输出来预测下一个输出； 考虑了输入和输出信息 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=4Bdc55j80l8">Illustrated Guide to Transformers Neural Network: A step by step explanation</a> 图示非常好</li>
-<li>多头是想模拟卷积，可以输出多个通道 由多个 feature，识别多个模式</li>
-<li>模型训练好之后，推理时每个 token 对应的 q,k,v 都固定了，因为 token embedding 后的词向量是固定的，Q,K V 矩阵也是固定的</li>
-<li>每一个 token 都会生成 q,k,v，用 q 去和所有 token 的 k 做相关，根据结果从 k 中提取特征; 例如： how are you How 的 q 会和每个 token 中的 k 提取出一些信息，根据这些信息决定下一个生成的字符，比如 you 中的 k 和 I 很相关（embeding 和训练 决定），从 you 中很可能提取出 I, 然后再根据 how are you I 中重复上一步动作，这就是为什么 token 要和自己做相关，所有 token 相关性是由 embeding 和训练一起决定的?</li>
-<li>kv cache 的长度分别为 <code>head 长度 * 每个 head 向量维度 * token 个数 * 层数</code></li>
-<li>transform llama 各层 shape 参数量和计算量</li>
-<li>推理时才自回归；训练时用相关矩阵(下三角)一步算出所有输出，推理时每次算出当前值与之前 token 注意力，相当于在下三角矩阵加一层，只输出一个预测 token;</li>
-<li>添加 position 信息在输入之后，attention 之前</li>
-<li>decode 训练时加掩码并行，同时输出； 推理时自回归一步一步输出</li>
-<li>encode decoder 架构推理直接有输入和起始符输出，decode only 需要预热</li>
-<li>batch 指的是在模型训练或推理的时候,同时输入模型的样本数量。<ul>
-<li>Transformer 可处理变长序列输入。不同的样本序列长度本来就可能不同,每个 batch 中的最大 token 长度是固定的,短的序列会 padding 补 0。对超长序列做截断,限制最大 token 数</li>
-<li>Transformer 模型的参数在不同的 batch 之间是共享的，而 KV cache 的共享则取决于具体的应用场景和模型配置。在自回归生成任务中，KV cache 通常是特定于单个样本的，不是共享的.</li>
-<li>在 Transformer 模型中,batch size 越大,则 key-value 缓存需要占用的内存空间也越大。</li>
-</ul>
-</li>
-<li>每个词向量(word vectors)代表了“词空间（word space）”中的一个点，具有相似含义的词的位置会更接近彼此。例如，在向量空间中与猫最接近的词包括狗、小猫和宠物。用实数向量表示单词（相对于“C-A-T”这样的字母串）的一个主要优点是，数字能够进行字母无法进行的运算。 <a target="_blank" rel="noopener" href="https://www.understandingai.org/p/large-language-models-explained-with">link</a></li>
-<li>像 ChatGPT 这样的语言模型能够根据单词出现的上下文以不同的向量表示同一个词(前几层 transformer 自动修改)。有一个针对“bank（金融机构）”的向量，还有一个针对“bank（河岸）”的向量。</li>
-<li>前几层专注于理解句子的语法,后面的层则致力于对整个段落的高层次理解。</li>
-<li><code>注意力层</code>从提示的较早部分检索信息，而<code>前馈层</code>使语言模型能够“记住”未在提示中出现的信息。事实上，可以将前馈层视为模型从训练数据中学到的信息的数据库。记忆力在前馈层。靠前的前馈层更可能编码与特定单词相关的简单事实，例如“特朗普经常在唐纳德之后出现”。靠后的层则编码更复杂的关系，如“添加这个向量以将一个国家转换为其首都。</li>
-<li>LLM 的一个关键创新之处在于，它们不需要显式标记的数据。相反，它们通过尝试预测文本段落中下一个单词来学习。几乎任何书面材料都适用于训练这些模型——从维基百科页面到新闻文章再到计算机代码。</li>
-<li>multi head 可能也是一维 把一维 head 当作多维 head</li>
-<li>Perplexity (PPL) 是一个衡量语言模型预测能力的指标。当评估大型语言模型时，PPL 是一个关键指标，因为它直接关系到模型对语言的处理能力。它反映了模型对语言的理解程度，特别是在预测下一个词时的不确定性。PPL 通常是通过在测试集上计算模型的交叉熵损失（cross-entropy loss）并将其转换为 PPL 来得到的。数学上，PPL 定义为交叉熵的指数。<ul>
-<li>低 PPL：意味着模型对数据的预测更准确，对语言的理解更深入。</li>
-<li>高 PPL：表明模型预测不准确，对语言的理解较浅。</li>
-</ul>
-</li>
-</ol>
-<h2 id="attention-计算"><a href="#attention-计算" class="headerlink" title="attention 计算"></a><a target="_blank" rel="noopener" href="https://excalidraw.com/#json=8NSyDtYnsvEG87bX_bOVH,GyCZRAI0zMQ4iesk5tU6Mw">attention 计算</a></h2><p><img src="https://i.ibb.co/ZhBZMds/fz-L82-OZ7od.png" alt="矩阵计算"></p>
-<h2 id="attention-种类"><a href="#attention-种类" class="headerlink" title="attention 种类"></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/t4ytOIuPx0799kkjFs5lbQ">attention 种类</a></h2><h2 id="kv-cache"><a href="#kv-cache" class="headerlink" title="kv cache"></a>kv cache</h2><p><img src="https://i.ibb.co/XCJ85TL/p3k-B45-Mhaj.png" alt="四种attention策略"></p>
-<ol>
-<li>多种 attention 策略<ul>
-<li>dense attention: 计算复杂度为 O(T*T), 缓存 T cache; 当句子超过训练长度时，PPL 增大, 计算复杂度：因为句子长为 T, 需要计算 T 次，每次需要和前 T 个 token 做 attention</li>
-<li>window attention: 计算复杂度为 O(T*L), 缓存 L cache，当句子大于窗口长度时， 模型的 PPL 会急速变大, 因为前几个 token 非常重要， 被换出后影响模型性能</li>
-<li>sliding window attention with re-computing : 计算复杂度为 O(T<em>L</em>L), T 个字符，L 窗口内类似 dense attention, 重新计算 L kv, 相当于缓存 L cache; 每层中会为每个生成的 token 重建最近 token 的 KV 状态。这种方法虽然性能强大，但由于需要在窗口内计算 quadratic attention，因此速度明显较慢; <a target="_blank" rel="noopener" href="https://github.com/mit-han-lab/streaming-llm/issues/33#issuecomment-1758597666">和 window attention 区别</a> The critical distinction is that in sliding window with re-computation, some key states are treated as initial tokens, whereas in window attention, all previous tokens’ KV are computed as if they were middle tokens.<ul>
-<li>re-computation 重置了状态，窗口第一个 token 位置变为 0(位置改变，kv cache 需要重新计算)， 可以扩展为无限长输出，但没有记住无限长; 窗口应该会添加 BOS</li>
-</ul>
-</li>
-<li>sliding window attention:(和 re-computing 有较大区别) 计算复杂度为 O(T*L), 这种方法类似卷积， 一层一层增加感受范围，<ul>
-<li>对于 m 层的 Transformer，receptive field 的大小为 m * L； 增加了感知范围，但没有到无限长， decoder only 时注意有掩码，看不到之前节点的(这条不需要专门处理，多层 decoder 自动有这个特性)<br><img src="https://i.ibb.co/r2c3DLY/p5h-Alp-Fh-TT.png" alt="类似卷积"></li>
-<li><a target="_blank" rel="noopener" href="https://ahelhady.medium.com/understanding-longformers-sliding-window-attention-mechanism-f5d61048a907">Understanding LongFormer’s Sliding Window Attention Mechanism</a> 有图</li>
-</ul>
-</li>
-<li>streaming LLM: 计算复杂度为 O(T*L)</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/mit-han-lab/streaming-llm">streaming-llm</a><ul>
-<li>这个方法并没有增加 LLM 的对上文的记忆，只是让它输入输出无限长</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/mit-han-lab/streaming-llm/blob/main/assets/StreamingLLM.pdf">slides</a></li>
-<li>介绍了多种 cache 方法</li>
-<li>上下文窗口保持不变。只保留最近的标记和注意力汇，丢弃中间的标记。这意味着模型只能处理最新的标记。需要重新计算 position</li>
-<li>StreamingLLM 的优势在于无需刷新缓存就能从最近的标记生成流畅的文本</li>
-<li>利用了 attention sink 现象, 由于 softmax，训练时前几个 token 对最终生成的内容非常关键，是生成内容稳定的关键 token, 如果保留前几个 token， 加上 window attention, 长文本时生成的内容就比较稳定</li>
-<li>这文章感觉就是之前 softmax 的 bug 带来的; 如果流式推理保证 system prompt 不被换出 不就没问题了…</li>
-<li>如何处理后面窗口位置信息的？有技巧，了解一下</li>
-</ul>
-</li>
-<li>llama kv cache<br><img src="https://i.ibb.co/88sYM2f/Cnc1i7-G0qy.png" alt="llama-2-7B"></li>
-<li>在基于 Transformer 的 decoder-only 模型中，包括<code>起始符号</code>在内的每个标记都有与之对应的键值（KV）缓存。</li>
-<li>decoder-only 推理过程，假设 prompt 为 how are you; 先输入 bos token, 生成对应 kv cache, 输入 how, 和 bos 做 attention, 不用管预测，将 are 作为输入，和之前做 attention， 不用管输出，将 you 作为输入， 输出为 I, 将 I 作为输入……<ul>
-<li>注意，如果有随机，每次 bos 生成的 kv cache 不同，对后面结果都有影响</li>
-<li>只要有输出不一样， 每一层的 kv cache 也不同， 会传递</li>
-</ul>
-</li>
-<li>encoder 也要存多有</li>
-</ol>
-<h4 id="变长矩阵乘"><a href="#变长矩阵乘" class="headerlink" title="变长矩阵乘"></a>变长矩阵乘</h4><ol>
-<li>预先申请长为 n 的 kv cache 内存, 使用 for 循环或变长矩阵乘计算 attention，<ul>
-<li>kv cache 长度小于 n 时， 不用移动 kv cache; <a target="_blank" rel="noopener" href="https://chat.openai.com/c/405fe374-fd46-4ec2-85be-ce08e32912ce">link</a></li>
-<li>大于 n 时，<ul>
-<li>环形缓冲区, 先放入到最早的 cache 位置; 不用关心顺序； 然后和所有 kv cache 做 attention; 和 q 直接矩阵乘; 由于每个 KV 对都与序列中的特定位置相关联，移除操作不会改变剩余 KV 对之间的相对位置关系。</li>
-<li>当前 kv 放到 cache 中的末尾，之前的 kv cache 需要向前移动</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h4 id="定长矩阵乘"><a href="#定长矩阵乘" class="headerlink" title="定长矩阵乘"></a>定长矩阵乘</h4><ol>
-<li>矩阵乘时需要 kv cache 是固定长的矩阵，刚开始 kv cache 矩阵需要 padding, 如果分配固定长的 kv cache 矩阵</li>
-<li>padding 利用优化的定长矩阵乘法来加速, 会浪费一些计算</li>
-</ol>
-<h2 id="推理过程："><a href="#推理过程：" class="headerlink" title="推理过程："></a>推理过程：</h2><ol>
-<li>有两个阶段 Prefill Phase 和 Decoding Phase（ FlexGen 中讲的比较清楚）。</li>
-<li>Prefill Phase：称为预处理&#x2F;Encoding。计算并缓存每一层的 key 和 value，其他的不需要缓存。每一个请求的 prompt 需要经过这个阶段，它只计算一次，是并行计算的。这个缓存称为 KV Cache，KV Cache 是整个解码过程中最为核心关键的一块。</li>
-<li>Decoding Phase：生成新 token 阶段，它是串行的，也就是 decode one by one。它用上一步生成的 token，称为当前 token 放到 input 中，然后生成下一个 token。具体包括两步，一是 Lookup KV Cache 计算并输出当前 token 最终 embedding 用来预测下一个 token，二是缓存计算过程中得到的当前 token 在每一层的 key 和 value，update 到第一阶段 Prefill Phase 中的 KV Cache 中。</li>
-<li>无问苍穹 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2311.01282">paper</a>, 有介绍各种推理框架<br><img src="https://i.ibb.co/T1DZvdD/0pemezw-XTa.png" alt="inference"></li>
-</ol>
-<h2 id="decode-only-推理过程-prompt（“how-are-you”）"><a href="#decode-only-推理过程-prompt（“how-are-you”）" class="headerlink" title="decode only 推理过程: prompt（“how are you”）"></a>decode only 推理过程: prompt（“how are you”）</h2><ol>
-<li>BOS Token：<ul>
-<li>开始：推理过程以输入一个特殊的开始标记（BOS, Begin Of Sentence）开始。</li>
-<li>生成 KV 缓存：对于 BOS 标记，模型计算出对应的键（Key）和值（Value），并将它们存储在 KV 缓存中。</li>
-</ul>
-</li>
-<li>逐个处理 Prompt 中的词：<ul>
-<li>对于 prompt 中的每个词（如”how”, “are”, “you”），模型依次进行处理。在处理每个词时，会使用到目前为止累积的 KV 缓存来进行注意力计算。例如，处理”how”时，它会与 BOS 的 KV 进行注意力计算；处理”are”时，它会与 BOS 和”how”的 KV 进行注意力计算，以此类推。<br>每个新词的处理结果也会生成新的 KV 对，这些新的 KV 对被添加到缓存中。</li>
-</ul>
-</li>
-<li>生成响应：<ul>
-<li>当处理完 prompt 中的所有词后，模型开始生成响应。假设首个生成的词是”I”。生成”I”时，会利用到目前为止（包括 BOS 标记和 prompt 中所有词）的所有 KV 缓存。</li>
-</ul>
-</li>
-<li>递归生成：<ul>
-<li>随后，模型继续基于累积的 KV 缓存和已生成的词（如”I”）来生成下一个词。这个过程会持续进行，直到生成一个完整的响应或达到某个终止条件（如特殊的结束标记或达到最大长度限制）。</li>
-</ul>
-</li>
-</ol>
-<h2 id="encoder-only-推理过程"><a href="#encoder-only-推理过程" class="headerlink" title="encoder only 推理过程"></a>encoder only 推理过程</h2><ol>
-<li>在 encoder-only 的 LLM 中，KV 缓存并不是一个主要问题，因为这些模型的设计和应用方式与需要逐步生成和维护上下文状态的 decoder-only 模型不同。在 encoder-only 模型中，更关注的是整个输入序列的一次性处理和理解。</li>
-<li>在 encoder-only 模型中的推理过程与 decoder-only 模型有所不同。encoder-only 模型，如 BERT，通常用于理解、分析或分类文本，而不是像 decoder-only 模型那样用于生成文本。以下是 encoder-only 模型的典型推理过程</li>
-<li><code>输入处理</code>：<ul>
-<li><code>完整的输入</code>：与 decoder-only 模型不同，encoder-only 模型在推理时接收完整的输入序列，如一个句子或段落。这个输入通常包括特殊的标记，如开始（BOS）和结束（EOS）标记。</li>
-<li><code>预处理</code>：输入文本经过标记化（tokenization），转换成模型能够理解的标记序列。</li>
-</ul>
-</li>
-<li><code>通过Encoder层传递</code>：<ul>
-<li><code>编码</code>：整个输入序列被送入模型的多个 encoder 层。在每一层中，通过自注意力机制和前馈神经网络，模型学习到输入中每个标记的上下文表示。</li>
-<li><code>自注意力计算</code>：在自注意力阶段，每个标记都考虑到序列中所有其他标记的信息，以捕捉内部的上下文关系。</li>
-</ul>
-</li>
-<li><code>输出提取</code>：<ul>
-<li><code>特定任务的输出</code>：根据任务的不同，模型的输出被相应地处理。例如，对于分类任务，模型可能只使用特定标记（如[CLS]）的最终隐藏状态；对于命名实体识别或问答任务，模型可能输出每个标记的特征表示。</li>
-</ul>
-</li>
-<li><code>后处理</code>：<ul>
-<li><code>映射到任务</code>：模型输出被映射到具体任务的要求上，如将隐藏状态映射到类别标签或其他输出格式。</li>
-<li><code>生成最终结果</code>：模型的输出经过适当的后处理步骤（如 softmax 层，用于分类任务），以生成最终的推理结果。</li>
-</ul>
-</li>
-<li>推理特点<ul>
-<li><code>不生成文本</code>：encoder-only 模型通常不用于生成文本，而是用于理解或分类输入文本。</li>
-<li><code>全局上下文</code>：模型在处理输入时同时考虑所有标记的上下文，与 decoder-only 模型逐步生成的方式不同。</li>
-<li><code>特定任务适用</code>：这类模型通常针对特定的 NLP 任务进行训练和优化，如情感分析、文本分类、实体识别等。</li>
-</ul>
-</li>
-</ol>
-<h2 id="关键操作"><a href="#关键操作" class="headerlink" title="关键操作"></a>关键操作</h2><ol>
-<li>multi head attention</li>
-<li>feed forward</li>
-<li>layernorm</li>
-<li>softmax</li>
-<li>matmul</li>
-<li>concat</li>
-<li>linear(生成 q, k, v) Q, K, V</li>
-</ol>
-<h2 id="参数、计算复杂度和-cache-统计"><a href="#参数、计算复杂度和-cache-统计" class="headerlink" title="参数、计算复杂度和 cache 统计"></a>参数、计算复杂度和 cache 统计</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://epochai.org/mlinputs/visualization?yAxis=Parameters">Model Size of Notable Machine Learning Systems Over Time</a> 可交互, 右上角 option 可搜索，可直接到论文</li>
-<li><a target="_blank" rel="noopener" href="https://kipp.ly/transformer-inference-arithmetic/">transformer-inference-arithmetic</a></li>
-</ol>
-<h3 id="transformer-all-you-need-is-attention"><a href="#transformer-all-you-need-is-attention" class="headerlink" title="transformer(all you need is attention)"></a>transformer(all you need is attention)</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/harvardnlp/annotated-transformer">harvardnlp&#x2F;annotated-transformer</a></li>
-<li>注意：模型结构定义并不决定 forward 流程，可以有多个函数，使用网络中不同的部分</li>
-<li>base model info: embeding 参数可能会共享</li>
-</ol>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line">EncoderDecoder(</span><br><span class="line">  (encoder): Encoder(</span><br><span class="line">    (layers): ModuleList(</span><br><span class="line">      (0-5): EncoderLayer(</span><br><span class="line">        (self_attn): MultiHeadedAttention(</span><br><span class="line">          (linears): ModuleList(</span><br><span class="line">            (0): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (1): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (2): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (3): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">          )</span><br><span class="line">          (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">        )</span><br><span class="line">        (feed_forward): PositionwiseFeedForward(</span><br><span class="line">          (w_1): Linear(in_features=512, out_features=2048, bias=True)</span><br><span class="line">          (w_2): Linear(in_features=2048, out_features=512, bias=True)</span><br><span class="line">          (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">        )</span><br><span class="line">        (sublayer): ModuleList(</span><br><span class="line">          (0): SublayerConnection(</span><br><span class="line">            (norm): LayerNorm()</span><br><span class="line">            (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">          )</span><br><span class="line">          (1): SublayerConnection(</span><br><span class="line">            (norm): LayerNorm()</span><br><span class="line">            (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">          )</span><br><span class="line">        )</span><br><span class="line">      )</span><br><span class="line">    (norm): LayerNorm()</span><br><span class="line">  )</span><br><span class="line">  (decoder): Decoder(</span><br><span class="line">    (layers): ModuleList(</span><br><span class="line">      (0-5): DecoderLayer(</span><br><span class="line">        (self_attn): MultiHeadedAttention(</span><br><span class="line">          (linears): ModuleList(</span><br><span class="line">            (0): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (1): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (2): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (3): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">          )</span><br><span class="line">          (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">        )</span><br><span class="line">        (src_attn): MultiHeadedAttention(</span><br><span class="line">          (linears): ModuleList(</span><br><span class="line">            (0): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (1): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (2): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (3): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">          )</span><br><span class="line">          (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">        )</span><br><span class="line">        (feed_forward): PositionwiseFeedForward(</span><br><span class="line">          (w_1): Linear(in_features=512, out_features=2048, bias=True)</span><br><span class="line">          (w_2): Linear(in_features=2048, out_features=512, bias=True)</span><br><span class="line">          (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">        )</span><br><span class="line">        (sublayer): ModuleList(</span><br><span class="line">          (0): SublayerConnection(</span><br><span class="line">            (norm): LayerNorm()</span><br><span class="line">            (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">          )</span><br><span class="line">          (1): SublayerConnection(</span><br><span class="line">            (norm): LayerNorm()</span><br><span class="line">            (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">          )</span><br><span class="line">          (2): SublayerConnection(</span><br><span class="line">            (norm): LayerNorm()</span><br><span class="line">            (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">          )</span><br><span class="line">        )</span><br><span class="line">      )</span><br><span class="line">    (norm): LayerNorm()</span><br><span class="line">  )</span><br><span class="line">  (src_embed): Sequential(</span><br><span class="line">    (0): Embeddings(</span><br><span class="line">      (lut): Embedding(32000, 512)</span><br><span class="line">    )</span><br><span class="line">    (1): PositionalEncoding(</span><br><span class="line">      (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line">  (tgt_embed): Sequential(</span><br><span class="line">    (0): Embeddings(</span><br><span class="line">      (lut): Embedding(32000, 512)</span><br><span class="line">    )</span><br><span class="line">    (1): PositionalEncoding(</span><br><span class="line">      (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line">  (generator): Generator(</span><br><span class="line">    (proj): Linear(in_features=512, out_features=32000, bias=True)</span><br><span class="line">  )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>参数总量：65M,论文中有提及</li>
-</ol>
-<h3 id="llama2-7b"><a href="#llama2-7b" class="headerlink" title="llama2-7b"></a><a target="_blank" rel="noopener" href="https://huggingface.co/meta-llama/Llama-2-7b-hf/blob/main/config.json">llama2-7b</a></h3><ol>
-<li>model info</li>
-</ol>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">LlamaForCausalLM(</span><br><span class="line">  (model): LlamaModel(</span><br><span class="line">    (embed_tokens): Embedding(32000, 4096, padding_idx=0)</span><br><span class="line">    (layers): ModuleList(</span><br><span class="line">      (0-31): 32 x LlamaDecoderLayer(</span><br><span class="line">        (self_attn): LlamaAttention(</span><br><span class="line">          (q_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (k_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (v_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (o_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (rotary_emb): LlamaRotaryEmbedding()</span><br><span class="line">        )</span><br><span class="line">        (mlp): LlamaMLP(</span><br><span class="line">          (gate_proj): Linear(in_features=4096, out_features=11008, bias=False) # 输入是 in_features, 输出为 out_features, 矩阵参数shape为（out_features, in_features); 因为矩阵乘法：(out_features, in_features)(in_features, 1) = (out_features, 1)</span><br><span class="line">          (up_proj): Linear(in_features=4096, out_features=11008, bias=False)</span><br><span class="line">          (down_proj): Linear(in_features=11008, out_features=4096, bias=False)</span><br><span class="line">          (act_fn): SiLUActivation()</span><br><span class="line">        )</span><br><span class="line">        (input_layernorm): LlamaRMSNorm()</span><br><span class="line">        (post_attention_layernorm): LlamaRMSNorm()</span><br><span class="line">      )</span><br><span class="line">    )</span><br><span class="line">    (norm): LlamaRMSNorm()</span><br><span class="line">  )</span><br><span class="line">  (lm_head): Linear(in_features=4096, out_features=32000, bias=False)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><p>参数: 见 pytorch params 计算，<a target="_blank" rel="noopener" href="https://medium.com/@saratbhargava/mastering-llama-math-part-1-a-step-by-step-guide-to-counting-parameters-in-llama-2-b3d73bc3ae31">link</a></p>
-<ul>
-<li>total: 131072000 + 6476267520 + 4096 + 131072000 &#x3D; 6738415616 &#x3D; 6.7B<ul>
-<li>embed_tokens: (32000, 4096) &#x3D; 131072000</li>
-<li>attention block x 32 &#x3D; 202383360 x 32 &#x3D; 6476267520<ul>
-<li>attention layer:4 x (4096, 4096) &#x3D; 67108864</li>
-<li>mlp: 2 x (11008, 4096) + (4096, 11008) &#x3D; 135266304 (占比最大)</li>
-<li>input layernorm: (4096) &#x3D; 4096</li>
-<li>post_attention_layernorm: (4096) &#x3D; 4096</li>
-</ul>
-</li>
-<li>norm: (4096) &#x3D; 4096</li>
-<li>lm_head:(32000, 4096) &#x3D; 131072000</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>计算复杂度：</p>
-<ul>
-<li>total: O(l(n^2 x d + ndd’ + nd)) ; l 为层数; 不要考虑 kv cache 更好理解, 加掩码的矩阵乘<ul>
-<li>Multi-head self-attention 层 计算复杂度主要来自注意力机制的计算。对于序列长度为 n,hidden size 为 d 的 self-attention,其复杂度为 O(n^2 x d)；（n, d)(d, n) &#x3D;&gt; O(n^2 x d); 包含 cache 的也等价矩阵乘</li>
-<li>前馈全连接层 这一层包含两个仿射变换,如果其 width 为 d’,那么复杂度为 O(n x d x d’)； (n, d)(d, d’) &#x3D;&gt; O(ndd’)</li>
-<li>Layer normalization 对序列长度为 n, 向量维度为 d,其复杂度为 O(n x d)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>kv cache</p>
-<ul>
-<li><code>BS * layers * kv-heads * heads-d * N * 2(kv) * sizeof(fp16) = BS * 32 * 32 * 128 * N * 2 * 2 = 0.5MB * BS * N</code> 注：128 &#x3D; 4096 &#x2F; 32</li>
-</ul>
-</li>
-</ol>
-<h2 id="hugging-face-transformers"><a href="#hugging-face-transformers" class="headerlink" title="hugging face transformers"></a><a target="_blank" rel="noopener" href="https://github.com/huggingface/transformers">hugging face transformers</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/index">doc</a></li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/installation#offline-mode">offline-model</a></li>
-<li>模型文件页面右侧有对应使用方法</li>
-<li>模型里有 onnx</li>
-<li>只需要模型和对应的 config.json</li>
-<li>sample: <a target="_blank" rel="noopener" href="https://huggingface.co/Xenova/llama2.c-stories15M/tree/main">llama2.c-stories15M</a></li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoTokenizer, AutoModelForCausalLM</span><br><span class="line">tokenizer = AutoTokenizer.from_pretrained(<span class="string">&quot;/home/xiyang/d/working/transformers/models/&quot;</span>)</span><br><span class="line">model = AutoModelForCausalLM.from_pretrained(<span class="string">&quot;/home/xiyang/d/working/transformers/models/&quot;</span>)</span><br><span class="line">model <span class="comment"># 查看模型结构</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/transformer_tutorial.html">pytorch transformer_tutorial</a></li>
-<li><a target="_blank" rel="noopener" href="https://nn.labml.ai/transformers/mha.html">nn.labml.ai&#x2F;transformers&#x2F;mha</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=4Bdc55j80l8">Illustrated Guide to Transformers Neural Network: A step by step explanation</a> 图示非常好</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/harvardnlp/annotated-transformer">harvardnlp&#x2F;annotated-transformer</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=nzqlFIcCSWQ">Transformer 论文逐段精读</a><br>代码带解说 李沐](<a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_attention-mechanisms/transformer.html">https://zh.d2l.ai/chapter_attention-mechanisms/transformer.html</a>)</li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/quicktour">quicktour</a> can run in colab</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2009.06732">Efficient Transformers: A Survey</a>s</li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/installation#fetch-models-and-tokenizers-to-use-offline">fetch-models-and-tokenizers-to-use-offline</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/huggingface/transformers">huggingface&#x2F;transformers</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1706.03762.pdf">Attention Is All You Need (Transformer) 论文</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhouyifan.net/2022/11/12/20220925-Transformer/">(good)Attention Is All You Need (Transformer) 论文精读</a></li>
-</ol>
-<h3 id="李宏毅"><a href="#李宏毅" class="headerlink" title="李宏毅"></a><a target="_blank" rel="noopener" href="https://www.youtube.com/@HungyiLeeNTU/playlists">李宏毅</a></h3><ol>
-<li><a target="_blank" rel="noopener" href="https://hackmd.io/@shaoeChen/rJlRfP7mL">Transformer</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=hYdO9CscNes">self attention</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/505105707">Self-attention 自注意力机制讲解 李宏毅版 v.s 吴恩达版</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/11/21/LLM/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/21/LLM/" class="post-title-link" itemprop="url">LLM</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-11-21 16:24:03" itemprop="dateCreated datePublished" datetime="2023-11-21T16:24:03+08:00">2023-11-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-11 11:16:56" itemprop="dateModified" datetime="2024-01-11T11:16:56+08:00">2024-01-11</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/11/21/LLM/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/11/21/LLM/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="LLM-进化树"><a href="#LLM-进化树" class="headerlink" title="LLM 进化树"></a><a target="_blank" rel="noopener" href="https://github.com/Mooler0410/LLMsPracticalGuide">LLM 进化树</a></h2><p><img src="https://github.com/Mooler0410/LLMsPracticalGuide/raw/main/imgs/tree.jpg" alt="LLM 进化树"></p>
-<h2 id="concept"><a href="#concept" class="headerlink" title="concept"></a>concept</h2><ol>
-<li><code>General Matrix Multiply (GeMM)</code><ul>
-<li><code>C = αAB + βC</code></li>
-<li>GEMM 是一种更通用的矩阵乘法操作。它不仅包括两个矩阵的乘法，还可以包括对这两个矩阵进行转置或共轭转置，以及将结果乘以一个标量或与另一个矩阵的和。</li>
-<li>在函数接口上,GEMM 通常需要传入更多的参数,包括缩放因子、转置选项等。而 matmul 接口更加简洁。</li>
-<li>在一些深度学习框架如 TensorFlow 和 PyTorch 中,matmul 是矩阵乘法的默认操作。而 GEMM 则由于其优化,常被用在需要高性能的场景。</li>
-</ul>
-</li>
-<li>奇怪的话可以放到 midjouney(or dell-e) 画出图像，助于理解</li>
-<li>token(令牌?) 是某个领域中一个抽象的语法或逻辑单元的称呼。在自然语言处理中,token 指一个文本串中基本的符号。比如一个句子可以被切分为多个词(word),每个词就是一个 token。</li>
-<li>prompt 提示很重要</li>
-<li>机器来找 prompt(提示)： hard prompt, soft prompt(adpter 放在 input), using reinforcement learning(加 generator), 让 llm 自己产生自己 prompt</li>
-<li>toolformer: 使用工具</li>
-<li>token 中文是字， 英文是 word piece, word 太多; unbreakable -&gt; un break able</li>
-<li>model 本质是函数</li>
-<li>prompting 给 chatgpt 催眠，设置限制，让 chatgpt 回答某方便问题，如设置中文聊天</li>
-<li>neural editing 训练好模型改参数</li>
-<li>machine unlearning 忘记曾经学过的东西， 遗忘某些涉密问题</li>
-<li>hyperparameter 超参数，学习算法的参数，不是神经网络的参数</li>
-<li>文字冒险游戏： chatgpt + midjourney + 语音</li>
-<li>腾讯语音情感 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2301.13662">https://arxiv.org/abs/2301.13662</a> <a target="_blank" rel="noopener" href="https://dongchaoyang.top/InstructTTS/">https://dongchaoyang.top/InstructTTS/</a></li>
-<li>embeddings:在某种程度上，就是用来降维的，降维的原理就是矩阵乘法 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/164502624">一文读懂 Embedding 的概念</a></li>
-<li><a target="_blank" rel="noopener" href="https://platform.openai.com/tokenizer">tokenizer</a></li>
-<li>tokenizer 是将文本进行分词,通常分为单词(word)或子词(subword)单元。它的目标是划分语料的基本符号。embeddings 是将语料库中的词或字符映射到 dense 向量表示。通常先经过 tokenizer 得到词单元,然后再映射为稠密词向量。tokenizer 侧重文本符号的划分,主要方法是基于词典或规则进行分割。embeddings 侧重语义信息的编码,主要方法是基于语料训练词向量。</li>
-<li>AGI (Artificial General Intelligence): 人工通用智能或通用人工智能，是指在任何智能任务上都能表现得与人类智能相媲美的人工智能系统。</li>
-<li>AIGC (AI-Generated Content): 人工智能生成内容，指的是通过人工智能算法和模型自动或半自动生成的内容。这包括文本、图像、音乐、视频和其他媒体形式。</li>
-<li>大模型（Large Language Model，LLM）<br><img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/1_Welcome_GenerativeMeena_CL_V02_150521_v2_720_25fps.gif" alt="示意"></li>
-<li>模型大小 7B(billion), 7B 表示 70 亿个可训练参数。吉比（gigabyte）是一个信息技术单位，。十亿（billion）是一个计数单位， 参数类型(float, int8)和数量(billion)决定模型的大小(gigabyte)</li>
-<li>Bard 是由 Google 开发的生成式人工智能聊天机器人，最初基于大型语言模型的 LaMDA 系列，后来基于 PaLM2。</li>
-<li>基础架构 transformer</li>
-<li><a target="_blank" rel="noopener" href="https://claude.ai/chats">claude</a> chatgpt 主要竞争对手</li>
-<li>webgpt: 产生的内容带引用网址, 先 gpt 处理文字， 得到关键字用于搜索引擎搜索，得到各网页结果，然后处理搜索结果，然后点选，处理网页中的内容，关联的收藏起来， 可以产生多个关键字， 多次搜索， 最终有多个收藏， 只处理这些收藏</li>
-<li>chatgpt 文字接龙， bert 文字填空</li>
-<li>大模型可以帮助完成强有力的事情 “A mouse riding on the head of an elephant, using reins to steer the giant creature.” (powered by Midjourney )</li>
-<li>对于大模型的期待：专才(finetune, adapter)，通才(instruction learning， in-context learning)</li>
-<li>finetune: update network parameters by gradient descent</li>
-<li>adapter(efficient fine tuning): 大模型加入插件(例如：加一层)， 只调整新添加插件参数, 优势：不用调整大模型原始参数</li>
-<li>in-context learning(示例学习): 给一些例子， 例子可能只是用于启动任务, 唤醒记忆。 更大的模型可能从例子学习到信息更多, 输入一些分类 feature 例子(直接给数字和 label)，可以将大模型变为一个分类器</li>
-<li>learing in-context learning: 学习示例学习结果更好，但数据难收集</li>
-<li>instruction learning</li>
-<li>chain-of-thought(CoT) prompting: 训练时给出推论再给结果， 结果正确率会高很多。多次推论有不同的答案再投票.。 （chatgpt 默认列出计算过程，如果不让列详细过程， 结果可能会差）</li>
-<li>参数越多，数据越多， 效果越好</li>
-<li>emergent ability 顿悟时刻 <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2206.07682.pdf">Emergent Abilities of Large Language Models</a> 10B</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2207.05221">Language Models (Mostly) Know What They Know</a></li>
-<li>calibration: 大模型 softmax 分数越高，正确率越高，大模型知道知己是否在瞎掰</li>
-<li>模型越大结果越差例子： <a target="_blank" rel="noopener" href="https://github.com/inverse-scaling/prize">inverse-scaling&#x2F;prize</a>, 更大的模型可能会顿悟，结果会更好; U-shaped U 型曲线</li>
-<li><a target="_blank" rel="noopener" href="https://www.jmlr.org/papers/v23/21-0998.html">Switch Transformers</a> 训练时用所有参数，推理时只用部分参数，加快推理运行</li>
-<li>从数据中学习语言：世界知识(尝试)， 语言知识</li>
-<li>data preparation: 数据处理<ul>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2112.11446">Scaling Language Models: Methods, Analysis &amp; Insights from Training Gopher</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2107.06499">Deduplicating Training Data Makes Language Models Better</a></li>
-</ul>
-</li>
-<li>固定算力资源情况下：模型参数(思考)， data(学习) 成反比； 大模型小数据(思而不学)， 小模型大数据(学而不思); 学思应该平衡<ul>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2203.15556">Training Compute-Optimal Large Language Models</a> 给出算力，参数量和数据量如何确定</li>
-<li>LLaMa 使用了这个知识</li>
-</ul>
-</li>
-<li>fintuning 和 reinforcement lerning 效果很好 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2203.02155">Training language models to follow instructions with human feedback</a> 小模型也可以胜大模型</li>
-<li>openai 收齐了很多问题，所以即使 chatgpt 模型不那么大，也比更大模型好</li>
-<li><code>MoE(Mixture of Experts)</code>模型指的是专家混合模型,是一类将多个模型专家进行混合的组合结构。例如： Mixtral 8x7B</li>
-</ol>
-<h2 id="生成内容"><a href="#生成内容" class="headerlink" title="生成内容"></a>生成内容</h2><ol>
-<li>文本</li>
-<li>语音</li>
-<li>声音</li>
-<li>图像</li>
-<li>视频</li>
-</ol>
-<h2 id="生成方式"><a href="#生成方式" class="headerlink" title="生成方式"></a>生成方式</h2><ol>
-<li><p>各个击破 Autoregressive(AR) model</p>
-<ul>
-<li>速度慢 无法并行</li>
-<li>质量高</li>
-<li>常用于文字生成</li>
-</ul>
-</li>
-<li><p>一次到位 Non-autoregressive(NAR) model</p>
-<ul>
-<li>速度快</li>
-<li>质量较差</li>
-<li>冲用于图片生成</li>
-</ul>
-</li>
-<li><p>各个击破和一次到位结合</p>
-<ul>
-<li>先各个击破产生中间产物(先决定大方向)，再一次到位</li>
-<li>一次到位改成 N 次到位(先一次到位再各个击破) diffusion model</li>
-</ul>
-</li>
-</ol>
-<h3 id="多任务学习-Multi-Task-Learning-和多模态学习-Multimodal-Learning"><a href="#多任务学习-Multi-Task-Learning-和多模态学习-Multimodal-Learning" class="headerlink" title="多任务学习(Multi-Task Learning)和多模态学习(Multimodal Learning)"></a>多任务学习(Multi-Task Learning)和多模态学习(Multimodal Learning)</h3><ol>
-<li><p>目标差异</p>
-<ul>
-<li>多任务学习的目标是同时学习多个相关的任务,在不同任务间实现知识迁移,从而 mutually improve 模型的泛化性能。</li>
-<li>而多模态学习是为了建模和理解包含多个模态(文本、图像、语音等)的单一任务或场景。</li>
-</ul>
-</li>
-<li><p>方法差异</p>
-<ul>
-<li>多任务学习通常是共享底层特征表示,在顶层分出多个 task-specific 的输出层。</li>
-<li>多模态学习则更关注不同模态间的交互建模、对齐、融合,学习联合的媒体表征。</li>
-</ul>
-</li>
-<li><p>应用差异</p>
-<ul>
-<li>多任务学习的应用更广泛,从计算机视觉、NLP 到健康领域都有。</li>
-<li>多模态应用更集中在人机交互、信息检索、场景理解等领域。</li>
-</ul>
-</li>
-<li><p>总结</p>
-<ul>
-<li>多任务学习 optimize 同一模型在不同任务上的泛化性能</li>
-<li>多模态学习 optimize 不同媒体表征的融合,用于理解复杂的多模态场景或问题。</li>
-</ul>
-</li>
-</ol>
-<h3 id="多模态"><a href="#多模态" class="headerlink" title="多模态"></a>多模态</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://openai.com/research/clip">clip</a> <a target="_blank" rel="noopener" href="https://imzhanghao.com/2022/10/27/multimodal-learning/">multimodal-learning 中文解析</a></li>
-</ol>
-<h2 id="排名"><a href="#排名" class="headerlink" title="排名"></a>排名</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://crfm.stanford.edu/helm/lite/latest/#/leaderboard">stanford helm leaderboard</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/CLUEbenchmark/SuperCLUE">SuperCLUE 中文通用大模型综合性基准</a></li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard">open_llm_leaderboard</a></li>
-<li><a target="_blank" rel="noopener" href="https://arena.lmsys.org/">UC 伯克利发布大模型排行榜 需要查看 leaderboard</a></li>
-</ol>
-<h2 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://laion.ai/">laion</a> 5B images, 图像生成训练集<ul>
-<li><a target="_blank" rel="noopener" href="https://rom1504.github.io/clip-retrieval/?back=https://knn.laion.ai&index=laion5B-H-14&useMclip=false">online search</a></li>
-</ul>
-</li>
-</ol>
-<h2 id="huggine-face"><a href="#huggine-face" class="headerlink" title="huggine face"></a>huggine face</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/models">models</a></li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard">open_llm_leaderboard</a></li>
-<li><code>dataset = load_dataset(&quot;/mnt/data-2/home/xiyang.jia/TensorRT-LLM/examples/bloom/cnn_dailymail/cnn_dailymail.py&quot;, &quot;3.0.0&quot;)</code> 从本地加载数据集</li>
-</ol>
-<h2 id="sota-models"><a href="#sota-models" class="headerlink" title="sota models"></a>sota models</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://openai.com/gpt-4">gpt-4</a></li>
-<li><a target="_blank" rel="noopener" href="https://ai.meta.com/llama/">llama</a></li>
-<li><a target="_blank" rel="noopener" href="https://ai.google/discover/palm2/">palm2</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.anthropic.com/index/claude-2">claude-2</a></li>
-</ol>
-<h2 id="llama"><a href="#llama" class="headerlink" title="llama"></a><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/llama">llama</a></h2><ol>
-<li>读音： 拉马（西班牙语通话的意思)</li>
-<li>clone 之后执行 download.sh, 需要官网申请的 url</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/llama-recipes/tree/main/demo_apps">demo_apps</a></li>
-</ol>
-<h2 id="gpt"><a href="#gpt" class="headerlink" title="gpt"></a>gpt</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=kCc8FmEb1nY">Let’s build GPT: from scratch, in code, spelled out.</a></li>
-<li>GPT(generative pre-trained transformer)</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/run-llama/rags">rags</a> RAGs is a Streamlit app that lets you create a RAG pipeline from a data source using natural language.</li>
-<li>chatgpt：文字接龙</li>
-<li>gpt 自监督学习(pre train)得到的模型(基础模型)，chatgpt 在 gpt 基础上监督学习(finetune)</li>
-<li>chatgpt 实际是分类问题， 从使用者角度是生成式学习（生成句子：多个分类问题）</li>
-<li>chatgpt 评价是增强学习</li>
-<li>chatgpt: gpt -&gt; 监督学习 -&gt; 增强学习</li>
-</ol>
-<h2 id="bing-copilot"><a href="#bing-copilot" class="headerlink" title="bing copilot"></a><a target="_blank" rel="noopener" href="https://www.bing.com/">bing copilot</a></h2><h2 id="precision-精度"><a href="#precision-精度" class="headerlink" title="precision 精度"></a>precision 精度</h2><ol>
-<li>float32</li>
-<li>float16</li>
-<li>bfloat16</li>
-<li>8bit</li>
-<li>4bit</li>
-<li>GPTQ</li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/Mooler0410/LLMsPracticalGuide">LLMsPracticalGuide</a></li>
-<li><a target="_blank" rel="noopener" href="https://z7nobhiey2.feishu.cn/file/JTa0bZ38RohzwTx9zjucuDmunVe">oneflow 技术年货 2023</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=yiY4nPOzJEg&list=PLJV_el3uVTsOePyfmkfivYZ7Rqr2nMk3W">李宏毅 生成式 AI</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=zjkBMFhNj_g">Intro to Large Language Models</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLFXJ6jwg0qW-7UM8iUTj3qKqdhbQULP5I">李沐论文精度</a></li>
-<li><a target="_blank" rel="noopener" href="https://openai.com/research/clip">openai.com&#x2F;research</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/11/15/shareX/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/15/shareX/" class="post-title-link" itemprop="url">shareX</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-11-15 14:11:38" itemprop="dateCreated datePublished" datetime="2023-11-15T14:11:38+08:00">2023-11-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-16 10:47:54" itemprop="dateModified" datetime="2023-11-16T10:47:54+08:00">2023-11-16</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/11/15/shareX/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/11/15/shareX/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>66</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>设置上传 url<br><img src="https://i.ibb.co/3C66vgd/UQTv-UKxj-Vi.png" alt="设置上传url"></li>
-</ol>
-<h2 id="设置自定义服务器"><a href="#设置自定义服务器" class="headerlink" title="设置自定义服务器"></a>设置自定义服务器</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://api.imgbb.com/">imagebb 生成 key</a><br><img src="https://i.ibb.co/Dz3Xkyn/Jf4m-Fd-WXg-F.png" alt="生成key"></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/ShareX/CustomUploaders/blob/master/imgbb.com.sxcu">自定义目标设置贴入，修改 key</a><br><img src="https://i.ibb.co/MM2mLg5/2z4l9e-PS2x.png" alt="修改key"><br><img src="https://i.ibb.co/TwmGMk8/BUHj-Zwd0ke.png" alt="key"></li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://getsharex.com/">shareX</a></li>
-<li><a target="_blank" rel="noopener" href="https://imgbb.com/">图片共享</a></li>
-<li><a target="_blank" rel="noopener" href="https://imgur.com/">imgur</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/11/10/nvidia/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/10/nvidia/" class="post-title-link" itemprop="url">nvidia</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-11-10 11:45:20" itemprop="dateCreated datePublished" datetime="2023-11-10T11:45:20+08:00">2023-11-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-10 19:48:56" itemprop="dateModified" datetime="2024-01-10T19:48:56+08:00">2024-01-10</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/11/10/nvidia/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/11/10/nvidia/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://epochai.org/blog/trends-in-machine-learning-hardware">trends-in-machine-learning-hardware</a></li>
-<li><code>export CUDA_VISIBLE_DEVICES=0,1</code>强制使用哪几个 GPU 上</li>
-</ol>
-<h2 id="查看-GPU-info"><a href="#查看-GPU-info" class="headerlink" title="查看 GPU info"></a>查看 GPU info</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/nvidia/cuda-samples">cuda-sample</a> 见 cuda.md<ul>
-<li><code>cd /usr/local/cuda-12/samples/1_Utilities/deviceQuery &amp;&amp; make &amp;&amp; ./deviceQuery</code> 查看 gpu 详细信息</li>
-</ul>
-</li>
-</ol>
-<h3 id="server"><a href="#server" class="headerlink" title="server"></a>server</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/michaelcjl/p/16657548.html">nvidia-smi 命令参数含义</a></li>
-<li><code>nvidia-smi</code> 可以看出每个 GPU 的显存总量和使用量 还可以看到 cuda 版本</li>
-<li><code>nvidia-smi -L</code>列出 GPU 列表, 查看 GPU 先开显卡型号</li>
-<li><code>nvidia-smi -l 1</code> 会每秒更新一次显示信息。<code>watch -n 1 nvidia-smi</code> 类似 top</li>
-<li><code>nvidia-smi -q</code> 查看 GPU 信息</li>
-<li><code>free -h</code> 看内存，注意服务器上内存和显存不一样, 不共享; PCIe 接在服务器上。 服务器市场的需求与集成设备（如 Jetson 系列）不同。服务器用户通常需要高度定制化的解决方案，可以独立升级和优化各个组件，而集成设备则更注重成本效益和空间效率。</li>
-<li>加速器：不包含 arm</li>
-</ol>
-<h2 id="edge"><a href="#edge" class="headerlink" title="edge"></a>edge</h2><ol>
-<li>SOC: 包含 arm</li>
-<li>NVIDIA Jetson 系列设备，包括像 Jetson Nano、Jetson TX1&#x2F;TX2、Jetson Xavier、 Jetson Orin 等，使用的是 NVIDIA 的 <code>Tegra</code> 架构。在这种架构中，CPU 和 GPU 确实共享内存，这被称为<code>统一内存（Unified Memory）或共享内存</code>。</li>
-<li>统一内存的优缺点：<a target="_blank" rel="noopener" href="https://chat.openai.com/c/c4285778-9988-4bba-80b2-0ae08689af88">link</a><ul>
-<li>优点：简化编程模型， 提高效率</li>
-<li>缺点：内存访问延迟，带宽限制，复杂的内存管理</li>
-</ul>
-</li>
-<li>tegra 是 SOC 架构</li>
-<li><code>jtop</code> <a target="_blank" rel="noopener" href="https://github.com/rbonghi/jetson_stats">jetson_stats</a> jetson-stats is a package for monitoring and control your NVIDIA Jetson [Orin, Xavier, Nano, TX] series.</li>
-<li><code>jetson_release</code></li>
-</ol>
-<h2 id="产品"><a href="#产品" class="headerlink" title="产品"></a>产品</h2><ol>
-<li>性能参数：产品 -&gt; 规格</li>
-<li><a target="_blank" rel="noopener" href="https://www.nvidia.cn/autonomous-machines/embedded-systems/">边缘计算产品</a> 查看模组对比， 可以看到各个芯片的参数<ul>
-<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/embedded/develop/roadmap">jetson roadmap</a></li>
-</ul>
-</li>
-<li>数据中心： A, H, L, V 系列<ul>
-<li><a target="_blank" rel="noopener" href="https://www.nvidia.cn/data-center/h100/">H100 性能参数</a> 游戏：RTX, GTX</li>
-<li>RTX: Ray Tracing eXtreme</li>
-<li>GTX: Graphics Processor protoType eXtreme</li>
-<li><a target="_blank" rel="noopener" href="https://www.nvidia.cn/geforce/graphics-cards/compare/?section=compare-specs">GeForce 显卡比较</a></li>
-<li>在 NVIDIA 的 GeForce 系列显卡中，Ti 是一个特殊的标识，用来表示某个型号的改进或升级版。从本意来讲，TI 属于’Titanium’的缩写，和太空金属’钛’是一个意思，在显卡中他代表着更高级版本。</li>
-</ul>
-</li>
-</ol>
-<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/kunhe0512/article/details/126247243">https://blog.csdn.net/kunhe0512/article/details/126247243</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/394352476">NVIDIA GPU 架构梳理</a></li>
-<li>天梯图</li>
-<li>架构演进</li>
-<li>tegra 是 SOC 架构, tesla 是 GPU 架构</li>
-<li>NVIDIA GeForce RTX 3090 使用的是 NVIDIA 的 Ampere 架构</li>
-<li>NVIDIA Jetson Orin 是基于 NVIDIA 的 Ampere 架构的高性能 AI 计算平台</li>
-<li>CUDA_ARCHS 是指定 CUDA 代码编译目标 NVIDIA GPU 架构的编译标志。 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/631850036">为各种 NVIDIA 架构匹配 CUDA arch 和 CUDA gencode</a></li>
-<li>架构历史</li>
-<li><a target="_blank" rel="noopener" href="https://www.baseten.co/blog/understanding-nvidias-datacenter-gpu-line/">understanding-nvidias-datacenter-gpu-line</a><br><img src="https://i.ibb.co/hZVxQFd/ZEI0-D9zw-C5.png" alt="历史"></li>
-</ol>
-<h2 id="JetPack"><a href="#JetPack" class="headerlink" title="JetPack"></a><a target="_blank" rel="noopener" href="https://docs.nvidia.com/jetson/jetpack/introduction/index.html">JetPack</a></h2><ol>
-<li>NVIDIA JetPack SDK is the most comprehensive solution for building AI applications. JetPack SDK provides a full development environment for hardware-accelerated AI-at-the-edge development.JetPack SDK includes Jetson Linux Driver Package with bootloader, Linux kernel, Ubuntu desktop environment, and a complete set of libraries for acceleration of GPU computing, multimedia, graphics, and computer vision. It also includes samples, documentation, and developer tools for both host computer and developer kit, and supports higher level SDKs such as DeepStream for streaming video analytics, Isaac for robotics and Riva for conversational AI.</li>
-</ol>
-<h2 id="tenosr-core-和-cuda-core"><a href="#tenosr-core-和-cuda-core" class="headerlink" title="tenosr core 和 cuda core"></a>tenosr core 和 cuda core</h2><ol>
-<li>CUDA Core 是为通用计算设计，而 Tensor Core 是为特定类型的计算（主要是深度学习中的矩阵运算）优化。</li>
-<li>在 NVIDIA 的某些 GPU 架构中，例如 Volta、Turing 和 Ampere，CUDA Core 和 Tensor Core 共同存在。它们可以根据计算任务的性质协同工作，提高整体的计算效率。</li>
-<li>在执行深度学习任务时，Tensor Core 可以显著加速计算过程，相较于仅使用 CUDA Core，能实现更快的训练和推理速度。</li>
-<li>Tensor Core 依赖 CUDA Core 并行架构。多个 CUDA Core 会组成一个 Tensor Core,实际运算还是需要 CUDA Core 并行执行。</li>
-</ol>
-<h2 id="vpi"><a href="#vpi" class="headerlink" title="vpi"></a><a target="_blank" rel="noopener" href="https://docs.nvidia.com/vpi/algorithms.html">vpi</a></h2><ol>
-<li>支持多种硬件做前处理, 如 resize, convert color, remap (VIC 都支持，可以释放 GPU 资源)</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/11/05/package-manager/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/05/package-manager/" class="post-title-link" itemprop="url">package manager</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-11-05 11:01:42" itemprop="dateCreated datePublished" datetime="2023-11-05T11:01:42+08:00">2023-11-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-06 11:10:28" itemprop="dateModified" datetime="2023-12-06T11:10:28+08:00">2023-12-06</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/11/05/package-manager/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/11/05/package-manager/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>694</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><h3 id="CPM"><a href="#CPM" class="headerlink" title="CPM"></a><a target="_blank" rel="noopener" href="https://github.com/cpm-cmake/CPM.cmake">CPM</a></h3><h2 id="python"><a href="#python" class="headerlink" title="python"></a>python</h2><h3 id="virtual-environments"><a href="#virtual-environments" class="headerlink" title="virtual-environments"></a><a target="_blank" rel="noopener" href="https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/">virtual-environments</a></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install python3-venv</span><br><span class="line">python3 -m venv .venv</span><br><span class="line"><span class="built_in">source</span> .venv/bin/activate</span><br><span class="line">deactivate</span><br><span class="line">pip install pip -U -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">pip config <span class="built_in">set</span> global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</span><br><span class="line">pip install -r requirements.txt</span><br><span class="line">python3 -m pip install --upgrade pip</span><br><span class="line">python3 -m pip install <span class="string">&#x27;requests==2.18.4&#x27;</span></span><br><span class="line">python3 -m pip install <span class="string">&#x27;requests&gt;=2.0.0,&lt;3.0.0&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="miniconda-选择对应-python-版本-install-时可以选路径"><a href="#miniconda-选择对应-python-版本-install-时可以选路径" class="headerlink" title="miniconda 选择对应 python 版本, install 时可以选路径"></a><a target="_blank" rel="noopener" href="https://docs.conda.io/en/latest/miniconda.html#linux-installers">miniconda</a> 选择对应 python 版本, install 时可以选路径</h3><h3 id="anaconda"><a href="#anaconda" class="headerlink" title="anaconda"></a><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/">anaconda</a></h3><h3 id="mamba"><a href="#mamba" class="headerlink" title="mamba"></a><a target="_blank" rel="noopener" href="https://github.com/mamba-org/mamba">mamba</a></h3><h2 id="rust"><a href="#rust" class="headerlink" title="rust"></a>rust</h2><h3 id="cargo"><a href="#cargo" class="headerlink" title="cargo"></a>cargo</h3><h2 id="multi"><a href="#multi" class="headerlink" title="multi"></a>multi</h2><h3 id="pixi"><a href="#pixi" class="headerlink" title="pixi"></a><a target="_blank" rel="noopener" href="https://github.com/prefix-dev/pixi">pixi</a></h3><ol>
-<li>pixi is a cross-platform, multi-language package manager and workflow tool built on the foundation of the conda ecosystem. It provides developers with an exceptional experience similar to popular package managers like cargo or yarn, but for any language.</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/11/03/pixi/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/03/pixi/" class="post-title-link" itemprop="url">pixi</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-11-03 15:02:45" itemprop="dateCreated datePublished" datetime="2023-11-03T15:02:45+08:00">2023-11-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-22 14:50:13" itemprop="dateModified" datetime="2023-11-22T14:50:13+08:00">2023-11-22</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/11/03/pixi/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/11/03/pixi/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>不同工程可以用软连接共享.pixi 文件夹</li>
-<li>cfonts 使得 task 更清楚</li>
-<li><code>curl -fsSL https://pixi.sh/install.sh | bash</code> install</li>
-<li>工程目录下<code>.pixi</code>包含各种环境依赖</li>
-<li>pixi is a cross-platform, multi-language package manager and workflow tool built on the foundation of the conda ecosystem. It provides developers with an exceptional experience similar to popular package managers like cargo or yarn, but for any language.</li>
-<li>Supports multiple languages including Python, C++, and R using Conda packages.</li>
-<li>可用于 github actions, 只需要配置 pixi，不用手动安装各种环境</li>
-<li>参考写 task <a target="_blank" rel="noopener" href="https://github.com/prefix-dev/pixi/blob/main/examples/cpp-sdl/pixi.toml">example</a></li>
-<li>如果下载不了 package， 可以删除~&#x2F;.cache&#x2F;rattler&#x2F;cache&#x2F;repodata 试试</li>
-<li>执行命令在 repo 下都行</li>
-<li><code>pixi global install &lt;cmake&gt;</code>在机器上安装 cmake; 安装到<del>&#x2F;.pixi&#x2F;bin， 需要需改.zshrc &#96;export PATH&#x3D;</del>&#x2F;.pixi&#x2F;bin:$PATH&#96;</li>
-<li><code>pixi shell</code>中可以用 pixi 安装的最新命令</li>
-<li><code>pixi add gxx clangxx</code> install g++ and clang++； ++符号不允许</li>
-<li>下载的时候 VPN 设置为 global， 用 rule 可能识别为本地， 下载出问题</li>
-<li>python 需要先安装 pip</li>
-</ol>
-<h2 id="command"><a href="#command" class="headerlink" title="command"></a><a target="_blank" rel="noopener" href="https://prefix.dev/docs/pixi/cli">command</a></h2><ol>
-<li><code>pixi init &lt;name&gt;</code> 初始化工程, 添加 pixi.toml 和 gitignore 信息</li>
-<li><code>pixi add cmake ninja opencv glog</code>添加依赖库</li>
-<li><code>pixi add &quot;clang-tools&lt;=15.0.0,&gt;13.0&quot;</code></li>
-<li><code>pixi run &lt;task&gt;</code> run task</li>
-<li><code>pixi search glog</code> search package</li>
-<li><code>pixi info</code> 查看各种信息， cache 位置：~&#x2F;.cache&#x2F;rattler&#x2F;, task list</li>
-<li><code>pixi global list</code> list global package</li>
-<li><code>pixi shell</code> 进入 pixi shell， 执行&#x2F;tmp&#x2F;pixi_env_xxx.sh 脚本设置环境变量， 可以在配置文件 activate 脚本中使用</li>
-</ol>
-<h2 id="config"><a href="#config" class="headerlink" title="config"></a><a target="_blank" rel="noopener" href="https://prefix.dev/docs/pixi/configuration">config</a></h2><ol>
-<li>pixi shell 可以查看环境变量</li>
-<li>channels &#x3D; [“conda-forge”, “robostack”, “bioconda”, “nvidia”, “pytorch”]; 设置源 <a target="_blank" rel="noopener" href="https://prefix.dev/channels">link</a></li>
-<li>env set, 可以设置 LD_LIBRARY_PATH</li>
-</ol>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">activation</span>]</span><br><span class="line"><span class="string">scripts</span> <span class="string">=</span> [<span class="string">&quot;env_setup.sh&quot;</span>]</span><br></pre></td></tr></table></figure>
-
-<h2 id="env"><a href="#env" class="headerlink" title="env"></a>env</h2><ol>
-<li><code>PIXI_PACKAGE_ROOT</code> repo 目录</li>
-<li><code>CONDA_PREFIX</code> pixi env 目录 ${PIXI_PACKAGE_ROOT}&#x2F;.pixi&#x2F;env</li>
-<li><code>PIXI_PACKAGE_PLATFORMS</code> platform 类型</li>
-<li><code>PATH</code> 只有 PATH, 没有 LD_LIBRARY_PATH, 需要自己在配置文件 activate 脚本里设置</li>
-</ol>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">export</span> <span class="string">LD_LIBRARY_PATH=$&#123;CONDA_PREFIX&#125;/lib</span>  <span class="comment"># for run app</span></span><br><span class="line"><span class="string">export</span> <span class="string">CMAKE_PREFIX_PATH=$&#123;CONDA_PREFIX&#125;/lib</span>  <span class="comment"># for cmake find_package</span></span><br><span class="line"><span class="string">export</span> <span class="string">PKG_CONFIG_PATH=$&#123;CONDA_PREFIX&#125;/share/pkgconfig:$&#123;CONDA_PREFIX&#125;/lib/pkgconfig</span>  <span class="comment"># for pkg-config</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/prefix-dev/pixi">pixi</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/prefix-dev/pixi/blob/main/docs/FAQ.md">What is the difference with conda, mamba, poetry, pip</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.rerun.io/docs/howto/arrow-cpp-install">cpp using example</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/rerun-io/cpp-example-opencv-eigen/blob/main/pixi.toml">rerun cpp-example-opencv-eigen pixi example</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
       
   
   
@@ -1725,10 +613,292 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/10/08/rerun/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/10/08/rerun/" class="post-title-link" itemprop="url">rerun</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-10-08 15:12:52" itemprop="dateCreated datePublished" datetime="2023-10-08T15:12:52+08:00">2023-10-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-11 16:26:47" itemprop="dateModified" datetime="2024-01-11T16:26:47+08:00">2024-01-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/Debug/" itemprop="url" rel="index"><span itemprop="name">Debug</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/10/08/rerun/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/10/08/rerun/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://foxglove.dev/">foxglove 支持 ros</a> <a target="_blank" rel="noopener" href="https://docs.ros.org/en/foxy/How-To-Guides/Visualizing-ROS-2-Data-With-Foxglove-Studio.html">Visualizing-ROS-2-Data-With-Foxglove-Studio</a></li>
+<li>日志重放工具 log-replay tools <a target="_blank" rel="noopener" href="https://www.rerun.io/blog/rosbag">link</a></li>
+<li>观察工具 <a target="_blank" rel="noopener" href="https://www.rerun.io/blog#what-is-a-seeingtool">what-is-a-seeingtool</a></li>
+<li><a target="_blank" rel="noopener" href="https://vimeo.com/97903574">Seeing Spaces 它是 Figma、Webflow、Our World in Data 等许多项目的灵感来源</a></li>
+<li>类似 rosbag</li>
+<li>rerun 可以纪录每帧对应的 latency，fps, 画图，平均值？方便分析哪一帧耗时</li>
+<li>不链接 viewer 也不保存，相当于不操作？方便开启和关闭 log</li>
+<li>使用 rerun 实时或回放监测的数据</li>
+<li><code>rr.set_time_sequence(&quot;frame_nr&quot;, x) # frame_nr为横坐标</code> 横坐标可以选择按帧或时间显示</li>
+<li>测试程序可以关闭 viewer(init spawn false)， 将结果记录到 rrd 文件里（rr.save), 使用 online demo 回放</li>
+<li>可以显示 log 和文档 <a target="_blank" rel="noopener" href="https://github.com/rerun-io/rerun/tree/main/examples/python/detect_and_track_objects">link</a></li>
+<li><code>pip install rerun-sdk &amp;&amp; python3 -m rerun_demo</code>安装并运行 demo</li>
+<li><code>python3 -m rerun</code>启动客户端</li>
+<li><code>python3 -m rerun --web-viewer</code>启动 web, <code>http://&#123;ip&#125;:9090/</code> to open webserver</li>
+<li><code>python3 -m rerun --web-viewer --web-viewer-port 5900</code> wsl docker</li>
+<li><code>python3 -m rerun --web-viewer --web-viewer-port 5900 --save test.rrd</code> 保存接收到的 log, save 时不能打开 web</li>
+<li><a target="_blank" rel="noopener" href="https://www.rerun.io/docs/reference/sdk-operating-modes">4 sdk-operating-modes</a> Connnect: Connects to a remote Rerun Viewer and streams all the data via TCP.</li>
+<li>good: docker web live data<ul>
+<li><code>python3 -m rerun --web-viewer --web-viewer-port 5900 --ws-server-port 6080</code> 注意–web-viewer-port 是打开 viewer 的端口， –ws-server-port 是用于连接 server 端口</li>
+<li><code>examples/python/clock/main.py --connect --addr=127.0.0.1:9876</code> example 用到的代码<code>rr.connect(127.0.0.1:9876)</code>; 注意 viewer 默认监听的是 9876, –port 才能修改，注意和–web-viewer-port 的区别</li>
+<li><code>http://localhost:10087/?url=ws://localhost:10089</code> (in docker -p10087:5900 -p10089:6080) or <code>http://10.31.2.47:9090/?url=ws://10.31.2.47:9877</code> 注意两个 localhost 和端口号都要替换</li>
+</ul>
+</li>
+<li>测试是否收到数据<ul>
+<li><code>python3 -m rerun --web-viewer --web-viewer-port 5900  --test-receive</code></li>
+<li><code>examples/python/clock/main.py --connect --addr=127.0.0.1:9876</code></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/rerun-io/rerun/blob/0a2a594b1f9527e91400a0b1d2dbb4943080f385/rerun_py/README.md?plain=1#L50">connect sample</a></li>
+<li>多次链接有多次数据</li>
+<li>python connect code</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> rerun <span class="keyword">as</span> rr  <span class="comment"># <span class="doctag">NOTE:</span> `rerun`, not `rerun-sdk`!</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">rr.init(<span class="string">&quot;rerun_example_my_data&quot;</span>, spawn=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">rr.connect(<span class="string">&quot;192.168.1.3:9876&quot;</span>)</span><br><span class="line"></span><br><span class="line">positions = np.zeros((<span class="number">10</span>, <span class="number">3</span>))</span><br><span class="line">positions[:,<span class="number">0</span>] = np.linspace(-<span class="number">10</span>,<span class="number">10</span>,<span class="number">10</span>)</span><br><span class="line">colors = np.zeros((<span class="number">10</span>,<span class="number">3</span>), dtype=np.uint8)</span><br><span class="line">colors[:,<span class="number">0</span>] = np.linspace(<span class="number">0</span>,<span class="number">255</span>,<span class="number">10</span>)</span><br><span class="line">rr.log(<span class="string">&quot;my_points&quot;</span>,rr.Points3D(positions, colors=colors, radii=<span class="number">0.5</span>))</span><br></pre></td></tr></table></figure>
+
+<h2 id="c"><a href="#c" class="headerlink" title="c++"></a>c++</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/rerun-io/cpp-example-opencv-eigen">cpp-example-opencv-eigen</a><ul>
+<li><code>pixi run example</code></li>
+</ul>
+</li>
+<li>测试程序可去掉<code>rec.spawn</code>, 添加<ul>
+<li><code>rec.save(&quot;test.rrd&quot;);</code> 保存结果到 test.rrd</li>
+<li><code>rec.connect(&quot;127.0.0.1:9876&quot;);</code> 连接本地的 viewer, 本地的 viewer(in docker -p10087:5900 -p10089:6080) <code>python3 -m rerun --web-viewer --web-viewer-port 5900 --ws-server-port 6080</code>; 本地浏览器<code>http://localhost:10087/?url=ws://localhost:10089</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><ol>
+<li><code>export RERUN=off</code>环境变量控制是否输出 log</li>
+<li><code>rerun --help</code>可以查看环境变量</li>
+</ol>
+<h2 id="install"><a href="#install" class="headerlink" title="install"></a>install</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.rerun.io/docs/getting-started/troubleshooting">troubleshooting</a></li>
+</ol>
+<h2 id="logging"><a href="#logging" class="headerlink" title="logging"></a><a target="_blank" rel="noopener" href="https://www.rerun.io/docs/reference/types/archetypes/text_log#textlogintegration">logging</a></h2><ol>
+<li>code</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">import rerun as rr</span><br><span class="line">import logging</span><br><span class="line"></span><br><span class="line">def <span class="selector-tag">main</span>() -&gt; <span class="attribute">None</span>:</span><br><span class="line">    rr.<span class="built_in">init</span>(<span class="string">&quot;rerun_example_my_data&quot;</span>, spawn=False)</span><br><span class="line">    rr.<span class="built_in">save</span>(<span class="string">&quot;recording.rrd&quot;</span>)</span><br><span class="line">    rr.<span class="built_in">set_time_sequence</span>(<span class="string">&quot;frame&quot;</span>, <span class="number">0</span>)</span><br><span class="line">    logging.<span class="built_in">getLogger</span>().<span class="built_in">addHandler</span>(rr.<span class="built_in">LoggingHandler</span>(<span class="string">&quot;logs/handler&quot;</span>))</span><br><span class="line">    logging.<span class="built_in">getLogger</span>().<span class="built_in">setLevel</span>(-<span class="number">1</span>)</span><br><span class="line">    logging.<span class="built_in">info</span>(<span class="string">&quot;This INFO log got added through the standard logging interface&quot;</span>)</span><br><span class="line">    rr.<span class="built_in">set_time_sequence</span>(<span class="string">&quot;frame&quot;</span>, <span class="number">1</span>)</span><br><span class="line">    logging.<span class="built_in">info</span>(<span class="string">&quot;Test logging&quot;</span>)</span><br><span class="line"></span><br><span class="line">if __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="built_in">main</span>()</span><br></pre></td></tr></table></figure>
+
+<h2 id="samples"><a href="#samples" class="headerlink" title="samples"></a>samples</h2><ol>
+<li>只记录数据不显示, 用于回放 w</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> rerun <span class="keyword">as</span> rr</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> cos, sin, tau</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">log_trig</span>() -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="comment"># Log a time series</span></span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">int</span>(tau * <span class="number">2</span> * <span class="number">100.0</span>)):</span><br><span class="line">        rr.set_time_sequence(<span class="string">&quot;frame_nr&quot;</span>, t)</span><br><span class="line"></span><br><span class="line">        sin_of_t = sin(<span class="built_in">float</span>(t) / <span class="number">100.0</span>)</span><br><span class="line">        rr.log(<span class="string">&quot;trig/sin&quot;</span>, rr.TimeSeriesScalar(sin_of_t, label=<span class="string">&quot;sin(0.01t)&quot;</span>, color=[<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line">        cos_of_t = cos(<span class="built_in">float</span>(t) / <span class="number">100.0</span>)</span><br><span class="line">        rr.log(<span class="string">&quot;trig/cos&quot;</span>, rr.TimeSeriesScalar(cos_of_t, label=<span class="string">&quot;cos(0.01t)&quot;</span>, color=[<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">log_linear</span>() -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">1000</span>):</span><br><span class="line">        rr.set_time_sequence(<span class="string">&quot;frame_nr&quot;</span>, x) <span class="comment"># frame_nr为横坐标</span></span><br><span class="line">        y = x</span><br><span class="line">        rr.log(<span class="string">&quot;linear/x&quot;</span>, rr.TimeSeriesScalar(y, label=<span class="string">&quot;y=x&quot;</span>, color=[<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>() -&gt; <span class="literal">None</span>:</span><br><span class="line">    rr.init(<span class="string">&quot;rerun_example_my_data&quot;</span>, spawn=<span class="literal">False</span>) <span class="comment"># spawn设置为False表示只记录数据， 不使用viewer显示</span></span><br><span class="line">    rr.save(<span class="string">&quot;recording.rrd&quot;</span>) <span class="comment"># 保存为rrd</span></span><br><span class="line">    log_trig()</span><br><span class="line">    log_linear()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>cool</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> rerun <span class="keyword">as</span> rr</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">rr.init(<span class="string">&quot;rerun_example_my_data&quot;</span>, spawn=<span class="literal">False</span>)</span><br><span class="line">rr.save(<span class="string">&quot;recording.rrd&quot;</span>)</span><br><span class="line"></span><br><span class="line">SIZE = <span class="number">10</span></span><br><span class="line"></span><br><span class="line">pos_grid = np.meshgrid(*[np.linspace(-<span class="number">10</span>, <span class="number">10</span>, SIZE)]*<span class="number">3</span>)</span><br><span class="line">positions = np.vstack([d.reshape(-<span class="number">1</span>) <span class="keyword">for</span> d <span class="keyword">in</span> pos_grid]).T</span><br><span class="line"></span><br><span class="line">col_grid = np.meshgrid(*[np.linspace(<span class="number">0</span>, <span class="number">255</span>, SIZE)]*<span class="number">3</span>)</span><br><span class="line">colors = np.vstack([c.reshape(-<span class="number">1</span>) <span class="keyword">for</span> c <span class="keyword">in</span> col_grid]).astype(np.uint8).T</span><br><span class="line"></span><br><span class="line">rr.log(</span><br><span class="line">            <span class="string">&quot;my_points&quot;</span>,</span><br><span class="line">                rr.Points3D(positions, colors=colors, radii=<span class="number">0.5</span>)</span><br><span class="line">                )</span><br></pre></td></tr></table></figure>
+
+<h2 id="demos"><a href="#demos" class="headerlink" title="demos"></a>demos</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/rerun-io/rerun/tree/latest/examples/python/plots">plots</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/rerun-io/rerun/tree/main/examples/python/live_depth_sensor">live-depth-sensor</a></li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://discord.com/invite/PXtCgFBSmH">rerun discord 在线信息 </a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/rerun-io/rerun">rerun-io&#x2F;rerun</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.rerun.io/docs">docs 示意图</a></li>
+<li><a target="_blank" rel="noopener" href="https://app.rerun.io/">online demo</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/rerun-io/rerun/milestones">rerun&#x2F;milestones</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/10/07/GPU/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/10/07/GPU/" class="post-title-link" itemprop="url">GPU</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-10-07 17:38:05 / 修改时间：17:39:22" itemprop="dateCreated datePublished" datetime="2023-10-07T17:38:05+08:00">2023-10-07</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/10/07/GPU/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/10/07/GPU/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>449</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="DLA-Deep-Learning-Accelerator-。"><a href="#DLA-Deep-Learning-Accelerator-。" class="headerlink" title="DLA (Deep Learning Accelerator)。"></a>DLA (Deep Learning Accelerator)。</h2><ol>
+<li>NVIDIA DLA 是一个专门设计的硬件加速器，用于加速深度学习推断在边缘设备上的性能。DLA 被设计为与 NVIDIA 的 Jetson 平台（例如 Jetson AGX Xavier、Jetson Xavier NX 等）一同工作，这些平台主要用于嵌入式和边缘计算应用。</li>
+<li><code>专为推断优化</code>：与训练深度学习模型的 GPU 不同，DLA 专门针对推断进行了优化，使其能够在功耗有限的边缘设备上高效运行。</li>
+<li><code>集成与Jetson平台</code>：DLA 被集成到了某些 NVIDIA Jetson 模块中，提供了与 GPU 和 CPU 协同工作的能力，以实现多任务处理。</li>
+<li><code>低功耗</code>：DLA 的设计重点是在保持低功耗的同时实现高效的推断处理，这对于需要长时间运行但电源有限的嵌入式应用非常重要。</li>
+<li><code>支持多种网络</code>：DLA 支持多种流行的深度学习模型和框架，使开发者能够灵活地部署各种应用。</li>
+<li><code>TensorRT兼容</code>：NVIDIA 的 TensorRT 是一个用于优化深度学习模型的推断的 SDK，它可以与 DLA 结合，进一步提高推断速度和效率。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1796,7 +966,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">169</span>
+          <span class="site-state-item-count">170</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1829,6 +999,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/11/blas/" title="2024&#x2F;01&#x2F;11&#x2F;blas&#x2F;">blas</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/10/llama-cpp/" title="2024&#x2F;01&#x2F;10&#x2F;llama-cpp&#x2F;">llama.cpp</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1839,9 +1012,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/01/tensorrt-llm/" title="2024&#x2F;01&#x2F;01&#x2F;tensorrt-llm&#x2F;">tensorrt-llm</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2023/12/30/gpt/" title="2023&#x2F;12&#x2F;30&#x2F;gpt&#x2F;">gpt</a>
         </li>
     </ul>
   </div>
@@ -1879,13 +1049,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">421k</span>
+    <span title="站点总字数">422k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:23</span>
+    <span title="站点阅读时长">6:24</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
