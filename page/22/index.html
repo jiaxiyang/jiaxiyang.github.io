@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">170</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">171</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -199,6 +199,140 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/09/13/Plugin-System/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/13/Plugin-System/" class="post-title-link" itemprop="url">plugins</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-09-13 22:17:40" itemprop="dateCreated datePublished" datetime="2021-09-13T22:17:40+08:00">2021-09-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/09/13/Plugin-System/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/09/13/Plugin-System/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>351</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><ol>
+<li>emacs man dlopen有参考例子</li>
+<li>用作插件：插件技术最大特点是更新插件无需编译主程序，设计良好的系统可以做到在线升级，只更新插件（补丁）</li>
+<li>使用dlopen时链接发生在runtime, 不需要知道函数声明， 而-l链接发生在compile期，需要知道函数声明</li>
+<li>libc.so.6 GNU标准c库，含有getchar,system等函数</li>
+</ol>
+<h2 id="VVAS-and-DeepStream"><a href="#VVAS-and-DeepStream" class="headerlink" title="VVAS and DeepStream"></a>VVAS and DeepStream</h2><ol>
+<li>use gstreamer</li>
+</ol>
+<h2 id="VART-and-TensorRT"><a href="#VART-and-TensorRT" class="headerlink" title="VART and TensorRT"></a>VART and TensorRT</h2><ol>
+<li>use dlopen</li>
+</ol>
+<h2 id="samples"><a href="#samples" class="headerlink" title="samples"></a>samples</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/rhcad/x3py/wiki">x3</a></li>
+</ol>
+<h2 id="famous-projects"><a href="#famous-projects" class="headerlink" title="famous projects"></a>famous projects</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/blob/eb8442dba3c9e85ffb77e0d870d2e29adcb0a4aa/plugin/common/cudaDriverWrapper.cpp#L28">TensorRT</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/tensorflow/tensorflow/blob/96493ef750a69c5ab71a1744b282c0c6770df234/tensorflow/core/platform/default/load_library.cc#L27">Tensorflow</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/pytorch/pytorch/blob/f23f21dafebae49c9670e2e695344edd01867b0c/torch/csrc/deploy/loader.cpp#L373">pytorch</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/torvalds/linux/blob/master/tools/lib/traceevent/event-plugin.c#L461">linux</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/FFmpeg/FFmpeg/blob/989febfbd0c986e9e3e0f269a6b22778bf79147b/libavcodec/omx.c#L115">FFmpeg</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/opencv/opencv/blob/c3ac834526c66840835737f03ed1b4d8f711534e/modules/core/src/gl_core_3_1.cpp#L62">opencv</a></li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://hackaday.com/2018/07/12/its-all-in-the-libs-building-a-plugin-system-using-dynamic-loading/">BUILDING A PLUGIN SYSTEM USING DYNAMIC LOADING</a></li>
+<li>TensorRT <a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/blob/eb8442dba3c9e85ffb77e0d870d2e29adcb0a4aa/samples/common/common.h#L930">link1</a> <a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/blob/eb8442dba3c9e85ffb77e0d870d2e29adcb0a4aa/samples/trtexec/trtexec.cpp#L145">trtexec</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/08/24/Cpp-Profiling/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -230,7 +364,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-09 10:30:13" itemprop="dateModified" datetime="2024-01-09T10:30:13+08:00">2024-01-09</time>
+                <time title="修改时间：2024-01-19 17:25:01" itemprop="dateModified" datetime="2024-01-19T17:25:01+08:00">2024-01-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -266,14 +400,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>39k</span>
+              <span>41k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>35 分钟</span>
+              <span>37 分钟</span>
             </span>
 
         </div>
@@ -286,6 +420,7 @@
 
       
           <h2 id="great"><a href="#great" class="headerlink" title="great"></a>great</h2><ol>
+<li>通过 roofline 作为指导, 各种优化方法对应到 roofline</li>
 <li><a target="_blank" rel="noopener" href="https://www.brendangregg.com/overview.html">各种性能分析工具</a></li>
 <li><a target="_blank" rel="noopener" href="https://easyperf.net/">easyperf</a></li>
 <li><a target="_blank" rel="noopener" href="https://docs.xilinx.com/r/zh-CN/ug1414-vitis-ai/Vitis-AI-Profiler-%E6%9E%B6%E6%9E%84">VAI profiler</a></li>
@@ -627,7 +762,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-10 15:10:23" itemprop="dateModified" datetime="2024-01-10T15:10:23+08:00">2024-01-10</time>
+                <time title="修改时间：2024-01-18 17:24:32" itemprop="dateModified" datetime="2024-01-18T17:24:32+08:00">2024-01-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -697,6 +832,11 @@
 <li><code>CMAKE_CURRENT_BINARY_DIR</code>: 指向当前正在处理的 CMakeLists.txt 文件对应的构建目录。</li>
 </ol>
 <h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><ol>
+<li>makefile 传参</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SRC_DIR ?= /src</span><br><span class="line">BUILD_DIR ?= /build</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make SRC_DIR=/tmp/src BUILD_DIR=/tmp/build</span></span><br></pre></td></tr></table></figure>
+
+<ol>
 <li><code>target_compile_definitions</code> 导出定义，供下游使用，<code>add_definitions</code>不会被导出</li>
 <li><code>-DCMAKE_TOOLCHAIN_FILE=path/to/toolchain-clang.cmake</code> 设置 toolchain</li>
 <li><code>-DCMAKE_BUILD_TYPE=RelWithDebInfo</code> release 模式编译，带 debug info</li>
@@ -821,7 +961,8 @@
 <li>add_excutable(hello, ${DIR_SRCS}) 定义了工程生成的可执行程序文件名，源文件为 DIR_SRCS 变量中定义的源文件列表</li>
 <li>add_library(libname [SHARED | STATIC | MODULE] source_files) 定义了库文件名 静态库，动态库不能重名</li>
 <li>add_library(hello_static STATIC ${LIBHELLO_SRC}) set_target_properties(hello_static PROPERTIES OUTPUT_NAME “hello”) 有 libhello.so 的情况下生成 libhello.a</li>
-<li>CMAKE_INSTALL_PREFIX 变量类似于 configure 脚本的 – prefix,常见的使用方法看 cmake -DCMAKE_INSTALL_PREFIX&#x3D;&#x2F;usr .</li>
+<li><code>CMAKE_INSTALL_PREFIX</code> 变量类似于 configure 脚本的 – prefix,常见的使用方法看 <code>cmake -DCMAKE_INSTALL_PREFIX=/usr .</code></li>
+<li><code>make install PREFIX=your_installation_directory</code></li>
 <li>install(TARGETS name [ARCHIVE|LIBRARY|RUNTIME] [DESTINATION <dir>] …) 安装库和可执行程序</li>
 <li>install(FILES include&#x2F;quicksort.hpp DESTINATION include) 安装头文件</li>
 <li>include_directories(&#x2F;usr&#x2F;include&#x2F;hello) 添加头文件搜索路径</li>
@@ -1200,121 +1341,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/07/11/Rust-grammar/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/11/Rust-grammar/" class="post-title-link" itemprop="url">Rust grammar</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-07-11 18:34:03" itemprop="dateCreated datePublished" datetime="2021-07-11T18:34:03+08:00">2021-07-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-24 12:15:43" itemprop="dateModified" datetime="2023-09-24T12:15:43+08:00">2023-09-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Rust/" itemprop="url" rel="index"><span itemprop="name">Rust</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/07/11/Rust-grammar/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/11/Rust-grammar/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>19k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>18 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="顶层概念"><a href="#顶层概念" class="headerlink" title="顶层概念"></a><a target="_blank" rel="noopener" href="https://www.infoq.cn/article/Uugi_eIJusEka1aSPmQM">顶层概念</a></h2><p><img src="https://static001.infoq.cn/resource/image/2d/91/2d36b45f6905a13a310e6447778ca391.jpg" alt="概念层次图"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/11/Rust-grammar/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1386,7 +1412,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">170</span>
+          <span class="site-state-item-count">171</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1419,6 +1445,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/11/blas/" title="2024&#x2F;01&#x2F;11&#x2F;blas&#x2F;">blas</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1429,9 +1458,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/04/huggingface/" title="2024&#x2F;01&#x2F;04&#x2F;huggingface&#x2F;">huggingface</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/01/tensorrt-llm/" title="2024&#x2F;01&#x2F;01&#x2F;tensorrt-llm&#x2F;">tensorrt-llm</a>
         </li>
     </ul>
   </div>
@@ -1469,13 +1495,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">424k</span>
+    <span title="站点总字数">434k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:25</span>
+    <span title="站点阅读时长">6:35</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

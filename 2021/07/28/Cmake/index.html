@@ -28,7 +28,7 @@
 <meta property="og:description" content="code generate vitis ai library overview generate test_performance…. link  FetchContent12345678include(FetchContent)FetchContent_Declare(backward    GIT_REPOSITORY https:&#x2F;&#x2F;github.com&#x2F;bombela&#x2F;backward-c">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-07-28T00:56:09.000Z">
-<meta property="article:modified_time" content="2024-01-10T07:10:23.254Z">
+<meta property="article:modified_time" content="2024-01-18T09:24:32.075Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="Cmake">
 <meta name="twitter:card" content="summary">
@@ -131,7 +131,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">170</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">171</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -233,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-10 15:10:23" itemprop="dateModified" datetime="2024-01-10T15:10:23+08:00">2024-01-10</time>
+                <time title="修改时间：2024-01-18 17:24:32" itemprop="dateModified" datetime="2024-01-18T17:24:32+08:00">2024-01-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -310,6 +310,11 @@
 <li><code>CMAKE_CURRENT_BINARY_DIR</code>: 指向当前正在处理的 CMakeLists.txt 文件对应的构建目录。</li>
 </ol>
 <h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><ol>
+<li>makefile 传参</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SRC_DIR ?= /src</span><br><span class="line">BUILD_DIR ?= /build</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">make SRC_DIR=/tmp/src BUILD_DIR=/tmp/build</span></span><br></pre></td></tr></table></figure>
+
+<ol>
 <li><code>target_compile_definitions</code> 导出定义，供下游使用，<code>add_definitions</code>不会被导出</li>
 <li><code>-DCMAKE_TOOLCHAIN_FILE=path/to/toolchain-clang.cmake</code> 设置 toolchain</li>
 <li><code>-DCMAKE_BUILD_TYPE=RelWithDebInfo</code> release 模式编译，带 debug info</li>
@@ -434,7 +439,8 @@
 <li>add_excutable(hello, ${DIR_SRCS}) 定义了工程生成的可执行程序文件名，源文件为 DIR_SRCS 变量中定义的源文件列表</li>
 <li>add_library(libname [SHARED | STATIC | MODULE] source_files) 定义了库文件名 静态库，动态库不能重名</li>
 <li>add_library(hello_static STATIC ${LIBHELLO_SRC}) set_target_properties(hello_static PROPERTIES OUTPUT_NAME “hello”) 有 libhello.so 的情况下生成 libhello.a</li>
-<li>CMAKE_INSTALL_PREFIX 变量类似于 configure 脚本的 – prefix,常见的使用方法看 cmake -DCMAKE_INSTALL_PREFIX&#x3D;&#x2F;usr .</li>
+<li><code>CMAKE_INSTALL_PREFIX</code> 变量类似于 configure 脚本的 – prefix,常见的使用方法看 <code>cmake -DCMAKE_INSTALL_PREFIX=/usr .</code></li>
+<li><code>make install PREFIX=your_installation_directory</code></li>
 <li>install(TARGETS name [ARCHIVE|LIBRARY|RUNTIME] [DESTINATION <dir>] …) 安装库和可执行程序</li>
 <li>install(FILES include&#x2F;quicksort.hpp DESTINATION include) 安装头文件</li>
 <li>include_directories(&#x2F;usr&#x2F;include&#x2F;hello) 添加头文件搜索路径</li>
@@ -691,7 +697,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">170</span>
+          <span class="site-state-item-count">171</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -724,6 +730,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/11/blas/" title="2024&#x2F;01&#x2F;11&#x2F;blas&#x2F;">blas</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -734,9 +743,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/04/huggingface/" title="2024&#x2F;01&#x2F;04&#x2F;huggingface&#x2F;">huggingface</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/01/tensorrt-llm/" title="2024&#x2F;01&#x2F;01&#x2F;tensorrt-llm&#x2F;">tensorrt-llm</a>
         </li>
     </ul>
   </div>
@@ -774,13 +780,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">424k</span>
+    <span title="站点总字数">434k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:25</span>
+    <span title="站点阅读时长">6:35</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

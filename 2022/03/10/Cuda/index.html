@@ -27,11 +27,13 @@
 <meta property="og:site_name" content="Xiyang">
 <meta property="og:description" content="Note 核函数 K（kernel function）就是指 K(x, y) &#x3D; ，其中 x 和 y 是 n 维的输入值，f(·) 是从 n 维到 m 维的映射（通常而言，m&gt;&gt;n）。是 x 和 y 的内积（inner product），严格来说 应该叫欧式空间的标准内积，也就是很多人常说的点积（dot product）。 sudo update-alternatives -">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.ibb.co/2qN87rv/QVJcq2r-QQ3.png">
 <meta property="article:published_time" content="2022-03-09T18:17:38.000Z">
-<meta property="article:modified_time" content="2024-01-12T06:31:15.075Z">
+<meta property="article:modified_time" content="2024-01-19T09:47:20.961Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="Cuda">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.ibb.co/2qN87rv/QVJcq2r-QQ3.png">
 
 <link rel="canonical" href="https://jiaxiyang.github.io/2022/03/10/Cuda/">
 
@@ -131,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">170</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">171</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -233,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-12 14:31:15" itemprop="dateModified" datetime="2024-01-12T14:31:15+08:00">2024-01-12</time>
+                <time title="修改时间：2024-01-19 17:47:20" itemprop="dateModified" datetime="2024-01-19T17:47:20+08:00">2024-01-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -276,14 +278,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
+              <span>5.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -307,6 +309,12 @@
 <li>GPU 函数耗时统计不能只记录一次的，GPU 可能做一些准备工作，教训： nppiResize_8u_C3R 不管大小第一次运行耗时都很大 The cuda context is lazily initialized</li>
 <li>unified memory cpu 访问时需要同一个线程。不同线程会 bus error。</li>
 <li><code>autotuning</code> 搜索 kernel grid 划分参数(结果不变)，找性能最优</li>
+<li>L1 和 shared memory 共享一块存储 可动态分配比例; 可用比例见<a target="_blank" rel="noopener" href="https://www.nvidia.com/content/PDF/nvidia-ampere-ga-102-gpu-architecture-whitepaper-v2.pdf">link</a></li>
+<li>warp 调度:延时隐藏 只执行 warp 一部分 当 warp 需要等待时 先执行其他 warp</li>
+<li>warp 执行类似 simd</li>
+<li><code>FMA (Fused Multiply Add)</code>: z&#x3D;a*x+y …z,x,y are vectors or scalars</li>
+<li><code>4FMA (Quad FMA)</code>: z&#x3D;A*x+z …A is a FP32 matrix; x,z are vectors</li>
+<li><code>WMMA (Tensor Core)</code>: Z&#x3D;AB+C …A,B are FP16 matrices; Z,C are FP32</li>
 </ol>
 <h2 id="cuda-grammer"><a href="#cuda-grammer" class="headerlink" title="cuda grammer"></a>cuda grammer</h2><ol>
 <li>所有的 kernel 函数返回类型都是 void</li>
@@ -314,6 +322,18 @@
 <li><code>vectorAdd&lt;&lt;&lt;blocksPerGrid, threadsPerBlock&gt;&gt;&gt;</code></li>
 <li>可以认为 M, T 对应图片的 H, W; 一个 thread 对应一个像素点；一个 block 对应一行，一个 grid 对应一张图片</li>
 <li><code>int tid = blockIdx.x * blockDim.x + threadIdx.x; =&gt; int index = h * W + w;</code></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cuda-samples/blob/master/Common/helper_cuda.h#L595">checkCudaErrors</a> helper_cuda.h</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">check</span><span class="params">(T result, <span class="type">char</span> <span class="type">const</span> *<span class="type">const</span> func, <span class="type">const</span> <span class="type">char</span> *<span class="type">const</span> file,</span></span></span><br><span class="line"><span class="params"><span class="function">           <span class="type">int</span> <span class="type">const</span> line)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (result) &#123;</span><br><span class="line">    <span class="built_in">fprintf</span>(stderr, <span class="string">&quot;CUDA error at %s:%d code=%d(%s) \&quot;%s\&quot; \n&quot;</span>, file, line,</span><br><span class="line">            <span class="built_in">static_cast</span>&lt;<span class="type">unsigned</span> <span class="type">int</span>&gt;(result), _cudaGetErrorEnum(result), func);</span><br><span class="line">    <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// This will output the proper CUDA error strings in the event</span></span><br><span class="line"><span class="comment">// that a CUDA host call returns an error</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> checkCudaErrors(val) check((val), #val, __FILE__, __LINE__)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>cutil.h NVIDIA 公司在 CUDA5 之后便不再使用 cutil.h <a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cuda-samples/blob/master/Samples/2_Concepts_and_Techniques/EGLSync_CUDAEvent_Interop/EGLSync_CUDAEvent_Interop.cu#L83">CUDA_SAFE_CALL </a></li>
+<li><a target="_blank" rel="noopener" href="https://bohipat.wordpress.com/2014/07/11/replacing-cutil-in-cuda-5-0/">replacing-cutil-in-cuda-5-0</a></li>
+</ol>
+<h2 id="build"><a href="#build" class="headerlink" title="build"></a>build</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#application-compatibility">application-compatibility</a></li>
+<li><code>-arch=sm_70</code> is a shorthand for <code>-arch=compute_70 -code=compute_70,sm_70</code> (which is the same as <code>-gencode arch=compute_70,code=\&quot;compute_70,sm_70\&quot;</code>)</li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-gpus">Your GPU Compute Capability</a> 包含各种 gpu arch</li>
 </ol>
 <h2 id="samples"><a href="#samples" class="headerlink" title="samples"></a><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cuda-samples">samples</a></h2><ol>
 <li>11.6 之后代码放在 github 上</li>
@@ -322,15 +342,124 @@
 <li><code>/usr/local/cuda-10.2/samples/0_Simple/vectorAdd</code></li>
 <li><code>nvprof ./vectorAdd</code> 查看 kenerl 耗时</li>
 </ol>
+<h2 id="CUDALibrarySamples"><a href="#CUDALibrarySamples" class="headerlink" title="CUDALibrarySamples"></a><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/CUDALibrarySamples">CUDALibrarySamples</a></h2><ol>
+<li>cublas</li>
+<li>cutlass</li>
+<li>npp</li>
+</ol>
 <h3 id="cuda-info"><a href="#cuda-info" class="headerlink" title="cuda info"></a>cuda info</h3><ol>
 <li><a target="_blank" rel="noopener" href="https://linuxconfig.org/how-to-get-cuda-cores-count-on-linux">查看 cuda core</a><br><code>cd /usr/local/cuda-11.4/samples/1_Utilities/deviceQuery &amp;&amp; make &amp;&amp; ./deviceQuery</code></li>
 <li>bandwith test<br><code>cd /usr/local/cuda-11.4/samples/1_Utilities/bandwidthTest &amp;&amp; make &amp;&amp; ./bandwidthTest</code></li>
 </ol>
-<h2 id="profiling"><a href="#profiling" class="headerlink" title="profiling"></a>profiling</h2><ol>
-<li><code>nvprof</code></li>
-<li>nsight: <code>nsys profile</code></li>
+<h2 id="NVIDIA-Developer-Tools"><a href="#NVIDIA-Developer-Tools" class="headerlink" title="NVIDIA Developer Tools"></a><a target="_blank" rel="noopener" href="https://developer.nvidia.com/tools-overview">NVIDIA Developer Tools</a></h2><ol>
+<li>各工具关系<br><img src="https://i.ibb.co/2qN87rv/QVJcq2r-QQ3.png" alt="tools"></li>
+</ol>
+<h3 id="nsight-system"><a href="#nsight-system" class="headerlink" title="nsight system"></a>nsight system</h3><ol>
+<li>分析系统性能</li>
+<li><code>nsys profile</code></li>
+<li><code>nvprof</code> 旧版本</li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/nsight-systems/UserGuide/index.html">user guide</a></li>
+<li>NsightSystems-2023.2.1.122-3259852.msi 安装包</li>
+<li>Nsight_Systems_User_Guide_2023.2.1.122-3259852.pdf 文档</li>
+<li>左上角 timeline view 可以选择 analysis summary，有各种总结</li>
+<li>左侧右键选<code>show in events view</code>， 可以看具体时间, 可以在 all 上操作，看所有 event 运行时间</li>
+<li>右键 reset room 显示全部</li>
+<li><code>shift + mouseleftdoubleclick</code> timeline 可以找到对应 event 在 event view 位置</li>
+<li><code>ctrl + mouseleftdoubleclick</code> timeline 可以 fit to screen</li>
+<li><code>backspace</code> timeline 可以 undo room</li>
+<li><code>ctrl + mouseleftdoubleclick</code> 可以找到 event view 对应的 timeline 位置</li>
+<li><code>sudo nsys profile &lt;app&gt;</code></li>
+<li><code>nsys stats report1.nsys-rep</code> 输出各种 report</li>
+<li>可以看 cpu 执行情况， tensort 可以看详细算子耗时，也有对应 cuda 执行情况</li>
+<li>analysis summary 中有各个线程的 cpu 利用率总结</li>
+<li>可以关注 cpu 空闲的地方，为什么会空闲(同步数据？)</li>
+<li>可以缩小看颜色占比，关注占比大的模块</li>
+<li>cudaMemcpy 会阻塞 cpu 执行， 可以多注意 cudaMemcpy 影响</li>
+<li>cudaStreamSynchronize 是 CUDA API 中的一个函数，用于等待指定的 CUDA 流上的所有 CUDA 核函数执行完毕。当 CUDA 核函数被执行时，它们会被添加到一个 CUDA 流中，这些核函数的执行可能是异步的，也可能是同步的，具体取决于如何在代码中调用它们。当我们调用 cudaStreamSynchronize 时，它将会阻塞当前 CPU 线程，直到指定的流上的所有核函数都执行完毕。</li>
+</ol>
+<h3 id="nsight-compute"><a href="#nsight-compute" class="headerlink" title="nsight compute"></a>nsight compute</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/nvidia-development-tools-solutions-err_nvgpuctrperm-permission-issue-performance-counters">permission 问题</a><ul>
+<li>可以增加临时权限</li>
+</ul>
+</li>
+<li>分析 kernel 性能, 可以选 kernel</li>
+<li>NVIDIA Nsight Compute is an interactive kernel profiler for CUDA applications. It provides detailed performance metrics and API debugging via a user interface and command line tool. In addition, its baseline feature allows users to compare results within the tool. NVIDIA Nsight Compute provides a customizable and data-driven user interface and metric collection and can be extended with analysis scripts for post-processing results.</li>
+<li>需要 windows 客户端通过 connect 将 ncu 送到开发环境<ul>
+<li>可以通过 activity 复制命令到板端执行</li>
+</ul>
+</li>
+<li><code> ncu --mode=launch ./test</code></li>
+<li><code>/tmp/var/target/linux-desktop-glibc_2_11_3-x64/ncu --config-file off --export &quot;/tmp/var/test&quot; --force-overwrite --section-folder /tmp/var/sections --set full ./test</code></li>
+<li><code>ncu --set full -f --export nsight_compute ./test</code></li>
+<li><code>docker run -itd -v /mnt:/mnt -p 30022:22 --user root --gpus all --name=Ubuntu20.04-CUDA-admin --shm-size 2g --cap-add=SYS_ADMIN nvidia/cuda:11.4.3-cudnn8-devel-ubuntu20.04</code> 尽量使用官方 docker<ul>
+<li>需要 <code>--gpus all --cap-add=SYS_ADMIN</code></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/nsight-compute/index.html">nsight-compute docs</a><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html">ProfilingGuide</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/nsight-compute/NsightCompute/index.html">user manual</a></li>
+</ul>
+</li>
+<li>左上角可以显示：<ul>
+<li>session: gpu cpu 等信息</li>
+<li>detailed：overview, compute, memory 等</li>
+<li>source: 汇编代码及耗时</li>
+</ul>
+</li>
+</ol>
+<h4 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h4><ol>
+<li>overview<ul>
+<li>roofline</li>
+</ul>
+</li>
+<li>comupte<ul>
+<li>IPC</li>
+<li>指令执行占比</li>
+</ul>
+</li>
+<li>memory<ul>
+<li>可以选择看 transfer size 和 throughput</li>
+<li>要提升 cache 命中率</li>
+<li>多用 shared memory(可作为中间结果)</li>
+<li>多种 memory<ul>
+<li>global</li>
+<li>local: 线程私有的。local memory 不是物理空间，而是 global memory 的一部分，所以延时较大。</li>
+<li>texture: 只读?</li>
+<li>surface</li>
+<li>load global stroe shared</li>
+<li>shared</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>scheduler</li>
+<li>warp state</li>
+<li>instructions</li>
+<li>launch</li>
+<li>cocupancy<ul>
+<li>Occupancy 是 CUDA 编程中一个重要的性能指标,它表示 GPU 中 Streaming Multiprocessor (SM)上的处理单元被运用的比例。</li>
+</ul>
+</li>
+</ol>
+<h3 id="nsgiht-graphics"><a href="#nsgiht-graphics" class="headerlink" title="nsgiht graphics"></a>nsgiht graphics</h3><h2 id="cuda-debug"><a href="#cuda-debug" class="headerlink" title="cuda-debug"></a><a target="_blank" rel="noopener" href="https://docs.nvidia.com/nsight-visual-studio-code-edition/cuda-debugger/index.html">cuda-debug</a></h2><ol>
+<li>shared memory(L1 cache?) dump<ul>
+<li>申请 shared memory 变量，存中间结果， shared memory 对 block 全局可见。</li>
+<li>可以申请多于 L1 cache 大小的存储，系统会自动调度</li>
+</ul>
+</li>
+<li>传递主存指针到 kernel，用于 dump</li>
+<li>print<ul>
+<li><code>if(threadIdx.x == 0) printf...</code> 条件打印</li>
+<li>cudaDeviceReset(); 不打印可以加</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/nsight-visual-studio-code-edition">nsight-visual-studio-code-edition</a></li>
+<li>cuda-gdb</li>
+<li>cuda-memcheck</li>
 </ol>
 <h2 id="link"><a href="#link" class="headerlink" title="link"></a>link</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-zone">cuda 相关开发</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/gpu-accelerated-libraries">gpu-accelerated-libraries</a></li>
 <li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/blog/unified-memory-cuda-beginners/">Unified Memory for CUDA Beginners</a></li>
 <li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/blog/maximizing-unified-memory-performance-cuda/">Maximizing Unified Memory Performance in CUDA</a></li>
 </ol>
@@ -442,7 +571,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Note"><span class="nav-number">1.</span> <span class="nav-text">Note</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cuda-grammer"><span class="nav-number">2.</span> <span class="nav-text">cuda grammer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#samples"><span class="nav-number">3.</span> <span class="nav-text">samples</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cuda-info"><span class="nav-number">3.1.</span> <span class="nav-text">cuda info</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#profiling"><span class="nav-number">4.</span> <span class="nav-text">profiling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#link"><span class="nav-number">5.</span> <span class="nav-text">link</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E5%AE%8F%E6%AF%85"><span class="nav-number">5.1.</span> <span class="nav-text">李宏毅</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Note"><span class="nav-number">1.</span> <span class="nav-text">Note</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cuda-grammer"><span class="nav-number">2.</span> <span class="nav-text">cuda grammer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#build"><span class="nav-number">3.</span> <span class="nav-text">build</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#samples"><span class="nav-number">4.</span> <span class="nav-text">samples</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CUDALibrarySamples"><span class="nav-number">5.</span> <span class="nav-text">CUDALibrarySamples</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cuda-info"><span class="nav-number">5.1.</span> <span class="nav-text">cuda info</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NVIDIA-Developer-Tools"><span class="nav-number">6.</span> <span class="nav-text">NVIDIA Developer Tools</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nsight-system"><span class="nav-number">6.1.</span> <span class="nav-text">nsight system</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nsight-compute"><span class="nav-number">6.2.</span> <span class="nav-text">nsight compute</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90"><span class="nav-number">6.2.1.</span> <span class="nav-text">结果分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nsgiht-graphics"><span class="nav-number">6.3.</span> <span class="nav-text">nsgiht graphics</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cuda-debug"><span class="nav-number">7.</span> <span class="nav-text">cuda-debug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#link"><span class="nav-number">8.</span> <span class="nav-text">link</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%8E%E5%AE%8F%E6%AF%85"><span class="nav-number">8.1.</span> <span class="nav-text">李宏毅</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -458,7 +587,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">170</span>
+          <span class="site-state-item-count">171</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -491,6 +620,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/11/blas/" title="2024&#x2F;01&#x2F;11&#x2F;blas&#x2F;">blas</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -501,9 +633,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/04/huggingface/" title="2024&#x2F;01&#x2F;04&#x2F;huggingface&#x2F;">huggingface</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/01/tensorrt-llm/" title="2024&#x2F;01&#x2F;01&#x2F;tensorrt-llm&#x2F;">tensorrt-llm</a>
         </li>
     </ul>
   </div>
@@ -541,13 +670,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">424k</span>
+    <span title="站点总字数">434k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:25</span>
+    <span title="站点阅读时长">6:35</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

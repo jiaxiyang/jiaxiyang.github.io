@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">170</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">171</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,283 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/03/10/Cuda/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/10/Cuda/" class="post-title-link" itemprop="url">Cuda</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-10 02:17:38" itemprop="dateCreated datePublished" datetime="2022-03-10T02:17:38+08:00">2022-03-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-19 17:47:20" itemprop="dateModified" datetime="2024-01-19T17:47:20+08:00">2024-01-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/Cuda/" itemprop="url" rel="index"><span itemprop="name">Cuda</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/03/10/Cuda/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/03/10/Cuda/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><ol>
+<li>核函数 K（kernel function）就是指 K(x, y) &#x3D; ，其中 x 和 y 是 n 维的输入值，f(·) 是从 n 维到 m 维的映射（通常而言，m&gt;&gt;n）。是 x 和 y 的内积（inner product），严格来说 应该叫欧式空间的标准内积，也就是很多人常说的点积（dot product）。</li>
+<li><code>sudo update-alternatives --display cuda</code>显示系统 cuda 版本</li>
+<li><code>export PATH=/usr/local/cuda/bin/:$&#123;PATH&#125;</code>找不到 nvcc 可能需要 export PATH</li>
+<li><code>sudo apt install -y nvidia-cuda-toolkit</code> 安装 cuda 工具链, 不能乱用，需要和系统 cuda 匹配</li>
+<li>在 CUDA 中，你会以类似于 C&#x2F;C++函数的形式来表达想要在 GPU 上运行的计算，这个函数被称为 kernel。</li>
+<li>CUDA 流表示一个 GPU 操作队列，该队列中的操作将以添加到流中的先后顺序而依次执行。</li>
+<li>stream 作用：在 Stream 的帮助下，CUDA 程序可以有效地将内存读取和数值运算并行，从而提升数据的吞吐量。 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/51402722">link</a><br>由于 GPU 和 CPU 不能直接读取对方的内存，CUDA 程序一般会有一下三个步骤：1）将数据从 CPU 内存转移到 GPU 内存，2）GPU 进行运算并将结果保存在 GPU 内存，3）将结果从 GPU 内存拷贝到 CPU 内存。</li>
+<li>cuda7 可以开启每个线程有一个默认 stream, 之前每个设备有一个 stream <a target="_blank" rel="noopener" href="https://developer.nvidia.com/zh-cn/blog/gpu-pro-tip-cuda-7-streams-simplify-concurrency/">gpu-pro-tip-cuda-7-streams-simplify-concurrency&#x2F;</a></li>
+<li>GPU 函数耗时统计不能只记录一次的，GPU 可能做一些准备工作，教训： nppiResize_8u_C3R 不管大小第一次运行耗时都很大 The cuda context is lazily initialized</li>
+<li>unified memory cpu 访问时需要同一个线程。不同线程会 bus error。</li>
+<li><code>autotuning</code> 搜索 kernel grid 划分参数(结果不变)，找性能最优</li>
+<li>L1 和 shared memory 共享一块存储 可动态分配比例; 可用比例见<a target="_blank" rel="noopener" href="https://www.nvidia.com/content/PDF/nvidia-ampere-ga-102-gpu-architecture-whitepaper-v2.pdf">link</a></li>
+<li>warp 调度:延时隐藏 只执行 warp 一部分 当 warp 需要等待时 先执行其他 warp</li>
+<li>warp 执行类似 simd</li>
+<li><code>FMA (Fused Multiply Add)</code>: z&#x3D;a*x+y …z,x,y are vectors or scalars</li>
+<li><code>4FMA (Quad FMA)</code>: z&#x3D;A*x+z …A is a FP32 matrix; x,z are vectors</li>
+<li><code>WMMA (Tensor Core)</code>: Z&#x3D;AB+C …A,B are FP16 matrices; Z,C are FP32</li>
+</ol>
+<h2 id="cuda-grammer"><a href="#cuda-grammer" class="headerlink" title="cuda grammer"></a>cuda grammer</h2><ol>
+<li>所有的 kernel 函数返回类型都是 void</li>
+<li><code>&lt;&lt;&lt; M , T &gt;&gt;&gt;</code> Which indicate that a kernel launches with a grid of M thread blocks. Each thread block has T parallel threads.</li>
+<li><code>vectorAdd&lt;&lt;&lt;blocksPerGrid, threadsPerBlock&gt;&gt;&gt;</code></li>
+<li>可以认为 M, T 对应图片的 H, W; 一个 thread 对应一个像素点；一个 block 对应一行，一个 grid 对应一张图片</li>
+<li><code>int tid = blockIdx.x * blockDim.x + threadIdx.x; =&gt; int index = h * W + w;</code></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cuda-samples/blob/master/Common/helper_cuda.h#L595">checkCudaErrors</a> helper_cuda.h</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">check</span><span class="params">(T result, <span class="type">char</span> <span class="type">const</span> *<span class="type">const</span> func, <span class="type">const</span> <span class="type">char</span> *<span class="type">const</span> file,</span></span></span><br><span class="line"><span class="params"><span class="function">           <span class="type">int</span> <span class="type">const</span> line)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (result) &#123;</span><br><span class="line">    <span class="built_in">fprintf</span>(stderr, <span class="string">&quot;CUDA error at %s:%d code=%d(%s) \&quot;%s\&quot; \n&quot;</span>, file, line,</span><br><span class="line">            <span class="built_in">static_cast</span>&lt;<span class="type">unsigned</span> <span class="type">int</span>&gt;(result), _cudaGetErrorEnum(result), func);</span><br><span class="line">    <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// This will output the proper CUDA error strings in the event</span></span><br><span class="line"><span class="comment">// that a CUDA host call returns an error</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> checkCudaErrors(val) check((val), #val, __FILE__, __LINE__)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>cutil.h NVIDIA 公司在 CUDA5 之后便不再使用 cutil.h <a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cuda-samples/blob/master/Samples/2_Concepts_and_Techniques/EGLSync_CUDAEvent_Interop/EGLSync_CUDAEvent_Interop.cu#L83">CUDA_SAFE_CALL </a></li>
+<li><a target="_blank" rel="noopener" href="https://bohipat.wordpress.com/2014/07/11/replacing-cutil-in-cuda-5-0/">replacing-cutil-in-cuda-5-0</a></li>
+</ol>
+<h2 id="build"><a href="#build" class="headerlink" title="build"></a>build</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#application-compatibility">application-compatibility</a></li>
+<li><code>-arch=sm_70</code> is a shorthand for <code>-arch=compute_70 -code=compute_70,sm_70</code> (which is the same as <code>-gencode arch=compute_70,code=\&quot;compute_70,sm_70\&quot;</code>)</li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-gpus">Your GPU Compute Capability</a> 包含各种 gpu arch</li>
+</ol>
+<h2 id="samples"><a href="#samples" class="headerlink" title="samples"></a><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cuda-samples">samples</a></h2><ol>
+<li>11.6 之后代码放在 github 上</li>
+<li><a target="_blank" rel="noopener" href="https://cuda-tutorial.readthedocs.io/en/latest/tutorials/tutorial01/">hello world</a></li>
+<li><code>/usr/local/cuda-11.4/samples</code> tree -L 2</li>
+<li><code>/usr/local/cuda-10.2/samples/0_Simple/vectorAdd</code></li>
+<li><code>nvprof ./vectorAdd</code> 查看 kenerl 耗时</li>
+</ol>
+<h2 id="CUDALibrarySamples"><a href="#CUDALibrarySamples" class="headerlink" title="CUDALibrarySamples"></a><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/CUDALibrarySamples">CUDALibrarySamples</a></h2><ol>
+<li>cublas</li>
+<li>cutlass</li>
+<li>npp</li>
+</ol>
+<h3 id="cuda-info"><a href="#cuda-info" class="headerlink" title="cuda info"></a>cuda info</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://linuxconfig.org/how-to-get-cuda-cores-count-on-linux">查看 cuda core</a><br><code>cd /usr/local/cuda-11.4/samples/1_Utilities/deviceQuery &amp;&amp; make &amp;&amp; ./deviceQuery</code></li>
+<li>bandwith test<br><code>cd /usr/local/cuda-11.4/samples/1_Utilities/bandwidthTest &amp;&amp; make &amp;&amp; ./bandwidthTest</code></li>
+</ol>
+<h2 id="NVIDIA-Developer-Tools"><a href="#NVIDIA-Developer-Tools" class="headerlink" title="NVIDIA Developer Tools"></a><a target="_blank" rel="noopener" href="https://developer.nvidia.com/tools-overview">NVIDIA Developer Tools</a></h2><ol>
+<li>各工具关系<br><img src="https://i.ibb.co/2qN87rv/QVJcq2r-QQ3.png" alt="tools"></li>
+</ol>
+<h3 id="nsight-system"><a href="#nsight-system" class="headerlink" title="nsight system"></a>nsight system</h3><ol>
+<li>分析系统性能</li>
+<li><code>nsys profile</code></li>
+<li><code>nvprof</code> 旧版本</li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/nsight-systems/UserGuide/index.html">user guide</a></li>
+<li>NsightSystems-2023.2.1.122-3259852.msi 安装包</li>
+<li>Nsight_Systems_User_Guide_2023.2.1.122-3259852.pdf 文档</li>
+<li>左上角 timeline view 可以选择 analysis summary，有各种总结</li>
+<li>左侧右键选<code>show in events view</code>， 可以看具体时间, 可以在 all 上操作，看所有 event 运行时间</li>
+<li>右键 reset room 显示全部</li>
+<li><code>shift + mouseleftdoubleclick</code> timeline 可以找到对应 event 在 event view 位置</li>
+<li><code>ctrl + mouseleftdoubleclick</code> timeline 可以 fit to screen</li>
+<li><code>backspace</code> timeline 可以 undo room</li>
+<li><code>ctrl + mouseleftdoubleclick</code> 可以找到 event view 对应的 timeline 位置</li>
+<li><code>sudo nsys profile &lt;app&gt;</code></li>
+<li><code>nsys stats report1.nsys-rep</code> 输出各种 report</li>
+<li>可以看 cpu 执行情况， tensort 可以看详细算子耗时，也有对应 cuda 执行情况</li>
+<li>analysis summary 中有各个线程的 cpu 利用率总结</li>
+<li>可以关注 cpu 空闲的地方，为什么会空闲(同步数据？)</li>
+<li>可以缩小看颜色占比，关注占比大的模块</li>
+<li>cudaMemcpy 会阻塞 cpu 执行， 可以多注意 cudaMemcpy 影响</li>
+<li>cudaStreamSynchronize 是 CUDA API 中的一个函数，用于等待指定的 CUDA 流上的所有 CUDA 核函数执行完毕。当 CUDA 核函数被执行时，它们会被添加到一个 CUDA 流中，这些核函数的执行可能是异步的，也可能是同步的，具体取决于如何在代码中调用它们。当我们调用 cudaStreamSynchronize 时，它将会阻塞当前 CPU 线程，直到指定的流上的所有核函数都执行完毕。</li>
+</ol>
+<h3 id="nsight-compute"><a href="#nsight-compute" class="headerlink" title="nsight compute"></a>nsight compute</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/nvidia-development-tools-solutions-err_nvgpuctrperm-permission-issue-performance-counters">permission 问题</a><ul>
+<li>可以增加临时权限</li>
+</ul>
+</li>
+<li>分析 kernel 性能, 可以选 kernel</li>
+<li>NVIDIA Nsight Compute is an interactive kernel profiler for CUDA applications. It provides detailed performance metrics and API debugging via a user interface and command line tool. In addition, its baseline feature allows users to compare results within the tool. NVIDIA Nsight Compute provides a customizable and data-driven user interface and metric collection and can be extended with analysis scripts for post-processing results.</li>
+<li>需要 windows 客户端通过 connect 将 ncu 送到开发环境<ul>
+<li>可以通过 activity 复制命令到板端执行</li>
+</ul>
+</li>
+<li><code> ncu --mode=launch ./test</code></li>
+<li><code>/tmp/var/target/linux-desktop-glibc_2_11_3-x64/ncu --config-file off --export &quot;/tmp/var/test&quot; --force-overwrite --section-folder /tmp/var/sections --set full ./test</code></li>
+<li><code>ncu --set full -f --export nsight_compute ./test</code></li>
+<li><code>docker run -itd -v /mnt:/mnt -p 30022:22 --user root --gpus all --name=Ubuntu20.04-CUDA-admin --shm-size 2g --cap-add=SYS_ADMIN nvidia/cuda:11.4.3-cudnn8-devel-ubuntu20.04</code> 尽量使用官方 docker<ul>
+<li>需要 <code>--gpus all --cap-add=SYS_ADMIN</code></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/nsight-compute/index.html">nsight-compute docs</a><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html">ProfilingGuide</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/nsight-compute/NsightCompute/index.html">user manual</a></li>
+</ul>
+</li>
+<li>左上角可以显示：<ul>
+<li>session: gpu cpu 等信息</li>
+<li>detailed：overview, compute, memory 等</li>
+<li>source: 汇编代码及耗时</li>
+</ul>
+</li>
+</ol>
+<h4 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h4><ol>
+<li>overview<ul>
+<li>roofline</li>
+</ul>
+</li>
+<li>comupte<ul>
+<li>IPC</li>
+<li>指令执行占比</li>
+</ul>
+</li>
+<li>memory<ul>
+<li>可以选择看 transfer size 和 throughput</li>
+<li>要提升 cache 命中率</li>
+<li>多用 shared memory(可作为中间结果)</li>
+<li>多种 memory<ul>
+<li>global</li>
+<li>local: 线程私有的。local memory 不是物理空间，而是 global memory 的一部分，所以延时较大。</li>
+<li>texture: 只读?</li>
+<li>surface</li>
+<li>load global stroe shared</li>
+<li>shared</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>scheduler</li>
+<li>warp state</li>
+<li>instructions</li>
+<li>launch</li>
+<li>cocupancy<ul>
+<li>Occupancy 是 CUDA 编程中一个重要的性能指标,它表示 GPU 中 Streaming Multiprocessor (SM)上的处理单元被运用的比例。</li>
+</ul>
+</li>
+</ol>
+<h3 id="nsgiht-graphics"><a href="#nsgiht-graphics" class="headerlink" title="nsgiht graphics"></a>nsgiht graphics</h3><h2 id="cuda-debug"><a href="#cuda-debug" class="headerlink" title="cuda-debug"></a><a target="_blank" rel="noopener" href="https://docs.nvidia.com/nsight-visual-studio-code-edition/cuda-debugger/index.html">cuda-debug</a></h2><ol>
+<li>shared memory(L1 cache?) dump<ul>
+<li>申请 shared memory 变量，存中间结果， shared memory 对 block 全局可见。</li>
+<li>可以申请多于 L1 cache 大小的存储，系统会自动调度</li>
+</ul>
+</li>
+<li>传递主存指针到 kernel，用于 dump</li>
+<li>print<ul>
+<li><code>if(threadIdx.x == 0) printf...</code> 条件打印</li>
+<li>cudaDeviceReset(); 不打印可以加</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/nsight-visual-studio-code-edition">nsight-visual-studio-code-edition</a></li>
+<li>cuda-gdb</li>
+<li>cuda-memcheck</li>
+</ol>
+<h2 id="link"><a href="#link" class="headerlink" title="link"></a>link</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-zone">cuda 相关开发</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/gpu-accelerated-libraries">gpu-accelerated-libraries</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/blog/unified-memory-cuda-beginners/">Unified Memory for CUDA Beginners</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/blog/maximizing-unified-memory-performance-cuda/">Maximizing Unified Memory Performance in CUDA</a></li>
+</ol>
+<h3 id="李宏毅"><a href="#李宏毅" class="headerlink" title="李宏毅"></a>李宏毅</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=JbfcAaBT66U">stable diffusion</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=n9TlOhRjYoc">transformer</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1185,155 +1462,6 @@ Bob--&gt;&gt;John: Jolly good!
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/02/03/Cpp-debug/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/02/03/Cpp-debug/" class="post-title-link" itemprop="url">Debug</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-02-03 17:02:35" itemprop="dateCreated datePublished" datetime="2022-02-03T17:02:35+08:00">2022-02-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-07 21:39:50" itemprop="dateModified" datetime="2024-01-07T21:39:50+08:00">2024-01-07</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/02/03/Cpp-debug/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/02/03/Cpp-debug/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>17k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>15 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="NOTE"><a href="#NOTE" class="headerlink" title="NOTE"></a>NOTE</h2><ol>
-<li>没 link 报<code>undefined reference to</code>, link 但没 found <code>xxx was not found, cannot find xxx</code></li>
-<li><code>target_link_options(xxx PUBLIC -Wl,-unresolved-symbols=ignore-in-shared-libs)</code> 只要能找到 xxx 中的符号就行， link 的 shared lib 中未找到符号不报错， 忽略 link 的库解析，用于交叉编译，运行时能找到库</li>
-<li>c++23 支持 stack trace <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/utility/basic_stacktrace">basic_stacktrace</a><ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/bombela/backward-cpp">backward-cpp</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/jeremy-rifkin/cpptrace">cpptrace</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.boost.org/doc/libs/1_80_0/doc/html/stacktrace/getting_started.html">boost stack trace</a></li>
-</ul>
-</li>
-<li>二进制依赖时， 需要先 find_package(glog REQUIRED), 否则<ul>
-<li>op PRIVATE 依赖 glog: undefined reference to 错误, 未传递出 glog 依赖 （静态链接的可以 PRIVATE 依赖)</li>
-<li>op PUBLIC 依赖 glog: target was not found 错误, 传递出 glog 依赖</li>
-</ul>
-</li>
-<li><code>gcc/g++  --verbose</code>显示编译过程</li>
-<li>strip 是一个在 Unix-like 操作系统中用于删除或剥离目标文件或对象文件的符号信息的工具。<ul>
-<li>删除符号表信息：符号表包含了源代码中的函数和变量的名称。</li>
-<li>删除调试信息：debug section 被删除</li>
-</ul>
-</li>
-<li>function tracing 只需要 symbols，不需要 debug symbols（gcc -g）。strip 之后不能跟踪</li>
-<li>动态符号（.dynsym）vs. 局部符号（.symtab）， .symtab 包含.dynsym; 可以用命令 strip 来手动去掉局部符号表， strip 前后用<code>readelf -s ./test</code>看, strip 只去除了.symtab</li>
-<li>strip 之后 gdb 不能使用 function 名字加断点</li>
-<li>debug info 作用：<ul>
-<li>将内存地址映射到具体某行源代码</li>
-<li>调用栈展开（stack unwinding）</li>
-</ul>
-</li>
-<li>在 C++中，如果函数有指定返回类型，但在实际代码中没有返回值或者在所有路径上都没有返回值，那么它的行为是未定义的（Undefined Behavior）。根据 C++标准，未定义的行为可能导致任何结果，包括程序崩溃、生成错误的结果或者在某些情况下看起来像是“正常工作”。</li>
-<li><code>addr2line</code>其功能是将函数地址解析成文件名或行号的工具。 <a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1974629">addr2line debug</a></li>
-<li>查看 debug 模式：gdb <code>l</code> and <code>info source</code></li>
-<li><code>-DCMAKE_BUILD_TYPE=RelWithDebInfo</code> release 模式编译，带 debug info</li>
-<li><code>-DCMAKE_CXX_FLAGS=&quot;-g&quot;</code> cmake 编译选项添加 debug info； release 模式也适用</li>
-<li>gcc 选项顺序很重要，如果两个选项冲突，则以后一个为准。可以用<code>-O3 -fno-inline-functions</code>既使用-O3 的功能又关闭函数内嵌功能。</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/02/03/Cpp-debug/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1405,7 +1533,7 @@ Bob--&gt;&gt;John: Jolly good!
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">170</span>
+          <span class="site-state-item-count">171</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1438,6 +1566,9 @@ Bob--&gt;&gt;John: Jolly good!
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/11/blas/" title="2024&#x2F;01&#x2F;11&#x2F;blas&#x2F;">blas</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1448,9 +1579,6 @@ Bob--&gt;&gt;John: Jolly good!
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/04/huggingface/" title="2024&#x2F;01&#x2F;04&#x2F;huggingface&#x2F;">huggingface</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/01/tensorrt-llm/" title="2024&#x2F;01&#x2F;01&#x2F;tensorrt-llm&#x2F;">tensorrt-llm</a>
         </li>
     </ul>
   </div>
@@ -1488,13 +1616,13 @@ Bob--&gt;&gt;John: Jolly good!
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">424k</span>
+    <span title="站点总字数">434k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:25</span>
+    <span title="站点阅读时长">6:35</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
