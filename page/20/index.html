@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-20 17:47:49" itemprop="dateModified" datetime="2024-01-20T17:47:49+08:00">2024-01-20</time>
+                <time title="修改时间：2024-01-21 17:05:25" itemprop="dateModified" datetime="2024-01-21T17:05:25+08:00">2024-01-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -266,14 +266,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.9k</span>
+              <span>7.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -319,8 +319,13 @@
 <li><a target="_blank" rel="noopener" href="https://bohipat.wordpress.com/2014/07/11/replacing-cutil-in-cuda-5-0/">replacing-cutil-in-cuda-5-0</a></li>
 </ol>
 <h2 id="tensor-core-program"><a href="#tensor-core-program" class="headerlink" title="tensor core program"></a>tensor core program</h2><ol>
+<li><code>--set roofline</code>能看到 tensor core roofline; 例如运行<code>cuda-samples/Samples/3_CUDA_Features/cudaTensorCoreGemm</code></li>
 <li>cuda-samples&#x2F;Samples&#x2F;3_CUDA_Features 包含多个 tensor core 实例</li>
-<li><code>Samples/3_CUDA_Features/cudaTensorCoreGemm</code>比<code>Samples/0_Introduction/matrixMul</code> 计算性能高很多</li>
+<li><code>Samples/3_CUDA_Features/cudaTensorCoreGemm</code>比<code>Samples/0_Introduction/matrixMul</code> 计算性能高很多<ul>
+<li>cudaTensorCoreGemm 测试的是 fp16 性能</li>
+</ul>
+</li>
+<li>cublas 满足特定条件才会使用 tensor core <a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cublas/index.html#tensor-core-usage">link</a></li>
 </ol>
 <h3 id="tenosr-core-和-cuda-core"><a href="#tenosr-core-和-cuda-core" class="headerlink" title="tenosr core 和 cuda core"></a>tenosr core 和 cuda core</h3><ol>
 <li>CUDA Core 是为通用计算设计，而 Tensor Core 是为特定类型的计算（主要是深度学习中的矩阵运算）优化。</li>
@@ -383,6 +388,7 @@
 <li>cudaStreamSynchronize 是 CUDA API 中的一个函数，用于等待指定的 CUDA 流上的所有 CUDA 核函数执行完毕。当 CUDA 核函数被执行时，它们会被添加到一个 CUDA 流中，这些核函数的执行可能是异步的，也可能是同步的，具体取决于如何在代码中调用它们。当我们调用 cudaStreamSynchronize 时，它将会阻塞当前 CPU 线程，直到指定的流上的所有核函数都执行完毕。</li>
 </ol>
 <h3 id="nsight-compute"><a href="#nsight-compute" class="headerlink" title="nsight compute"></a>nsight compute</h3><ol>
+<li><code>metrics</code> 是指性能指标，这些指标用于衡量 CUDA 应用程序的性能和行为。性能指标可以包括各种硬件级别的统计数据，如内存访问效率、计算操作的执行时间、流处理器（SM）的利用率、寄存器使用情况、分支效率等等。</li>
 <li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/nvidia-development-tools-solutions-err_nvgpuctrperm-permission-issue-performance-counters">permission 问题</a><ul>
 <li>可以增加临时权限</li>
 </ul>
@@ -391,6 +397,11 @@
 <li>NVIDIA Nsight Compute is an interactive kernel profiler for CUDA applications. It provides detailed performance metrics and API debugging via a user interface and command line tool. In addition, its baseline feature allows users to compare results within the tool. NVIDIA Nsight Compute provides a customizable and data-driven user interface and metric collection and can be extended with analysis scripts for post-processing results.</li>
 <li>需要 windows 客户端通过 connect 将 ncu 送到开发环境<ul>
 <li>可以通过 activity 复制命令到板端执行</li>
+<li>metrics 可以选择 Sets 和 rules</li>
+</ul>
+</li>
+<li>profile -&gt; metrics details<ul>
+<li>点击统计界面某个 metrics 可以看 metrics 详细信息</li>
 </ul>
 </li>
 <li><code> ncu --mode=launch ./test</code></li>
@@ -409,10 +420,22 @@
 <li>session: gpu cpu 等信息</li>
 <li>detailed：overview, compute, memory 等</li>
 <li>source: 汇编代码及耗时</li>
+<li>summary: 耗时，compute and memory throughput; 底下有优化建议</li>
+</ul>
+</li>
+<li><code>ncu --set roofline</code>可以测量详细 roofline</li>
+<li><code>ncu --metrics smsp__inst_executed.sum ./matrixMul</code> 打印 metrics</li>
+<li><code>--set roofline</code>能看到 tensor core roofline; 例如运行<code>cuda-samples/Samples/3_CUDA_Features/cudaTensorCoreGemm</code></li>
+</ol>
+<h4 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h4><ol>
+<li>The application returned an error code (9).<ul>
+<li><code>ncu --replay-mode application</code> 加参数； 见<a target="_blank" rel="noopener" href="https://forums.developer.nvidia.com/t/nsight-profiling-crashes-with-error-code-9/230094/5">link</a></li>
+<li>可以使用<code>–replay-mode application</code>切换到应用程序重播。 这避免了内存存储需要重放。</li>
 </ul>
 </li>
 </ol>
 <h4 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h4><ol>
+<li>每项下面会有建议</li>
 <li>overview<ul>
 <li>roofline</li>
 </ul>
@@ -437,12 +460,23 @@
 </li>
 </ul>
 </li>
-<li>scheduler</li>
+<li>scheduler statistics<ul>
+<li>Issued Warp Per Scheduler: 平均每个 cycle 发射的 warp 数</li>
+<li>On cycles with no eligible warps, the issue slot is skipped and no instruction is issued. Having many skipped issue slots indicates poor latency hiding.</li>
+<li>Out of the maximum of 12 warps per scheduler, this kernel allocates an average of 2.00 active warps per scheduler, but only an average of 0.07 warps were eligible(合格的) per cycle.</li>
+<li>可以看出平局每个 sm 有几个 warps; 参考可以看 Theoretical Occupancy 是多少，有可能受 regitster 和 shared memory 等限制</li>
+<li>Eligible warps are the subset of active warps that are ready to issue their next instruction.</li>
+</ul>
+</li>
 <li>warp state</li>
 <li>instructions</li>
 <li>launch</li>
 <li>cocupancy<ul>
+<li>Occupancy is the ratio of the number of active warps per multiprocessor to the maximum number of possible active warps.</li>
+<li>可以看出理论占用率及不能到 100%的原因</li>
+<li>一个 warp 中用太多 register 和 shared memory 会影响 Occupancy， Occupancy 会影响 scheduler， 进而会影响延迟隐藏</li>
 <li>Occupancy 是 CUDA 编程中一个重要的性能指标,它表示 GPU 中 Streaming Multiprocessor (SM)上的处理单元被运用的比例。</li>
+<li>右上角点开 table，可以可视化</li>
 </ul>
 </li>
 </ol>
@@ -1633,13 +1667,13 @@ Bob--&gt;&gt;John: Jolly good!
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">436k</span>
+    <span title="站点总字数">438k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:36</span>
+    <span title="站点阅读时长">6:38</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
