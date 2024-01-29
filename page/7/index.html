@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">171</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">173</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -199,6 +199,334 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/06/09/pytorch/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/06/09/pytorch/" class="post-title-link" itemprop="url">pytorch</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-06-09 15:28:49" itemprop="dateCreated datePublished" datetime="2023-06-09T15:28:49+08:00">2023-06-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-08 16:36:39" itemprop="dateModified" datetime="2024-01-08T16:36:39+08:00">2024-01-08</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/06/09/pytorch/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/06/09/pytorch/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>pytorch 导出模型时会显示 ONNX IR, 类似三段式<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/pytorch/pytorch/blob/main/torch/onnx/utils.py#L190">Functions to export models into the ONNX IR format.</a></li>
+</ul>
+</li>
+<li>pytorch 模型结构定义之后, 有些算子不一定会使用，导出 onnx 模型时不使用的算子不会导出，应为导出模型进行一次模型推理，在推理的过程中记录所有经过的计算，将这些记录整合成计算图</li>
+<li>pytorch 为什么不直接用 numpy?<ul>
+<li><code>GPU 支持</code>：PyTorch 设计之初就考虑到了与 GPU 的兼容性，允许其在 GPU 上直接执行张量运算，大大加快了深度学习模型的训练和推理速度。相比之下，NumPy 主要是为 CPU 设计的，不支持 GPU 或其他类型的加速硬件。</li>
+<li><code>自动微分</code>：PyTorch 提供了自动微分功能，这对于深度学习至关重要。通过它的 <code>autograd</code> 系统，PyTorch 能够自动计算模型参数的梯度，这对于训练神经网络来说是必需的。NumPy 没有内置这样的功能。</li>
+<li><code>深度学习特定的操作</code>：PyTorch 提供了许多专为深度学习设计的操作和函数，如卷积、池化等，这些在 NumPy 中不是直接可用的。</li>
+<li><code>动态计算图</code>：PyTorch 使用动态计算图（也称为即时执行），这意味着计算图在运行时动态构建，从而提供了更灵活的编程模式，特别是对于复杂的模型和动态输入。而 NumPy 没有这样的概念。</li>
+<li><code>可扩展性和生态系统</code>：虽然 NumPy 在科学计算方面非常强大，但 PyTorch 提供了更适合于大规模、复杂的深度学习模型和应用的工具和库。</li>
+</ul>
+</li>
+<li>在使用动态图（Dynamic Graph）框架（如 PyTorch 或 TensorFlow 的 Eager Execution 模式）进行单步调试时，并不是每一步操作都会完全重新构建整个计算图。相反，每一步操作通常对应计算图的一部分，这个部分在执行时被动态创建和执行。在单步调试时，整个模型的计算图不会在每一步都被重新构建。只有实际执行的操作会被动态添加到图中。</li>
+<li>在使用动态图框架（如 PyTorch 或 TensorFlow 的 Eager Execution 模式）进行单步调试时，整个模型的计算图并不会在每一步都被重新构建。动态图的特点是在运行时动态构建和执行计算图的一部分，而非整个图。这种方法与静态图框架（如 TensorFlow 的传统模式）形成对比，后者在执行任何计算前需要先构建完整的计算图并对其进行优化。</li>
+<li>循环：<ul>
+<li>不固定：动态图</li>
+<li>固定：可以被展开，构成静态图</li>
+</ul>
+</li>
+<li><code>torch==1.11.0+cu113</code></li>
+<li><code>pip install torch==1.11.0+cu113 --extra-index-url https://download.pytorch.org/whl/cu113</code></li>
+<li><code>pip freeze | grep torch</code>: 查看库版本</li>
+<li><code>pip show torch</code>: 查看库版本</li>
+<li><code>python3 -c &quot;import torch; print(torch.__version__)&quot;</code></li>
+<li>pytorch tensor to binary file: <code>tensor.cpu().numpy().astype(np.float32).tofile(&quot;test.bin&quot;)</code>; c++ read binary file</li>
+<li>tensor 中取单个元素会降维；例如从二维 tensor 取单行或者单列结果会变为一维 tensor</li>
+<li><code>help(torch.ones)</code> 显示函数 help</li>
+<li><code>print(dir(torch.distributions))</code> 显示 torch 的 distributions</li>
+</ol>
+<h2 id="基础运算"><a href="#基础运算" class="headerlink" title="基础运算"></a><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/basics/tensorqs_tutorial.html">基础运算</a></h2><ol>
+<li><a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_preliminaries/ndarray.html">d2l ndarray</a></li>
+<li><code>x = torch.arange(10)</code> tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])</li>
+<li><code>x = torch.arange(10.0)</code> tensor([0., 1., 2., 3., 4., 5., 6., 7., 8., 9.])</li>
+<li><code>type(x)</code> 打印 x 类型</li>
+<li><code>torch.randn(2)</code> tensor([ 0.6872, -0.3433]); 返回一个填充随机正态分布的张量(mean&#x3D;0, std&#x3D;1)。即,生成的值大概符合平均数为 0,标准差为 1 的正态分布。</li>
+<li><code>X = torch.rand(2,20)</code> 返回一个填充随机均匀分布的张量,即在[0,1)区间内均匀随机。</li>
+<li><code>x = x.reshape(2, 5)</code></li>
+<li><code>x.shape</code> torch.Size([2, 5])</li>
+<li><code>a = torch.tensor(3.4); a.shape</code> torch.Size([]) 标量</li>
+<li><code>a = torch.tensor([3.4]);a.shape</code> torch.Size([1]) 向量</li>
+<li><code>x.numel()</code> 10; element number</li>
+<li><code>len(x)</code> 2; len()为 python 内置函数， 用于 tensor 时是指 tesnor 的维度（dimension）</li>
+<li><code>torch.ones(2, 4)</code></li>
+<li><code>torch.zeros(2, 4)</code></li>
+<li><code>X.reshape(-1)</code> 展平为一维</li>
+<li>tensor 基本运算</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x = torch.tensor([<span class="number">1.0</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">8</span>])  <span class="comment"># 1.0 mean float</span></span><br><span class="line">y = torch.tensor([<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>])</span><br><span class="line">x + y, x - y, x * y, x / y, x ** y  <span class="comment"># **运算符是求幂运算</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>tensor 矩阵运算</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">X = torch.arange(<span class="number">9</span>).reshape(<span class="number">3</span>,<span class="number">3</span>)</span><br><span class="line">Y = torch.arange(<span class="number">9</span>).reshape(<span class="number">3</span>,<span class="number">3</span>)</span><br><span class="line">X.t() <span class="comment"># 转置</span></span><br><span class="line">X @ Y <span class="comment"># 矩阵乘</span></span><br><span class="line">torch.matmul(X, Y) <span class="comment"># 矩阵乘</span></span><br><span class="line">X * Y <span class="comment"># 元素分别相乘</span></span><br><span class="line">X + <span class="number">5</span> <span class="comment"># 广播：分别加5</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>torch.exp(x)</code> tensor 求指数</li>
+<li>concat and condition</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">X = torch.arange(<span class="number">12</span>, dtype=torch.float32).reshape((<span class="number">3</span>,<span class="number">4</span>))</span><br><span class="line">Y = torch.tensor([[<span class="number">2.0</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], [<span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>]])</span><br><span class="line">torch.cat((X, Y), dim=<span class="number">0</span>), torch.cat((X, Y), dim=<span class="number">1</span>)  <span class="comment"># dim=0按行拼接， dim=1按列拼接， 0代表最里面一个维度</span></span><br><span class="line">X == Y <span class="comment"># shape: torch.Size([3, 4])</span></span><br><span class="line">X &lt; Y</span><br><span class="line">X &gt; Y</span><br><span class="line">X.<span class="built_in">sum</span>() <span class="comment"># 求和</span></span><br><span class="line">X.mean() <span class="comment"># 求均值</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>索引和切片</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X[-<span class="number">1</span>] <span class="comment"># 取最后一个元素</span></span><br><span class="line">X[<span class="number">1</span>:<span class="number">3</span>] <span class="comment"># 取第二个和第三个元素，不包含X[3]</span></span><br><span class="line">X[<span class="number">1</span>,<span class="number">2</span>] = <span class="number">9</span> <span class="comment"># 赋值</span></span><br><span class="line">X[<span class="number">0</span>:<span class="number">2</span>, :] = <span class="number">12</span> <span class="comment"># 前两行赋值为12</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>节省内存</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">before = <span class="built_in">id</span>(Y)</span><br><span class="line">Y = Y + X</span><br><span class="line"><span class="built_in">id</span>(Y) == before <span class="comment"># False</span></span><br><span class="line"></span><br><span class="line">Z = torch.zeros_like(Y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;id(Z):&#x27;</span>, <span class="built_in">id</span>(Z))</span><br><span class="line">Z[:] = X + Y</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;id(Z):&#x27;</span>, <span class="built_in">id</span>(Z))</span><br><span class="line"></span><br><span class="line">before = <span class="built_in">id</span>(X)</span><br><span class="line">X += Y</span><br><span class="line"><span class="built_in">id</span>(X) == before <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>和 numpy 转换</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">A = X.numpy()</span><br><span class="line">B = torch.tensor(A)</span><br><span class="line"><span class="built_in">type</span>(A), <span class="built_in">type</span>(B)</span><br><span class="line"></span><br><span class="line">a = torch.tensor([<span class="number">3.5</span>])</span><br><span class="line">a, a.item(), <span class="built_in">float</span>(a), <span class="built_in">int</span>(a) <span class="comment"># (tensor([3.5000]), 3.5, 3.5, 3)</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>type 转换 <a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/tensors.html">type</a></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">X = torch.arange(<span class="number">12</span>).reshape(<span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line">X.dtype <span class="comment"># torch.int64</span></span><br><span class="line">X.to(torch.float32)</span><br><span class="line">torch.tensor([<span class="number">1.2</span>]).<span class="built_in">type</span>() <span class="comment"># torch.FloatTensor</span></span><br><span class="line">torch.tensor([<span class="number">1.2</span>]).dtype <span class="comment"># torch.float32</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>cpu cuda</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">X.cpu()</span><br><span class="line">X.cuda() <span class="comment"># 默认cuda:0</span></span><br><span class="line">X.to(<span class="string">&quot;cpu&quot;</span>)</span><br><span class="line">X.to(<span class="string">&quot;cuda:0&quot;</span>)</span><br><span class="line"></span><br><span class="line">device = torch.device(<span class="string">&quot;cuda&quot;</span>)</span><br><span class="line">Y = X.to(device)</span><br><span class="line"></span><br><span class="line"><span class="comment"># PyTorch的GPU端对tensor数据类型的支持是有限的,很多运算只实现了float/double类型的GPU支持。</span></span><br><span class="line">X = torch.arange(<span class="number">9</span>).reshape(<span class="number">3</span>,<span class="number">3</span>).cuda().to(torch.float32)</span><br><span class="line">Y = torch.arange(<span class="number">9</span>).reshape(<span class="number">3</span>,<span class="number">3</span>).cuda().to(torch.float32)</span><br><span class="line">torch.matmul(X, Y)</span><br><span class="line">X @ Y</span><br></pre></td></tr></table></figure>
+
+<h2 id="torchscript"><a href="#torchscript" class="headerlink" title="torchscript"></a><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2010575">torchscript</a></h2><ol>
+<li>TorchScript 是 PyTorch 模型推理部署的中间表示，可以在高性能环境 libtorch（C ++）中直接加载，实现模型推理，而无需 Pytorch 训练框架依赖。torch.jit 是 torchscript Python 语言包支持，支持 pytorch 模型快速，高效，无缝对接到 libtorch 运行时，实现高效推理。</li>
+<li>torchscript 主要包含权重和计算过程(IR; 类似.text; 各种函数，有一个入口)</li>
+<li>trace 指的是进行一次模型推理，在推理的过程中记录所有经过的计算，将这些记录整合成计算图<ul>
+<li>for 循环被展开</li>
+</ul>
+</li>
+<li>script 会直接解析网络定义的 python 代码，生成抽象语法树 AST，因此这种方法可以解决一些 trace 无法解决的问题，比如对 branch&#x2F;loop 等数据流控制语句的建图。<ul>
+<li>for 循环编程子图</li>
+</ul>
+</li>
+</ol>
+<h2 id="model"><a href="#model" class="headerlink" title="model"></a>model</h2><ol>
+<li>定义模型时可以直接初始化参数，也可以后期加载<ul>
+<li><code>self.lin1.weight = nn.Parameter(torch.arange(-4.0, 5.0).view(3, 3))</code></li>
+</ul>
+</li>
+<li>basic</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line">model = nn.Sequential(nn.Linear(<span class="number">20</span>, <span class="number">256</span>), nn.ReLU(), nn.Linear(<span class="number">256</span>, <span class="number">10</span>))</span><br><span class="line">X = torch.rand(<span class="number">2</span>, <span class="number">20</span>)</span><br><span class="line">model(X)</span><br><span class="line"><span class="built_in">help</span>(model) <span class="comment">#可以看帮助</span></span><br><span class="line"></span><br><span class="line">output = x</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;输入:&#x27;</span>, output)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看每层输出</span></span><br><span class="line"><span class="keyword">for</span> name, layer <span class="keyword">in</span> model.named_children():</span><br><span class="line">    output = layer(output)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;层:&#x27;</span>, name, <span class="string">&#x27;,&#x27;</span>, <span class="string">&#x27;输出:&#x27;</span>, output)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看每层参数</span></span><br><span class="line"><span class="keyword">for</span> name, param <span class="keyword">in</span> model.named_parameters():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Name: <span class="subst">&#123;name&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Size: <span class="subst">&#123;param.size()&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Values: \n<span class="subst">&#123;param.data&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>model parmas</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Load model directly</span></span><br><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoTokenizer, AutoModelForCausalLM</span><br><span class="line"></span><br><span class="line">model = AutoModelForCausalLM.from_pretrained(<span class="string">&quot;./Llama-2-7b-hf&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(model)</span><br><span class="line"><span class="keyword">from</span> prettytable <span class="keyword">import</span> PrettyTable</span><br><span class="line"></span><br><span class="line">table = PrettyTable([<span class="string">&#x27;Name&#x27;</span>, <span class="string">&#x27;Shape&#x27;</span>, <span class="string">&#x27;Param&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> name, param <span class="keyword">in</span> model.named_parameters():</span><br><span class="line">    param_count = param.numel()</span><br><span class="line">    table.add_row([name, param.shape, param_count])</span><br><span class="line"><span class="built_in">print</span>(table)</span><br><span class="line"></span><br><span class="line">num_parameters = <span class="built_in">sum</span>(p.numel() <span class="keyword">for</span> p <span class="keyword">in</span> model.parameters())</span><br><span class="line"><span class="built_in">print</span>(num_parameters)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>pytorch model to onnx(导出为 batch 1 时需要设置输入数据第一维度为 1,)</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision.models <span class="keyword">as</span> models</span><br><span class="line"><span class="keyword">import</span> torch.onnx <span class="keyword">as</span> onnx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载预训练模型</span></span><br><span class="line">model = models.resnet18(pretrained=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个输入张量作为示例; 注意数据和模型要么都在cuda，要么都在cpu</span></span><br><span class="line">input_data = torch.randn(<span class="number">1</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>)</span><br><span class="line">input_data = torch.randn(<span class="number">1</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>).cuda()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置模型为推理模式</span></span><br><span class="line">model.<span class="built_in">eval</span>() <span class="comment"># 只影响</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将模型和输入张量转换为ONNX格式</span></span><br><span class="line">onnx_path = <span class="string">&quot;model.onnx&quot;</span></span><br><span class="line">onnx.export(model, input_data, onnx_path)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;模型已成功转换为ONNX格式并保存在:&quot;</span>, onnx_path)</span><br></pre></td></tr></table></figure>
+
+<h2 id="model-info"><a href="#model-info" class="headerlink" title="model info"></a>model info</h2><ol>
+<li>需要 model.eval()； 不会打印 dropout 层</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/TylerYep/torchinfo">torchinfo</a></li>
+<li><code>summary(model, [(1, 1, 32000), (1,1,32000), (1, 1, 32000), (1,1,32000)], dtypes=[torch.long, torch.long, torch.long, torch.long])</code></li>
+</ol>
+<h2 id="tools"><a href="#tools" class="headerlink" title="tools"></a>tools</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/pytorch/captum">captum</a> Model interpretability and understanding for PyTorch</li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/intermediate/tensorboard_tutorial.html">tensorboard_tutorial</a></li>
+</ol>
+<h2 id="samples"><a href="#samples" class="headerlink" title="samples"></a>samples</h2><ol start="2">
+<li>量化模型</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/basics/tensorqs_tutorial.html">tutorials</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/index.html">docs</a></li>
+<li><a target="_blank" rel="noopener" href="https://yiyibooks.cn/yiyibooks/pytorch_131/index.html">中文</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/06/08/colab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/06/08/colab/" class="post-title-link" itemprop="url">colab</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-06-08 17:16:31" itemprop="dateCreated datePublished" datetime="2023-06-08T17:16:31+08:00">2023-06-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/06/08/colab/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/06/08/colab/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>23</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="link"><a href="#link" class="headerlink" title="link"></a>link</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://colab.research.google.com/notebooks/snippets/importing_libraries.ipynb">importing_libraries</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/06/08/roadmap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -230,7 +558,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-11 10:32:56" itemprop="dateModified" datetime="2024-01-11T10:32:56+08:00">2024-01-11</time>
+                <time title="修改时间：2024-01-25 18:06:12" itemprop="dateModified" datetime="2024-01-25T18:06:12+08:00">2024-01-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -351,6 +679,7 @@
 </ol>
 <h2 id="collect"><a href="#collect" class="headerlink" title="collect"></a>collect</h2><ol>
 <li>深度学习基础, 熟悉常见的模型架构，先不用管精度，专注在推理和性能<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/mlabonne/llm-course">llm-course</a></li>
 <li><a target="_blank" rel="noopener" href="https://zh.d2l.ai/">李沐《动手学深度学习》</a></li>
 <li>李宏毅</li>
 <li><a target="_blank" rel="noopener" href="https://www.kaggle.com/learn">kaggle learn</a></li>
@@ -380,6 +709,7 @@
 </ul>
 </li>
 <li>大模型推理优化<ul>
+<li>xformers, flash attention</li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=7WeraZ0LLlg">韩松大模型优化介绍</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/tree/main?tab=readme-ov-file#key-features">TensorRT-LLM key-features</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.cvmart.net/community/detail/7069">一文总结当下常用的大型 transformer 效率优化方案</a></li>
@@ -1310,247 +1640,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/03/06/cross-compile/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/03/06/cross-compile/" class="post-title-link" itemprop="url">cross-compile</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-03-06 20:42:24" itemprop="dateCreated datePublished" datetime="2023-03-06T20:42:24+08:00">2023-03-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/03/06/cross-compile/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/03/06/cross-compile/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>22</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><h2 id="基本组成"><a href="#基本组成" class="headerlink" title="基本组成"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/u012503639/article/details/104159375">基本组成</a></h2><h3 id="binutils"><a href="#binutils" class="headerlink" title="binutils"></a>binutils</h3><h3 id="gcc"><a href="#gcc" class="headerlink" title="gcc"></a>gcc</h3><h3 id="glibc"><a href="#glibc" class="headerlink" title="glibc"></a>glibc</h3>
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/02/17/TVM/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/02/17/TVM/" class="post-title-link" itemprop="url">TVM</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-02-17 15:46:22" itemprop="dateCreated datePublished" datetime="2023-02-17T15:46:22+08:00">2023-02-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-29 17:19:05" itemprop="dateModified" datetime="2023-12-29T17:19:05+08:00">2023-12-29</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/02/17/TVM/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/02/17/TVM/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li><p>Apache TVM 是一个用于 CPU、GPU 和机器学习加速器的开源机器学习编译器框架，旨在让机器学习工程师能够在任何硬件后端上高效地优化和运行计算。</p>
-</li>
-<li><p>可以搜索优化模型，提供了 runtime</p>
-</li>
-<li><p>模型相当于语言， TVM 相当于编译器，将模型编译到各种硬件上</p>
-</li>
-<li><p>TVM: Tensor Virtual Machine</p>
-</li>
-<li><p>利用 TVM，机器学习算法可以被自动编译成可供下层硬件执行的机器语言，从而可以利用多种类型的算力。</p>
-</li>
-<li><p>我们希望创建一个简洁的抽象统一解决这些问题，希望用一个干净、统一的管理平台把所有的系统和硬件都清晰地抽象出来，以便能够部署模型，并最大限度地利用好目标硬件。</p>
-</li>
-<li><p>他们致力于打造一个可扩展、开放、中立的端到端栈，用于深度学习模型的<code>优化和部署</code>，目标是减少企业为特定硬件开发和深度学习软件部署所花费的成本和时间。</p>
-</li>
-<li><p>按照官方的定义，TVM 是一套完整的 stack，包括神经网络图优化（比如 op fusion）和单个 operation 优化等部分。我习惯于将图优化的部分归类做 Relay 项目，而仅仅把单个 operation 优化看做 TVM，因此文章之后提到的 TVM 基本是指单个算子优化这部分。</p>
-</li>
-<li><p>做自动代码优化的优秀项目除了 AutoTVM，还有 Halide(<a target="_blank" rel="noopener" href="https://halide-lang.org/papers/autoscheduler2019.html)%EF%BC%8C%E4%B8%AA%E4%BA%BA%E8%AE%A4%E4%B8%BA%E7%9B%AE%E5%89%8DHalide%E5%81%9A%E4%BB%A3%E7%A0%81%E8%87%AA%E5%8A%A8%E4%BC%98%E5%8C%96%E5%81%9A%E7%9A%84%E6%9B%B4%E5%A5%BD%E3%80%82TVM%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF%E5%8F%82%E8%80%83%E8%87%AAHalide%EF%BC%8C">https://halide-lang.org/papers/autoscheduler2019.html)，个人认为目前Halide做代码自动优化做的更好。TVM的基本思路参考自Halide，</a></p>
-</li>
-<li><p>TVM 中的调优是指，在给定 target 上优化模型，使其运行得更快。与训练或微调不同，它不会影响模型的准确性，而只会影响 runtime 性能。作为调优过程的一部分，TVM <code>实现并运行许多不同算子的变体，以查看哪个性能最佳</code>。这些运行的结果存储在调优记录文件（tune 命令的最终输出）中。</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/88188955">初识 TVM</a></p>
-</li>
-</ol>
-<h2 id="build"><a href="#build" class="headerlink" title="build"></a>build</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://tvm.hyper.ai/docs/install/docker/">docker</a></li>
-<li>使用自己 docker</li>
-<li><a target="_blank" rel="noopener" href="https://hub.docker.com/layers/wadewuu/tvm-test/v2/images/sha256-58a2d0f3f9aefbf1c8d681a32f72ee3ffd2b05971461973ee632f03eaa1fd529?context=explore">wadewuu&#x2F;tvm-test&#x2F;v2</a></li>
-<li>要先现在源码，编译出 docker，再编译 tvm</li>
-<li>替换源</li>
-<li>build 时 llvm 打开</li>
-</ol>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RUN sed -i s@<span class="regexp">/archive.ubuntu.com/</span>@<span class="regexp">/mirrors.tuna.tsinghua.edu.cn/</span>@g <span class="regexp">/etc/</span>apt/sources.list</span><br><span class="line">RUN apt-get clean</span><br></pre></td></tr></table></figure>
-
-<h2 id="python"><a href="#python" class="headerlink" title="python"></a>python</h2><ol>
-<li><code>python3 -m tvm.driver.tvmc --help</code></li>
-<li><code>alias tvmc=&#39;python3 -m tvm.driver.tvmc&#39;</code></li>
-</ol>
-<h2 id="sample"><a href="#sample" class="headerlink" title="sample"></a><a target="_blank" rel="noopener" href="https://tvm.hyper.ai/docs/tutorial/compile/">sample</a></h2><ol>
-<li><code>wget https://github.com/onnx/models/raw/b9a54e89508f101a1611cd64f4ef56b9cb62c7cf/vision/classification/resnet/model/resnet50-v2-7.onnx</code></li>
-<li><a target="_blank" rel="noopener" href="https://discuss.tvm.apache.org/t/error-when-trying-to-tune-the-resnet-model/13431">Error when trying to tune the ResNet Model</a> model input should frozen</li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/50529704">手把手带你遨游 TVM</a></li>
-<li><a target="_blank" rel="noopener" href="https://tvm.apache.org/#about">TVM</a></li>
-<li><a target="_blank" rel="noopener" href="https://tvm.hyper.ai/docs/tutorial/intro/">TVM 中文网站</a></li>
-<li><a target="_blank" rel="noopener" href="https://tvm.hyper.ai/docs/tutorial/compile/">sample</a></li>
-<li><a target="_blank" rel="noopener" href="https://tvm.hyper.ai/docs/how_to/deploy/vitis_ai">Vitis AI 集成</a></li>
-<li><a target="_blank" rel="noopener" href="https://software-dl.ti.com/codegen/docs/tvm/tvm_tidl_users_guide/index.html">TI TVM</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/401766029/answer/2733700454">机器学习编译器的前世今生</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzU5ODY2MTk3Nw==&mid=2247487015&idx=1&sn=04282e2d15eca05eb56062062b46e781&chksm=fe418011c9360907048966af43299fa55b570c9d634c4bcdb3702c6e4d8101a72ef07d5ec77f&scene=21#wechat_redirect">TVM：成为深度学习领域的“Linux”</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzU5ODY2MTk3Nw==&mid=2247492618&idx=1&sn=a20f4828b9ab3e3cee3fedfd906e0eb2&chksm=fe426a3cc935e32a8312ce9efbb4f2640787508d3e811579bbffe918685cdb07a8bd8e3ffc4b&scene=132&exptype=timeline_recommend_article_extendread_samebiz#wechat_redirect">LLVM 之父 Chris Lattner：我的 AI 基础设施软件构建理念</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1622,7 +1711,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">171</span>
+          <span class="site-state-item-count">173</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1655,6 +1744,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1662,12 +1757,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/10/llama-cpp/" title="2024&#x2F;01&#x2F;10&#x2F;llama-cpp&#x2F;">llama.cpp</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/10/model-compression/" title="2024&#x2F;01&#x2F;10&#x2F;model-compression&#x2F;">model-compression</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/04/huggingface/" title="2024&#x2F;01&#x2F;04&#x2F;huggingface&#x2F;">huggingface</a>
         </li>
     </ul>
   </div>
@@ -1705,13 +1794,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">438k</span>
+    <span title="站点总字数">447k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:38</span>
+    <span title="站点阅读时长">6:46</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

@@ -240,7 +240,7 @@ mjx-container[display="true"] + br {
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">171</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">173</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -307,6 +307,292 @@ mjx-container[display="true"] + br {
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/07/22/Zsh-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/22/Zsh-config/" class="post-title-link" itemprop="url">Zsh config</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-22 15:19:28" itemprop="dateCreated datePublished" datetime="2020-07-22T15:19:28+08:00">2020-07-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-10 14:31:22" itemprop="dateModified" datetime="2023-11-10T14:31:22+08:00">2023-11-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/Zsh/" itemprop="url" rel="index"><span itemprop="name">Zsh</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/22/Zsh-config/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/22/Zsh-config/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="NOTE"><a href="#NOTE" class="headerlink" title="NOTE"></a>NOTE</h2><ol>
+<li>scp not work</li>
+</ol>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># remember to put this code to .bashrc before <span class="built_in">execute</span> zsh</span><br><span class="line"># If <span class="keyword">not</span>, scp can <span class="keyword">not</span> work.</span><br><span class="line"><span class="string">[[ $- == *i* ]]</span> || <span class="keyword">return</span></span><br><span class="line">zsh</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>如果你使用的是 zsh，上面的通配符会失效，你可以切换到 bash 执行这些命令，或者使用 setopt no_nomatch 来关闭 zsh 对于通配符的拦截</li>
+</ol>
+<h2 id="oh-my-zsh"><a href="#oh-my-zsh" class="headerlink" title="oh my zsh"></a>oh my zsh</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="microsoft-inshellisense-npm-issue"><a href="#microsoft-inshellisense-npm-issue" class="headerlink" title="microsoft&#x2F;inshellisense npm issue"></a><a target="_blank" rel="noopener" href="https://github.com/microsoft/inshellisense">microsoft&#x2F;inshellisense</a> <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/61404290">npm issue</a></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @microsoft/inshellisense</span><br><span class="line">inshellisense <span class="built_in">bind</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="autosuggestions"><a href="#autosuggestions" class="headerlink" title="autosuggestions"></a>autosuggestions</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://github.com/zsh-users/zsh-autosuggestions <span class="variable">$ZSH_CUSTOM</span>/custom/plugins/zsh-autosuggestions</span><br><span class="line">sed -i <span class="string">&quot;s/fg=8/fg=cyan/&quot;</span> .oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh</span><br><span class="line">vi ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 文件，修改 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=<span class="string">&#x27;fg=blue&#x27;</span></span><br><span class="line"><span class="comment"># support colors: black, red, green; yellow; blue; magenta; cyan and white;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="zsh-syntax-highlighting"><a href="#zsh-syntax-highlighting" class="headerlink" title="zsh-syntax-highlighting"></a>zsh-syntax-highlighting</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://github.com/jimmijj/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
+
+<h2 id="zshrc-config"><a href="#zshrc-config" class="headerlink" title=".zshrc config"></a>.zshrc config</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PROMPT=<span class="string">&quot;%n@%m:%1~%# &quot;</span></span><br><span class="line">plugins=(rust rustup cargo zsh-autosuggestions zsh-syntax-highlighting colored-man-pages tmux fd)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Othe-config"><a href="#Othe-config" class="headerlink" title="Othe config"></a>Othe config</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config oh-my-zsh.hide-status 1 --global <span class="comment">#close git status</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Powlevel9k-theme"><a href="#Powlevel9k-theme" class="headerlink" title="Powlevel9k theme"></a>Powlevel9k theme</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git clone https:<span class="regexp">//gi</span>thub.com<span class="regexp">/bhilburn/</span>powerlevel9k.git ~<span class="regexp">/.oh-my-zsh/</span>custom<span class="regexp">/themes/</span>powerlevel9k</span><br><span class="line">.zshrc：</span><br><span class="line">export TERM=<span class="string">&quot;xterm-256color&quot;</span></span><br><span class="line">POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user dir)</span><br><span class="line">POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(root_indicator background_jobs )</span><br><span class="line">POWERLEVEL9K_MODE=<span class="string">&#x27;awesome-fontconfig&#x27;</span></span><br><span class="line">ZSH_THEME=<span class="string">&quot;powerlevel9k/powerlevel9k&quot;</span></span><br><span class="line">~<span class="regexp">/.oh-my-zsh/</span>custom<span class="regexp">/themes/</span>powerlevel9k/powerlevel9k.zsh-theme          修改  <span class="string">&quot;CONTENT&quot;</span>             <span class="string">&quot;jia@61&quot;</span> <span class="comment">#&quot;$(whoami)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="awesome-terminal-fonts"><a href="#awesome-terminal-fonts" class="headerlink" title="awesome-terminal-fonts"></a>awesome-terminal-fonts</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/gabrielelana/awesome-terminal-fonts</span><br><span class="line"><span class="built_in">cp</span> -R build/* ~/.fonts/</span><br><span class="line">fc-cache -fv ~/.fonts</span><br><span class="line"><span class="built_in">cp</span> config/10-symbols.conf ~/.config/fontconfig/conf.d</span><br><span class="line"><span class="built_in">source</span> ~/.fonts/*.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="autojump"><a href="#autojump" class="headerlink" title="autojump"></a>autojump</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://github.com/joelthelion/autojump.git</span><br><span class="line"><span class="built_in">cd</span> autojump</span><br><span class="line">./install.py</span><br></pre></td></tr></table></figure>
+
+<h2 id="powerline-非必须）"><a href="#powerline-非必须）" class="headerlink" title="powerline(非必须）"></a>powerline(非必须）</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install fonts-powerline</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/powerline/fonts.git --depth=1</span><br><span class="line"><span class="built_in">cd</span> fonts</span><br><span class="line">./install.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><p>install oh my zsh : sh -c “$(curl -fsSL <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh">https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh</a>)”<br>zsh autosuggestions <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBa075b0a3e60cbde5f506563c3c14997a/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBa075b0a3e60cbde5f506563c3c14997a/</a><br>sudo apt-get install autojump <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEB1da9f35b71c3815439e1426116e7ecf9/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEB1da9f35b71c3815439e1426116e7ecf9/</a><br>Powlevel9k theme install <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBfd1ecc9886dfcf108ee9bae6b586cab6/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBfd1ecc9886dfcf108ee9bae6b586cab6/</a><br>Powerline <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBac4ed9c8ab78bb09940458cfb9b1a397/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBac4ed9c8ab78bb09940458cfb9b1a397/</a><br>awesome-terminal-fonts <a target="_blank" rel="noopener" href="http://www.cnblogs.com/weixuqin/p/7029177.html">http://www.cnblogs.com/weixuqin/p/7029177.html</a><br>zsh-syntax-highlighting <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBef4ca4fdaf7d36950545241429e3daee/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBef4ca4fdaf7d36950545241429e3daee/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/07/10/Why-Rust/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/10/Why-Rust/" class="post-title-link" itemprop="url">Why Rust</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-10 21:45:08" itemprop="dateCreated datePublished" datetime="2020-07-10T21:45:08+08:00">2020-07-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/Rust/" itemprop="url" rel="index"><span itemprop="name">Rust</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/10/Why-Rust/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/10/Why-Rust/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>798</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Why-Rust"><a href="#Why-Rust" class="headerlink" title="Why Rust?"></a>Why Rust?</h2><h3 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h3><ol>
+<li>It’s <strong><code>fast</code></strong> and memory efficient: with no runtime or garbage collector.</li>
+<li>It can easily integrate with other languages.</li>
+</ol>
+<h3 id="Reliability"><a href="#Reliability" class="headerlink" title="Reliability"></a>Reliability</h3><ol>
+<li>It’s rich type system and ownership model guarantee <font color='red'><strong>memory-safety</strong></font> and <font color='red'><strong>thread-safety</strong></font>.</li>
+</ol>
+<h3 id="Productivity"><a href="#Productivity" class="headerlink" title="Productivity"></a>Productivity</h3><ol>
+<li>Great documentation</li>
+<li>Friendly compiler, find most errors when compiling</li>
+<li>An integrated package manager</li>
+<li>Doc system: <code>cargo doc --open</code></li>
+</ol>
+<h2 id="Rust-features"><a href="#Rust-features" class="headerlink" title="Rust features"></a>Rust features</h2><ol>
+<li>Zero-cost abstractions</li>
+<li>Modern conveniences</li>
+<li>Type system: Ownership and Borrowing</li>
+<li>Sense of craftsmanship</li>
+</ol>
+<h2 id="Why-Name-Rust"><a href="#Why-Name-Rust" class="headerlink" title="Why Name Rust?"></a>Why Name Rust?</h2><ol>
+<li>It’s a pun on “chrome”. Rust was written by the engineer company Mozilla(firefox). And chrome is a metal.</li>
+</ol>
+<h2 id="Rust-目的"><a href="#Rust-目的" class="headerlink" title="Rust 目的"></a>Rust 目的</h2><ol>
+<li>创建这个新语言的目的是为了解决一个顽疾：软件的演进速度大大低于硬件的演进，软件在语言级别上无法真正利用多核计算带来的性能提升。Rust是针对多核体系提出的语言，并且吸收一些其他动态语言的重要特性，比如不需要管理内存，比如不会出现Null指针等</li>
+</ol>
+<h2 id="Why-not-C"><a href="#Why-not-C" class="headerlink" title="Why not C++"></a>Why not C++</h2><ol>
+<li>当然C++ 也很好，因为它教会了我怎么面向搜索引擎编程。</li>
+</ol>
+<h2 id="Rust类型系统借鉴Haskell特性"><a href="#Rust类型系统借鉴Haskell特性" class="headerlink" title="Rust类型系统借鉴Haskell特性"></a>Rust类型系统借鉴Haskell特性</h2><ol>
+<li>没有空指针</li>
+<li>类型默认不可变</li>
+<li>表达式</li>
+<li>高阶函数</li>
+<li>代数数据类型</li>
+<li>模式匹配</li>
+<li>泛型</li>
+<li>trait和关联类型</li>
+<li>本地类型推导</li>
+</ol>
+<h2 id="Rust相比Haskell独有特点"><a href="#Rust相比Haskell独有特点" class="headerlink" title="Rust相比Haskell独有特点"></a>Rust相比Haskell独有特点</h2><ol>
+<li>仿射变换(Affine Type)</li>
+<li>借用，生命周期</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -872,7 +1158,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">171</span>
+          <span class="site-state-item-count">173</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -905,6 +1191,12 @@ mjx-container[display="true"] + br {
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -912,12 +1204,6 @@ mjx-container[display="true"] + br {
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/10/llama-cpp/" title="2024&#x2F;01&#x2F;10&#x2F;llama-cpp&#x2F;">llama.cpp</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/10/model-compression/" title="2024&#x2F;01&#x2F;10&#x2F;model-compression&#x2F;">model-compression</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/04/huggingface/" title="2024&#x2F;01&#x2F;04&#x2F;huggingface&#x2F;">huggingface</a>
         </li>
     </ul>
   </div>
@@ -955,13 +1241,13 @@ mjx-container[display="true"] + br {
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">438k</span>
+    <span title="站点总字数">447k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:38</span>
+    <span title="站点阅读时长">6:46</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.ibb.co/8MWgXfn/atg4bmz-C9l.png">
 <meta property="article:published_time" content="2024-01-11T08:31:34.000Z">
-<meta property="article:modified_time" content="2024-01-21T07:06:41.328Z">
+<meta property="article:modified_time" content="2024-01-28T09:20:12.802Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.ibb.co/8MWgXfn/atg4bmz-C9l.png">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">171</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">173</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-21 15:06:41" itemprop="dateModified" datetime="2024-01-21T15:06:41+08:00">2024-01-21</time>
+                <time title="修改时间：2024-01-28 17:20:12" itemprop="dateModified" datetime="2024-01-28T17:20:12+08:00">2024-01-28</time>
               </span>
 
           
@@ -264,7 +264,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.3k</span>
+              <span>2.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -302,11 +302,35 @@
 <li>mm:matirx matrix matrix product</li>
 </ul>
 </li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/350470257">矩阵乘法的内积与外积</a><ul>
+<li>cuda thread tile 时用了外积，可以缓存 shared memory 到 register</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://kl66.top/2019/05/30/%E5%90%91%E9%87%8F%E5%92%8C%E7%9F%A9%E9%98%B5%E7%9A%84%E5%90%84%E7%A7%8D%E7%A7%AF/">向量和矩阵的各种积</a></li>
 </ol>
 <h2 id="optimize"><a href="#optimize" class="headerlink" title="optimize"></a>optimize</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/flame/how-to-optimize-gemm">how-to-optimize-gemm</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/flame/how-to-optimize-gemm">how-to-optimize-gemm</a><ul>
+<li>列优先</li>
+<li>Optimization2: 循环展开</li>
+<li>Optimization_1x4_4: 使用内联</li>
+<li>Optimization_1x4_5: 循环合并</li>
+<li>Optimization_1x4_6: 使用寄存器：register double test;</li>
+<li>Optimization_1x4_7: 减少 for 循环变量访存</li>
+<li>Optimization_4x4_5 MMult_4x4_5.c: 可以显示 block 计算过程, 可以看出分块之后有很多访存可以合并, A 和 B 分别可以减少到 1&#x2F;4</li>
+<li>Optimization_4x4_10: 使用 vector 计算 block</li>
+</ul>
+</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/tpoisonooo/how-to-optimize-gemm/blob/master/README_ZH_CN.md">how-to-optimize-gemm C++ 中文版</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/njuhope/cuda_sgemm/tree/master">cuda_sgemm</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/njuhope/cuda_sgemm/tree/master">cuda_sgemm 旷视</a></li>
+<li>(good)<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/441146275">CUDA GEMM 理论性能分析与 kernel 优化</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/410278370">CUDA 矩阵乘法终极优化指南</a><ul>
+<li>如果是 float4(128bit)，一个 warp 访问 16B，32x16B 得分 4 次做，那么会把一个 warp 分成 0-7&#x2F;8-15&#x2F;16-23&#x2F;24-31 这么 4 组，只要组内没有 bank conflict 就行了。</li>
+<li>shared memory: float4 0 和 8 线程确实读的都是 0-3bank，但是 0-7 8-15 是分别的两组，这时候一个 warp 会分成 4 组 4 次读取，在不同组是不会冲突的，只需要组内没有冲突就可以了。我之前说了 shared memory 是 32 bank，每 bank 4B，你要一个 warp 访问 float4，数据量是 32*16B，是 shared memory 一次性能提供的数据量的 4 倍，那么必然要分 4 次获得，然后架构设计就是我说的分组情况。如果你一个线程访问 float2，那么就会是 0-15 16-31 两组</li>
+<li>shared memory 一次不冲突只能读 32x4B， 看一次读取的数据量，多于 32x4B 需要读取多次 n&#x2F;(32x4)，只要在 n&#x2F;(32x4) 次内读完就是最高效的。</li>
+</ul>
+</li>
+<li>使用 float4 类型访存，用向量化的 LDG.128 和 STG.128 指令一次读 4 个元素，以减少指令数</li>
+<li>block tile 时，第一个矩阵在 shared memory 上要按列存储，为了连续存储，好利用 LDG.128 和 STG.128 指令</li>
 </ol>
 <h2 id="blas"><a href="#blas" class="headerlink" title="blas"></a><a target="_blank" rel="noopener" href="https://www.netlib.org/blas/">blas</a></h2><ol>
 <li>名词出自 blas 库，例如<ul>
@@ -316,21 +340,7 @@
 </ul>
 </li>
 </ol>
-<h2 id="NVIDIA-cutlass"><a href="#NVIDIA-cutlass" class="headerlink" title="NVIDIA&#x2F;cutlass"></a><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass">NVIDIA&#x2F;cutlass</a></h2><ol>
-<li>c++模板，只用包含头文件</li>
-<li>CUDA Templates for Linear Algebra Subroutines and Solvers</li>
-<li>CUTLASS 和 cuBLAS 都是与 NVIDIA GPUs 相关的库，专门用于高效地执行线性代数运算</li>
-<li>大矩阵 GEMM 运算 CuTlass 可以显著提速,是目前 GPU 上最快的 GEMM 库。</li>
-<li>它允许开发者使用模板元编程自定义和优化矩阵乘法（GEMM）等线性代数运算，更加灵活。</li>
-<li>cuBLAS 提供了一个简单、标准的 BLAS 接口，易于使用，而 CUTLASS 提供了更多的定制性和灵活性，但需要更深入的理解和控制。</li>
-</ol>
-<h3 id="RTX-3090-sample"><a href="#RTX-3090-sample" class="headerlink" title="RTX 3090 sample"></a>RTX 3090 sample</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/quickstart.md">quickstart</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/quickstart.md#building-for-multiple-architectures">选择 arch</a></li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/NVIDIA/cutlass.git</span><br><span class="line"><span class="built_in">export</span> CUDACXX=<span class="variable">$&#123;CUDA_INSTALL_PATH&#125;</span>/bin/nvcc</span><br><span class="line"><span class="built_in">export</span> PATH=/usr/local/cuda/bin/:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">mkdir</span> build &amp;&amp; <span class="built_in">cd</span> build</span><br><span class="line">cmake .. -DCUTLASS_NVCC_ARCHS=86</span><br><span class="line">make cutlass_profiler -j12</span><br><span class="line">./tools/profiler/cutlass_profiler --kernels=sgemm --m=4352 --n=4096 --k=4096</span><br></pre></td></tr></table></figure>
-
-<h2 id="cuBLAS"><a href="#cuBLAS" class="headerlink" title="cuBLAS"></a><a target="_blank" rel="noopener" href="https://developer.nvidia.com/cublas">cuBLAS</a></h2><ol>
+<h2 id="NVIDIA-cutlass"><a href="#NVIDIA-cutlass" class="headerlink" title="NVIDIA&#x2F;cutlass"></a><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass">NVIDIA&#x2F;cutlass</a></h2><h2 id="cuBLAS"><a href="#cuBLAS" class="headerlink" title="cuBLAS"></a><a target="_blank" rel="noopener" href="https://developer.nvidia.com/cublas">cuBLAS</a></h2><ol>
 <li>CUDA Basic Linear Algebra Subprograms</li>
 <li>cuBLAS（CUDA Basic Linear Algebra Subprograms）是由 NVIDIA 提供的官方库，它是经典 BLAS（Basic Linear Algebra Subprograms）库的 CUDA 实现。</li>
 <li>列优先</li>
@@ -455,7 +465,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#basic"><span class="nav-number">1.</span> <span class="nav-text">basic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#optimize"><span class="nav-number">2.</span> <span class="nav-text">optimize</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#blas"><span class="nav-number">3.</span> <span class="nav-text">blas</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NVIDIA-cutlass"><span class="nav-number">4.</span> <span class="nav-text">NVIDIA&#x2F;cutlass</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RTX-3090-sample"><span class="nav-number">4.1.</span> <span class="nav-text">RTX 3090 sample</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cuBLAS"><span class="nav-number">5.</span> <span class="nav-text">cuBLAS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenBLAS"><span class="nav-number">6.</span> <span class="nav-text">OpenBLAS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#blis"><span class="nav-number">7.</span> <span class="nav-text">blis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hipBLAS"><span class="nav-number">8.</span> <span class="nav-text">hipBLAS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Intel-oneMKL"><span class="nav-number">9.</span> <span class="nav-text">Intel oneMKL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CLBlast"><span class="nav-number">10.</span> <span class="nav-text">CLBlast</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#basic"><span class="nav-number">1.</span> <span class="nav-text">basic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#optimize"><span class="nav-number">2.</span> <span class="nav-text">optimize</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#blas"><span class="nav-number">3.</span> <span class="nav-text">blas</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NVIDIA-cutlass"><span class="nav-number">4.</span> <span class="nav-text">NVIDIA&#x2F;cutlass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cuBLAS"><span class="nav-number">5.</span> <span class="nav-text">cuBLAS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OpenBLAS"><span class="nav-number">6.</span> <span class="nav-text">OpenBLAS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#blis"><span class="nav-number">7.</span> <span class="nav-text">blis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hipBLAS"><span class="nav-number">8.</span> <span class="nav-text">hipBLAS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Intel-oneMKL"><span class="nav-number">9.</span> <span class="nav-text">Intel oneMKL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CLBlast"><span class="nav-number">10.</span> <span class="nav-text">CLBlast</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -471,7 +481,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">171</span>
+          <span class="site-state-item-count">173</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -504,6 +514,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -511,12 +527,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/10/llama-cpp/" title="2024&#x2F;01&#x2F;10&#x2F;llama-cpp&#x2F;">llama.cpp</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/10/model-compression/" title="2024&#x2F;01&#x2F;10&#x2F;model-compression&#x2F;">model-compression</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/04/huggingface/" title="2024&#x2F;01&#x2F;04&#x2F;huggingface&#x2F;">huggingface</a>
         </li>
     </ul>
   </div>
@@ -554,13 +564,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">438k</span>
+    <span title="站点总字数">447k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:38</span>
+    <span title="站点阅读时长">6:46</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

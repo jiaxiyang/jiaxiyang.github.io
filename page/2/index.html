@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">171</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">173</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -756,7 +756,7 @@
 <li>awk 按列过滤参数 ls -l test.sh | awk ‘{ print $5 }’ 输出：454</li>
 <li>shell 小程序<a target="_blank" rel="noopener" href="https://www.jb51.net/article/54488.htm">link</a></li>
 <li>shell 得到文件信息 <code>ll /var/log/messages | cut -d &quot; &quot; -f 5</code></li>
-<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#106;&#105;&#x61;&#x78;&#x69;&#121;&#x61;&#x6e;&#103;&#64;&#49;&#x30;&#46;&#x31;&#x30;&#46;&#x30;&#x2e;&#x31;&#x37;">&#106;&#105;&#x61;&#x78;&#x69;&#121;&#x61;&#x6e;&#103;&#64;&#49;&#x30;&#46;&#x31;&#x30;&#46;&#x30;&#x2e;&#x31;&#x37;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
+<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#x6a;&#x69;&#x61;&#x78;&#105;&#x79;&#97;&#x6e;&#x67;&#64;&#49;&#48;&#x2e;&#49;&#48;&#46;&#x30;&#x2e;&#x31;&#55;">&#x6a;&#x69;&#x61;&#x78;&#105;&#x79;&#97;&#x6e;&#x67;&#64;&#49;&#48;&#x2e;&#49;&#48;&#46;&#x30;&#x2e;&#x31;&#55;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
 <li>读文件内容，记录到变量中 var&#x3D;$(cat name.txt)</li>
 <li>计时 start&#x3D;$(date+%s) &amp;&amp; sleep 2 &amp;&amp; end&#x3D;$(date+%s)&amp;&amp; echo $(($end - $start)) <a target="_blank" rel="noopener" href="http://blog.csdn.net/gengshenghong/article/details/7583580">link</a></li>
 <li>sleep: sleep 1 睡眠 1 秒 sleep 1s 睡眠 1 秒 sleep 1m 睡眠 1 分 sleep 1h 睡眠 1 小时</li>
@@ -1783,7 +1783,7 @@ Bob--&gt;&gt;John: Jolly good!
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/01/14/Efficient-LLM/">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/01/26/cutlass/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/coder2.jpg">
@@ -1797,7 +1797,7 @@ Bob--&gt;&gt;John: Jolly good!
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/01/14/Efficient-LLM/" class="post-title-link" itemprop="url">Efficient-LLM</a>
+            <a href="/2024/01/26/cutlass/" class="post-title-link" itemprop="url">cutlass</a>
         </h2>
 
         <div class="post-meta">
@@ -1808,7 +1808,7 @@ Bob--&gt;&gt;John: Jolly good!
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2024-01-14 18:44:21 / 修改时间：23:02:28" itemprop="dateCreated datePublished" datetime="2024-01-14T18:44:21+08:00">2024-01-14</time>
+              <time title="创建时间：2024-01-26 10:20:32 / 修改时间：16:25:03" itemprop="dateCreated datePublished" datetime="2024-01-26T10:20:32+08:00">2024-01-26</time>
             </span>
 
           
@@ -1820,8 +1820,8 @@ Bob--&gt;&gt;John: Jolly good!
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2024/01/14/Efficient-LLM/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2024/01/14/Efficient-LLM/" itemprop="commentCount"></span>
+    <a title="valine" href="/2024/01/26/cutlass/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/01/26/cutlass/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1831,7 +1831,7 @@ Bob--&gt;&gt;John: Jolly good!
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>705</span>
+              <span>1.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1850,37 +1850,49 @@ Bob--&gt;&gt;John: Jolly good!
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><h2 id="大模型推理综述-Towards-Efficient-Generative-Large-Language-Model-Serving-A-Survey-from-Algorithms-to-Systems"><a href="#大模型推理综述-Towards-Efficient-Generative-Large-Language-Model-Serving-A-Survey-from-Algorithms-to-Systems" class="headerlink" title="大模型推理综述 Towards Efficient Generative Large Language Model Serving: A Survey from Algorithms to Systems"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2312.15234">大模型推理综述 Towards Efficient Generative Large Language Model Serving: A Survey from Algorithms to Systems</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Uue0SxH6W_tI8K4Zb0igLQ">中文解读</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/675101140">黄浴中文翻译</a></li>
-<li><code>低延迟和高吞吐量</code>是 LLM 服务系统中的双重优化目标，代表了互补但往往相互冲突的目标，需要一种平衡的策略来优化单个任务的快速响应和指定时间内最大化处理任务量之间的权衡</li>
-<li>除了注意计算之外，对于线性投影算子，最近还出现了用<code>通用矩阵向量积（GEMV，general matrix-vector product）代替GEMM的趋势</code>，更有效地处理小批量（即大小为 1）的情况。</li>
-</ol>
-<h2 id="Full-Stack-Optimization-of-Transformer-Inference-a-Survey"><a href="#Full-Stack-Optimization-of-Transformer-Inference-a-Survey" class="headerlink" title="Full Stack Optimization of Transformer Inference: a Survey"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2302.14017">Full Stack Optimization of Transformer Inference: a Survey</a></h2><ul>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/677595064">黄浴中文翻译</a></li>
+          <h2 id="note"><a href="#note" class="headerlink" title="note"></a>note</h2><ol>
+<li>cutlass kernel 融合效果好</li>
+<li>可以看一下 cutlass 发版历史，了解一下过程</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/v0.1.1/README.md">v0.1.1&#x2F;README.md</a><ul>
+<li>thread block tile, warp tile, thread tile</li>
 </ul>
-<h2 id="Efficient-Large-Language-Models-A-Survey"><a href="#Efficient-Large-Language-Models-A-Survey" class="headerlink" title="Efficient Large Language Models: A Survey"></a><a target="_blank" rel="noopener" href="https://github.com/AIoT-MLSys-Lab/Efficient-LLMs-Survey">Efficient Large Language Models: A Survey</a></h2><h2 id="Efficient-Deep-Learning-Book"><a href="#Efficient-Deep-Learning-Book" class="headerlink" title="Efficient Deep Learning Book"></a><a target="_blank" rel="noopener" href="https://www.jiqizhixin.com/articles/2022-05-03-4">Efficient Deep Learning Book</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://efficientdlbook.com/#download">https://efficientdlbook.com</a></li>
+</li>
+<li>CUTLASS is a collection of CUDA C++ template abstractions for implementing high-performance <code>matrix-matrix multiplication (GEMM)</code> and <code>related computations</code> at all levels and scales within CUDA<ul>
+<li><code>GEMM</code></li>
+<li><code>related computations</code> 主要指的是接在 GEMM 后面的 activation 或者一些 pointwise 计算，比如 bias，scales，这些计算可以和 GEMM 融合在一起，从而减少访存压力，由于这类计算一般发生在 GEMM 之后，我们管这类计算叫 epilogue(中文：结语)</li>
+</ul>
+</li>
+<li>大量使用模板以及各种各种手段，把尽可能多的事情放在编译期完成。</li>
+<li>对用户暴露大量的实现策略，用户需要自己做出实现策略的选择。这是 CUTLASS 和 CUBLAS,CUDNN 的重要差别所在，CUBLAS 和 CUDNN 用户只需要描述计算问题，所有的策略选择在内部完成。这意味着从软件分层上来说，CUTLASS 可以是 CUBLAS 和 CUDNN 的 backend，换而言之，CUBLAS 和 CUDNN 可以是 CUTLASS 的用户</li>
+<li>c++模板，只用包含头文件</li>
+<li>CUDA Templates for Linear Algebra Subroutines and Solvers</li>
+<li>CUTLASS 和 cuBLAS 都是与 NVIDIA GPUs 相关的库，专门用于高效地执行线性代数运算</li>
+<li>大矩阵 GEMM 运算 CuTlass 可以显著提速,是目前 GPU 上最快的 GEMM 库。</li>
+<li>它允许开发者使用模板元编程自定义和优化矩阵乘法（GEMM）等线性代数运算，更加灵活。</li>
+<li>cuBLAS 提供了一个简单、标准的 BLAS 接口，易于使用，而 CUTLASS 提供了更多的定制性和灵活性，但需要更深入的理解和控制。</li>
+</ol>
+<h2 id="docs"><a href="#docs" class="headerlink" title="docs"></a>docs</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/gemm_api.md">gemm_api</a><ul>
+<li>包含层级结构</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/efficient_gemm.md">efficient_gemm.md</a></li>
+<li>最全流程图<br><img src="https://github.com/NVIDIA/cutlass/blob/main/media/images/gemm-structural-components.png" alt="gemm-structural-components"></li>
+</ol>
+<h3 id="build"><a href="#build" class="headerlink" title="build"></a>build</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/quickstart.md">quickstart</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/quickstart.md#building-for-multiple-architectures">选择 arch</a></li>
+<li>下不下来 google test, 修改 cmakelists.txt, 注释掉 gtest</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libgtest-dev</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/NVIDIA/cutlass.git</span><br><span class="line"><span class="built_in">export</span> CUDACXX=<span class="variable">$&#123;CUDA_INSTALL_PATH&#125;</span>/bin/nvcc</span><br><span class="line"><span class="built_in">export</span> PATH=/usr/local/cuda/bin/:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">mkdir</span> build &amp;&amp; <span class="built_in">cd</span> build</span><br><span class="line">cmake .. -DCUTLASS_NVCC_ARCHS=86</span><br><span class="line">make cutlass_profiler -j12</span><br><span class="line">./tools/profiler/cutlass_profiler --kernels=sgemm --m=4352 --n=4096 --k=4096</span><br></pre></td></tr></table></figure>
+
+<h2 id="samples"><a href="#samples" class="headerlink" title="samples"></a>samples</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/tree/main/examples/02_dump_reg_shmem">02_dump_reg_shmem</a></li>
 </ol>
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/horseee/Awesome-Efficient-LLM">Awesome-Efficient-LLM</a></li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/spaces/optimum/llm-perf-leaderboard">llm-perf-leaderboard</a><ul>
-<li>lantency vs memory vs score</li>
-</ul>
-</li>
-</ol>
-<h2 id="指标"><a href="#指标" class="headerlink" title="指标"></a>指标</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/perplexity">PPL: perplexity</a></li>
-<li>hugging face 显示指标<br><img src="https://i.ibb.co/THp5xHd/Ijz-O30-Ae96.png" alt="指标"></li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/spaces/optimum/llm-perf-leaderboard">llm-perf-leaderboard</a><ul>
-<li>lantency vs memory vs score</li>
-<li>e2e lantency</li>
-<li>e2e throughput</li>
-<li>prefil lantency</li>
-<li>decode throughput</li>
-</ul>
-</li>
-<li>TTFT 表示 Time To First Token，TPOT 表示 Time Per Output Token。前者由初始相位处理速度驱动，而后者直接取决于增量解码中的每次迭代执行时间。</li>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/pdf/10.1145/3582016.3582018">Graphene: An IR for Optimized Tensor Computations on GPUs</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/column/c_1696937812497235968">CUDA 高性能编程</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/588953452">cutlass 源码导读（1）——API 与设计理念</a></li>
 </ol>
 
       
@@ -1970,7 +1982,7 @@ Bob--&gt;&gt;John: Jolly good!
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">171</span>
+          <span class="site-state-item-count">173</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2003,6 +2015,12 @@ Bob--&gt;&gt;John: Jolly good!
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -2010,12 +2028,6 @@ Bob--&gt;&gt;John: Jolly good!
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/10/llama-cpp/" title="2024&#x2F;01&#x2F;10&#x2F;llama-cpp&#x2F;">llama.cpp</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/10/model-compression/" title="2024&#x2F;01&#x2F;10&#x2F;model-compression&#x2F;">model-compression</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/04/huggingface/" title="2024&#x2F;01&#x2F;04&#x2F;huggingface&#x2F;">huggingface</a>
         </li>
     </ul>
   </div>
@@ -2053,13 +2065,13 @@ Bob--&gt;&gt;John: Jolly good!
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">438k</span>
+    <span title="站点总字数">447k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:38</span>
+    <span title="站点阅读时长">6:46</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

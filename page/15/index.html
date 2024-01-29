@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">171</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">173</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,290 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/06/27/Elisp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/27/Elisp/" class="post-title-link" itemprop="url">Elisp</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-27 22:37:13" itemprop="dateCreated datePublished" datetime="2021-06-27T22:37:13+08:00">2021-06-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-10-12 19:22:48" itemprop="dateModified" datetime="2023-10-12T19:22:48+08:00">2023-10-12</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/27/Elisp/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/27/Elisp/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Useful-Command"><a href="#Useful-Command" class="headerlink" title="Useful Command"></a>Useful Command</h2><ol>
+<li>C-u before command to insert the result into the current buffer.</li>
+<li>crux-eval-and-replace 将表达式替换为结果， 例如(+ 1 1) -&gt; 2</li>
+<li>创建新 buffer: switch-to-buffer</li>
+<li>需要到命令行工作时，不用关闭 emacs, 使用 suspend-frame(C-z) 回到命令行，使用 fg 命令返回 emacs</li>
+</ol>
+<h2 id="grammer"><a href="#grammer" class="headerlink" title="grammer"></a>grammer</h2><ol>
+<li>(car list) first element</li>
+<li>(nth n list) nth element</li>
+<li>(car (last list)) last element</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(car (list &quot;a&quot; &quot;b&quot; &quot;c&quot;) )   ; &quot;a&quot;</span><br><span class="line">(nth 1 (list &quot;a&quot; &quot;b&quot; &quot;c&quot;) ) ; &quot;b&quot;</span><br><span class="line">(car (last (list &quot;a&quot; &quot;b&quot; &quot;c&quot;)) )   ; &quot;c&quot;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>(setq temp (append temp (list 1)))</code> addpend to list temp</li>
+<li>loop list</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(dolist (element (extract-rectangle start end)) ;; extract-rectangle to lists</span><br><span class="line">  (setq LIST (append LIST (split-string element)))) ;; apend to list</span><br></pre></td></tr></table></figure>
+
+<h2 id="functions"><a href="#functions" class="headerlink" title="functions"></a>functions</h2><ol>
+<li><code>(message &quot;%s=%d&quot; &quot;test&quot; 1)</code> minibuf 打印</li>
+<li><code> (split-string &quot;1 2 3 4&quot;)</code> &#x3D;&gt; (“1” “2” “3” “4”)</li>
+<li><code> (seq-map &#39;string-to-number (split-string &quot;1 2 3 4&quot;))</code> &#x3D;&gt; (1 2 3 4)</li>
+<li><code>(vconcat [] (split-string &quot;1.2.3&quot; &quot;\\.&quot;))</code> &#x3D;&gt; [“1” “2” “3”]</li>
+<li>max, min, sum and mean</li>
+<li><code>(extract-rectangle start end)</code> extract-rectangle to lists</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">(defun count-of-nums (xs)</span><br><span class="line">  (length xs))</span><br><span class="line"></span><br><span class="line">(defun min-of-nums (xs)</span><br><span class="line">  (apply #&#x27;min xs))</span><br><span class="line"></span><br><span class="line">(defun max-of-nums (xs)</span><br><span class="line">  (apply #&#x27;max xs))</span><br><span class="line"></span><br><span class="line">(defun sum-of-nums (xs)</span><br><span class="line">  (apply #&#x27;+ xs))</span><br><span class="line"></span><br><span class="line">(defun mean-of-nums (xs)</span><br><span class="line">  (float (/ (float (sum-of-nums xs))</span><br><span class="line">            (count-of-nums xs))))</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>对 region 进行统计，注意不能是 rectangle <a href="link">http://sugano-nu.github.io/emacs-lisp-stat-attitude/</a></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">(defun statistics-in-region (start end)</span><br><span class="line">  (interactive &quot;r&quot;)</span><br><span class="line">  (setq LIST (split-string (buffer-substring start end)))</span><br><span class="line">  (setq LIST (mapcar* #&#x27;(lambda (X) (math-read-number X)) LIST))</span><br><span class="line">  (message &quot;length:%s, mean:%s, variance:%s, standard deviation:%s, meidan:%s, max:%s, min:%s&quot;</span><br><span class="line">           (length LIST)</span><br><span class="line">           (math-format-number (calcFunc-vmean (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vvar (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vsdev (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmedian (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmax (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmin (cons &#x27;vec LIST)))))</span><br><span class="line"></span><br><span class="line">;; not chose a string with character, it will be as 0</span><br><span class="line">(defun statistics-in-rectangle (start end)</span><br><span class="line">  &quot;statistics-in-rectangle.&quot;</span><br><span class="line">  (interactive &quot;r&quot;)</span><br><span class="line">  (setq LIST nil)</span><br><span class="line">  (dolist (element (extract-rectangle start end)) ;; extract-rectangle to lists</span><br><span class="line">    (setq LIST (append LIST (split-string element)))) ;; apend to list</span><br><span class="line">  ;; (setq LIST (seq-map &#x27;string-to-number LIST)) ;;  convert to num</span><br><span class="line">  (setq LIST (mapcar* #&#x27;(lambda (X) (math-read-number X)) LIST))</span><br><span class="line">  (message &quot;length:%s, mean:%s, variance:%s, standard deviation:%s, meidan:%s, max:%s, min:%s&quot;</span><br><span class="line">           (length LIST)</span><br><span class="line">           (math-format-number (calcFunc-vmean (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vvar (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vsdev (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmedian (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmax (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmin (cons &#x27;vec LIST)))))</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>toggle function: cycle status</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">;; http://xahlee.info/emacs/emacs/elisp_toggle_command.html</span><br><span class="line">(defun company-toggle-delay (@n)</span><br><span class="line">  &quot;Company toggle idle delay.&quot;</span><br><span class="line">  (interactive &quot;p&quot;)</span><br><span class="line">  (let* (</span><br><span class="line">         ($values [0.2 nil])</span><br><span class="line">         ($index-before</span><br><span class="line">          (if (get &#x27;company-toggle-delay &#x27;state)</span><br><span class="line">              (get &#x27;company-toggle-delay &#x27;state)</span><br><span class="line">            0))</span><br><span class="line">         ($index-after (% (+ $index-before (length $values) @n) (length $values)))</span><br><span class="line">         ($next-value (aref $values $index-after)))</span><br><span class="line"></span><br><span class="line">    (put &#x27;company-toggle-delay &#x27;state $index-after)</span><br><span class="line">    (setq company-idle-delay  $next-value)</span><br><span class="line">    (message &quot;company idle delay to %s&quot; $next-value)))</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>if mode then</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(if (derived-mode-p &#x27;c++-mode)</span><br><span class="line">    (message &quot;The mode is on&quot;)</span><br><span class="line">    (message &quot;The mode is off&quot;)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>yes or no</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(if (yes-or-no-p &quot;Do you really want to remove everything?&quot;)</span><br><span class="line">    (message &quot;yes&quot;)</span><br><span class="line">    (message &quot;no&quot;))</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>auto add, commit and push</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">(defun aborn/simple-git-commit-push ()</span><br><span class="line">  &quot;Simple commit current git project and push to its upstream.&quot;</span><br><span class="line">  ;; (interactive &quot;sCommit Message: &quot;)</span><br><span class="line">  (interactive)</span><br><span class="line">  (when (and buffer-file-name</span><br><span class="line">             (buffer-modified-p))</span><br><span class="line">    (save-buffer))                   ;; save it first if modified.</span><br><span class="line">  (magit-diff-unstaged)</span><br><span class="line">  (when (yes-or-no-p &quot;Do you really want to commit everything?&quot;)</span><br><span class="line">    (magit-stage-modified)</span><br><span class="line">    ;; (magit-mode-bury-buffer)</span><br><span class="line">    (magit-diff-staged)</span><br><span class="line">    (setq msg (read-string &quot;Commit Message: &quot;))</span><br><span class="line">    (when (= 0 (length msg))</span><br><span class="line">      (setq msg (format-time-string &quot;commit by magit in emacs@%Y-%m-%d %H:%M:%S&quot;</span><br><span class="line">                                    (current-time))))</span><br><span class="line">    (message &quot;commit message is %s&quot; msg)</span><br><span class="line">    ;;(magit-commit (list &quot;-m&quot; msg))</span><br><span class="line">    (magit-call-git &quot;commit&quot; &quot;-m&quot; msg)</span><br><span class="line">    (magit-push-current-to-upstream nil)</span><br><span class="line">    (message &quot;now do async push to %s&quot; (magit-get &quot;remote&quot; &quot;origin&quot; &quot;url&quot;)))</span><br><span class="line">  (magit-mode-bury-buffer))</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://ergoemacs.org/emacs/elisp_basics.html">Xah 教程</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ksco/BuildYourOwnLispCn">BuildYourOwnLispCn</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/06/22/Haskell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/22/Haskell/" class="post-title-link" itemprop="url">Haskell</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-22 10:47:46" itemprop="dateCreated datePublished" datetime="2021-06-22T10:47:46+08:00">2021-06-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/22/Haskell/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/22/Haskell/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Higher-Order-Functions"><a href="#Higher-Order-Functions" class="headerlink" title="Higher Order Functions"></a>Higher Order Functions</h2><ol>
+<li>Haskell functions can take functions as parameters and return functions as return values. A function that does either of those is called a higher order function.</li>
+<li>Every function in Haskell officially only takes one parameter.</li>
+<li><code>map</code> takes a function and a list and applies that function to every element in the list, producing a new list.</li>
+<li><code>filter</code> is a function that takes a predicate (a predicate is a function that tells whether something is true or not, so in our case, a function that returns a boolean value) and a list and then returns the list of elements that satisfy the predicate.</li>
+<li><code>folds</code> They’re sort of like the map function, only they reduce the list to some <code>single value</code>.<br>1.<a target="_blank" rel="noopener" href="https://excalidraw.com/#json=5033777575231488,ixM2dP13DMyzxCvIDEpzqg">map, filter, fold 示意图</a></li>
+<li>map是一种抽象，屏蔽了对list操作的具体实现，不用关心是迭代或是递归实现的，只能感受到list每个元素都经过了转化，不用考虑控制结构，只需要考虑策略。(link: SICP)</li>
+</ol>
+<h2 id="Functors-Applicatives-And-Monads"><a href="#Functors-Applicatives-And-Monads" class="headerlink" title="Functors, Applicatives And Monads"></a>Functors, Applicatives And Monads</h2><ol>
+<li>defination</li>
+</ol>
+<figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class Functor f <span class="keyword">where</span></span><br><span class="line">    <span class="function"><span class="title">fmap</span> :: (a -&gt;</span> <span class="function"><span class="title">b</span>) -&gt;</span> <span class="function"><span class="title">f</span> a -&gt;</span> f b</span><br><span class="line"></span><br><span class="line">class (Functor f) =&gt; Applicative f <span class="keyword">where</span></span><br><span class="line">    <span class="function"><span class="title">pure</span> :: a -&gt;</span> f a</span><br><span class="line">    (&lt;*&gt;) :: <span class="function"><span class="title">f</span> (a -&gt;</span> <span class="function"><span class="title">b</span>) -&gt;</span> <span class="function"><span class="title">f</span> a -&gt;</span> f b</span><br><span class="line"></span><br><span class="line">class (Applicative m) =&gt; Monad m <span class="keyword">where</span></span><br><span class="line">    <span class="function"><span class="title">return</span> :: a -&gt;</span> m a</span><br><span class="line">    (&gt;&gt;=) :: <span class="function"><span class="title">m</span> a -&gt;</span> (<span class="function"><span class="title">a</span> -&gt;</span> <span class="function"><span class="title">m</span> b) -&gt;</span> m b</span><br><span class="line">    (&gt;&gt;) :: <span class="function"><span class="title">m</span> a -&gt;</span> <span class="function"><span class="title">m</span> b -&gt;</span> m b</span><br><span class="line">    <span class="function"><span class="title">x</span> &gt;&gt; y = x &gt;&gt;= \_ -&gt;</span> y</span><br><span class="line">    <span class="function"><span class="title">fail</span> :: String -&gt;</span> m a</span><br><span class="line">    fail msg = error msg</span><br><span class="line"></span><br><span class="line">class Monoid m <span class="keyword">where</span>  -- 注意是Monoid不是Monad</span><br><span class="line">    mempty :: m</span><br><span class="line">    <span class="function"><span class="title">mappend</span> :: m -&gt;</span> <span class="function"><span class="title">m</span> -&gt;</span> m</span><br><span class="line">    <span class="function"><span class="title">mconcat</span> :: [m] -&gt;</span> m</span><br><span class="line">    mconcat = foldr mappend mempty</span><br></pre></td></tr></table></figure>
+<ol>
+<li>type of fmap, (&lt;*&gt;) and (&gt;&gt;&#x3D;)</li>
+</ol>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fmap :: <span class="function"><span class="params">(Functor f)</span> =&gt; <span class="params">(a -&gt; b)</span> -&gt;</span> f a -&gt; f b           -- 先解f a封装到a, a -&gt; b, b再封装到f b; 操作<span class="number">2</span>次封装</span><br><span class="line"><span class="function"><span class="params">(&lt;*&gt;)</span> :: <span class="params">(Applicative f)</span> =&gt; <span class="title">f</span> <span class="params">(a -&gt; b)</span> -&gt;</span> f a -&gt; f b    -- 先解f a封装到a, 解f(a -&gt; b)封装， a -&gt; b, b再封装到f b; 操作<span class="number">3</span>次封装</span><br><span class="line"><span class="function"><span class="params">(&gt;&gt;=)</span> :: <span class="params">(Monad m)</span> =&gt; <span class="title">m</span> <span class="title">a</span> -&gt;</span> <span class="function"><span class="params">(a -&gt; m b)</span> -&gt;</span> m b          -- 先解m a封装到a, a -&gt; mb; 操作<span class="number">1</span>次封装</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Functor, Applicative and Monad都是封装，可以封装原始类型。</li>
+<li>&lt;$&gt; 是 fmap 的中缀表达式版本</li>
+<li>functors: you apply a function to a wrapped value using fmap or &lt;$&gt;</li>
+<li>applicatives: you apply a wrapped function to a wrapped value using &lt;*&gt; or liftA</li>
+<li>monads: you apply a function that returns a wrapped value, to a wrapped value using &gt;&gt;&#x3D; or liftM</li>
+<li>conclusion</li>
+</ol>
+<ul>
+<li>A functor is a data type that implements the Functor typeclass.</li>
+<li>An applicative is a data type that implements the Applicative typeclass.</li>
+<li>A monad is a data type that implements the Monad typeclass.</li>
+<li>A Maybe implements all three, so it is a functor, an applicative, and a monad.</li>
+</ul>
+<ol start="9">
+<li>区别</li>
+</ol>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://learnyouahaskell.com/chapters">Learn you haskell book</a></li>
+<li><a target="_blank" rel="noopener" href="https://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html">Functors, Applicatives, And Monads In Pictures</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1358,293 +1642,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/03/05/git-biset-to-debug/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/03/05/git-biset-to-debug/" class="post-title-link" itemprop="url">Git bisect to debug</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-03-05 09:51:13" itemprop="dateCreated datePublished" datetime="2021-03-05T09:51:13+08:00">2021-03-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/03/05/git-biset-to-debug/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/05/git-biset-to-debug/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>599</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h2><ol>
-<li>Use binary search to find the commit that introduced a bug</li>
-</ol>
-<h2 id="Command"><a href="#Command" class="headerlink" title="Command"></a>Command</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect start</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect bad                 <span class="comment"># Current version is bad</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect good v2.6.13-rc2    <span class="comment"># v2.6.13-rc2 is known to be good</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect <span class="built_in">log</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect skip                 <span class="comment"># Current version cannot be tested</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect reset</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">run script</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect run my_script arguments</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> ~/test.sh</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line">make || exit 125                     # this skips broken builds</span><br><span class="line">~/check_test_case.sh                 # does the test case pass?</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect start HEAD v1.3.1 --      <span class="comment"># HEAD is bad, v1.2 is good</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect run ~/test.sh</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">git bisect run sh -c <span class="string">&quot;make || exit 125; ~/check_test_case.sh&quot;</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect reset                   <span class="comment"># quit the bisect session</span></span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://git-scm.com/docs/git-bisect">git bisect</a></li>
-<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903537860673544">Git 二分调试法，火速定位疑难Bug</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/02/23/FFmpeg/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/23/FFmpeg/" class="post-title-link" itemprop="url">FFmpeg</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-02-23 20:21:13" itemprop="dateCreated datePublished" datetime="2021-02-23T20:21:13+08:00">2021-02-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/FFmpeg/" itemprop="url" rel="index"><span itemprop="name">FFmpeg</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/02/23/FFmpeg/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/02/23/FFmpeg/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="视频处理基本概念"><a href="#视频处理基本概念" class="headerlink" title="视频处理基本概念"></a><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2020/01/ffmpeg.html">视频处理基本概念</a></h2><ol>
-<li><code>容器(封装)</code>：<code>ffmpeg-formats</code> 视频文件本身其实是一个容器（container），里面包括了视频和音频，也可能有字幕等其他内容。</li>
-<li><code>编码格式</code>：<code>ffmpeg-codecs</code> 视频和音频都需要经过编码，才能保存成文件。不同的编码格式（CODEC），有不同的压缩率，会导致文件大小和清晰度的差异。</li>
-<li><code>编码器</code>：<code>ffmpeg-encoders</code> 编码器（encoders）是实现某种编码格式的库文件。只有安装了某种格式的编码器，才能实现该格式视频&#x2F;音频的编码和解码。</li>
-</ol>
-<h2 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h2><ol>
-<li>ffmpeg的主要工作流程相对比较简单，具体如下。</li>
-</ol>
-<ul>
-<li>解封装（Demuxing）</li>
-<li>解码（Decoding）</li>
-<li>编码（Encoding）</li>
-<li>封装（Muxing）</li>
-</ul>
-<ol>
-<li>其中需要经过6个步骤，具体如下。</li>
-</ol>
-<ul>
-<li>读取输入源</li>
-<li>进行音视频的解封装</li>
-<li>解码每一帧音视频数据</li>
-<li>进行音视频的重新封装</li>
-<li>输出到目标</li>
-</ul>
-<p>1.<br>                _______              ______________<br>               |       |            |              |<br>               | input |  demuxer   | encoded data |   decoder<br>               | file  | ———&gt; | packets      | —–+<br>               |<em><strong><strong><strong>|            |</strong></strong></strong><strong><strong><strong><strong>|      |<br>                                                          v<br>                                                      _________<br>                                                     |         |<br>                                                     | decoded |<br>                                                     | frames  |<br>                                                     |</strong></strong></strong></strong></em>|<br>                ________             ______________       |<br>               |        |           |              |      |<br>               | output | &lt;——– | encoded data | &lt;—-+<br>               | file   |   muxer   | packets      |   encoder<br>               |<strong><strong><strong><strong>|           |</strong></strong></strong></strong>______|</p>
-<h2 id="ffmpeg"><a href="#ffmpeg" class="headerlink" title="ffmpeg"></a>ffmpeg</h2><ol>
-<li>FFmpeg框架的基本组成包含AVFormat、AVCodec、AVFilter、AVDevice、AVUtil等模块库</li>
-<li>主要命令</li>
-</ol>
-<ul>
-<li>ffmpeg主要用于音视频编解码</li>
-<li>ffprobe主要用于音视频内容分析</li>
-<li>ffplay主要用于音视频播放、可视化分析</li>
-</ul>
-<h3 id="ffmpeg-1"><a href="#ffmpeg-1" class="headerlink" title="ffmpeg"></a>ffmpeg</h3><ol>
-<li>总共分为5部分：<code>ffmpeg &#123;1&#125; &#123;2&#125; -i &#123;3&#125; &#123;4&#125; &#123;5&#125;</code></li>
-</ol>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ffmpeg \</span><br><span class="line"><span class="selector-attr">[全局参数]</span> \</span><br><span class="line"><span class="selector-attr">[输入文件参数]</span> \</span><br><span class="line">-<span class="selector-tag">i</span> <span class="selector-attr">[输入文件]</span> \</span><br><span class="line"><span class="selector-attr">[输出文件参数]</span> \</span><br><span class="line"><span class="selector-attr">[输出文件]</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="ffplay"><a href="#ffplay" class="headerlink" title="ffplay"></a>ffplay</h3><ol>
-<li>FFmpeg不但可以提供转码、转封装等功能，同时还提供了播放器相关功能，使用FFmpeg的avformat与avcodec，可以播放各种媒体文件或者流。如果想要使用ffplay，那么系统首先需要有SDL来进行ffplay的基础支撑。</li>
-</ol>
-<h3 id="ffprobe"><a href="#ffprobe" class="headerlink" title="ffprobe"></a>ffprobe</h3><ol>
-<li>ffprobe也是FFmpeg源码编译后生成的一个可执行程序。ffprobe是一个非常强大的多媒体分析工具，可以从媒体文件或者媒体流中获得你想要了解的媒体信息，比如音频的参数、视频的参数、媒体容器的参数信息等。</li>
-<li><code>./ffprobe –show_streams output.mp4</code></li>
-</ol>
-<h2 id="ffmpeg硬编解码"><a href="#ffmpeg硬编解码" class="headerlink" title="ffmpeg硬编解码"></a>ffmpeg硬编解码</h2><ol>
-<li>当使用FFmpeg进行软编码时，常见的基于CPU进行H.264或H.265编码其相对成本会比较高，CPU编码时的性能也很低，所以出于编码效率及成本考虑，很多时候都会考虑采用硬编码，常见的硬编码包含Nvidia GPU与Intel QSV两种，还有常见的嵌入式平台，如树莓派、瑞芯微等</li>
-</ol>
-<h2 id="ffmpeg流媒体"><a href="#ffmpeg流媒体" class="headerlink" title="ffmpeg流媒体"></a>ffmpeg流媒体</h2><ol>
-<li>随着互联网、移动互联网的发展，人们获取信息的方式开始从纸质媒体转向互联网文字媒体，又从文字媒体转向音视频流媒体。音视频流媒体又称为流媒体，而用于处理流媒体的压缩、录制、编辑操作，开源并强大的工具屈指可数，FFmpeg就是常见的流媒体处理工具。</li>
-<li>流类型：RTMP, RTSP, HTTP, UDP&#x2F;TCP, HDS, DASH</li>
-</ol>
-<h2 id="ffmpeg-filter"><a href="#ffmpeg-filter" class="headerlink" title="ffmpeg filter"></a>ffmpeg filter</h2><ol>
-<li>FFmpeg除了具有强大的封装&#x2F;解封装、编&#x2F;解码功能之外，还包含了一个非常强大的组件——avfilter。avfilter组件经常用于进行多媒体的处理与编辑。例如加水印，画中画，多宫格视频等</li>
-</ol>
-<h2 id="ffmpeg视频采集"><a href="#ffmpeg视频采集" class="headerlink" title="ffmpeg视频采集"></a>ffmpeg视频采集</h2><ol>
-<li>可以使用FFmpeg采集本地的音视频采集设备的数据，然后进行编码、封装、传输等操作</li>
-</ol>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://ffmpeg.org/documentation.html">Official Documents</a></li>
-<li><a target="_blank" rel="noopener" href="http://jxz1.j9p.com/pc/dgsdfhghgh.pdf">FFmpeg从入门到精通（书）</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1716,7 +1713,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">171</span>
+          <span class="site-state-item-count">173</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1749,6 +1746,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1756,12 +1759,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/10/llama-cpp/" title="2024&#x2F;01&#x2F;10&#x2F;llama-cpp&#x2F;">llama.cpp</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/10/model-compression/" title="2024&#x2F;01&#x2F;10&#x2F;model-compression&#x2F;">model-compression</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/04/huggingface/" title="2024&#x2F;01&#x2F;04&#x2F;huggingface&#x2F;">huggingface</a>
         </li>
     </ul>
   </div>
@@ -1799,13 +1796,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">438k</span>
+    <span title="站点总字数">447k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:38</span>
+    <span title="站点阅读时长">6:46</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

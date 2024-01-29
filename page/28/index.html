@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">171</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">173</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,337 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/08/11/OS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/11/OS/" class="post-title-link" itemprop="url">OS</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-11 12:10:18" itemprop="dateCreated datePublished" datetime="2020-08-11T12:10:18+08:00">2020-08-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/08/11/OS/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/11/OS/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="page-faults"><a href="#page-faults" class="headerlink" title="page faults"></a>page faults</h2><ol>
+<li></li>
+</ol>
+<h2 id="C-变量内存分配区域"><a href="#C-变量内存分配区域" class="headerlink" title="C++ 变量内存分配区域"></a>C++ 变量内存分配区域</h2><ol>
+<li>栈区（stack） 由编译器自动分配释放 ，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。</li>
+<li>堆区（heap）就是那些由 malloc 等分配的内存块，他和堆是十分相似的，不过它是用 free 来结束自己的生命的。一般由程序员分配释放， 若程序员不释放，程序结束时可能由 OS 回收 。注意它与数据结构中的堆是两回事，分配方式倒是类似于链。堆可以动态地扩展和收缩。</li>
+<li>自由存储区(也在堆区？) 就是那些由 new 分配的内存块，一般一个 new 就要对应一个 delete。</li>
+<li>全局区&#x2F;静态区（static）全局变量和静态变量的存储是放在一块的，初始化的全局变量和静态变量在一块区域 data 段， 未初始化的全局变量和未初始化的静态变量在相邻的另一块区域 bss 段。程序结束后有系统释放</li>
+<li>常量存储区 存放的是常量，不允许修改。常量字符串就是放在这里的。常量字符串不能修改, 否则程序会在运行期崩溃（当然，你要通过非正当手段也可以修改，而且方法很多）.程序结束后由系统释放</li>
+</ol>
+<h3 id="C-自由存储区和堆区"><a href="#C-自由存储区和堆区" class="headerlink" title="C++ 自由存储区和堆区"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/Q_1849805767/article/details/107376682">C++ 自由存储区和堆区</a></h3><ol>
+<li>堆是操作系统维护的一块内存，而自由存储是 C++中通过 new 与 delete 动态分配和释放对象的抽象概念。堆与自由存储区并不等价</li>
+<li>new &#x2F; new[]：完成两件事，先底层调用 malloc 分配了内存，然后调用构造函数（创建对象）。</li>
+<li>delete&#x2F;delete[]：也完成两件事，先调用析构函数（清理资源），然后底层调用 free 释放空间。</li>
+<li>new 在申请内存时会自动计算所需字节数，而 malloc 则需我们自己输入申请内存空间的字节数。</li>
+</ol>
+<h2 id="linux-虚拟内存空间分区"><a href="#linux-虚拟内存空间分区" class="headerlink" title="linux 虚拟内存空间分区"></a>linux 虚拟内存空间分区</h2><ol>
+<li><code>cat /proc/pid/maps 或 pmap pid</code> 看进程映射区域</li>
+<li>64 位系统虚拟内存 <img src="https://fanlv.wiki/2021/07/25/linux-mem/Linux-Memory-X86-64.jpg" alt="linux 64 memory"></li>
+<li>ELF 在装载时按照 Segment 划分。一个 Segment 包含一个或多个属性类型的 Section。实际上 Segment 的概念是从装载的角度重新定划分了 ELF 的各个段。<a target="_blank" rel="noopener" href="https://maodanp.github.io/2019/06/02/linux-virtual-space/">link</a>， 映射的时候，这里面的 segment 会对应一个 VMA。Linux 将进程虚拟地址空间中的一个段叫做虚拟内存区域（VMA）。<img src="https://maodanp.github.io/pic/2019/2019-06-02-linux-virtual-space-02.png" alt="示意图"></li>
+<li>ELF 可执行文件中有两个概念，分别是段(segment)和节(section)。通过 <code>readelf -S name.elf</code> 可以查看 ELF 可执行文件的节头表，这里面有所有节的信息。使用命令 <code>readelf -l name.elf</code> 来查看 ELF 的段。而系统正是按照“segment”而不是“section”来映射可执行文件的。</li>
+<li>readelf -a test 先显示 section 信息， 然后显示 segment(Program Headers)信息，接着显示 Section to Segment mapping 信息</li>
+<li>从装载的角度看，我们只关心”LOAD”型的 segment，因为只有它是需要被映射的，其他诸如“NOTE”,”GNU_STACK”都是在装载时起辅助作用的。<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44395686/article/details/104761488">link</a></li>
+<li>总体而言，Segment 和 Section 是从不同角度来划分同一个 ELF 文件。从 Section 角度来看 ELF 文件就是链接视图（Linking View），从 Segment 角度来看 ELF 文件则是执行视图（Execution View）。</li>
+</ol>
+<h3 id="进程虚拟存储器"><a href="#进程虚拟存储器" class="headerlink" title="进程虚拟存储器"></a>进程虚拟存储器</h3><ol>
+<li>只读区(.init, .text, .rodata)</li>
+<li>已初始化的数据(.data 段)</li>
+<li>未初始化的数据(.bss 段)</li>
+<li>堆</li>
+<li>映射区(mmap, 共享库等)</li>
+<li>栈</li>
+</ol>
+<h3 id="内核虚拟存储器"><a href="#内核虚拟存储器" class="headerlink" title="内核虚拟存储器"></a>内核虚拟存储器</h3><ol>
+<li>内核代码和数据</li>
+<li>物理存储器</li>
+<li>与进程相关的数据结构(每个进程不同)</li>
+</ol>
+<h2 id="ELF"><a href="#ELF" class="headerlink" title="ELF"></a>ELF</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/16557699">变量根据情况分配在.bss 段上</a><ul>
+<li>int bigvar_in_bss[16300];</li>
+<li>int bigvar_in_bss[16300] &#x3D; {0};</li>
+<li>int bigvar_in_data[16300] &#x3D; {1};</li>
+<li>int var_in_data[5] &#x3D; {1, 2, 3, 4, 5};</li>
+</ul>
+</li>
+<li><code>file -A</code> 查看各 section 大小</li>
+<li><code>nm test</code> 查看变量是否在 bss 段上</li>
+<li><code>readelf -s test 或 nm -S test</code> 查看变量大小, 在其他模块定义的符号 size 为 0</li>
+<li><code>nm -S --size-sort test</code> 按 size 排序</li>
+<li>初始化为 0 的在 bss 段上？<a target="_blank" rel="noopener" href="https://stackoverflow.com/a/16557776">link</a></li>
+</ol>
+<h2 id="others"><a href="#others" class="headerlink" title="others"></a>others</h2><h3 id="同步异步，阻塞非阻塞区别"><a href="#同步异步，阻塞非阻塞区别" class="headerlink" title="同步异步，阻塞非阻塞区别"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/mhq-martin/p/9035640.html">同步异步，阻塞非阻塞区别</a></h3><ol>
+<li><p><code>不同的的概念，同步与异步区别是什么时候拿到最终结果，阻塞和非阻塞区别进程线程是是否等待结果， 同步可以是阻塞的， 也可以是非阻塞的(一次非阻塞拿不全结果， 轮询try_lock或read noblock)，异步可以是阻塞的，也可以是非阻塞的，阻塞是同步的，但非阻塞不一定异步的. 比如非阻塞系统调用read，返回的是字节数，不是最终结果。</code></p>
+</li>
+<li><p>组合：</p>
+<ul>
+<li>同步阻塞：同步接口里使用阻塞方式拿到最终结果</li>
+<li>同步非阻塞：同步接口里通过非阻塞方式轮询拿到最终结果</li>
+<li>异步阻塞：异步接口里通过阻塞方式拿到最终结果</li>
+<li>异步非阻塞：异步接口里通过非阻塞方式拿到最终结果</li>
+</ul>
+</li>
+<li><p>同步与异步是更高层次上的概念</p>
+</li>
+<li><p>同步与异步区别是什么时候拿到最终结果。如果是在调用函数就拿到最终结果，则是同步的，</p>
+</li>
+<li><p>同步异步区别是在调用一个功能时，没得到<code>结果</code>之前，是否继续后续操作（有问题，非阻塞也是没拿到结果，也往后继续进行， 但是非阻塞不一定是异步的）</p>
+</li>
+<li><p>阻塞非阻塞区别是<code>线程/程序</code>在等待调用结果时，是否一直等待（挂起当前线程）</p>
+</li>
+<li><p>阻塞和非阻塞关注的是程序在<code>等待调用结果</code>（消息，返回值）时的<code>状态</code>.</p>
+</li>
+<li><p>进程线程锁是用来同步的，lock()函数是阻塞式，不拿到锁不返回，线程被阻塞。try_lock()是非阻塞式的，如果拿不到锁也返回。</p>
+</li>
+<li><p>异步是目的，而多线程是实现这个目的的方法</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/19732473/answer/241673170">非阻塞 I&#x2F;O 和异步 I&#x2F;O</a><br>非阻塞 I&#x2F;O 系统调用( nonblocking system call )的另一个替代品是 异步 I&#x2F;O 系统调用 （asychronous system call）。 与非阻塞 I&#x2F;O 系统调用类似，asychronous system call 也是会立即返回， 不会等待 I&#x2F;O 操作的完成， 应用程序可以继续执行其他的操作， 等到 I&#x2F;O 操作完成了以后，操作系统会通知调用进程（设置一个用户空间特殊的变量值 或者 触发一个 signal 或者 产生一个软中断 或者 调用应用程序的回调函数）。<br>此处， 非阻塞 I&#x2F;O 系统调用( nonblocking system call ) 和 异步 I&#x2F;O 系统调用 （asychronous system call）的区别是：</p>
+<ul>
+<li>一个非阻塞 I&#x2F;O 系统调用 read() 操作立即返回的是任何可以立即拿到的数据， 可以是完整的结果， 也可以是不完整的结果， 还可以是一个空值。</li>
+<li>而异步 I&#x2F;O 系统调用 read（）结果必须是完整的， 但是这个操作完成的通知可以延迟到将来的一个时间点。<br>上面提到的 非阻塞 I&#x2F;O 系统调用( nonblocking system call ) 和 异步 I&#x2F;O 系统调用 都是非阻塞式的行为（non-blocking behavior）。 他们的差异仅仅是返回结果的方式和内容不同。</li>
+</ul>
+</li>
+<li><p>我们所说的 “阻塞”是指进程在发起了一个系统调用（System Call） 后， 由于该系统调用的操作不能立即完成，需要等待一段时间，于是内核将进程挂起为等待 （waiting）状态， 以确保它不会被调度执行， 占用 CPU 资源。</p>
+</li>
+<li><p>在进程通信层面， 阻塞&#x2F;非阻塞， 同步&#x2F;异步基本是同义词， 但是需要注意区分讨论的对象是发送方还是接收方。发送方阻塞&#x2F;非阻塞（同步&#x2F;异步）和接收方的阻塞&#x2F;非阻塞（同步&#x2F;异步） 是互不影响的。</p>
+</li>
+<li><p>在 IO 系统调用层面（ IO system call ）层面， 非阻塞 IO 系统调用 和 异步 IO 系统调用存在着一定的差别， 它们都不会阻塞进程， 但是返回结果的方式和内容有所差别， 但是都属于非阻塞系统调用（ non-blocing system call ）</p>
+</li>
+<li><p>举例：从磁盘读 50000 字节到内存</p>
+</li>
+</ol>
+<ul>
+<li>同步：调用 api，api 内不拿到结果或出错不返回。</li>
+<li>异步：调用 api, 直接返回，结果通过 callback 等方式通知。结果是完整的。</li>
+<li>阻塞：线程系统调用 read(), 不读 50000 字节不返回，线程挂起，内核态在执行。</li>
+<li>非阻塞：线程系统调用 read(NO_BLOCK), 达到某个条件，如出现’\n’直接返回，结果不完整，线程要多次调用来得到结果。</li>
+</ul>
+<h3 id="Linux-异步-I-O-框架-io-uring：基本原理、程序示例与性能压测"><a href="#Linux-异步-I-O-框架-io-uring：基本原理、程序示例与性能压测" class="headerlink" title="Linux 异步 I&#x2F;O 框架 io_uring：基本原理、程序示例与性能压测"></a><a target="_blank" rel="noopener" href="http://arthurchiao.art/blog/intro-to-io-uring-zh/">Linux 异步 I&#x2F;O 框架 io_uring：基本原理、程序示例与性能压测</a></h3><h2 id="CFS"><a href="#CFS" class="headerlink" title="CFS"></a>CFS</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://arthurchiao.art/blog/linux-cfs-design-and-implementation-zh/">Linux CFS 调度器：原理、设计与内核实现</a></li>
+</ol>
+<h2 id="linux-src"><a href="#linux-src" class="headerlink" title="linux src"></a>linux src</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://askubuntu.com/a/159842">apt-get source linux-source</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/08/05/Cargo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/05/Cargo/" class="post-title-link" itemprop="url">Cargo</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-05 08:58:58" itemprop="dateCreated datePublished" datetime="2020-08-05T08:58:58+08:00">2020-08-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/Rust/" itemprop="url" rel="index"><span itemprop="name">Rust</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/08/05/Cargo/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/05/Cargo/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>563</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Build-Scripts"><a href="#Build-Scripts" class="headerlink" title="Build Scripts"></a>Build Scripts</h2><ol>
+<li>有些库依赖第三方语言的库，例如需要C库，并且需要从源码编译，cargo目标并不是取代那些优化很好的第三方编译工具，所以cargo通过build脚本来集成其他工具。</li>
+<li>在crate包的根路径下创建一个名为<code>build.sh</code>的脚本，Cargo会在编译crate包之前先编译<code>build.sh</code>脚本然后执行该脚本。</li>
+<li>如果<code>build.sh</code>依赖的文件有任何改变，会被重新编译。</li>
+<li>build脚本的输入是通过环境变量传递的。</li>
+<li>环境变量中的当前路径就是<code>build.sh</code>源码所在路径。</li>
+<li>build脚本会将输出放入到<code>OUT_DIR</code>中的各个路径中。所以build脚本不应该改变这些输出路径中的文件。</li>
+<li>Cargo会解析那些以<code>cargo:</code>开头的行，其他行被忽略。</li>
+<li>build脚本的输出默认被隐藏，可以使用<code>-vv</code>(very verbose)来查看输出。如果依赖的文件没有被改变，什么都不会输出，因为不会重新执行编译脚本。</li>
+<li>build脚本的编译输出都会存在类似于<code>target/debug/build/&lt;pkg&gt;/output</code>文件中。</li>
+<li>…</li>
+<li><code>build.sh</code>中依赖的crates需要在Cargo.toml中的<code>[build-dependencies]</code>中指定依赖，<code>build.sh</code>可用的依赖见<a target="_blank" rel="noopener" href="https://crates.io/keywords/build-dependencies">crates.io build-dependencies crates</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -487,7 +818,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-18 11:58:10" itemprop="dateModified" datetime="2024-01-18T11:58:10+08:00">2024-01-18</time>
+                <time title="修改时间：2024-01-26 17:57:25" itemprop="dateModified" datetime="2024-01-26T17:57:25+08:00">2024-01-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -523,7 +854,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6.1k</span>
+              <span>6.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -547,6 +878,12 @@
 <li>nsight compute 可以显示各 memory 速率</li>
 </ol>
 <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li><code>加权访存带宽计算</code>：只读带宽最高约 520 GB&#x2F;s，L2 Cache 带宽 1.9TB&#x2F;s，当 L2 cache 命中率为 30% 时，加权后的平均访存带宽为 520 _ 0.7 + 1900 _ 0.3 &#x3D; 934 GB&#x2F;s</li>
+<li>gpu sram 带宽为什么比主存大很多：<ul>
+<li>并行，多个 SM 访问 shared memory， 如有 80 个 sm，每个 sm4 个 partition， 每个 shared memory 有 32 个 bank， 等效位宽为：<code>80*4*32*8 = 81920</code>, hbm 位宽为 8192， 带宽为 1.5TB&#x2F;s, sram 为 19TB&#x2F;s</li>
+</ul>
+</li>
+<li>可以按照是否在芯片上分为片上内存(<code>on chip</code>)和片下内存(<code>off chip</code>)。</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/freelancer-leon/notes/blob/master/kernel/mm/meminfo.md">&#x2F;proc&#x2F;meminfo</a></li>
 <li>RES&#x3D;CODE+DATA 进程使用的、未被换出的物理内存大小</li>
 <li>内存主要关注物理内存, 虚拟内存表示程序文件及链接库大小，并不是所有的都加载到内存</li>
@@ -842,292 +1179,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/07/22/Zsh-config/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/22/Zsh-config/" class="post-title-link" itemprop="url">Zsh config</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-22 15:19:28" itemprop="dateCreated datePublished" datetime="2020-07-22T15:19:28+08:00">2020-07-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-10 14:31:22" itemprop="dateModified" datetime="2023-11-10T14:31:22+08:00">2023-11-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/Zsh/" itemprop="url" rel="index"><span itemprop="name">Zsh</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/07/22/Zsh-config/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/22/Zsh-config/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="NOTE"><a href="#NOTE" class="headerlink" title="NOTE"></a>NOTE</h2><ol>
-<li>scp not work</li>
-</ol>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># remember to put this code to .bashrc before <span class="built_in">execute</span> zsh</span><br><span class="line"># If <span class="keyword">not</span>, scp can <span class="keyword">not</span> work.</span><br><span class="line"><span class="string">[[ $- == *i* ]]</span> || <span class="keyword">return</span></span><br><span class="line">zsh</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>如果你使用的是 zsh，上面的通配符会失效，你可以切换到 bash 执行这些命令，或者使用 setopt no_nomatch 来关闭 zsh 对于通配符的拦截</li>
-</ol>
-<h2 id="oh-my-zsh"><a href="#oh-my-zsh" class="headerlink" title="oh my zsh"></a>oh my zsh</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="microsoft-inshellisense-npm-issue"><a href="#microsoft-inshellisense-npm-issue" class="headerlink" title="microsoft&#x2F;inshellisense npm issue"></a><a target="_blank" rel="noopener" href="https://github.com/microsoft/inshellisense">microsoft&#x2F;inshellisense</a> <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/61404290">npm issue</a></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @microsoft/inshellisense</span><br><span class="line">inshellisense <span class="built_in">bind</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="autosuggestions"><a href="#autosuggestions" class="headerlink" title="autosuggestions"></a>autosuggestions</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://github.com/zsh-users/zsh-autosuggestions <span class="variable">$ZSH_CUSTOM</span>/custom/plugins/zsh-autosuggestions</span><br><span class="line">sed -i <span class="string">&quot;s/fg=8/fg=cyan/&quot;</span> .oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh</span><br><span class="line">vi ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 文件，修改 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=<span class="string">&#x27;fg=blue&#x27;</span></span><br><span class="line"><span class="comment"># support colors: black, red, green; yellow; blue; magenta; cyan and white;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="zsh-syntax-highlighting"><a href="#zsh-syntax-highlighting" class="headerlink" title="zsh-syntax-highlighting"></a>zsh-syntax-highlighting</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://github.com/jimmijj/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
-
-<h2 id="zshrc-config"><a href="#zshrc-config" class="headerlink" title=".zshrc config"></a>.zshrc config</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PROMPT=<span class="string">&quot;%n@%m:%1~%# &quot;</span></span><br><span class="line">plugins=(rust rustup cargo zsh-autosuggestions zsh-syntax-highlighting colored-man-pages tmux fd)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Othe-config"><a href="#Othe-config" class="headerlink" title="Othe config"></a>Othe config</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config oh-my-zsh.hide-status 1 --global <span class="comment">#close git status</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Powlevel9k-theme"><a href="#Powlevel9k-theme" class="headerlink" title="Powlevel9k theme"></a>Powlevel9k theme</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git clone https:<span class="regexp">//gi</span>thub.com<span class="regexp">/bhilburn/</span>powerlevel9k.git ~<span class="regexp">/.oh-my-zsh/</span>custom<span class="regexp">/themes/</span>powerlevel9k</span><br><span class="line">.zshrc：</span><br><span class="line">export TERM=<span class="string">&quot;xterm-256color&quot;</span></span><br><span class="line">POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user dir)</span><br><span class="line">POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(root_indicator background_jobs )</span><br><span class="line">POWERLEVEL9K_MODE=<span class="string">&#x27;awesome-fontconfig&#x27;</span></span><br><span class="line">ZSH_THEME=<span class="string">&quot;powerlevel9k/powerlevel9k&quot;</span></span><br><span class="line">~<span class="regexp">/.oh-my-zsh/</span>custom<span class="regexp">/themes/</span>powerlevel9k/powerlevel9k.zsh-theme          修改  <span class="string">&quot;CONTENT&quot;</span>             <span class="string">&quot;jia@61&quot;</span> <span class="comment">#&quot;$(whoami)&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="awesome-terminal-fonts"><a href="#awesome-terminal-fonts" class="headerlink" title="awesome-terminal-fonts"></a>awesome-terminal-fonts</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/gabrielelana/awesome-terminal-fonts</span><br><span class="line"><span class="built_in">cp</span> -R build/* ~/.fonts/</span><br><span class="line">fc-cache -fv ~/.fonts</span><br><span class="line"><span class="built_in">cp</span> config/10-symbols.conf ~/.config/fontconfig/conf.d</span><br><span class="line"><span class="built_in">source</span> ~/.fonts/*.sh</span><br></pre></td></tr></table></figure>
-
-<h2 id="autojump"><a href="#autojump" class="headerlink" title="autojump"></a>autojump</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://github.com/joelthelion/autojump.git</span><br><span class="line"><span class="built_in">cd</span> autojump</span><br><span class="line">./install.py</span><br></pre></td></tr></table></figure>
-
-<h2 id="powerline-非必须）"><a href="#powerline-非必须）" class="headerlink" title="powerline(非必须）"></a>powerline(非必须）</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install fonts-powerline</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/powerline/fonts.git --depth=1</span><br><span class="line"><span class="built_in">cd</span> fonts</span><br><span class="line">./install.sh</span><br></pre></td></tr></table></figure>
-
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><p>install oh my zsh : sh -c “$(curl -fsSL <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh">https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh</a>)”<br>zsh autosuggestions <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBa075b0a3e60cbde5f506563c3c14997a/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBa075b0a3e60cbde5f506563c3c14997a/</a><br>sudo apt-get install autojump <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEB1da9f35b71c3815439e1426116e7ecf9/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEB1da9f35b71c3815439e1426116e7ecf9/</a><br>Powlevel9k theme install <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBfd1ecc9886dfcf108ee9bae6b586cab6/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBfd1ecc9886dfcf108ee9bae6b586cab6/</a><br>Powerline <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBac4ed9c8ab78bb09940458cfb9b1a397/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBac4ed9c8ab78bb09940458cfb9b1a397/</a><br>awesome-terminal-fonts <a target="_blank" rel="noopener" href="http://www.cnblogs.com/weixuqin/p/7029177.html">http://www.cnblogs.com/weixuqin/p/7029177.html</a><br>zsh-syntax-highlighting <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBef4ca4fdaf7d36950545241429e3daee/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBef4ca4fdaf7d36950545241429e3daee/</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/07/10/Why-Rust/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/10/Why-Rust/" class="post-title-link" itemprop="url">Why Rust</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-10 21:45:08" itemprop="dateCreated datePublished" datetime="2020-07-10T21:45:08+08:00">2020-07-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Rust/" itemprop="url" rel="index"><span itemprop="name">Rust</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/07/10/Why-Rust/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/10/Why-Rust/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>798</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Why-Rust"><a href="#Why-Rust" class="headerlink" title="Why Rust?"></a>Why Rust?</h2><h3 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h3><ol>
-<li>It’s <strong><code>fast</code></strong> and memory efficient: with no runtime or garbage collector.</li>
-<li>It can easily integrate with other languages.</li>
-</ol>
-<h3 id="Reliability"><a href="#Reliability" class="headerlink" title="Reliability"></a>Reliability</h3><ol>
-<li>It’s rich type system and ownership model guarantee <font color='red'><strong>memory-safety</strong></font> and <font color='red'><strong>thread-safety</strong></font>.</li>
-</ol>
-<h3 id="Productivity"><a href="#Productivity" class="headerlink" title="Productivity"></a>Productivity</h3><ol>
-<li>Great documentation</li>
-<li>Friendly compiler, find most errors when compiling</li>
-<li>An integrated package manager</li>
-<li>Doc system: <code>cargo doc --open</code></li>
-</ol>
-<h2 id="Rust-features"><a href="#Rust-features" class="headerlink" title="Rust features"></a>Rust features</h2><ol>
-<li>Zero-cost abstractions</li>
-<li>Modern conveniences</li>
-<li>Type system: Ownership and Borrowing</li>
-<li>Sense of craftsmanship</li>
-</ol>
-<h2 id="Why-Name-Rust"><a href="#Why-Name-Rust" class="headerlink" title="Why Name Rust?"></a>Why Name Rust?</h2><ol>
-<li>It’s a pun on “chrome”. Rust was written by the engineer company Mozilla(firefox). And chrome is a metal.</li>
-</ol>
-<h2 id="Rust-目的"><a href="#Rust-目的" class="headerlink" title="Rust 目的"></a>Rust 目的</h2><ol>
-<li>创建这个新语言的目的是为了解决一个顽疾：软件的演进速度大大低于硬件的演进，软件在语言级别上无法真正利用多核计算带来的性能提升。Rust是针对多核体系提出的语言，并且吸收一些其他动态语言的重要特性，比如不需要管理内存，比如不会出现Null指针等</li>
-</ol>
-<h2 id="Why-not-C"><a href="#Why-not-C" class="headerlink" title="Why not C++"></a>Why not C++</h2><ol>
-<li>当然C++ 也很好，因为它教会了我怎么面向搜索引擎编程。</li>
-</ol>
-<h2 id="Rust类型系统借鉴Haskell特性"><a href="#Rust类型系统借鉴Haskell特性" class="headerlink" title="Rust类型系统借鉴Haskell特性"></a>Rust类型系统借鉴Haskell特性</h2><ol>
-<li>没有空指针</li>
-<li>类型默认不可变</li>
-<li>表达式</li>
-<li>高阶函数</li>
-<li>代数数据类型</li>
-<li>模式匹配</li>
-<li>泛型</li>
-<li>trait和关联类型</li>
-<li>本地类型推导</li>
-</ol>
-<h2 id="Rust相比Haskell独有特点"><a href="#Rust相比Haskell独有特点" class="headerlink" title="Rust相比Haskell独有特点"></a>Rust相比Haskell独有特点</h2><ol>
-<li>仿射变换(Affine Type)</li>
-<li>借用，生命周期</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1199,7 +1250,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">171</span>
+          <span class="site-state-item-count">173</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1232,6 +1283,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1239,12 +1296,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/10/llama-cpp/" title="2024&#x2F;01&#x2F;10&#x2F;llama-cpp&#x2F;">llama.cpp</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/10/model-compression/" title="2024&#x2F;01&#x2F;10&#x2F;model-compression&#x2F;">model-compression</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/04/huggingface/" title="2024&#x2F;01&#x2F;04&#x2F;huggingface&#x2F;">huggingface</a>
         </li>
     </ul>
   </div>
@@ -1282,13 +1333,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">438k</span>
+    <span title="站点总字数">447k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:38</span>
+    <span title="站点阅读时长">6:46</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
