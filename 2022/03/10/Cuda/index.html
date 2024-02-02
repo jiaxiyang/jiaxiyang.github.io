@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="Note GPU通过计算而不是深度缓存层次结构来隐藏访存延迟 并发的 warp 切换没有开销，因为每个 warp 都分配了硬件资源 不需要上下文切换 以空间换时间   gpu sram 带宽为什么比主存大很多： 并行，多个 SM 访问 shared memory， 如有 80 个 sm，每个 sm4 个 partition， 每个 shared memory 有 32 个 bank， 等效位宽为：">
+  <meta name="description" content="Note gridDim 划分的是数据，blockDim 划分的是线程：例如: sgemm 分块矩阵乘  1234N&#x3D;M&#x3D;1024;BN&#x3D;BM&#x3D;128, TN&#x3D;TB&#x3D;8;    dim3 blockDim(BN &#x2F; TN, BM &#x2F; TM);  &#x2F;&#x2F; block 按线程分为 16x16 thread,threadDim&#x3D;(16, 16) 每个线程处理8x8数据; x维度是列，y维度是行;dim3">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cuda">
 <meta property="og:url" content="https://jiaxiyang.github.io/2022/03/10/Cuda/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="Note GPU通过计算而不是深度缓存层次结构来隐藏访存延迟 并发的 warp 切换没有开销，因为每个 warp 都分配了硬件资源 不需要上下文切换 以空间换时间   gpu sram 带宽为什么比主存大很多： 并行，多个 SM 访问 shared memory， 如有 80 个 sm，每个 sm4 个 partition， 每个 shared memory 有 32 个 bank， 等效位宽为：">
+<meta property="og:description" content="Note gridDim 划分的是数据，blockDim 划分的是线程：例如: sgemm 分块矩阵乘  1234N&#x3D;M&#x3D;1024;BN&#x3D;BM&#x3D;128, TN&#x3D;TB&#x3D;8;    dim3 blockDim(BN &#x2F; TN, BM &#x2F; TM);  &#x2F;&#x2F; block 按线程分为 16x16 thread,threadDim&#x3D;(16, 16) 每个线程处理8x8数据; x维度是列，y维度是行;dim3">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.ibb.co/2qN87rv/QVJcq2r-QQ3.png">
 <meta property="article:published_time" content="2022-03-09T18:17:38.000Z">
-<meta property="article:modified_time" content="2024-01-28T09:47:32.515Z">
+<meta property="article:modified_time" content="2024-02-02T09:45:46.940Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="Cuda">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-28 17:47:32" itemprop="dateModified" datetime="2024-01-28T17:47:32+08:00">2024-01-28</time>
+                <time title="修改时间：2024-02-02 17:45:46" itemprop="dateModified" datetime="2024-02-02T17:45:46+08:00">2024-02-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -278,14 +278,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>14k</span>
+              <span>17k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>12 分钟</span>
+              <span>16 分钟</span>
             </span>
 
         </div>
@@ -298,6 +298,11 @@
 
       
         <h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><ol>
+<li>gridDim 划分的是数据，blockDim 划分的是线程：例如: sgemm 分块矩阵乘</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">N=M=<span class="number">1024</span>;</span><br><span class="line">BN=BM=<span class="number">128</span>, TN=TB=<span class="number">8</span>;</span><br><span class="line">    <span class="function">dim3 <span class="title">blockDim</span><span class="params">(BN / TN, BM / TM)</span></span>;  <span class="comment">// block 按线程分为 16x16 thread,threadDim=(16, 16) 每个线程处理8x8数据; x维度是列，y维度是行;</span></span><br><span class="line"><span class="function">dim3 <span class="title">gridDim</span><span class="params">((N + BN - <span class="number">1</span>) / BN, (M + BM - <span class="number">1</span>) / BM)</span></span>; <span class="comment">// grid 按数据分为 8x8 block, blockDim=(8, 8)</span></span><br></pre></td></tr></table></figure>
+
+<ol>
 <li><code>GPU通过计算而不是深度缓存层次结构来隐藏访存延迟</code></li>
 <li>并发的 warp 切换没有开销，因为每个 warp 都分配了硬件资源<ul>
 <li>不需要上下文切换</li>
@@ -333,6 +338,63 @@
 <li><code>FMA (Fused Multiply Add)</code>: z&#x3D;a*x+y …z,x,y are vectors or scalars</li>
 <li><code>4FMA (Quad FMA)</code>: z&#x3D;A*x+z …A is a FP32 matrix; x,z are vectors</li>
 <li><code>WMMA: Warp-level Matrix Mulitply and Accumulate (Tensor Core)</code>: Z&#x3D;AB+C …A,B are FP16 matrices; Z,C are FP32</li>
+<li>global memory -&gt; shared memory 时，计算每个线程需要搬移的数据量。假如每个线程要搬移 A，B 矩阵为 4 个 single float point, 4x4 &#x3D; 16B<ul>
+<li>A_tile（128,8): 256 个线程， 每个线程搬移 4 个数，每行由 2 个线程处理， 假如线程一维索引为 tid； 行 m &#x3D; tid &#x2F; 2 &#x3D; tid &gt;&gt; 1; 列 k &#x3D; (tid % 2) x 4 &#x3D; (tid &amp; 1) &lt;&lt; 2</li>
+<li>B_tile（8,128): 256 个线程， 每个线程搬移 4 个数，每行由 32 个线程处理， 假如线程一维索引为 tid； 行 k &#x3D; tid &#x2F; 32 &#x3D; tid &gt;&gt; 5; 列 n &#x3D; (tid % 32) x 4 &#x3D; (tid &amp; 31) &lt;&lt; 2</li>
+</ul>
+</li>
+<li>load&#x2F;store 关键点在行列索引(分别计算各 tile 维度的 m, n, k)， 通过行列可以找到起始地址。<code>#define OFFSET(row, col, ld) ((row) * (ld) + (col))</code></li>
+<li>load&#x2F;store memory 的时候先通过行列坐标找到 global 起始点，然后再算偏移，用宏定义来访问矩阵，先找最外层的 tile，再找里层的 tile。</li>
+<li>sgemm 分块 A 矩阵 global 到 shared load 时，shared memory 需要列优先排列，一次 load 四个数都寄存器，然后再分别赋值给列。</li>
+<li>shred memory double buffering: 在 for 循环里只用 sync 一次<ul>
+<li>load tile[0] 到 buffer[0]; sync</li>
+<li>for: load tile[i]; compute tile[i-1]; sync</li>
+<li>comute tile[-1]; sync</li>
+</ul>
+</li>
+<li>wave 的概念：wave 表示 GPU 上同时执行的 thread block。例如一个 kernel 中 thread block 为 256 线程，每个线程使用了 128 个寄存器，那么在 GV100 上每个 SM 可同时执行 2 个 thread block，GV100 共 80 个 SM，一个 wave 就是 160 个 thread block。</li>
+<li>cuda 遵循 IEEE 754 standard for binary floating-point representation； 由于融合和乘加， 其结果与分别乘加结果略有不同 <a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#ieee-754-compliance">ieee-754-compliance</a><ul>
+<li>One of the key differences is the fused multiply-add (FMA) instruction, which combines multiply-add operations into a single instruction execution. <code>Its result will often differ slightly from results obtained by doing the two operations separately.</code></li>
+</ul>
+</li>
+<li>每个浮点算术运算都涉及一定量的舍入。因此，算术运算的执行顺序很重要。如果 A、B 和 C 是浮点值，则 (A+B)+C 不能保证等于 A+(B+C)</li>
+<li>我们可以将 CUDA 内核编写为许多短 <code>__device__</code> 函数的集合，而不是一个大型的整体 <code>__global__</code> 函数；每个设备功能可以在将它们连接在一起之前进行独立测试。</li>
+<li>如果大多数函数都定义为 <code>__host__ __device__</code> 而不仅仅是 <code>__device__</code> 函数，那么这些函数就可以在 CPU 和 GPU 上进行测试，</li>
+<li><code>local memory</code>之所以如此命名，是因为它的作用域是线程本地的，而不是因为它的物理位置。事实上，本地存储器位于片外。因此，访问本地内存与访问全局内存一样昂贵。换句话说，名称中的“本地”一词并不意味着访问速度更快。本地内存仅用于保存自动变量。当 nvcc 编译器确定没有足够的寄存器空间来保存变量时，就会执行此操作。可能放置在本地内存中的自动变量是大型结构或数组，它们会消耗太多寄存器空间，并且编译器确定可以动态索引的数组。</li>
+<li><code>constent memory</code></li>
+<li><code>The NVIDIA Management Library (NVML)</code> is a C-based interface that provides direct access to the queries and commands exposed via nvidia-smi intended as a platform for building 3rd-party system management applications.</li>
+<li>可以通过 CUDA_VISIBLE_DEVICES 环境变量重新排列已安装的 CUDA 设备的集合; <code>CUDA_VISIBLE_DEVICES=0,2,1,3</code></li>
+<li>Starting with CUDA 11.0, devices of compute capability 8.0 and above have the capability to influence persistence of data in the L2 cache, potentially providing higher bandwidth and lower latency accesses to global memory.</li>
+<li>从 Hopper 开始，CUTLASS 3.0 将 Warp Specialization 的概念纳入了内核设计的一部分。线程块被划分为两组 warp，生产者 warp 组和消费者 warp 组。生产者 warp 组使用新的张量内存加速器（TMA）将数据从全局内存加载到共享内存缓冲区中。<a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/efficient_gemm.md#warp-specialization">link</a></li>
+</ol>
+<h2 id="NVCC"><a href="#NVCC" class="headerlink" title="NVCC"></a>NVCC</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html">NVIDIA CUDA Compiler Driver NVCC</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#supported-input-file-suffixes">编译过程中各类型文件作用说明</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.linmao.dev/joy/1165/">CUDA 编译过程</a></li>
+</ol>
+<h2 id="PTX-Parallel-Thread-Execution"><a href="#PTX-Parallel-Thread-Execution" class="headerlink" title="PTX(Parallel Thread Execution)"></a>PTX(Parallel Thread Execution)</h2><ol>
+<li>a low-level parallel thread execution virtual machine and instruction set architecture (ISA)</li>
+<li>PTX 是上承 GPU 编程语言 CUDA C++，下启 GPU 硬件 SASS 指令，可以借助 NVRTC 实现运行时优化，某些层面上来说可以称之为 GPU 设备无关代码，因此 PTX 可以理解为<code>CUDA IR</code></li>
+<li>PTX 独立于特定 GPU 架构,可以重用相同的代码适用于不同的 GPU 架构,相当于前端</li>
+<li>使用虚拟架构生成 PTX 中间文件，虚拟框架由<code>compute_</code>开头。虚拟架构通常是从大的 GPU 代上控制的，真实框架必须大于等于虚拟框架，真实框架对应真正运行的 GPU，即编译阶段就确定要运行的 GPU 是什么。真实框架由<code>sm_</code>开头。</li>
+<li><code>nvcc -ptx program.cu -o _program.ptx -arch=sm_86</code></li>
+<li><code>cat program.ptx | cu++filt &gt; program_demangle.ptx</code> demangle ptx</li>
+</ol>
+<h2 id="SASS-Shader-Assembly"><a href="#SASS-Shader-Assembly" class="headerlink" title="SASS(Shader-Assembly)"></a>SASS(Shader-Assembly)</h2><ol>
+<li>真正的机器汇编，由 cubin 文件经过 cuobjdump 工具转换而来。目前没有官方的 sass to cubin 的工具。</li>
+<li>只有官方反汇编器，没有官方汇编器</li>
+<li>generate</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ptxas -arch=sm_86 mma_gemm_demangle.ptx -o mma_gemm.cubin</span><br><span class="line">cuobjdump -sass mma_gemm.cubin &gt; mma_gemm.sass</span><br></pre></td></tr></table></figure>
+
+<h2 id="sync"><a href="#sync" class="headerlink" title="sync"></a>sync</h2><ol>
+<li><code>block level</code>: <code>__syncthreads()</code></li>
+<li><code>grid level</code>: <code>__threadfence()</code></li>
+<li><code>stream level</code>: <code>cudaStreamSynchronize(cudaStream_t stream)</code><ul>
+<li>这个函数会阻塞 CPU 线程，直到特定的 CUDA stream 中的所有操作完成。</li>
+</ul>
+</li>
+<li><code>device level</code>: <code>cudaDeviceSynchronize()</code></li>
 </ol>
 <h2 id="bank-conflict"><a href="#bank-conflict" class="headerlink" title="bank conflict"></a>bank conflict</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/3842483/23011500">概念</a></li>
@@ -342,7 +404,7 @@
 <ol>
 <li>Each bank has a bandwidth of 32 bits per clock cycle</li>
 <li>shared memory 一次不冲突只能读 32x4B， 看一次读取的数据量，多于 32x4B 需要读取多次 n&#x2F;(32x4)，只要在 n&#x2F;(32x4) 次内读完就是最高效的。</li>
-<li>使用 float4 类型访存，用向量化的 LDG.128 和 STG.128 指令一次读 4 个元素，以减少指令数</li>
+<li>使用 float4 类型访存，用向量化的 LDG.128 和 STG.128 指令一次读 4 个元素，以减少访存指令数， 提高计算访存比</li>
 <li>thread tile 时如果 TM 是 8，一个 warp 需要读 32*8 个 TM 的数(shared memory 上)，至少需要 8 次(如果有 32 个 bank)<ul>
 <li>如果一个线程一次处理 8 个连续的数，一个 warp 一次只有 4 个线程不 bank 冲突，<ul>
 <li>如果一个线程 1 次读 1 个数，一个 warp 一次只读 4 个数， 需要 64 次读完，</li>
@@ -393,7 +455,15 @@
 <li>cutil.h NVIDIA 公司在 CUDA5 之后便不再使用 cutil.h <a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cuda-samples/blob/master/Samples/2_Concepts_and_Techniques/EGLSync_CUDAEvent_Interop/EGLSync_CUDAEvent_Interop.cu#L83">CUDA_SAFE_CALL </a></li>
 <li><a target="_blank" rel="noopener" href="https://bohipat.wordpress.com/2014/07/11/replacing-cutil-in-cuda-5-0/">replacing-cutil-in-cuda-5-0</a></li>
 </ol>
-<h2 id="tensor-core-program"><a href="#tensor-core-program" class="headerlink" title="tensor core program"></a>tensor core program</h2><ol>
+<h2 id="tensor-core"><a href="#tensor-core" class="headerlink" title="tensor core"></a>tensor core</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/620185229">4 种 tensor core 调用方法</a><ul>
+<li>WMMA (Warp-level Matrix Multiply Accumulate) API</li>
+<li>WMMA PTX (Parallel Thread Execution)</li>
+<li>MMA (Matrix Multiply Accumulate) PTX</li>
+<li>SASS</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.nvidia.com/en-us/data-center/tensor-cores/">tensor-cores</a></li>
 <li><code>--set roofline</code>能看到 tensor core roofline; 例如运行<code>cuda-samples/Samples/3_CUDA_Features/cudaTensorCoreGemm</code></li>
 <li>cuda-samples&#x2F;Samples&#x2F;3_CUDA_Features 包含多个 tensor core 实例</li>
 <li><code>Samples/3_CUDA_Features/cudaTensorCoreGemm</code>比<code>Samples/0_Introduction/matrixMul</code> 计算性能高很多<ul>
@@ -402,8 +472,18 @@
 </li>
 <li>cublas 满足特定条件才会使用 tensor core <a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cublas/index.html#tensor-core-usage">link</a></li>
 <li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/index.html#requirements-tc">Tensor Core Requirements</a></li>
+<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1893665">FP32 vs TF32</a><ul>
+<li>tf32 整数部分精度与 fp32 相同，小数部分与 fp16 相同， 只用了 19 位</li>
+<li>包含 Amphere 架构性能</li>
+</ul>
+</li>
+</ol>
+<h2 id="wmma-vs-mma"><a href="#wmma-vs-mma" class="headerlink" title="wmma vs mma"></a>wmma vs mma</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/parallel-thread-execution/index.html#warp-level-matrix-multiply-accumulate-instructions">warp-level-matrix-multiply-accumulate-instructions</a></li>
 </ol>
 <h3 id="tenosr-core-和-cuda-core"><a href="#tenosr-core-和-cuda-core" class="headerlink" title="tenosr core 和 cuda core"></a>tenosr core 和 cuda core</h3><ol>
+<li>计算层级：CUDA Core 是线程级别，Tensor Core 是 warp 级别</li>
+<li>计算维度：CUDA Core 是一维逐点计算，Tensor Core 是二维逐 tile 计算</li>
 <li>CUDA Core 是为通用计算设计，而 Tensor Core 是为特定类型的计算（主要是深度学习中的矩阵运算）优化。</li>
 <li>在 NVIDIA 的某些 GPU 架构中，例如 Volta、Turing 和 Ampere，CUDA Core 和 Tensor Core 共同存在。它们可以根据计算任务的性质协同工作，提高整体的计算效率。</li>
 <li>在执行深度学习任务时，Tensor Core 可以显著加速计算过程，相较于仅使用 CUDA Core，能实现更快的训练和推理速度。</li>
@@ -481,6 +561,7 @@
 <li>latency：launch latency, 与执行时间不一样，latency 是 api 调用到 kernel 开始执行时间<ul>
 <li><a target="_blank" rel="noopener" href="https://forums.developer.nvidia.com/t/nsys-timeline-end-start-is-not-the-same-as-latency/238043">NSys Timeline: End - Start is not the same as latency</a></li>
 <li>CUDA kernel launch latency could be defined as the time range from the beginning of the launch API call to the beginning of the kernel execution.</li>
+<li>执行的是 <code>cudaStreamSynchronize</code>, 没执行这个函数之前，stream 中的 kernel 不会 launch</li>
 </ul>
 </li>
 <li>gird, block 设置;(注意，同一个 stream 下相同函数调用可能设置不一样导致时间不同)</li>
@@ -798,7 +879,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Note"><span class="nav-number">1.</span> <span class="nav-text">Note</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bank-conflict"><span class="nav-number">2.</span> <span class="nav-text">bank conflict</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">3.</span> <span class="nav-text">关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#occupancy-%E8%AE%BE%E8%AE%A1"><span class="nav-number">4.</span> <span class="nav-text">occupancy 设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stream"><span class="nav-number">5.</span> <span class="nav-text">stream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cuda-grammer"><span class="nav-number">6.</span> <span class="nav-text">cuda grammer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tensor-core-program"><span class="nav-number">7.</span> <span class="nav-text">tensor core program</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tenosr-core-%E5%92%8C-cuda-core"><span class="nav-number">7.1.</span> <span class="nav-text">tenosr core 和 cuda core</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#build"><span class="nav-number">8.</span> <span class="nav-text">build</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cuda-samples"><span class="nav-number">9.</span> <span class="nav-text">cuda samples</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CUDALibrarySamples"><span class="nav-number">10.</span> <span class="nav-text">CUDALibrarySamples</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cuda-info"><span class="nav-number">10.1.</span> <span class="nav-text">cuda info</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NVIDIA-Developer-Tools"><span class="nav-number">11.</span> <span class="nav-text">NVIDIA Developer Tools</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nsight-system"><span class="nav-number">11.1.</span> <span class="nav-text">nsight system</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nsight-compute"><span class="nav-number">11.2.</span> <span class="nav-text">nsight compute</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">11.2.1.</span> <span class="nav-text">遇到的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#metrics"><span class="nav-number">11.2.2.</span> <span class="nav-text">metrics</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90"><span class="nav-number">11.2.3.</span> <span class="nav-text">结果分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nsgiht-graphics"><span class="nav-number">11.3.</span> <span class="nav-text">nsgiht graphics</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cuda-debug"><span class="nav-number">12.</span> <span class="nav-text">cuda-debug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#link"><span class="nav-number">13.</span> <span class="nav-text">link</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#build-1"><span class="nav-number">14.</span> <span class="nav-text">build</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cmake"><span class="nav-number">14.1.</span> <span class="nav-text">cmake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#compile"><span class="nav-number">14.2.</span> <span class="nav-text">compile</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unified-memory"><span class="nav-number">15.</span> <span class="nav-text">unified memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#design"><span class="nav-number">16.</span> <span class="nav-text">design</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Note"><span class="nav-number">1.</span> <span class="nav-text">Note</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NVCC"><span class="nav-number">2.</span> <span class="nav-text">NVCC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PTX-Parallel-Thread-Execution"><span class="nav-number">3.</span> <span class="nav-text">PTX(Parallel Thread Execution)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SASS-Shader-Assembly"><span class="nav-number">4.</span> <span class="nav-text">SASS(Shader-Assembly)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sync"><span class="nav-number">5.</span> <span class="nav-text">sync</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bank-conflict"><span class="nav-number">6.</span> <span class="nav-text">bank conflict</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">7.</span> <span class="nav-text">关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#occupancy-%E8%AE%BE%E8%AE%A1"><span class="nav-number">8.</span> <span class="nav-text">occupancy 设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stream"><span class="nav-number">9.</span> <span class="nav-text">stream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cuda-grammer"><span class="nav-number">10.</span> <span class="nav-text">cuda grammer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tensor-core"><span class="nav-number">11.</span> <span class="nav-text">tensor core</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wmma-vs-mma"><span class="nav-number">12.</span> <span class="nav-text">wmma vs mma</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tenosr-core-%E5%92%8C-cuda-core"><span class="nav-number">12.1.</span> <span class="nav-text">tenosr core 和 cuda core</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#build"><span class="nav-number">13.</span> <span class="nav-text">build</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cuda-samples"><span class="nav-number">14.</span> <span class="nav-text">cuda samples</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CUDALibrarySamples"><span class="nav-number">15.</span> <span class="nav-text">CUDALibrarySamples</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cuda-info"><span class="nav-number">15.1.</span> <span class="nav-text">cuda info</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NVIDIA-Developer-Tools"><span class="nav-number">16.</span> <span class="nav-text">NVIDIA Developer Tools</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nsight-system"><span class="nav-number">16.1.</span> <span class="nav-text">nsight system</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nsight-compute"><span class="nav-number">16.2.</span> <span class="nav-text">nsight compute</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">16.2.1.</span> <span class="nav-text">遇到的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#metrics"><span class="nav-number">16.2.2.</span> <span class="nav-text">metrics</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90"><span class="nav-number">16.2.3.</span> <span class="nav-text">结果分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nsgiht-graphics"><span class="nav-number">16.3.</span> <span class="nav-text">nsgiht graphics</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cuda-debug"><span class="nav-number">17.</span> <span class="nav-text">cuda-debug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#link"><span class="nav-number">18.</span> <span class="nav-text">link</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#build-1"><span class="nav-number">19.</span> <span class="nav-text">build</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cmake"><span class="nav-number">19.1.</span> <span class="nav-text">cmake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#compile"><span class="nav-number">19.2.</span> <span class="nav-text">compile</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unified-memory"><span class="nav-number">20.</span> <span class="nav-text">unified memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#design"><span class="nav-number">21.</span> <span class="nav-text">design</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -897,13 +978,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">447k</span>
+    <span title="站点总字数">453k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:46</span>
+    <span title="站点阅读时长">6:52</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

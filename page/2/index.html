@@ -756,7 +756,7 @@
 <li>awk 按列过滤参数 ls -l test.sh | awk ‘{ print $5 }’ 输出：454</li>
 <li>shell 小程序<a target="_blank" rel="noopener" href="https://www.jb51.net/article/54488.htm">link</a></li>
 <li>shell 得到文件信息 <code>ll /var/log/messages | cut -d &quot; &quot; -f 5</code></li>
-<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#x6a;&#x69;&#x61;&#x78;&#105;&#x79;&#97;&#x6e;&#x67;&#64;&#49;&#48;&#x2e;&#49;&#48;&#46;&#x30;&#x2e;&#x31;&#55;">&#x6a;&#x69;&#x61;&#x78;&#105;&#x79;&#97;&#x6e;&#x67;&#64;&#49;&#48;&#x2e;&#49;&#48;&#46;&#x30;&#x2e;&#x31;&#55;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
+<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#106;&#x69;&#97;&#x78;&#105;&#x79;&#97;&#110;&#x67;&#x40;&#49;&#48;&#x2e;&#x31;&#48;&#x2e;&#48;&#46;&#x31;&#55;">&#106;&#x69;&#97;&#x78;&#105;&#x79;&#97;&#110;&#x67;&#x40;&#49;&#48;&#x2e;&#x31;&#48;&#x2e;&#48;&#46;&#x31;&#55;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
 <li>读文件内容，记录到变量中 var&#x3D;$(cat name.txt)</li>
 <li>计时 start&#x3D;$(date+%s) &amp;&amp; sleep 2 &amp;&amp; end&#x3D;$(date+%s)&amp;&amp; echo $(($end - $start)) <a target="_blank" rel="noopener" href="http://blog.csdn.net/gengshenghong/article/details/7583580">link</a></li>
 <li>sleep: sleep 1 睡眠 1 秒 sleep 1s 睡眠 1 秒 sleep 1m 睡眠 1 分 sleep 1h 睡眠 1 小时</li>
@@ -1806,10 +1806,16 @@ Bob--&gt;&gt;John: Jolly good!
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-01-26 10:20:32 / 修改时间：16:25:03" itemprop="dateCreated datePublished" datetime="2024-01-26T10:20:32+08:00">2024-01-26</time>
+              <time title="创建时间：2024-01-26 10:20:32" itemprop="dateCreated datePublished" datetime="2024-01-26T10:20:32+08:00">2024-01-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-01 16:48:35" itemprop="dateModified" datetime="2024-02-01T16:48:35+08:00">2024-02-01</time>
+              </span>
 
           
   
@@ -1831,14 +1837,14 @@ Bob--&gt;&gt;John: Jolly good!
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.4k</span>
+              <span>2.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -1851,6 +1857,13 @@ Bob--&gt;&gt;John: Jolly good!
 
       
           <h2 id="note"><a href="#note" class="headerlink" title="note"></a>note</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cub">cutlass 参考了 cub 的设计</a></li>
+<li>cutlass 是对 gemm 实现过程的各种级别的抽象；手写搬数时需要进行大量计算<ul>
+<li>block tile 矩阵乘法内积； thread tile 矩阵乘法外积</li>
+<li>global memory &lt;-&gt; shared memory &lt;-&gt; register &lt;-&gt; core</li>
+<li>double buffering: shared memory, register</li>
+</ul>
+</li>
 <li>cutlass kernel 融合效果好</li>
 <li>可以看一下 cutlass 发版历史，了解一下过程</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/v0.1.1/README.md">v0.1.1&#x2F;README.md</a><ul>
@@ -1870,12 +1883,64 @@ Bob--&gt;&gt;John: Jolly good!
 <li>大矩阵 GEMM 运算 CuTlass 可以显著提速,是目前 GPU 上最快的 GEMM 库。</li>
 <li>它允许开发者使用模板元编程自定义和优化矩阵乘法（GEMM）等线性代数运算，更加灵活。</li>
 <li>cuBLAS 提供了一个简单、标准的 BLAS 接口，易于使用，而 CUTLASS 提供了更多的定制性和灵活性，但需要更深入的理解和控制。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/functionality.md">缩写的含义</a><ul>
+<li>N: Column Major Matrix</li>
+<li>T: Row Major matrix</li>
+<li>{N,T} x {N,T}: All combinations, i.e., NN, NT, TN, TT</li>
+<li>f: floating point</li>
+<li>s: signed int</li>
+<li>b: bit</li>
+<li>cf: complex float</li>
+<li>bf16: bfloat16</li>
+<li>tf32: tfloat32</li>
+<li>Simt: Use Simt CUDA Core MMA(使用 cuda core)</li>
+<li>TensorOp: Use Tensor Core MMA</li>
+<li>SpTensorOp: Use Sparse Tensor Core MMA</li>
+<li>WmmaTensorOp: Use WMMA abstraction to use Tensor Core MMA</li>
+</ul>
+</li>
+</ol>
+<h2 id="type"><a href="#type" class="headerlink" title="type"></a>type</h2><ol>
+<li><code>cutlass::half_t</code> 不支持 half</li>
+<li><code>cutlass::bfloat16</code> Ampere ElementAccumulator 应该为 float, 看手册可以看到只支持 float32 的 accumulate <a target="_blank" rel="noopener" href="https://www.nvidia.com/content/PDF/nvidia-ampere-ga-102-gpu-architecture-whitepaper-v2.pdf">link</a><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/examples/23_ampere_gemm_operand_reduction_fusion/ampere_gemm_operand_reduction_fusion.cu#L68">ampere_gemm_operand_reduction_fusion</a></li>
+</ul>
+</li>
+</ol>
+<h2 id="fusion"><a href="#fusion" class="headerlink" title="fusion"></a>fusion</h2><ol>
+<li>注意融合分两种：<ul>
+<li>简单融合：简单将两个 kernel 合并成一个，并没有减少从主存加载数据次数，只是减少了 kernel 调度的开销</li>
+<li>高效融合：利用 shared memory 减少从主存加载数据次数</li>
+</ul>
+</li>
+<li>两个 gemm 融合， 关键在 k 维度， 假设 A@B@C， 分块时 A，B 矩阵滑动取数，结果放到 C 中，只能取一块，结果和 C 相乘的时候需要所有的分块矩阵</li>
+</ol>
+<h2 id="cute-cuda-tensor-tools"><a href="#cute-cuda-tensor-tools" class="headerlink" title="cute (cuda tensor tools)"></a>cute (cuda tensor tools)</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=PWWOGrLZtZg">youtube 介绍</a></li>
+<li>new layout language to describe coordinate and index bookkeepings</li>
+<li>layout 两个核心概念<ul>
+<li>shape: define the coordinate mappings</li>
+<li>stride: defines the index mappings</li>
+</ul>
+</li>
+<li>thread layout and data layout</li>
+<li>mapping correct threads to correct values for you computation</li>
+<li>layout is a function</li>
 </ol>
 <h2 id="docs"><a href="#docs" class="headerlink" title="docs"></a>docs</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/cutlass_3x_design.md">cutlass_3x_design</a><ul>
+<li>CUTLASS 3.0 将其接口层与硬件分离，将它们集中在 GEMM 算法的自然结构周围，不依赖于任何特定的 GPU generation</li>
+<li>CUTLASS 2.x 将 GEMM 操作的移动部分分解为一个层次结构，该层次结构密切反映了 GPU 架构的组织。然而，这种设计有时会导致耦合过于紧密，无法扩展到不适合同一架构层次结构的较新 GPU。</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/gemm_api_3x.md">gemm_api_3x</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/gemm_api.md">gemm_api</a><ul>
 <li>包含层级结构</li>
 </ul>
 </li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/code_organization.md">代码组织</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/fundamental_types.md">数据类型</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/cute/01_layout.md">CuTe layout</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/efficient_gemm.md">efficient_gemm.md</a></li>
 <li>最全流程图<br><img src="https://github.com/NVIDIA/cutlass/blob/main/media/images/gemm-structural-components.png" alt="gemm-structural-components"></li>
 </ol>
@@ -1890,6 +1955,8 @@ Bob--&gt;&gt;John: Jolly good!
 <li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/tree/main/examples/02_dump_reg_shmem">02_dump_reg_shmem</a></li>
 </ol>
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=QLdUML5MCfE&t=42s">CUTLASS 3 0 Next Generation Composable and Reusable GPU Linear Algebra Library - TVMCon2023</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/blog/cutlass-linear-algebra-cuda/">nvidia cutlass-linear-algebra-cuda</a></li>
 <li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/pdf/10.1145/3582016.3582018">Graphene: An IR for Optimized Tensor Computations on GPUs</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.zhihu.com/column/c_1696937812497235968">CUDA 高性能编程</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/588953452">cutlass 源码导读（1）——API 与设计理念</a></li>
@@ -2065,13 +2132,13 @@ Bob--&gt;&gt;John: Jolly good!
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">447k</span>
+    <span title="站点总字数">453k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:46</span>
+    <span title="站点阅读时长">6:52</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
