@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">173</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">174</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,245 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/01/26/cutlass/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/26/cutlass/" class="post-title-link" itemprop="url">cutlass</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-01-26 10:20:32" itemprop="dateCreated datePublished" datetime="2024-01-26T10:20:32+08:00">2024-01-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-07 13:32:28" itemprop="dateModified" datetime="2024-02-07T13:32:28+08:00">2024-02-07</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/01/26/cutlass/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/01/26/cutlass/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="note"><a href="#note" class="headerlink" title="note"></a>note</h2><ol>
+<li><code>Swizzle</code>主要是在到 8192 以后，且 B 矩阵 transpose 的情况下必须要用（不用则效率腰斩，调出来 SWIZZLE 最优是 8）</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cub">cutlass 参考了 cub 的设计</a></li>
+<li>cutlass 是对 gemm 实现过程的各种级别的抽象；手写搬数时需要进行大量计算<ul>
+<li>block tile 矩阵乘法内积； thread tile 矩阵乘法外积</li>
+<li>global memory &lt;-&gt; shared memory &lt;-&gt; register &lt;-&gt; core</li>
+<li>double buffering: shared memory, register</li>
+</ul>
+</li>
+<li>cutlass kernel 融合效果好</li>
+<li>可以看一下 cutlass 发版历史，了解一下过程</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/v0.1.1/README.md">v0.1.1&#x2F;README.md</a><ul>
+<li>thread block tile, warp tile, thread tile</li>
+</ul>
+</li>
+<li>CUTLASS is a collection of CUDA C++ template abstractions for implementing high-performance <code>matrix-matrix multiplication (GEMM)</code> and <code>related computations</code> at all levels and scales within CUDA<ul>
+<li><code>GEMM</code></li>
+<li><code>related computations</code> 主要指的是接在 GEMM 后面的 activation 或者一些 pointwise 计算，比如 bias，scales，这些计算可以和 GEMM 融合在一起，从而减少访存压力，由于这类计算一般发生在 GEMM 之后，我们管这类计算叫 epilogue(中文：结语)</li>
+</ul>
+</li>
+<li>大量使用模板以及各种各种手段，把尽可能多的事情放在编译期完成。</li>
+<li>对用户暴露大量的实现策略，用户需要自己做出实现策略的选择。这是 CUTLASS 和 CUBLAS,CUDNN 的重要差别所在，CUBLAS 和 CUDNN 用户只需要描述计算问题，所有的策略选择在内部完成。这意味着从软件分层上来说，CUTLASS 可以是 CUBLAS 和 CUDNN 的 backend，换而言之，CUBLAS 和 CUDNN 可以是 CUTLASS 的用户</li>
+<li>c++模板，只用包含头文件</li>
+<li>CUDA Templates for Linear Algebra Subroutines and Solvers</li>
+<li>CUTLASS 和 cuBLAS 都是与 NVIDIA GPUs 相关的库，专门用于高效地执行线性代数运算</li>
+<li>大矩阵 GEMM 运算 CuTlass 可以显著提速,是目前 GPU 上最快的 GEMM 库。</li>
+<li>它允许开发者使用模板元编程自定义和优化矩阵乘法（GEMM）等线性代数运算，更加灵活。</li>
+<li>cuBLAS 提供了一个简单、标准的 BLAS 接口，易于使用，而 CUTLASS 提供了更多的定制性和灵活性，但需要更深入的理解和控制。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/functionality.md">缩写的含义</a><ul>
+<li>N: Column Major Matrix</li>
+<li>T: Row Major matrix</li>
+<li>{N,T} x {N,T}: All combinations, i.e., NN, NT, TN, TT(blas 中约定 Normal(N)矩阵为列优先，T 表示 transpose，即对列优先的矩阵进行转置则为行优先)</li>
+<li>f: floating point</li>
+<li>s: signed int</li>
+<li>b: bit</li>
+<li>cf: complex float</li>
+<li>bf16: bfloat16</li>
+<li>tf32: tfloat32</li>
+<li>Simt: Use Simt CUDA Core MMA(使用 cuda core)</li>
+<li>TensorOp: Use Tensor Core MMA</li>
+<li>SpTensorOp: Use Sparse Tensor Core MMA</li>
+<li>WmmaTensorOp: Use WMMA abstraction to use Tensor Core MMA</li>
+</ul>
+</li>
+<li><code>One of CUTLASS&#39;s design patterns is to define gemm argument objects that are constructible in host code and passed to kernels by value.</code> These may include pointers, strides, scalars, and other arguments needed by Gemm and its components.The benefits of this pattern are <code>(1.) a structured, composable strategy for passing host-constructible arguments to kernels and (2.) minimized initialization overhead on kernel entry.</code></li>
+</ol>
+<h2 id="cute"><a href="#cute" class="headerlink" title="cute"></a>cute</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/column/c_1696937812497235968">CUDA 高性能编程</a></li>
+<li>计算机中的内存是一维的线性地址空间，而数学计算问题所要处理的空间经常是高维的。如 GEMM（General Matrix Multiplication）问题的数学计算体系是二维计算空间，Deep Learning 计算体系是三维以上的计算空间(batch, height, width, channel, etc.)。如何高效的表达高维计算空间，如何高效便捷的将计算所要求的高维空间映射到一维空间变得越来越重要。历史上对该问题的探究可以分为三个阶段：<ul>
+<li>第一阶段 BLAS 的 row&#x2F;col-major + leading dimension 描述阶段；</li>
+<li>第二阶段 Tensor 的 shape + stride 阶段；</li>
+<li>第三阶段为 Hierarchy Tensor 阶段。(组合设计模式实现？)</li>
+</ul>
+</li>
+<li>引入有层次的描述（Layout）代数来表达计算空间和一维地址空间的映射问题。Layout 是一个数据排列的描述体系，其可以实现将<code>逻辑坐标</code>映射到<code>索引(物理)坐标</code>（offset 表示）</li>
+<li>Tensor 是数据的表达，其表达一个相对独立且有结构的数据体，而 Tensor 内的数据排布则由 Layout 来表达</li>
+<li>二维矩阵的描述和一维类似，shape 表示其逻辑形状，stride 表示具体的某个元素和物理空间的映射时的间隔量。</li>
+<li>逻辑空间到物理空间的映射通过点积来完成。如 shape: (3,4); stride: (4, 1); cood: (2, 2), 物理 offset &#x3D; 2x4 + 2x1 &#x3D; 10</li>
+<li>Layout 的本质是函数，其可以实现由一种坐标系统变换到一个表示偏移量的标量</li>
+<li>Layout 的本质是函数，函数的本质是集合</li>
+<li>((2, 4), (3, 5))，同样我们可以得到其 stride: ((3, 6), (1, 24)) <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/662089556">link</a><ul>
+<li>(2, 4)表示行方向按 2 个一组，分 4 组</li>
+<li>(3, 5)表示列方向按 3 个一组，分 5 组</li>
+<li>(3, 6)表示行方向内层元素之间 stride 为 3，外层元素 stride 为 6</li>
+<li>(1, 24)表示列方向内存元素之间 stride 为 1，外层元素 stride 为 24</li>
+<li>行为：2x4 &#x3D; 8</li>
+<li>列为：3x5 &#x3D; 15</li>
+<li>(6, 4)表示：((6%2, 6&#x2F;2), (4%3, 4&#x2F;3)) &#x3D; ((0, 3), (1, 1))， offset &#x3D; 0<em>3 + 3</em>6 + 1<em>1 + 24</em>1 &#x3D; 43</li>
+<li>((1, 3), (2, 4))位置如何找？在行上，先看 3，后看 1，确定外围 tensor 是第 4 个，内层 tensor 是第 1 个；列同理</li>
+</ul>
+</li>
+<li>Layout 描述了数据的排列和底层存储位置关系，但 Layout 并没有指定存储。Tensor 就是在 Layout 的基础上包含了存储，即<code>Tensor = Layout + storage</code>, 数据存储的具体表现上可以是指针表达的数据或则是栈上数据（GPU 上表现为寄存器）</li>
+<li>深度学习框架中的 Tensor 更强调数据的表达实体，通过 Tensor 实体与实体之间的计算产生新的 Tensor 实体，即<code>多份数据实体</code>，cute 中的 Tensor 更多的是对 Tensor 进行分解和组合等操作，而这些操作多是对 Layout 的变换（只是逻辑层面的数据组织形式），<code>底层的数据实体一般不变更</code>。</li>
+<li>深度学习框架中的 Tensor 是用来表达数据实体，cute 中的 Tensor 是偏向描述的实体。</li>
+<li>使用 Tensor 语义和工具能够更形象化的表达我们的逻辑，方便我们的思考，而 CUDA 的优化思路和技巧并不会因为 Tensor 的引入而变简单或困难。Tensor 只是工具，可以方便我们的表达，至于深层次的优化思路那还是对经验的挑战。</li>
+<li>Tensor 表达虽然提供了很多方便，但也只限于表达的高效和便捷，如何对程序进行优化，Tensor 表达的引入并没有提供额外帮助，它仍然需要我们从别的途径来获得。即便如此，<code>表达和抽象依然无比重要</code>，那正如：伽罗瓦如果没有群这一表达工具，就难以解决多项式根的问题；杨振宁没有群这一工具就难以构思举世的杨-米尔斯理论。</li>
+<li>抽象和工具让我们可以在更高的维度上思考。</li>
+<li>cute 提供了 MMA 能力来完成 D &#x3D; A x B + C 的矩阵乘法运算，其针对指令封装，适配层，原子能力、块状 MMA、线程划分和执行进行了抽象，形成了 MMAOperation、MMA_Traits、MMA_Atom、TiledMMA、ThrMMA、cute::gemm 数据结构和函数，我们通过这些结构能够完成逻辑块状矩阵乘法的划分和执行。这些抽象通过软件分层设计使得各层次独立，我们不必关注底层细节，只需要从提供的模块中组合我们的逻辑即可，同时抽象的解偶设计，使得我们可以专注于顶层逻辑而降低对底层细节的要求。</li>
+</ol>
+<h2 id="type"><a href="#type" class="headerlink" title="type"></a>type</h2><ol>
+<li><code>cutlass::half_t</code> 不支持 half</li>
+<li><code>cutlass::bfloat16</code> Ampere ElementAccumulator 应该为 float, 看手册可以看到只支持 float32 的 accumulate <a target="_blank" rel="noopener" href="https://www.nvidia.com/content/PDF/nvidia-ampere-ga-102-gpu-architecture-whitepaper-v2.pdf">link</a><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/examples/23_ampere_gemm_operand_reduction_fusion/ampere_gemm_operand_reduction_fusion.cu#L68">ampere_gemm_operand_reduction_fusion</a></li>
+</ul>
+</li>
+</ol>
+<h2 id="fusion"><a href="#fusion" class="headerlink" title="fusion"></a>fusion</h2><ol>
+<li>注意融合分两种：<ul>
+<li>简单融合：简单将两个 kernel 合并成一个，并没有减少从主存加载数据次数，只是减少了 kernel 调度的开销</li>
+<li>高效融合：利用 shared memory 减少从主存加载数据次数</li>
+</ul>
+</li>
+<li>两个 gemm 融合， 关键在 k 维度， 假设 A@B@C， 分块时 A，B 矩阵滑动取数，结果放到 C 中，只能取一块，结果和 C 相乘的时候需要所有的分块矩阵</li>
+</ol>
+<h2 id="cute-cuda-tensor-tools"><a href="#cute-cuda-tensor-tools" class="headerlink" title="cute (cuda tensor tools)"></a>cute (cuda tensor tools)</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=PWWOGrLZtZg">youtube 介绍</a></li>
+<li>new layout language to describe coordinate and index bookkeepings</li>
+<li>layout 两个核心概念<ul>
+<li>shape: define the coordinate mappings</li>
+<li>stride: defines the index mappings</li>
+</ul>
+</li>
+<li>thread layout and data layout</li>
+<li>mapping correct threads to correct values for you computation</li>
+<li>layout is a function</li>
+</ol>
+<h2 id="docs"><a href="#docs" class="headerlink" title="docs"></a>docs</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/cutlass_3x_design.md">cutlass_3x_design</a><ul>
+<li>CUTLASS 3.0 将其接口层与硬件分离，将它们集中在 GEMM 算法的自然结构周围，不依赖于任何特定的 GPU generation</li>
+<li>CUTLASS 2.x 将 GEMM 操作的移动部分分解为一个层次结构，该层次结构密切反映了 GPU 架构的组织。然而，这种设计有时会导致耦合过于紧密，无法扩展到不适合同一架构层次结构的较新 GPU。</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/gemm_api_3x.md">gemm_api_3x</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/gemm_api.md">gemm_api</a><ul>
+<li>包含层级结构</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/code_organization.md">代码组织</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/fundamental_types.md">数据类型</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/cute/01_layout.md">CuTe layout</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/efficient_gemm.md">efficient_gemm.md</a></li>
+<li>最全流程图<br><img src="https://github.com/NVIDIA/cutlass/blob/main/media/images/gemm-structural-components.png" alt="gemm-structural-components"></li>
+</ol>
+<h3 id="build"><a href="#build" class="headerlink" title="build"></a>build</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/quickstart.md">quickstart</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/quickstart.md#building-for-multiple-architectures">选择 arch</a></li>
+<li>下不下来 google test, 修改 cmakelists.txt, 注释掉 gtest</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libgtest-dev</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/NVIDIA/cutlass.git</span><br><span class="line"><span class="built_in">export</span> CUDACXX=<span class="variable">$&#123;CUDA_INSTALL_PATH&#125;</span>/bin/nvcc</span><br><span class="line"><span class="built_in">export</span> PATH=/usr/local/cuda/bin/:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">mkdir</span> build &amp;&amp; <span class="built_in">cd</span> build</span><br><span class="line">cmake .. -DCUTLASS_NVCC_ARCHS=86</span><br><span class="line">make cutlass_profiler -j12</span><br><span class="line">./tools/profiler/cutlass_profiler --kernels=sgemm --m=4352 --n=4096 --k=4096</span><br></pre></td></tr></table></figure>
+
+<h2 id="samples"><a href="#samples" class="headerlink" title="samples"></a>samples</h2><ol>
+<li>01 basic gemm<ul>
+<li>创建 cutlass::gemm::device::Gemm，CutlassGemm::Arguments 实例 gemm_operator 和 args</li>
+<li>gemm_operator(args) launch kernel</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/tree/main/examples/02_dump_reg_shmem">02_dump_reg_shmem</a></li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=QLdUML5MCfE&t=42s">CUTLASS 3 0 Next Generation Composable and Reusable GPU Linear Algebra Library - TVMCon2023</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/blog/cutlass-linear-algebra-cuda/">nvidia cutlass-linear-algebra-cuda</a></li>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/pdf/10.1145/3582016.3582018">Graphene: An IR for Optimized Tensor Computations on GPUs</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/column/c_1696937812497235968">CUDA 高性能编程</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/588953452">cutlass 源码导读（1）——API 与设计理念</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -462,7 +701,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-31 11:12:26" itemprop="dateModified" datetime="2024-01-31T11:12:26+08:00">2024-01-31</time>
+                <time title="修改时间：2024-02-07 14:57:48" itemprop="dateModified" datetime="2024-02-07T14:57:48+08:00">2024-02-07</time>
               </span>
 
           
@@ -485,7 +724,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
+              <span>3.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -505,6 +744,7 @@
 
       
           <h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
+<li>先选定 TileC，然后沿着 k 轴移动小块进行累加求和的策略为 sliced-k，它对于 m、n 维度较大的场景（m n 分块所需要的 block 数目足以填充所有的 SM）比较有效。<code>对于k比较大，而m、n比较小的场景，由于m、n较小而我们根据C来划分thread block，这时需要的thread block数目比较小，当这个数目无法填充所有的SM时，则存在很多SM无任务，而有任务的SM需却又需要循环多次的问题</code>，这时候可以考虑将 k 轴拆分成多段，每一段都计算一个 TileC 结果，最后再通过额外的累加过程将多段的结果进行求和，这种模式的任务划分方法成为 split-k 方法。<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/667521327">link</a></li>
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2301.03598">Stream-K: Work-Centric Parallel Decomposition for Dense Matrix-Matrix Multiplication on the GPU</a><ul>
 <li>矩阵乘分块方法： sliced-k, split-k, stream-k</li>
 </ul>
@@ -513,7 +753,10 @@
 <li>k 维度由多个 thread 计算， 减少单 thread 的延迟， 增加并行性</li>
 </ul>
 </li>
-<li><h2 id="efficient-gemm-md-parallelized-reductions-split-k"><a href="#efficient-gemm-md-parallelized-reductions-split-k" class="headerlink" title="efficient_gemm.md parallelized-reductions- split-k"></a><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/efficient_gemm.md#parallelized-reductions">efficient_gemm.md parallelized-reductions</a><br>- split-k</h2></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/efficient_gemm.md#parallelized-reductions">efficient_gemm.md parallelized-reductions</a><ul>
+<li>split-k</li>
+</ul>
+</li>
 <li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Basic_Linear_Algebra_Subprograms#Level_3">各种 blas 实现</a></li>
 <li>BLAS 是 Basic Linear Algebra Subprograms 的缩写,即基本线性代数子程序,它是一系列线性代数运算函数的标准说明和接口规范。通常情况下,BLAS 函数库会为矩阵和向量运算提供高效、经过优化的实现,这些函数被广泛使用于科学计算、机器学习、数据分析等领域需要大量数值计算的场景中。常见的 BLAS 函数标准说明有:<ul>
 <li>BLAS level 1:向量-向量运算</li>
@@ -1333,186 +1576,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/12/24/llama2-c/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/12/24/llama2-c/" class="post-title-link" itemprop="url">llama2</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-12-24 18:23:45" itemprop="dateCreated datePublished" datetime="2023-12-24T18:23:45+08:00">2023-12-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-10 17:07:17" itemprop="dateModified" datetime="2024-01-10T17:07:17+08:00">2024-01-10</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/12/24/llama2-c/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/24/llama2-c/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><h3 id="llama2-参数量计算"><a href="#llama2-参数量计算" class="headerlink" title="llama2 参数量计算"></a>llama2 参数量计算</h3><ol>
-<li>见 transformer 参数计算</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/649125936">LLAMA2 的参数计算</a></li>
-<li><a target="_blank" rel="noopener" href="https://medium.com/@saratbhargava/mastering-llama-math-part-1-a-step-by-step-guide-to-counting-parameters-in-llama-2-b3d73bc3ae31">Mastering Llama Math (Part-1): A Step-by-Step Guide to Counting Parameters in Llama-2</a></li>
-<li><code>窗口长度, 上下文长度(Context Length)</code>指的是模型在做预测时能够看到的上下文单词的数量。具体来说,在 transformer 等注意力机制的模型中,输入是一个定长的窗口,窗口中的每个词会通过自注意力机制关联到窗口中的其他词。这个窗口的长度就是上下文长度。</li>
-<li><code>词向量</code>：embeding 层的输出就是词向量</li>
-<li>推理时间复杂度：整体级别是 l<em>n</em>d^2+l<em>d</em>n^2，其中：d 是词向量维度，n 是窗口或序列长度，l：层数<ul>
-<li>无论是窗口长度还是词向量维度，都会让推理时间呈平方指数级上升。</li>
-<li>层数对推理时间的影响是线性的。</li>
-<li>而词表大小对推理时间基本没有影响。</li>
-</ul>
-</li>
-</ol>
-<h3 id="长文本-输入输出更长-token"><a href="#长文本-输入输出更长-token" class="headerlink" title="长文本(输入输出更长 token)"></a>长文本(输入输出更长 token)</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/657210829">大模型长文本建模的难点与方案</a></li>
-<li><a target="_blank" rel="noopener" href="https://36kr.com/p/2470939687950470">卷完参数后，大模型公司又盯上了“长文本”？</a></li>
-</ol>
-<h2 id="llama2-c"><a href="#llama2-c" class="headerlink" title="llama2.c"></a><a target="_blank" rel="noopener" href="https://github.com/karpathy/llama2.c">llama2.c</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=zjkBMFhNj_g">Intro to Large Language Models</a> ka</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/llama/blob/main/llama/model.py">python 推理代码</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=oM4VmoabDAI">Coding LLaMA 2 from scratch in PyTorch - KV Cache, Grouped Query Attention, Rotary PE, RMSNorm</a></li>
-<li>build and run</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/karpathy/llama2.c.git</span><br><span class="line"><span class="built_in">cd</span> llama2.c</span><br><span class="line">make run; make rundebug</span><br><span class="line">wget https://huggingface.co/karpathy/tinyllamas/resolve/main/stories15M.bin</span><br><span class="line">./run stories15M.bin</span><br><span class="line">make runfast  <span class="comment"># 加速运行， 80 tok/s =&gt; 180 tok/s</span></span><br><span class="line">make runomp &amp;&amp; OMP_NUM_THREADS=4 ./run out/model.bin <span class="comment"># 多核加速， from 80 tok/s =&gt; 320 tok/s 主要加速matmul</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="代码理解"><a href="#代码理解" class="headerlink" title="代码理解"></a>代码理解</h3><ol>
-<li>固定长 n 的 kv cache, 并且最大支持 n 的序列，使用 for 循环计算 attention，没有使用矩阵乘， 不用移动 kv cache; 矩阵乘时需要 kv cache 是矩阵，如果 kv cache 矩阵 padding, 是固定长, 需要移动 cache</li>
-<li><code>Tokenizer, Transformer, Sampler</code> 三大部分</li>
-<li>tokenizer 也是一个模型，需要训练</li>
-<li>Tokenizer 的主要作用是将自然语言文本转换为机器学习模型可以理解的格式。这通常意味着将文本拆分成词汇、子词或字符单元（即 tokens），然后将这些 tokens 转换为数字 ID。这些 ID 对应于模型的词汇表中的索引。</li>
-<li>当有 prompt 时，有预热过程，从第一个 prompt_tokens 开始推理，if we are still processing the input prompt, force the next prompt token， otherwise sample the next token from the logits</li>
-<li>Sampler 的主要作用是根据模型输出的 logits（未归一化的概率对数）来决定下一个生成的 token</li>
-<li>Temperature Scaling：通过温度参数调整 logits。温度较低（&lt;1）会使输出分布更加尖锐（更确定），温度较高（&gt;1）则使分布更平滑（更随机）</li>
-<li>采样策略对生成文本的质量和多样性有显著影响。例如，argmax 采样可能导致非常重复和可预测的文本，而合适的随机采样可以增加多样性和创造性，同时保持文本的连贯性和可读性。通过合理配置 temperature 和 topp 参数，可以在随机性和确定性之间找到平衡，生成符合预期的文本。</li>
-<li>top-p 采样：<ul>
-<li>模型输出的 logits（未归一化的概率对数），转换为 softmax 概率</li>
-<li>创建一个结构体数组，每个元素包含 token 的索引和对应的概率。</li>
-<li>概率小于 cutoff 过滤掉</li>
-<li>排序</li>
-<li>计算累计概率， 累计概率超过 topp 后不选择</li>
-<li>随机数*累计概率；找到这个随机数对应的累积概率区间内的 token。</li>
-<li>返回所选 token 的索引</li>
-<li>控制生成质量：通过调整 p 的值，可以控制生成文本的随机性和确定性。较低的 p 值会导致更确定性的输出（更少的 token 可供选择），而较高的 p 值会增加输出的多样性。</li>
-<li>避免不合理的 token：Top-p 采样可以有效地避免选择那些极不可能的 token，这对于生成更加连贯和自然的文本至关重要。</li>
-</ul>
-</li>
-<li>前馈神经网络（Feed-Forward Neural Network, <code>FFN</code>）</li>
-<li><code>forward</code> 跟 all you need is attention 论文描述的结构非常像</li>
-<li>相对位置编码（RoPE）：模型利用 RoPE 来给序列中的每个 token 引入位置信息。这种方式与原始 Transformer 中的绝对位置编码不同。</li>
-<li>对于每个输入 token， 生成 q, k, v, q 用来和之前的 k 做 attention 得到 scores, scores 和 k 做加权得到多头输出; 缓存 k, v 用于之后的推理</li>
-<li>q 和之前所有 k 做 attension, 结果在和 v 做加权</li>
-<li><a target="_blank" rel="noopener" href="https://paperswithcode.com/method/grouped-query-attention">grouped-query-attention</a></li>
-<li>Config 中通过 n_heads 和 n_kv_heads 可以看出是 multi-head, group-query, multi-query； 相同时（不为 1）是 multi-head, 都为 1 时是 multi-query; n_kv_heads &lt; n_heads 时是 group_query</li>
-<li>MQA，全称 Multi Query Attention, 而 GQA 则是前段时间 Google 提出的 MQA 变种，全称 Group-Query Attention。MHA（Multi-head Attention）是标准的多头注意力机制，h 个 Query、Key 和 Value 矩阵。</li>
-<li>推理的过程是一个自回归的过程，也就是说前 i 次的 token 会作为第 i+1 次的预测数据送入模型，拿到第 i+1 次的推理 token。</li>
-<li>embedding 还能起到降维的作用，将 one-hot 的[s,vocab_size]大小变成了[s,d]。</li>
-<li>在大多数基于 Transformer 的模型中，embedding 层输出的词向量维度通常与 Transformer 的隐藏层(attention layer)维度（也称为 Transformer dimension）相匹配。</li>
-<li>Config 中的 dim 和 hidden_dim:<ul>
-<li>dim（Transformer Dimension）: 这个参数指的是 Transformer 模型中主要的隐藏层维度。在标准的 Transformer 模型中，这包括自注意力层（Self-Attention Layer）的输出维度和 embedding 层的维度。因此，dim 通常与 embedding 层输出的词向量的大小相匹配。</li>
-<li>hidden_dim（Feed-Forward Network Dimension）: 这个参数指的是 Transformer 模型中前馈网络（Feed-Forward Network, FFN）层的内部隐藏层的维度。FFN 是 Transformer 每个注意力层之后的一个子层，它的维度通常与主要隐藏层维度不同。这个维度通常更大，用于在模型中引入额外的非线性。</li>
-</ul>
-</li>
-<li>Config 中的窗口长度等于 seq_len， 词向量维度等于 dim</li>
-</ol>
-<h3 id="embedding-和-tokenizer-的区别"><a href="#embedding-和-tokenizer-的区别" class="headerlink" title="embedding 和 tokenizer 的区别"></a>embedding 和 tokenizer 的区别</h3><ol>
-<li>Tokenizer 是第一步：它将原始文本转换为一系列的 token 索引。Embedding 是第二步：利用这些索引在 embedding 层中查找或生成每个 token 的向量表示。互补关系：Tokenizer 和 embedding 层一起工作，将自然语言文本转换为机器学习模型可以有效处理的数值形式。</li>
-<li>tokenizer 负责将文本转换为一系列的 token，而 embedding 则负责将这些 token 转换为机器学习模型可以理解的语义向量。</li>
-<li>通过 token_embedding_table 查找 token 对应的的向量</li>
-</ol>
-<h3 id="模型基本结构"><a href="#模型基本结构" class="headerlink" title="模型基本结构"></a>模型基本结构</h3><ol>
-<li>层的堆叠：模型由多个相同的层堆叠而成，每层包含两个主要子模块：多头自注意力（Multi-Head Self-Attention）和前馈神经网络（Feed-Forward Neural Network, FFN）。</li>
-</ol>
-<h2 id="others"><a href="#others" class="headerlink" title="others"></a>others</h2><ol>
-<li>openmp 加速会获得较大加速比, 编译选项加<code>-fopenmp -march=native</code></li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">matmul</span><span class="params">(<span class="type">float</span>* xout, <span class="type">float</span>* x, <span class="type">float</span>* w, <span class="type">int</span> n, <span class="type">int</span> d)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// W (d,n) @ x (n,) -&gt; xout (d,)</span></span><br><span class="line">    <span class="comment">// by far the most amount of time is spent inside this little function</span></span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="meta">#<span class="keyword">pragma</span> omp parallel for private(i)</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; d; i++) &#123;</span><br><span class="line">        <span class="type">float</span> val = <span class="number">0.0f</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">            val += w[i * n + j] * x[j];</span><br><span class="line">        &#125;</span><br><span class="line">        xout[i] = val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://chat.openai.com/c/4e520557-e827-40c5-9357-db76b5a5e6ba">chatgpt 解释</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/651248009">一文看懂 llama2(原理,模型,训练)</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/83814532">Embedding 的作用</a></li>
-<li><a target="_blank" rel="noopener" href="https://kexue.fm/archives/9529">为什么现在的 LLM 都是 Decoder-only 的架构？</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/ggerganov/ggml/blob/master/docs/gguf.md">gguf doc</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/mit-han-lab/streaming-llm">pytorch llama</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/hpcaitech/SwiftInfer?tab=readme-ov-file">tensorrt llm llama</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1584,7 +1647,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">173</span>
+          <span class="site-state-item-count">174</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1617,6 +1680,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1627,9 +1693,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/11/blas/" title="2024&#x2F;01&#x2F;11&#x2F;blas&#x2F;">blas</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/10/llama-cpp/" title="2024&#x2F;01&#x2F;10&#x2F;llama-cpp&#x2F;">llama.cpp</a>
         </li>
     </ul>
   </div>
@@ -1667,13 +1730,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">453k</span>
+    <span title="站点总字数">459k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:52</span>
+    <span title="站点阅读时长">6:58</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

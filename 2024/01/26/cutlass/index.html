@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="note cutlass 参考了 cub 的设计 cutlass 是对 gemm 实现过程的各种级别的抽象；手写搬数时需要进行大量计算 block tile 矩阵乘法内积； thread tile 矩阵乘法外积 global memory &lt;-&gt; shared memory &lt;-&gt; register &lt;-&gt; core double buffering: shar">
+  <meta name="description" content="note Swizzle主要是在到 8192 以后，且 B 矩阵 transpose 的情况下必须要用（不用则效率腰斩，调出来 SWIZZLE 最优是 8） cutlass 参考了 cub 的设计 cutlass 是对 gemm 实现过程的各种级别的抽象；手写搬数时需要进行大量计算 block tile 矩阵乘法内积； thread tile 矩阵乘法外积 global memory &lt;-&amp;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="cutlass">
 <meta property="og:url" content="https://jiaxiyang.github.io/2024/01/26/cutlass/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="note cutlass 参考了 cub 的设计 cutlass 是对 gemm 实现过程的各种级别的抽象；手写搬数时需要进行大量计算 block tile 矩阵乘法内积； thread tile 矩阵乘法外积 global memory &lt;-&gt; shared memory &lt;-&gt; register &lt;-&gt; core double buffering: shar">
+<meta property="og:description" content="note Swizzle主要是在到 8192 以后，且 B 矩阵 transpose 的情况下必须要用（不用则效率腰斩，调出来 SWIZZLE 最优是 8） cutlass 参考了 cub 的设计 cutlass 是对 gemm 实现过程的各种级别的抽象；手写搬数时需要进行大量计算 block tile 矩阵乘法内积； thread tile 矩阵乘法外积 global memory &lt;-&amp;">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://github.com/NVIDIA/cutlass/blob/main/media/images/gemm-structural-components.png">
 <meta property="article:published_time" content="2024-01-26T02:20:32.000Z">
-<meta property="article:modified_time" content="2024-02-01T08:48:35.545Z">
+<meta property="article:modified_time" content="2024-02-07T05:32:28.941Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://github.com/NVIDIA/cutlass/blob/main/media/images/gemm-structural-components.png">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">173</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">174</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-01 16:48:35" itemprop="dateModified" datetime="2024-02-01T16:48:35+08:00">2024-02-01</time>
+                <time title="修改时间：2024-02-07 13:32:28" itemprop="dateModified" datetime="2024-02-07T13:32:28+08:00">2024-02-07</time>
               </span>
 
           
@@ -264,14 +264,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.8k</span>
+              <span>5.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -284,6 +284,7 @@
 
       
         <h2 id="note"><a href="#note" class="headerlink" title="note"></a>note</h2><ol>
+<li><code>Swizzle</code>主要是在到 8192 以后，且 B 矩阵 transpose 的情况下必须要用（不用则效率腰斩，调出来 SWIZZLE 最优是 8）</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cub">cutlass 参考了 cub 的设计</a></li>
 <li>cutlass 是对 gemm 实现过程的各种级别的抽象；手写搬数时需要进行大量计算<ul>
 <li>block tile 矩阵乘法内积； thread tile 矩阵乘法外积</li>
@@ -313,7 +314,7 @@
 <li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/functionality.md">缩写的含义</a><ul>
 <li>N: Column Major Matrix</li>
 <li>T: Row Major matrix</li>
-<li>{N,T} x {N,T}: All combinations, i.e., NN, NT, TN, TT</li>
+<li>{N,T} x {N,T}: All combinations, i.e., NN, NT, TN, TT(blas 中约定 Normal(N)矩阵为列优先，T 表示 transpose，即对列优先的矩阵进行转置则为行优先)</li>
 <li>f: floating point</li>
 <li>s: signed int</li>
 <li>b: bit</li>
@@ -326,6 +327,40 @@
 <li>WmmaTensorOp: Use WMMA abstraction to use Tensor Core MMA</li>
 </ul>
 </li>
+<li><code>One of CUTLASS&#39;s design patterns is to define gemm argument objects that are constructible in host code and passed to kernels by value.</code> These may include pointers, strides, scalars, and other arguments needed by Gemm and its components.The benefits of this pattern are <code>(1.) a structured, composable strategy for passing host-constructible arguments to kernels and (2.) minimized initialization overhead on kernel entry.</code></li>
+</ol>
+<h2 id="cute"><a href="#cute" class="headerlink" title="cute"></a>cute</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/column/c_1696937812497235968">CUDA 高性能编程</a></li>
+<li>计算机中的内存是一维的线性地址空间，而数学计算问题所要处理的空间经常是高维的。如 GEMM（General Matrix Multiplication）问题的数学计算体系是二维计算空间，Deep Learning 计算体系是三维以上的计算空间(batch, height, width, channel, etc.)。如何高效的表达高维计算空间，如何高效便捷的将计算所要求的高维空间映射到一维空间变得越来越重要。历史上对该问题的探究可以分为三个阶段：<ul>
+<li>第一阶段 BLAS 的 row&#x2F;col-major + leading dimension 描述阶段；</li>
+<li>第二阶段 Tensor 的 shape + stride 阶段；</li>
+<li>第三阶段为 Hierarchy Tensor 阶段。(组合设计模式实现？)</li>
+</ul>
+</li>
+<li>引入有层次的描述（Layout）代数来表达计算空间和一维地址空间的映射问题。Layout 是一个数据排列的描述体系，其可以实现将<code>逻辑坐标</code>映射到<code>索引(物理)坐标</code>（offset 表示）</li>
+<li>Tensor 是数据的表达，其表达一个相对独立且有结构的数据体，而 Tensor 内的数据排布则由 Layout 来表达</li>
+<li>二维矩阵的描述和一维类似，shape 表示其逻辑形状，stride 表示具体的某个元素和物理空间的映射时的间隔量。</li>
+<li>逻辑空间到物理空间的映射通过点积来完成。如 shape: (3,4); stride: (4, 1); cood: (2, 2), 物理 offset &#x3D; 2x4 + 2x1 &#x3D; 10</li>
+<li>Layout 的本质是函数，其可以实现由一种坐标系统变换到一个表示偏移量的标量</li>
+<li>Layout 的本质是函数，函数的本质是集合</li>
+<li>((2, 4), (3, 5))，同样我们可以得到其 stride: ((3, 6), (1, 24)) <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/662089556">link</a><ul>
+<li>(2, 4)表示行方向按 2 个一组，分 4 组</li>
+<li>(3, 5)表示列方向按 3 个一组，分 5 组</li>
+<li>(3, 6)表示行方向内层元素之间 stride 为 3，外层元素 stride 为 6</li>
+<li>(1, 24)表示列方向内存元素之间 stride 为 1，外层元素 stride 为 24</li>
+<li>行为：2x4 &#x3D; 8</li>
+<li>列为：3x5 &#x3D; 15</li>
+<li>(6, 4)表示：((6%2, 6&#x2F;2), (4%3, 4&#x2F;3)) &#x3D; ((0, 3), (1, 1))， offset &#x3D; 0<em>3 + 3</em>6 + 1<em>1 + 24</em>1 &#x3D; 43</li>
+<li>((1, 3), (2, 4))位置如何找？在行上，先看 3，后看 1，确定外围 tensor 是第 4 个，内层 tensor 是第 1 个；列同理</li>
+</ul>
+</li>
+<li>Layout 描述了数据的排列和底层存储位置关系，但 Layout 并没有指定存储。Tensor 就是在 Layout 的基础上包含了存储，即<code>Tensor = Layout + storage</code>, 数据存储的具体表现上可以是指针表达的数据或则是栈上数据（GPU 上表现为寄存器）</li>
+<li>深度学习框架中的 Tensor 更强调数据的表达实体，通过 Tensor 实体与实体之间的计算产生新的 Tensor 实体，即<code>多份数据实体</code>，cute 中的 Tensor 更多的是对 Tensor 进行分解和组合等操作，而这些操作多是对 Layout 的变换（只是逻辑层面的数据组织形式），<code>底层的数据实体一般不变更</code>。</li>
+<li>深度学习框架中的 Tensor 是用来表达数据实体，cute 中的 Tensor 是偏向描述的实体。</li>
+<li>使用 Tensor 语义和工具能够更形象化的表达我们的逻辑，方便我们的思考，而 CUDA 的优化思路和技巧并不会因为 Tensor 的引入而变简单或困难。Tensor 只是工具，可以方便我们的表达，至于深层次的优化思路那还是对经验的挑战。</li>
+<li>Tensor 表达虽然提供了很多方便，但也只限于表达的高效和便捷，如何对程序进行优化，Tensor 表达的引入并没有提供额外帮助，它仍然需要我们从别的途径来获得。即便如此，<code>表达和抽象依然无比重要</code>，那正如：伽罗瓦如果没有群这一表达工具，就难以解决多项式根的问题；杨振宁没有群这一工具就难以构思举世的杨-米尔斯理论。</li>
+<li>抽象和工具让我们可以在更高的维度上思考。</li>
+<li>cute 提供了 MMA 能力来完成 D &#x3D; A x B + C 的矩阵乘法运算，其针对指令封装，适配层，原子能力、块状 MMA、线程划分和执行进行了抽象，形成了 MMAOperation、MMA_Traits、MMA_Atom、TiledMMA、ThrMMA、cute::gemm 数据结构和函数，我们通过这些结构能够完成逻辑块状矩阵乘法的划分和执行。这些抽象通过软件分层设计使得各层次独立，我们不必关注底层细节，只需要从提供的模块中组合我们的逻辑即可，同时抽象的解偶设计，使得我们可以专注于顶层逻辑而降低对底层细节的要求。</li>
 </ol>
 <h2 id="type"><a href="#type" class="headerlink" title="type"></a>type</h2><ol>
 <li><code>cutlass::half_t</code> 不支持 half</li>
@@ -379,6 +414,11 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libgtest-dev</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/NVIDIA/cutlass.git</span><br><span class="line"><span class="built_in">export</span> CUDACXX=<span class="variable">$&#123;CUDA_INSTALL_PATH&#125;</span>/bin/nvcc</span><br><span class="line"><span class="built_in">export</span> PATH=/usr/local/cuda/bin/:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">mkdir</span> build &amp;&amp; <span class="built_in">cd</span> build</span><br><span class="line">cmake .. -DCUTLASS_NVCC_ARCHS=86</span><br><span class="line">make cutlass_profiler -j12</span><br><span class="line">./tools/profiler/cutlass_profiler --kernels=sgemm --m=4352 --n=4096 --k=4096</span><br></pre></td></tr></table></figure>
 
 <h2 id="samples"><a href="#samples" class="headerlink" title="samples"></a>samples</h2><ol>
+<li>01 basic gemm<ul>
+<li>创建 cutlass::gemm::device::Gemm，CutlassGemm::Arguments 实例 gemm_operator 和 args</li>
+<li>gemm_operator(args) launch kernel</li>
+</ul>
+</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/tree/main/examples/02_dump_reg_shmem">02_dump_reg_shmem</a></li>
 </ol>
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
@@ -425,7 +465,10 @@
     <a href="/2024/01/25/OpenCL/" rel="prev" title="OpenCL">
       <i class="fa fa-chevron-left"></i> OpenCL
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2024/02/03/flashattention/" rel="next" title="flashattention">
+      flashattention <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -485,7 +528,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#note"><span class="nav-number">1.</span> <span class="nav-text">note</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#type"><span class="nav-number">2.</span> <span class="nav-text">type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fusion"><span class="nav-number">3.</span> <span class="nav-text">fusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cute-cuda-tensor-tools"><span class="nav-number">4.</span> <span class="nav-text">cute (cuda tensor tools)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docs"><span class="nav-number">5.</span> <span class="nav-text">docs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#build"><span class="nav-number">5.1.</span> <span class="nav-text">build</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#samples"><span class="nav-number">6.</span> <span class="nav-text">samples</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">7.</span> <span class="nav-text">links</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#note"><span class="nav-number">1.</span> <span class="nav-text">note</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cute"><span class="nav-number">2.</span> <span class="nav-text">cute</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#type"><span class="nav-number">3.</span> <span class="nav-text">type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fusion"><span class="nav-number">4.</span> <span class="nav-text">fusion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cute-cuda-tensor-tools"><span class="nav-number">5.</span> <span class="nav-text">cute (cuda tensor tools)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docs"><span class="nav-number">6.</span> <span class="nav-text">docs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#build"><span class="nav-number">6.1.</span> <span class="nav-text">build</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#samples"><span class="nav-number">7.</span> <span class="nav-text">samples</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">8.</span> <span class="nav-text">links</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -501,7 +544,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">173</span>
+          <span class="site-state-item-count">174</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -534,6 +577,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -544,9 +590,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/11/blas/" title="2024&#x2F;01&#x2F;11&#x2F;blas&#x2F;">blas</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/10/llama-cpp/" title="2024&#x2F;01&#x2F;10&#x2F;llama-cpp&#x2F;">llama.cpp</a>
         </li>
     </ul>
   </div>
@@ -584,13 +627,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">453k</span>
+    <span title="站点总字数">459k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:52</span>
+    <span title="站点阅读时长">6:58</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

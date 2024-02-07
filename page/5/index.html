@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">173</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">174</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,148 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/11/03/pixi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/03/pixi/" class="post-title-link" itemprop="url">pixi</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-03 15:02:45" itemprop="dateCreated datePublished" datetime="2023-11-03T15:02:45+08:00">2023-11-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-22 14:50:13" itemprop="dateModified" datetime="2023-11-22T14:50:13+08:00">2023-11-22</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/11/03/pixi/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/11/03/pixi/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>不同工程可以用软连接共享.pixi 文件夹</li>
+<li>cfonts 使得 task 更清楚</li>
+<li><code>curl -fsSL https://pixi.sh/install.sh | bash</code> install</li>
+<li>工程目录下<code>.pixi</code>包含各种环境依赖</li>
+<li>pixi is a cross-platform, multi-language package manager and workflow tool built on the foundation of the conda ecosystem. It provides developers with an exceptional experience similar to popular package managers like cargo or yarn, but for any language.</li>
+<li>Supports multiple languages including Python, C++, and R using Conda packages.</li>
+<li>可用于 github actions, 只需要配置 pixi，不用手动安装各种环境</li>
+<li>参考写 task <a target="_blank" rel="noopener" href="https://github.com/prefix-dev/pixi/blob/main/examples/cpp-sdl/pixi.toml">example</a></li>
+<li>如果下载不了 package， 可以删除~&#x2F;.cache&#x2F;rattler&#x2F;cache&#x2F;repodata 试试</li>
+<li>执行命令在 repo 下都行</li>
+<li><code>pixi global install &lt;cmake&gt;</code>在机器上安装 cmake; 安装到<del>&#x2F;.pixi&#x2F;bin， 需要需改.zshrc &#96;export PATH&#x3D;</del>&#x2F;.pixi&#x2F;bin:$PATH&#96;</li>
+<li><code>pixi shell</code>中可以用 pixi 安装的最新命令</li>
+<li><code>pixi add gxx clangxx</code> install g++ and clang++； ++符号不允许</li>
+<li>下载的时候 VPN 设置为 global， 用 rule 可能识别为本地， 下载出问题</li>
+<li>python 需要先安装 pip</li>
+</ol>
+<h2 id="command"><a href="#command" class="headerlink" title="command"></a><a target="_blank" rel="noopener" href="https://prefix.dev/docs/pixi/cli">command</a></h2><ol>
+<li><code>pixi init &lt;name&gt;</code> 初始化工程, 添加 pixi.toml 和 gitignore 信息</li>
+<li><code>pixi add cmake ninja opencv glog</code>添加依赖库</li>
+<li><code>pixi add &quot;clang-tools&lt;=15.0.0,&gt;13.0&quot;</code></li>
+<li><code>pixi run &lt;task&gt;</code> run task</li>
+<li><code>pixi search glog</code> search package</li>
+<li><code>pixi info</code> 查看各种信息， cache 位置：~&#x2F;.cache&#x2F;rattler&#x2F;, task list</li>
+<li><code>pixi global list</code> list global package</li>
+<li><code>pixi shell</code> 进入 pixi shell， 执行&#x2F;tmp&#x2F;pixi_env_xxx.sh 脚本设置环境变量， 可以在配置文件 activate 脚本中使用</li>
+</ol>
+<h2 id="config"><a href="#config" class="headerlink" title="config"></a><a target="_blank" rel="noopener" href="https://prefix.dev/docs/pixi/configuration">config</a></h2><ol>
+<li>pixi shell 可以查看环境变量</li>
+<li>channels &#x3D; [“conda-forge”, “robostack”, “bioconda”, “nvidia”, “pytorch”]; 设置源 <a target="_blank" rel="noopener" href="https://prefix.dev/channels">link</a></li>
+<li>env set, 可以设置 LD_LIBRARY_PATH</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">activation</span>]</span><br><span class="line"><span class="string">scripts</span> <span class="string">=</span> [<span class="string">&quot;env_setup.sh&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="env"><a href="#env" class="headerlink" title="env"></a>env</h2><ol>
+<li><code>PIXI_PACKAGE_ROOT</code> repo 目录</li>
+<li><code>CONDA_PREFIX</code> pixi env 目录 ${PIXI_PACKAGE_ROOT}&#x2F;.pixi&#x2F;env</li>
+<li><code>PIXI_PACKAGE_PLATFORMS</code> platform 类型</li>
+<li><code>PATH</code> 只有 PATH, 没有 LD_LIBRARY_PATH, 需要自己在配置文件 activate 脚本里设置</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">export</span> <span class="string">LD_LIBRARY_PATH=$&#123;CONDA_PREFIX&#125;/lib</span>  <span class="comment"># for run app</span></span><br><span class="line"><span class="string">export</span> <span class="string">CMAKE_PREFIX_PATH=$&#123;CONDA_PREFIX&#125;/lib</span>  <span class="comment"># for cmake find_package</span></span><br><span class="line"><span class="string">export</span> <span class="string">PKG_CONFIG_PATH=$&#123;CONDA_PREFIX&#125;/share/pkgconfig:$&#123;CONDA_PREFIX&#125;/lib/pkgconfig</span>  <span class="comment"># for pkg-config</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/prefix-dev/pixi">pixi</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/prefix-dev/pixi/blob/main/docs/FAQ.md">What is the difference with conda, mamba, poetry, pip</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.rerun.io/docs/howto/arrow-cpp-install">cpp using example</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/rerun-io/cpp-example-opencv-eigen/blob/main/pixi.toml">rerun cpp-example-opencv-eigen pixi example</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1266,195 +1408,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/09/13/Reverse-Engineering/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/13/Reverse-Engineering/" class="post-title-link" itemprop="url">Reverse-Engineering</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-09-13 14:39:44" itemprop="dateCreated datePublished" datetime="2023-09-13T14:39:44+08:00">2023-09-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-19 18:07:52" itemprop="dateModified" datetime="2023-09-19T18:07:52+08:00">2023-09-19</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/09/13/Reverse-Engineering/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/09/13/Reverse-Engineering/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="radare2"><a href="#radare2" class="headerlink" title="radare2"></a><a target="_blank" rel="noopener" href="https://github.com/radareorg/radare2">radare2</a></h2><ol>
-<li>install</li>
-</ol>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo pip install -U r2env</span><br><span class="line"></span><br><span class="line">git clone https:<span class="regexp">//gi</span>thub.com<span class="regexp">/radareorg/</span>radare2</span><br><span class="line">radare2<span class="regexp">/sys/i</span>nstall.sh</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><table> show help</li>
-</ol>
-<h3 id="usage"><a href="#usage" class="headerlink" title="usage"></a>usage</h3><ol>
-<li><code>r2 ./test</code></li>
-<li><code>r2 -A ./test</code> analyse or <code>r2 ./test; aaa</code></li>
-<li><code>ia</code> show all info</li>
-<li><code>il</code> libraries</li>
-<li><code>is</code> show symbols</li>
-<li><code>iS</code> show sections</li>
-<li><code>iX</code> show used files</li>
-<li><code>ic</code> show classes</li>
-<li><code>iE | grep FUNC</code> show output functions</li>
-</ol>
-<h2 id="ida"><a href="#ida" class="headerlink" title="ida"></a><a target="_blank" rel="noopener" href="https://hex-rays.com/ida-pro/">ida</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.52pojie.cn/forum.php?mod=forumdisplay&fid=4&filter=typeid&typeid=123">反编译工具集合</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/Coldwave96/WebSecurity/blob/master/IDA%20Pro%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%EF%BC%88%E7%AC%AC%E4%BA%8C%E7%89%88%EF%BC%89.pdf">IDA Pro 权威指南（第二版）.pdf</a></li>
-<li><code>Tab</code> jump to pseudocode</li>
-<li><code>Esc</code> jump to previous position</li>
-<li><code>Space</code> text view and graph view 切换</li>
-<li><code>C-Enter</code> jump to next position</li>
-<li><code>C-l</code> jump by name + <code>C-F</code> filter</li>
-<li><code>C-p</code> jump to function</li>
-<li><code>C-s</code> jump to segment</li>
-<li><code>M-t</code> +<code>C-t</code> find</li>
-<li><code>text view</code> and <code>graph view</code></li>
-<li>窗口拖出来后，可以点击窗口灰色线条来 reattach, If you click on the small gray bar just below the titlebar, you can drag it back to the main window.</li>
-<li><code>view -&gt; open subviews</code>看各种窗口</li>
-<li><code>view -&gt; toolbars -&gt; debug</code> 显示 debug 按钮</li>
-<li>分割窗口，diassembly 和 pseudocode， 右键 synchronize with；可以高亮同步代码</li>
-<li>新窗口会在鼠标停留的窗口打开</li>
-</ol>
-<h3 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h3><ol>
-<li>可以用 gdbserver 调试</li>
-<li>可以实时看内存, bss, data, text</li>
-<li>下方有<code>gdb</code>命令窗口， 可以<code>exit</code>来结束远程 gdbserver</li>
-<li><code>debugger -&gt; detach from process</code></li>
-<li><code>debugger -&gt; debugger windows</code> 可以打开 stack trace(call stack), Locals 等调试窗口</li>
-<li><code>debugger -&gt; using source level debugging</code> 才可以在反编译的文件加断点</li>
-</ol>
-<h3 id="修改二进制"><a href="#修改二进制" class="headerlink" title="修改二进制"></a>修改二进制</h3><ol>
-<li><code>Edit -&gt; Pach program -&gt; change byte/assemble</code> 修改二进制</li>
-<li><code>Edit -&gt; Pach program -&gt; Apply patches to input file</code> 报错修改</li>
-<li><code>File -&gt; Produce file -&gt; Create DIF file</code> 可以列出被修改的字节</li>
-<li><a target="_blank" rel="noopener" href="https://wandbox.org/">Compiler on line wandbox</a> 可对比结果</li>
-<li><a target="_blank" rel="noopener" href="https://aarmconverter.com/">汇编指令和二进制互转</a></li>
-<li><a target="_blank" rel="noopener" href="https://disasm.czbix.com/">汇编指令和二进制互转 1</a></li>
-</ol>
-<h3 id="修改-PC-值"><a href="#修改-PC-值" class="headerlink" title="修改 PC 值"></a>修改 PC 值</h3><ol>
-<li>能临时跳到不同分支执行</li>
-</ol>
-<h4 id="gdb"><a href="#gdb" class="headerlink" title="gdb"></a><a target="_blank" rel="noopener" href="https://wizardforcel.gitbooks.io/100-gdb-tips/content/patch-program.html">gdb</a></h4><ol>
-<li><code>b *main+12</code>函数偏移来打断点</li>
-<li><code>disassemble</code> 显示汇编</li>
-<li><code>p $pc</code>显示 PC 值</li>
-<li><code>set var $pc=0x11111</code>设置 PC 值</li>
-</ol>
-<h3 id="plugins"><a href="#plugins" class="headerlink" title="plugins"></a><a target="_blank" rel="noopener" href="https://github.com/onethawt/idaplugins-list">plugins</a></h3><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/0xgalz/Virtuailor">Virtuailor</a> Virtuailor is an IDAPython tool that reconstructs vtables for C++ code written for intel architecture, both 32bit and 64bit code and AArch64 (New!).</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/gaasedelen/lighthouse">lighthouse</a></li>
-</ol>
-<h2 id="ghidra"><a href="#ghidra" class="headerlink" title="ghidra"></a><a target="_blank" rel="noopener" href="https://github.com/NationalSecurityAgency/ghidra">ghidra</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.secrss.com/articles/8829">使用说明</a></li>
-<li>需要先安装 jdk, 使用 cmd 打开， powershell 不行</li>
-<li>开始界面有 debugger</li>
-</ol>
-<h2 id="binary-ninja"><a href="#binary-ninja" class="headerlink" title="binary.ninja"></a><a target="_blank" rel="noopener" href="https://binary.ninja/">binary.ninja</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://down.52pojie.cn/Tools/Disassemblers/">破解</a><ul>
-<li>需要替换安装路径下的动态库</li>
-<li>还不支持 debugger</li>
-</ul>
-</li>
-<li>可以远程调试</li>
-<li>可以从不同 level 查看各个 section 内容</li>
-<li>查看各种 level 代码</li>
-<li>窗口划分，可同时显示不同级别代码</li>
-<li>图形化做的不错</li>
-</ol>
-<h2 id="cutter"><a href="#cutter" class="headerlink" title="cutter"></a><a target="_blank" rel="noopener" href="https://github.com/rizinorg/cutter">cutter</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://cutter.re/">官网</a></li>
-</ol>
-<h2 id="x64dbg"><a href="#x64dbg" class="headerlink" title="x64dbg"></a>x64dbg</h2><ol>
-<li>只试用 windows</li>
-</ol>
-<h2 id="cheat-engine"><a href="#cheat-engine" class="headerlink" title="cheat-engine"></a><a target="_blank" rel="noopener" href="https://github.com/cheat-engine/cheat-engine">cheat-engine</a></h2><h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>关键在读懂汇编</li>
-<li><a target="_blank" rel="noopener" href="https://www.52pojie.cn/forum.php?mod=forumdisplay&fid=4&filter=typeid&typeid=123">反编译工具集合</a></li>
-<li><a target="_blank" rel="noopener" href="https://down.52pojie.cn/Tools/Disassemblers/">合集 2</a></li>
-<li>反编译器： 从二进制到代码</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1526,7 +1479,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">173</span>
+          <span class="site-state-item-count">174</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1559,6 +1512,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1569,9 +1525,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/11/blas/" title="2024&#x2F;01&#x2F;11&#x2F;blas&#x2F;">blas</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/10/llama-cpp/" title="2024&#x2F;01&#x2F;10&#x2F;llama-cpp&#x2F;">llama.cpp</a>
         </li>
     </ul>
   </div>
@@ -1609,13 +1562,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">453k</span>
+    <span title="站点总字数">459k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:52</span>
+    <span title="站点阅读时长">6:58</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
