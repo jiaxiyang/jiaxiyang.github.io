@@ -756,7 +756,7 @@
 <li>awk 按列过滤参数 ls -l test.sh | awk ‘{ print $5 }’ 输出：454</li>
 <li>shell 小程序<a target="_blank" rel="noopener" href="https://www.jb51.net/article/54488.htm">link</a></li>
 <li>shell 得到文件信息 <code>ll /var/log/messages | cut -d &quot; &quot; -f 5</code></li>
-<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#106;&#105;&#97;&#x78;&#105;&#x79;&#x61;&#x6e;&#103;&#x40;&#x31;&#48;&#46;&#x31;&#x30;&#46;&#x30;&#x2e;&#x31;&#x37;">&#106;&#105;&#97;&#x78;&#105;&#x79;&#x61;&#x6e;&#103;&#x40;&#x31;&#48;&#46;&#x31;&#x30;&#46;&#x30;&#x2e;&#x31;&#x37;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
+<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#x6a;&#x69;&#x61;&#120;&#x69;&#x79;&#x61;&#x6e;&#103;&#x40;&#x31;&#48;&#x2e;&#49;&#x30;&#x2e;&#x30;&#46;&#x31;&#55;">&#x6a;&#x69;&#x61;&#120;&#x69;&#x79;&#x61;&#x6e;&#103;&#x40;&#x31;&#48;&#x2e;&#49;&#x30;&#x2e;&#x30;&#46;&#x31;&#55;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
 <li>读文件内容，记录到变量中 var&#x3D;$(cat name.txt)</li>
 <li>计时 start&#x3D;$(date+%s) &amp;&amp; sleep 2 &amp;&amp; end&#x3D;$(date+%s)&amp;&amp; echo $(($end - $start)) <a target="_blank" rel="noopener" href="http://blog.csdn.net/gengshenghong/article/details/7583580">link</a></li>
 <li>sleep: sleep 1 睡眠 1 秒 sleep 1s 睡眠 1 秒 sleep 1m 睡眠 1 分 sleep 1h 睡眠 1 小时</li>
@@ -1806,10 +1806,16 @@ Bob--&gt;&gt;John: Jolly good!
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-02-03 14:55:42 / 修改时间：18:41:36" itemprop="dateCreated datePublished" datetime="2024-02-03T14:55:42+08:00">2024-02-03</time>
+              <time title="创建时间：2024-02-03 14:55:42" itemprop="dateCreated datePublished" datetime="2024-02-03T14:55:42+08:00">2024-02-03</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-14 22:31:01" itemprop="dateModified" datetime="2024-02-14T22:31:01+08:00">2024-02-14</time>
+              </span>
 
           
   
@@ -1831,7 +1837,7 @@ Bob--&gt;&gt;John: Jolly good!
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>263</span>
+              <span>715</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1858,12 +1864,20 @@ Bob--&gt;&gt;John: Jolly good!
 <li>vllm</li>
 </ul>
 </li>
-<li>Attention 不融合消耗大量内存，如果 n 很大 qk 结果非常大; 如果 kenel 进行融合；分块计算，只需要保存中间结果，见 xformer 示意图：<a target="_blank" rel="noopener" href="https://twitter.com/fvsmassa/status/1580229170629849089">xformer link</a></li>
+<li>(不考虑 softmax)Attention 不融合消耗大量内存，如果 n 很大 qk 结果非常大; 如果 kenel 进行融合；分块计算，只需要保存中间结果，见 xformer 示意图：<a target="_blank" rel="noopener" href="https://twitter.com/fvsmassa/status/1580229170629849089">xformer link</a></li>
+<li>FlashAttention 在<code>batch和heads两个维度上进行了并行化</code>：使用一个 thread block 来处理一个 attention head，总共需要 thread block 的数量等于 batch size × number of heads。每个 block 被调到到一个 SM 上运行，例如 A100 GPU 上有 108 个 SMs。当 block 数量很大时（例如 ≥80），这种调度方式是高效的，因为几乎可以有效利用 GPU 上所有计算资源。但是在处理长序列输入时，由于内存限制，通常会减小 batch size 和 head 数量，这样并行化成都就降低了。 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/645376942">link</a></li>
+<li>FlashAttention-2 还在<code>序列长度这一维度上进行并行化</code>，显著提升了计算速度。此外，当 batch size 和 head 数量较小时，在序列长度上增加并行性有助于提高 GPU 占用率。</li>
+<li></li>
 </ol>
 <h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/61a777247900f6c2a37376f3ffd7134385fdc95c/setup.py#L133">编译 cuda</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/61a777247900f6c2a37376f3ffd7134385fdc95c/csrc/flash_attn/flash_api.cpp#L1462">pybind11 python interface</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/search?q=repo:Dao-AILab/flash-attention%20flash_attn_cuda&type=code">python using pybind11 api</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/61a777247900f6c2a37376f3ffd7134385fdc95c/csrc/flash_attn/flash_api.cpp#L221C17-L221C29">run_mha_fwd</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/search?q=repo:Dao-AILab/flash-attention%20run_mha_fwd_&type=code">run_mha_fwd 多种实现</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/5cdabc2809095b98c311283125c05d222500c8ff/csrc/flash_attn/src/flash_fwd_launch_template.h#L31">run_flash_fwd</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/5cdabc2809095b98c311283125c05d222500c8ff/csrc/flash_attn/src/flash_fwd_kernel.h#L1043">compute_attn kernel 实现</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/5cdabc2809095b98c311283125c05d222500c8ff/csrc/flash_attn/src/flash_fwd_kernel.h#L28">compute_attn_1rowblock 最关键实现函数</a></li>
 </ol>
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2>
       
@@ -2036,13 +2050,13 @@ Bob--&gt;&gt;John: Jolly good!
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">459k</span>
+    <span title="站点总字数">463k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:58</span>
+    <span title="站点阅读时长">7:01</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

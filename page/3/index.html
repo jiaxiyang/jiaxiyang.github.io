@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-07 13:32:28" itemprop="dateModified" datetime="2024-02-07T13:32:28+08:00">2024-02-07</time>
+                <time title="修改时间：2024-02-15 20:24:55" itemprop="dateModified" datetime="2024-02-15T20:24:55+08:00">2024-02-15</time>
               </span>
 
           
@@ -253,14 +253,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.2k</span>
+              <span>7.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -273,14 +273,17 @@
 
       
           <h2 id="note"><a href="#note" class="headerlink" title="note"></a>note</h2><ol>
+<li>主动设置<code>--cache-control=all</code>选项来保证在进行 kernel profiling 的时候清空历史 cache 数据，通过设置<code>--clock-control=base</code>选项来锁定 GPU 运行的频率，避免动态调频对性能测量的影响。</li>
 <li><code>Swizzle</code>主要是在到 8192 以后，且 B 矩阵 transpose 的情况下必须要用（不用则效率腰斩，调出来 SWIZZLE 最优是 8）</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cub">cutlass 参考了 cub 的设计</a></li>
 <li>cutlass 是对 gemm 实现过程的各种级别的抽象；手写搬数时需要进行大量计算<ul>
 <li>block tile 矩阵乘法内积； thread tile 矩阵乘法外积</li>
 <li>global memory &lt;-&gt; shared memory &lt;-&gt; register &lt;-&gt; core</li>
 <li>double buffering: shared memory, register</li>
+<li>bank conflict: permute</li>
 </ul>
 </li>
+<li>排列（英语：Permutation）是将相异对象或符号根据确定的顺序重排。每个顺序都称作一个排列</li>
 <li>cutlass kernel 融合效果好</li>
 <li>可以看一下 cutlass 发版历史，了解一下过程</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/v0.1.1/README.md">v0.1.1&#x2F;README.md</a><ul>
@@ -317,8 +320,39 @@
 </ul>
 </li>
 <li><code>One of CUTLASS&#39;s design patterns is to define gemm argument objects that are constructible in host code and passed to kernels by value.</code> These may include pointers, strides, scalars, and other arguments needed by Gemm and its components.The benefits of this pattern are <code>(1.) a structured, composable strategy for passing host-constructible arguments to kernels and (2.) minimized initialization overhead on kernel entry.</code></li>
+<li>group gemm 和 batch gemm 区别： group 是 batch 更通用的形式，允许有不同尺寸的矩阵，batch 则需要多个矩阵尺寸相同</li>
+<li>三种 tile<ul>
+<li>thread block tile(例如：128x128x32)</li>
+<li>warp tile(例如：64x64x32)</li>
+<li>mma tile(例如：16x8x16)</li>
+</ul>
+</li>
 </ol>
-<h2 id="cute"><a href="#cute" class="headerlink" title="cute"></a>cute</h2><ol>
+<h2 id="cute-cuda-tensor-tools"><a href="#cute-cuda-tensor-tools" class="headerlink" title="cute (cuda tensor tools)"></a>cute (cuda tensor tools)</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=PWWOGrLZtZg">youtube 介绍</a></li>
+<li><code>Layout maps from coordinate space(s) to an index space</code>. 从坐标(逻辑存储)映射到索引(物理存储);</li>
+<li>需要十分明确 coordinate 和 index 概念， 1D coordinate 和 index 是不同的</li>
+<li>The map from a natural coordinate to an index is performed by taking the inner product of the natural coordinate with the Layout’s Stride. coordinate 和 stride 内积来实现到 index 的映射;</li>
+<li><code>cute::crd2idx(c, shape, stride)</code>来计算 c(coordinate)的 index</li>
+<li>直接根据 coordinate 顺序计算 index， 不要用想象， 用公式； 例如 A &#x3D; (2,2):(4,1); coordinate 顺序为 A(0) &#x3D; A(0, 0) &#x3D; 0; A(1) &#x3D; A(1, 0) &#x3D; 4x1 &#x3D; 4; A(2) &#x3D; A(0, 1) &#x3D; 1; A(3) &#x3D; A(1, 1) &#x3D; 5; 所以 A(c)为 0 4 1 5</li>
+<li>Layout 对象调用,返回 index，layout(i)</li>
+<li>The core abstraction of CuTe are the hierarchically multidimensional layouts which can be composed with data arrays to represent tensors.</li>
+<li>tensor</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tensor = ptr + layout</span><br><span class="line">layout = shape + stride</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>从右往左读</code> The map from an input coordinate to a natural coordinate is the application of a colexicographical order (reading right to left, instead of “lexicographical,” which reads left to right) within the Shape</li>
+<li>shape and stride 是 IntTupple, A Layout is a tuple of (Shape, Stride).</li>
+<li>new layout language to describe coordinate and index bookkeepings</li>
+<li>layout 两个核心概念<ul>
+<li>shape: define the coordinate mappings</li>
+<li>stride: defines the index mappings</li>
+</ul>
+</li>
+<li>thread layout and data layout</li>
+<li>mapping correct threads to correct values for you computation</li>
+<li>layout is a function</li>
 <li><a target="_blank" rel="noopener" href="https://www.zhihu.com/column/c_1696937812497235968">CUDA 高性能编程</a></li>
 <li>计算机中的内存是一维的线性地址空间，而数学计算问题所要处理的空间经常是高维的。如 GEMM（General Matrix Multiplication）问题的数学计算体系是二维计算空间，Deep Learning 计算体系是三维以上的计算空间(batch, height, width, channel, etc.)。如何高效的表达高维计算空间，如何高效便捷的将计算所要求的高维空间映射到一维空间变得越来越重要。历史上对该问题的探究可以分为三个阶段：<ul>
 <li>第一阶段 BLAS 的 row&#x2F;col-major + leading dimension 描述阶段；</li>
@@ -351,6 +385,14 @@
 <li>抽象和工具让我们可以在更高的维度上思考。</li>
 <li>cute 提供了 MMA 能力来完成 D &#x3D; A x B + C 的矩阵乘法运算，其针对指令封装，适配层，原子能力、块状 MMA、线程划分和执行进行了抽象，形成了 MMAOperation、MMA_Traits、MMA_Atom、TiledMMA、ThrMMA、cute::gemm 数据结构和函数，我们通过这些结构能够完成逻辑块状矩阵乘法的划分和执行。这些抽象通过软件分层设计使得各层次独立，我们不必关注底层细节，只需要从提供的模块中组合我们的逻辑即可，同时抽象的解偶设计，使得我们可以专注于顶层逻辑而降低对底层细节的要求。</li>
 </ol>
+<h2 id="cutlass-优化手段"><a href="#cutlass-优化手段" class="headerlink" title="cutlass 优化手段"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/677616101">cutlass 优化手段</a></h2><ol>
+<li><code>bank conflict free的shared memory layout</code></li>
+<li><code>thread block swizzle</code>：这个优化对于中大型矩阵乘法比较明显，更改了发射 block 的顺序，以增加 locality，从而提高 l2cache 的命中率，实现上非常简单，核心代码就是一个取余操作，但有用多级流水线(software pipeline)：2 条可以不要 async.copy 这个指令(sm80 才有的)，大于 2 条流水就需要了，原理上没什么，和 CPU 的多级流水一个道理，主要是指令的应用。</li>
+<li><code>predicate iterator</code>：这个是一个软件层组件写法的优化，叫 predicate 的原因是，这个 iterator 会返回一个布尔值，在 gpu 的指令里是一个 special register，用来表示这块内存是不是需要 load，这个在软件层会涉及一些优化手段，比较有趣的是会在 host 侧 precompute 了哪些下标需要 load，用位运算来 mask，计算开销(位运算在 gpu 里开销较小)和存储开销(一个 byte 可以存 8 个 mask 值)都很小。为什么需要让存储开销很小？因为在 gpu 架构里，register 是很贵的，一个 thread 只能使用 255 个 register，如果超出了就会存在 local memory 里，register 读取很快，一个 cycle 就可以完成，而 local memory 就会慢非常多，register 用超了会非常非常影响性能！</li>
+<li><code>shared memory重排搬出</code>：mma 指令计算完成之后，结果是存在 register 里的，且 register 中存储的数据是不连续的(32bits 连续)，原因是由于 mma 指令造成的，我们知道 vectorize load&#x2F;store 会提高访存带宽，所以我们可以在 shared memory 里重新排序，一并搬出。但并不是什么情况下重排都是正优化，因为重排还是会增加一次 shared memory store&#x2F;load，比如在小 channel 的 conv2d 中，直接从 register 搬出到 global memory 性能会更好</li>
+<li><code>cooperative fetching和vectorize load</code>：这两个是 GPU 的一些基本优化方法，即尽量用更大的 data type 来搬运，以及尽量让一个 warp 里的不同线程是连续地访存同一块内存地址，原理可以参考</li>
+<li><code>tiling description</code>: 提供了实例化方法，来调整 block 计算量和 warp 计算量，</li>
+</ol>
 <h2 id="type"><a href="#type" class="headerlink" title="type"></a>type</h2><ol>
 <li><code>cutlass::half_t</code> 不支持 half</li>
 <li><code>cutlass::bfloat16</code> Ampere ElementAccumulator 应该为 float, 看手册可以看到只支持 float32 的 accumulate <a target="_blank" rel="noopener" href="https://www.nvidia.com/content/PDF/nvidia-ampere-ga-102-gpu-architecture-whitepaper-v2.pdf">link</a><ul>
@@ -365,18 +407,6 @@
 </ul>
 </li>
 <li>两个 gemm 融合， 关键在 k 维度， 假设 A@B@C， 分块时 A，B 矩阵滑动取数，结果放到 C 中，只能取一块，结果和 C 相乘的时候需要所有的分块矩阵</li>
-</ol>
-<h2 id="cute-cuda-tensor-tools"><a href="#cute-cuda-tensor-tools" class="headerlink" title="cute (cuda tensor tools)"></a>cute (cuda tensor tools)</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=PWWOGrLZtZg">youtube 介绍</a></li>
-<li>new layout language to describe coordinate and index bookkeepings</li>
-<li>layout 两个核心概念<ul>
-<li>shape: define the coordinate mappings</li>
-<li>stride: defines the index mappings</li>
-</ul>
-</li>
-<li>thread layout and data layout</li>
-<li>mapping correct threads to correct values for you computation</li>
-<li>layout is a function</li>
 </ol>
 <h2 id="docs"><a href="#docs" class="headerlink" title="docs"></a>docs</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/cutlass_3x_design.md">cutlass_3x_design</a><ul>
@@ -403,12 +433,21 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libgtest-dev</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/NVIDIA/cutlass.git</span><br><span class="line"><span class="built_in">export</span> CUDACXX=<span class="variable">$&#123;CUDA_INSTALL_PATH&#125;</span>/bin/nvcc</span><br><span class="line"><span class="built_in">export</span> PATH=/usr/local/cuda/bin/:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">mkdir</span> build &amp;&amp; <span class="built_in">cd</span> build</span><br><span class="line">cmake .. -DCUTLASS_NVCC_ARCHS=86</span><br><span class="line">make cutlass_profiler -j12</span><br><span class="line">./tools/profiler/cutlass_profiler --kernels=sgemm --m=4352 --n=4096 --k=4096</span><br></pre></td></tr></table></figure>
 
 <h2 id="samples"><a href="#samples" class="headerlink" title="samples"></a>samples</h2><ol>
-<li>01 basic gemm<ul>
+<li>00 basic gemm<ul>
 <li>创建 cutlass::gemm::device::Gemm，CutlassGemm::Arguments 实例 gemm_operator 和 args</li>
 <li>gemm_operator(args) launch kernel</li>
 </ul>
 </li>
+<li>01 cutlass utilities<ul>
+<li>HostTensor contributes management for both host and device memory. HostTensor allocates host and device memory upon construction. Basic element-wise operations on host memory synchronize device memory automatically.</li>
+<li>cutlass::reference::host::Gemm</li>
+<li>cutlass::reference::device::TensorFillRandomGaussian()</li>
+<li>cutlass::reference::host::BlockFillSequential()</li>
+<li>cutlass::reference::host::TensorEquals()</li>
+</ul>
+</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/tree/main/examples/02_dump_reg_shmem">02_dump_reg_shmem</a></li>
+<li>41_fused_multi_head_attention</li>
 </ol>
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=QLdUML5MCfE&t=42s">CUTLASS 3 0 Next Generation Composable and Reusable GPU Linear Algebra Library - TVMCon2023</a></li>
@@ -1730,13 +1769,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">459k</span>
+    <span title="站点总字数">463k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:58</span>
+    <span title="站点阅读时长">7:01</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
