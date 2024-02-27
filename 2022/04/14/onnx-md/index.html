@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pic2.zhimg.com/80/v2-3214168ce95096026d2079623342317d_720w.webp">
 <meta property="article:published_time" content="2022-04-14T05:45:11.000Z">
-<meta property="article:modified_time" content="2024-01-05T04:16:24.899Z">
+<meta property="article:modified_time" content="2024-02-22T09:47:25.935Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://pic2.zhimg.com/80/v2-3214168ce95096026d2079623342317d_720w.webp">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">174</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-05 12:16:24" itemprop="dateModified" datetime="2024-01-05T12:16:24+08:00">2024-01-05</time>
+                <time title="修改时间：2024-02-22 17:47:25" itemprop="dateModified" datetime="2024-02-22T17:47:25+08:00">2024-02-22</time>
               </span>
 
           
@@ -264,14 +264,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.4k</span>
+              <span>2.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -293,13 +293,38 @@
 <li>ONNX 使用的是 Protobuf 这个序列化数据结构去存储神经网络的权重信息。</li>
 <li>onnx 实现了一个 python 运行时，可用于评估 ONNX 模型和评估 ONNX 操作。目的是阐明 ONNX 的语义并帮助理解和调试 ONNX 工具和转换器。它无意用于生产，性能也不是目标</li>
 <li>ONNX 是强类型的，其定义不支持隐式强制转换。</li>
+<li>Constant 值预先已知，用于存 weights 和 bias,</li>
+<li>Variable 值在推理时之前未知，但可能包含有关数据类型和形状的信息。用于存中间结果</li>
+<li>Constant 和 Variable 都是 tensor</li>
+<li>在 ONNX (Open Neural Network Exchange) 模型中，”attributes” 是与模型的各个节点或算子相关联的关键信息。这些属性为算子提供了额外的规范和配置信息，使得算子能够正确执行其预定的操作。理解属性在 ONNX 模型中的作用是重要的，尤其是在模型转换、优化或理解模型行为时。</li>
+<li>属性用于指定算子的具体行为。例如，在一个卷积算子中，属性可以定义卷积核的大小、步长（stride）、填充（padding）等。</li>
+<li>不变参数(weights bias div mul 需要的参数)使用 constant tensor 类型，输入是 variable tensor, attributes 是 op <code>初始化</code>用到的数值， 计算不用</li>
+<li>onnx 模型 variable tensor 不需要 type 信息，转化后才有信息; weights 有 type 信息</li>
 </ol>
 <h2 id="tools"><a href="#tools" class="headerlink" title="tools"></a>tools</h2><h3 id="netron"><a href="#netron" class="headerlink" title="netron"></a>netron</h3><ol>
-<li>netron 查看 weights 需要点击+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/lutzroeder/netron?tab=readme-ov-file#models">samples 直接看</a></li>
+<li><a target="_blank" rel="noopener" href="https://hiranh.medium.com/visualize-keras-neural-networks-with-netron-9d3f9b3e4b5a">可以显示 type shape 等信息</a></li>
+<li>显示 shape 信息（需要实例）</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> onnx <span class="keyword">import</span> shape_inference</span><br><span class="line">model = onnx.load(<span class="string">&quot;mnist_cc.onnx&quot;</span>)</span><br><span class="line">inferred_model = shape_inference.infer_shapes(model)</span><br><span class="line">onnx.save(inferred_model, <span class="string">&quot;shape.onnx&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ol>
 <li>netron 点击 input 或 output 可以显示模型整体信息</li>
+<li>netron 查看 weights 需要点击+</li>
 <li>netron 左侧菜单栏可以点击 toggle names, weights, attributes</li>
 <li>Netron supports ONNX, TensorFlow Lite, Core ML, Keras, Caffe, Darknet, MXNet, PaddlePaddle, ncnn, MNN and TensorFlow.js. Netron has experimental support for PyTorch, TorchScript, TensorFlow, OpenVINO, RKNN, MediaPipe, ML.NET and scikit-learn.</li>
 </ol>
+<h3 id="onnx-simplifier"><a href="#onnx-simplifier" class="headerlink" title="onnx-simplifier"></a><a target="_blank" rel="noopener" href="https://github.com/daquexian/onnx-simplifier">onnx-simplifier</a></h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/tree/main/tools/Polygraphy/examples/cli/surgeon/02_folding_constants">tensorrt polygraphy surgeon 也能 folding constant</a></li>
+<li>为了支持动态图，onnx 不得不使用复杂的方式来实现，例如 reshape，如果输入是变量，不是常量，会多出来很多分支。<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/346511883">link</a><ul>
+<li>直接转化为常量 int(x.shape[0])</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://convertmodel.com/#input=onnx&output=onnx">网页版本</a></li>
+<li>sample</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> onnx</span><br><span class="line"><span class="keyword">from</span> onnxsim <span class="keyword">import</span> simplify</span><br><span class="line"></span><br><span class="line"><span class="comment"># load your predefined ONNX model</span></span><br><span class="line">model = onnx.load(filename)</span><br><span class="line"></span><br><span class="line"><span class="comment"># convert model</span></span><br><span class="line">model_simp, check = simplify(model)</span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span> check, <span class="string">&quot;Simplified ONNX model could not be validated&quot;</span></span><br><span class="line"></span><br><span class="line">onnx.save(onnx_model, <span class="string">&quot;path/to/the/model.onnx&quot;</span>)</span><br></pre></td></tr></table></figure>
+
 <h3 id="PaddlePaddle-VisualDL"><a href="#PaddlePaddle-VisualDL" class="headerlink" title="PaddlePaddle&#x2F;VisualDL"></a><a target="_blank" rel="noopener" href="https://github.com/PaddlePaddle/VisualDL/tree/develop">PaddlePaddle&#x2F;VisualDL</a></h3><h3 id="zetane"><a href="#zetane" class="headerlink" title="zetane"></a><a target="_blank" rel="noopener" href="https://github.com/zetane/viewer">zetane</a></h3><ol>
 <li>can load onnx model and show intermediate results when the model is executed. 查看模型中间结果</li>
 </ol>
@@ -427,7 +452,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tools"><span class="nav-number">2.</span> <span class="nav-text">tools</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#netron"><span class="nav-number">2.1.</span> <span class="nav-text">netron</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PaddlePaddle-VisualDL"><span class="nav-number">2.2.</span> <span class="nav-text">PaddlePaddle&#x2F;VisualDL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zetane"><span class="nav-number">2.3.</span> <span class="nav-text">zetane</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onnx2py-py"><span class="nav-number">2.4.</span> <span class="nav-text">onnx2py.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onnx-tool-%E5%8F%AF%E4%BB%A5%E7%BB%9F%E8%AE%A1%E8%AE%A1%E7%AE%97%E9%87%8F%EF%BC%8C%E6%AF%8F%E5%B1%82%E8%BE%93%E5%87%BA-shape"><span class="nav-number">2.5.</span> <span class="nav-text">onnx-tool 可以统计计算量，每层输出 shape</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pytorch-OpCounter"><span class="nav-number">2.6.</span> <span class="nav-text">pytorch-OpCounter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#polygraph"><span class="nav-number">2.7.</span> <span class="nav-text">polygraph</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">3.</span> <span class="nav-text">links</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-conver5"><span class="nav-number">4.</span> <span class="nav-text">model conver5</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pytorch"><span class="nav-number">4.1.</span> <span class="nav-text">pytorch</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tools"><span class="nav-number">2.</span> <span class="nav-text">tools</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#netron"><span class="nav-number">2.1.</span> <span class="nav-text">netron</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onnx-simplifier"><span class="nav-number">2.2.</span> <span class="nav-text">onnx-simplifier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PaddlePaddle-VisualDL"><span class="nav-number">2.3.</span> <span class="nav-text">PaddlePaddle&#x2F;VisualDL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zetane"><span class="nav-number">2.4.</span> <span class="nav-text">zetane</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onnx2py-py"><span class="nav-number">2.5.</span> <span class="nav-text">onnx2py.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onnx-tool-%E5%8F%AF%E4%BB%A5%E7%BB%9F%E8%AE%A1%E8%AE%A1%E7%AE%97%E9%87%8F%EF%BC%8C%E6%AF%8F%E5%B1%82%E8%BE%93%E5%87%BA-shape"><span class="nav-number">2.6.</span> <span class="nav-text">onnx-tool 可以统计计算量，每层输出 shape</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pytorch-OpCounter"><span class="nav-number">2.7.</span> <span class="nav-text">pytorch-OpCounter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#polygraph"><span class="nav-number">2.8.</span> <span class="nav-text">polygraph</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">3.</span> <span class="nav-text">links</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-conver5"><span class="nav-number">4.</span> <span class="nav-text">model conver5</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pytorch"><span class="nav-number">4.1.</span> <span class="nav-text">pytorch</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -443,7 +468,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">174</span>
+          <span class="site-state-item-count">175</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -476,6 +501,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -486,9 +514,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/11/blas/" title="2024&#x2F;01&#x2F;11&#x2F;blas&#x2F;">blas</a>
         </li>
     </ul>
   </div>
@@ -526,13 +551,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">463k</span>
+    <span title="站点总字数">484k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:01</span>
+    <span title="站点阅读时长">7:20</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

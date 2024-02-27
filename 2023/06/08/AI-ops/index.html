@@ -28,7 +28,7 @@
 <meta property="og:description" content="NOTE Operators torch.nn pytorch2.0 ops netron 在线打开 onnx arm 官方加速库  常见的算子深度学习中常见的算子包括：  卷积层 (Convolutional Layer)：用于提取输入数据的特征，通过卷积操作在输入数据上滑动卷积核，并对每个位置进行乘法累加操作。 池化层 (Pooling Layer)：用于降低特征图的空间维度，常见的池化操作包">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-06-08T02:21:24.000Z">
-<meta property="article:modified_time" content="2023-12-26T08:46:10.527Z">
+<meta property="article:modified_time" content="2024-02-27T02:59:15.040Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 
@@ -130,7 +130,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">174</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-26 16:46:10" itemprop="dateModified" datetime="2023-12-26T16:46:10+08:00">2023-12-26</time>
+                <time title="修改时间：2024-02-27 10:59:15" itemprop="dateModified" datetime="2024-02-27T10:59:15+08:00">2024-02-27</time>
               </span>
 
           
@@ -262,7 +262,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3k</span>
+              <span>3.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -315,6 +315,14 @@
 <li>生成对抗网络 (Generative Adversarial Network, GAN)：由生成器和判别器组成的对抗性模型，通过博弈训练的方式，使生成器逐渐生成逼真的样本。</li>
 </ol>
 <p>这些算子在不同的深度学习任务和模型中发挥着重要的作用，可以根据具体的问题和需求选择适合的算子进行使用。</p>
+<h2 id="其他算子"><a href="#其他算子" class="headerlink" title="其他算子"></a>其他算子</h2><ol>
+<li>clip 夹子：np.clip(x, min_val, max_val), 限制输入范围</li>
+<li>nozero: B&#x3D;A[b &gt; c], b &gt; c 是 bool, B 取 b &gt; c 的值; tensorrt8.6 之前不支持， 可用 topk + mask 替代</li>
+<li>update: a[100] &#x3D; 1 不会产生新 tensor, tensorrt 不支持，用 scatter 替换</li>
+<li>scatter：根据输入、index, update 生成一个新 tensor</li>
+<li>gatther: 求子集</li>
+<li>inverse:求矩阵逆</li>
+</ol>
 <h3 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a><a target="_blank" rel="noopener" href="https://www.jiqizhixin.com/articles/2021-02-24-7">激活函数</a></h3><h4 id="relu"><a href="#relu" class="headerlink" title="relu"></a>relu</h4><ol>
 <li><code>max(0,x)</code></li>
 <li><a target="_blank" rel="noopener" href="https://www.desmos.com/calculator/hi1hxgezri">可视化</a></li>
@@ -448,7 +456,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#NOTE"><span class="nav-number">1.</span> <span class="nav-text">NOTE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E7%AE%97%E5%AD%90"><span class="nav-number">2.</span> <span class="nav-text">常见的算子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">2.1.</span> <span class="nav-text">激活函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#relu"><span class="nav-number">2.1.1.</span> <span class="nav-text">relu</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sigmoid"><span class="nav-number">2.1.2.</span> <span class="nav-text">sigmoid</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tanh"><span class="nav-number">2.1.3.</span> <span class="nav-text">tanh</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">3.</span> <span class="nav-text">links</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#NOTE"><span class="nav-number">1.</span> <span class="nav-text">NOTE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E7%AE%97%E5%AD%90"><span class="nav-number">2.</span> <span class="nav-text">常见的算子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%AE%97%E5%AD%90"><span class="nav-number">3.</span> <span class="nav-text">其他算子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">激活函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#relu"><span class="nav-number">3.1.1.</span> <span class="nav-text">relu</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sigmoid"><span class="nav-number">3.1.2.</span> <span class="nav-text">sigmoid</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tanh"><span class="nav-number">3.1.3.</span> <span class="nav-text">tanh</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">4.</span> <span class="nav-text">links</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -464,7 +472,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">174</span>
+          <span class="site-state-item-count">175</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -497,6 +505,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -507,9 +518,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/11/blas/" title="2024&#x2F;01&#x2F;11&#x2F;blas&#x2F;">blas</a>
         </li>
     </ul>
   </div>
@@ -547,13 +555,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">463k</span>
+    <span title="站点总字数">484k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:01</span>
+    <span title="站点阅读时长">7:20</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

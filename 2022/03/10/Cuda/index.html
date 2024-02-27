@@ -20,20 +20,21 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="Note NVIDIA GPU 的缓存行（cache line）大小一般是 128 字节。 gridDim 划分的是数据，blockDim 划分的是线程：例如: sgemm 分块矩阵乘  1234N&#x3D;M&#x3D;1024;BN&#x3D;BM&#x3D;128, TN&#x3D;TB&#x3D;8;    dim3 blockDim(BN &#x2F; TN, BM &#x2F; TM);  &#x2F;&#x2F; block 按线程分为 16x16 thread,threadDi">
+  <meta name="description" content="Note GPU 有 108 个 SM。每个 SM 可以并行处理多个线程块，具体取决于所使用的内核；为了获得最佳并行化，隐式 GEMM 应包含 108 个图块的整数倍。 fp32, tf32, fp16, bf16, fp8 NVIDIA GPU 的缓存行（cache line）大小一般是 128 字节。 cache line 又分为 4 个 sectors, 1 个 sector 32B sec">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Cuda">
 <meta property="og:url" content="https://jiaxiyang.github.io/2022/03/10/Cuda/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="Note NVIDIA GPU 的缓存行（cache line）大小一般是 128 字节。 gridDim 划分的是数据，blockDim 划分的是线程：例如: sgemm 分块矩阵乘  1234N&#x3D;M&#x3D;1024;BN&#x3D;BM&#x3D;128, TN&#x3D;TB&#x3D;8;    dim3 blockDim(BN &#x2F; TN, BM &#x2F; TM);  &#x2F;&#x2F; block 按线程分为 16x16 thread,threadDi">
+<meta property="og:description" content="Note GPU 有 108 个 SM。每个 SM 可以并行处理多个线程块，具体取决于所使用的内核；为了获得最佳并行化，隐式 GEMM 应包含 108 个图块的整数倍。 fp32, tf32, fp16, bf16, fp8 NVIDIA GPU 的缓存行（cache line）大小一般是 128 字节。 cache line 又分为 4 个 sectors, 1 个 sector 32B sec">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.ibb.co/vdTGHkJ/txy-EFVOs5-P.png">
 <meta property="og:image" content="https://i.ibb.co/2qN87rv/QVJcq2r-QQ3.png">
 <meta property="article:published_time" content="2022-03-09T18:17:38.000Z">
-<meta property="article:modified_time" content="2024-02-13T11:31:54.875Z">
+<meta property="article:modified_time" content="2024-02-26T08:58:59.249Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="Cuda">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.ibb.co/2qN87rv/QVJcq2r-QQ3.png">
+<meta name="twitter:image" content="https://i.ibb.co/vdTGHkJ/txy-EFVOs5-P.png">
 
 <link rel="canonical" href="https://jiaxiyang.github.io/2022/03/10/Cuda/">
 
@@ -133,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">174</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -235,7 +236,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-13 19:31:54" itemprop="dateModified" datetime="2024-02-13T19:31:54+08:00">2024-02-13</time>
+                <time title="修改时间：2024-02-26 16:58:59" itemprop="dateModified" datetime="2024-02-26T16:58:59+08:00">2024-02-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -278,14 +279,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>21k</span>
+              <span>24k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>19 分钟</span>
+              <span>22 分钟</span>
             </span>
 
         </div>
@@ -298,7 +299,11 @@
 
       
         <h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><ol>
+<li>GPU 有 108 个 SM。每个 SM 可以并行处理多个线程块，具体取决于所使用的内核；为了获得最佳并行化，隐式 GEMM 应包含 108 个图块的整数倍。</li>
+<li>fp32, tf32, fp16, bf16, fp8<br><img src="https://i.ibb.co/vdTGHkJ/txy-EFVOs5-P.png" alt="data type"></li>
 <li>NVIDIA GPU 的缓存行（cache line）大小一般是 128 字节。</li>
+<li>cache line 又分为 4 个 sectors, 1 个 sector 32B</li>
+<li>sector 是 global memory 访问的最小单位，32 个线程一起运行，最少访问 32B</li>
 <li>gridDim 划分的是数据，blockDim 划分的是线程：例如: sgemm 分块矩阵乘</li>
 </ol>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">N=M=<span class="number">1024</span>;</span><br><span class="line">BN=BM=<span class="number">128</span>, TN=TB=<span class="number">8</span>;</span><br><span class="line">    <span class="function">dim3 <span class="title">blockDim</span><span class="params">(BN / TN, BM / TM)</span></span>;  <span class="comment">// block 按线程分为 16x16 thread,threadDim=(16, 16) 每个线程处理8x8数据; x维度是列，y维度是行;</span></span><br><span class="line"><span class="function">dim3 <span class="title">gridDim</span><span class="params">((N + BN - <span class="number">1</span>) / BN, (M + BM - <span class="number">1</span>) / BM)</span></span>; <span class="comment">// grid 按数据分为 8x8 block, blockDim=(8, 8)</span></span><br></pre></td></tr></table></figure>
@@ -328,7 +333,10 @@
 <li>在 CUDA 中，你会以类似于 C&#x2F;C++函数的形式来表达想要在 GPU 上运行的计算，这个函数被称为 kernel。</li>
 <li>GPU 函数耗时统计不能只记录一次的，GPU 可能做一些准备工作，教训： nppiResize_8u_C3R 不管大小第一次运行耗时都很大 The cuda context is lazily initialized</li>
 <li><code>autotuning</code> 搜索 kernel grid 划分参数(结果不变)，找性能最优</li>
-<li>L1 和 shared memory 共享一块存储 可动态分配比例; 可用比例见<a target="_blank" rel="noopener" href="https://www.nvidia.com/content/PDF/nvidia-ampere-ga-102-gpu-architecture-whitepaper-v2.pdf">link</a></li>
+<li>L1 和 shared memory 共享一块存储 可动态分配比例; 可用比例见<a target="_blank" rel="noopener" href="https://www.nvidia.com/content/PDF/nvidia-ampere-ga-102-gpu-architecture-whitepaper-v2.pdf">link</a><ul>
+<li>多用 shared memory 就多分点给 shared memory 多用寄存器就多分点给 L1 cache</li>
+</ul>
+</li>
 <li>warp 调度:延时隐藏 只执行 warp 一部分 当 warp 需要等待时 先执行其他 warp</li>
 <li>shared memory 和 register 是 SM 中的稀缺资源.</li>
 <li>warp 执行类似 simd</li>
@@ -377,6 +385,16 @@
 </ul>
 </li>
 <li>虽然 block 可以划分为二维 thread, 单调度时按一维调度，每 32 个一个 warp</li>
+<li>lanID 是 warp 内第几个线程 threadIdx.x %32</li>
+<li>WarpID &#x3D; threadIdx.x &#x2F;32</li>
+<li>常量内存位于显存中 片上有缓存 类似于 shared memeory warp 内多个线程读同一个地址最快，不同地址要串行</li>
+<li>常量内存对于 kernel 是只读的 对于主机可读写</li>
+<li>constant 由主机代码准备 kernel 中直接用</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">__constant__ <span class="type">float</span> coef[<span class="number">100</span>];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup_coef_constant</span><span class="params">(<span class="type">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="built_in">cudaMemorycpyToSymbol</span>(coef, h_coef, size);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>kernel 第三个参数是动态共享内存的大小</li>
 </ol>
 <h2 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h2><ol>
 <li>想办法喂饱硬件, 好好调教它，让它努力打工, 工作饱和，不能偷懒</li>
@@ -398,6 +416,16 @@
 </ul>
 </li>
 <li><a target="_blank" rel="noopener" href="https://developer.download.nvidia.com/GTC/PDF/1083_Wang.pdf">Fundamental Optimizations in CUDA</a></li>
+<li>kernels are too small -&gt; kernel launch bound; gpu is idle in many time, reason:kernels are too small <a target="_blank" rel="noopener" href="https://github.com/jiaxiyang/CUDA-PPT/blob/main/GTC2020/s21417-faster-transformer.pdf">link</a><ul>
+<li>a simple solution: using tensorflow XLA to fuse kernel automaticlly</li>
+</ul>
+</li>
+<li>在 CUDA 编程中，<code>谓词替换</code>通常指的是一种编程技巧，它通过使用谓词（即条件表达式）来代替显式的分支语句（如 if-else 或 switch 语句）。这种技巧可以帮助<code>减少线程发散</code>，从而提高在 GPU 上的并行执行效率。使用条件运算符（如? :）或逻辑运算符（如&amp;&amp;和||）来替换 if-else 语句。这样可以保证所有线程执行相同数量的指令，尽管这些指令的实际作用可能因条件而异。</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">__global__ void traditionalBranch(int *data, int value, int threshold) &#123;</span><br><span class="line">    int index = threadIdx.x + blockIdx.x * blockDim.x;</span><br><span class="line">    if (data[index] &gt; threshold) &#123;</span><br><span class="line">        data[index] = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">__global__ void predicateReplacement(int *data, int value, int threshold) &#123;</span><br><span class="line">    int index = threadIdx.x + blockIdx.x * blockDim.x;</span><br><span class="line">    data[index] = (data[index] &gt; threshold) * value + !(data[index] &gt; threshold) * data[index];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>cache locality 表示程序对缓存中数据的访问 locality 和重用情况。如果同一个 warp 中的线程迭代访问同一缓存线(cache line)上的数据(比如遍历一个数组),那么可以最大化利用 cache,称之为良好的 cache locality。</li>
 </ol>
 <h3 id="papers"><a href="#papers" class="headerlink" title="papers"></a>papers</h3><ol>
 <li><a target="_blank" rel="noopener" href="http://impact.crhc.illinois.edu/shared/papers/optimization2008.pdf">Optimization Principles and Application Performance Evaluation</a></li>
@@ -414,9 +442,18 @@
 <li>compute-bound 需要争取达到最大算力，memory bound 需要争取达到最大带宽</li>
 </ol>
 <h3 id="优化技术"><a href="#优化技术" class="headerlink" title="优化技术"></a>优化技术</h3><ol>
-<li>memory coalescing</li>
+<li>memory coalescing<ul>
+<li>让连续的线程访问连续的内存地址。这样就有合并机会，多个线程间会合并访存，可能并不是 32 个线程都合并, 比如一个线程访问 4 个 32bit float 数据，8 个线程可合并，8 x 4 x 32 &#x2F; 8 &#x3D; 128Bx</li>
+</ul>
+</li>
 <li>swizzle</li>
 <li>bank conflict</li>
+<li>分支优化<ul>
+<li>谓词替换</li>
+<li>分支预测</li>
+<li>循环展开</li>
+</ul>
+</li>
 </ol>
 <h3 id="访存优化"><a href="#访存优化" class="headerlink" title="访存优化"></a>访存优化</h3><ol>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/600489819">漫谈高性能计算与性能优化：访存</a></li>
@@ -512,6 +549,8 @@
 <li>如果一个线程一次操作 4 个连续的数(处理两个在空间上属于同一 bank 的数)， 那么一个 warp 一次有 8 个线程 bank 不冲突， 一次操作 4*8 个数， 需要 8 次能读完。与 bank 不冲突等效。</li>
 </ul>
 </li>
+<li>这种情况也可以看作是：shared memory 基本单元为 16byte，总 bank 数为 8，冲突与否的分析不在是 32 线程，而变成 4 个 phase 中的不同线程。如果采用 64bit 的访问形式，则相应的基本单元可以看作是 8byte，总 bank 数目为 16，冲突与否的条件变成两个 phase 内的线程是否冲突。</li>
+<li>4x32 or 8x16 or 16x8 (16B, 8bank)</li>
 </ol>
 <h2 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h2><ol>
 <li><code>__restrict__</code> 用于限定指针,表示该指针是唯一访问目标内存的途径。可以避免出现不同指针引用同一内存区域的情况,编译器可以更自由地进行优化。这意味着编译器可以假设这个指针没有别名（alias），即没有其他指针指向相同的内存位置。</li>
@@ -572,6 +611,9 @@
 <li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1893665">FP32 vs TF32</a><ul>
 <li>tf32 整数部分精度与 fp32 相同，小数部分与 fp16 相同， 只用了 19 位</li>
 <li>包含 Amphere 架构性能</li>
+<li>A100、H100 tf32 算力比 fp32 算力高 8 倍左右</li>
+<li>3090 上 tf32 算力跟 fp32 算力相同</li>
+<li>最新 trtexec 默认是 tf32，注意和 python fp32 计算比较时结果误差可能较大</li>
 </ul>
 </li>
 </ol>
@@ -595,6 +637,7 @@
 </ol>
 <h2 id="cuda-samples"><a href="#cuda-samples" class="headerlink" title="cuda samples"></a><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cuda-samples">cuda samples</a></h2><ol>
 <li>可以全部 sample 一起编译</li>
+<li><code>cuobjdump -all  ./matrixMulDrv</code>可以看可执行程序 arch 等信息</li>
 <li><code>make SMS=&quot;86&quot;</code>选择 arch</li>
 <li><code>make dbg=1</code> debug 编译</li>
 <li><code>Samples/1_Utilities/bandwidthTest</code> 可以查看 host &lt;-&gt; memory 之间传输速度</li>
@@ -618,6 +661,13 @@
 <li>各工具关系<br><img src="https://i.ibb.co/2qN87rv/QVJcq2r-QQ3.png" alt="tools"></li>
 </ol>
 <h3 id="nsight-system"><a href="#nsight-system" class="headerlink" title="nsight system"></a>nsight system</h3><ol>
+<li>分析系统性能， help you to pinpoint performance issues and identify optimization opportunities; 帮助分析性能问题和识别优化机会<ul>
+<li>gpu kernel 运行时间太长</li>
+<li>某些 process cpu 处理时间太长</li>
+<li>cpu gpu pcie copy 耗时过大</li>
+</ul>
+</li>
+<li>GPU timeline 方便分析</li>
 <li>profiling 可以简单地分为粗粒度和细粒度。粗粒度主要是判断瓶颈是不是在 GPU 上，具体又是哪个 kernel，典型代表就是 nsight system 工具，会显示出整个程序的 timeline。可以从 timeline 上直接清晰明了地看到瓶颈是在 CPU 还是 GPU，如果是 GPU，那又是在 GPU 的哪个 kernel 上。</li>
 <li>如果是 timeline 中 GPU kernel 的占比很小，CPU 占比很大，那说明瓶颈在 CPU 侧，需要注意是不是数据读取花了太多时间。如果 GPU kernel 的占比很大，说明瓶颈在 GPU 侧，需要重点花精力去优化 GPU kernel 实现。还有一种情况是，如果数据一直放在 GPU 上，但是 kernel 的时间占比不是特别多，那可能是因为 kernel 本身不太耗时，可能只运行了 4us。但 kernel lauch 就花了 6us。这个时间就要想着采用 kernel fusion 的方式，尽可能地在一个 kernel 里面多干点活。</li>
 <li>点击时注意竖线上的小三角号, 表示关联</li>
@@ -699,6 +749,9 @@
 <li>cudaStreamSynchronize 是 CUDA API 中的一个函数，用于等待指定的 CUDA 流上的所有 CUDA 核函数执行完毕。当 CUDA 核函数被执行时，它们会被添加到一个 CUDA 流中，这些核函数的执行可能是异步的，也可能是同步的，具体取决于如何在代码中调用它们。当我们调用 cudaStreamSynchronize 时，它将会阻塞当前 CPU 线程，直到指定的流上的所有核函数都执行完毕。</li>
 </ol>
 <h3 id="nsight-compute"><a href="#nsight-compute" class="headerlink" title="nsight compute"></a>nsight compute</h3><ol>
+<li><code>balance throughput</code> compute and memory throughput are near; 平衡比较重要，不平衡时说明使用率较高的是瓶颈</li>
+<li>Both SM (Compute) and Memory SOL report the categories’ throughput as the achieved percentage of utilization with respect to the theoretical maximum, i.e. the “Speed Of Light”. Both metrics are composed of sub-metrics, with the respective highest contributor defining the resulting value. The Breakdown tables below the chart can be used to identify all such contributors and their values. SM（计算）和内存 SOL 都将类别的吞吐量报告为相对于理论最大值（即“speed of light”）所实现的利用率百分比</li>
+<li>SOL(speed of light): 相对于理论最大值的比例</li>
 <li>有开销 <a target="_blank" rel="noopener" href="https://docs.nvidia.com/nsight-compute/2023.3/ProfilingGuide/index.html#overhead">overhead</a></li>
 <li><code>metrics</code> 是指性能指标，这些指标用于衡量 CUDA 应用程序的性能和行为。性能指标可以包括各种硬件级别的统计数据，如内存访问效率、计算操作的执行时间、流处理器（SM）的利用率、寄存器使用情况、分支效率等等。</li>
 <li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/nvidia-development-tools-solutions-err_nvgpuctrperm-permission-issue-performance-counters">permission 问题</a><ul>
@@ -716,6 +769,7 @@
 <li>点击统计界面某个 metrics 可以看 metrics 详细信息</li>
 </ul>
 </li>
+<li><code>--import-source yes --source-folders ./</code> 导入 source</li>
 <li><code>ncu --replay-mode application --set full  ./preprocess</code> 详细信息显示到命令行<ul>
 <li>Duration 为 kernel 执行时间</li>
 </ul>
@@ -739,6 +793,7 @@
 <li>summary: 耗时，compute and memory throughput; 底下有优化建议</li>
 </ul>
 </li>
+<li>可以添加 baseline，对比多次结果, 分析结果变化</li>
 <li><code>ncu --set roofline</code>可以测量详细 roofline</li>
 <li><code>ncu --metrics smsp__inst_executed.sum ./matrixMul</code> 打印 metrics</li>
 <li><code>--set roofline</code>能看到 tensor core roofline; 例如运行<code>cuda-samples/Samples/3_CUDA_Features/cudaTensorCoreGemm</code></li>
@@ -763,16 +818,25 @@
 </ol>
 <h4 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h4><ol>
 <li>每项下面会有建议</li>
-<li>overview<ul>
+<li>compute 分析延迟很关键 目标是计算要掩盖延迟; 分析 stall 原因，stall 就是 warp 闲着</li>
+<li>bank 冲突能解决指令的延迟</li>
+<li>overview(GPU speed of light throughput)<ul>
+<li><code>用于查看计算和内存吞吐对理论值的占比以及roofline</code></li>
+<li>High-level overview of the <code>throughput for compute and memory</code> resources of the GPU 主要关注计算和内存</li>
+<li>Achieved compute throughput and&#x2F;or memory bandwidth below 60.0% of peak typically indicate latency issues.</li>
+<li>低于 60% 表明有延迟问题, 例如：指令有延迟，可以看 scheduler statistics 和 warp state statistics 进一步分析;延迟问题可能是由于 occupancy 较低， 也可能是指令执行延迟太大，无法隐藏;</li>
 <li>roofline</li>
 </ul>
 </li>
-<li>comupte<ul>
+<li>comupte workload<ul>
+<li><code>用于分析 SM 计算资源使用情况</code></li>
 <li>IPC</li>
 <li>指令执行占比</li>
+<li>LSU: load store unit</li>
 </ul>
 </li>
-<li>memory<ul>
+<li>memory workload<ul>
+<li><code>用于分析 GPU memory 使用情况</code></li>
 <li>可以选择看 transfer size 和 throughput</li>
 <li>要提升 cache 命中率</li>
 <li>多用 shared memory(可作为中间结果)</li>
@@ -788,6 +852,7 @@
 </ul>
 </li>
 <li>scheduler statistics<ul>
+<li><code>用于分析每个 scheduler active, eligible, issue warp 情况</code></li>
 <li>Issued Warp Per Scheduler: 平均每个 cycle 发射的 warp 数</li>
 <li>On cycles with no eligible warps, the issue slot is skipped and no instruction is issued. Having many skipped issue slots indicates poor latency hiding.</li>
 <li>Out of the maximum of 12 warps per scheduler(Ampere 1 个 SM 有 4 个 scheduler), this kernel allocates an average of 2.00 active warps per scheduler, but only an average of 0.07 warps were eligible(合格的) per cycle.</li>
@@ -795,10 +860,26 @@
 <li>Eligible warps are the subset of active warps that are ready to issue their next instruction.</li>
 </ul>
 </li>
-<li>warp state</li>
-<li>instructions</li>
-<li>launch</li>
-<li>cocupancy<ul>
+<li>warp state statistics<ul>
+<li><code>用于分析 warp stall 原因</code></li>
+<li>Check the Warp Stall Sampling (source counters 中) table for the top stall locations in your source based on sampling data. 查看 stalll source 位置</li>
+<li>statll 解决办法： Try to increase the number of active warps to hide the existent latency or try changing the instruction mix to utilize all available pipelines in a more balanced way.</li>
+<li>The warp cycles per instruction define the latency between two consecutive instructions. 每条指令的 warp 周期定义两个连续指令之间的延迟</li>
+<li>可以查看两个 warp instruction 之间 cyles 组成： stall math pipe throttle, stall mio throttle;</li>
+</ul>
+</li>
+<li>instructions statistics<ul>
+<li><code>用于查看指令的类型和执行次数</code></li>
+<li>Statistics of the executed low-level assembly instructions (SASS). SASS 指令统计</li>
+<li>统计执行的指令数，可以看出哪些指令执行的较多</li>
+</ul>
+</li>
+<li>launch statistics<ul>
+<li><code>用于查看 grid, block 设置和 register, shared memory 使用情况</code></li>
+</ul>
+</li>
+<li>occupancy<ul>
+<li><code>用于查看occupancy情况及限制原因</code></li>
 <li>Occupancy is the ratio of the number of active warps per multiprocessor to the maximum number of possible active warps.</li>
 <li>可以看出理论占用率及不能到 100%的原因</li>
 <li>一个 warp 中用太多 register 和 shared memory 会影响 Occupancy， Occupancy 会影响 scheduler， 进而会影响延迟隐藏</li>
@@ -806,9 +887,18 @@
 <li>右上角点开 table，可以可视化</li>
 </ul>
 </li>
+<li>source counters<ul>
+<li><code>用于分析分支指令是否有影响，是否合并访存</code></li>
+<li>Source metrics, including branch efficiency and sampled warp stall reasons.</li>
+</ul>
+</li>
 </ol>
 <h3 id="nsgiht-graphics"><a href="#nsgiht-graphics" class="headerlink" title="nsgiht graphics"></a>nsgiht graphics</h3><h2 id="cuda-debug"><a href="#cuda-debug" class="headerlink" title="cuda-debug"></a><a target="_blank" rel="noopener" href="https://docs.nvidia.com/nsight-visual-studio-code-edition/cuda-debugger/index.html">cuda-debug</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/tree/main/examples/02_dump_reg_shmem">02_dump_reg_shmem</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/tree/main/examples/02_dump_reg_shmem">02_dump_reg_shmem</a><ul>
+<li>dump_shmem</li>
+<li>dump_fragment</li>
+</ul>
+</li>
 <li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-gdb/index.html#compiling-the-application">compiling 要求</a><ul>
 <li><code>nvcc -g -G foo.cu -o foo</code></li>
 </ul>
@@ -994,7 +1084,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">174</span>
+          <span class="site-state-item-count">175</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1027,6 +1117,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1037,9 +1130,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/11/blas/" title="2024&#x2F;01&#x2F;11&#x2F;blas&#x2F;">blas</a>
         </li>
     </ul>
   </div>
@@ -1077,13 +1167,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">463k</span>
+    <span title="站点总字数">484k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:01</span>
+    <span title="站点阅读时长">7:20</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

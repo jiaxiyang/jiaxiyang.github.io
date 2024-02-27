@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="综述大模型推理综述 Towards Efficient Generative Large Language Model Serving: A Survey from Algorithms to Systems 中文解读 黄浴中文翻译 低延迟和高吞吐量是 LLM 服务系统中的双重优化目标，代表了互补但往往相互冲突的目标，需要一种平衡的策略来优化单个任务的快速响应和指定时间内最大化处理任务量之间的权衡">
+  <meta name="description" content="综述大模型推理综述 Towards Efficient Generative Large Language Model Serving: A Survey from Algorithms to Systems Context or initial or prefil 阶段: input token 是并行的，可以利用 flash attention 来加速 Generation or increm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Efficient-LLM">
 <meta property="og:url" content="https://jiaxiyang.github.io/2024/01/14/Efficient-LLM/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="综述大模型推理综述 Towards Efficient Generative Large Language Model Serving: A Survey from Algorithms to Systems 中文解读 黄浴中文翻译 低延迟和高吞吐量是 LLM 服务系统中的双重优化目标，代表了互补但往往相互冲突的目标，需要一种平衡的策略来优化单个任务的快速响应和指定时间内最大化处理任务量之间的权衡">
+<meta property="og:description" content="综述大模型推理综述 Towards Efficient Generative Large Language Model Serving: A Survey from Algorithms to Systems Context or initial or prefil 阶段: input token 是并行的，可以利用 flash attention 来加速 Generation or increm">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.ibb.co/THp5xHd/Ijz-O30-Ae96.png">
 <meta property="article:published_time" content="2024-01-14T10:44:21.000Z">
-<meta property="article:modified_time" content="2024-01-26T06:53:37.485Z">
+<meta property="article:modified_time" content="2024-02-22T06:09:16.652Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.ibb.co/THp5xHd/Ijz-O30-Ae96.png">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">174</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-26 14:53:37" itemprop="dateModified" datetime="2024-01-26T14:53:37+08:00">2024-01-26</time>
+                <time title="修改时间：2024-02-22 14:09:16" itemprop="dateModified" datetime="2024-02-22T14:09:16+08:00">2024-02-22</time>
               </span>
 
           
@@ -264,7 +264,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>836</span>
+              <span>1.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -284,6 +284,12 @@
 
       
         <h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><h3 id="大模型推理综述-Towards-Efficient-Generative-Large-Language-Model-Serving-A-Survey-from-Algorithms-to-Systems"><a href="#大模型推理综述-Towards-Efficient-Generative-Large-Language-Model-Serving-A-Survey-from-Algorithms-to-Systems" class="headerlink" title="大模型推理综述 Towards Efficient Generative Large Language Model Serving: A Survey from Algorithms to Systems"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2312.15234">大模型推理综述 Towards Efficient Generative Large Language Model Serving: A Survey from Algorithms to Systems</a></h3><ol>
+<li>Context or initial or prefil 阶段: input token 是并行的，可以利用 flash attention 来加速</li>
+<li>Generation or incremental or decode 阶段: input token 是 1， Autoregressive(AR)，使用 paged attention 来实现<ul>
+<li>如果是 batch 为 1， 可以填充为 8 来利用 tensor core; 或者使用优化的 cuda core GEMV</li>
+<li>解码阶段的过程主要由 GEMV（batch size&#x3D;1）或 flat GEMM（batch size &gt; 1）操作组成</li>
+</ul>
+</li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Uue0SxH6W_tI8K4Zb0igLQ">中文解读</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/675101140">黄浴中文翻译</a></li>
 <li><code>低延迟和高吞吐量</code>是 LLM 服务系统中的双重优化目标，代表了互补但往往相互冲突的目标，需要一种平衡的策略来优化单个任务的快速响应和指定时间内最大化处理任务量之间的权衡</li>
@@ -294,6 +300,28 @@
 </ul>
 <h3 id="Efficient-Large-Language-Models-A-Survey"><a href="#Efficient-Large-Language-Models-A-Survey" class="headerlink" title="Efficient Large Language Models: A Survey"></a><a target="_blank" rel="noopener" href="https://github.com/AIoT-MLSys-Lab/Efficient-LLMs-Survey">Efficient Large Language Models: A Survey</a></h3><h3 id="Efficient-Deep-Learning-Book"><a href="#Efficient-Deep-Learning-Book" class="headerlink" title="Efficient Deep Learning Book"></a><a target="_blank" rel="noopener" href="https://www.jiqizhixin.com/articles/2022-05-03-4">Efficient Deep Learning Book</a></h3><ol>
 <li><a target="_blank" rel="noopener" href="https://efficientdlbook.com/#download">https://efficientdlbook.com</a></li>
+</ol>
+<h2 id="sampling"><a href="#sampling" class="headerlink" title="sampling"></a>sampling</h2><ol>
+<li>top-K</li>
+<li>top-P</li>
+</ol>
+<h2 id="系统优化技术"><a href="#系统优化技术" class="headerlink" title="系统优化技术"></a>系统优化技术</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/">nvidia mastering-llm-techniques-inference-optimization</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2312.15234">大模型推理综述 Towards Efficient Generative Large Language Model Serving: A Survey from Algorithms to Systems</a><ul>
+<li>量化</li>
+<li>并行计算</li>
+<li>内存管理</li>
+<li>请求调度</li>
+<li>kernel 优化</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/tree/main?tab=readme-ov-file#advanced-topics">tensorrt llm 高级主题</a><ul>
+<li>量化</li>
+<li>in-flight batching</li>
+<li>attention</li>
+<li>graph rewriting</li>
+</ul>
+</li>
 </ol>
 <h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><ol>
 <li>vllm</li>
@@ -427,7 +455,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%BC%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">综述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E7%BB%BC%E8%BF%B0-Towards-Efficient-Generative-Large-Language-Model-Serving-A-Survey-from-Algorithms-to-Systems"><span class="nav-number">1.1.</span> <span class="nav-text">大模型推理综述 Towards Efficient Generative Large Language Model Serving: A Survey from Algorithms to Systems</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Full-Stack-Optimization-of-Transformer-Inference-a-Survey"><span class="nav-number">1.2.</span> <span class="nav-text">Full Stack Optimization of Transformer Inference: a Survey</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Efficient-Large-Language-Models-A-Survey"><span class="nav-number">1.3.</span> <span class="nav-text">Efficient Large Language Models: A Survey</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Efficient-Deep-Learning-Book"><span class="nav-number">1.4.</span> <span class="nav-text">Efficient Deep Learning Book</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attention-%E4%BC%98%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">attention 优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">4.</span> <span class="nav-text">links</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E6%A0%87"><span class="nav-number">5.</span> <span class="nav-text">指标</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%BC%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">综述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A8%E7%90%86%E7%BB%BC%E8%BF%B0-Towards-Efficient-Generative-Large-Language-Model-Serving-A-Survey-from-Algorithms-to-Systems"><span class="nav-number">1.1.</span> <span class="nav-text">大模型推理综述 Towards Efficient Generative Large Language Model Serving: A Survey from Algorithms to Systems</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Full-Stack-Optimization-of-Transformer-Inference-a-Survey"><span class="nav-number">1.2.</span> <span class="nav-text">Full Stack Optimization of Transformer Inference: a Survey</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Efficient-Large-Language-Models-A-Survey"><span class="nav-number">1.3.</span> <span class="nav-text">Efficient Large Language Models: A Survey</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Efficient-Deep-Learning-Book"><span class="nav-number">1.4.</span> <span class="nav-text">Efficient Deep Learning Book</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sampling"><span class="nav-number">2.</span> <span class="nav-text">sampling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF"><span class="nav-number">3.</span> <span class="nav-text">系统优化技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84"><span class="nav-number">4.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attention-%E4%BC%98%E5%8C%96"><span class="nav-number">5.</span> <span class="nav-text">attention 优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">6.</span> <span class="nav-text">links</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E6%A0%87"><span class="nav-number">7.</span> <span class="nav-text">指标</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -443,7 +471,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">174</span>
+          <span class="site-state-item-count">175</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -476,6 +504,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -486,9 +517,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/11/blas/" title="2024&#x2F;01&#x2F;11&#x2F;blas&#x2F;">blas</a>
         </li>
     </ul>
   </div>
@@ -526,13 +554,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">463k</span>
+    <span title="站点总字数">484k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:01</span>
+    <span title="站点阅读时长">7:20</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

@@ -28,7 +28,7 @@
 <meta property="og:description" content="base pytorch 导出模型时会显示 ONNX IR, 类似三段式 Functions to export models into the ONNX IR format.   pytorch 模型结构定义之后, 有些算子不一定会使用，导出 onnx 模型时不使用的算子不会导出，应为导出模型进行一次模型推理，在推理的过程中记录所有经过的计算，将这些记录整合成计算图 pytorch 为什么不直接">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-06-09T07:28:49.000Z">
-<meta property="article:modified_time" content="2024-01-08T08:36:39.651Z">
+<meta property="article:modified_time" content="2024-02-22T03:06:02.710Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 
@@ -130,7 +130,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">174</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-08 16:36:39" itemprop="dateModified" datetime="2024-01-08T16:36:39+08:00">2024-01-08</time>
+                <time title="修改时间：2024-02-22 11:06:02" itemprop="dateModified" datetime="2024-02-22T11:06:02+08:00">2024-02-22</time>
               </span>
 
           
@@ -262,7 +262,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.6k</span>
+              <span>5.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -397,10 +397,10 @@
 <ol>
 <li>pytorch model to onnx(导出为 batch 1 时需要设置输入数据第一维度为 1,)</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision.models <span class="keyword">as</span> models</span><br><span class="line"><span class="keyword">import</span> torch.onnx <span class="keyword">as</span> onnx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载预训练模型</span></span><br><span class="line">model = models.resnet18(pretrained=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个输入张量作为示例; 注意数据和模型要么都在cuda，要么都在cpu</span></span><br><span class="line">input_data = torch.randn(<span class="number">1</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>)</span><br><span class="line">input_data = torch.randn(<span class="number">1</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>).cuda()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置模型为推理模式</span></span><br><span class="line">model.<span class="built_in">eval</span>() <span class="comment"># 只影响</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将模型和输入张量转换为ONNX格式</span></span><br><span class="line">onnx_path = <span class="string">&quot;model.onnx&quot;</span></span><br><span class="line">onnx.export(model, input_data, onnx_path)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;模型已成功转换为ONNX格式并保存在:&quot;</span>, onnx_path)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision.models <span class="keyword">as</span> models</span><br><span class="line"><span class="keyword">import</span> torch.onnx <span class="keyword">as</span> onnx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载预训练模型</span></span><br><span class="line">model = models.resnet18(pretrained=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个输入张量作为示例; 注意数据和模型要么都在cuda，要么都在cpu</span></span><br><span class="line">input_data = torch.randn(<span class="number">1</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>)</span><br><span class="line">input_data = torch.randn(<span class="number">1</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>).cuda()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置模型为推理模式</span></span><br><span class="line">model.<span class="built_in">eval</span>() <span class="comment"># 只影响, 不启用 Batch Normalization 和 Dropout</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将模型和输入张量转换为ONNX格式</span></span><br><span class="line">onnx_path = <span class="string">&quot;model.onnx&quot;</span></span><br><span class="line">onnx.export(model, input_data, onnx_path)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;模型已成功转换为ONNX格式并保存在:&quot;</span>, onnx_path)</span><br></pre></td></tr></table></figure>
 
 <h2 id="model-info"><a href="#model-info" class="headerlink" title="model info"></a>model info</h2><ol>
-<li>需要 model.eval()； 不会打印 dropout 层</li>
+<li>需要 model.eval()； 不会打印 dropout 层, 不启用 Batch Normalization 和 Dropout</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/TylerYep/torchinfo">torchinfo</a></li>
 <li><code>summary(model, [(1, 1, 32000), (1,1,32000), (1, 1, 32000), (1,1,32000)], dtypes=[torch.long, torch.long, torch.long, torch.long])</code></li>
 </ol>
@@ -534,7 +534,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">174</span>
+          <span class="site-state-item-count">175</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -567,6 +567,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -577,9 +580,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/11/blas/" title="2024&#x2F;01&#x2F;11&#x2F;blas&#x2F;">blas</a>
         </li>
     </ul>
   </div>
@@ -617,13 +617,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">463k</span>
+    <span title="站点总字数">484k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:01</span>
+    <span title="站点阅读时长">7:20</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

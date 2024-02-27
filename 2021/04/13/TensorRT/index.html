@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="base work with loop rnn 在 9.0 被移除，使用 loop op 替代 NVIDIA TensorRT is an SDK for optimizing trained deep learning models to enable high-performance inference. TensorRT contains a deep learning inference">
+  <meta name="description" content="base 推理是使用训练好的模型进行预测的过程，而部署是将这个模型集成到最终应用环境的过程。 推理系统优化目标 延迟(Latency): 满足服务等级协议的延迟 吞吐量(Throughputs): 暴增负载的吞吐量需求 效率(Efficiency): 高效率，低功耗使用 GPU，CPU 灵活性(Flexibility): 支持多种框架，提供构建不同应用的灵活 扩展性(Scalability): 扩">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TensorRT">
 <meta property="og:url" content="https://jiaxiyang.github.io/2021/04/13/TensorRT/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="base work with loop rnn 在 9.0 被移除，使用 loop op 替代 NVIDIA TensorRT is an SDK for optimizing trained deep learning models to enable high-performance inference. TensorRT contains a deep learning inference">
+<meta property="og:description" content="base 推理是使用训练好的模型进行预测的过程，而部署是将这个模型集成到最终应用环境的过程。 推理系统优化目标 延迟(Latency): 满足服务等级协议的延迟 吞吐量(Throughputs): 暴增负载的吞吐量需求 效率(Efficiency): 高效率，低功耗使用 GPU，CPU 灵活性(Flexibility): 支持多种框架，提供构建不同应用的灵活 扩展性(Scalability): 扩">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://developer-blogs.nvidia.com/wp-content/uploads/2023/01/nvidia-inference-stack.png">
 <meta property="article:published_time" content="2021-04-13T13:35:32.000Z">
-<meta property="article:modified_time" content="2024-01-11T02:39:51.848Z">
+<meta property="article:modified_time" content="2024-02-27T04:12:35.490Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="TensorRT">
 <meta name="twitter:card" content="summary">
@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">174</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-11 10:39:51" itemprop="dateModified" datetime="2024-01-11T10:39:51+08:00">2024-01-11</time>
+                <time title="修改时间：2024-02-27 12:12:35" itemprop="dateModified" datetime="2024-02-27T12:12:35+08:00">2024-02-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -278,14 +278,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.3k</span>
+              <span>8.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -298,6 +298,21 @@
 
       
         <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>推理是使用训练好的模型进行预测的过程，而部署是将这个模型集成到最终应用环境的过程。</li>
+<li><a target="_blank" rel="noopener" href="https://microsoft.github.io/AI-System/SystemforAI-8-Inference.pdf">推理系统优化目标</a><ul>
+<li>延迟(Latency): 满足服务等级协议的延迟</li>
+<li>吞吐量(Throughputs): 暴增负载的吞吐量需求</li>
+<li>效率(Efficiency): 高效率，低功耗使用 GPU，CPU</li>
+<li>灵活性(Flexibility): 支持多种框架，提供构建不同应用的灵活</li>
+<li>扩展性(Scalability): 扩展支持不断增长的用户或设备</li>
+</ul>
+</li>
+<li>推理考虑延迟、吞吐量和效率，部署考虑灵活性和可扩展性</li>
+<li>提高 batch size 用于提高吞吐</li>
+<li>等待浪费 GPU, 造成低效率</li>
+<li>python 用 trt 部署验证模型更有效率</li>
+<li>pytorch2.0 之后有了原生的 IR, 可以修改和运行 IR, 也可以直接支持转换成 trt 模型，简化了 torch -&gt; onnx model -&gt; trt engine -&gt; load to torch 的流程</li>
+<li><code>PyTorch-Quantization</code> is a toolkit for training and evaluating PyTorch models with simulated quantization. Quantization can be added to the model automatically, or manually, allowing the model to be tuned for accuracy and performance. The quantized model can be exported to ONNX and imported to an upcoming version of TensorRT. PyTorch-Quantization 是一个用于通过模拟量化来训练和评估 PyTorch 模型的工具包。量化可以自动或手动添加到模型中，从而可以调整模型的准确性和性能。量化模型可以导出到 ONNX 并导入到即将推出的 TensorRT 版本。</li>
 <li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#work-with-loops">work with loop</a></li>
 <li>rnn 在 9.0 被移除，使用 loop op 替代</li>
 <li>NVIDIA TensorRT is an SDK for optimizing trained deep learning models to enable high-performance inference. TensorRT contains <code>a deep learning inference optimizer for trained deep learning models</code>, and <code>a runtime for execution</code>.</li>
@@ -340,7 +355,92 @@
 <li>同步推理: <code>executeV2</code>方法; 异步推理: <code>enqueueV2</code></li>
 <li><img src="https://developer-blogs.nvidia.com/wp-content/uploads/2023/01/nvidia-inference-stack.png" alt="NVIDIA 推理堆栈"></li>
 <li>在 TensorRT 8.5 及更高版本中， cuDNN 和 cuBLAS 内核是可选的添加，以减少 TensorRT 库的部署大小。</li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/performance/dl-performance-convolutional/index.html#tensor-layout">Tensor Layouts In Memory: NCHW vs NHWC</a></li>
+<li>tensor core 用 Implicit GEMM 实现的卷积不用生成中间的矩阵，直接原位计算， 不需要 im2col <a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/performance/dl-performance-convolutional/index.html#tc-usage">link</a></li>
+<li>因为为 Tensor Core 实现的卷积需要 NHWC 布局，并且当输入张量以 NHWC 布局时速度最快</li>
 <li>NHWC 格式的输入非常适合 NVIDIA 上的 Tensor Core GPU 。由于 ONNX 仅支持 NCHW 格式(?)，因此必须使用技巧启用 NHWC 作为输入张量。将输入维度设置为 NHWC ，并在 CUDA 或 TensorRT EP 删除的输入之后插入 Transpose 操作</li>
+<li>The process of identifying the sequences of operations that can be fused is called <code>pattern-matching</code>. TensorRT has a powerful pattern-matching algorithm that can identify a lot of possible fusions.</li>
+<li>可以使用 python API 来调用转换后的 engine 来和 torch 结果作比较</li>
+<li>workspace<ul>
+<li>在 TensorRT 中，工作空间（Workspace）是用于存储临时数据（如中间层输出、优化过程中的临时数据）的内存区域。它主要在模型优化和执行过程中被使用。</li>
+<li>较大的工作空间可以允许 TensorRT 执行更复杂的优化，可能带来更高的运行效率。然而，过大的工作空间可能导致内存资源的浪费或者在内存受限的设备上无法运行。</li>
+<li>在使用 TensorRT API 时，可以通过编程方式配置工作空间的大小。这通常在<code>构建优化引擎（Optimization Engine）时设置</code></li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/tensorrt/archives/tensorrt-722/developer-guide/index.html#troubleshooting">Q: How do I choose the optimal workspace size?</a>。</li>
+</ul>
+</li>
+</ol>
+<h2 id="ecosystem"><a href="#ecosystem" class="headerlink" title="ecosystem"></a><a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/tensorrt/quick-start-guide/index.html#ecosystem">ecosystem</a></h2><ol>
+<li>workflow<ul>
+<li>导出 onnx 模型</li>
+<li>选择 batch size</li>
+<li>选择量化精度</li>
+<li>转换模型</li>
+<li>发布模型</li>
+</ul>
+</li>
+<li>有多种方式可以转换模型</li>
+<li>有多种方式可以部署模型</li>
+</ol>
+<h2 id="plugins-custom-op"><a href="#plugins-custom-op" class="headerlink" title="plugins(custom op)"></a>plugins(custom op)</h2><ol>
+<li>要在应用程序中使用 TensorRT 官方插件，必须加载 libnvinfer_plugin.so （Windows 上为 nvinfer_plugin.dll ）库，并且必须通过在应用程序中调用 initLibNvInferPlugins 来注册所有插件代码。</li>
+<li>几个概念：<ul>
+<li>plugin: 具体 plugin 实现， 需要继承 IPluginV2DynamicExt</li>
+<li>plugin creator: plugin 对象创建方法，相当于抽象工场函数的具体工厂, 改工厂的实例会被注册到全局工厂(注册表)中，用来创建 creator</li>
+<li>register: 将 plugin creator 工厂函数注册到, tensorrt sample 中注册位置<a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/blob/main/plugin/api/inferPlugin.cpp">register tensorrt plugin</a>; 单例模式实现<ul>
+<li>需要调用 getPluginRegistry()-&gt;registerCreator(*pluginCreator, libNamespace)来注册</li>
+<li>REGISTER_TENSORRT_PLUGIN 宏也可以来注册：#define REGISTER_TENSORRT_PLUGIN(name) static nvinfer1::PluginRegistrar<name> pluginRegistrar##name {}; getPluginRegistry()-&gt;registerCreator(instance, “”);</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>设计模式插件系统; so 加载时 static 变量初始化注册工厂实例到全局工厂；反射 由字符串来创建对象</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/tree/main/samples/sampleOnnxMnistCoordConvAC">官方 sample</a><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/tree/main/plugin/coordConvACPlugin">plugin 代码位置</a></li>
+<li>enqueue 在 cu 文件中实现</li>
+<li>自己写的插件可能用不到 workspace, 见上述代码 enqueue 函数</li>
+<li>onnx shape_inference 在模型上显示 shape 信息</li>
+<li>修改模型时要照着 net forward 来改 op input(tensor) output name</li>
+<li>自定义 op 内可变参数作为输入, 不变数值直接写死, y&#x3D;kx + 2; k 是参数，2 是数值, y &#x3D; x + 2</li>
+<li>netron 上不变参数(weights bias div mul 需要的参数)使用 constant tensor 类型，输入是 variable tensor, attributes 是 op <code>初始化</code>用到的数值， 计算不用</li>
+<li>参数传递与转换：在插件中，你需要将原始模型中算子的参数传递到你的插件实现中。这通常涉及到参数的序列化和反序列化。确保所有必要的参数都被正确传递，并且在需要时进行适当的数据类型转换。</li>
+<li>attention 输入为 q k v 输出 q 维度类似的结果; 参数可能为各种 shape 信息 地址 head num, scale, mask 等。如果是 paged attention 需要处理 q k v 地址不连续的情况, <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/638468472">link</a></li>
+</ul>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/tree/master/plugin">官方 plugin</a></li>
+</ol>
+</li>
+<li>ONNX 解析器会自动尝试将无法识别的节点作为插件导入。如果在插件注册表中找到与该节点具有相同 op_type 的插件</li>
+<li>python 自定义 op 用了多种内置 op 实现，在图上表现为多个内置 op，需要把 onnx 模型内置 op 转换为自定义 op 再转换模型</li>
+<li>适用场景<ul>
+<li>python 中算子 trt 不支持可以用 plugin 方式实现</li>
+<li>trt 算子性能有问题</li>
+<li>手动算子融合(将融合算子的所有输入作为融合算子的输入， 输出同理)</li>
+</ul>
+</li>
+<li>合并之后的 中间 op 的参数也不用管，因为算子等价，中间参数无用</li>
+<li>op 没有权重，只是计算方法，处理输入得到输出，不用关心权重问题, 权重在输入接口,<ul>
+<li>attention 插件会在接口中传递输入输出地址，kvcache 地址， 长度等信息，插件负责计算</li>
+<li>load 模型时权重会从模型 load 到 op，作为参数传递给 op；序列化与反序列化</li>
+</ul>
+</li>
+<li>onnx 模型添加了 plugin 之后 neoton 可能显示不出 shape 信息，原因是 plugin 的存在，妨碍了自动推断;<ul>
+<li>如果 plugin 不改变 shape，直接删除掉之后，在图上就能看到 shape 信息</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/tensorrt/developer-guide/index.html#extending">Extending TensorRT with Custom Layers</a></li>
+<li>即使 TensorRT 拥有强大的模式匹配算法并支持许多可能的融合，但始终存在无法识别不常见和&#x2F;或非常高级模式的风险。为了克服这一不可避免的限制，TensorRT 提供了一种称为插件的强大机制。</li>
+<li>The plugins are nodes inserted in the network graph definition that map to user-defined GPU kernels.</li>
+</ol>
+<h2 id="修改模型"><a href="#修改模型" class="headerlink" title="修改模型"></a>修改模型</h2><h3 id="拆分"><a href="#拆分" class="headerlink" title="拆分"></a>拆分</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/tree/master/tools/onnx-graphsurgeon">TensorRT&#x2F;tools&#x2F;onnx-graphsurgeon</a></li>
+<li><code>polygraph surgeon extract</code>也可以提取子图</li>
+<li>一个一个算子累加形成 grpah 可以找出出现问题的 op; 加入 polygrpah 不能用，trtexec 能用；所有 graph 设置同一个输入，和 onnx 比输出</li>
+</ol>
+<h3 id="op-替换"><a href="#op-替换" class="headerlink" title="op 替换"></a>op 替换</h3><h2 id="build"><a href="#build" class="headerlink" title="build"></a>build</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/tree/main?tab=readme-ov-file#optional---if-not-using-tensorrt-container-specify-the-tensorrt-ga-release-build-path">源码编译</a><ul>
+<li><code>export TRT_LIBPATH=</code>pwd<code>/TensorRT-8.6.1.6/lib</code>必须设置</li>
+</ul>
+</li>
 </ol>
 <h2 id="查看版本"><a href="#查看版本" class="headerlink" title="查看版本"></a>查看版本</h2><ol>
 <li>jtop -&gt; INFO</li>
@@ -349,15 +449,18 @@
 <li><code>dpkg-query -W tensorrt</code> tensorrt 版本</li>
 <li><code>cat /proc/driver/nvidia/gpus/0000\:02\:00.0/information</code> 查看硬件型号</li>
 </ol>
-<h2 id="查看模型信息"><a href="#查看模型信息" class="headerlink" title="查看模型信息"></a>查看模型信息</h2><ol>
+<h2 id="查看模型信息-对数"><a href="#查看模型信息-对数" class="headerlink" title="查看模型信息, 对数"></a>查看模型信息, 对数</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/tree/main/tools/Polygraphy/examples/cli/inspect/">polygraph</a><ul>
 <li><code>polygraphy inspect model tensorrt/resnet50/model.onnx</code></li>
 <li><code>polygraphy inspect capability model.onnx</code> Inspecting TensorRT ONNX Support</li>
 <li><code>polygraphy inspect model op16_iter7_refine_filter_fb.trt --model-type=engine --show layers</code></li>
 <li><code>polygraphy run dynamic_identity.onnx --trt --onnxrt</code> Comparing TensorRT And ONNX-Runtime Outputs</li>
 <li><code>polygraphy run dynamic_identity.onnx --trt --fp16 --onnxrt --input-shapes X:[1,2,4,4]</code> Comparing TensorRT Precisions</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/tree/main/tools/Polygraphy/examples/cli/run/05_comparing_with_custom_input_data">run&#x2F;05_comparing_with_custom_input_data</a></li>
+<li><code>polygraphy surgeon sanitize model.onnx --fold-constants -o folded.onnx</code> 可以 fold constant, 作为 op 参数, 不用作为 input</li>
 </ul>
 </li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/tree/main/tools/experimental/trt-engine-explorer">trt-engine-explorer</a></li>
 </ol>
 <h2 id="op-支持"><a href="#op-支持" class="headerlink" title="op 支持"></a>op 支持</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://github.com/onnx/onnx-tensorrt/blob/main/docs/operators.md">onnx operators.md</a></li>
@@ -369,6 +472,11 @@
 <li>TensorRT 是用于高性能深度学习<code>推理</code>的 SDK。此 SDK 包含深度学习推理优化器和<code>运行时环境</code>，可为深度学习推理应用提供低延迟和高吞吐量。借助 TensorRT，开发者可专注于创建新颖的 AI 支持应用，无需费力调节性能来部署推理工作。</li>
 </ol>
 <h2 id="trt-engine-explorer"><a href="#trt-engine-explorer" class="headerlink" title="trt-engine-explorer"></a><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/tree/main/tools/experimental/trt-engine-explorer">trt-engine-explorer</a></h2><h2 id="trtexec"><a href="#trtexec" class="headerlink" title="trtexec"></a>trtexec</h2><h3 id="转模型"><a href="#转模型" class="headerlink" title="转模型"></a>转模型</h3><ol>
+<li>NOTE: <code>--noTF32 Disable tf32 precision (default is to enable tf32, in addition to fp32)</code>转出的模型默认是 tf32<ul>
+<li>A100、H100 tf32 算力比 fp32 算力高 8 倍左右</li>
+<li>3090 上 tf32 算力跟 fp32 算力相同</li>
+</ul>
+</li>
 <li><code>trtexec --onnx=model.onnx --saveEngine=model.trt</code></li>
 <li><code>trtexec --onnx=model.onnx --saveEngine=model_fp16.trt --fp16</code></li>
 <li><code>trtexec --onnx=model.onnx --saveEngine=model_int8.trt --int8</code></li>
@@ -378,7 +486,16 @@
 <li><code>算子融合：</code>trtexec 会尝试将多个算子融合为一个算子，以减少推理过程中的开销。</li>
 <li><code>内存优化：</code>trtexec 会尝试将模型的权重和激活值存储在更高效的内存中，以提高推理速度。</li>
 <li><code>模型裁剪：</code>trtexec 会尝试将模型的参数量减少，以减少推理过程中的计算量。</li>
-<li><code>图优化?</code></li>
+<li><code>图优化?</code> <a target="_blank" rel="noopener" href="https://microsoft.github.io/AI-System/SystemforAI-9-Compilation%20and%20Optimization.pdf">link</a><ul>
+<li>等价变化简化图计算; 算术表达式等价替换：a*0 -&gt; 0; 公共子表达式消除, 常量折叠</li>
+<li>子图替换，如 flash attention</li>
+<li>包括算子融合</li>
+<li>剪枝</li>
+<li>调度优化，异步， 可以并行的并行做</li>
+<li>内存优化</li>
+<li>混合精度</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>trtexec 执行步骤：<ul>
@@ -534,7 +651,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%89%88%E6%9C%AC"><span class="nav-number">2.</span> <span class="nav-text">查看版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%A8%A1%E5%9E%8B%E4%BF%A1%E6%81%AF"><span class="nav-number">3.</span> <span class="nav-text">查看模型信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#op-%E6%94%AF%E6%8C%81"><span class="nav-number">4.</span> <span class="nav-text">op 支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TensorRT-CUDA-cuDNN"><span class="nav-number">5.</span> <span class="nav-text">TensorRT, CUDA, cuDNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#trt-engine-explorer"><span class="nav-number">6.</span> <span class="nav-text">trt-engine-explorer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#trtexec"><span class="nav-number">7.</span> <span class="nav-text">trtexec</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AC%E6%A8%A1%E5%9E%8B"><span class="nav-number">7.1.</span> <span class="nav-text">转模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E7%90%86"><span class="nav-number">7.2.</span> <span class="nav-text">推理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">8.</span> <span class="nav-text">links</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ecosystem"><span class="nav-number">2.</span> <span class="nav-text">ecosystem</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plugins-custom-op"><span class="nav-number">3.</span> <span class="nav-text">plugins(custom op)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%A8%A1%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">修改模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%86%E5%88%86"><span class="nav-number">4.1.</span> <span class="nav-text">拆分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#op-%E6%9B%BF%E6%8D%A2"><span class="nav-number">4.2.</span> <span class="nav-text">op 替换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#build"><span class="nav-number">5.</span> <span class="nav-text">build</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%89%88%E6%9C%AC"><span class="nav-number">6.</span> <span class="nav-text">查看版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%A8%A1%E5%9E%8B%E4%BF%A1%E6%81%AF-%E5%AF%B9%E6%95%B0"><span class="nav-number">7.</span> <span class="nav-text">查看模型信息, 对数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#op-%E6%94%AF%E6%8C%81"><span class="nav-number">8.</span> <span class="nav-text">op 支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TensorRT-CUDA-cuDNN"><span class="nav-number">9.</span> <span class="nav-text">TensorRT, CUDA, cuDNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#trt-engine-explorer"><span class="nav-number">10.</span> <span class="nav-text">trt-engine-explorer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#trtexec"><span class="nav-number">11.</span> <span class="nav-text">trtexec</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AC%E6%A8%A1%E5%9E%8B"><span class="nav-number">11.1.</span> <span class="nav-text">转模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E7%90%86"><span class="nav-number">11.2.</span> <span class="nav-text">推理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">12.</span> <span class="nav-text">links</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -550,7 +667,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">174</span>
+          <span class="site-state-item-count">175</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -583,6 +700,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -593,9 +713,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/11/blas/" title="2024&#x2F;01&#x2F;11&#x2F;blas&#x2F;">blas</a>
         </li>
     </ul>
   </div>
@@ -633,13 +750,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">463k</span>
+    <span title="站点总字数">484k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:01</span>
+    <span title="站点阅读时长">7:20</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://i.ibb.co/8PQq9fy/Cs-Me-Agns06.png">
 <meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/2icOarNW84W7BnJpVvdnUeOgJYHibeWJbd4z0KJu556ykzgnjl7MHm5YWyjWDqR7eMPmXIWSWCFy8KG3dJQD8O8A/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1">
 <meta property="article:published_time" content="2021-08-24T14:30:52.000Z">
-<meta property="article:modified_time" content="2024-02-04T11:35:08.763Z">
+<meta property="article:modified_time" content="2024-02-27T07:34:27.656Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="Profiling">
 <meta property="article:tag" content="Perf">
@@ -135,7 +135,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">174</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -237,7 +237,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-04 19:35:08" itemprop="dateModified" datetime="2024-02-04T19:35:08+08:00">2024-02-04</time>
+                <time title="修改时间：2024-02-27 15:34:27" itemprop="dateModified" datetime="2024-02-27T15:34:27+08:00">2024-02-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -280,14 +280,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>41k</span>
+              <span>42k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>37 分钟</span>
+              <span>38 分钟</span>
             </span>
 
         </div>
@@ -329,14 +329,18 @@
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/445267642">linux 性能分析工具 perf：十八般武器之 cache</a></li>
 <li><a target="_blank" rel="noopener" href="https://static.linaro.org/connect/yvr18/presentations/yvr18-416.pdf">Using perf On Arm platforms</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/gaogaotiantian/viztracer">viztracer</a></li>
-<li>谓词替换分支， 谓词函数是一个返回布尔值的函数。</li>
+<li>谓词替换分支， 谓词函数是一个返回布尔值的函数。<ul>
+<li>这种方法涉及将复杂或重复的条件逻辑（通常出现在 if-else 或 switch 语句中）替换为更简洁、更清晰的代码结构。这种替换通常通过使用函数指针、Lambda 表达式或对象方法来实现。如 map 查找来替换 else if</li>
+</ul>
+</li>
 <li>问 chatgpt 如何优化</li>
 <li><a target="_blank" rel="noopener" href="https://tvm.hyper.ai/docs/tutorial/tensor_expr#%E7%A4%BA%E4%BE%8B-2%E4%BD%BF%E7%94%A8-te-%E6%89%8B%E5%8A%A8%E4%BC%98%E5%8C%96%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95">TVM 各种优化方法</a><ul>
-<li>块操作</li>
-<li>循环置换</li>
-<li>向量化</li>
-<li>数组打包</li>
-<li>通过缓存优化块写入</li>
+<li>总体： 提高缓存命中率和使用 SIMD</li>
+<li>块操作(cache)</li>
+<li>循环置换(cache)</li>
+<li>向量化(simd)</li>
+<li>数组打包, 重新排序，类似 cutlass cute(cache)</li>
+<li>通过缓存优化块写入(cache)</li>
 <li>并行化</li>
 </ul>
 </li>
@@ -379,7 +383,7 @@
 <li>可以实测最大 FLOPS，最大主存带宽, 得到最大计算访存比；当程序计算访存比小于最大计算访存比时，则是访存密集型，大于则是计算密集型。<code>并不是访存量大于计算量才是访存密集型</code>。</li>
 <li>应用所在的点不能超过屋顶</li>
 <li>其中 x 轴表示<code>算术密度</code>（每个访问的字节所做的浮点操作数），y 轴表示<code>性能</code>（通常是 FLOP&#x2F;s， Tops&#x2F;s，即每秒浮点操作数）。如果代码在带宽屋顶下方但接近于它，那么可能会受到内存带宽的限制。相反，如果代码在计算屋顶下方但接近于它，那么它可能受到计算能力的限制。</li>
-<li><code>how to opt gemm</code> 只需计算性能就能矩阵乘优化好坏，因为 roof line 目标就是提高计算性能</li>
+<li><code>how to opt gemm</code> 只需计算性能就能矩阵乘优化好坏，因为 roof line 目标就是提高计算性能, 计算性能才是关键，计算量一定，计算越快，延迟越少，访存只是完成计算需要的步骤，目的是完成计算</li>
 <li><code>Arithmetic Intensity</code>算术密度(FLOPs&#x2F;Byte), (速率或总量， 知道总操作数和总访问量也可以)</li>
 <li>注意 FLOPS 和 Flops 区别。 FLOPS &#x3D; Flops&#x2F;s</li>
 <li>转折点为最大性能，最大带宽（可由计算密度算）</li>
@@ -399,9 +403,9 @@
 <li>如果只用 cache， 计算密度不变，向上</li>
 <li>Achieved Value - The achieved value represents the performance of the profiled kernel. If baselines are being used, the roofline chart will also contain an achieved value for each baseline.</li>
 <li>The distance from the achieved value to the respective roofline boundary (shown in this figure as a dotted white line), represents the opportunity for performance improvement. The closer the achieved value is to the roofline boundary, the more optimal is its performance. An achieved value that lies on the Memory Bandwidth Boundary but is not yet at the height of the ridge point would indicate that any further improvements in overall FLOP&#x2F;s are only possible if the Arithmetic Intensity is increased at the same time. 到达点到 roofline 边界距离显示了优化机会，越接近边界表示越接近最佳性能，如果接近边界但还没到脊点，那么只有计算密度增加才能提高计算性能。</li>
-<li>memory bound 步骤：先向上， 在向左<ul>
+<li>memory bound 步骤：先向上， 在向右<ul>
 <li>向上：提高带宽(提升 cache 命中率)</li>
-<li>向左：提高计算密度(算法层面优化：减少访存) Reducing data movement increases AI</li>
+<li>向右：提高计算密度(算法层面优化：减少访存) Reducing data movement increases AI</li>
 </ul>
 </li>
 <li>系统和应用在存储不同层级上有不同的脊点和 AI<br><img src="https://i.ibb.co/8PQq9fy/Cs-Me-Agns06.png" alt="pic"></li>
@@ -593,7 +597,7 @@
 </li>
 <li><p>eigen 矩阵可以向量化，Eigen::Map 问 chatgpt</p>
 </li>
-<li><p>矩阵乘法是计算密集型运算。为取得良好的 CPU 性能，有两个重要的优化： <a target="_blank" rel="noopener" href="https://tvm.hyper.ai/docs/tutorial/tensor_expr#%E7%A4%BA%E4%BE%8B-2%E4%BD%BF%E7%94%A8-te-%E6%89%8B%E5%8A%A8%E4%BC%98%E5%8C%96%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95">link</a></p>
+<li><p>矩阵乘法是计算密集型运算(会变)。为取得良好的 CPU 性能，有两个重要的优化： <a target="_blank" rel="noopener" href="https://tvm.hyper.ai/docs/tutorial/tensor_expr#%E7%A4%BA%E4%BE%8B-2%E4%BD%BF%E7%94%A8-te-%E6%89%8B%E5%8A%A8%E4%BC%98%E5%8C%96%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95">link</a></p>
 <ul>
 <li><code>提高内存访问的缓存命中率</code>。高缓存命中率可以加速复杂的数值计算和热点内存访问。这需要将原始内存访问模式转换为适合缓存策略的模式。</li>
 <li><code>SIMD（单指令多数据）</code>，又称向量处理单元。在每个循环中，SIMD 可以处理一小批数据，而不是处理单个值。这需要将循环体中的数据访问模式转换为统一模式，以便 LLVM 后端可将其降低到 SIMD。</li>
@@ -611,6 +615,7 @@
 <ul>
 <li>连续访存</li>
 <li>分块</li>
+<li>循环置换</li>
 </ul>
 </li>
 <li><p>向量处理器可以设置步幅，访问步幅确定的非连续内存也有比较高的性能</p>
@@ -784,7 +789,7 @@
 </li>
 <li><p>访存密集型</p>
 <ul>
-<li>提高 page 和 cache 命中率</li>
+<li>提高 cache 命中率</li>
 <li>减少不必要访存</li>
 </ul>
 </li>
@@ -792,9 +797,9 @@
 </li>
 </ol>
 <h2 id="理论性能评估"><a href="#理论性能评估" class="headerlink" title="理论性能评估"></a>理论性能评估</h2><ol>
-<li>理论 GPU 使用时间计算：各模型的推理耗时是单模型实测值，GPU 时间片按照各自的设计帧率（如 15Hz (fps)）× 推理耗时得到，是个纯理论计算的值。总和为各部分理论值相加，820 为理论值，这个值如果大于 1000 则系统无法达成。</li>
-<li>单模型推理时间 * fps &#x3D; 模型占用 gpu 时间, 所有模型时间不能超过 1000ms;</li>
-<li>有了各个模型推理时间也可以算理论最大帧率；（未考虑模型对计算资源的抢占，锁）</li>
+<li>(假设串行执行)理论 GPU 使用时间计算：各模型的推理耗时是单模型实测值，GPU 时间片按照各自的设计帧率（如 15Hz (fps)）× 推理耗时得到，是个纯理论计算的值。总和为各部分理论值相加，820 为理论值，这个值如果大于 1000 则系统无法达成。</li>
+<li>单模型推理时间 x fps &#x3D; 模型占用 gpu 时间, 所有模型时间不能超过 1000ms;</li>
+<li>有了各个模型推理时间也可以算理论最大帧率；（未考虑模型对计算资源的抢占，锁）1000 &#x2F; 所有模型加一起耗时;</li>
 </ol>
 <h2 id="推理优化"><a href="#推理优化" class="headerlink" title="推理优化"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Matrix_Yao/p/13181778.html">推理优化</a></h2><ol>
 <li><a target="_blank" rel="noopener" href="https://www.6aiq.com/article/1662281420188">深度模型推理加速的术与道</a></li>
@@ -812,7 +817,7 @@
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/362575905">profiling 与性能优化总结</a></li>
 </ol>
 <h2 id="性能调优方法"><a href="#性能调优方法" class="headerlink" title="性能调优方法"></a>性能调优方法</h2><h3 id="PMC-Performance-Monitoring-Counters"><a href="#PMC-Performance-Monitoring-Counters" class="headerlink" title="PMC(Performance Monitoring Counters)"></a>PMC(Performance Monitoring Counters)</h3><h3 id="循环展开"><a href="#循环展开" class="headerlink" title="循环展开"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/553771789">循环展开</a></h3><ol>
-<li>计算能力（GFlops）和访存速度（MB&#x2F;s）的矛盾，在汇编语言中就是取指令（load）和计算（ALU）的矛盾。访存和计算天然是两种独立的资源，两者可以独立运行互不影响。</li>
+<li>计算能力（GFlops）和访存速度（MB&#x2F;s）的矛盾，在汇编语言中就是取指令（load store）和计算（ALU）的矛盾。访存和计算天然是两种独立的资源，两者可以独立运行互不影响。</li>
 <li>当循环次数变少，循环体增多的时候，<code>CPU在执行循环体的过程中就有了更大的操作空间进行指令调度(inline也有这个作用)</code>，在计算 a[i]的时候就可以去调度 a[i+1]相关的指令（取数据）和 a[i-1]相关的指令（存数据），因此 CPU 流水线更满载，也就提高了性能。</li>
 <li>循环展开可以减少分支预测的次数</li>
 <li>一般不需要手动优化，-O2 会自动展开， -O1 不会</li>
@@ -905,7 +910,7 @@
 <li><code>sudo cachetop-bpfcc</code></li>
 </ol>
 <h4 id="prefetch"><a href="#prefetch" class="headerlink" title="prefetch"></a>prefetch</h4><ol>
-<li>预取是一种优化技术，它允许 CPU 提前加载将要访问的数据到缓存中，以便在实际访问数据时可以更快地获得它。预取可以减少由于缓存未命中引起的等待时间。</li>
+<li>预取是一种优化技术，它允许 CPU 提前加载将要访问的数据到缓存中，以便在实际访问数据时可以更快地获得它。预取可以减少由于缓存未命中引起的等待时间。减少指令延迟</li>
 <li>硬件预取：现代 CPU 已经有自己的硬件预取策略。在某些情况下，手动的预取可能会与硬件的预取策略发生冲突，导致性能下降。</li>
 <li><code> __builtin_prefetch(&amp;data[i + 16], 0, 1);  // 预取下一个将要访问的数据</code></li>
 </ol>
@@ -1092,7 +1097,12 @@
 </ol>
 <h4 id="mem"><a href="#mem" class="headerlink" title="mem"></a>mem</h4><h3 id="perfetto"><a href="#perfetto" class="headerlink" title="perfetto"></a><a target="_blank" rel="noopener" href="https://perfetto.dev/docs/">perfetto</a></h3><ol>
 <li><a target="_blank" rel="noopener" href="https://perfetto.dev/docs/tracing-101">tracing-101</a><ul>
-<li>Logging vs tracing vs metrix</li>
+<li>Logging vs tracing vs profiling vs metrix</li>
+<li>profiling 使用采样技术，tracing 会跟踪每个细节</li>
+<li>Traces cannot feasibly capture execution of extreme high frequency events e.g. every function call. Profiling tools fill this niche: by sampling, they can significantly cut down on how much information they store.</li>
+<li>跟踪无法捕获高频时间， profiling 弥补了空白</li>
+<li>Traces are excellent at providing this exact context: application instrumentation and low-level kernel events together provide deep insight into why code was run in the first place.</li>
+<li>跟踪非常适合提供这种精确的上下文：应用程序检测和低级内核事件一起提供了对代码最初运行原因的深入了解。</li>
 </ul>
 </li>
 </ol>
@@ -1419,7 +1429,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">174</span>
+          <span class="site-state-item-count">175</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1452,6 +1462,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1462,9 +1475,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/01/11/blas/" title="2024&#x2F;01&#x2F;11&#x2F;blas&#x2F;">blas</a>
         </li>
     </ul>
   </div>
@@ -1502,13 +1512,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">463k</span>
+    <span title="站点总字数">484k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:01</span>
+    <span title="站点阅读时长">7:20</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
