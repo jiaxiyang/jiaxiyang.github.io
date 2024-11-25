@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0-rc2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
+  </script>
+
+  <meta name="description" content="base 使得算子开发的部分复杂度分配给上层 kernel 开发用户，部分复杂度分配给底层的 Triton compiler。同时对接上层框架的工作则交给了上层软件栈，使得 Triton 能够专注在自己这个层次需要解决的核心问题上，找到了一个比较不错的”product&#x2F;technology” fit。 Triton 的核心设计思想—-Block-wise 编程，Block 上面的归用户，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="triton">
+<meta property="og:url" content="https://jiaxiyang.github.io/2024/07/03/triton/index.html">
+<meta property="og:site_name" content="Xiyang">
+<meta property="og:description" content="base 使得算子开发的部分复杂度分配给上层 kernel 开发用户，部分复杂度分配给底层的 Triton compiler。同时对接上层框架的工作则交给了上层软件栈，使得 Triton 能够专注在自己这个层次需要解决的核心问题上，找到了一个比较不错的”product&#x2F;technology” fit。 Triton 的核心设计思想—-Block-wise 编程，Block 上面的归用户，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.ibb.co/NYSS9WV/Xrz-Qku-ZLSo.png">
+<meta property="og:image" content="https://i.ibb.co/qszbhN4/NYmmor-R0l-P.png">
+<meta property="article:published_time" content="2024-07-03T07:04:53.000Z">
+<meta property="article:modified_time" content="2024-07-25T09:24:53.881Z">
+<meta property="article:author" content="贾夕阳">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.ibb.co/NYSS9WV/Xrz-Qku-ZLSo.png">
+
+<link rel="canonical" href="https://jiaxiyang.github.io/2024/07/03/triton/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>triton | Xiyang</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WGS6S6YFJ6"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-WGS6S6YFJ6');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Xiyang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Think twice, code once!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">44</span></a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">55</span></a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/jiaxiyang" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/07/03/triton/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          triton
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-07-03 15:04:53" itemprop="dateCreated datePublished" datetime="2024-07-03T15:04:53+08:00">2024-07-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-07-25 17:24:53" itemprop="dateModified" datetime="2024-07-25T17:24:53+08:00">2024-07-25</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/07/03/triton/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/07/03/triton/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>使得算子开发的部分复杂度分配给上层 kernel 开发用户，部分复杂度分配给底层的 Triton compiler。同时对接上层框架的工作则交给了上层软件栈，使得 Triton 能够专注在自己这个层次需要解决的核心问题上，找到了一个比较不错的”product&#x2F;technology” fit。</li>
+<li>Triton 的核心设计思想—-Block-wise 编程，Block 上面的归用户，Block 内部的归 Triton compiler 自动化处理。相应地，Block 内部的优化细节，也交由 Triton compiler 处理了。</li>
+<li>Triton 这个项目目前还更像是一个满足细分场景(高效高性能 Kernel 开发)需求的“小而美”的项目</li>
+<li>triton kernel 中的计算是 block level, 跟据 ptr + offset 直接计算一个 block，block 具体如何划分成 thread 由编译器决定<ul>
+<li>通过 arrange + stride 来计算 block 中每个数据的 offset</li>
+</ul>
+</li>
+<li>注意代码中的 pid 含义和 cuda 的不同：triton 表示 block id, cuda 表示 thread id</li>
+<li>自定义优化搜索空间，减少搜索时间</li>
+<li>使用 triton 来做 codegen</li>
+<li>triton 的 language 语法确实很简单，相比较 cuda 来说，它能够帮我们快速验证一些 idea，同时给出比 cublas 性能相当的算子。</li>
+<li>Using Triton, you only need to know that a program is divided into multiple blocks</li>
+<li>大部分的框架都以 python 的 DSL 暴露给用户，然后用户通过写对应的 python 语法，调用已经用 C++&#x2F;CUDA 或者 assemble 写好的高性能组件。</li>
+<li><code>pip show triton</code> &#x2F;usr&#x2F;local&#x2F;lib&#x2F;python3.10&#x2F;dist-packages&#x2F;triton&#x2F;_C&#x2F;libtriton.so</li>
+<li>支持 nvidia, AMD GPU； &#x2F;usr&#x2F;local&#x2F;lib&#x2F;python3.10&#x2F;dist-packages&#x2F;triton&#x2F;backends&#x2F;amd&#x2F;lib&#x2F;libamdhip64.so</li>
+<li><code>~/.triton/cache</code> cache 路径, 里面有 ptx, cubin, 各种 ir 文件</li>
+<li>Triton, a <code>language</code> and <code>compiler</code> for writing highly efficient custom Deep-Learning primitives. The aim of Triton is to provide an open-source environment to write fast code at higher productivity than CUDA, but also with higher flexibility than other existing DSLs.</li>
+<li>An open-source python-like programming language which enables researchers with no CUDA experience to write highly efficient GPU code – most of the time on par with what an expert would be able to produce</li>
+<li>开发效率<br><img src="https://i.ibb.co/NYSS9WV/Xrz-Qku-ZLSo.png" alt="img"></li>
+<li>领域特定语言（DSLs)</li>
+<li>本质上来说，Triton 和 TVM&#x2F;XLA 这类工作的定位有所不同，如果说 TVM&#x2F;XLA 是比较纯正的 AI 编译器的话，Triton 更像是一个面向 AI 加速器算子开发的领域开发语言，为了能够将用户使用 Triton 语言开发的 kernel 映射到具体硬件上的执行码，需要设计开发相应的 Triton compiler 来完成这层映射。所以当我们说 Triton 的时候，其实隐指了 Triton 语言+Triton 编译器这两个事物的综合体。</li>
+<li>从 triton 的源码来看，triton 目前在 NV 的 GPU 上已经有了一套自己比较成熟的 mapping 路线，通过先对 python 语言层，也就是 triton DSL 进行抽象，得到 AST，然后将 AST 中的每个节点 lower 到 Triton Dialect 上，Triton Dialect 则是一个比较贴近上层语言表达的 IR，他的主要作用则是为了保持用户在书写对应算法时的准确性。接下来会进一步被 map 到 TritonGPU Dialect 上，那么 TritonGPU Dialect 则是一个更加贴近 GPU 层面的 IR，它则是为了具体的性能优化而设计。图中其他的蓝色模块，比如 SCF，Arith，Tensor 等都是 MLIR 生态中已经被实现好并且广为使用的 Dialect。这些 Dialect 会一起和 TritonGPU Dialect 共存，然后被 lower 到对应的 LLVM Dialect，LLVM Dialect 则是最贴近 LLVM IR 的一层设计，从 LLVM Dialect 到 LLVM IR 的转换是非常容易的，最终代码就会被接入到 LLVM 的 NVPTX 的后端，从而生成后续能跑在 GPU 上的高性能 machine code. <a target="_blank" rel="noopener" href="http://giantpandacv.com/project/%E9%83%A8%E7%BD%B2%E4%BC%98%E5%8C%96/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%BC%96%E8%AF%91%E5%99%A8/OpenAI%20Triton%20MLIR%20%E7%AC%AC%E9%9B%B6%E7%AB%A0%20%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/">link</a></li>
+<li>和 cuda pytorch 区别 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=AtbnRIzpwho&t=273s">link</a><br><img src="https://i.ibb.co/qszbhN4/NYmmor-R0l-P.png" alt="区别"></li>
+<li>编译器是一个很好的生产力工具，能够帮助做很多手工的任务</li>
+<li>triton 支持的语言特性是 Python 的一个子集<ul>
+<li>no dict</li>
+<li>no meta-programming</li>
+<li>no slicing</li>
+<li>no indexing</li>
+<li>…</li>
+</ul>
+</li>
+<li>triton v2 <a target="_blank" rel="noopener" href="https://www.jokeren.tech/slides/triton_next.pdf">link</a><ul>
+<li>MLIR(Triton dialect, TritonGPU dialect)</li>
+<li>clean layout concepts(like cutlass cute)<ul>
+<li>low overhead time: Cache and fetch kernels using efficient signatures</li>
+</ul>
+</li>
+<li>debugging: triton.language.print</li>
+<li>Profiler interface</li>
+</ul>
+</li>
+<li>查看 grid</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grid = <span class="keyword">lambda</span> meta: (triton.cdiv(n_elements, meta[<span class="string">&#x27;BLOCK_SIZE&#x27;</span>]), )</span><br><span class="line">grid_size = grid(&#123;<span class="string">&#x27;BLOCK_SIZE&#x27;</span>: <span class="number">1024</span>&#125;) <span class="comment"># grid是lamda函数，需要先调用才能看结果</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;Grid size: <span class="subst">&#123;grid_size&#125;</span>&#x27;</span>) <span class="comment"># (97, )</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h2><ol>
+<li>triton.jit</li>
+<li>triton.autotune</li>
+<li>triton.compile</li>
+<li>torch.compile</li>
+</ol>
+<h2 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://triton-lang.org/main/programming-guide/chapter-3/debugging.html">官方指导</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/triton-lang/triton?tab=readme-ov-file#tips-for-building">源码 debug</a></li>
+<li><code>TRITON_INTERPRET=1</code> 使用 Triton 解释器而不是在 GPU 上运行。您可以在内核代码中插入 Python 断点！NOTE:注意真正运行的时候不要打开</li>
+<li><code>TRITON_PRINT_AUTOTUNING=1</code>可以打印 autotune 选择的最快配置 prints out the best autotuning config and total time spent for each kernel after autotuning is complete.</li>
+</ol>
+<h2 id="c-调用-triton-kernel"><a href="#c-调用-triton-kernel" class="headerlink" title="c++调用 triton kernel"></a>c++调用 triton kernel</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/triton-lang/triton/blob/main/python/test/unit/tools/test_aot.py">test aot</a><ul>
+<li>vscode testing 下的 pytest 来测试 debug 模式可以看到生成的文件路径, 右键测试程序进入 debug</li>
+<li>能自动生成 kernel.h, kernel.c, libkernel.so, test.c 不用手写</li>
+<li>python3 -m pytest -v python&#x2F;test&#x2F;unit&#x2F;tools 运行测试程序</li>
+<li>python3 -m pytest -v -k test_compile_link_matmul python&#x2F;test&#x2F;unit&#x2F;tools&#x2F;test_aot.py</li>
+<li>compile.py 编译</li>
+<li>compile_aot_kernels 编译 kernel</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/triton-lang/triton/blob/fd691c67ac20958a67693358186d877790f5f48f/python/triton/tools/link.py#L222">load 函数</a></li>
+</ul>
+</li>
+<li>在 c++ load triton 生成的 ptx 或者 cubin 文件</li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://giantpandacv.com/project/%E9%83%A8%E7%BD%B2%E4%BC%98%E5%8C%96/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%BC%96%E8%AF%91%E5%99%A8/OpenAI%20Triton%20MLIR%20%E7%AC%AC%E9%9B%B6%E7%AB%A0%20%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/">非常好的中文教程</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jokeren.tech/slides/triton_next.pdf">triton next</a><ul>
+<li>why triton</li>
+<li>triton 的定位</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/613244988">谈谈对 OpenAI Triton 的一些理解</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+      
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>贾夕阳
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://jiaxiyang.github.io/2024/07/03/triton/" title="triton">https://jiaxiyang.github.io/2024/07/03/triton/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/07/01/talk-skills/" rel="prev" title="talk_skills">
+      <i class="fa fa-chevron-left"></i> talk_skills
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/09/24/qualcomm/" rel="next" title="qualcomm">
+      qualcomm <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">装饰器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#debug"><span class="nav-number">3.</span> <span class="nav-text">debug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c-%E8%B0%83%E7%94%A8-triton-kernel"><span class="nav-number">4.</span> <span class="nav-text">c++调用 triton kernel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">5.</span> <span class="nav-text">links</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="贾夕阳"
+      src="/images/coder2.jpg">
+  <p class="site-author-name" itemprop="name">贾夕阳</p>
+  <div class="site-description" itemprop="description">深度学习/自动驾驶/C++/性能优化</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jiaxiyang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jiaxiyang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+  <div class="links-of-recent-posts motion-element">
+    <div class="links-of-recent-posts-title">
+      <i class="fa fa-history fa-fw"></i>
+      最近文章
+    </div>
+    <ul class="links-of-recent-posts-list">
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">贾夕阳</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">543k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">8:13</span>
+</div>
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">载入天数...</span>
+<span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("06/26/2020 14:52:10");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_sphere.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : '[object Object]',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://jiaxiyang.github.io/2024/07/03/triton/',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'g32ipLmEye1u5l6wBGRJt03S-gzGzoHsz',
+      appKey     : 'zHgLkAICsZUl9Mf8LfdoVigP',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+  
+
+  <script src="/js/activate-power-mode.min.js"></script>
+  <script>
+    POWERMODE.colorful = true;
+    POWERMODE.shake = false;
+    document.body.addEventListener('input', POWERMODE);
+  </script>
+
+
+
+
+
+ 
+</body>
+</html>
+

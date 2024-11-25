@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="badges 显示 build 状态 what-are-gitlab-badges  format check123456check-format:  image:    name: witekio&#x2F;clang-format-checker    entrypoint: [&quot;&quot;]  script:    - run-clang-format.py -r src  include">
+  <meta name="description" content="base 使用 clang-format 在 CI 中自动格式化 C++代码  badges 显示 build 状态 what-are-gitlab-badges  format check123456check-format:  image:    name: witekio&#x2F;clang-format-checker    entrypoint: [&quot;&quot;]  script:">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Gitlab-CI">
 <meta property="og:url" content="https://jiaxiyang.github.io/2022/02/15/Gitlab-CI/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="badges 显示 build 状态 what-are-gitlab-badges  format check123456check-format:  image:    name: witekio&#x2F;clang-format-checker    entrypoint: [&quot;&quot;]  script:    - run-clang-format.py -r src  include">
+<meta property="og:description" content="base 使用 clang-format 在 CI 中自动格式化 C++代码  badges 显示 build 状态 what-are-gitlab-badges  format check123456check-format:  image:    name: witekio&#x2F;clang-format-checker    entrypoint: [&quot;&quot;]  script:">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-15T15:27:31.000Z">
-<meta property="article:modified_time" content="2023-11-23T05:40:05.839Z">
+<meta property="article:modified_time" content="2024-06-28T07:42:21.917Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="Tools">
 <meta property="article:tag" content="CI">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-23 13:40:05" itemprop="dateModified" datetime="2023-11-23T13:40:05+08:00">2023-11-23</time>
+                <time title="修改时间：2024-06-28 15:42:21" itemprop="dateModified" datetime="2024-06-28T15:42:21+08:00">2024-06-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -277,7 +277,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6.3k</span>
+              <span>6.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -296,7 +296,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="badges"><a href="#badges" class="headerlink" title="badges"></a>badges</h2><ol>
+        <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://lrita.github.io/2022/07/30/auto-clang-format-cpp-code/">使用 clang-format 在 CI 中自动格式化 C++代码</a></li>
+</ol>
+<h2 id="badges"><a href="#badges" class="headerlink" title="badges"></a>badges</h2><ol>
 <li>显示 build 状态</li>
 <li><a target="_blank" rel="noopener" href="https://www.benjaminrancourt.ca/what-are-gitlab-badges/">what-are-gitlab-badges</a></li>
 </ol>
@@ -345,6 +348,12 @@
 <li><code>gitlab-runner unregister --name test-runner</code> 删除 runner</li>
 </ul>
 </li>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#docker-in-docker-with-tls-enabled-in-the-docker-executor">docker in docker</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/runner/configuration/advanced-configuration.html#the-runnersdocker-section">docker image param setting</a><ul>
+<li>需要再创建 runner 的时候设置</li>
+<li>&#x2F;etc&#x2F;gitlab-runner&#x2F;config.toml 可以直接改传递参数</li>
+</ul>
+</li>
 <li>使用 <a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/ci/runners/runners_scope.html">shared runner</a>:<ul>
 <li>需要 admin 用户</li>
 <li>group 下默认有</li>
@@ -379,7 +388,12 @@
 <li><a target="_blank" rel="noopener" href="https://github.com/gitlabhq/gitlabhq/blob/2ea638391497c495798e0bab7c704af112789299/.gitlab/ci/rules.gitlab-ci.yml">rules 模板</a></li>
 <li>只手动编译， 有个按键可以执行所有 job</li>
 </ol>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">.rules:if-tag-or-manual:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">&lt;&lt;:</span> <span class="string">*if-tag</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">when:</span> <span class="string">manual</span></span><br><span class="line"></span><br><span class="line"><span class="string">.rules:always:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">when:</span> <span class="string">always</span></span><br><span class="line">      <span class="attr">allow_failure:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## fix mr detach issue</span></span><br><span class="line"><span class="attr">workflow:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">if:</span> <span class="string">&#x27;$CI_PIPELINE_SOURCE == &quot;merge_request_event&quot;&#x27;</span></span><br><span class="line">      <span class="attr">when:</span> <span class="string">never</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">when:</span> <span class="string">always</span></span><br><span class="line"></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">build</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">test</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Build::GPU_ubuntu20.04:</span></span><br><span class="line">  <span class="attr">extends:</span></span><br><span class="line">    <span class="string">.rules:if-tag-or-manual</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">.rules:if-tag-or-manual:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">&lt;&lt;:</span> <span class="string">*if-tag</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">when:</span> <span class="string">manual</span></span><br><span class="line"></span><br><span class="line"><span class="string">.rules:always:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">when:</span> <span class="string">always</span></span><br><span class="line">      <span class="attr">allow_failure:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## fix mr detach issue； merge_request_event or push 禁止一个</span></span><br><span class="line"><span class="attr">workflow:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">if:</span> <span class="string">&#x27;$CI_PIPELINE_SOURCE == &quot;merge_request_event&quot;&#x27;</span></span><br><span class="line">      <span class="attr">when:</span> <span class="string">never</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">when:</span> <span class="string">always</span></span><br><span class="line"></span><br><span class="line"><span class="attr">stages:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">build</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">test</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Build::GPU_ubuntu20.04:</span></span><br><span class="line">  <span class="attr">extends:</span></span><br><span class="line">    <span class="string">.rules:if-tag-or-manual</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>失败自动 format</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Build::Format:</span></span><br><span class="line">  <span class="attr">rules:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">if:</span> <span class="string">&#x27;$CI_PIPELINE_SOURCE == &quot;merge_request_event&quot;&#x27;</span></span><br><span class="line">      <span class="attr">when:</span> <span class="string">on_failure</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">when:</span> <span class="string">never</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">build</span></span><br><span class="line">  <span class="attr">tags:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">xxx</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">xxx</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">bash</span> <span class="string">ci/format.sh</span></span><br></pre></td></tr></table></figure>
 
 <ol>
 <li>在 mr 时自动运行全流程，or 手动选择要编译的平台</li>
@@ -558,7 +572,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#badges"><span class="nav-number">1.</span> <span class="nav-text">badges</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#format-check"><span class="nav-number">2.</span> <span class="nav-text">format check</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#include"><span class="nav-number">3.</span> <span class="nav-text">include</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#release-artifacts"><span class="nav-number">4.</span> <span class="nav-text">release artifacts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pipeline"><span class="nav-number">5.</span> <span class="nav-text">pipeline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh"><span class="nav-number">6.</span> <span class="nav-text">ssh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#runner"><span class="nav-number">7.</span> <span class="nav-text">runner</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#script"><span class="nav-number">8.</span> <span class="nav-text">script</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deploy"><span class="nav-number">9.</span> <span class="nav-text">deploy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#prefill-variables"><span class="nav-number">10.</span> <span class="nav-text">prefill variables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#workflow"><span class="nav-number">11.</span> <span class="nav-text">workflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#keys"><span class="nav-number">12.</span> <span class="nav-text">keys</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#needs"><span class="nav-number">12.1.</span> <span class="nav-text">needs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rules"><span class="nav-number">13.</span> <span class="nav-text">rules</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Notes"><span class="nav-number">14.</span> <span class="nav-text">Notes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Links"><span class="nav-number">15.</span> <span class="nav-text">Links</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#samples"><span class="nav-number">16.</span> <span class="nav-text">samples</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#badges"><span class="nav-number">2.</span> <span class="nav-text">badges</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#format-check"><span class="nav-number">3.</span> <span class="nav-text">format check</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#include"><span class="nav-number">4.</span> <span class="nav-text">include</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#release-artifacts"><span class="nav-number">5.</span> <span class="nav-text">release artifacts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pipeline"><span class="nav-number">6.</span> <span class="nav-text">pipeline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh"><span class="nav-number">7.</span> <span class="nav-text">ssh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#runner"><span class="nav-number">8.</span> <span class="nav-text">runner</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#script"><span class="nav-number">9.</span> <span class="nav-text">script</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#deploy"><span class="nav-number">10.</span> <span class="nav-text">deploy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#prefill-variables"><span class="nav-number">11.</span> <span class="nav-text">prefill variables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#workflow"><span class="nav-number">12.</span> <span class="nav-text">workflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#keys"><span class="nav-number">13.</span> <span class="nav-text">keys</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#needs"><span class="nav-number">13.1.</span> <span class="nav-text">needs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rules"><span class="nav-number">14.</span> <span class="nav-text">rules</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Notes"><span class="nav-number">15.</span> <span class="nav-text">Notes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Links"><span class="nav-number">16.</span> <span class="nav-text">Links</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#samples"><span class="nav-number">17.</span> <span class="nav-text">samples</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -574,7 +588,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">175</span>
+          <span class="site-state-item-count">190</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -607,19 +621,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
+          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
+          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -657,13 +671,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">484k</span>
+    <span title="站点总字数">543k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:20</span>
+    <span title="站点阅读时长">8:13</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

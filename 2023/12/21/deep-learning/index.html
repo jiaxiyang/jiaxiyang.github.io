@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="基础概念 Deep learning is an approach to machine learning characterized by deep stacks of computations. This depth of computation is what has enabled deep learning models to disentangle the kinds of compl">
+  <meta name="description" content="基础概念 神经网络本质上是一个计算图。计算图的节点是算子，边是参与运算的张量  Deep learning is an approach to machine learning characterized by deep stacks of computations. This depth of computation is what has enabled deep learning model">
 <meta property="og:type" content="article">
 <meta property="og:title" content="deep-learning">
 <meta property="og:url" content="https://jiaxiyang.github.io/2023/12/21/deep-learning/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="基础概念 Deep learning is an approach to machine learning characterized by deep stacks of computations. This depth of computation is what has enabled deep learning models to disentangle the kinds of compl">
+<meta property="og:description" content="基础概念 神经网络本质上是一个计算图。计算图的节点是算子，边是参与运算的张量  Deep learning is an approach to machine learning characterized by deep stacks of computations. This depth of computation is what has enabled deep learning model">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.ibb.co/bWthfyQ/o-XLOSNus4-J.png">
 <meta property="article:published_time" content="2023-12-21T05:18:24.000Z">
-<meta property="article:modified_time" content="2024-02-22T07:59:20.687Z">
+<meta property="article:modified_time" content="2024-07-02T09:31:05.965Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.ibb.co/bWthfyQ/o-XLOSNus4-J.png">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-22 15:59:20" itemprop="dateModified" datetime="2024-02-22T15:59:20+08:00">2024-02-22</time>
+                <time title="修改时间：2024-07-02 17:31:05" itemprop="dateModified" datetime="2024-07-02T17:31:05+08:00">2024-07-02</time>
               </span>
 
           
@@ -264,7 +264,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.1k</span>
+              <span>5.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -284,6 +284,8 @@
 
       
         <h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><ol>
+<li><p>神经网络本质上是一个计算图。计算图的节点是算子，边是参与运算的张量</p>
+</li>
 <li><p><code>Deep learning</code> is an approach to machine learning characterized by deep stacks of computations. This depth of computation is what has enabled deep learning models to disentangle the kinds of complex and hierarchical patterns found in the most challenging real-world datasets.</p>
 </li>
 <li><p><code>SGD</code>: 全称为 Stochastic Gradient Descent 即随机梯度下降,是机器学习中常用的优化算法,用于训练各种模型(如神经网络)寻找最优参数, optimizer</p>
@@ -347,6 +349,8 @@
 </li>
 <li><p><code>relu</code> 是 single x 的激活函数</p>
 </li>
+<li><p><a target="_blank" rel="noopener" href="https://medium.com/@tariqanwarph/activation-function-and-glu-variants-for-transformer-models-a4fcbe85323f">GEGLU</a></p>
+</li>
 <li><p><code>MLP, CNN, RNN, Transformer</code> 四大深度学习架构 Multilayer Perceptron(MLP)</p>
 </li>
 <li><p>样本和特征, batch 是样本</p>
@@ -391,6 +395,28 @@
 <li>tensor core 用 Implicit GEMM 实现的卷积不用生成中间的矩阵，直接原位计算， 不需要 im2col <a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/performance/dl-performance-convolutional/index.html#tc-usage">link</a></li>
 <li>因为为 Tensor Core 实现的卷积需要 NHWC 布局，并且当输入张量以 NHWC 布局时速度最快</li>
 </ol>
+<h2 id="model"><a href="#model" class="headerlink" title="model"></a>model</h2><ol>
+<li>构建深度学习模型的基本流程就是：搭建计算图，求得损失函数，然后计算损失函数对模型参数的导数，再利用梯度下降法等方法来更新参数。</li>
+</ol>
+<h2 id="backward"><a href="#backward" class="headerlink" title="backward"></a>backward</h2><ol>
+<li>反向传播用于算梯度</li>
+<li>backward()实际上是通过 DCG 图从根张量追溯到每一个叶子节点，然后计算将计算出的梯度存入每个叶子节点的.grad 属性中</li>
+<li>在某种程度上，反向传播只是链式法则的一个花哨的名字—— Jeremy Howard</li>
+<li>backward 不传入参数时，默认为传入 backward(torch.tensor(1.0))。</li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/pytorch_with_examples.html">Learning PyTorch with Examples</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/niexinyu0026/article/details/122262082">用 numpy、PyTorch 自动求导、torch.nn 库实现两层神经网络</a> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/luedong/p/14492361.html">link</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/baidu_38797690/article/details/122180655">PyTorch：梯度计算之反向传播函数 backward()</a></li>
+</ol>
+<h2 id="optimizer"><a href="#optimizer" class="headerlink" title="optimizer"></a>optimizer</h2><ol>
+<li>根据参数梯度来更新参数</li>
+<li>pytorch 中初始化需要注意 model 参数位置， model.to(gpu_device)之后初始化 optim</li>
+</ol>
+<h2 id="dataset"><a href="#dataset" class="headerlink" title="dataset"></a>dataset</h2><ol>
+<li>用于管理训练时(x_train, y_train)</li>
+</ol>
+<h2 id="dataloader"><a href="#dataloader" class="headerlink" title="dataloader"></a>dataloader</h2><ol>
+<li>dataset batch 管理</li>
+</ol>
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://www.kaggle.com/learn/intro-to-deep-learning">kaggle intro-to-deep-learning</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.kaggle.com/code/ryanholbrook/deep-learning-animations-and-illustrations/notebook">sgd 动画</a></li>
@@ -401,7 +427,7 @@
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0evrjcivb5ArZGLQ4tGrmg">深度学习速查词典</a></li>
 <li><a target="_blank" rel="noopener" href="https://developers.google.com/machine-learning/glossary?hl=zh-cn">google 机器学习术语表</a></li>
 </ol>
-<h3 id="全连接层与矩阵计算"><a href="#全连接层与矩阵计算" class="headerlink" title="全连接层与矩阵计算"></a>全连接层与矩阵计算</h3><ol>
+<h2 id="全连接层与矩阵计算"><a href="#全连接层与矩阵计算" class="headerlink" title="全连接层与矩阵计算"></a>全连接层与矩阵计算</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://excalidraw.com/#json=EUPwP_pkPfoNDDVEC4b71,-89u61cxUzIS_dhKYsdHQQ">图示</a><br><img src="https://i.ibb.co/bWthfyQ/o-XLOSNus4-J.png" alt="图"></li>
 <li>输出的每个神经元可以看到所有输入，提取了输入的某种特征</li>
 <li>两个相乘的矩阵分别为 m×k 和 k×n 时，计算强度的计算略有不同。在这种情况下，矩阵乘法需要进行大约 m×n×k 次乘法和相同数量的加法操作。<ul>
@@ -516,7 +542,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF"><span class="nav-number">1.1.</span> <span class="nav-text">卷积</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">2.</span> <span class="nav-text">links</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AF%E8%AF%AD%E8%A1%A8"><span class="nav-number">2.1.</span> <span class="nav-text">术语表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82%E4%B8%8E%E7%9F%A9%E9%98%B5%E8%AE%A1%E7%AE%97"><span class="nav-number">2.2.</span> <span class="nav-text">全连接层与矩阵计算</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B7%E7%A7%AF"><span class="nav-number">1.1.</span> <span class="nav-text">卷积</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model"><span class="nav-number">2.</span> <span class="nav-text">model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#backward"><span class="nav-number">3.</span> <span class="nav-text">backward</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#optimizer"><span class="nav-number">4.</span> <span class="nav-text">optimizer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dataset"><span class="nav-number">5.</span> <span class="nav-text">dataset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dataloader"><span class="nav-number">6.</span> <span class="nav-text">dataloader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">7.</span> <span class="nav-text">links</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AF%E8%AF%AD%E8%A1%A8"><span class="nav-number">7.1.</span> <span class="nav-text">术语表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82%E4%B8%8E%E7%9F%A9%E9%98%B5%E8%AE%A1%E7%AE%97"><span class="nav-number">8.</span> <span class="nav-text">全连接层与矩阵计算</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -532,7 +558,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">175</span>
+          <span class="site-state-item-count">190</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -565,19 +591,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
+          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
+          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -615,13 +641,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">484k</span>
+    <span title="站点总字数">543k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:20</span>
+    <span title="站点阅读时长">8:13</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

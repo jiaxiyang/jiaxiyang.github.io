@@ -20,17 +20,17 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="great 通过 roofline 作为指导, 各种优化方法对应到 roofline 各种性能分析工具 easyperf VAI profiler perf-book perf-ninja 基于 CPU 性能调优的必要性和方法 topics&#x2F;profiling Linux_Performance_Analysis_and_Tools linuxperf">
+  <meta name="description" content="great 通过 roofline 作为指导, 各种优化方法对应到 roofline  各种性能分析工具  easyperf  VAI profiler  perf-book  perf-ninja  基于 CPU 性能调优的必要性和方法  topics&#x2F;profiling  Linux_Performance_Analysis_and_Tools  linuxperf  glances">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Profiling">
 <meta property="og:url" content="https://jiaxiyang.github.io/2021/08/24/Cpp-Profiling/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="great 通过 roofline 作为指导, 各种优化方法对应到 roofline 各种性能分析工具 easyperf VAI profiler perf-book perf-ninja 基于 CPU 性能调优的必要性和方法 topics&#x2F;profiling Linux_Performance_Analysis_and_Tools linuxperf">
+<meta property="og:description" content="great 通过 roofline 作为指导, 各种优化方法对应到 roofline  各种性能分析工具  easyperf  VAI profiler  perf-book  perf-ninja  基于 CPU 性能调优的必要性和方法  topics&#x2F;profiling  Linux_Performance_Analysis_and_Tools  linuxperf  glances">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.ibb.co/8PQq9fy/Cs-Me-Agns06.png">
 <meta property="og:image" content="https://mmbiz.qpic.cn/sz_mmbiz_png/2icOarNW84W7BnJpVvdnUeOgJYHibeWJbd4z0KJu556ykzgnjl7MHm5YWyjWDqR7eMPmXIWSWCFy8KG3dJQD8O8A/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1">
 <meta property="article:published_time" content="2021-08-24T14:30:52.000Z">
-<meta property="article:modified_time" content="2024-02-27T07:34:27.656Z">
+<meta property="article:modified_time" content="2024-10-29T03:31:13.496Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="Profiling">
 <meta property="article:tag" content="Perf">
@@ -135,7 +135,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -237,7 +237,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-27 15:34:27" itemprop="dateModified" datetime="2024-02-27T15:34:27+08:00">2024-02-27</time>
+                <time title="修改时间：2024-10-29 11:31:13" itemprop="dateModified" datetime="2024-10-29T11:31:13+08:00">2024-10-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -280,14 +280,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>42k</span>
+              <span>44k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>38 分钟</span>
+              <span>40 分钟</span>
             </span>
 
         </div>
@@ -300,41 +300,66 @@
 
       
         <h2 id="great"><a href="#great" class="headerlink" title="great"></a>great</h2><ol>
-<li>通过 roofline 作为指导, 各种优化方法对应到 roofline</li>
-<li><a target="_blank" rel="noopener" href="https://www.brendangregg.com/overview.html">各种性能分析工具</a></li>
-<li><a target="_blank" rel="noopener" href="https://easyperf.net/">easyperf</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.xilinx.com/r/zh-CN/ug1414-vitis-ai/Vitis-AI-Profiler-%E6%9E%B6%E6%9E%84">VAI profiler</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/dendibakh/perf-book">perf-book</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/dendibakh/perf-ninja">perf-ninja</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.eet-china.com/mp/a196988.html">基于 CPU 性能调优的必要性和方法</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/topics/profiling">topics&#x2F;profiling</a></li>
-<li><a target="_blank" rel="noopener" href="https://hhb584520.github.io/kvm_blog/files/perf/Linux_Performance_Analysis_and_Tools.pdf">Linux_Performance_Analysis_and_Tools</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.brendangregg.com/linuxperf.html">linuxperf</a></li>
-</ol>
+<li><p>通过 roofline 作为指导, 各种优化方法对应到 roofline</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.brendangregg.com/overview.html">各种性能分析工具</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://easyperf.net/">easyperf</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://docs.xilinx.com/r/zh-CN/ug1414-vitis-ai/Vitis-AI-Profiler-%E6%9E%B6%E6%9E%84">VAI profiler</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/dendibakh/perf-book">perf-book</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/dendibakh/perf-ninja">perf-ninja</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.eet-china.com/mp/a196988.html">基于 CPU 性能调优的必要性和方法</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/topics/profiling">topics&#x2F;profiling</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://hhb584520.github.io/kvm_blog/files/perf/Linux_Performance_Analysis_and_Tools.pdf">Linux_Performance_Analysis_and_Tools</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.brendangregg.com/linuxperf.html">linuxperf</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/nicolargo/glances">glances</a></p>
 <span id="more"></span>
-
-<ol>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/362575905">profiling 与性能优化总结</a><ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/362575905">profiling 与性能优化总结</a></p>
+<ul>
 <li>通常在计算密集型（CPU intensive）的任务中 CPU time 会占据较大的比重，而在 I&#x2F;O 密集型（I&#x2F;O intensive）任务中 off-CPU time 会占据较大的比重。</li>
 <li>我们把程序在 CPU 上执行的时间（即 user CPU time + system CPU time）称为 CPU time（或 on-CPU time），程序处于睡眠等状态的时间称为 off-CPU time（or blocked time），程序实际运行的时间称为 wall clock time（字面意思是墙上时钟的时间，也就是真实世界中流逝的时间），对于一个给定的线程：wall clock time &#x3D; CPU time + off-CPU time。</li>
 </ul>
 </li>
-<li><a target="_blank" rel="noopener" href="http://arthurchiao.art/blog/linux-tracing-basis-zh/">Linux tracing&#x2F;profiling 基础：符号表、调用栈、perf&#x2F;bpftrace</a></li>
-<li><a target="_blank" rel="noopener" href="https://medium.com/coccoc-engineering-blog/things-you-should-know-to-begin-playing-with-linux-tracing-tools-part-i-x-225aae1aaf13">Practical Linux tracing ( Part 1&#x2F;5) : symbols, debug symbols and stack unwinding</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/385519404">Perf IPC 以及 CPU 性能</a></li>
-<li><a target="_blank" rel="noopener" href="https://plantegg.github.io/">plantegg’s blog</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-AI/tree/master/src/vai_runtime/vart/trace">VART trace</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-AI/tree/master/src/vai_runtime/vart/trace/vaitrace/vaitraceTools/mem_perf">vaitraceTools&#x2F;mem_perf</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.xilinx.com/r/en-US/ug1414-vitis-ai/Vitis-AI-Profiler?tocId=LjrELULUsJtA_mgGxWE2lQ">Vitis-AI-Profiler</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/445267642">linux 性能分析工具 perf：十八般武器之 cache</a></li>
-<li><a target="_blank" rel="noopener" href="https://static.linaro.org/connect/yvr18/presentations/yvr18-416.pdf">Using perf On Arm platforms</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/gaogaotiantian/viztracer">viztracer</a></li>
-<li>谓词替换分支， 谓词函数是一个返回布尔值的函数。<ul>
+<li><p><a target="_blank" rel="noopener" href="http://arthurchiao.art/blog/linux-tracing-basis-zh/">Linux tracing&#x2F;profiling 基础：符号表、调用栈、perf&#x2F;bpftrace</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://medium.com/coccoc-engineering-blog/things-you-should-know-to-begin-playing-with-linux-tracing-tools-part-i-x-225aae1aaf13">Practical Linux tracing ( Part 1&#x2F;5) : symbols, debug symbols and stack unwinding</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/385519404">Perf IPC 以及 CPU 性能</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://plantegg.github.io/">plantegg’s blog</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-AI/tree/master/src/vai_runtime/vart/trace">VART trace</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-AI/tree/master/src/vai_runtime/vart/trace/vaitrace/vaitraceTools/mem_perf">vaitraceTools&#x2F;mem_perf</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://docs.xilinx.com/r/en-US/ug1414-vitis-ai/Vitis-AI-Profiler?tocId=LjrELULUsJtA_mgGxWE2lQ">Vitis-AI-Profiler</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/445267642">linux 性能分析工具 perf：十八般武器之 cache</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://static.linaro.org/connect/yvr18/presentations/yvr18-416.pdf">Using perf On Arm platforms</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/gaogaotiantian/viztracer">viztracer</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/google/orbit">orbit</a></p>
+</li>
+<li><p>谓词替换分支， 谓词函数是一个返回布尔值的函数。</p>
+<ul>
 <li>这种方法涉及将复杂或重复的条件逻辑（通常出现在 if-else 或 switch 语句中）替换为更简洁、更清晰的代码结构。这种替换通常通过使用函数指针、Lambda 表达式或对象方法来实现。如 map 查找来替换 else if</li>
 </ul>
 </li>
-<li>问 chatgpt 如何优化</li>
-<li><a target="_blank" rel="noopener" href="https://tvm.hyper.ai/docs/tutorial/tensor_expr#%E7%A4%BA%E4%BE%8B-2%E4%BD%BF%E7%94%A8-te-%E6%89%8B%E5%8A%A8%E4%BC%98%E5%8C%96%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95">TVM 各种优化方法</a><ul>
+<li><p>问 chatgpt 如何优化</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://tvm.hyper.ai/docs/tutorial/tensor_expr#%E7%A4%BA%E4%BE%8B-2%E4%BD%BF%E7%94%A8-te-%E6%89%8B%E5%8A%A8%E4%BC%98%E5%8C%96%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95">TVM 各种优化方法</a></p>
+<ul>
 <li>总体： 提高缓存命中率和使用 SIMD</li>
 <li>块操作(cache)</li>
 <li>循环置换(cache)</li>
@@ -342,6 +367,19 @@
 <li>数组打包, 重新排序，类似 cutlass cute(cache)</li>
 <li>通过缓存优化块写入(cache)</li>
 <li>并行化</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/google/highway/blob/master/hwy/profiler.h">highway profiler 使用 RAII 可以设置 zone</a></p>
+<ul>
+<li>生命周期结束做一些操作</li>
+<li>add_definitions(-DPROFILER_ENABLED&#x3D;1)</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.51cto.com/article/718780.html">QPS、TPS、RT、吞吐量</a></p>
+<ul>
+<li>系统吞吐量几个重要参数：QPS（TPS）、并发数、响应时间。</li>
+<li>QPS（TPS）&#x3D; 并发数&#x2F;平均响应时间</li>
+<li>QPS：Queries Per Second 意思是“每秒查询率”</li>
 </ul>
 </li>
 </ol>
@@ -442,6 +480,10 @@
 <li><code>echo 1 | sudo tee /proc/sys/kernel/perf_event_paranoid</code></li>
 </ol>
 <h2 id="编译器选项"><a href="#编译器选项" class="headerlink" title="编译器选项"></a>编译器选项</h2><ol>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/hellogcc/100-gcc-tips/blob/master/src/index.md">100-gcc-tips</a></p>
+</li>
+<li><p><code>gcc -Q --help=optimizers -O1</code>打印优化级别的对应选项</p>
+</li>
 <li><p>gcc 选项顺序很重要，如果两个选项冲突，则以后一个为准。可以用<code>-O3 -fno-inline-functions</code>既使用-O3 的功能又关闭函数内嵌功能。</p>
 <ul>
 <li><code>-O3 -O0</code> O0 级别</li>
@@ -457,6 +499,12 @@
 <li><p><code>-LNO:simd</code> 是针对 SIMD（Single Instruction Multiple Data）指令集的优化选项。SIMD 是一种并行计算的技术，它允许在同一时间执行多个数据元素的相同操作，以提高程序的并行性和性能。<code>-LNO:simd</code> 告诉编译器使用 SIMD 指令集进行优化，以利用硬件的并行能力。这可以在循环、向量操作和并行计算等方面提高程序的性能。</p>
 </li>
 <li><p><code>-fopenmp</code>可以在编译时启用 OpenMP 并行编程的支持，从而实现多线程并行执行，提高程序的性能， 需要注意的是，使用 OpenMP 进行并行编程需要在代码中添加适当的并行指令，如 #pragma omp parallel，来标识需要并行执行的代码块。同时，也需要注意线程间的同步和数据共享，以避免并发冲突和数据竞争的问题。</p>
+<ul>
+<li><code>#pragma omp parallel for reduction(+ : sum)</code></li>
+<li><code>#pragma omp parallel</code></li>
+<li>多线程访问同时写一个地址会 core， 需要先处理数据依赖关系，比如先放到 vector 中，最后再合并处理</li>
+<li><code>export OMP_NUM_THREADS=4</code>设置运行时线程数量</li>
+</ul>
 </li>
 <li><p><code>sudo apt install libomp-dev</code></p>
 </li>
@@ -500,7 +548,11 @@
 <li><code>perf top -p</code> 快速的定位热点函数</li>
 <li>火焰图看各函数耗时占比</li>
 <li>perf report and annotate 查看热点函数的热点代码</li>
-<li>profiling table 统计代码具体时间</li>
+<li>profiling table 统计代码具体时间<ul>
+<li>(profiling table + csv server)<a target="_blank" rel="noopener" href="https://nmon.sourceforge.io/pmwiki.php?n=Main.HomePage">nmon</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/LLNL/Caliper">Caliper</a> 类似 Caliper</li>
+</ul>
+</li>
 <li>flamescope 看 hot map</li>
 <li>speedscope</li>
 </ol>
@@ -944,7 +996,68 @@
 <li>-O3 测试</li>
 <li>perf stat .&#x2F;xxx 测试程序运行时间</li>
 </ol>
-<h2 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h2><h3 id="likwid"><a href="#likwid" class="headerlink" title="likwid"></a><a target="_blank" rel="noopener" href="https://github.com/RRZE-HPC/likwid.git">likwid</a></h3><ol>
+<h2 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h2><h3 id="arm-map"><a href="#arm-map" class="headerlink" title="arm map"></a><a target="_blank" rel="noopener" href="https://developer.arm.com/documentation/101136/22-1-3/MAP/Performance-analysis-with-Caliper-instrumentation/Analyze-your-program">arm map</a></h3><h3 id="palanteer"><a href="#palanteer" class="headerlink" title="palanteer"></a><a target="_blank" rel="noopener" href="https://github.com/dfeneyrou/palanteer">palanteer</a></h3><ol>
+<li><a target="_blank" rel="noopener" href="https://dfeneyrou.github.io/palanteer/index.html#">c++ doc</a></li>
+<li><a target="_blank" rel="noopener" href="https://dfeneyrou.github.io/palanteer/getting_started.md.html">getting_started</a></li>
+</ol>
+<h3 id="njmon"><a href="#njmon" class="headerlink" title="njmon"></a><a target="_blank" rel="noopener" href="https://nmon.sourceforge.io/pmwiki.php?n=Site.Njmon">njmon</a></h3><ol>
+<li>注意可以看视频教程</li>
+<li><a target="_blank" rel="noopener" href="https://www.ibm.com/support/pages/njmon-intro-and-update">njmon-intro-and-update</a></li>
+<li><code>wget http://sourceforge.net/projects/nmon/files/njmon_linux_v83.zip</code> tar and make</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/chhanz/njmon-grafana-dashboard-json">njmon-grafana-dashboard-json</a></li>
+</ol>
+<h3 id="nmon"><a href="#nmon" class="headerlink" title="nmon"></a><a target="_blank" rel="noopener" href="https://nmon.sourceforge.io/pmwiki.php?n=Main.HomePage">nmon</a></h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/adejoux/nmon2influxdb">nmon2influxdb</a></li>
+<li>Nigel’s Monitor(nmon)</li>
+<li>可以记录 cpu, memory， io 等资源，用 nmonchart 显示图表</li>
+<li>建议您将快照数量保持在 800 - 1000 左右，以避免文件过大出现问题。</li>
+<li>nmon -f -s 10 -c 360 (snapshot the statistics every 10 seconds for an hour)</li>
+<li>(very good)nmon -fT -s 5 -c 720 非常好用，top 信息, html 中显示 top timeline, execl 中显示 top summary，包括 cpu、memory 各进程使用情况<ul>
+<li>包含各进程 cpu mem 使用信息</li>
+</ul>
+</li>
+<li>-a 包含 gpu 信息</li>
+<li><a target="_blank" rel="noopener" href="https://nmon.sourceforge.io/pmwiki.php?n=Site.Nmonchart">nmonchart</a><ul>
+<li>sampleD 可以看详细信息</li>
+<li>下方 download 下载</li>
+<li><code>wget -c http://sourceforge.net/projects/nmon/files/nmonchart42.tar</code></li>
+<li>sudo apt install ksh</li>
+<li>.&#x2F;nmonchart *.nom 生成 html</li>
+<li>JFS 可以显示文件系统使用百分比历史</li>
+<li>cpu util 中 idle + wait + sys + user &#x3D; 100%</li>
+<li>top command 中与 cpu util 表示方法不同，top command 不叠加，cpu util 叠加</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://nmon.sourceforge.io/pmwiki.php?n=Site.Nmon-Analyser">Nmon-Analyser</a><ul>
+<li>下方下载，注意是 excel，需要解除宏限制 <a target="_blank" rel="noopener" href="https://support.microsoft.com/zh-cn/topic/%E5%B7%B2%E9%98%BB%E6%AD%A2%E6%9C%89%E6%BD%9C%E5%9C%A8%E5%8D%B1%E9%99%A9%E7%9A%84%E5%AE%8F-0952faa0-37e7-4316-b61d-5b5ed6024216">link</a></li>
+<li>使用 excel 生成各种图表，包含各个 cpu 和 cpu_all 信息</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mzky/easyNmon?tab=readme-ov-file">easyNmon</a><ul>
+<li>对 nmon 的扩展</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nmonvisualizer/nmonvisualizer">nmonvisualizer</a></li>
+</ol>
+<h3 id="top-analyzer"><a href="#top-analyzer" class="headerlink" title="top-analyzer"></a><a target="_blank" rel="noopener" href="https://gceasy.io/yc-top-analyzer.jsp">top-analyzer</a></h3><h3 id="netdata"><a href="#netdata" class="headerlink" title="netdata"></a><a target="_blank" rel="noopener" href="https://github.com/netdata/netdata">netdata</a></h3><h3 id="ui"><a href="#ui" class="headerlink" title="ui"></a>ui</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://www.markhansen.co.nz/profiler-uis/">Linux perf Profiler UIs</a></li>
+</ol>
+<h3 id="firefox-devtools-profiler"><a href="#firefox-devtools-profiler" class="headerlink" title="firefox-devtools&#x2F;profiler"></a><a target="_blank" rel="noopener" href="https://github.com/firefox-devtools/profiler">firefox-devtools&#x2F;profiler</a></h3><ol>
+<li>可以打开 perf script 之后的数据，类似 flamegraph</li>
+<li><a target="_blank" rel="noopener" href="https://profiler.firefox.com/">live web</a></li>
+<li>点击上方线程对应的图片，可以显示具体函数调用，注意会高亮所有相同调用的部分</li>
+</ol>
+<h3 id="tracy"><a href="#tracy" class="headerlink" title="tracy"></a><a target="_blank" rel="noopener" href="https://github.com/wolfpld/tracy">tracy</a></h3><h3 id="uftrace"><a href="#uftrace" class="headerlink" title="uftrace"></a><a target="_blank" rel="noopener" href="https://github.com/namhyung/uftrace">uftrace</a></h3><ol>
+<li>uftrace record .&#x2F;test</li>
+<li>uftrace report</li>
+<li>uftrace info</li>
+<li>uftrace dump –flame-graph &gt; test.fold</li>
+<li>flamegraph.pl test.fold &gt; test.svg</li>
+</ol>
+<h3 id="orbit"><a href="#orbit" class="headerlink" title="orbit"></a><a target="_blank" rel="noopener" href="https://github.com/google/orbit">orbit</a></h3><ol>
+<li>Orbit is a CPU profiler that enables you to identify CPU-related performance issues in your application. It allows you to take system traces and detailed CPU performance data using callstack sampling, dynamic instrumentation, memory tracing and GPU driver tracing (AMD only).</li>
+</ol>
+<h3 id="likwid"><a href="#likwid" class="headerlink" title="likwid"></a><a target="_blank" rel="noopener" href="https://github.com/RRZE-HPC/likwid.git">likwid</a></h3><ol>
 <li><code>sudo apt install likwid</code></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/RRZE-HPC/likwid/wiki/AddARMSupport">AddARMSupport</a></li>
 <li><code>likwid-topology -g</code></li>
@@ -991,6 +1104,7 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">valgrind –tool=callgrind ./tmp</span><br><span class="line">callgrind_annotate callgrind.out.XXX</span><br><span class="line">gprof2dot.py -f callgrind callgrind.out.XXX |dot -Tpng -o report.png</span><br></pre></td></tr></table></figure>
 
 <h3 id="pmu-tools"><a href="#pmu-tools" class="headerlink" title="pmu-tools"></a><a target="_blank" rel="noopener" href="https://github.com/andikleen/pmu-tools">pmu-tools</a></h3><h3 id="good-pprof"><a href="#good-pprof" class="headerlink" title="(good)pprof"></a><a target="_blank" rel="noopener" href="https://github.com/google/pprof">(good)pprof</a></h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/google/perf_data_converter">perf_data_converter</a></li>
 <li><code>-g</code>和<code>sudo</code>可能有问题</li>
 </ol>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo perf record -F 99  -g ./bandwidth64</span><br><span class="line">pprof -svg perf.data</span><br></pre></td></tr></table></figure>
@@ -1008,7 +1122,7 @@
 <li>可类似 gprof 将 perf 结果生成调用图</li>
 <li><code>perf script | c++filt | gprof2dot.py -f perf | dot -Tpng -o output.png</code></li>
 </ol>
-<h2 id="perf"><a href="#perf" class="headerlink" title="perf"></a><a target="_blank" rel="noopener" href="https://billtian.github.io/digoal.blog/2016/11/27/01.html">perf</a></h2><ol>
+<h2 id="simpleperf"><a href="#simpleperf" class="headerlink" title="simpleperf"></a><a target="_blank" rel="noopener" href="https://android.googlesource.com/platform/system/extras/+/master/simpleperf/doc/README.md">simpleperf</a></h2><h2 id="perf"><a href="#perf" class="headerlink" title="perf"></a><a target="_blank" rel="noopener" href="https://billtian.github.io/digoal.blog/2016/11/27/01.html">perf</a></h2><ol>
 <li><code>-vvv</code>打印调试信息</li>
 <li><code>perf stat --all-cpus --no-aggr ls</code>查看每一个 cpu 统计</li>
 <li><a target="_blank" rel="noopener" href="https://gaomf.cn/2019/10/30/perf_stack_traceback/">使用 perf 进行性能分析时如何获取准确的调用栈</a></li>
@@ -1031,7 +1145,16 @@
 <li>raw counter 不管是 bash 还是 c++都有个数限制，需要分时复用，有没有方法计算到利用的时间？</li>
 <li><code>perf stat -vvv ./test</code>可以看 perf_event_attr 配置</li>
 </ol>
-<h3 id="timechart"><a href="#timechart" class="headerlink" title="timechart"></a>timechart</h3><h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><ol>
+<h3 id="timechart"><a href="#timechart" class="headerlink" title="timechart"></a>timechart</h3><ol>
+<li><code>sudo perf timechart record</code> or <code>sudo perf timechart record sleep 1</code></li>
+<li><code>sudo perf timechart</code></li>
+<li>图上进程显示时间表示占用 cpu 时间, 注意有多核<ul>
+<li>一个空格 100ms</li>
+</ul>
+</li>
+<li><code>/sys/kernel/debug/tracing/events/sched/sched_wakeup</code> 需要&#x2F;sys&#x2F;kernel&#x2F;debug&#x2F;tracing 文件夹</li>
+</ol>
+<h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><ol>
 <li><a target="_blank" rel="noopener" href="https://developer.arm.com/documentation/100442/0100/debug-descriptions/pmu/pmu-events?lang=en">arm55 pmu 手册</a></li>
 <li>列出 event</li>
 <li><code>likwid-perfctr -e</code> 列出所有 PMC</li>
@@ -1097,12 +1220,15 @@
 </ol>
 <h4 id="mem"><a href="#mem" class="headerlink" title="mem"></a>mem</h4><h3 id="perfetto"><a href="#perfetto" class="headerlink" title="perfetto"></a><a target="_blank" rel="noopener" href="https://perfetto.dev/docs/">perfetto</a></h3><ol>
 <li><a target="_blank" rel="noopener" href="https://perfetto.dev/docs/tracing-101">tracing-101</a><ul>
-<li>Logging vs tracing vs profiling vs metrix</li>
+<li>Logging vs tracing vs profiling vs metrics</li>
 <li>profiling 使用采样技术，tracing 会跟踪每个细节</li>
 <li>Traces cannot feasibly capture execution of extreme high frequency events e.g. every function call. Profiling tools fill this niche: by sampling, they can significantly cut down on how much information they store.</li>
 <li>跟踪无法捕获高频时间， profiling 弥补了空白</li>
 <li>Traces are excellent at providing this exact context: application instrumentation and low-level kernel events together provide deep insight into why code was run in the first place.</li>
 <li>跟踪非常适合提供这种精确的上下文：应用程序检测和低级内核事件一起提供了对代码最初运行原因的深入了解。</li>
+<li>metrics: why bother with high level metrics at all? Why not instead just use tracing and compute metrics on resulting traces? In some settings, this may indeed be the right approach. In local and lab situations using trace-based metrics, where metrics are computed from traces instead of collecting them directly, is a powerful approach. If a metric regresses, it’s easy to open the trace to root cause why that happened.</li>
+<li>指标是跟踪系统随时间变化的性能的数值。通常指标映射到高级概念。指标的示例包括：CPU 使用率、内存使用率、网络带宽等。指标是在程序运行时直接从应用程序或操作系统收集的。</li>
+<li>metrics 比 tracing 要轻量级很多</li>
 </ul>
 </li>
 </ol>
@@ -1184,7 +1310,7 @@
 <li><p>火焰图结合 perf(on-cpu) 实际使用方法</p>
 </li>
 </ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sudo apt install -y linux-tools-generic</span></span><br><span class="line"><span class="comment"># sudo rm /usr/bin/perf</span></span><br><span class="line"><span class="comment"># sudo ln -s /usr/lib/linux-tools/4.15.0-162-generic/perf /usr/bin/perf</span></span><br><span class="line"><span class="comment"># git clone https://github.com/brendangregg/FlameGraph.git</span></span><br><span class="line"><span class="comment"># cd FlameGraph</span></span><br><span class="line"><span class="comment"># perf record -F 99 -p $&#123;PID&#125; -a -g -- sleep 60</span></span><br><span class="line"><span class="comment"># perf script &gt; out.perf</span></span><br><span class="line"><span class="comment"># ./stackcollapse-perf.pl out.perf &gt; out.folded</span></span><br><span class="line"><span class="comment"># ./stackcollapse-perf.pl out.perf | c++flit &gt; out.folded</span></span><br><span class="line"><span class="comment"># ./flamegraph.pl out.folded &gt; out.svg</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sudo apt install -y linux-tools-generic</span></span><br><span class="line"><span class="comment"># sudo rm /usr/bin/perf</span></span><br><span class="line"><span class="comment"># sudo ln -s /usr/lib/linux-tools/4.15.0-162-generic/perf /usr/bin/perf</span></span><br><span class="line"><span class="comment"># git clone https://github.com/brendangregg/FlameGraph.git</span></span><br><span class="line"><span class="comment"># cd FlameGraph</span></span><br><span class="line"><span class="comment"># perf record -F 99 -p $&#123;PID&#125; -a -g -- sleep 60</span></span><br><span class="line"><span class="comment"># perf record -m 1 -F 99(出现mmap问题)</span></span><br><span class="line"><span class="comment"># perf script &gt; out.perf</span></span><br><span class="line"><span class="comment"># ./stackcollapse-perf.pl out.perf &gt; out.folded</span></span><br><span class="line"><span class="comment"># ./stackcollapse-perf.pl out.perf | c++flit &gt; out.folded</span></span><br><span class="line"><span class="comment"># ./flamegraph.pl out.folded &gt; out.svg</span></span><br></pre></td></tr></table></figure>
 
 <ol>
 <li>很轻松的分析出，哪些代码会经常性的触发 pagefault，以及比重。</li>
@@ -1205,6 +1331,12 @@
 </ul>
 </li>
 <li>哪些场景下可以利用火焰图来帮助我们处理问题<br>（1）版本更新时，对比前后两个版本的火焰图差别，有助于我们分析新旧两个版本的异同；<br>（2）CPU 异常占用时（CPU 异常打满或者 CPU 利用率一直上不去），通过火焰图，有助于我们定位异常代码；<br>（3）性能分析时，通过火焰图来了解程序实际执行时各模块对 CPU 资源的占用情况；<br>（4）问题排查，通过分析火焰图的调用栈是否符合预期，排查程序逻辑执行是否符合预期；</li>
+</ol>
+<h2 id="benchmark"><a href="#benchmark" class="headerlink" title="benchmark"></a>benchmark</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/martinus/nanobench">nanobench</a><ul>
+<li>可以测 IPC, cache miss</li>
+</ul>
+</li>
 </ol>
 <h2 id="总结-搜索-speed-up-C"><a href="#总结-搜索-speed-up-C" class="headerlink" title="总结(搜索 speed up C++)"></a>总结(搜索 speed up C++)</h2><ol>
 <li>内存连续读写速度远快于随机读写。(尽可能顺序访问内存)</li>
@@ -1413,7 +1545,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#great"><span class="nav-number">1.</span> <span class="nav-text">great</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#roofline"><span class="nav-number">2.</span> <span class="nav-text">roofline</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#berkeleylab-cs-roofline-toolkit"><span class="nav-number">2.1.</span> <span class="nav-text">berkeleylab&#x2F;cs-roofline-toolkit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#timemory"><span class="nav-number">2.2.</span> <span class="nav-text">timemory</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8%E9%80%89%E9%A1%B9"><span class="nav-number">3.</span> <span class="nav-text">编译器选项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#links"><span class="nav-number">3.1.</span> <span class="nav-text">links</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E6%AD%A5%E9%AA%A4"><span class="nav-number">4.</span> <span class="nav-text">程序性能分析步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#60s-%E6%93%8D%E4%BD%9C-bpf"><span class="nav-number">5.</span> <span class="nav-text">60s 操作 bpf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#simd-library"><span class="nav-number">6.</span> <span class="nav-text">simd library</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%9F%BA%E5%87%86%E6%B5%8B%E8%AF%95"><span class="nav-number">7.</span> <span class="nav-text">性能基准测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sysstat"><span class="nav-number">8.</span> <span class="nav-text">sysstat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#top"><span class="nav-number">9.</span> <span class="nav-text">top</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proc-%E8%8E%B7%E5%8F%96%E4%BF%A1%E6%81%AF"><span class="nav-number">10.</span> <span class="nav-text">proc 获取信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic"><span class="nav-number">11.</span> <span class="nav-text">Basic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E8%AE%BA%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0"><span class="nav-number">12.</span> <span class="nav-text">理论性能评估</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E7%90%86%E4%BC%98%E5%8C%96"><span class="nav-number">13.</span> <span class="nav-text">推理优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E5%AD%90%E8%9E%8D%E5%90%88"><span class="nav-number">13.1.</span> <span class="nav-text">算子融合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cpu-time-and-off-cpu-time"><span class="nav-number">14.</span> <span class="nav-text">cpu time and off-cpu time</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E6%96%B9%E6%B3%95"><span class="nav-number">15.</span> <span class="nav-text">性能调优方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PMC-Performance-Monitoring-Counters"><span class="nav-number">15.1.</span> <span class="nav-text">PMC(Performance Monitoring Counters)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E5%B1%95%E5%BC%80"><span class="nav-number">15.2.</span> <span class="nav-text">循环展开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B"><span class="nav-number">15.3.</span> <span class="nav-text">分支预测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E5%8F%96"><span class="nav-number">15.4.</span> <span class="nav-text">预取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPC-instruction-per-cycle"><span class="nav-number">15.5.</span> <span class="nav-text">IPC (instruction per cycle)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CPI-Cycle-Per-Instruction"><span class="nav-number">15.6.</span> <span class="nav-text">CPI(Cycle Per Instruction)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%91%E6%A0%B8"><span class="nav-number">15.7.</span> <span class="nav-text">绑核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#memory-bound"><span class="nav-number">15.8.</span> <span class="nav-text">memory bound</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSE%EF%BC%88Streaming-SIMD-Extensions%EF%BC%89"><span class="nav-number">15.9.</span> <span class="nav-text">SSE（Streaming SIMD Extensions）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVE-Scalable-Vector-Extension"><span class="nav-number">15.10.</span> <span class="nav-text">SVE(Scalable Vector Extension)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E5%8F%91%E5%B0%84%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-number">15.11.</span> <span class="nav-text">多发射处理器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E8%B0%83%E5%BA%A6%E8%B6%85%E6%A0%87%E9%87%8F%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-number">15.11.1.</span> <span class="nav-text">静态调度超标量处理器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VLIW-%E8%B6%85%E9%95%BF%E6%8C%87%E4%BB%A4%E5%AD%97-%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-number">15.11.2.</span> <span class="nav-text">VLIW( 超长指令字)处理器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%B0%83%E5%BA%A6%E8%B6%85%E6%A0%87%E9%87%8F%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-number">15.11.3.</span> <span class="nav-text">动态调度超标量处理器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cache"><span class="nav-number">15.12.</span> <span class="nav-text">cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E9%AB%98-cache-%E6%80%A7%E8%83%BD"><span class="nav-number">15.13.</span> <span class="nav-text">提高 cache 性能</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cache-line"><span class="nav-number">15.13.1.</span> <span class="nav-text">cache line</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cache-%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-number">15.13.2.</span> <span class="nav-text">cache 一致性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cache-miss"><span class="nav-number">15.13.3.</span> <span class="nav-text">cache miss</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#prefetch"><span class="nav-number">15.13.4.</span> <span class="nav-text">prefetch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%AA%E5%85%B1%E4%BA%AB"><span class="nav-number">15.13.5.</span> <span class="nav-text">伪共享</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Notes"><span class="nav-number">16.</span> <span class="nav-text">Notes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tools"><span class="nav-number">17.</span> <span class="nav-text">Tools</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#likwid"><span class="nav-number">17.1.</span> <span class="nav-text">likwid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gprof"><span class="nav-number">17.2.</span> <span class="nav-text">gprof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#google-perftools"><span class="nav-number">17.3.</span> <span class="nav-text">google-perftools</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#valgrind"><span class="nav-number">17.4.</span> <span class="nav-text">valgrind</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cachegrind"><span class="nav-number">17.4.1.</span> <span class="nav-text">cachegrind</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#callgrind"><span class="nav-number">17.4.2.</span> <span class="nav-text">callgrind</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pmu-tools"><span class="nav-number">17.5.</span> <span class="nav-text">pmu-tools</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#good-pprof"><span class="nav-number">17.6.</span> <span class="nav-text">(good)pprof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gprof2dot"><span class="nav-number">17.7.</span> <span class="nav-text">gprof2dot</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#perf"><span class="nav-number">18.</span> <span class="nav-text">perf</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85"><span class="nav-number">18.1.</span> <span class="nav-text">源码安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#perf-event"><span class="nav-number">18.2.</span> <span class="nav-text">perf_event</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#timechart"><span class="nav-number">18.3.</span> <span class="nav-text">timechart</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list"><span class="nav-number">18.4.</span> <span class="nav-text">list</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#record"><span class="nav-number">18.4.1.</span> <span class="nav-text">record</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#report"><span class="nav-number">18.4.2.</span> <span class="nav-text">report</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#script"><span class="nav-number">18.4.3.</span> <span class="nav-text">script</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#stat"><span class="nav-number">18.4.4.</span> <span class="nav-text">stat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#annotate"><span class="nav-number">18.4.5.</span> <span class="nav-text">annotate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#list-1"><span class="nav-number">18.4.6.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#top-1"><span class="nav-number">18.4.7.</span> <span class="nav-text">top</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mem"><span class="nav-number">18.4.8.</span> <span class="nav-text">mem</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#perfetto"><span class="nav-number">18.5.</span> <span class="nav-text">perfetto</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hotspot"><span class="nav-number">18.6.</span> <span class="nav-text">hotspot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pyroscope"><span class="nav-number">18.7.</span> <span class="nav-text">pyroscope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#speedscope"><span class="nav-number">18.8.</span> <span class="nav-text">speedscope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flamescope"><span class="nav-number">18.9.</span> <span class="nav-text">flamescope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%81%AB%E7%84%B0%E5%9B%BE"><span class="nav-number">18.10.</span> <span class="nav-text">火焰图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-%E6%90%9C%E7%B4%A2-speed-up-C"><span class="nav-number">19.</span> <span class="nav-text">总结(搜索 speed up C++)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cpu-mem-%E5%AE%9E%E6%97%B6%E5%88%A9%E7%94%A8%E7%8E%87"><span class="nav-number">20.</span> <span class="nav-text">cpu mem 实时利用率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#profiling-result"><span class="nav-number">21.</span> <span class="nav-text">profiling result</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Links"><span class="nav-number">22.</span> <span class="nav-text">Links</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">23.</span> <span class="nav-text">优化的问题</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#great"><span class="nav-number">1.</span> <span class="nav-text">great</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#roofline"><span class="nav-number">2.</span> <span class="nav-text">roofline</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#berkeleylab-cs-roofline-toolkit"><span class="nav-number">2.1.</span> <span class="nav-text">berkeleylab&#x2F;cs-roofline-toolkit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#timemory"><span class="nav-number">2.2.</span> <span class="nav-text">timemory</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%99%A8%E9%80%89%E9%A1%B9"><span class="nav-number">3.</span> <span class="nav-text">编译器选项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#links"><span class="nav-number">3.1.</span> <span class="nav-text">links</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD%E5%88%86%E6%9E%90%E6%AD%A5%E9%AA%A4"><span class="nav-number">4.</span> <span class="nav-text">程序性能分析步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#60s-%E6%93%8D%E4%BD%9C-bpf"><span class="nav-number">5.</span> <span class="nav-text">60s 操作 bpf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#simd-library"><span class="nav-number">6.</span> <span class="nav-text">simd library</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%9F%BA%E5%87%86%E6%B5%8B%E8%AF%95"><span class="nav-number">7.</span> <span class="nav-text">性能基准测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sysstat"><span class="nav-number">8.</span> <span class="nav-text">sysstat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#top"><span class="nav-number">9.</span> <span class="nav-text">top</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proc-%E8%8E%B7%E5%8F%96%E4%BF%A1%E6%81%AF"><span class="nav-number">10.</span> <span class="nav-text">proc 获取信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic"><span class="nav-number">11.</span> <span class="nav-text">Basic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E8%AE%BA%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0"><span class="nav-number">12.</span> <span class="nav-text">理论性能评估</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E7%90%86%E4%BC%98%E5%8C%96"><span class="nav-number">13.</span> <span class="nav-text">推理优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%97%E5%AD%90%E8%9E%8D%E5%90%88"><span class="nav-number">13.1.</span> <span class="nav-text">算子融合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cpu-time-and-off-cpu-time"><span class="nav-number">14.</span> <span class="nav-text">cpu time and off-cpu time</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E6%96%B9%E6%B3%95"><span class="nav-number">15.</span> <span class="nav-text">性能调优方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PMC-Performance-Monitoring-Counters"><span class="nav-number">15.1.</span> <span class="nav-text">PMC(Performance Monitoring Counters)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E5%B1%95%E5%BC%80"><span class="nav-number">15.2.</span> <span class="nav-text">循环展开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E9%A2%84%E6%B5%8B"><span class="nav-number">15.3.</span> <span class="nav-text">分支预测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E5%8F%96"><span class="nav-number">15.4.</span> <span class="nav-text">预取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPC-instruction-per-cycle"><span class="nav-number">15.5.</span> <span class="nav-text">IPC (instruction per cycle)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CPI-Cycle-Per-Instruction"><span class="nav-number">15.6.</span> <span class="nav-text">CPI(Cycle Per Instruction)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%91%E6%A0%B8"><span class="nav-number">15.7.</span> <span class="nav-text">绑核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#memory-bound"><span class="nav-number">15.8.</span> <span class="nav-text">memory bound</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSE%EF%BC%88Streaming-SIMD-Extensions%EF%BC%89"><span class="nav-number">15.9.</span> <span class="nav-text">SSE（Streaming SIMD Extensions）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SVE-Scalable-Vector-Extension"><span class="nav-number">15.10.</span> <span class="nav-text">SVE(Scalable Vector Extension)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E5%8F%91%E5%B0%84%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-number">15.11.</span> <span class="nav-text">多发射处理器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E8%B0%83%E5%BA%A6%E8%B6%85%E6%A0%87%E9%87%8F%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-number">15.11.1.</span> <span class="nav-text">静态调度超标量处理器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VLIW-%E8%B6%85%E9%95%BF%E6%8C%87%E4%BB%A4%E5%AD%97-%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-number">15.11.2.</span> <span class="nav-text">VLIW( 超长指令字)处理器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%B0%83%E5%BA%A6%E8%B6%85%E6%A0%87%E9%87%8F%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-number">15.11.3.</span> <span class="nav-text">动态调度超标量处理器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cache"><span class="nav-number">15.12.</span> <span class="nav-text">cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E9%AB%98-cache-%E6%80%A7%E8%83%BD"><span class="nav-number">15.13.</span> <span class="nav-text">提高 cache 性能</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cache-line"><span class="nav-number">15.13.1.</span> <span class="nav-text">cache line</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cache-%E4%B8%80%E8%87%B4%E6%80%A7"><span class="nav-number">15.13.2.</span> <span class="nav-text">cache 一致性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cache-miss"><span class="nav-number">15.13.3.</span> <span class="nav-text">cache miss</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#prefetch"><span class="nav-number">15.13.4.</span> <span class="nav-text">prefetch</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%AA%E5%85%B1%E4%BA%AB"><span class="nav-number">15.13.5.</span> <span class="nav-text">伪共享</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Notes"><span class="nav-number">16.</span> <span class="nav-text">Notes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tools"><span class="nav-number">17.</span> <span class="nav-text">Tools</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#arm-map"><span class="nav-number">17.1.</span> <span class="nav-text">arm map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#palanteer"><span class="nav-number">17.2.</span> <span class="nav-text">palanteer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#njmon"><span class="nav-number">17.3.</span> <span class="nav-text">njmon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nmon"><span class="nav-number">17.4.</span> <span class="nav-text">nmon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#top-analyzer"><span class="nav-number">17.5.</span> <span class="nav-text">top-analyzer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#netdata"><span class="nav-number">17.6.</span> <span class="nav-text">netdata</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ui"><span class="nav-number">17.7.</span> <span class="nav-text">ui</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#firefox-devtools-profiler"><span class="nav-number">17.8.</span> <span class="nav-text">firefox-devtools&#x2F;profiler</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tracy"><span class="nav-number">17.9.</span> <span class="nav-text">tracy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#uftrace"><span class="nav-number">17.10.</span> <span class="nav-text">uftrace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#orbit"><span class="nav-number">17.11.</span> <span class="nav-text">orbit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#likwid"><span class="nav-number">17.12.</span> <span class="nav-text">likwid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gprof"><span class="nav-number">17.13.</span> <span class="nav-text">gprof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#google-perftools"><span class="nav-number">17.14.</span> <span class="nav-text">google-perftools</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#valgrind"><span class="nav-number">17.15.</span> <span class="nav-text">valgrind</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cachegrind"><span class="nav-number">17.15.1.</span> <span class="nav-text">cachegrind</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#callgrind"><span class="nav-number">17.15.2.</span> <span class="nav-text">callgrind</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pmu-tools"><span class="nav-number">17.16.</span> <span class="nav-text">pmu-tools</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#good-pprof"><span class="nav-number">17.17.</span> <span class="nav-text">(good)pprof</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gprof2dot"><span class="nav-number">17.18.</span> <span class="nav-text">gprof2dot</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#simpleperf"><span class="nav-number">18.</span> <span class="nav-text">simpleperf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#perf"><span class="nav-number">19.</span> <span class="nav-text">perf</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85"><span class="nav-number">19.1.</span> <span class="nav-text">源码安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#perf-event"><span class="nav-number">19.2.</span> <span class="nav-text">perf_event</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#timechart"><span class="nav-number">19.3.</span> <span class="nav-text">timechart</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list"><span class="nav-number">19.4.</span> <span class="nav-text">list</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#record"><span class="nav-number">19.4.1.</span> <span class="nav-text">record</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#report"><span class="nav-number">19.4.2.</span> <span class="nav-text">report</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#script"><span class="nav-number">19.4.3.</span> <span class="nav-text">script</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#stat"><span class="nav-number">19.4.4.</span> <span class="nav-text">stat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#annotate"><span class="nav-number">19.4.5.</span> <span class="nav-text">annotate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#list-1"><span class="nav-number">19.4.6.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#top-1"><span class="nav-number">19.4.7.</span> <span class="nav-text">top</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mem"><span class="nav-number">19.4.8.</span> <span class="nav-text">mem</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#perfetto"><span class="nav-number">19.5.</span> <span class="nav-text">perfetto</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hotspot"><span class="nav-number">19.6.</span> <span class="nav-text">hotspot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pyroscope"><span class="nav-number">19.7.</span> <span class="nav-text">pyroscope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#speedscope"><span class="nav-number">19.8.</span> <span class="nav-text">speedscope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flamescope"><span class="nav-number">19.9.</span> <span class="nav-text">flamescope</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%81%AB%E7%84%B0%E5%9B%BE"><span class="nav-number">19.10.</span> <span class="nav-text">火焰图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#benchmark"><span class="nav-number">20.</span> <span class="nav-text">benchmark</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-%E6%90%9C%E7%B4%A2-speed-up-C"><span class="nav-number">21.</span> <span class="nav-text">总结(搜索 speed up C++)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cpu-mem-%E5%AE%9E%E6%97%B6%E5%88%A9%E7%94%A8%E7%8E%87"><span class="nav-number">22.</span> <span class="nav-text">cpu mem 实时利用率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#profiling-result"><span class="nav-number">23.</span> <span class="nav-text">profiling result</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Links"><span class="nav-number">24.</span> <span class="nav-text">Links</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">25.</span> <span class="nav-text">优化的问题</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -1429,7 +1561,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">175</span>
+          <span class="site-state-item-count">190</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1462,19 +1594,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
+          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
+          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -1512,13 +1644,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">484k</span>
+    <span title="站点总字数">543k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:20</span>
+    <span title="站点阅读时长">8:13</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -199,7 +199,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/06/CANBUS/">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/09/v4l2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/coder2.jpg">
@@ -213,7 +213,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/06/CANBUS/" class="post-title-link" itemprop="url">CANBUS</a>
+            <a href="/2022/10/09/v4l2/" class="post-title-link" itemprop="url">v4l2</a>
         </h2>
 
         <div class="post-meta">
@@ -223,7 +223,127 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-09-06 10:40:49" itemprop="dateCreated datePublished" datetime="2022-09-06T10:40:49+08:00">2022-09-06</time>
+              <time title="创建时间：2022-10-09 17:22:03" itemprop="dateCreated datePublished" datetime="2022-10-09T17:22:03+08:00">2022-10-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-09 17:06:28" itemprop="dateModified" datetime="2023-11-09T17:06:28+08:00">2023-11-09</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/10/09/v4l2/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/09/v4l2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="usb-双目"><a href="#usb-双目" class="headerlink" title="usb 双目"></a>usb 双目</h2><ol>
+<li>只能打开一个原因 <a target="_blank" rel="noopener" href="https://www.21xrx.com/Articles/read_article/259051">link</a> <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32900237/article/details/102392445">link2</a></li>
+<li>保存到同一画面上的优势：解决同步问题, 通过板载芯片来进行同步</li>
+</ol>
+<h2 id="v4l2"><a href="#v4l2" class="headerlink" title="v4l2"></a><a target="_blank" rel="noopener" href="http://zhaoxuhui.top/blog/2021/09/23/v4l2-introduction-and-usb-camera-bayer-raw-data.html">v4l2</a></h2><ol>
+<li><code>sudo v4l2-ctl --list-devices</code>获取相机列表</li>
+<li><code>media-ctl -p</code></li>
+<li><code>v4l2-ctl --all -d /dev/video</code></li>
+<li><code>v4l2-ctl -d /dev/video0 --list-formats-ext</code> 列出&#x2F;dev&#x2F;video0 支持的格式</li>
+<li><code>yavta /dev/video0 -n3 -c10 -f YUYV -s1920x1282 --skip 9 -Fvideo0_#.yuv &amp;</code> 从&#x2F;dev&#x2F;video0 拿图, 保存未.yuv</li>
+<li><code>v4l2-ctl --set-fmt-video=width=1920,height=1282,pixelformat=YUYV --stream-mmap --stream-count=1 -d /dev/video0 --stream-to=camera_0_1920_1282_0.yuv</code> 获取一张图片</li>
+<li><a target="_blank" rel="noopener" href="https://askubuntu.com/a/881341">send video to &#x2F;dev&#x2F;video0</a></li>
+<li><code>ffmpeg -y -t 15 -f video4linux2 -video_size 1920x1080 -input_format nv12 -timestamps abs -use_libv4l2 1 -i /dev/video0 out.mov</code> ffmpeg <a target="_blank" rel="noopener" href="https://superuser.com/q/1449252">link</a></li>
+</ol>
+<h2 id="sample"><a href="#sample" class="headerlink" title="sample"></a>sample</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/wuhanstudio/capturev4l2">wuhanstudio&#x2F;capturev4l2</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/html/v4.9/media/uapi/v4l/capture.c.html">C++ sample</a> <code>gcc -o v4l2_test v4l2_test.c</code></li>
+<li>simple opencv sample</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;opencv2/opencv.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;iostream&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span>, <span class="type">char</span>**)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// open the first webcam plugged in the computer</span></span><br><span class="line">    <span class="function">cv::VideoCapture <span class="title">camera</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line">    <span class="keyword">if</span> (!camera.<span class="built_in">isOpened</span>()) &#123;</span><br><span class="line">        std::cerr &lt;&lt; <span class="string">&quot;ERROR: Could not open camera&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// create a window to display the images from the webcam</span></span><br><span class="line">    cv::<span class="built_in">namedWindow</span>(<span class="string">&quot;Webcam&quot;</span>, CV_WINDOW_AUTOSIZE);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// this will contain the image from the webcam</span></span><br><span class="line">    cv::Mat frame;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// capture the next frame from the webcam</span></span><br><span class="line">    camera &gt;&gt; frame;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// display the frame until you press a key</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment">// show the image on the window</span></span><br><span class="line">        cv::<span class="built_in">imshow</span>(<span class="string">&quot;Webcam&quot;</span>, frame);</span><br><span class="line">        <span class="comment">// wait (10ms) for a key to be pressed</span></span><br><span class="line">        <span class="keyword">if</span> (cv::<span class="built_in">waitKey</span>(<span class="number">10</span>) &gt;= <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="issue"><a href="#issue" class="headerlink" title="issue"></a>issue</h2><ol>
+<li><code>OPENCV_LOG_LEVEL=DEBUG ./demo</code> 打开 opencv debug 信息</li>
+<li>注意<code>/dev/video*</code> 权限</li>
+<li>双目摄像头可能需要同时打开 <code>/dev/video0</code> 和 <code>/dev/video1</code></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/09/Life-experience/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/09/Life-experience/" class="post-title-link" itemprop="url">Life-experience</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-10-09 10:13:03" itemprop="dateCreated datePublished" datetime="2022-10-09T10:13:03+08:00">2022-10-09</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -242,8 +362,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2022/09/06/CANBUS/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/06/CANBUS/" itemprop="commentCount"></span>
+    <a title="valine" href="/2022/10/09/Life-experience/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/09/Life-experience/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -253,1388 +373,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>192</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/178274029">CAN FD 协议实用指南</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013606261/article/details/112529205">CAN FD 总线协议深度解析-简单易懂协议详解</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/141638034">DBC 文件：</a> DBC 是 Database Can 的缩写，其代表的是 CAN 的数据库文件，在这个文件中把 CAN 通讯的信息定义的非常完整清楚，而 CAN 网络的通讯就是依据这个文件的描述进行的，所以 DBC 文件的作用非常强大，正是因为有了它才可以使得整个 CAN 网路的节点控制器无差错的协同同步开发。</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/343635976">CANoe 软件介绍</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/06/IDL/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/06/IDL/" class="post-title-link" itemprop="url">IDL</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-09-06 10:22:41" itemprop="dateCreated datePublished" datetime="2022-09-06T10:22:41+08:00">2022-09-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/09/06/IDL/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/06/IDL/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>249</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zh.m.wikipedia.org/zh-hans/%E6%8E%A5%E5%8F%A3%E6%8F%8F%E8%BF%B0%E8%AF%AD%E8%A8%80">接口描述语言（Interface description language，缩写 IDL）</a></li>
-<li>是用来描述软件组件介面的一种计算机语言。IDL 通过一种独立于编程语言的方式来描述接口，使得在不同平台上运行的对象和用不同语言编写的程序可以相互通信交流；比如，一个组件用 C++写成，另一个组件用 Java 写成。<br>IDL 通常用于远程调用软件。在这种情况下，一般是由远程客户终端调用不同操作系统上的对象组件，并且这些对象组件可能是由不同计算机语言编写的。IDL 建立起了两个不同操作系统间通信的桥梁。</li>
-<li><a target="_blank" rel="noopener" href="https://p1.itc.cn/q_70/images03/20220217/2bd3a649a51c4cd08a37ac5c0e864e97.png">idl 开发示意图</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/05/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/05/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="post-title-link" itemprop="url">消息中间件</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-09-05 20:32:52" itemprop="dateCreated datePublished" datetime="2022-09-05T20:32:52+08:00">2022-09-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/09/05/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/05/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.rti.com/rti-blog-cn/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%E6%B1%BD%E8%BD%A6%E7%9A%84%E8%BD%AF%E4%BB%B6%E8%BF%9E%E6%8E%A5%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">自动驾驶汽车的软件连接解决方案</a><ul>
-<li>第一种选择是利用为大规模系统开发的云和企业技术</li>
-<li>第二种选择是从头开始构建解决方案。</li>
-<li>第三种方法是选择一种新的汽车平台，例如 AUTOSAR Adaptive、ROS 2、Apollo 等，并围绕它们构建系统。</li>
-<li>第四种方法是使用基于标准的关键技术中已证明的基础技术。上面提到的几种汽车平台都使用 Data Distribution Service™（DDS）标准作为其核心。</li>
-</ul>
-</li>
-<li>中间件——一种应用于分布式系统的基础软件，自上世纪 80 年代诞生以来，在分布式环境中低调地发挥着重要作用。基于中间件，系统软件与应用软件之间实现了高效连接与沟通，应用开发得以提速。</li>
-<li>消息中间件和计算中间件</li>
-</ol>
-<h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><ol>
-<li>RPC 和消息中间件区别？ <a target="_blank" rel="noopener" href="https://blog.csdn.net/u012562943/article/details/98586854">link</a><ul>
-<li>主要的区别就是消息队列适用于异步场景，而 rpc 是远程同步调用 [<a target="_blank" rel="noopener" href="https://www.cnblogs.com/lizhensheng/p/11117407.html">消息队列 RPC 之间的区别与联系</a>]</li>
-<li>rpc 没有 broker, 而消息队列是需要管理消息的存储的，rpc 没有存储，只有通信。</li>
-<li>不管是消息队列还是 rpc 调用都是 分布式下面的 通信方式。</li>
-<li>消息队列最容易理解的方式就是生产者消费者模式，使两个应用解耦。mq 等框架就是对这的具体实现。</li>
-<li>MQ 是生产者消费者模式。</li>
-<li>RPC 是请求响应模式。</li>
-<li>MQ 是面向数据的。</li>
-<li>RPC 是面向动作的。</li>
-</ul>
-</li>
-<li>Broker: 消息服务器，作为 server 提供消息核心服务</li>
-<li>Producer: 消息生产者，业务的发起方，负责生产消息传输给 broker，</li>
-<li>Consumer: 消息消费者，业务的处理方，负责从 broker 获取消息并进行业务逻辑处理</li>
-<li>Topic: 主题，发布订阅模式下的消息统一汇集地，不同生产者向 topic 发送消息，由 MQ 服务器分发到不同的订阅者，实现消息的广播</li>
-<li>Queue: 队列，PTP 模式下，特定生产者向特定 queue 发送消息，消费者订阅特定的 queue 完成指定消息的接收</li>
-<li>Message: 消息体，根据不同通信协议定义的固定格式进行编码的数据包，来封装业务数据，实现消息的传输</li>
-</ol>
-<h2 id="baidu-cyber-RT"><a href="#baidu-cyber-RT" class="headerlink" title="baidu cyber RT"></a>baidu cyber RT</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/397607823">Apollo6.0 学习 002：Cyber RT 框架</a></li>
-</ol>
-<h2 id="ZeroMQ"><a href="#ZeroMQ" class="headerlink" title="ZeroMQ"></a>ZeroMQ</h2><ol>
-<li>号称最快的消息队列系统，专门为高吞吐量&#x2F;低延迟的场景开发，在金融界的应用中经常使用，偏重于实时数据通信场景。ZMQ 能够实现 RabbitMQ 不擅长的高级&#x2F;复杂的队列，但是开发人员需要自己组合多种技术框架，开发成本高。</li>
-<li>无锁的队列模型：对于跨线程间的交互（用户端和 session）之间的数据交换通道 pipe，采用无锁的队列算法 CAS；在 pipe 的两端注册有异步事件，在读或者写消息到 pipe 的时，会自动触发读写事件。</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/armlinuxww/article/details/103988198">无锁队列的实现</a></li>
-</ol>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E4%B8%AD%E9%97%B4%E4%BB%B6">中间件</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_40210977/article/details/109729464">中间件是什么,常用的中间件有哪些</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/79ca08116d57">消息队列</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/insane-Mr-Li/p/10684536.html">消息中间件（一）MQ 详解及四大 MQ 比较</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/05/DDS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/05/DDS/" class="post-title-link" itemprop="url">DDS</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-09-05 20:19:17" itemprop="dateCreated datePublished" datetime="2022-09-05T20:19:17+08:00">2022-09-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-28 13:14:02" itemprop="dateModified" datetime="2023-09-28T13:14:02+08:00">2023-09-28</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/09/05/DDS/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/05/DDS/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><h3 id="what"><a href="#what" class="headerlink" title="what"></a>what</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://www.dds-foundation.org/what-is-dds-3/">what-is-dds</a></li>
-<li><code>DDS(Data Distribution Service,数据分发服务)</code> 是一种以数据为中心的通信协议，用于分布式软件应用程序通信。</li>
-<li>RTPS 是 Real-Time Publish Subscribe 的缩写</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/192981171">分布式实时通信——DDS 技术简洁</a></li>
-<li><img src="https://pic1.zhimg.com/80/v2-ff84b83ecac6b84f96d3631827080188_720w.jpg" alt="示意图"></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/56652257">简介 2</a><br><img src="https://picx.zhimg.com/80/v2-daee8186bd378ce224b0f032a735f6c6_720w.jpg?source=1940ef5c" alt="DDS模型架构图"></li>
-</ol>
-<h3 id="why"><a href="#why" class="headerlink" title="why"></a>why</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://www.dds-foundation.org/why-choose-dds/">why-choose-dds</a></li>
-<li><a target="_blank" rel="noopener" href="https://icode.best/i/86439147785337">dds 与 some&#x2F;ip 及 opendds 与 fastdds 区别</a></li>
-<li>dds, mq , rpc 区别：<ul>
-<li>dds： 事件总线模式， mq: 代理模式？ <a target="_blank" rel="noopener" href="https://juejin.cn/post/6949929918138417165">事件总线（发布订阅模式）</a></li>
-<li>dds 是（主要是）基于组播的“无中心”的端到端发布订阅，kafka 等主要是基于代理节点的发布订阅，二者在体系结构上差异明显</li>
-<li>抽象程度不一样。DDS 的很多高级功能如果在 ZMQ 基础上增加成本很高。 ZMQ 更底层</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://www.rti.com/blog/2017/04/20/why-would-anyone-use-dds-over-zeromq">why-would-anyone-use-dds-over-zeromq</a><ul>
-<li>In DDS you just publish&#x2F;subscribe to topic names. You never have to provide IP addresses, computer names or ports. It is all handled by the built-in discovery. And it does it automatically without additional services. This means that applications can be re-deployed and integrated without recompilation or reconfiguration.</li>
-<li>In comparison, ZeroMQ is lower level. You must specify ports, IP addresses, etc.</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://www.rti.com/blog/industrial-iot-communication-solutions-which-ones-for-you-comparison">IIoT Solutions | 6 Industrial IoT Communication Solutions</a></li>
-<li><a target="_blank" rel="noopener" href="https://info.rti.com/hubfs/blog-files/iiot_comsol_pngaspdf.pdf">比较图表</a></li>
-<li><img src="https://marvel-b1-cdn.bc0a.com/f00000000264121/www.rti.com/hs-fs/hubfs/Assets%202017/communicationsevolution.jpg?width=720&height=405&name=communicationsevolution.jpg" alt="Architectural diagrams for the various IoT protocols."></li>
-</ol>
-<h3 id="how"><a href="#how" class="headerlink" title="how"></a>how</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://www.dds-foundation.org/how-dds-works/">how-dds-works</a></li>
-</ol>
-<h3 id="others"><a href="#others" class="headerlink" title="others"></a>others</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Tom942067059/article/details/113382934">FastDDS、OpenDDS、ConnextDDS 三者之间是能够实现通信的</a></li>
-</ol>
-<h2 id="Fast-DDS"><a href="#Fast-DDS" class="headerlink" title="Fast-DDS"></a>Fast-DDS</h2><ol>
-<li>DCPS(以数据为中心的发布订阅模型)</li>
-</ol>
-<h3 id="sample"><a href="#sample" class="headerlink" title="sample"></a>sample</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">% docker pull iceoryx/fastdds</span><br><span class="line">% docker run -<span class="built_in">id</span> --name fastdds iceoryx/fastdds</span><br><span class="line">% docker <span class="built_in">exec</span> -it fastdds bash</span><br><span class="line">% tmux new-session <span class="string">&quot;./HelloWorldExample publisher 0 1000&quot;</span> \; \</span><br><span class="line">split-window <span class="string">&quot;./HelloWorldExample subscriber&quot;</span> \; \</span><br><span class="line">select-layout even-vertical</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/briblue/article/details/124081170">通信中间件 Fast DDS 基础概念简述与通信示例</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/05/VSCode/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/05/VSCode/" class="post-title-link" itemprop="url">VSCode</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-09-05 17:57:52" itemprop="dateCreated datePublished" datetime="2022-09-05T17:57:52+08:00">2022-09-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-20 18:52:38" itemprop="dateModified" datetime="2024-02-20T18:52:38+08:00">2024-02-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/09/05/VSCode/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/05/VSCode/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=Bito.Bito">Bito</a></li>
-<li><a target="_blank" rel="noopener" href="https://codegpt.co/">codegpt.co</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=Blackboxapp.blackbox">ai 助手</a></li>
-<li>(good)<a target="_blank" rel="noopener" href="https://ash12rai-weblearning.medium.com/visual-studio-code-vs-code-inlay-hints-32fee837e80">inlay-hints</a><ul>
-<li>font 从 windows 下查找</li>
-<li>font: Lucida Calligraphy, Lucida Bright</li>
-<li>toggle: <code>alt+&#39;</code></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/96041706">从 VSCode 看大型 IDE 技术架构 j</a></li>
-<li><a target="_blank" rel="noopener" href="https://device.harmonyos.com/cn/docs/documentation/guide/vscode_proxy-0000001074231144">vscode proxy setting</a></li>
-</ol>
-<h2 id="sync-config"><a href="#sync-config" class="headerlink" title="sync config"></a><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/editor/settings-sync">sync config</a></h2><ol>
-<li>不好用</li>
-</ol>
-<h2 id="task"><a href="#task" class="headerlink" title="task"></a>task</h2><ol>
-<li><code>Task: configure task</code> 设置 task 选择 other task</li>
-<li><code>Task: run task</code></li>
-</ol>
-<h2 id="cmake"><a href="#cmake" class="headerlink" title="cmake"></a>cmake</h2><ol>
-<li><code>M-x C/C++ Edit configurations(JSON)</code> 打开工程配置 c_cpp_properties.json</li>
-<li><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/c-cpp-properties-schema-reference">c_cpp_properties.json reference</a></li>
-<li>“compileCommands”: “&#x2F;path&#x2F;to&#x2F;compile_commands.json”, 设置 compile_commands.json， 方便代码补全</li>
-<li>关闭 cmake tools 自动 build 功能</li>
-</ol>
-<h2 id="format"><a href="#format" class="headerlink" title="format"></a>format</h2><ol>
-<li><code>format toggle</code></li>
-<li><code>M-S-f</code></li>
-<li>自动 format <code>C-,</code> 打开设置，搜索 format, 选中 format on save</li>
-<li><code>File: Save withourt Formatting</code> 命令</li>
-</ol>
-<h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>(good)<code>fold all</code> and <code>unfold all</code></li>
-<li><code>Open Log File</code> 可以看各种 log, window 可以看经常断开原因</li>
-<li><code>Terminal: Select All</code>复制到文件，保存 log</li>
-<li><code>watch</code>可能引起 debug 崩溃 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/Baiyug/p/16243436.html">link</a></li>
-<li><code>ps uxa | grep .vscode-server | awk &#39;&#123;print $2&#125;&#39; | xargs kill -9</code> kill vscode server</li>
-<li>debug console 中可以输入命令：<code>-exec info registers</code></li>
-<li>鼠标左键是 expand select</li>
-<li><code>ctrl+g</code>多用</li>
-<li><code>dev contatiner show all logs</code></li>
-<li><code>output</code>窗口可以选择看各种 log</li>
-<li><code>&quot;stopAtEntry&quot;: false</code> c++ 调试默认会有个断点，但不会开启（launch.json)</li>
-<li><code>Debug Visualizer</code>可以可视化常用数据结构，便于调试</li>
-<li>debug 可以使用 <code>Hex Editor</code> 查看内存, 点击</li>
-<li><code>remote-containers.openDevContainerFile</code> 打开配置设置 <code>&quot;remoteUser&quot;: &quot;xiyang&quot;</code> docker 可以使用 xiyang 用户登录, 每个 container 有一个配置</li>
-<li>dev-container 可以访问远程机器上的 docker，不用开端口</li>
-<li>windows 配置路径在当前用户.vscode 下面 例如:C:\Users\86158.vscode (extensions) 注意和 C:\Users\86158\AppData\Roaming\Code\User(settings) 数据做区分</li>
-<li><code>toggleDevTools</code> 用来调试插件</li>
-<li>注意配置文件区分:<ul>
-<li>host: <code>keybindings.json settings.json</code></li>
-<li>target: <code>.vscode-server/data/User/extensions.json</code></li>
-<li>target project: <code>launch.json settings.json task.json c_cpp_properties.json</code></li>
-</ul>
-</li>
-<li>右侧放 baseline， 代码导航下面</li>
-<li><code>alt</code>有时候会误触，按 esc 或 alt</li>
-<li>使用 vim 插件，使用 vim 快捷键 如： <code>*</code> 把当前的字段作为查找内容，找下一处。可以配合 <code>n</code> or <code>N</code>使用</li>
-<li>zen mode 模式下一遍写代码， 一边画图， <code>M-l or M-h</code>切换</li>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/49196147">zen mode 显示 tabs</a> 可以设置 zen mode 显示</li>
-</ol>
-<h2 id="short-keys"><a href="#short-keys" class="headerlink" title="short keys"></a><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/getstarted/keybindings">short keys</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/editor/codebasics">basic editing</a></li>
-<li><a target="_blank" rel="noopener" href="https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf">cheetsheat</a></li>
-<li><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/editor/editingevolved#_open-symbol-by-name">open-symbol-by-name</a></li>
-<li><code>Navigate Edits History - Goto Last Edit</code>安装插件， 设置 loop true, <code>move to previous edit</code> -&gt; <code>, g g</code></li>
-<li><code>Terminal: run recent command</code> 执行最近 command 的命令 或者安装插件<code>Rerun last command in termnalxs</code></li>
-<li><code>Terminal: go to recent directory</code> 进入最近使用的文件夹</li>
-<li><code>S-M downarrow</code> vim 模式下对列操作</li>
-<li><code>C-space</code> 补全的时候用, 能显示更多信息，如 c++能显示文件路径, 也可以直接按</li>
-<li><code>Developer: Toggle Screencast Mode</code> 对应 emacs <code>C-h k</code> 显示键对应的命令</li>
-<li>最左侧显示 <code>&quot;workbench.activityBar.visible&quot;: true</code></li>
-<li><code>view: toggle menu bar / status bar / activate bar / breadcrumbs</code></li>
-<li><code>Terminal: focuse find</code> C-f 快捷键删除，想用的时候使用命令</li>
-<li>罗技鼠标 master 可以前进后退</li>
-<li>多用命令</li>
-<li>File &gt; Preferences &gt; Keyboard Shortcuts 查看所有快捷键</li>
-<li>可以点击测试 key 绑定到什么命令上</li>
-<li>可以复制键设置到配置文件，然后修改键绑定</li>
-<li><code>alt</code>给禁止了 设置为 emacs key <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/65163917">link</a></li>
-<li><code>C-p ?</code>查看简写帮助 like emacs <code>C-h h</code></li>
-<li><code>C-k z</code> zen mode 非常好用</li>
-<li><code>C-1</code> 聚焦到 editor</li>
-<li><code>C-S o</code> + <code>C n/p</code> goto symbol in editor 可用于跳转函数, 很好用</li>
-<li><code>Ctrl+T</code> goto symbol in workspace</li>
-<li><code>Rename symbol</code></li>
-<li><code>C-,</code> 打开设置</li>
-<li><code>M-x open settings (json)</code> 打开配置文件</li>
-<li><code>C-b</code> toggle left side bar</li>
-<li><code>C-j</code> toggle down side bar</li>
-<li>C-` toggle termianl</li>
-<li>C-S-` new terminal</li>
-<li><code>C-w</code> 关闭 tab</li>
-<li><code>C-+</code> 扩大字体 <code>view room in</code></li>
-<li><code>C--</code> 减小字体 <code>view room out</code></li>
-<li><code>M-x editor font size in</code> 只放大 editor size(emacs buffer)</li>
-<li><code>F12</code> goto-defination 改为 <code>M-.</code></li>
-<li><code>M-leftarrow</code> go-back 改为 <code>M-,</code></li>
-<li>vim <code>C-o and C-i</code> 前后跳转</li>
-<li><code>C-pagedown</code> next tab&#x2F;terminal 改为 <code>M-l</code></li>
-<li><code>C-pageup</code> previous tab&#x2F;terminal 改为 <code>M-h</code></li>
-<li><code>M-1</code> first tab</li>
-<li><code>C-p</code> find file 删除<code>C-e</code></li>
-<li><code>C-S-p</code> 命令搜索</li>
-<li>Esc 取消</li>
-<li>F8 next error</li>
-<li><code>C-S-y</code> debug console window</li>
-<li><code>C-S-u</code> output window</li>
-<li><code>C-S-m</code> problems window</li>
-<li><code>Focus on opened editors</code> 设置到 <code>M-b</code>, 配合<code>C-S-e</code>使用</li>
-<li><code>show all editors by appearance by recent use</code> 设置到 <code>M-b</code>, emacs <code>,bb</code></li>
-<li><code>View: Focus Next Editor Group</code> -&gt; <code>alt+o</code></li>
-<li><code>View: duplicate edior right</code> -&gt; <code>alt-3</code></li>
-<li><code>View: duplicate edior down</code> -&gt; <code>alt-2</code></li>
-<li><code>go to next change</code> git 修改 next</li>
-<li><code>C-S-t</code> reopen closed editor</li>
-<li><code>M-p toggle editor v/h layerout</code> 改变横向纵向分割</li>
-<li><code>reload window</code></li>
-<li><code>设置alt-n导航</code> <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/58082645">link</a></li>
-<li><a target="_blank" rel="noopener" href="https://gist.github.com/cschleiden/4dbc22a5711f069199a0cc730ac42cb5">emacs 快捷键设置</a></li>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/54403042">快速切换 window</a></li>
-<li><code>M-S-c</code> copy file path</li>
-<li><code>Alt + Click</code>：添加新的光标, 多行操作</li>
-<li><code>Alt + Shift + Click</code>：多行操作</li>
-<li><code>M-S p</code> project manager: list project to open 配合 <code>C-M q</code> quick swich windwos</li>
-</ol>
-<h2 id="免密"><a href="#免密" class="headerlink" title="免密"></a>免密</h2><ol>
-<li>公钥放到服务器配置文件中</li>
-<li><code>IdentityFile &quot;C:\Users\xxx/xxx\id_rsa&quot;</code> config 配置里添加私钥位置</li>
-<li><code>chmod 400 ~/.ssh/id_rsa</code> Permissions are too open</li>
-<li>wsl 里权限有问题，可以把 id_rsa 拷贝出来，换个指定位置。</li>
-<li>将本地<code>~/.ssh/id_rsa.pub</code>复制到<code>~/.ssh/authorized_keys</code>中</li>
-</ol>
-<h2 id="plugins"><a href="#plugins" class="headerlink" title="plugins"></a>plugins</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.intellicode-api-usage-examples">intellicode-api-usage-examples</a> 帮助文档里有 sample</li>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/hwy6/p/15930217.html">Vscode 离线安装插件的方法</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode">JSON Crack json 可视化</a></li>
-<li>jupyter 不用安装图形界面就能显示<ul>
-<li><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/datascience/jupyter-notebooks">教程</a></li>
-<li>C-Enter 运行 code</li>
-<li>C-M-S-Enter 进入 cell debug 模式</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=rebornix.toggle">toggle 设置</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=kiwanamie.dabbrev-expand">dabbrev-expand</a> alt+&#x2F;</li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=tombonnike.vscode-status-bar-format-toggle">format-toggle</a> status bar 右下角有 status, 可以点击切换状态</li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=hoovercj.vscode-settings-cycler">toogle shortcut settings</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=jfacoustic.line-num-toggle">line-num-toggle</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=cschlosser.doxdocgen">doxdocgen</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=alefragnani.Bookmarks">Bookmarks</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=donjayamanne.python-extension-pack">python-extension-pack</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance">vscode-pylance lsp server 好用， 智能助手</a></li>
-<li>vscode 里选 most popular</li>
-<li>Laravel goto view ctrl 点击跳转, 配合 mater3 鼠标后退键，很高效</li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/vscode">marketplace</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=fabiospampinato.vscode-statusbar-debugger">StatusBar Debugger</a><ul>
-<li>关闭 floating debug toolbar: setting: debug -&gt; tool bar location -&gt; hiden</li>
-</ul>
-</li>
-<li>magit</li>
-<li>sourcegraph</li>
-<li>shell-format</li>
-<li>Prettier format</li>
-<li>cmake format</li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=jasonlhy.hungry-delete">hungry-delete</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/hediet/vscode-debug-visualizer">vscode-debug-visualizer</a></li>
-<li>project manager (status bar 有图标， 可用于切换)</li>
-<li>gitlens(不负责提交 commit)<ul>
-<li>关闭自动显示配置</li>
-<li>编辑右上角有 toggle changes&#x2F;blame&#x2F;heatmaps 图标</li>
-<li>设置 git diff tool <a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/sourcecontrol/overview#_vs-code-as-git-difftool-and-mergetool">link</a></li>
-<li><code>C-w</code>关闭 diff</li>
-<li><code>open remote</code> 可以打开远程 commit branch file</li>
-<li>status bar 可以选择 zen or review mode， review mode 能显示多种信息; 可以显示关闭提交历史 <code>&quot;gitlens.mode.active&quot;: &quot;zen&quot;,</code></li>
-<li><code>GitLens:Toggle Zen Mode</code></li>
-</ul>
-</li>
-<li>vscode-icons</li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=geeebe.duplicate">Duplicate selection or line</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=mrmlnc.vscode-duplicate">duplicate file</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=mkxml.vscode-filesize">vscode-filesize</a></li>
-<li>wsl</li>
-<li>json</li>
-<li>code runner</li>
-<li>Material Icon Theme</li>
-<li>remote ssh</li>
-<li>C&#x2F;C++ Extension Pack</li>
-<li>Better C++ Syntax</li>
-<li>C&#x2F;C++ Compile Run</li>
-<li>Path Intellisense</li>
-<li>Remote Development</li>
-<li>Rainbow Brackets</li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=kamikillerto.vscode-colorize">colorize</a> 显示值颜色</li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=rsbondi.highlight-words">highlight-words</a></li>
-<li>todo highlight</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/debugpig/vscode-extension-highlight">highlight</a> 选择高亮字符, 配合 vim <code>*</code> <code>#</code> 使用</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/fabiospampinato/vscode-highlight">vscode-highlight</a> 直接高亮字符</li>
-<li>Svg Preview</li>
-<li>better comment</li>
-<li>next console</li>
-<li>gdb-syntax</li>
-<li>excel view 查看 csv 文件</li>
-<li>doxygen document 生成 doxygen 注释</li>
-<li>Manpages</li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=imagio.vscode-dimmer-block">dimmer</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=nick-rudenko.back-n-forth">back 图标</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense">path-intellisense</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=njzy.stats-bar">stats-bar: show cpu and mem usage</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=sleistner.vscode-fileutils">vscode-fileutils</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=antfu.browse-lite">vscode 中打开网页，用于调试 server</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv">rainbow-csv</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=GrapeCity.gc-excelviewer">excelviewer</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=phplasma.csv-to-table">csv-to-table</a></li>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=ionutvmi.path-autocomplete">path-autocomplete</a></li>
-</ol>
-<h2 id="vim"><a href="#vim" class="headerlink" title="vim"></a><a target="_blank" rel="noopener" href="https://github.com/VSCodeVim/Vim">vim</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://cnodejs.org/topic/5b9e696037a6965f59051a09">设置 learder key</a></li>
-<li><code>toggleDevTools</code> 用来调试插件 vim loglevel 设置为 debug</li>
-<li>打开 easymotion</li>
-<li>修复 fold <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/50892839">link</a></li>
-<li>可以设置 search color</li>
-</ol>
-<h2 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=akamud.vscode-theme-onedark">vscode-theme-onedark</a></li>
-<li>pe</li>
-</ol>
-<h2 id="todo"><a href="#todo" class="headerlink" title="todo"></a>todo</h2><ol>
-<li>fold and unfold tab to toggle fold</li>
-<li>show command using key</li>
-<li>对比 emacs 看有哪些好用的功能</li>
-</ol>
-<h2 id="issues"><a href="#issues" class="headerlink" title="issues"></a>issues</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://codeantenna.com/a/ZOXgWzApJO">关闭 vscode 烦人的提示框</a></li>
-</ol>
-<h2 id="python"><a href="#python" class="headerlink" title="python"></a>python</h2><ol>
-<li>set python3 path: Python: Select Interpreter</li>
-<li>config: “cwd”: “${fileDirname}”</li>
-</ol>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="comment">// Use IntelliSense to learn about possible attributes.</span></span><br><span class="line">  <span class="comment">// Hover to view descriptions of existing attributes.</span></span><br><span class="line">  <span class="comment">// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Python: Current File&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;python&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;file&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="comment">// &quot;cwd&quot;: &quot;$&#123;fileDirname&#125;&quot;,</span></span><br><span class="line">      <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;console&quot;</span><span class="punctuation">:</span> <span class="string">&quot;integratedTerminal&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;justMyCode&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/08/18/OpenCV/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/08/18/OpenCV/" class="post-title-link" itemprop="url">OpenCV</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-08-18 19:43:20" itemprop="dateCreated datePublished" datetime="2022-08-18T19:43:20+08:00">2022-08-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-29 15:38:57" itemprop="dateModified" datetime="2023-11-29T15:38:57+08:00">2023-11-29</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/08/18/OpenCV/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/08/18/OpenCV/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="doc"><a href="#doc" class="headerlink" title="doc"></a>doc</h2><ol>
-<li>注意 doc 中函数说明下面有 examples</li>
-<li><a target="_blank" rel="noopener" href="https://docs.opencv.org/4.6.0/d3/d63/classcv_1_1Mat.html">Mat</a></li>
-</ol>
-<h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><ol>
-<li>debug opencv:<code>OPENCV_LOG_LEVEL=DEBUG</code></li>
-<li>nv12 type 是 <code>CV_8UC1， h = real_h * 3 / 2</code></li>
-<li>opencv 不支持 nv12 resize， 需要 <code>to rgb -&gt; resize -&gt; to nv12</code> 或 <a target="_blank" rel="noopener" href="https://github.com/lemenkov/libyuv">libyuv</a> 来 resize</li>
-</ol>
-<h2 id="Mat"><a href="#Mat" class="headerlink" title="Mat"></a><a target="_blank" rel="noopener" href="https://docs.opencv.org/4.6.0/d3/d63/classcv_1_1Mat.html">Mat</a></h2><ol>
-<li><code>mata.mul(matb)</code> 矩阵相乘</li>
-<li><code>cv::Mat Z_c2 = Z_w * std::cos(phi) + hc * std::sin(phi);</code> Z_w 为 Mat，直接做运算</li>
-<li><a target="_blank" rel="noopener" href="https://fossies.org/dox/opencv-4.6.0/classcv_1_1Mat.html">fossies 依赖关系</a> 点图右上角能展开图片</li>
-<li>(代理模式？) opencv 接口使用代理类 <em>InputArray，This is the proxy class for passing read-only input arrays into OpenCV functions. _InputArray is a class that can be constructed from Mat, Mat</em><T>, Matx&lt;T, m, n&gt;, std::vector<T>, std::vector&lt;std::vector<T> &gt;, std::vector<Mat>, std::vector&lt;Mat_<T> &gt;, UMat, std::vector<UMat> or double. It can also be constructed from a matrix expression.</li>
-<li><a target="_blank" rel="noopener" href="https://fossies.org/dox/opencv-4.6.0/classcv_1_1__InputArray.html">_InputArray</a></li>
-<li>cv::resize 等接口用的都是(InputArray..) <code>cv::resize (InputArray src, OutputArray dst, Size dsize, double fx=0, double fy=0, int interpolation=INTER_LINEAR)</code></li>
-</ol>
-<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/dcrmg/article/details/52294259">Opencv Mat 矩阵中 data、size、depth、elemSize、step 等属性的理解</a></li>
-<li><code>flags</code></li>
-<li><code>dims</code> Mat 矩阵的维度，若 Mat 是一个二维矩阵，则 dims&#x3D;2，三维则 dims&#x3D;3</li>
-<li><code>rows</code> Mat 矩阵的行数。</li>
-<li><code>cols</code> Mat 矩阵的列数。</li>
-<li><code>data</code> uchar 类型的指针，指向 Mat 数据矩阵的首地址。</li>
-<li><code>size</code> 首先 size 是一个结构体，定义了 Mat 矩阵内数据的分布形式，数值上有关系式：image.size().width&#x3D;&#x3D;image.cols; image.size().height&#x3D;&#x3D;image.rows</li>
-<li><code>step</code> 可以理解为 Mat 矩阵中每一行的“步长”，以字节为基本单位，每一行中所有元素的字节总量，是累计了一行中所有元素、所有通道、所有通道的 elemSize1 之后的值；</li>
-<li><code>channels()</code>：Mat 矩阵元素拥有的通道数。例如常见的 RGB 彩色图像，channels&#x3D;&#x3D;3；而灰度图像只有一个灰度分量信息 channels&#x3D;&#x3D;1。</li>
-<li><code>type()</code> Mat 矩阵的类型</li>
-<li><code>depth()</code> 用来度量每一个像素中每一个通道的精度，但它本身与图像的通道数无关！depth 数值越大，精度越高。Opencv 中，Mat.depth()得到的是一个 0~6 的数字，分别代表不同的位数，对应关系如下：enum{CV_8U&#x3D;0,CV_8S&#x3D;1,CV_16U&#x3D;2,CV_16S&#x3D;3,CV_32S&#x3D;4,CV_32F&#x3D;5,CV_64F&#x3D;6}</li>
-<li><code>elemSize()</code> elem 是 element(元素)的缩写，表示矩阵中每一个元素的数据大小，如果 Mat 中的数据类型是 CV_8UC1，那么 elemSize&#x3D;&#x3D;1；如果是 CV_8UC3 或 CV_8SC3，那么 elemSize&#x3D;&#x3D;3；如果是 CV_16UC3 或者 CV_16SC3，那么 elemSize&#x3D;&#x3D;6；即 elemSize 是以 8 位（一个字节）为一个单位，乘以通道数和 8 位的整数倍；</li>
-<li><code>total()</code>: the total number of array elements. <code>mat data size: total() * elemSize()</code></li>
-<li><code>isContinuous()</code>数据是否连续</li>
-</ol>
-<h2 id="functions"><a href="#functions" class="headerlink" title="functions"></a>functions</h2><h3 id="构造"><a href="#构造" class="headerlink" title="构造"></a>构造</h3><ol>
-<li>Mat array &#x3D; (Mat_<double>(3, 3) &lt;&lt; 0, -1, 5, -1, 5, -1, 0, -1, 0);</li>
-</ol>
-<h3 id="imread"><a href="#imread" class="headerlink" title="imread"></a>imread</h3><ol>
-<li><code>Mat cv::imread(const String &amp;filename, int flags = IMREAD_COLOR);</code></li>
-<li><a target="_blank" rel="noopener" href="https://fossies.org/dox/opencv-4.6.0/group__imgcodecs__flags.html#ga61d9b0126a3e57d9277ac48327799c80">flags list</a></li>
-<li>IMREAD_COLOR(value is 1): If set, always convert image to the 3 channel BGR color image.</li>
-<li>IMREAD_GRAYSCALE(vaule is 0): If set, always convert image to the single channel grayscale image (codec internal conversion).</li>
-</ol>
-<h3 id="imwrite"><a href="#imwrite" class="headerlink" title="imwrite"></a>imwrite</h3><ol>
-<li><code>bool cv::imwrite (const String&amp; filename, InputArray img, const std::vector&lt;int&gt; &amp; params = std::vector&lt;int&gt;())</code></li>
-<li><code>params</code> Format-specific parameters encoded as pairs (paramId_1, paramValue_1, paramId_2, paramValue_2, … .) see <a target="_blank" rel="noopener" href="https://fossies.org/dox/opencv-4.6.0/group__imgcodecs__flags.html#ga292d81be8d76901bff7988d18d2b42ac">cv::ImwriteFlags</a></li>
-</ol>
-<h3 id="resize"><a href="#resize" class="headerlink" title="resize"></a>resize</h3><ol>
-<li>不支持 nv12 resize <a target="_blank" rel="noopener" href="https://github.com/lemenkov/libyuv">libyuv</a>来做 yuv resize</li>
-</ol>
-<h3 id="crop"><a href="#crop" class="headerlink" title="crop"></a>crop</h3><ol>
-<li>使用 cv::Rect (x, y, w, h)</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">cv::Rect <span class="title">crop_region</span><span class="params">(<span class="number">250</span>, <span class="number">10</span>,<span class="number">400</span>, <span class="number">400</span>)</span></span>;</span><br><span class="line"><span class="keyword">auto</span> mat2=<span class="built_in">mat1</span>(crop_region);</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/lemenkov/libyuv/blob/6900494d90ae095d44405cd4cc3f346971fa69c9/include/libyuv/convert.h#L900">libyuv crop</a></li>
-</ol>
-<h3 id="cvtColor"><a href="#cvtColor" class="headerlink" title="cvtColor"></a>cvtColor</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://docs.opencv.org/4.6.0/d8/d01/group__imgproc__color__conversions.html">列表</a></li>
-<li><code>cv::cvtColor(src, dst, cv::COLOR_YUV2BGR_YVYU)</code></li>
-<li><code>cv::cvtColor(src, dst, cv::COLOR_BGR2GRAY)</code></li>
-<li><code>cv::cvtColor(src, dst, cv::COLOR_GRAY2BGR)</code></li>
-<li><code>cv::cvtColor(origin_image, image_rgb, cv::COLOR_YUV2RGB_NV12);</code></li>
-<li>不支持 yuv 转 rbg, 可以参考<a target="_blank" rel="noopener" href="https://github.com/mhomola/AutonomousFlight/blob/422de6ccbbd3ec290a16c8d919fd23d4503ad62f/CV_scripts/opencv-4.x/modules/gapi/test/streaming/gapi_streaming_tests.cpp#L208-L208">代码</a></li>
-</ol>
-<h3 id="permute-transpose-通道转换"><a href="#permute-transpose-通道转换" class="headerlink" title="permute &#x2F; transpose 通道转换"></a>permute &#x2F; transpose 通道转换</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gab1b1274b4a563be34cdfa55b8919a4ec">transposeND</a>： Transpose for n-dimensional matrices.</li>
-</ol>
-<h3 id="cv-FileStorage-序列化与反序列化"><a href="#cv-FileStorage-序列化与反序列化" class="headerlink" title="cv::FileStorage 序列化与反序列化"></a>cv::FileStorage 序列化与反序列化</h3><ol>
-<li><code>cv2.FileStorage(&quot;output.yml&quot;, cv2.FILE_STORAGE_WRITE).write(&quot;mat&quot;, mat)</code></li>
-<li>test</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">cv::FileStorage <span class="title">file</span><span class="params">(<span class="string">&quot;test.yml&quot;</span>, cv::FileStorage::READ)</span></span>;</span><br><span class="line">cv::Mat left_image, right_image;</span><br><span class="line"><span class="type">int</span> out_hei, out_wid;</span><br><span class="line">cv::Mat Q;</span><br><span class="line"><span class="type">float</span> phi, hc, traj_center, traj_wid, traj_near, traj_far;</span><br><span class="line"><span class="type">bool</span> affine;</span><br><span class="line"></span><br><span class="line">file[<span class="string">&quot;left_image&quot;</span>] &gt;&gt; left_image;</span><br><span class="line">file[<span class="string">&quot;right_image&quot;</span>] &gt;&gt; right_image;</span><br><span class="line">out_hei = (<span class="type">int</span>)file[<span class="string">&quot;out_hei&quot;</span>];</span><br><span class="line">out_wid = (<span class="type">int</span>)file[<span class="string">&quot;out_wid&quot;</span>];</span><br><span class="line">file[<span class="string">&quot;Q&quot;</span>] &gt;&gt; Q;</span><br><span class="line">phi = (<span class="type">float</span>)file[<span class="string">&quot;phi&quot;</span>];</span><br><span class="line">hc = (<span class="type">float</span>)file[<span class="string">&quot;hc&quot;</span>];</span><br><span class="line"><span class="type">int</span> int_affine = (<span class="type">int</span>)file[<span class="string">&quot;affine&quot;</span>];</span><br><span class="line">affine = int_affine == <span class="number">0</span> ? <span class="literal">false</span> : <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.51cto.com/SpaceVision/5071910">Mat 常见属性</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/08/13/Vim/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/08/13/Vim/" class="post-title-link" itemprop="url">Vim</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-08-13 14:30:50" itemprop="dateCreated datePublished" datetime="2022-08-13T14:30:50+08:00">2022-08-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-28 13:13:47" itemprop="dateModified" datetime="2023-09-28T13:13:47+08:00">2023-09-28</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/08/13/Vim/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/08/13/Vim/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>963</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="keybind-link"><a href="#keybind-link" class="headerlink" title="keybind link"></a>keybind <a target="_blank" rel="noopener" href="https://blog.csdn.net/RunBoying/article/details/7695164">link</a></h2><ol>
-<li>[] 调上一个 func</li>
-<li><code>:e filename</code> 打开 file</li>
-<li><code>za</code> fold and unfold</li>
-<li><code>zM</code> fold all</li>
-<li><code>zO</code> unfold all</li>
-<li><code>C-^</code> 切换 buffer</li>
-<li><code>c-d</code> 向下滚屏, 左手单手操作</li>
-<li><code>c-u</code> 向上滚屏</li>
-<li><code>ZZ</code>: 普通模式下保存并退出</li>
-<li><code>:e!</code> 可以不保存文件并重新载入这个文件</li>
-<li><code>*</code> 把当前的字段作为查找内容，找下一处。可以配合 <code>n</code> or <code>N</code>使用</li>
-<li><code>%</code> 跳转到相配对的括号</li>
-<li><code>v %</code> 选中括号里内容</li>
-<li><code>^</code> 跳转至行第一个非空字符</li>
-<li><code>:set hlsearch</code> 可以将查找的内容设置成高亮。<code>:set nohlsearc</code> 取消高亮或 <code>/xxxx</code></li>
-<li><code>mm</code> and `m : mark and jump back</li>
-<li><code>C-o</code> 命令则跳到一个 “较老” 的地方 (提示： O 表示 older)。<code>C-i</code> 则跳到一个 “较新” 的地方.</li>
-<li><code>f</code> 向后搜索, <code>F</code> 向前搜索, <code>;</code> next</li>
-<li>H:将光标移动到当前可见页面的顶部（High）</li>
-<li>M:将光标移到当前可见页面的中间（Middle）</li>
-<li>L:将光标移动到当前可见页面的底部（Low）</li>
-<li><code>:buffers</code> or <code>:ls</code> 列出可用的缓冲区</li>
-<li><code>:bn</code> 下一个缓冲区。类似地，我们可以通过键入 b 数字或名称（在上面的第一列）或名称来切换到缓冲区。</li>
-<li><code>:bd</code> 删除当前 buffer</li>
-<li><code>p and S-p</code> 当前字符前后复制</li>
-<li><code>I</code> go to start line and insert</li>
-<li><code>A</code> go to end line and insert</li>
-</ol>
-<h2 id="easymotion"><a href="#easymotion" class="headerlink" title="easymotion"></a><a target="_blank" rel="noopener" href="https://github.com/easymotion/vim-easymotion">easymotion</a></h2><ol>
-<li><p>Set a custom color for the easymotion search n-character (default <leader><leader>&#x2F;).</p>
-</li>
-<li><p><code>&lt;leader&gt;&lt;leader&gt;f</code> char</p>
-</li>
-<li><p>like emacs avy-jump</p>
-</li>
-</ol>
-<h2 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://shapeshed.com/vim-packages/">native package</a></li>
-</ol>
-<h3 id="vim-slime"><a href="#vim-slime" class="headerlink" title="vim-slime"></a><a target="_blank" rel="noopener" href="https://github.com/jpalardy/vim-slime">vim-slime</a></h3><ol>
-<li>install</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/.vim/pack/plugins/start</span><br><span class="line"><span class="built_in">cd</span> ~/.vim/pack/plugins/start</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/jpalardy/vim-slime.git</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>vimrc config</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> g:slime_target = <span class="string">&quot;tmux&quot;</span></span><br><span class="line">nmap &lt;c-c&gt;&lt;c-l&gt; &lt;Plug&gt;SlimeLineSend</span><br><span class="line">nmap &lt;c-a&gt; &lt;Plug&gt;SlimeLineSend</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><a target="_blank" rel="noopener" href="https://blog.jpalardy.com/posts/trying-vim-slime-in-docker/">try in docker</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/07/30/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%B8%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/30/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%B8%88/" class="post-title-link" itemprop="url">系统架构师</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-30 19:36:08" itemprop="dateCreated datePublished" datetime="2022-07-30T19:36:08+08:00">2022-07-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/07/30/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%B8%88/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/07/30/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%B8%88/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>68</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://bm.ruankao.org.cn/sign/welcome">网上报名平台</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/gitlfc163/SystemArchitect">资料</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/xxlllq/system_architect">高质量、最全面的 2022 年系统架构设计师（软考高级）备考资源库</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.ruankao.org.cn/">中国计算机技术职业资格网</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.ruankao.org.cn/platform">报考指南</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.ruankao.org.cn/arrange">考试安排</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/264585896">知乎分析</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/07/16/CPM/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/16/CPM/" class="post-title-link" itemprop="url">CPM</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-16 15:53:20" itemprop="dateCreated datePublished" datetime="2022-07-16T15:53:20+08:00">2022-07-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-12 11:27:04" itemprop="dateModified" datetime="2024-01-12T11:27:04+08:00">2024-01-12</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/07/16/CPM/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/07/16/CPM/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>12k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>11 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/cpm-cmake/CPM.cmake?tab=readme-ov-file#usage">usage</a><ul>
-<li><dependency>_SOURCE_DIR is the path to the source of the dependency.</li>
-<li><dependency>_BINARY_DIR is the path to the build directory of the dependency.</li>
-<li><dependency>_ADDED is set to YES if the dependency has not been added before, otherwise it is set to NO.</li>
-</ul>
-</li>
-<li>CPMAddPackage 是 CMake 的一个模块，它是 CPM.cmake 的一部分，用于管理项目依赖项。当你使用 CPMAddPackage 下载 .tgz 或 .tar.gz 归档文件时，该模块会自动解压归档文件,会去除一层</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/cpm-cmake/CPM.cmake/wiki/More-Snippets#sol2">samples</a></li>
-<li>导入外部库 <code>INTERFACE IMPORTED</code> <a target="_blank" rel="noopener" href="https://hsf-training.github.io/hsf-training-cmake-webpage/04-targets/index.html">link</a></li>
-<li>全局导入外部库 <code>INTERFACE IMPORTED GLOBAL</code>， 解决 cpm local scope include_directories 不工作问题</li>
-<li>? add_definitions()传递， 后引入的库在作用域更小， 先引入的库作用域大，与顺序有关</li>
-<li>download</li>
-</ol>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(CPM_DOWNLOAD_VERSION <span class="number">0.27</span>.<span class="number">2</span>)</span><br><span class="line"><span class="keyword">set</span>(CPM_DOWNLOAD_LOCATION <span class="string">&quot;$&#123;CMAKE_BINARY_DIR&#125;/cmake/CPM_$&#123;CPM_DOWNLOAD_VERSION&#125;.cmake&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">NOT</span> (<span class="keyword">EXISTS</span> <span class="variable">$&#123;CPM_DOWNLOAD_LOCATION&#125;</span>))</span><br><span class="line">    <span class="keyword">message</span>(STATUS <span class="string">&quot;Downloading CPM.cmake&quot;</span>)</span><br><span class="line">    <span class="keyword">file</span>(DOWNLOAD https://github.com/TheLartians/CPM.cmake/releases/download/v<span class="variable">$&#123;CPM_DOWNLOAD_VERSION&#125;</span>/CPM.cmake <span class="variable">$&#123;CPM_DOWNLOAD_LOCATION&#125;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">include</span>(<span class="variable">$&#123;CPM_DOWNLOAD_LOCATION&#125;</span>)</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>cpm url lib export， <a target="_blank" rel="noopener" href="https://github.com/cpm-cmake/CPM.cmake/wiki/More-Snippets#sol2">cmake 导入外部链接库</a></li>
-</ol>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">cpmaddpackage(</span><br><span class="line">  NAME</span><br><span class="line">  gflags</span><br><span class="line">  URL</span><br><span class="line">  https://mirrors.xxxxxx/nfs/pkgs/gflags_2.<span class="number">2.2</span>/$gflags_2.<span class="number">2.2</span>.tar</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># if(gflags_ADDED AND NOT TARGET gflags)</span></span><br><span class="line"><span class="comment">## 错误</span></span><br><span class="line"><span class="keyword">if</span>(gflags_ADDED)</span><br><span class="line">  <span class="keyword">add_library</span>(gflags INTERFACE)</span><br><span class="line">  <span class="keyword">target_include_directories</span>(gflags INTERFACE <span class="string">&quot;$&#123;gflags_SOURCE_DIR&#125;/include&quot;</span>)</span><br><span class="line">  <span class="keyword">target_link_directories</span>(gflags INTERFACE <span class="string">&quot;$&#123;gflags_SOURCE_DIR&#125;/lib&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">## 正确(官网的例子没有set properties，是因为会编译出.so，不用指定so位置)</span></span><br><span class="line"><span class="keyword">if</span>(gflags_ADDED)</span><br><span class="line">  <span class="keyword">message</span>(STATUS <span class="string">&quot;gflags test2**********************&quot;</span>)</span><br><span class="line">  <span class="keyword">add_library</span>(gflags INTERFACE IMPORTED GLOBAL) <span class="comment">## global导入， 解决cpm local scope include_directories不工作问题</span></span><br><span class="line">  <span class="keyword">add_library</span>(gflags::gflags ALIAS gflags)</span><br><span class="line">  <span class="keyword">set_target_properties</span>(</span><br><span class="line">    gflags PROPERTIES IMPORTED_LOCATION <span class="string">&quot;$&#123;gflags_SOURCE_DIR&#125;/lib/libgflags.so&quot;</span>)</span><br><span class="line">  <span class="keyword">target_include_directories</span>(gflags INTERFACE <span class="string">&quot;$&#123;gflags_SOURCE_DIR&#125;/include&quot;</span>)</span><br><span class="line">  <span class="comment"># target_link_directories(gflags INTERFACE &quot;$&#123;gflags_SOURCE_DIR&#125;/lib&quot;)</span></span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><p>多个库 if(xxx_ADDED)只有一个库会调用，可以在 if 里面打印消息测试。不用<code>if(gflags_ADDED AND NOT TARGET gflags)</code></p>
-</li>
-<li><p>注意区分<code>add_library(gflags SHARED IMPORTED GLOBAL)</code>和<code>libgflags.so</code>的区别，前者是 target, 后者是 so。为了区分两者， 可以使用<code>add_library(gflags SHARED IMPORTED GLOBAL) add_library(gflags::gflags ALIAS gflags)</code> target::target 来区分。</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/cpm-cmake/CPM.cmake/issues/175">如果依赖的库有冲突， CPM 会有 WARNING</a></p>
-</li>
-</ol>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CMake Warning at cmake/CPM.cmake:<span class="number">269</span> (<span class="keyword">message</span>):</span><br><span class="line">  CPM: cpm-test2: requires a newer version of cpm-test1 (<span class="number">0.0</span>.<span class="number">4</span>) than</span><br><span class="line">  currently included ().</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/cpm-cmake/CPM.cmake#limitations">解决库冲突方法</a></li>
-</ol>
-<ul>
-<li>最外层添加依赖（因为 first version used)</li>
-<li>lock file</li>
-</ul>
-<ol>
-<li>cpm funtion</li>
-</ol>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span>(pg_add_lib name)</span><br><span class="line">  <span class="keyword">set</span>(options <span class="string">&quot;&quot;</span>)</span><br><span class="line">  <span class="keyword">set</span>(oneValueArgs PACK)</span><br><span class="line">  <span class="keyword">set</span>(multiValueArgs INCLUDE_DIRS LIB_DIRS)</span><br><span class="line">  <span class="keyword">cmake_parse_arguments</span>(ARG <span class="string">&quot;$&#123;options&#125;&quot;</span> <span class="string">&quot;$&#123;oneValueArgs&#125;&quot;</span> <span class="string">&quot;$&#123;multiValueArgs&#125;&quot;</span></span><br><span class="line">                        <span class="variable">$&#123;ARGN&#125;</span>)</span><br><span class="line">  <span class="keyword">if</span>(ARG_PACK)</span><br><span class="line">    <span class="keyword">set</span>(PACK_NAME <span class="variable">$&#123;ARG_PACK&#125;</span>)</span><br><span class="line">  <span class="keyword">else</span>()</span><br><span class="line">    <span class="keyword">set</span>(PACK_NAME <span class="variable">$&#123;name&#125;</span>.tar)</span><br><span class="line">  <span class="keyword">endif</span>()</span><br><span class="line">  cpmaddpackage(</span><br><span class="line">    NAME <span class="variable">$&#123;name&#125;</span> URL</span><br><span class="line">    https://xxxxxxx/nfs/pkgs/<span class="variable">$&#123;name&#125;</span>/<span class="variable">$&#123;ARCH_PLAT_VENDOR&#125;</span>/<span class="variable">$&#123;PACK_NAME&#125;</span></span><br><span class="line">  )</span><br><span class="line">  <span class="keyword">if</span>(<span class="variable">$&#123;name&#125;</span>_ADDED)</span><br><span class="line">    <span class="keyword">if</span>(ARG_INCLUDE_DIRS)</span><br><span class="line">      <span class="keyword">message</span>(STATUS, <span class="string">&quot;ARG_INCLUDE_DIRS=\&quot;$&#123;ARG_INCLUDE_DIRS&#125;\&quot;&quot;</span>)</span><br><span class="line">      <span class="keyword">foreach</span>(INCLUDE_DIR <span class="variable">$&#123;ARG_INCLUDE_DIRS&#125;</span>)</span><br><span class="line">        <span class="keyword">message</span>(STATUS, <span class="string">&quot;INCLUDE_DIR=\&quot;$&#123;INCLUDE_DIR&#125;\&quot;&quot;</span>)</span><br><span class="line">        <span class="keyword">list</span>(APPEND INCLUDE_DIRS <span class="variable">$&#123;$&#123;name&#125;</span>_SOURCE_DIR&#125;/<span class="variable">$&#123;INCLUDE_DIR&#125;</span>)</span><br><span class="line">      <span class="keyword">endforeach</span>()</span><br><span class="line">    <span class="keyword">else</span>()</span><br><span class="line">      <span class="keyword">list</span>(APPEND INCLUDE_DIRS <span class="variable">$&#123;$&#123;name&#125;</span>_SOURCE_DIR&#125;/<span class="keyword">include</span>)</span><br><span class="line">    <span class="keyword">endif</span>()</span><br><span class="line">    <span class="keyword">message</span>(STATUS, <span class="string">&quot;INCLUDE_DIRS=\&quot;$&#123;INCLUDE_DIRS&#125;\&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(ARG_LIB_DIRS)</span><br><span class="line">      <span class="keyword">message</span>(STATUS, <span class="string">&quot;ARG_LIB_DIRS=\&quot;$&#123;ARG_LIB_DIRS&#125;\&quot;&quot;</span>)</span><br><span class="line">      <span class="keyword">foreach</span>(LIB_DIR <span class="variable">$&#123;ARG_LIB_DIRS&#125;</span>)</span><br><span class="line">        <span class="keyword">message</span>(STATUS, <span class="string">&quot;LIB_DIR=\&quot;$&#123;LIB_DIR&#125;\&quot;&quot;</span>)</span><br><span class="line">        <span class="keyword">list</span>(APPEND LIB_DIRS <span class="variable">$&#123;$&#123;name&#125;</span>_SOURCE_DIR&#125;/<span class="variable">$&#123;LIB_DIR&#125;</span>)</span><br><span class="line">      <span class="keyword">endforeach</span>()</span><br><span class="line">    <span class="keyword">else</span>()</span><br><span class="line">      <span class="keyword">list</span>(APPEND LIB_DIRS <span class="variable">$&#123;$&#123;name&#125;</span>_SOURCE_DIR&#125;/lib)</span><br><span class="line">    <span class="keyword">endif</span>()</span><br><span class="line">    <span class="keyword">message</span>(STATUS, <span class="string">&quot;LIB_DIRS=\&quot;$&#123;LIB_DIRS&#125;\&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">foreach</span>(LIB_DIR <span class="variable">$&#123;LIB_DIRS&#125;</span>)</span><br><span class="line">      <span class="keyword">execute_process</span>(</span><br><span class="line">        <span class="keyword">COMMAND</span> ls</span><br><span class="line">        <span class="keyword">COMMAND</span> sh -c <span class="string">&quot;awk &#x27;/.so\$|.a\$/&#123;print \$0&#125;&#x27;&quot;</span></span><br><span class="line">        <span class="keyword">COMMAND</span> sh -c <span class="string">&quot;awk -F &#x27;.&#x27; &#x27;&#123;print substr($1,4)&#125;&#x27;&quot;</span></span><br><span class="line">        <span class="comment"># COMMAND sh -c &quot;sort&quot; COMMAND sh -c &quot;uniq&quot;</span></span><br><span class="line">        WORKING_DIRECTORY <span class="variable">$&#123;LIB_DIR&#125;</span></span><br><span class="line">        OUTPUT_VARIABLE LIBS</span><br><span class="line">        OUTPUT_STRIP_TRAILING_WHITESPACE)</span><br><span class="line">      <span class="keyword">message</span>(STATUS, <span class="string">&quot;LIBS=$&#123;LIBS&#125;&quot;</span>)</span><br><span class="line">      <span class="keyword">string</span>(REPLACE <span class="string">&quot;\n&quot;</span> <span class="string">&quot;;&quot;</span> LIBS <span class="string">&quot;$&#123;LIBS&#125;&quot;</span>)</span><br><span class="line">      <span class="keyword">foreach</span>(LIB <span class="variable">$&#123;LIBS&#125;</span>)</span><br><span class="line">        <span class="keyword">message</span>(STATUS, <span class="string">&quot;LIB=\&quot;$&#123;LIB&#125;\&quot;&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">NOT</span> <span class="keyword">TARGET</span> <span class="variable">$&#123;LIB&#125;</span>)</span><br><span class="line">          <span class="keyword">find_library</span>(</span><br><span class="line">            <span class="variable">$&#123;LIB&#125;</span>_PATH</span><br><span class="line">            NAMES <span class="variable">$&#123;LIB&#125;</span></span><br><span class="line">            PATHS <span class="string">&quot;$&#123;LIB_DIR&#125;&quot;</span></span><br><span class="line">            NO_DEFAULT_PATH)</span><br><span class="line">          <span class="keyword">message</span>(STATUS, <span class="string">&quot;LIB_PATH=\&quot;$&#123;$&#123;LIB&#125;_PATH&#125;\&quot;&quot;</span>)</span><br><span class="line">          <span class="keyword">add_library</span>(<span class="variable">$&#123;LIB&#125;</span> UNKNOWN IMPORTED GLOBAL)</span><br><span class="line">          <span class="keyword">add_library</span>(<span class="variable">$&#123;name&#125;</span>::<span class="variable">$&#123;LIB&#125;</span> ALIAS <span class="variable">$&#123;LIB&#125;</span>)</span><br><span class="line">          <span class="keyword">set_target_properties</span>(<span class="variable">$&#123;LIB&#125;</span> PROPERTIES IMPORTED_LOCATION</span><br><span class="line">                                                  <span class="string">&quot;$&#123;$&#123;LIB&#125;_PATH&#125;&quot;</span>)</span><br><span class="line">          <span class="keyword">target_include_directories</span>(<span class="variable">$&#123;LIB&#125;</span> INTERFACE <span class="variable">$&#123;INCLUDE_DIRS&#125;</span>)</span><br><span class="line">        <span class="keyword">endif</span>()</span><br><span class="line">      <span class="keyword">endforeach</span>()</span><br><span class="line">    <span class="keyword">endforeach</span>()</span><br><span class="line">  <span class="keyword">endif</span>()</span><br><span class="line"><span class="keyword">endfunction</span>(pg_add_lib)</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>适应 windows, 去除 awk 依赖</li>
-</ol>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span>(pg_add_third_party_lib name)</span><br><span class="line">  <span class="keyword">set</span>(options <span class="string">&quot;&quot;</span>)</span><br><span class="line">  <span class="keyword">set</span>(oneValueArgs PACK)</span><br><span class="line">  <span class="keyword">set</span>(multiValueArgs INCLUDE_DIRS LIB_DIRS)</span><br><span class="line">  <span class="keyword">cmake_parse_arguments</span>(ARG <span class="string">&quot;$&#123;options&#125;&quot;</span> <span class="string">&quot;$&#123;oneValueArgs&#125;&quot;</span> <span class="string">&quot;$&#123;multiValueArgs&#125;&quot;</span></span><br><span class="line">                        <span class="variable">$&#123;ARGN&#125;</span>)</span><br><span class="line">  <span class="keyword">if</span>(ARG_PACK)</span><br><span class="line">    <span class="keyword">set</span>(PACK_NAME <span class="variable">$&#123;ARG_PACK&#125;</span>)</span><br><span class="line">  <span class="keyword">else</span>()</span><br><span class="line">    <span class="keyword">set</span>(PACK_NAME <span class="variable">$&#123;name&#125;</span>.tar)</span><br><span class="line">  <span class="keyword">endif</span>()</span><br><span class="line">  cpmaddpackage(</span><br><span class="line">    NAME <span class="variable">$&#123;name&#125;</span> URL</span><br><span class="line">    https://xxx/nfs/pkgs/<span class="variable">$&#123;name&#125;</span>/<span class="variable">$&#123;ARCH_PLAT_VENDOR&#125;</span>/<span class="variable">$&#123;PACK_NAME&#125;</span></span><br><span class="line">  )</span><br><span class="line">  <span class="keyword">if</span>(<span class="variable">$&#123;name&#125;</span>_ADDED)</span><br><span class="line">    <span class="keyword">if</span>(ARG_INCLUDE_DIRS)</span><br><span class="line">      <span class="keyword">foreach</span>(INCLUDE_DIR <span class="variable">$&#123;ARG_INCLUDE_DIRS&#125;</span>)</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">EXISTS</span> <span class="string">&quot;$&#123;$&#123;name&#125;_SOURCE_DIR&#125;/$&#123;INCLUDE_DIR&#125;&quot;</span>)</span><br><span class="line">          <span class="keyword">list</span>(APPEND INCLUDE_DIRS <span class="variable">$&#123;$&#123;name&#125;</span>_SOURCE_DIR&#125;/<span class="variable">$&#123;INCLUDE_DIR&#125;</span>)</span><br><span class="line">        <span class="keyword">endif</span>()</span><br><span class="line">      <span class="keyword">endforeach</span>()</span><br><span class="line">    <span class="keyword">else</span>()</span><br><span class="line">      <span class="keyword">list</span>(APPEND INCLUDE_DIRS <span class="variable">$&#123;$&#123;name&#125;</span>_SOURCE_DIR&#125;/<span class="keyword">include</span>)</span><br><span class="line">    <span class="keyword">endif</span>()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(ARG_LIB_DIRS)</span><br><span class="line">      <span class="keyword">foreach</span>(LIB_DIR <span class="variable">$&#123;ARG_LIB_DIRS&#125;</span>)</span><br><span class="line">        <span class="keyword">list</span>(APPEND LIB_DIRS <span class="variable">$&#123;$&#123;name&#125;</span>_SOURCE_DIR&#125;/<span class="variable">$&#123;LIB_DIR&#125;</span>)</span><br><span class="line">      <span class="keyword">endforeach</span>()</span><br><span class="line">    <span class="keyword">else</span>()</span><br><span class="line">      <span class="keyword">list</span>(APPEND LIB_DIRS <span class="variable">$&#123;$&#123;name&#125;</span>_SOURCE_DIR&#125;/lib)</span><br><span class="line">    <span class="keyword">endif</span>()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">foreach</span>(LIB_DIR <span class="variable">$&#123;LIB_DIRS&#125;</span>)</span><br><span class="line">      <span class="comment"># shared libs</span></span><br><span class="line">      <span class="keyword">execute_process</span>(</span><br><span class="line">        <span class="keyword">COMMAND</span> ls</span><br><span class="line">        <span class="comment"># COMMAND sh -c &quot;awk &#x27;/.so\$/&#123;print \$0&#125;&#x27;&quot; COMMAND sh -c &quot;awk -F &#x27;.&#x27;</span></span><br><span class="line">        <span class="comment"># &#x27;&#123;print substr($1,4)&#125;&#x27;&quot;</span></span><br><span class="line">        WORKING_DIRECTORY <span class="variable">$&#123;LIB_DIR&#125;</span></span><br><span class="line">        OUTPUT_VARIABLE LIBS</span><br><span class="line">        OUTPUT_STRIP_TRAILING_WHITESPACE)</span><br><span class="line">      <span class="keyword">string</span>(REPLACE <span class="string">&quot;\n&quot;</span> <span class="string">&quot;;&quot;</span> LIBS <span class="string">&quot;$&#123;LIBS&#125;&quot;</span>)</span><br><span class="line">      <span class="keyword">foreach</span>(LIB <span class="variable">$&#123;LIBS&#125;</span>)</span><br><span class="line">        <span class="keyword">string</span>(REGEX MATCH <span class="string">&quot;lib.*\.so$&quot;</span> LIB <span class="variable">$&#123;LIB&#125;</span>)</span><br><span class="line">        <span class="keyword">if</span>(LIB)</span><br><span class="line">          <span class="keyword">get_filename_component</span>(LIB <span class="variable">$&#123;LIB&#125;</span> NAME_WE)</span><br><span class="line">          <span class="keyword">string</span>(REPLACE <span class="string">&quot;lib&quot;</span> <span class="string">&quot;&quot;</span> LIB <span class="string">&quot;$&#123;LIB&#125;&quot;</span>)</span><br><span class="line">          <span class="keyword">message</span>(STATUS <span class="string">&quot;.......lib=$&#123;LIB&#125;&quot;</span>)</span><br><span class="line">          <span class="keyword">if</span>(<span class="keyword">NOT</span> <span class="keyword">TARGET</span> <span class="variable">$&#123;LIB&#125;</span>)</span><br><span class="line">            <span class="keyword">add_library</span>(<span class="variable">$&#123;LIB&#125;</span> SHARED IMPORTED GLOBAL)</span><br><span class="line">            <span class="keyword">add_library</span>(<span class="variable">$&#123;name&#125;</span>::<span class="variable">$&#123;LIB&#125;</span> ALIAS <span class="variable">$&#123;LIB&#125;</span>)</span><br><span class="line">            <span class="keyword">set_target_properties</span>(<span class="variable">$&#123;LIB&#125;</span> PROPERTIES IMPORTED_LOCATION</span><br><span class="line">                                                    <span class="string">&quot;$&#123;LIB_DIR&#125;/lib$&#123;LIB&#125;.so&quot;</span>)</span><br><span class="line">            <span class="keyword">target_include_directories</span>(<span class="variable">$&#123;LIB&#125;</span> INTERFACE <span class="variable">$&#123;INCLUDE_DIRS&#125;</span>)</span><br><span class="line">          <span class="keyword">endif</span>()</span><br><span class="line">        <span class="keyword">endif</span>()</span><br><span class="line">      <span class="keyword">endforeach</span>()</span><br><span class="line"></span><br><span class="line">      <span class="comment"># static libs</span></span><br><span class="line">      <span class="keyword">execute_process</span>(</span><br><span class="line">        <span class="keyword">COMMAND</span> ls</span><br><span class="line">        <span class="comment"># COMMAND sh -c &quot;awk &#x27;/.a\$/&#123;print \$0&#125;&#x27;&quot; COMMAND sh -c &quot;awk -F &#x27;.&#x27;</span></span><br><span class="line">        <span class="comment"># &#x27;&#123;print substr($1,4)&#125;&#x27;&quot;</span></span><br><span class="line">        WORKING_DIRECTORY <span class="variable">$&#123;LIB_DIR&#125;</span></span><br><span class="line">        OUTPUT_VARIABLE LIBS</span><br><span class="line">        OUTPUT_STRIP_TRAILING_WHITESPACE)</span><br><span class="line">      <span class="keyword">string</span>(REPLACE <span class="string">&quot;\n&quot;</span> <span class="string">&quot;;&quot;</span> LIBS <span class="string">&quot;$&#123;LIBS&#125;&quot;</span>)</span><br><span class="line">      <span class="keyword">foreach</span>(LIB <span class="variable">$&#123;LIBS&#125;</span>)</span><br><span class="line">        <span class="keyword">string</span>(REGEX MATCH <span class="string">&quot;lib.*\.so$&quot;</span> LIB <span class="variable">$&#123;LIB&#125;</span>)</span><br><span class="line">        <span class="keyword">if</span>(LIB)</span><br><span class="line">          <span class="keyword">get_filename_component</span>(LIB <span class="variable">$&#123;LIB&#125;</span> NAME_WE)</span><br><span class="line">          <span class="keyword">string</span>(REPLACE <span class="string">&quot;lib&quot;</span> <span class="string">&quot;&quot;</span> LIB <span class="string">&quot;$&#123;LIB&#125;&quot;</span>)</span><br><span class="line">          <span class="keyword">message</span>(STATUS <span class="string">&quot;.......lib=$&#123;LIB&#125;&quot;</span>)</span><br><span class="line">          <span class="keyword">if</span>(<span class="keyword">NOT</span> <span class="keyword">TARGET</span> <span class="variable">$&#123;LIB&#125;</span>)</span><br><span class="line">            <span class="keyword">add_library</span>(<span class="variable">$&#123;LIB&#125;</span> STATIC IMPORTED GLOBAL)</span><br><span class="line">            <span class="keyword">add_library</span>(<span class="variable">$&#123;name&#125;</span>::<span class="variable">$&#123;LIB&#125;</span> ALIAS <span class="variable">$&#123;LIB&#125;</span>)</span><br><span class="line">            <span class="keyword">set_target_properties</span>(<span class="variable">$&#123;LIB&#125;</span> PROPERTIES IMPORTED_LOCATION</span><br><span class="line">                                                    <span class="string">&quot;$&#123;LIB_DIR&#125;/lib$&#123;LIB&#125;.a&quot;</span>)</span><br><span class="line">            <span class="keyword">target_include_directories</span>(<span class="variable">$&#123;LIB&#125;</span> INTERFACE <span class="variable">$&#123;INCLUDE_DIRS&#125;</span>)</span><br><span class="line">          <span class="keyword">endif</span>()</span><br><span class="line">        <span class="keyword">endif</span>()</span><br><span class="line">      <span class="keyword">endforeach</span>()</span><br><span class="line">    <span class="keyword">endforeach</span>()</span><br><span class="line">  <span class="keyword">endif</span>()</span><br><span class="line"><span class="keyword">endfunction</span>(pg_add_third_party_lib)</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>final</li>
-</ol>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(cmake/CPM.cmake)</span><br><span class="line"><span class="keyword">function</span>(pg_add_third_party_lib name)</span><br><span class="line">  <span class="keyword">set</span>(options <span class="string">&quot;&quot;</span>)</span><br><span class="line">  <span class="keyword">set</span>(oneValueArgs PACK)</span><br><span class="line">  <span class="keyword">set</span>(multiValueArgs INCLUDE_DIRS LIB_DIRS)</span><br><span class="line">  <span class="keyword">cmake_parse_arguments</span>(ARG <span class="string">&quot;$&#123;options&#125;&quot;</span> <span class="string">&quot;$&#123;oneValueArgs&#125;&quot;</span> <span class="string">&quot;$&#123;multiValueArgs&#125;&quot;</span></span><br><span class="line">                        <span class="variable">$&#123;ARGN&#125;</span>)</span><br><span class="line">  <span class="keyword">if</span>(ARG_PACK)</span><br><span class="line">    <span class="keyword">set</span>(PACK_NAME <span class="variable">$&#123;ARG_PACK&#125;</span>)</span><br><span class="line">  <span class="keyword">else</span>()</span><br><span class="line">    <span class="keyword">set</span>(PACK_NAME <span class="variable">$&#123;name&#125;</span>.tar)</span><br><span class="line">  <span class="keyword">endif</span>()</span><br><span class="line">  cpmaddpackage(</span><br><span class="line">    NAME <span class="variable">$&#123;name&#125;</span> URL</span><br><span class="line">    https://mirrors.phigent.io/nfs/pkgs/<span class="variable">$&#123;name&#125;</span>/<span class="variable">$&#123;ARCH_PLAT_VENDOR&#125;</span>/<span class="variable">$&#123;PACK_NAME&#125;</span></span><br><span class="line">  )</span><br><span class="line">  <span class="comment"># if($&#123;name&#125;_ADDED)</span></span><br><span class="line">  <span class="keyword">if</span>(ARG_INCLUDE_DIRS)</span><br><span class="line">    <span class="keyword">foreach</span>(INCLUDE_DIR <span class="variable">$&#123;ARG_INCLUDE_DIRS&#125;</span>)</span><br><span class="line">      <span class="keyword">if</span>(<span class="keyword">EXISTS</span> <span class="string">&quot;$&#123;$&#123;name&#125;_SOURCE_DIR&#125;/$&#123;INCLUDE_DIR&#125;&quot;</span>)</span><br><span class="line">        <span class="keyword">list</span>(APPEND INCLUDE_DIRS <span class="variable">$&#123;$&#123;name&#125;</span>_SOURCE_DIR&#125;/<span class="variable">$&#123;INCLUDE_DIR&#125;</span>)</span><br><span class="line">      <span class="keyword">endif</span>()</span><br><span class="line">    <span class="keyword">endforeach</span>()</span><br><span class="line">  <span class="keyword">else</span>()</span><br><span class="line">    <span class="keyword">list</span>(APPEND INCLUDE_DIRS <span class="variable">$&#123;$&#123;name&#125;</span>_SOURCE_DIR&#125;/<span class="keyword">include</span>)</span><br><span class="line">  <span class="keyword">endif</span>()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(ARG_LIB_DIRS)</span><br><span class="line">    <span class="keyword">foreach</span>(LIB_DIR <span class="variable">$&#123;ARG_LIB_DIRS&#125;</span>)</span><br><span class="line">      <span class="keyword">list</span>(APPEND LIB_DIRS <span class="variable">$&#123;$&#123;name&#125;</span>_SOURCE_DIR&#125;/<span class="variable">$&#123;LIB_DIR&#125;</span>)</span><br><span class="line">    <span class="keyword">endforeach</span>()</span><br><span class="line">  <span class="keyword">else</span>()</span><br><span class="line">    <span class="keyword">list</span>(APPEND LIB_DIRS <span class="variable">$&#123;$&#123;name&#125;</span>_SOURCE_DIR&#125;/lib)</span><br><span class="line">  <span class="keyword">endif</span>()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">foreach</span>(LIB_DIR <span class="variable">$&#123;LIB_DIRS&#125;</span>)</span><br><span class="line">    <span class="comment"># shared libs</span></span><br><span class="line">    <span class="keyword">execute_process</span>(</span><br><span class="line">      <span class="keyword">COMMAND</span> ls</span><br><span class="line">      WORKING_DIRECTORY <span class="variable">$&#123;LIB_DIR&#125;</span></span><br><span class="line">      OUTPUT_VARIABLE LIBS</span><br><span class="line">      OUTPUT_STRIP_TRAILING_WHITESPACE)</span><br><span class="line">    <span class="keyword">string</span>(REPLACE <span class="string">&quot;\n&quot;</span> <span class="string">&quot;;&quot;</span> LIBS <span class="string">&quot;$&#123;LIBS&#125;&quot;</span>)</span><br><span class="line">    <span class="keyword">foreach</span>(LIB <span class="variable">$&#123;LIBS&#125;</span>)</span><br><span class="line">      <span class="keyword">string</span>(REGEX MATCH <span class="string">&quot;lib.*\.so$&quot;</span> LIB <span class="variable">$&#123;LIB&#125;</span>)</span><br><span class="line">      <span class="keyword">if</span>(LIB)</span><br><span class="line">        <span class="keyword">string</span>(LENGTH <span class="variable">$&#123;LIB&#125;</span> STR_LEN)</span><br><span class="line">        <span class="keyword">math</span>(EXPR STR_LEN <span class="string">&quot;$&#123;STR_LEN&#125; - 6&quot;</span>)</span><br><span class="line">        <span class="keyword">string</span>(SUBSTRING <span class="variable">$&#123;LIB&#125;</span> <span class="number">3</span> <span class="variable">$&#123;STR_LEN&#125;</span> LIB)</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">NOT</span> <span class="keyword">TARGET</span> <span class="variable">$&#123;LIB&#125;</span>)</span><br><span class="line">          <span class="keyword">add_library</span>(<span class="variable">$&#123;LIB&#125;</span> SHARED IMPORTED GLOBAL)</span><br><span class="line">          <span class="keyword">add_library</span>(<span class="variable">$&#123;name&#125;</span>::<span class="variable">$&#123;LIB&#125;</span> ALIAS <span class="variable">$&#123;LIB&#125;</span>)</span><br><span class="line">          <span class="keyword">set_target_properties</span>(<span class="variable">$&#123;LIB&#125;</span> PROPERTIES IMPORTED_LOCATION</span><br><span class="line">                                                  <span class="string">&quot;$&#123;LIB_DIR&#125;/lib$&#123;LIB&#125;.so&quot;</span>)</span><br><span class="line">          <span class="keyword">target_include_directories</span>(<span class="variable">$&#123;LIB&#125;</span> INTERFACE <span class="variable">$&#123;INCLUDE_DIRS&#125;</span>)</span><br><span class="line">        <span class="keyword">endif</span>()</span><br><span class="line">      <span class="keyword">endif</span>()</span><br><span class="line">    <span class="keyword">endforeach</span>()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># static libs</span></span><br><span class="line">    <span class="keyword">execute_process</span>(</span><br><span class="line">      <span class="keyword">COMMAND</span> ls</span><br><span class="line">      WORKING_DIRECTORY <span class="variable">$&#123;LIB_DIR&#125;</span></span><br><span class="line">      OUTPUT_VARIABLE LIBS</span><br><span class="line">      OUTPUT_STRIP_TRAILING_WHITESPACE)</span><br><span class="line">    <span class="keyword">string</span>(REPLACE <span class="string">&quot;\n&quot;</span> <span class="string">&quot;;&quot;</span> LIBS <span class="string">&quot;$&#123;LIBS&#125;&quot;</span>)</span><br><span class="line">    <span class="keyword">foreach</span>(LIB <span class="variable">$&#123;LIBS&#125;</span>)</span><br><span class="line">      <span class="keyword">string</span>(REGEX MATCH <span class="string">&quot;lib.*\.a$&quot;</span> LIB <span class="variable">$&#123;LIB&#125;</span>)</span><br><span class="line">      <span class="keyword">if</span>(LIB)</span><br><span class="line">        <span class="keyword">string</span>(LENGTH <span class="variable">$&#123;LIB&#125;</span> STR_LEN)</span><br><span class="line">        <span class="keyword">math</span>(EXPR STR_LEN <span class="string">&quot;$&#123;STR_LEN&#125; - 5&quot;</span>)</span><br><span class="line">        <span class="keyword">string</span>(SUBSTRING <span class="variable">$&#123;LIB&#125;</span> <span class="number">3</span> <span class="variable">$&#123;STR_LEN&#125;</span> LIB)</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">NOT</span> <span class="keyword">TARGET</span> <span class="variable">$&#123;LIB&#125;</span>)</span><br><span class="line">          <span class="keyword">add_library</span>(<span class="variable">$&#123;LIB&#125;</span> STATIC IMPORTED GLOBAL)</span><br><span class="line">          <span class="keyword">add_library</span>(<span class="variable">$&#123;name&#125;</span>::<span class="variable">$&#123;LIB&#125;</span> ALIAS <span class="variable">$&#123;LIB&#125;</span>)</span><br><span class="line">          <span class="keyword">set_target_properties</span>(<span class="variable">$&#123;LIB&#125;</span> PROPERTIES IMPORTED_LOCATION</span><br><span class="line">                                                  <span class="string">&quot;$&#123;LIB_DIR&#125;/lib$&#123;LIB&#125;.a&quot;</span>)</span><br><span class="line">          <span class="keyword">target_include_directories</span>(<span class="variable">$&#123;LIB&#125;</span> INTERFACE <span class="variable">$&#123;INCLUDE_DIRS&#125;</span>)</span><br><span class="line">        <span class="keyword">endif</span>()</span><br><span class="line">      <span class="keyword">endif</span>()</span><br><span class="line">    <span class="keyword">endforeach</span>()</span><br><span class="line">  <span class="keyword">endforeach</span>()</span><br><span class="line">  <span class="comment"># endif()</span></span><br><span class="line"><span class="keyword">endfunction</span>(pg_add_third_party_lib)</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>版本管理</li>
-</ol>
-<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(CPM_FUNCTIONS_VERSION <span class="number">0.1</span>)</span><br><span class="line"><span class="keyword">set</span>(CPM_DOWNLOAD_LOCATION <span class="string">&quot;$&#123;CMAKE_SOURCE_DIR&#125;/cmake/pg_cpm_functions.cmake&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">EXISTS</span> <span class="variable">$&#123;CPM_DOWNLOAD_LOCATION&#125;</span>)</span><br><span class="line">  <span class="keyword">include</span>(<span class="variable">$&#123;CPM_DOWNLOAD_LOCATION&#125;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">NOT</span> (CPM_FUNCTIONS_VERSION <span class="keyword">VERSION_EQUAL</span> CURRENT_CPM_FUNCTIONS_VERSION))</span><br><span class="line">  <span class="keyword">message</span>(</span><br><span class="line">    STATUS</span><br><span class="line">      <span class="string">&quot;CURRENT_CPM_FUNCTIONS_VERSION $&#123;CURRENT_CPM_FUNCTIONS_VERSION&#125; not equal to CPM_FUNCTIONS_VERSION $&#123;CPM_FUNCTIONS_VERSION&#125;&#125;&quot;</span></span><br><span class="line">  )</span><br><span class="line">  <span class="keyword">message</span>(</span><br><span class="line">    STATUS</span><br><span class="line">      <span class="string">&quot;Downloading https://xxxxcpm/functions/v$&#123;CPM_FUNCTIONS_VERSION&#125;/pg_cpm_functions.cmake to $&#123;CPM_DOWNLOAD_LOCATION&#125;&quot;</span></span><br><span class="line">  )</span><br><span class="line">  <span class="keyword">file</span>(</span><br><span class="line">    DOWNLOAD</span><br><span class="line">    https://xxxxxx/functions/v<span class="variable">$&#123;CPM_FUNCTIONS_VERSION&#125;</span>/pg_cpm_functions.cmake</span><br><span class="line">    <span class="variable">$&#123;CPM_DOWNLOAD_LOCATION&#125;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">include</span>(<span class="variable">$&#123;CPM_DOWNLOAD_LOCATION&#125;</span>)</span><br><span class="line"><span class="keyword">message</span>(</span><br><span class="line">  STATUS <span class="string">&quot;CURRENT_CPM_FUNCTIONS_VERSION=\&quot;$&#123;CURRENT_CPM_FUNCTIONS_VERSION&#125;\&quot;&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/davidhopper/article/details/121030549">使用 CPM 管理 CMake C++工程中的外部依赖库</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/07/07/Clang/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/07/07/Clang/" class="post-title-link" itemprop="url">Clang</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-07-07 13:58:12" itemprop="dateCreated datePublished" datetime="2022-07-07T13:58:12+08:00">2022-07-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-22 13:05:50" itemprop="dateModified" datetime="2023-11-22T13:05:50+08:00">2023-11-22</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/07/07/Clang/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/07/07/Clang/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>762</span>
+              <span>745</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1654,41 +393,1003 @@
 
       
           <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li><code>-Wall</code>：启用大多数警告。这是开发中常用的选项，可以帮助发现潜在的代码问题。</li>
-<li><code>-Wextra</code>：启用额外的警告，比 -Wall 更严格。</li>
-<li><code>-Werror</code>：将所有警告当作错误处理。这意味着任何警告都会导致编译失败，迫使开发者修复这些潜在的问题</li>
+<li><code>找到内心的召唤</code>， 做事要培养兴趣，不然很难做好 <code>Hackers write better code when it&#39;s for their own satisfaction instead of for pay.</code></li>
+<li><code>多尝试</code>，别怕出错</li>
+<li><code>不要用反问</code> 老板要是换个说法，说“这个文件需要打印两份”。你觉得哪种说法更容易接受呢？明显后者听起来舒服多了。 比如你打印文件，老板跟你说“你怎么只打印一份啊？老板要是换个说法，说“这个文件需要打印两份”。你觉得哪种说法更容易接受呢？明显后者听起来舒服多了。老板要是换个说法，说“这个文件需要打印两份”。你觉得哪种说法更容易接受呢？明显后者听起来舒服多了。</li>
+<li><code>能够轻易得到答案的简单问题不要问出口</code>，那并不会显得你很好学，反而会显得你无知又懒惰。</li>
+<li><code>不经过思考后的答案不要脱口而出</code>，控制住嘴巴是你学会成熟的第一步。</li>
+<li><code>说话尽量不要带“吧”字</code>，好和好吧，行和行吧，听你的和听你的吧，前者是直接坦率的，后者是犹豫而无奈的。要做就做，干脆一点，不然为何答应</li>
+<li><code>要把自己当作一个公司去运营</code>，要有战略方向（你的人生目标），要有运营路径（你的行动方案），要有产品竞争力（你的个人能力维度），要有营销（你的公开表达），要有财务思维（你的收支平衡）</li>
+<li><code>职场没有功劳就没有苦劳</code> 只有建立在功劳基础上的苦劳，才有价值。</li>
+<li><code>远离抱怨的人</code></li>
+<li><code>生气时，学会闭嘴</code> 生气时，情绪完全被动物大脑控制，很容易得罪人。像钉子钉墙一样，就算把钉子拔出来，墙依然会有孔 最好的办法就是深呼吸，闭嘴。</li>
+<li><code>如果找不到热爱的事业，先做最擅长的工作</code></li>
+<li><code>别糊弄</code></li>
+<li>别人找你帮忙的时候，不要果断答应。如果对方是爽快之人，你可以同样爽快交往。但对大部分人，不要急于表露自己的热情好客，你的直爽只会把你的付出变得廉价，在他眼里你办这事没有任何难度，不会从心里感激你，只是把你当工具人。</li>
 </ol>
-<h2 id="clang-VS-gcc"><a href="#clang-VS-gcc" class="headerlink" title="clang VS gcc"></a>clang VS gcc</h2><ol>
-<li>clang 优势<ul>
-<li>编译速度更快</li>
-<li>编译产出更小</li>
-<li>出错提示更友好</li>
-<li>内置有静态分析工具</li>
-<li>专注</li>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/30/log/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/30/log/" class="post-title-link" itemprop="url">log</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-30 10:46:58" itemprop="dateCreated datePublished" datetime="2022-09-30T10:46:58+08:00">2022-09-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-09-28 13:13:09" itemprop="dateModified" datetime="2023-09-28T13:13:09+08:00">2023-09-28</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/09/30/log/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/30/log/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="glog"><a href="#glog" class="headerlink" title="glog"></a>glog</h2><ol>
+<li><code>GLOG_colorlogtostderr=1 ./test</code> 输出彩色</li>
+<li><code>GLOG_alsologtostderr=false</code> 关闭 log</li>
+<li>export GLOG_log_dir&#x3D;.&#x2F;log_tmp 输入 log 到 log_tmp 目录下</li>
+</ol>
+<h2 id="logrotate"><a href="#logrotate" class="headerlink" title="logrotate"></a>logrotate</h2><ol>
+<li>使用 logrotate 实现 log 循环覆盖功能，将 log 文件限制在一定大小。由于 logrotate 程序不能解决多文件未知变量名的情况，讨论了一下解决办法，设置环境变量 GLOG_max_log_size&#x3D;1，使得程序输出的 log 被分片，每片最大为 1M,然后使用脚本保留最新的几片 log，从而控制 log 的大小在一定范围内。</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kevingrace/p/6307298.html">https://www.cnblogs.com/kevingrace/p/6307298.html</a> 配置</p>
+<p><a target="_blank" rel="noopener" href="http://blog.csdn.net/hxh129/article/details/8178647">http://blog.csdn.net/hxh129/article/details/8178647</a> 指定文件大小，超过就转存</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">size=`ll /var/log/messages | <span class="built_in">cut</span> -d <span class="string">&quot; &quot;</span> -f 5`</span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$size</span> -ge xxxxx ];</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">logrotate  /xxx/xxx.conf;</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="logrotate-功能"><a href="#logrotate-功能" class="headerlink" title="logrotate 功能"></a>logrotate 功能</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /tmp</span><br><span class="line"><span class="keyword">while</span> <span class="built_in">sleep</span> 15; <span class="keyword">do</span></span><br><span class="line">        file_num=`<span class="built_in">ls</span> -l |grep <span class="string">&quot;^-&quot;</span>|<span class="built_in">wc</span> -l`</span><br><span class="line">        <span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$file_num</span>&quot;</span> -gt 8 ]; <span class="keyword">then</span></span><br><span class="line">                rm_num=$((<span class="variable">$file_num</span> - <span class="number">8</span>))</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> `<span class="built_in">ls</span> -t /tmp | <span class="built_in">tail</span> -n <span class="variable">$rm_num</span>`; <span class="keyword">do</span></span><br><span class="line">                        <span class="built_in">rm</span> <span class="string">&quot;<span class="variable">$i</span>&quot;</span></span><br><span class="line">                <span class="keyword">done</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> /tmp</span><br><span class="line"><span class="keyword">while</span> <span class="built_in">sleep</span> 15; <span class="keyword">do</span></span><br><span class="line">        file_num=`<span class="built_in">ls</span> -l |grep <span class="string">&quot;^-&quot;</span>|<span class="built_in">wc</span> -l`</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$file_num</span>&quot;</span></span><br><span class="line">        <span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$file_num</span>&quot;</span> -gt 8 ]; <span class="keyword">then</span></span><br><span class="line">                rm_num=$((<span class="variable">$file_num</span> - <span class="number">8</span>))</span><br><span class="line">                <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$rm_num</span>&quot;</span></span><br><span class="line">                <span class="built_in">ls</span> -lt</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> `<span class="built_in">ls</span> -t /tmp | <span class="built_in">tail</span> -n <span class="variable">$rm_num</span>`; <span class="keyword">do</span></span><br><span class="line">                        <span class="built_in">echo</span> <span class="string">&quot;clear log file <span class="variable">$i</span>&quot;</span>;</span><br><span class="line">                        <span class="built_in">rm</span> <span class="string">&quot;<span class="variable">$i</span>&quot;</span> || <span class="built_in">echo</span> ok</span><br><span class="line">                <span class="keyword">done</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">alive_counter=0</span><br><span class="line">prog=run_smartsv</span><br><span class="line"><span class="built_in">cd</span> /tmp</span><br><span class="line"><span class="keyword">while</span> <span class="built_in">sleep</span> 5; <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">if</span> [ $((alive_counter % <span class="number">5</span> )) -eq 0 ]; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="built_in">test</span></span><br><span class="line">        file_num=`<span class="built_in">ls</span> -l |grep <span class="string">&quot;^-&quot;</span>|<span class="built_in">wc</span> -l`</span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$file_num</span>&quot;</span></span><br><span class="line">        <span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$file_num</span>&quot;</span> -gt 6 ]; <span class="keyword">then</span></span><br><span class="line">                rm_num=$((<span class="variable">$file_num</span> - <span class="number">6</span>))</span><br><span class="line">                <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$rm_num</span>&quot;</span></span><br><span class="line">                <span class="built_in">ls</span> -lt</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> `<span class="built_in">ls</span> -t /tmp | <span class="built_in">tail</span> -n <span class="variable">$rm_num</span>`; <span class="keyword">do</span></span><br><span class="line">                        <span class="built_in">echo</span> <span class="string">&quot;clear log file <span class="variable">$i</span>&quot;</span>;</span><br><span class="line">                        <span class="built_in">rm</span> <span class="string">&quot;<span class="variable">$i</span>&quot;</span> || <span class="built_in">echo</span> ok</span><br><span class="line">                <span class="keyword">done</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/29/wallpaper/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/29/wallpaper/" class="post-title-link" itemprop="url">wallpaper</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-29 14:39:45" itemprop="dateCreated datePublished" datetime="2022-09-29T14:39:45+08:00">2022-09-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-12-03 18:30:00" itemprop="dateModified" datetime="2023-12-03T18:30:00+08:00">2023-12-03</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/09/29/wallpaper/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/29/wallpaper/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>233</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="桌面背景制作"><a href="#桌面背景制作" class="headerlink" title="桌面背景制作"></a>桌面背景制作</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/pearmini/colorfu">colorfu</a></li>
+<li>color value : <code>1E1E1E</code></li>
+<li><a target="_blank" rel="noopener" href="https://express.adobe.com/zh-Hans-CN/sp/design/post/urn:aaid:sc:VA6C2:a245b511-f975-4454-94d9-cdb73067395b">express.adobe</a> 先抠图，纯色背景，调整透明度</li>
+<li><a target="_blank" rel="noopener" href="https://www.canva.com/">canva</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.canva.com/design/DAFNl8MDuMs/Og2VZlsR1bnZXNcsOhPOYg/view?utm_content=DAFNl8MDuMs&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink&mode=preview">think twice 模板链接</a></li>
+<li><a target="_blank" rel="noopener" href="https://picwish.cn/upload">在线抠图</a></li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.canva.com/search/templates?q=%E5%A3%81%E7%BA%B8%E6%B1%BD%E8%BD%A6&fCategory=tACZCp5JRWg&filters=eyJBIjoiTUBmcFVZX0dNQlhrM19idyIsIkE/IjoiQyIsIkQiOiIwMDAwMDAifQ==">canva 搜索壁纸</a></li>
+<li><a target="_blank" rel="noopener" href="https://wallpaperaccess.com/full/1644661.jpg">口袋妖怪适合 zenburn 背景的壁纸</a></li>
+<li><a target="_blank" rel="noopener" href="https://wallpaperaccess.com/awesome-gengar">口袋妖怪壁纸</a></li>
+<li><a target="_blank" rel="noopener" href="https://wallpaperaccess.com/black-pokemon">口袋妖怪壁纸黑</a></li>
+<li><a target="_blank" rel="noopener" href="http://ubuntu.ecchi.ca/wallpapers/">ubuntu 每一版壁纸汇总</a></li>
+<li><a target="_blank" rel="noopener" href="https://wallpaperaccess.com/ubuntu">ubuntu 壁纸</a></li>
+<li><a target="_blank" rel="noopener" href="https://wallpaperhub.app/creators/genrolecaspe">windows 壁纸</a></li>
+<li><a target="_blank" rel="noopener" href="https://wallpaperhub.app/wallpapers/?tags=windows">windows 壁纸 2</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/terminal/issues/3878#issuecomment-735253417">close scroll bar</a></li>
+<li><a target="_blank" rel="noopener" href="https://windowsterminalthemes.dev/">themes</a></li>
+<li><a target="_blank" rel="noopener" href="https://wallpapers.com/wallpapers/4k-programming-codes-in-black-screen-cl72lv0j7uvh4bmy.html">programmer backgroud</a></li>
+<li><a target="_blank" rel="noopener" href="https://wallpapers.com/wallpapers/cool-car-neon-blue-j3a9pqeowr7ywja3.html">cool car</a></li>
+<li><a target="_blank" rel="noopener" href="https://express.adobe.com/zh-Hans-CN/sp/design/post/urn:aaid:sc:VA6C2:928899ca-b02d-442f-9132-8607d4a4fada?workflow=quicktask">cool</a></li>
+<li><a target="_blank" rel="noopener" href="https://m.media-amazon.com/images/S/aplus-media-library-service-media/d64dd730-5df0-4bd0-a30c-c78d168d48bd.__CR0,0,1464,625_PT0_SX1464_V1___.jpg">car</a></li>
+<li><a target="_blank" rel="noopener" href="https://wallpaperaccess.com/cool-sports-car">cool-sports-car</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/27/Pandoc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/27/Pandoc/" class="post-title-link" itemprop="url">Pandoc</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-27 11:08:48" itemprop="dateCreated datePublished" datetime="2022-09-27T11:08:48+08:00">2022-09-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/09/27/Pandoc/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/27/Pandoc/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>235</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>Pandoc is a Haskell library for converting from one markup format to another, and a command-line tool that uses this library.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jgm/pandoc">pandoc</a> (The universal markup converter 可以转换各种标记语言)</li>
+</ol>
+<h2 id="usage"><a href="#usage" class="headerlink" title="usage"></a>usage</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://pandoc.org/demos.html">demos</a></li>
+<li><a target="_blank" rel="noopener" href="https://pandoc.org/try/">online 转换</a></li>
+<li>markdown to pdf <code>pandoc MANUAL.md --pdf-engine=xelatex -o example13.pdf</code></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/26/Document/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/26/Document/" class="post-title-link" itemprop="url">Document</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-26 14:53:29" itemprop="dateCreated datePublished" datetime="2022-09-26T14:53:29+08:00">2022-09-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/09/26/Document/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/26/Document/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>396</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h2><ol>
+<li><p><a target="_blank" rel="noopener" href="https://bazel.build/?hl=zh-cn">参考 bazel</a></p>
+</li>
+<li><p>are several main types of documents that software engineers often need to write:</p>
+<ul>
+<li>Reference documentation, including code comments 参考文档，包括代码注释</li>
+<li>Design documents 设计文档</li>
+<li>Tutorials 教程</li>
+<li>Conceptual documentation 概念文档</li>
+<li>Landing pages 着陆页</li>
+<li>quickstart, Getting Started</li>
+<li>introduction, overview</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://qiangmzsx.github.io/Software-Engineering-at-Google/#/zh-cn/Chapter-10_Documentation/Chapter-10_Documentatio">Software-Engineering-at-Google</a></p>
+</li>
+</ol>
+<h2 id="tools"><a href="#tools" class="headerlink" title="tools"></a>tools</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/jgm/pandoc">pandoc</a> (The universal markup converter 可以转换各种标记语言)</li>
+<li>doxygen</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/sphinx-doc/sphinx">sphinx-doc&#x2F;sphinx</a></li>
+<li>Latex <a target="_blank" rel="noopener" href="https://github.com/Wandmalfarbe/pandoc-latex-template">pandoc-latex-template</a></li>
+<li><a target="_blank" rel="noopener" href="https://readthedocs.org/">readthedocs</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/26/github/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/26/github/" class="post-title-link" itemprop="url">github</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-26 11:27:54" itemprop="dateCreated datePublished" datetime="2022-09-26T11:27:54+08:00">2022-09-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-29 10:42:57" itemprop="dateModified" datetime="2024-01-29T10:42:57+08:00">2024-01-29</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/09/26/github/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/26/github/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>433</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="note"><a href="#note" class="headerlink" title="note"></a>note</h2><ol>
+<li>github clone&#x2F;push 问题<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.github.com/en/authentication/troubleshooting-ssh/using-ssh-over-the-https-port#enabling-ssh-connections-over-https">enabling-ssh-connections-over-https</a></li>
 </ul>
 </li>
 </ol>
-<h2 id="cmake-使用"><a href="#cmake-使用" class="headerlink" title="cmake 使用"></a>cmake 使用</h2><ol>
-<li>env</li>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    Hostname ssh.github.com</span><br><span class="line">    Port 443</span><br><span class="line">    User git</span><br></pre></td></tr></table></figure>
+
+<h2 id="explore"><a href="#explore" class="headerlink" title="explore"></a>explore</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://star-history.com/">star-history</a> 可以多个 repo 同时显示</li>
+<li><a target="_blank" rel="noopener" href="https://starchart.cc/">starchart.cc</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/anuraghazra/github-readme-stats">github-readme-stats</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/search?o=desc&q=stars:%3E0&s=stars&type=Repositories">start sort</a></li>
+<li><a target="_blank" rel="noopener" href="https://octobox.io/">octobox.io 管理 github 通知</a><ul>
+<li>直接登录 github 就能显示</li>
+</ul>
+</li>
 </ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> CC=clang</span><br><span class="line"><span class="built_in">export</span> CXX=clang++</span><br></pre></td></tr></table></figure>
+<h2 id="gist"><a href="#gist" class="headerlink" title="gist"></a>gist</h2><h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://shields.io/badges">badges&#x2F;shields</a> 左上角按要求输入变量，会生成 URL, 点击 execute 会预览结果<ul>
+<li><a target="_blank" rel="noopener" href="https://shields.io/badges/static-badge">任意格式</a> <a target="_blank" rel="noopener" href="https://img.shields.io/badge/try%20it-online-orange">sample</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/doctest/doctest">badge example</a></li>
+<li><a target="_blank" rel="noopener" href="https://dev.to/azure/github-how-to-display-the-status-badge-for-a-github-action-5449">build-badge</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.repostatus.org/">repostatus</a></li>
+<li><a target="_blank" rel="noopener" href="https://isitmaintained.com/">issuse badge</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Platane/snk">自动生成蛇的行走路径，一口气吃光所有“绿块”</a></li>
+<li>访问 github 有问题，访问 gitlab 无问题， 可以先用 gitlab 去 mirrors github repo， 再访问 gitlab</li>
+<li>点击<code>go to file</code>， 搜索文件</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/25/LaTeX/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/25/LaTeX/" class="post-title-link" itemprop="url">LaTeX</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-25 14:25:17" itemprop="dateCreated datePublished" datetime="2022-09-25T14:25:17+08:00">2022-09-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-09-28 13:14:09" itemprop="dateModified" datetime="2023-09-28T13:14:09+08:00">2023-09-28</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/09/25/LaTeX/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/25/LaTeX/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>LaTeX: Lamport TeX</li>
+<li>读音：莱泰克</li>
+<li><a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/Font_sizes%2C_families%2C_and_styles">调整字体大小</a></li>
+<li>中文问题 <code>\begin&#123;CJK&#125;&#123;UTF8&#125;</code> 换成 <code>\begin&#123;CJK&#125;&#123;gbsn&#125;</code> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/zyl910/archive/2013/06/02/doxygen_pdf_chinese.html">link</a></li>
+<li>换页问题： <code>\doxysection</code> 之前加 <code>\newpage</code></li>
+<li><a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/Headers_and_footers">fancy Headers_and_footers</a><ul>
+<li><code>O</code> or <code>E</code>: to specify Odd or Even pages</li>
+<li><code>H</code> or <code>F</code>: to indicate Header or Footer</li>
+<li><code>L</code>, <code>C</code> or <code>R</code>: for the Left, Centre and Right “zone” of the header or footer</li>
+</ul>
+</li>
+<li><code>\pagestyle&#123;fancyplain&#125;</code> doxygen refman.tex 删除之后页眉页脚不再有横杠</li>
+<li>pagestyle <code>\pagestyle&#123;⟨style⟩&#125;</code> <a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/Headers_and_footers">link</a><ul>
+<li>empty: no headers or footers on pages</li>
+<li>plain: no page headers, footers consist of a centered page number</li>
+<li>headings: no footers, headers contains class-specific information and page number</li>
+<li>myheadings: no footers, headers contains page number and user-supplied information</li>
+</ul>
+</li>
+<li>picture in header <a target="_blank" rel="noopener" href="https://tex.stackexchange.com/a/122936">link</a> picture 下可以添加官网网址，并加上点击链接 <code>\fancyhead[L]&#123;\includegraphics[width=3cm]&#123;logo1&#125; \\\href&#123;https://www.wikibooks.org&#125;&#123;Wikibooks home&#125;&#125;</code></li>
+<li>oneside or twoside <a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/Single_sided_and_double_sided_documents#Difference_between_one-side_and_two-side_documents">link</a></li>
+<li>chapter style <a target="_blank" rel="noopener" href="https://tex.stackexchange.com/a/18605">link</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/Lists_of_tables_and_figures">list of features and tables</a></li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">% Headers &amp; footers</span><br><span class="line">\usepackage&#123;fancyhdr&#125;</span><br><span class="line">\pagestyle&#123;fancy&#125;</span><br><span class="line">\setlength\headheight&#123;32pt&#125;</span><br><span class="line">\fancyhead&#123;&#125;</span><br><span class="line">\fancyhead[L]&#123;\includegraphics[width=3cm]&#123;logo1&#125;&#125;</span><br><span class="line">\fancyhead[R]&#123;\text&#123;dcv-cpp 开发手册&#125; \\[4pt] \\\text&#123;\fancyplain&#123;&#125;&#123;\rightmark&#125;&#125;&#125;</span><br><span class="line">% \renewcommand&#123;\headrulewidth&#125;&#123;0pt&#125;</span><br><span class="line">% \renewcommand&#123;\footrulewidth&#125;&#123;0pt&#125;</span><br><span class="line">\renewcommand&#123;\headruleskip&#125;&#123;2.5pt&#125;</span><br><span class="line">% \renewcommand&#123;\footruleskip&#125;&#123;0pt&#125;</span><br></pre></td></tr></table></figure>
 
 <ol>
-<li>cmake</li>
+<li>首页设置</li>
 </ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cmake -DCMAKE_C_COMPILER=clang  -DCMAKE_CXX_COMPILER=clang++ ..</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">\begin&#123;titlepage&#125;</span><br><span class="line">\vspace*&#123;7cm&#125;</span><br><span class="line">\begin&#123;center&#125;%</span><br><span class="line">\includegraphics[width=4cm]&#123;logo1&#125;</span><br><span class="line"></span><br><span class="line">\textbf&#123;\Huge heimdallr-\/sdk 用户手册 \\[3ex]\Large v1.\+0.\+0 &#125;\\</span><br><span class="line">\vfill</span><br><span class="line">\vspace*&#123;1cm&#125;</span><br><span class="line">&#123;\large 制作者 PhiGent Robotics&#125;\\</span><br><span class="line">\end&#123;center&#125;</span><br><span class="line">\end&#123;titlepage&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="include-what-you-use"><a href="#include-what-you-use" class="headerlink" title="include-what-you-use"></a><a target="_blank" rel="noopener" href="https://github.com/include-what-you-use/include-what-you-use">include-what-you-use</a></h2><ol>
-<li>检查在头文件中用了哪些 symbol</li>
-<li><code>sudo ln -s /usr/bin/python3 /usr/bin/python</code></li>
-<li><code>iwyu_tool.py -p build/</code> build 下有 compile_commands.json, 分析工程</li>
-<li>fix_includes.py 修复 include</li>
-<li>build</li>
+<h2 id="editer"><a href="#editer" class="headerlink" title="editer"></a>editer</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/James-Yu/LaTeX-Workshop">vscode</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.overleaf.com/">online editer overleaf</a><ul>
+<li>点击可以到对应代码</li>
+<li>可以修改主题， 编译器, 字体大小，style 等</li>
+<li>添加 package <a target="_blank" rel="noopener" href="https://tex.stackexchange.com/a/536730">link</a></li>
+<li>doxygen 需要的 sty: tabu_doxygen.sty, ongtable_doxygen.sty, doxygen.sty</li>
+</ul>
+</li>
 </ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># git clone git@github.com:include-what-you-use/include-what-you-use.git</span></span><br><span class="line"><span class="comment"># cd include-what-you-use</span></span><br><span class="line"><span class="comment"># git checkout 0.14</span></span><br><span class="line"><span class="comment"># mkdir build &amp;&amp; cd build</span></span><br><span class="line"><span class="comment"># cmake -G &quot;Unix Makefiles&quot; -DCMAKE_PREFIX_PATH=/usr/lib/llvm-10 ../</span></span><br><span class="line"><span class="comment"># make &amp;&amp; make install</span></span><br><span class="line"><span class="comment"># bin/include-what-you-use ../../cpp_sandbox/io/read_shape/test.cpp</span></span><br></pre></td></tr></table></figure>
-
+<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes">overleaf Learn_LaTeX_in_30_minutes</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/luong-komorebi/Begin-Latex-in-minutes">Begin-Latex-in-minutes</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/luong-komorebi/Begin-Latex-in-minutes/blob/master/Translation-Chinese.md">Begin-Latex-in-minutes Chinese</a></li>
+</ol>
+<h2 id="简历模板"><a href="#简历模板" class="headerlink" title="简历模板"></a>简历模板</h2><ol>
+<li><p>The CV presents a full history of your academic credentials, so the length of the document is variable. In contrast, a resume presents a concise picture of your skills and qualifications for a specific position, so length tends to be shorter and dictated by years of experience (generally 1-2 pages).</p>
+</li>
+<li><p>CV 是履历，Resume 是简历。</p>
+<ul>
+<li>Resume，简述于求职相关的教育背景和工作经历，其目的在于说服用人单位雇用自己；</li>
+<li>CV，Curriculum Vitae 事集中说明学术工作，不重视与文化程度和学习成绩无直接关系的资料。</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/posquit0/Awesome-CV">Awesome-CV</a> CV: Curriculum Vitae 个人简历</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.overleaf.com/latex/templates/awesome-cv/dfnvtnhzhhbm">overleaf awesome-cv template</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/jankapunkt/latexcv/tree/master/sidebar">latexcv</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/dyweb/awesome-resume-for-chinese">awesome-resume-for-chinese</a></p>
+</li>
+</ol>
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1449757">linux 下 Clang 和 gcc 的区别</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/HarisIqbal88/PlotNeuralNet"> drawing neural networks for reports and presentation</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Wandmalfarbe/pandoc-latex-template">pandoc-latex-template</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ti.com/lit/an/spracz2/spracz2.pdf?ts=1664353778597&ref_url=https%253A%252F%252Fwww.google.com%252F">TI 文档参考</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/15/DataStructure/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/15/DataStructure/" class="post-title-link" itemprop="url">DataStructure</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-15 21:17:10" itemprop="dateCreated datePublished" datetime="2022-09-15T21:17:10+08:00">2022-09-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/09/15/DataStructure/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/15/DataStructure/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>97</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="CPP"><a href="#CPP" class="headerlink" title="CPP"></a>CPP</h2><h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><ol>
+<li>unordered_map 排序：使用 map <code>std::map&lt;int, int&gt; ordered(unordered.begin(), unordered.end());</code> <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/6212709">link</a></li>
+<li></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/14/J5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/14/J5/" class="post-title-link" itemprop="url">J5</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-14 10:29:39" itemprop="dateCreated datePublished" datetime="2022-09-14T10:29:39+08:00">2022-09-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-05 15:40:34" itemprop="dateModified" datetime="2024-02-05T15:40:34+08:00">2024-02-05</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/09/14/J5/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/14/J5/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://developer.horizon.cc/forumDetail/185446371330059350">多模型优先级调度</a></li>
+</ol>
+<h2 id="software-development"><a href="#software-development" class="headerlink" title="software development"></a>software development</h2><ol>
+<li>功能</li>
+<li>指标</li>
+<li>性能</li>
+</ol>
+<h2 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/r/openexplorer/ai_toolchain_ubuntu_20_j5_cpu/tags">ai_toolchain_ubuntu_20_j5_cpu</a></li>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/r/openexplorer/ai_toolchain_ubuntu_20_j5_gpu/tags">ai_toolchain_ubuntu_20_j5_gpu</a></li>
+</ol>
+<h2 id="Model-Convert"><a href="#Model-Convert" class="headerlink" title="Model Convert"></a>Model Convert</h2><ol>
+<li>PTQ 根据算法计算 scale, QAT 训练的时候学习 scale</li>
+<li><code>PTQ</code> 后量化（即：Post-training Quantization，浮点定点转换方案 ）：先训练浮点模型，然后使用校准图片计算量化参数，将浮点模型转为量化模型。该方法简单、快捷，但将浮点模型直接转为量化模型难免会有一些量化损失，地平线浮点转换工具链中提供的后量化工具能做到 80%以上的模型量化误差小于 1%。</li>
+<li><code>QAT</code> 量化训练 （Quantization Aware Training）通过在训练过程中融入量化和反量化过程，来实现量化模型的精度恢复, 由于量化是每层独立进行的，所以每层的量化是不依赖于前一层量化的结果的，这就导致了在实际的 inference 过程中会出现误差累积的情况，我们需要一种可学习的 scale。QAT 就是在做这样一件事情</li>
+<li>浮点转定点工具链生成物是异构混合模型 bin 文件，与量化训练方案中最后的定点模型 hbm 文件有概念上的差异。</li>
+</ol>
+<h2 id="Runtime-部署"><a href="#Runtime-部署" class="headerlink" title="Runtime 部署"></a>Runtime 部署</h2><ol>
+<li><code>format</code>: NV12, NV12_SEPERATE, BGR, YUV</li>
+<li><code>layout</code>: NCHW or NHWC</li>
+<li><code>type</code>: float, S32, int8; quant and dequant 定浮点转换</li>
+<li><code>memory</code>: alloc, free, sync</li>
+<li><code>inference</code>: setinput, do, getoutput</li>
+<li><code>align</code>: model output align</li>
+</ol>
+<h2 id="hardware-acceleration"><a href="#hardware-acceleration" class="headerlink" title="hardware acceleration"></a>hardware acceleration</h2><ol>
+<li>VPS 硬件：提供了缩放，镜像，旋转，矫正，流控，金字塔等图像处理能力。硬件上由单个 IPU，单个金字塔 PYM，两个 GDC 组成。软件上则采用分组来实现分时复用硬件，最大支持 8 个组的分时复用。</li>
+<li>VENC&#x2F;VDEC 模块：编解码</li>
+</ol>
+<h2 id="金字塔配置"><a href="#金字塔配置" class="headerlink" title="金字塔配置"></a>金字塔配置</h2><ol>
+<li>参考《MU-3020-12-J5-视频通路配置指南》vpm 配置</li>
+<li>1920 _ 1080 -&gt; 896 _ 512（需要 16 的倍数)<ul>
+<li>bl 线性变换到 960 * 540</li>
+<li>ds roi 设置 960 * 540 roi 0, 0, 960, 540</li>
+<li>ds 设置 output 为 896 * 512</li>
+</ul>
+</li>
+</ol>
+<h2 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h2><ol>
+<li>交叉编译: OE(OpenExplorer 天工开物开发平台)</li>
+<li>系统升级</li>
+<li>查看模型信息</li>
+<li>profiling</li>
+<li>dump 对数</li>
+<li><code>hrut_ddr -t all -p 1000000 -n 1</code> 查看 ddr 读写带宽</li>
+<li><code>hrut_bpuprofile -b 2 -r 0</code>查看 bpu 使用率</li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_38043555/article/details/118278641">一文了解模型量化中的 QAT 和 PTQ</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.horizon.ai/api/v1/fileData/horizon_j5_open_explorer_v1_1_40c_py38cn_doc/oe_mapper/source/appendix/hardware/dev_board_kit.html">j5 开发板信息</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.horizon.ai/api/v1/fileData/horizon_j5_open_explorer_v1_1_40c_py38cn_doc/vdsp/dsp_rpc_api_doc/source/index.html">horizon_j5_open_explorer_v1_1_40c_py38cn_doc</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/cad-rlc/ndsp-kp6">Cadence NatureDSP Library for MathX KP6 DSP cores</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.horizon.ai/api/v1/fileData/doc/ddk_doc/navigation/ai_toolchain/docs_cn/horizon_ai_toolchain_user_guide/chapter_6_appendix.html">x3 模型官方性能</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.horizon.cc/api/v1/fileData/horizon_j5_open_explorer_cn_doc/vdsp/dsp_example_doc/source/dsp_example.html#pointpillars">pointpillar dps 加速</a></li>
 </ol>
 
       
@@ -1710,7 +1411,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1778,7 +1479,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">175</span>
+          <span class="site-state-item-count">190</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1811,19 +1512,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
+          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
+          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -1861,13 +1562,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">484k</span>
+    <span title="站点总字数">543k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:20</span>
+    <span title="站点阅读时长">8:13</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

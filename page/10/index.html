@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -199,7 +199,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/26/Document/">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/01/13/Cpp20/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/coder2.jpg">
@@ -213,7 +213,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/26/Document/" class="post-title-link" itemprop="url">Document</a>
+            <a href="/2023/01/13/Cpp20/" class="post-title-link" itemprop="url">Cpp20</a>
         </h2>
 
         <div class="post-meta">
@@ -223,7 +223,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-09-26 14:53:29" itemprop="dateCreated datePublished" datetime="2022-09-26T14:53:29+08:00">2022-09-26</time>
+              <time title="创建时间：2023-01-13 15:31:55" itemprop="dateCreated datePublished" datetime="2023-01-13T15:31:55+08:00">2023-01-13</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -242,8 +242,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2022/09/26/Document/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/26/Document/" itemprop="commentCount"></span>
+    <a title="valine" href="/2023/01/13/Cpp20/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/01/13/Cpp20/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -253,7 +253,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>396</span>
+              <span>713</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -272,29 +272,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h2><ol>
-<li><p><a target="_blank" rel="noopener" href="https://bazel.build/?hl=zh-cn">参考 bazel</a></p>
-</li>
-<li><p>are several main types of documents that software engineers often need to write:</p>
-<ul>
-<li>Reference documentation, including code comments 参考文档，包括代码注释</li>
-<li>Design documents 设计文档</li>
-<li>Tutorials 教程</li>
-<li>Conceptual documentation 概念文档</li>
-<li>Landing pages 着陆页</li>
-<li>quickstart, Getting Started</li>
-<li>introduction, overview</li>
-</ul>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://qiangmzsx.github.io/Software-Engineering-at-Google/#/zh-cn/Chapter-10_Documentation/Chapter-10_Documentatio">Software-Engineering-at-Google</a></p>
-</li>
+          <h2 id="module"><a href="#module" class="headerlink" title="module"></a>module</h2><h2 id="coroutine"><a href="#coroutine" class="headerlink" title="coroutine"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/172471249">coroutine</a></h2><ol>
+<li>协程并没有增加线程数量，只是在线程的基础之上通过分时复用的方式运行多个协程，而且协程的切换在用户态完成，切换的代价比线程从用户态到内核态的代价小很多。</li>
+<li>协程对计算密集型的任务也没有太大的好处，计算密集型的任务本身不需要大量的线程切换，因此协程的作用也十分有限，反而还增加了协程切换的开销。</li>
+<li>因此在协程中不能调用导致线程阻塞的操作。也就是说，协程只有和异步 IO 结合起来，才能发挥最大的威力。</li>
+<li>协程只有和异步 IO 结合起来才能发挥出最大的威力。</li>
+<li>协程可以通过 yield（取其“让步”之义而非“出产”）来调用其它协程，接下来的每次协程被调用时，从协程上次 yield，返回的位置接着执行，通过 yield 方式转移执行权的协程之间不是调用者与被调用者的关系，而是彼此对称、平等的。</li>
+<li>协程非常类似于线程。但是协程是协作式多任务的，而线程典型是抢占式多任务的。这意味着协程提供并发性而非并行性。协程超过线程的好处是它们可以用于硬性实时的语境（在协程之间的切换不需要涉及任何系统调用或任何阻塞调用），这里不需要用来守卫关键区块的同步性原语（primitive）比如互斥锁、信号量等，并且不需要来自操作系统的支持。有可能以一种对调用代码透明的方式，使用抢占式调度的线程实现协程，但是会失去某些利益（特别是对硬性实时操作的适合性和相对廉价的相互之间切换）。</li>
+<li>协程的核心竞争力在于：它能简化异步并发任务，以同步方式写异步代码, 这也是为什么要引入协程的原因了：简化异步并发任务</li>
+<li>线程是操作系统层面的概念，协程是语言层面的概念, 线程与协程最大的区别在于：线程是被动挂起恢复，协程是主动挂起恢复</li>
 </ol>
-<h2 id="tools"><a href="#tools" class="headerlink" title="tools"></a>tools</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/jgm/pandoc">pandoc</a> (The universal markup converter 可以转换各种标记语言)</li>
-<li>doxygen</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/sphinx-doc/sphinx">sphinx-doc&#x2F;sphinx</a></li>
-<li>Latex <a target="_blank" rel="noopener" href="https://github.com/Wandmalfarbe/pandoc-latex-template">pandoc-latex-template</a></li>
-<li><a target="_blank" rel="noopener" href="https://readthedocs.org/">readthedocs</a></li>
+<h3 id="link"><a href="#link" class="headerlink" title="link"></a>link</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%8D%8F%E7%A8%8B">wikipedia</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6973650934664527885">进程、线程和协程的区别</a></li>
 </ol>
 
       
@@ -317,7 +307,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/26/github/">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/12/26/BPF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/coder2.jpg">
@@ -331,7 +321,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/26/github/" class="post-title-link" itemprop="url">github</a>
+            <a href="/2022/12/26/BPF/" class="post-title-link" itemprop="url">BPF</a>
         </h2>
 
         <div class="post-meta">
@@ -341,14 +331,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-09-26 11:27:54" itemprop="dateCreated datePublished" datetime="2022-09-26T11:27:54+08:00">2022-09-26</time>
+              <time title="创建时间：2022-12-26 16:52:00" itemprop="dateCreated datePublished" datetime="2022-12-26T16:52:00+08:00">2022-12-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-29 10:42:57" itemprop="dateModified" datetime="2024-01-29T10:42:57+08:00">2024-01-29</time>
+                <time title="修改时间：2023-12-03 18:24:06" itemprop="dateModified" datetime="2023-12-03T18:24:06+08:00">2023-12-03</time>
               </span>
 
           
@@ -360,8 +350,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2022/09/26/github/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/26/github/" itemprop="commentCount"></span>
+    <a title="valine" href="/2022/12/26/BPF/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/12/26/BPF/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -371,7 +361,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>433</span>
+              <span>372</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -390,299 +380,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="note"><a href="#note" class="headerlink" title="note"></a>note</h2><ol>
-<li>github clone&#x2F;push 问题<ul>
-<li><a target="_blank" rel="noopener" href="https://docs.github.com/en/authentication/troubleshooting-ssh/using-ssh-over-the-https-port#enabling-ssh-connections-over-https">enabling-ssh-connections-over-https</a></li>
-</ul>
-</li>
+          <h2 id="tools"><a href="#tools" class="headerlink" title="tools"></a>tools</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_23662505/article/details/125427689?spm=1001.2101.3001.6650.7&utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-7-125427689-blog-119563743.pc_relevant_aa2&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-7-125427689-blog-119563743.pc_relevant_aa2&utm_relevant_index=8">各种 tools</a></li>
 </ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    Hostname ssh.github.com</span><br><span class="line">    Port 443</span><br><span class="line">    User git</span><br></pre></td></tr></table></figure>
-
-<h2 id="explore"><a href="#explore" class="headerlink" title="explore"></a>explore</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://star-history.com/">star-history</a> 可以多个 repo 同时显示</li>
-<li><a target="_blank" rel="noopener" href="https://starchart.cc/">starchart.cc</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/anuraghazra/github-readme-stats">github-readme-stats</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/search?o=desc&q=stars:%3E0&s=stars&type=Repositories">start sort</a></li>
-<li><a target="_blank" rel="noopener" href="https://octobox.io/">octobox.io 管理 github 通知</a><ul>
-<li>直接登录 github 就能显示</li>
-</ul>
-</li>
-</ol>
-<h2 id="gist"><a href="#gist" class="headerlink" title="gist"></a>gist</h2><h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://shields.io/badges">badges&#x2F;shields</a> 左上角按要求输入变量，会生成 URL, 点击 execute 会预览结果<ul>
-<li><a target="_blank" rel="noopener" href="https://shields.io/badges/static-badge">任意格式</a> <a target="_blank" rel="noopener" href="https://img.shields.io/badge/try%20it-online-orange">sample</a></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/doctest/doctest">badge example</a></li>
-<li><a target="_blank" rel="noopener" href="https://dev.to/azure/github-how-to-display-the-status-badge-for-a-github-action-5449">build-badge</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.repostatus.org/">repostatus</a></li>
-<li><a target="_blank" rel="noopener" href="https://isitmaintained.com/">issuse badge</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/Platane/snk">自动生成蛇的行走路径，一口气吃光所有“绿块”</a></li>
-<li>访问 github 有问题，访问 gitlab 无问题， 可以先用 gitlab 去 mirrors github repo， 再访问 gitlab</li>
-<li>点击<code>go to file</code>， 搜索文件</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/25/LaTeX/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/25/LaTeX/" class="post-title-link" itemprop="url">LaTeX</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-09-25 14:25:17" itemprop="dateCreated datePublished" datetime="2022-09-25T14:25:17+08:00">2022-09-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-28 13:14:09" itemprop="dateModified" datetime="2023-09-28T13:14:09+08:00">2023-09-28</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/09/25/LaTeX/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/25/LaTeX/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.5k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>LaTeX: Lamport TeX</li>
-<li>读音：莱泰克</li>
-<li><a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/Font_sizes%2C_families%2C_and_styles">调整字体大小</a></li>
-<li>中文问题 <code>\begin&#123;CJK&#125;&#123;UTF8&#125;</code> 换成 <code>\begin&#123;CJK&#125;&#123;gbsn&#125;</code> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/zyl910/archive/2013/06/02/doxygen_pdf_chinese.html">link</a></li>
-<li>换页问题： <code>\doxysection</code> 之前加 <code>\newpage</code></li>
-<li><a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/Headers_and_footers">fancy Headers_and_footers</a><ul>
-<li><code>O</code> or <code>E</code>: to specify Odd or Even pages</li>
-<li><code>H</code> or <code>F</code>: to indicate Header or Footer</li>
-<li><code>L</code>, <code>C</code> or <code>R</code>: for the Left, Centre and Right “zone” of the header or footer</li>
-</ul>
-</li>
-<li><code>\pagestyle&#123;fancyplain&#125;</code> doxygen refman.tex 删除之后页眉页脚不再有横杠</li>
-<li>pagestyle <code>\pagestyle&#123;⟨style⟩&#125;</code> <a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/Headers_and_footers">link</a><ul>
-<li>empty: no headers or footers on pages</li>
-<li>plain: no page headers, footers consist of a centered page number</li>
-<li>headings: no footers, headers contains class-specific information and page number</li>
-<li>myheadings: no footers, headers contains page number and user-supplied information</li>
-</ul>
-</li>
-<li>picture in header <a target="_blank" rel="noopener" href="https://tex.stackexchange.com/a/122936">link</a> picture 下可以添加官网网址，并加上点击链接 <code>\fancyhead[L]&#123;\includegraphics[width=3cm]&#123;logo1&#125; \\\href&#123;https://www.wikibooks.org&#125;&#123;Wikibooks home&#125;&#125;</code></li>
-<li>oneside or twoside <a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/Single_sided_and_double_sided_documents#Difference_between_one-side_and_two-side_documents">link</a></li>
-<li>chapter style <a target="_blank" rel="noopener" href="https://tex.stackexchange.com/a/18605">link</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/Lists_of_tables_and_figures">list of features and tables</a></li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">% Headers &amp; footers</span><br><span class="line">\usepackage&#123;fancyhdr&#125;</span><br><span class="line">\pagestyle&#123;fancy&#125;</span><br><span class="line">\setlength\headheight&#123;32pt&#125;</span><br><span class="line">\fancyhead&#123;&#125;</span><br><span class="line">\fancyhead[L]&#123;\includegraphics[width=3cm]&#123;logo1&#125;&#125;</span><br><span class="line">\fancyhead[R]&#123;\text&#123;dcv-cpp 开发手册&#125; \\[4pt] \\\text&#123;\fancyplain&#123;&#125;&#123;\rightmark&#125;&#125;&#125;</span><br><span class="line">% \renewcommand&#123;\headrulewidth&#125;&#123;0pt&#125;</span><br><span class="line">% \renewcommand&#123;\footrulewidth&#125;&#123;0pt&#125;</span><br><span class="line">\renewcommand&#123;\headruleskip&#125;&#123;2.5pt&#125;</span><br><span class="line">% \renewcommand&#123;\footruleskip&#125;&#123;0pt&#125;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>首页设置</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">\begin&#123;titlepage&#125;</span><br><span class="line">\vspace*&#123;7cm&#125;</span><br><span class="line">\begin&#123;center&#125;%</span><br><span class="line">\includegraphics[width=4cm]&#123;logo1&#125;</span><br><span class="line"></span><br><span class="line">\textbf&#123;\Huge heimdallr-\/sdk 用户手册 \\[3ex]\Large v1.\+0.\+0 &#125;\\</span><br><span class="line">\vfill</span><br><span class="line">\vspace*&#123;1cm&#125;</span><br><span class="line">&#123;\large 制作者 PhiGent Robotics&#125;\\</span><br><span class="line">\end&#123;center&#125;</span><br><span class="line">\end&#123;titlepage&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="editer"><a href="#editer" class="headerlink" title="editer"></a>editer</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/James-Yu/LaTeX-Workshop">vscode</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.overleaf.com/">online editer overleaf</a><ul>
-<li>点击可以到对应代码</li>
-<li>可以修改主题， 编译器, 字体大小，style 等</li>
-<li>添加 package <a target="_blank" rel="noopener" href="https://tex.stackexchange.com/a/536730">link</a></li>
-<li>doxygen 需要的 sty: tabu_doxygen.sty, ongtable_doxygen.sty, doxygen.sty</li>
-</ul>
-</li>
-</ol>
-<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes">overleaf Learn_LaTeX_in_30_minutes</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/luong-komorebi/Begin-Latex-in-minutes">Begin-Latex-in-minutes</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/luong-komorebi/Begin-Latex-in-minutes/blob/master/Translation-Chinese.md">Begin-Latex-in-minutes Chinese</a></li>
-</ol>
-<h2 id="简历模板"><a href="#简历模板" class="headerlink" title="简历模板"></a>简历模板</h2><ol>
-<li><p>The CV presents a full history of your academic credentials, so the length of the document is variable. In contrast, a resume presents a concise picture of your skills and qualifications for a specific position, so length tends to be shorter and dictated by years of experience (generally 1-2 pages).</p>
-</li>
-<li><p>CV 是履历，Resume 是简历。</p>
-<ul>
-<li>Resume，简述于求职相关的教育背景和工作经历，其目的在于说服用人单位雇用自己；</li>
-<li>CV，Curriculum Vitae 事集中说明学术工作，不重视与文化程度和学习成绩无直接关系的资料。</li>
-</ul>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/posquit0/Awesome-CV">Awesome-CV</a> CV: Curriculum Vitae 个人简历</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.overleaf.com/latex/templates/awesome-cv/dfnvtnhzhhbm">overleaf awesome-cv template</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/jankapunkt/latexcv/tree/master/sidebar">latexcv</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/dyweb/awesome-resume-for-chinese">awesome-resume-for-chinese</a></p>
-</li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/HarisIqbal88/PlotNeuralNet"> drawing neural networks for reports and presentation</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/Wandmalfarbe/pandoc-latex-template">pandoc-latex-template</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.ti.com/lit/an/spracz2/spracz2.pdf?ts=1664353778597&ref_url=https%253A%252F%252Fwww.google.com%252F">TI 文档参考</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/15/DataStructure/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/15/DataStructure/" class="post-title-link" itemprop="url">DataStructure</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-09-15 21:17:10" itemprop="dateCreated datePublished" datetime="2022-09-15T21:17:10+08:00">2022-09-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/09/15/DataStructure/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/15/DataStructure/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>97</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="CPP"><a href="#CPP" class="headerlink" title="CPP"></a>CPP</h2><h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><ol>
-<li>unordered_map 排序：使用 map <code>std::map&lt;int, int&gt; ordered(unordered.begin(), unordered.end());</code> <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/6212709">link</a></li>
+<h2 id="BCC"><a href="#BCC" class="headerlink" title="BCC"></a>BCC</h2><ol>
+<li>需要 sudo 来执行命令</li>
+<li>各命令有 man 手册</li>
+<li><code>sudo apt-get install bpfcc-tools</code></li>
+<li><code> &#39;./include/linux/kconfig.h&#39; file not found</code> &#x3D;&gt; <code>cd /lib/modules/5.10.104-tegra/build/ &amp;&amp; ln -s /lib/modules/5.10.104-tegra/build/kernel-5.10/include .</code></li>
 <li></li>
 </ol>
+<h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/iovisor/bcc/blob/master/QUICKSTART.md">docker</a> 需要用宿主机上的内核源码</li>
+</ol>
+<h2 id="bpftrace"><a href="#bpftrace" class="headerlink" title="bpftrace"></a>bpftrace</h2><ol>
+<li><code>mount -t debugfs none /sys/kernel/debug/</code></li>
+</ol>
+<h3 id="install-1"><a href="#install-1" class="headerlink" title="install"></a>install</h3><ol>
+<li><code>sudo apt-get install -y bpftrace</code></li>
+<li>需要内核开启一些选项</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/iovisor/bpftrace/blob/master/INSTALL.md#ubuntu-packages">ubuntu</a></li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/eunomia-bpf/bpf-developer-tutorial">bpf-developer-tutorial</a></li>
+</ol>
 
       
     </div>
@@ -704,7 +425,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/14/J5/">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/12/02/unix/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/coder2.jpg">
@@ -718,7 +439,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/14/J5/" class="post-title-link" itemprop="url">J5</a>
+            <a href="/2022/12/02/unix/" class="post-title-link" itemprop="url">unix</a>
         </h2>
 
         <div class="post-meta">
@@ -728,14 +449,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-09-14 10:29:39" itemprop="dateCreated datePublished" datetime="2022-09-14T10:29:39+08:00">2022-09-14</time>
+              <time title="创建时间：2022-12-02 09:14:27" itemprop="dateCreated datePublished" datetime="2022-12-02T09:14:27+08:00">2022-12-02</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-05 15:40:34" itemprop="dateModified" datetime="2024-02-05T15:40:34+08:00">2024-02-05</time>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
               </span>
 
           
@@ -747,8 +468,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2022/09/14/J5/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/14/J5/" itemprop="commentCount"></span>
+    <a title="valine" href="/2022/12/02/unix/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/12/02/unix/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -758,7 +479,378 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
+              <span>954</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="UNIX-环境高级编程"><a href="#UNIX-环境高级编程" class="headerlink" title="UNIX 环境高级编程"></a><a target="_blank" rel="noopener" href="http://www.apuebook.com/apue3e.html">UNIX 环境高级编程</a></h2><ol>
+<li><p>ID</p>
+<ul>
+<li>文件(文件描述符)</li>
+<li>进程</li>
+<li>错误处理(errno)</li>
+<li>用户标识(用户 ID, 组 ID)</li>
+<li>信号(SIG)</li>
+</ul>
+</li>
+<li><p><code>stat</code>: 获取文件各种信息</p>
+<ul>
+<li><code>stat -c %s file</code> 查看文件长度</li>
+</ul>
+</li>
+<li><p><code>strace - trace system calls and signals</code></p>
+</li>
+</ol>
+<h2 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h2><h2 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h2><h2 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h2><ol>
+<li>信号是软件中断。</li>
+<li>终端键盘上有两种信号方法：<ul>
+<li>SIGINT 中断键：C-c</li>
+<li>SIGQUIT 退出键：C-\</li>
+</ul>
+</li>
+<li>使用 system 而不是直接用 fork 和 exec 的优点是： system 有各种错误处理和各种信号处理</li>
+</ol>
+<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><ol>
+<li>进程 ID 用 pid_t 数据类型来表示，是一个非负整数。 线程 ID 是用 pthread_t 数据类型来表示， 是一个结构体， 不同系统类型不同。</li>
+<li>如果进程中的任意线程调用了 exit, _Exit 或者_exit, 那么整个进程就会终止。</li>
+<li><code>nm -C test | grep GLIBC_</code>可以看出 c++程序用 thread 和 mutex 最终调用了 pthread_create 和 pthread_mutex*</li>
+<li>守护进程出错记录使用 syslog，log 位置 &#x2F;var&#x2F;log&#x2F;syslog</li>
+</ol>
+<h4 id="进程间通信-InterProcess-Communication-IPC"><a href="#进程间通信-InterProcess-Communication-IPC" class="headerlink" title="进程间通信 InterProcess Communication IPC"></a>进程间通信 InterProcess Communication IPC</h4><ol>
+<li>同一机器：管道，FIFO, 消息队列，信号量，共享内存。</li>
+<li>不同机器：socket</li>
+</ol>
+<h4 id="线程间通信"><a href="#线程间通信" class="headerlink" title="线程间通信"></a>线程间通信</h4><ol>
+<li>mutex, 读写锁，自旋锁， 条件变量</li>
+<li>mutex 保护的是 lock 和 unlock 之间的代码</li>
+<li>如果线程对一个互斥量加锁两次，那么它自身就会陷入死锁。</li>
+<li>线程间循环依赖锁也会死锁，解决办法：1. 控制互斥量加锁的顺序避免死锁。2. try_lock 如果获得不了想要的锁， 先释放已占有的锁，过一段时间再试试。</li>
+<li>自旋锁与互斥量类似， 但自旋锁获取锁之前线程是非阻塞状态。适用于锁持有时间段，线程不希望在重新调度上花费太多成本。自旋锁在非抢占式内核中非常有用，在用户层，自旋锁并不是很有用。</li>
+<li>很多互斥量实现非常高效，有些互斥量的实现在试图获取互斥量的时候会自选一小段时间，只有自旋计数达到某一阈值的时候才会休眠。</li>
+</ol>
+<h3 id="linux-下源码编译问题"><a href="#linux-下源码编译问题" class="headerlink" title="linux 下源码编译问题"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_29116917/article/details/103786194">linux 下源码编译问题</a></h3><ol>
+<li>minor 找不到： filedir&#x2F;devrdev.c <code>#include &lt;sys/sysmacros.h&gt;</code></li>
+<li><code>sudo apt install libbsd-dev</code></li>
+<li>err_sys 找不到问题， error.c 源码复制到 apue.h 中</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/11/15/version/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/11/15/version/" class="post-title-link" itemprop="url">version</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-11-15 10:21:58" itemprop="dateCreated datePublished" datetime="2022-11-15T10:21:58+08:00">2022-11-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/11/15/version/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/11/15/version/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>184</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Linux-动态库版本管理"><a href="#Linux-动态库版本管理" class="headerlink" title="Linux 动态库版本管理"></a>Linux 动态库版本管理</h2><ol>
+<li>Linux 通过版本号来管理动态库的版本，版本号最多有 3 级，其格式为 libname.so.x.y.z<ul>
+<li>x: major release，非兼容修改，可能对接口做了大改动，比如重命名、增加或减少参数等。</li>
+<li>y: minor release，不改变兼容性，但是增加了新接口</li>
+<li>z: patch release，不改变兼容性，仅仅是修复 bug、或者优化代码实现、优化性能等。</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/30/github-ci/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/30/github-ci/" class="post-title-link" itemprop="url">github-ci</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-10-30 21:35:59" itemprop="dateCreated datePublished" datetime="2022-10-30T21:35:59+08:00">2022-10-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-28 14:56:00" itemprop="dateModified" datetime="2023-11-28T14:56:00+08:00">2023-11-28</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/10/30/github-ci/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/30/github-ci/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>802</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="actions"><a href="#actions" class="headerlink" title="actions"></a>actions</h2><ol>
+<li>fork 的 repo 需要手动在 actions 里 enable</li>
+<li><a target="_blank" rel="noopener" href="https://docs.github.com/en/actions/managing-workflow-runs/disabling-and-enabling-a-workflow">disabling-and-enabling-a-workflow</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.github.com/cn/actions">actions doc</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/dorny/test-reporter">test-reporter</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/test-summary/">test-summary</a></li>
+</ol>
+<h2 id="sample"><a href="#sample" class="headerlink" title="sample"></a>sample</h2><ol>
+<li>use 可以连续用</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Ubuntu</span></span><br><span class="line"><span class="attr">on:</span> <span class="string">push</span></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">release-test:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">dataflow</span> <span class="string">build</span> <span class="string">on</span> <span class="string">ubuntu</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span> <span class="comment">## checkout到分支</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">prefix-dev/setup-pixi@v0.3.0</span> <span class="comment">## 安装pixi</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">install</span> <span class="string">deps</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">apt</span> <span class="string">install</span> <span class="string">-y</span> <span class="string">libc6-dbg</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">run</span> <span class="string">all</span> <span class="string">test</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">pixi</span> <span class="string">run</span> <span class="string">all</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;Upload Artifact&quot;</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/upload-artifact@v3</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">my-artifact</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">.gitignore</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="upload-artifact"><a href="#upload-artifact" class="headerlink" title="upload-artifact"></a><a target="_blank" rel="noopener" href="https://github.com/actions/upload-artifact#zipped-artifact-downloads">upload-artifact</a></h2><ol>
+<li>config</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;Upload Artifact&quot;</span></span><br><span class="line">  <span class="attr">uses:</span> <span class="string">actions/upload-artifact@v3</span></span><br><span class="line">  <span class="attr">with:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">my-artifact</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">.gitignore</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>ci job 左侧 summary 可以下载 artifacts</li>
+</ol>
+<h2 id="upload-release-asset"><a href="#upload-release-asset" class="headerlink" title="upload-release-asset"></a><a target="_blank" rel="noopener" href="https://github.com/actions/upload-release-asset">upload-release-asset</a></h2><ol>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/75995802/resource-not-accessible-by-integration-github-action-fails-for-pushed-commit">push 失败问题： 需要设置 repo read_and_write 权限</a></li>
+<li>参考 cpp_sandbox 和 python_sandbox</li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.github.com/zh/actions/quickstart">官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/marketplace?type=actions">action samples</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/onnxruntime/blob/main/README.md">readme show build status</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/taskflow/taskflow/tree/master/.github/workflows">taskflow samples</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/250534172">基于 Github Action 的 CI&#x2F;CD 流程</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/25/Coroutine/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/25/Coroutine/" class="post-title-link" itemprop="url">Coroutine</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-10-25 19:55:32" itemprop="dateCreated datePublished" datetime="2022-10-25T19:55:32+08:00">2022-10-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/10/25/Coroutine/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/25/Coroutine/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>231</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -778,60 +870,13 @@
 
       
           <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://developer.horizon.cc/forumDetail/185446371330059350">多模型优先级调度</a></li>
+<li>协程并没有增加线程数量，只是在线程的基础之上通过分时复用的方式运行多个协程，而且协程的切换在用户态完成，切换的代价比线程从用户态到内核态的代价小很多。</li>
+<li>协程对计算密集型的任务也没有太大的好处，计算密集型的任务本身不需要大量的线程切换，因此协程的作用也十分有限，反而还增加了协程切换的开销。</li>
+<li>因此在协程中不能调用导致线程阻塞的操作。也就是说，协程只有和异步 IO 结合起来，才能发挥最大的威力。</li>
+<li>协程只有和异步 IO 结合起来才能发挥出最大的威力。</li>
 </ol>
-<h2 id="software-development"><a href="#software-development" class="headerlink" title="software development"></a>software development</h2><ol>
-<li>功能</li>
-<li>指标</li>
-<li>性能</li>
-</ol>
-<h2 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://hub.docker.com/r/openexplorer/ai_toolchain_ubuntu_20_j5_cpu/tags">ai_toolchain_ubuntu_20_j5_cpu</a></li>
-<li><a target="_blank" rel="noopener" href="https://hub.docker.com/r/openexplorer/ai_toolchain_ubuntu_20_j5_gpu/tags">ai_toolchain_ubuntu_20_j5_gpu</a></li>
-</ol>
-<h2 id="Model-Convert"><a href="#Model-Convert" class="headerlink" title="Model Convert"></a>Model Convert</h2><ol>
-<li>PTQ 根据算法计算 scale, QAT 训练的时候学习 scale</li>
-<li><code>PTQ</code> 后量化（即：Post-training Quantization，浮点定点转换方案 ）：先训练浮点模型，然后使用校准图片计算量化参数，将浮点模型转为量化模型。该方法简单、快捷，但将浮点模型直接转为量化模型难免会有一些量化损失，地平线浮点转换工具链中提供的后量化工具能做到 80%以上的模型量化误差小于 1%。</li>
-<li><code>QAT</code> 量化训练 （Quantization Aware Training）通过在训练过程中融入量化和反量化过程，来实现量化模型的精度恢复, 由于量化是每层独立进行的，所以每层的量化是不依赖于前一层量化的结果的，这就导致了在实际的 inference 过程中会出现误差累积的情况，我们需要一种可学习的 scale。QAT 就是在做这样一件事情</li>
-<li>浮点转定点工具链生成物是异构混合模型 bin 文件，与量化训练方案中最后的定点模型 hbm 文件有概念上的差异。</li>
-</ol>
-<h2 id="Runtime-部署"><a href="#Runtime-部署" class="headerlink" title="Runtime 部署"></a>Runtime 部署</h2><ol>
-<li><code>format</code>: NV12, NV12_SEPERATE, BGR, YUV</li>
-<li><code>layout</code>: NCHW or NHWC</li>
-<li><code>type</code>: float, S32, int8; quant and dequant 定浮点转换</li>
-<li><code>memory</code>: alloc, free, sync</li>
-<li><code>inference</code>: setinput, do, getoutput</li>
-<li><code>align</code>: model output align</li>
-</ol>
-<h2 id="hardware-acceleration"><a href="#hardware-acceleration" class="headerlink" title="hardware acceleration"></a>hardware acceleration</h2><ol>
-<li>VPS 硬件：提供了缩放，镜像，旋转，矫正，流控，金字塔等图像处理能力。硬件上由单个 IPU，单个金字塔 PYM，两个 GDC 组成。软件上则采用分组来实现分时复用硬件，最大支持 8 个组的分时复用。</li>
-<li>VENC&#x2F;VDEC 模块：编解码</li>
-</ol>
-<h2 id="金字塔配置"><a href="#金字塔配置" class="headerlink" title="金字塔配置"></a>金字塔配置</h2><ol>
-<li>参考《MU-3020-12-J5-视频通路配置指南》vpm 配置</li>
-<li>1920 _ 1080 -&gt; 896 _ 512（需要 16 的倍数)<ul>
-<li>bl 线性变换到 960 * 540</li>
-<li>ds roi 设置 960 * 540 roi 0, 0, 960, 540</li>
-<li>ds 设置 output 为 896 * 512</li>
-</ul>
-</li>
-</ol>
-<h2 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h2><ol>
-<li>交叉编译: OE(OpenExplorer 天工开物开发平台)</li>
-<li>系统升级</li>
-<li>查看模型信息</li>
-<li>profiling</li>
-<li>dump 对数</li>
-<li><code>hrut_ddr -t all -p 1000000 -n 1</code> 查看 ddr 读写带宽</li>
-<li><code>hrut_bpuprofile -b 2 -r 0</code>查看 bpu 使用率</li>
-</ol>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_38043555/article/details/118278641">一文了解模型量化中的 QAT 和 PTQ</a></li>
-<li><a target="_blank" rel="noopener" href="https://developer.horizon.ai/api/v1/fileData/horizon_j5_open_explorer_v1_1_40c_py38cn_doc/oe_mapper/source/appendix/hardware/dev_board_kit.html">j5 开发板信息</a></li>
-<li><a target="_blank" rel="noopener" href="https://developer.horizon.ai/api/v1/fileData/horizon_j5_open_explorer_v1_1_40c_py38cn_doc/vdsp/dsp_rpc_api_doc/source/index.html">horizon_j5_open_explorer_v1_1_40c_py38cn_doc</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/cad-rlc/ndsp-kp6">Cadence NatureDSP Library for MathX KP6 DSP cores</a></li>
-<li><a target="_blank" rel="noopener" href="https://developer.horizon.ai/api/v1/fileData/doc/ddk_doc/navigation/ai_toolchain/docs_cn/horizon_ai_toolchain_user_guide/chapter_6_appendix.html">x3 模型官方性能</a></li>
-<li><a target="_blank" rel="noopener" href="https://developer.horizon.cc/api/v1/fileData/horizon_j5_open_explorer_cn_doc/vdsp/dsp_example_doc/source/dsp_example.html#pointpillars">pointpillar dps 加速</a></li>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/172471249">什么是协程？</a></li>
 </ol>
 
       
@@ -854,7 +899,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/07/SOA/">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/21/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/coder2.jpg">
@@ -868,7 +913,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/07/SOA/" class="post-title-link" itemprop="url">SOA</a>
+            <a href="/2022/10/21/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">开发方法</a>
         </h2>
 
         <div class="post-meta">
@@ -878,7 +923,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-09-07 10:45:11" itemprop="dateCreated datePublished" datetime="2022-09-07T10:45:11+08:00">2022-09-07</time>
+              <time title="创建时间：2022-10-21 16:57:14" itemprop="dateCreated datePublished" datetime="2022-10-21T16:57:14+08:00">2022-10-21</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -897,8 +942,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2022/09/07/SOA/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/07/SOA/" itemprop="commentCount"></span>
+    <a title="valine" href="/2022/10/21/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/21/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -908,138 +953,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><ol>
-<li><p>SOA 是一种架构风格</p>
-</li>
-<li><p>实际上 SOA 只是一种架构设计模式，而 SOAP、REST、RPC 就是为了实践这种设计模式而设计的数据通讯方式，其中 SOAP 通俗理解就是服务间通过 http+xml 的形式完成数据交换，REST 就是 http+json 的形式，RPC 是基于 socket 的形式。CXF 框架就是典型的 SOAP&#x2F;REST 框架，Dubbo 就是典型的 RPC 框架，而 SpringCloud 就是遵守 REST 规范的微服务生态系统。<br>1 .后来又有了微服务的概念，个人理解微服务和 SOA 就是孪生子。如今生产实践中提到的微服务，在 SOA 的基础上更进一层，引入了很多新的东西如服务治理、链路跟踪、配置管理等等可以帮助企业构建高可用高并发高性能的系统的组件。</p>
-</li>
-<li><p>为什么服务总是和以太网，DDS 或 SOME&#x2F;IP 绑定的呢？CAN 网络上是否可以实现完整的 SOA 架构？</p>
-<ul>
-<li>首先，以 SOME&#x2F;IP 举例，因为 SOME&#x2F;IP 的完整名称其实能回答上面的大多数问题，SOME&#x2F;IP &#x3D; Scalable service-Oriented Middleware over IP。即“运行于 IP 之上的可伸缩的面向服务的中间件”。可见，并不是 SOA 必须和 SOME&#x2F;IP 绑定，而是 SOME&#x2F;IP 天生就是为了 SOA 架构而生。</li>
-<li>SOME&#x2F;IP 的精华在于“Middleware 中间件”，这是一种独立的系统软件或服务程序，分布式应用软件可借助 Middleware 在不同的技术之间共享资源。分布式应用软件，在这里指的就是“服务”；不同的技术之间，在这里指的就是不同的平台或操作系统，比如 Linux 系统或 AUTOSAR OS OSEK 等。</li>
-<li>Scalable Middleware，顾名思义，则是“可伸缩中间件”，指的是该中间件能够适配于不同的平台及操作系统，其支撑的平台可大可小。</li>
-<li>简单来说，SOA 是软件架构的一种设计理念；SOME&#x2F;IP 是一种将软件接口进行打包的打包方式，是一种中间件。而汽车行业通常所指的”以太网”是泛化之后的概念，涵盖了基于以太网技术所实现的各种相关技术手段，包括 TCP&#x2F;IP 协议、DoIP 协议、SOME&#x2F;IP 协议等。当然若通过其他非以太网的通信方式来实现 SOA 也是可行的，但通常大家不那么用。比如基于 CAN 总线的架构，由于其基础的架构和通信协议栈里不存在 Middleware 中间层的概念，所以要实现 SOA 的代价是非常巨大的。</li>
-</ul>
-</li>
-<li><p>以服务导向的软件系统构架（SOA）将成为主流，以 SOA&#x2F;SOME-IP 为脉络支撑起汽车以服务为出发点和差异化竞争的整车 E&#x2F;E 架构。</p>
-</li>
-<li><p><code>SOA</code>（Service-Oriented Architecture，面向服务的架构）</p>
-</li>
-<li><p>SOA 的软件架构<br><img src="https://mmbiz.qpic.cn/mmbiz_png/dgmES0HFW0utCXbf5mDOFepsQSA2wVFPBqzgGf38bkxsJOlMEkjvHG3H5ibs5ZW9Mw968jLxgOOpVk8iaKNRdABg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="SOA的软件架构"></p>
-</li>
-<li><p><img src="https://mmbiz.qpic.cn/mmbiz_png/dgmES0HFW0utCXbf5mDOFepsQSA2wVFPBqzgGf38bkxsJOlMEkjvHG3H5ibs5ZW9Mw968jLxgOOpVk8iaKNRdABg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="SOA汽车分层模型"></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000040618603">SOA 所解决的核心问题</a></p>
-<ul>
-<li>系统集成：站在系统的角度，解决企业系统间的通信问 题，把原先散乱、无规划的系统间的网状结构，梳理成规整、可治理的系统间星形结构，这一步往往需要引入 一些产品，比如 ESB、以及技术规范、服务管理规范；这一步解决的核心问题是【有序】</li>
-<li>系统的服务化：站在功能的角度，把业务逻辑抽象成可复用、可组装的服务，通过服务的编排实现业务的快速再生。目的：把原先固有的业务功能转变为通用的业务服务，实现业务逻辑的快速复用；这一步解决的核心问题是【复用】</li>
-<li>业务的服务化：站在企业的角度，把企业职能抽象成可复用、可组装的服务；把原先职能化的企业架构转变为服务化的企业架构，进一步提升企业的对外服务能力；前面两步都是从技术层面来解决系统调用、系统功能复用的问题。第三步，则是以业务驱动把一个 业务单元封装成一项服务。这一步解决的核心问题是 【高效】</li>
-</ul>
-</li>
-</ol>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.kdocs.cn/l/sbWWKnW352t2">车载 SOA 软件架构技术规范 1.0</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.3cst.cn/Information/info/RHcujT3VVDQD11ea8d6300163e0473d8">“域”测未来 “域”见 SOA</a></li>
-<li><a target="_blank" rel="noopener" href="https://bbs.huaweicloud.com/blogs/315752">什么是 SOA？什么是微服务？SOA 和微服务有什么区别？</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.sohu.com/a/523519503_560178">面向 SOA 服务的智能汽车高性能计算平台布局与测试方案</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.3cst.cn/Information/info/ALwsiHASP99L11ea8d6300163e0473d8">SOA 中的软件架构设计及软硬件解耦方法论</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/48839b7d0050">MVC、 RPC、SOA 和 微服务架构异同</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/07/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%9B%BE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/07/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%9B%BE/" class="post-title-link" itemprop="url">软件架构图</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-09-07 10:23:23" itemprop="dateCreated datePublished" datetime="2022-09-07T10:23:23+08:00">2022-09-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/09/07/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%9B%BE/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/07/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E5%9B%BE/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>225</span>
+              <span>128</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1058,42 +972,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><ol>
-<li><p>画图工具</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://excalidraw.com/">excalidraw</a></li>
-</ul>
-</li>
-<li><p>黑色背景图更清晰显眼 <a target="_blank" rel="noopener" href="https://excalidraw.com/#json=QQSsjTtgSH00X3SatzWVM,fCNSETDLrfuaDv7-iRMwAA">test</a></p>
-</li>
-<li><p>黑白灰就可以让框图显示的清晰</p>
-</li>
-<li><p>动态流程图 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1by4y167EA/">link</a></p>
-</li>
-<li><p>交互式流程图 <a target="_blank" rel="noopener" href="http://www.jtopo.com/">link</a></p>
-</li>
-<li><p>ProcessOn 数据流图动图</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7111894700952387621">用 JointJs 实现数据流图</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.drawzh.com/1457.html">如何用 drawio 让自己的流程图线条产生动起来的效果</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://babkin-pavel.medium.com/how-to-animate-objects-along-the-path-in-figma-motion-plugin-370f3bf95e7b">figma motion</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.figma.com/file/35Xwhb4WtXZdRGQlWDdewn/Motion---UI-and-Games-animation-(Community)?node-id=0:1">figma flow arrow</a></p>
-</li>
-</ol>
-<h2 id="层次图"><a href="#层次图" class="headerlink" title="层次图"></a>层次图</h2><h3 id="sample"><a href="#sample" class="headerlink" title="sample"></a>sample</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/previous-versions/msp-n-p/ee658124(v=pandp.10)">微软程序建构指南</a><br><img src="https://docs.microsoft.com/en-us/previous-versions/msp-n-p/images/ee658124.b8220f0d-f76a-40d6-8b1b-5279f7cdcee9(en-us,pandp.10).png" alt="Common application architecture"></li>
-<li>appolo<br><img src="https://github.com/ApolloAuto/apollo/raw/master/docs/demo_guide/images/Apollo_7_0.png" alt="Apollo 7.0"></li>
-<li>vitis-ai-library<br><img src="https://github.com/Xilinx/Vitis-AI/raw/master/src/Vitis-AI-Library/ai_library_diagram.png" alt="vitis-ai-library"></li>
-<li>dcv-cpp<br><img src="/images/software-diagram/dcv-cpp.jpg" alt="dcv-cpp"></li>
-<li><a target="_blank" rel="noopener" href="https://inews.gtimg.com/newsapp_bt/0/14916534758/1000">理想的软件自研规划</a><br><img src="/images/software-diagram/lixiang.png" alt="理想的软件自研规划"></li>
-<li><img src="https://mmbiz.qpic.cn/mmbiz_png/dgmES0HFW0utCXbf5mDOFepsQSA2wVFPBqzgGf38bkxsJOlMEkjvHG3H5ibs5ZW9Mw968jLxgOOpVk8iaKNRdABg/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1" alt="SOA汽车分层模型"></li>
-<li><img src="https://img-blog.csdnimg.cn/20210414055550879.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d1amlhbmluZ18xMTAxMTc=,size_16,color_FFFFFF,t_70" alt="华为MDC智能驾驶计算平台"></li>
-<li><a target="_blank" rel="noopener" href="https://nwzimg.wezhan.cn/contents/sitefiles2049/10245019/images/23519503.png">华玉通软 Greenstone 智能驾驶基础软件平台</a><br><img src="/images/software-diagram/huayu.png" alt="华玉通软Greenstone 智能驾驶基础软件平台"></li>
-<li><img src="https://nwzimg.wezhan.cn/contents/sitefiles2049/10245019/images/25100339.gif" alt="华玉通软应用"></li>
-<li><img src="http://nvidia.zhidx.com/uploadfile/2018/10/5bce021d3364a.jpg" alt="nvidia"></li>
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>瀑布流方法（Waterfall）</li>
+<li>V 型方法（V-model）</li>
+<li>迭代式开发（Iterative and incremental development, IID）</li>
+<li>螺旋开发（Spiral）</li>
+<li>敏捷开发（Scrum）</li>
+<li>极限编程（Extreme programming, XP）</li>
 </ol>
 
       
@@ -1116,7 +1001,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/06/AUTOSAR/">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/20/KataOS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/coder2.jpg">
@@ -1130,7 +1015,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/09/06/AUTOSAR/" class="post-title-link" itemprop="url">AUTOSAR</a>
+            <a href="/2022/10/20/KataOS/" class="post-title-link" itemprop="url">KataOS</a>
         </h2>
 
         <div class="post-meta">
@@ -1140,7 +1025,7 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-09-06 20:25:30" itemprop="dateCreated datePublished" datetime="2022-09-06T20:25:30+08:00">2022-09-06</time>
+              <time title="创建时间：2022-10-20 13:11:40" itemprop="dateCreated datePublished" datetime="2022-10-20T13:11:40+08:00">2022-10-20</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
@@ -1159,8 +1044,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2022/09/06/AUTOSAR/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/06/AUTOSAR/" itemprop="commentCount"></span>
+    <a title="valine" href="/2022/10/20/KataOS/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/20/KataOS/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1170,7 +1055,275 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>641</span>
+              <span>96</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/AmbiML/sparrow-manifest">sparrow-manifest</a></li>
+<li><a target="_blank" rel="noopener" href="https://opensource.googleblog.com/2022/10/announcing-kataos-and-sparrow.html">announcing-kataos-and-sparrow</a></li>
+<li><a target="_blank" rel="noopener" href="https://antmicro.com/blog/2022/08/running-rust-programs-in-sel4/">Running Rust programs in seL4 using the sel4-sys crate</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/15/color/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/15/color/" class="post-title-link" itemprop="url">color</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-10-15 15:43:06" itemprop="dateCreated datePublished" datetime="2022-10-15T15:43:06+08:00">2022-10-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-10-10 14:16:42" itemprop="dateModified" datetime="2023-10-10T14:16:42+08:00">2023-10-10</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/10/15/color/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/15/color/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
+<li><code>GLOG_colorlogtostderr=1 ./test</code> glog 输出彩色</li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/ANSI_escape_code#Colors">ANSI_escape_code</a> 全面；包含各种颜色值</li>
+<li><a target="_blank" rel="noopener" href="https://misc.flogisoft.com/bash/tip_colors_and_formatting">tip_colors_and_formatting</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/363287904">Linux 使用 echo 命令打印输出特定颜色的字符</a><ul>
+<li><code>echo -e &quot;\033[43;31;5m我是黄底红色的闪烁字符串\033[0m&quot;</code> 输出字符串的的前部”\033[43;31m”和后部\033[0m 是固定用法，被称为<code>ANSI控制码</code></li>
+<li>前部的 43 是背景设置, 31 是字符颜色设置，5 是闪烁</li>
+</ul>
+</li>
+<li><code>dircolors</code> ls 显示颜色 env: <code>LS_COLORS</code> <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/39600129">在 Linux 命令行中自定义文本颜色</a></li>
+<li><code>#f12</code> 等效 <code>#ff1122</code></li>
+<li>开发板命令显示颜色：<code>alias ll=&quot;ls -al --color=auto&quot; alias ls=&quot;ls --color=auto&quot;</code></li>
+<li><a target="_blank" rel="noopener" href="https://www.cyberciti.biz/faq/bash-shell-change-the-color-of-my-shell-prompt-under-linux-or-unix/">PS1 set</a></li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\e[0;31m\u@\h:\W% \e[m&quot;</span></span><br><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\e[0;32m\u@\h:\W% \e[m&quot;</span></span><br><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\e[0;33m\u@\h:\W% \e[m&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>script -q -c &quot;bat symbol.json&quot; color.log &gt; /dev/null</code> 将彩色输出保存到到文件中 <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/27399198">write stdout to file with colors</a></li>
+<li>ninja color output</li>
+</ol>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="string">&quot;$&#123;CMAKE_CXX_COMPILER_ID&#125;&quot;</span> <span class="keyword">STREQUAL</span> <span class="string">&quot;GNU&quot;</span>)</span><br><span class="line">    <span class="keyword">add_compile_options</span> (-fdiagnostics-color=always)</span><br><span class="line"><span class="keyword">elseif</span> (<span class="string">&quot;$&#123;CMAKE_CXX_COMPILER_ID&#125;&quot;</span> <span class="keyword">STREQUAL</span> <span class="string">&quot;Clang&quot;</span>)</span><br><span class="line">    <span class="keyword">add_compile_options</span> (-fcolor-diagnostics)</span><br><span class="line"><span class="keyword">endif</span> ()</span><br></pre></td></tr></table></figure>
+
+<h2 id="Emacs"><a href="#Emacs" class="headerlink" title="Emacs"></a>Emacs</h2><ol>
+<li><code>list-face-display and list-colors-display</code> 列出颜色</li>
+<li><code>rainbow-mode</code> buffer 里显示颜色</li>
+<li>color-196 大红</li>
+<li><a target="_blank" rel="noopener" href="https://www.emacswiki.org/emacs/RegularExpression">emacs 正则</a></li>
+<li>正则需要<code>\\</code>来转义</li>
+<li>minor mode: deffac 创建 face, font-lock-add-keywords 和 font-lock-remove-keywords 添加规则, define-minor-mode 添加 minor mode</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">;; log color</span><br><span class="line">(defgroup log-group nil</span><br><span class="line">  &quot;Group for customization&quot;</span><br><span class="line">  :prefix &quot;log-&quot;)</span><br><span class="line"></span><br><span class="line">(defface log-highlight-numbers-face</span><br><span class="line">  &#x27;((t :foreground &quot;yellow&quot;))</span><br><span class="line">  &quot;Face for numbers&quot;</span><br><span class="line">  :group &#x27;log-group )</span><br><span class="line"></span><br><span class="line">(defface log-highlight-file-face</span><br><span class="line">  &#x27;((t :foreground &quot;magenta&quot;))</span><br><span class="line">  &quot;Face for file&quot;</span><br><span class="line">  :group &#x27;log-group )</span><br><span class="line"></span><br><span class="line">(defface log-highlight-success-face</span><br><span class="line">  &#x27;((t :foreground &quot;black&quot;</span><br><span class="line">       :background &quot;green&quot;))</span><br><span class="line">  &quot;Face for pass success&quot;</span><br><span class="line">  :group &#x27;log-group )</span><br><span class="line"></span><br><span class="line">(defface log-highlight-warning-face</span><br><span class="line">  &#x27;((t :foreground &quot;black&quot;</span><br><span class="line">       :background &quot;yellow&quot;))</span><br><span class="line">  &quot;Face for warning&quot;</span><br><span class="line">  :group &#x27;log-group )</span><br><span class="line"></span><br><span class="line">(defface log-highlight-fail-face</span><br><span class="line">  &#x27;((t :foreground &quot;black&quot;</span><br><span class="line">       :background &quot;red&quot;))</span><br><span class="line">  ;; :bold t))</span><br><span class="line">  &quot;Face for fail, error&quot;</span><br><span class="line">  :group &#x27;log-group )</span><br><span class="line"></span><br><span class="line">(defface log-highlight-normal-face</span><br><span class="line">  &#x27;((t :foreground &quot;black&quot;</span><br><span class="line">       :background &quot;cyan&quot;))</span><br><span class="line">  ;; :bold t))</span><br><span class="line">  &quot;Face for normol&quot;</span><br><span class="line">  :group &#x27;log-group )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(defvar log-keywords &#x27;(</span><br><span class="line">                       (&quot;[[:space:]]\\(\\+\\|-\\)?[0-9]+\\(\\.[0-9]+\\)?[[:space:]]&quot; . &#x27;log-highlight-numbers-face)</span><br><span class="line">                       (&quot;[[:space:]][0-9a-zA-Z\-\_\/]+\\.\\(jpg\\|jpeg\\|yuv\\|yuyv\\|png\\|json\\|bin\\|hbm\\|engine\\|txt\\)&quot; . &#x27;log-highlight-file-face)</span><br><span class="line">                       (&quot;\\&lt;\\([Ff]ps\\|FPS\\)&quot; . &#x27;log-highlight-normal-face)</span><br><span class="line">                       (&quot;\\&lt;\\([Ss]uccess\\|SUCCESS\\|[Pp]ass\\|PASS\\)&quot; . &#x27;log-highlight-success-face)</span><br><span class="line">                       (&quot;^E\\([0-9]+\\)&quot; . &#x27;log-highlight-fail-face)</span><br><span class="line">                       (&quot;\\&lt;\\([Ff]ail\\|FAIL\\|[Ee]rror\\|ERROR\\|[Aa]bort\\|ABORT\\|[Ff]ault\\|FAULT\\)&quot; . &#x27;log-highlight-fail-face)</span><br><span class="line">                       (&quot;^W\\([0-9]+\\)&quot; . &#x27;log-highlight-warning-face)</span><br><span class="line">                       (&quot;\\&lt;\\([Ww]arning\\|WARNING\\|[Ww]arn\\|WARN\\)&quot; . &#x27;log-highlight-warning-face)</span><br><span class="line">                       )</span><br><span class="line">  &quot;Keywords for log-minor-mode highlighting&quot;)</span><br><span class="line"></span><br><span class="line">(define-minor-mode log-minor-mode</span><br><span class="line">  &quot;Minor mode for customization&quot;</span><br><span class="line">  :init-value nil</span><br><span class="line">  :lighter &quot; LogMode&quot;</span><br><span class="line">  :group &#x27;log-group</span><br><span class="line">  (when (bound-and-true-p log-minor-mode)</span><br><span class="line">    (font-lock-add-keywords nil log-keywords)</span><br><span class="line">    (font-lock-fontify-buffer))</span><br><span class="line">  (when (not (bound-and-true-p log-minor-mode))</span><br><span class="line">    (font-lock-remove-keywords nil log-keywords)</span><br><span class="line">    (font-lock-fontify-buffer)))</span><br><span class="line">(add-to-list &#x27;auto-mode-alist &#x27;(&quot;\\.log\\&#x27;&quot; . log-minor-mode))</span><br></pre></td></tr></table></figure>
+
+<h2 id="tools"><a href="#tools" class="headerlink" title="tools"></a>tools</h2><ol>
+<li>PowerToys: windows color pick: <code>win + shift + c</code></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/colorzilla/bhlhnicpbhignbdhedgjhgdocnmhomnp?hl=zh-CN">chrome plugin colorzilla</a> 可以用来显示 value</li>
+</ol>
+<h3 id="bat"><a href="#bat" class="headerlink" title="bat"></a>bat</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/sharkdp/bat#adding-new-themes">adding-new-themes</a></li>
+</ol>
+<h3 id="colout"><a href="#colout" class="headerlink" title="colout"></a><a target="_blank" rel="noopener" href="https://github.com/nojhan/colout">colout</a></h3><ol>
+<li><code>pip install colout</code> install</li>
+<li><code>cat yolox.log | colout fps white.red</code> colout 当 grep 用</li>
+<li><code>ls -l | colout &quot;.&quot; blue</code><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/nojhan/colout/tree/master/colout">theme</a></li>
+</ul>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## colout_log.py</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">theme</span>(<span class="params">context</span>):</span><br><span class="line">    <span class="keyword">return</span> context, [</span><br><span class="line">        <span class="comment"># Pass and success</span></span><br><span class="line">        [</span><br><span class="line">            <span class="string">&quot;([Ff][Pp][Ss]|[Pp][Aa][Ss][Ss])(ing|ING)?|(success|SUCCESS|Success)(ful|FUL)?&quot;</span>,</span><br><span class="line">            <span class="string">&quot;white.green&quot;</span>, <span class="string">&quot;bold&quot;</span></span><br><span class="line">        ],</span><br><span class="line"></span><br><span class="line">        <span class="comment"># warning</span></span><br><span class="line">        [<span class="string">&quot;^W[0-9]+\d&quot;</span>, <span class="string">&quot;white.yellow&quot;</span>, <span class="string">&quot;bold&quot;</span>],</span><br><span class="line">        [<span class="string">&quot;([Ww][Aa][Rr][Nn])(ing|ING)?&quot;</span>, <span class="string">&quot;white.yellow&quot;</span>, <span class="string">&quot;bold&quot;</span>],</span><br><span class="line"></span><br><span class="line">        <span class="comment"># error fail</span></span><br><span class="line">        [<span class="string">&quot;^E[0-9]+\d&quot;</span>, <span class="string">&quot;white.red&quot;</span>, <span class="string">&quot;bold&quot;</span>],</span><br><span class="line">        [</span><br><span class="line">            <span class="string">&quot;([Ee][Rr][Rr][Oo][Rr]|[Ff][Aa][Ii][Ll]|[Aa][Bb][Oo][Rr][Tt])(ing|ING|ure|URE)?&quot;</span>,</span><br><span class="line">            <span class="string">&quot;white.red&quot;</span>, <span class="string">&quot;bold&quot;</span></span><br><span class="line">        ],</span><br><span class="line"></span><br><span class="line">        <span class="comment"># file</span></span><br><span class="line">        [</span><br><span class="line">            <span class="string">&quot;(\s[0-9a-zA-Z\/\_\-]+.)(jpg|jpeg|yuv|yuyv|png|json|bin|hbm|engine|txt)\s&quot;</span>,</span><br><span class="line">            <span class="string">&quot;magenta&quot;</span>, <span class="string">&quot;bold&quot;</span></span><br><span class="line">        ],</span><br><span class="line"></span><br><span class="line">        <span class="comment"># []</span></span><br><span class="line">        <span class="comment"># [&quot;(\[[^\]]+\])&quot;, &quot;cyan&quot;, &quot;bold&quot;],</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># num</span></span><br><span class="line">        [<span class="string">&quot;\s\d+\s&quot;</span>, <span class="string">&quot;yellow&quot;</span>, <span class="string">&quot;bold&quot;</span>],</span><br><span class="line">        [<span class="string">&quot;\s\d+[uUmMnN]?[sS]&quot;</span>, <span class="string">&quot;red&quot;</span>, <span class="string">&quot;bold&quot;</span>],</span><br><span class="line">    ]</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>.bashrc 添加 function</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">cl</span></span>() &#123;</span><br><span class="line">	<span class="built_in">set</span> -o pipefail</span><br><span class="line">	<span class="built_in">cat</span> <span class="string">&quot;<span class="variable">$@</span>&quot;</span> 2&gt;&amp;1 | colout -t <span class="built_in">log</span> -T ~/</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="title">cless</span></span>() &#123;</span><br><span class="line">	<span class="built_in">set</span> -o pipefail</span><br><span class="line">	<span class="built_in">cat</span> <span class="string">&quot;<span class="variable">$@</span>&quot;</span> 2&gt;&amp;1 | colout -t <span class="built_in">log</span> -T ~/ | less</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="TxtStyle-自定义输出颜色"><a href="#TxtStyle-自定义输出颜色" class="headerlink" title="TxtStyle 自定义输出颜色"></a><a target="_blank" rel="noopener" href="https://github.com/armandino/TxtStyle">TxtStyle</a> 自定义输出颜色</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/armandino/TxtStyle/blob/6fd9028587bedd67a99e1bf7e950ede2c8ef35fe/txtstyle/txtsconf.py#L31">style</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/62337029">sample</a></li>
+<li>color log TxtStyle <code>cl test.log | less</code> or <code>ls -al | cl</code> or <code>bat test.log</code></li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">cl</span></span>() &#123;</span><br><span class="line">	<span class="built_in">set</span> -o pipefail</span><br><span class="line">	<span class="built_in">cat</span> <span class="string">&quot;<span class="variable">$@</span>&quot;</span> 2&gt;&amp;1 | txts -n example --color-always</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># .txts.conf</span></span><br><span class="line">[Style=<span class="string">&quot;example&quot;</span>]</span><br><span class="line"><span class="comment"># Print in red any line containing the word &#x27;error&#x27;</span></span><br><span class="line"><span class="comment"># !red: regex(&quot;error&quot;)</span></span><br><span class="line"><span class="comment"># !red: regex(&quot;ERROR&quot;)</span></span><br><span class="line"><span class="comment"># !red: regex(&quot;Error&quot;)</span></span><br><span class="line"><span class="comment"># !yellow bold: regex(&quot;warning&quot;)</span></span><br><span class="line"><span class="comment"># !yellow bold: regex(&quot;WARNING&quot;)</span></span><br><span class="line"><span class="comment"># !yellow bold: regex(&quot;Warning&quot;)</span></span><br><span class="line">white on-yellow bold: regex(<span class="string">&quot;[Ww][Aa][Rr][Nn](ing|ING)?&quot;</span>)</span><br><span class="line">white on-red bold: regex(<span class="string">&quot;([Ee][Rr][Rr][Oo][Rr]|[Ff][Aa][Ii][Ll](ing|ING|ure|URE)?)&quot;</span>)</span><br><span class="line">white on-green bold: regex(<span class="string">&quot;([Ff][Pp][Ss]|[Pp][Aa][Ss][Ss](ing|ING)?)|(success|SUCCESS|Success)(ful|FUL)?&quot;</span>)</span><br><span class="line">white on-red bold: regex(<span class="string">&quot;^E[0-9]+\d&quot;</span>)</span><br><span class="line">white on-yellow bold : regex(<span class="string">&quot;^W[0-9]+\d&quot;</span>)</span><br><span class="line"><span class="comment"># white on-green bold: regex(&quot;[Ff][Pp][Ss]&quot;)</span></span><br><span class="line"></span><br><span class="line">yellow: regex(<span class="string">&quot;\s[0-9]+\s&quot;</span>)</span><br><span class="line">red: regex(<span class="string">&quot;\s[0-9]+[uUmM][sS]&quot;</span>)</span><br><span class="line"><span class="comment"># magenta: regex(&quot;\s[^\]]+.(jpg|jpeg|yuv|yuyv|png|json|bin|hbm|engine|txt)&quot;)</span></span><br><span class="line">magenta: regex(<span class="string">&quot;\s[0-9a-zA-Z\/\_\-]+.(jpg|jpeg|yuv|yuyv|png|json|bin|hbm|engine|txt)&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Date</span></span><br><span class="line">green: regex(<span class="string">&quot;\d&#123;4&#125;-\d\d-\d\d&quot;</span>)</span><br><span class="line"><span class="comment"># Time</span></span><br><span class="line">green bold: regex(<span class="string">&quot;\d\d:\d\d:\d\d&quot;</span>)</span><br><span class="line"><span class="comment"># IP address (and port number if present)</span></span><br><span class="line">yellow underline: regex(<span class="string">&quot;\d+\.\d+\.\d+\.\d+(:\d+)?&quot;</span>)</span><br><span class="line">magenta: regex(<span class="string">&quot;\[samplesession\]&quot;</span>)</span><br><span class="line"><span class="comment"># Catch-all for anything else inside [square brackets]</span></span><br><span class="line">blue: regex(<span class="string">&quot;\[[^\]]+\]&quot;</span>)</span><br><span class="line"><span class="comment"># Catch-all for any remaining standalone numbers</span></span><br><span class="line">cyan bold: regex(<span class="string">&quot;\d+&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="lolcat"><a href="#lolcat" class="headerlink" title="lolcat"></a><a target="_blank" rel="noopener" href="https://github.com/busyloop/lolcat">lolcat</a></h3><ol>
+<li><code>pip install logcat</code></li>
+<li>彩色输出 <code>lolcat phigent.txt -F 0.02</code></li>
+</ol>
+<h3 id="logtool"><a href="#logtool" class="headerlink" title="logtool"></a><a target="_blank" rel="noopener" href="http://xjack.org/logtool/">logtool</a></h3><ol>
+<li><code>sudo apt install logtool</code></li>
+<li><code>cat no_bug_car.txt | logtool &gt; test.txt</code> 输出颜色</li>
+</ol>
+<h2 id="link"><a href="#link" class="headerlink" title="link"></a>link</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.programmingfonts.org/#ubuntu">code style 主题：programmingfonts</a></li>
+<li><a target="_blank" rel="noopener" href="https://coolors.co/palettes/palettes">color palettes</a></li>
+<li><a target="_blank" rel="noopener" href="https://regex101.com/">正则表达测试</a></li>
+<li><a target="_blank" rel="noopener" href="https://tool.oschina.net/uploads/apidocs/jquery/regexp.html">正则表达式解释</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/14/Markdown/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/14/Markdown/" class="post-title-link" itemprop="url">Markdown</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-10-14 15:38:52" itemprop="dateCreated datePublished" datetime="2022-10-14T15:38:52+08:00">2022-10-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-11-22 16:37:39" itemprop="dateModified" datetime="2023-11-22T16:37:39+08:00">2023-11-22</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/10/14/Markdown/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/14/Markdown/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>724</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1190,253 +1343,43 @@
 
       
           <h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
-<li><code>AUTOmotive Open System ARchitecture</code></li>
-<li>开发标准化：interfaces, exchange formats, methodology</li>
-<li>代码分为静态代码和动态代码，静态是写死的，动态是根据配置自动生成的</li>
-<li>配置通过<a target="_blank" rel="noopener" href="https://developer.cisco.com/docs/axl/#!what-is-axl">axml</a></li>
-<li>有三层：application, runtime environment(rte) 和 basic Software(bsw), 每一层通过标准接口通信。(没有增加中间层解决不了的问题)</li>
-<li><code>Any problem in computer science can be solved by another layer of indirection</code> 计算机科学领域的任何问题都可以通过增加一个间接的中间层来解决</li>
-<li>application 由 software component(swc)组成</li>
-<li>rte 均是动态代码，类似事件总线, 起到交换机的作用</li>
-<li>runnables 类似 graph 概念, 是一个静态概念，tasks 是动态概念, 有 map 机制，将静态概念映射到动态</li>
-<li>区分好静态概念和动态概念：如 graph 是静态概念，runner 是动态概念， 静态是一种表示(程序)， 动态运行静态概念(进程)</li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/73613628">color</a></li>
+<li>page break: <code>&lt;div style=&quot;page-break-after: always; break-after: page;&quot;&gt;&lt;/div&gt;</code></li>
+<li>check box <code>- [x]</code>: 好好利用，写好 worklog</li>
+<li><code>&gt;</code> 注意符号</li>
+<li>diff</li>
 </ol>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.autosar.org/nc/document-search/?tx_sysgsearch_pi1%5Bquery%5D=&tx_sysgsearch_pi1%5Bcategory%5D%5B150%5D=150">release</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.autosar.org/fileadmin/user_upload/AUTOSAR_EXP_Introduction_Part1.pdf">AUTOSAR Introduction: The AUTOSAR Partnership and Standardization(官网)</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.autosar.org/fileadmin/user_upload/AUTOSAR_EXP_Introduction_Part2.pdf">AUTOSAR Introduction: Current Features in a Nutshell(官网)</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/AgingMoon/article/details/102813280">Adaptive Autosar 整体架构理解</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.3cst.cn/Information/info/1uwAF7ySxL8111ea8d6300163e0473d8">AUTOSAR 与 ROS2 区别</a></li>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Hello1</span><br><span class="line">&#123;</span><br><span class="line">   public static void Main()</span><br><span class="line">   &#123;</span><br><span class="line"><span class="deletion">-      System.Console.WriteLine(&quot;Hello, World!&quot;);</span></span><br><span class="line"><span class="addition">+      System.Console.WriteLine(&quot;Rock all night long!&quot;);</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="emoji"><a href="#emoji" class="headerlink" title="emoji"></a>emoji</h2><ol>
+<li>直接复制就能用</li>
+<li><a target="_blank" rel="noopener" href="https://www.webfx.com/tools/emoji-cheat-sheet/">webfx</a></li>
+<li><a target="_blank" rel="noopener" href="https://emojipedia.org/">emojipedia</a></li>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/rxaviers/7360908">总结</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ikatyang/emoji-cheat-sheet#table-of-contents">cheatsheet</a></li>
+<li>✅ 🔥 😀</li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/06/%E5%9F%9F%E6%8E%A7%E5%88%B6%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/06/%E5%9F%9F%E6%8E%A7%E5%88%B6%E5%99%A8/" class="post-title-link" itemprop="url">域控制器</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-09-06 19:37:11" itemprop="dateCreated datePublished" datetime="2022-09-06T19:37:11+08:00">2022-09-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/09/06/%E5%9F%9F%E6%8E%A7%E5%88%B6%E5%99%A8/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/06/%E5%9F%9F%E6%8E%A7%E5%88%B6%E5%99%A8/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>953</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><ol>
-<li><p>在今天软件定义汽车和汽车智能化、网联化的发展趋势下，原来基于 ECU 的分布式 EEA 也日益暴露诸多问题和挑战。为了解决分布式 EEA 的这些问题，人们开始逐渐把很多功能相似、分离的 ECU 功能集成整合到一个比 ECU 性能更强的处理器硬件平台上，这就是汽车“域控制器（Domain Control Unit，DCU）”。</p>
-</li>
-<li><p>ECU（Electronic Control Unit）电子控制单元，又称“行车电脑”、“车载电脑”等。它和普通的电脑一样,由微控制器（MCU）、存储器（ROM、RAM）、输入&#x2F;输出接口（I&#x2F;O）、模数转换器（A&#x2F;D）以及整形、驱动等大规模集成电路组成。</p>
-</li>
-<li><p>经典的五域集中式 EEA ：</p>
-<ul>
-<li>动力域（Power Train）</li>
-<li>底盘域（Chassis）</li>
-<li>车身域（Body&#x2F;Comfort）</li>
-<li>座舱域（Cockpit&#x2F;Infotainment）</li>
-<li>自动驾驶域（ADAS）</li>
-</ul>
-</li>
-<li><p>在五域集中式架构基础上进一步融合，把原本的动力域、底盘域和车身域融合为整车控制域，从而形成了三域集中式 EEA，也即：</p>
-<ul>
-<li>车控域控制器（VDC，Vehicle Domain Controller）</li>
-<li>智能驾驶域控制器（ADC，ADAS\AD Domain Controller）</li>
-<li>智能座舱域控制器（CDC，Cockpit Domain Controller）</li>
-</ul>
-</li>
-<li><p>在分布式 ECU 时代，计算和控制的核心是 MCU 芯片，传输的基础核心是基于传统的 CAN、LIN 和 FlexRay 等低速总线。</p>
-</li>
-<li><p>在域控制器时代，高性能、高集成度的异构 SoC 芯片作为域的主控处理器，将成为域控制器的计算与控制的核心芯片。而汽车 <code>TSN（Time-Sensitive Network）</code>以太网因为具有高带宽、实时和可靠的数据通信能力等特点，必将成为整车通信的核心基础设施，尤其是域主控处理器之间的通信主干网。</p>
-</li>
-<li><p>分布式 &#x3D;&gt; （跨）域集中式 &#x3D;&gt; 中央+区域集中式</p>
-</li>
+<h2 id="Keybindings-emacs"><a href="#Keybindings-emacs" class="headerlink" title="Keybindings(emacs)"></a>Keybindings(emacs)</h2><ol>
+<li>stying test: C-c C-s</li>
+<li>toggle: C-c C-x</li>
+<li>help: C-c C-h</li>
+<li>outline navigation: same as org-mode</li>
+<li>running: C-c C-c</li>
 </ol>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/561699068">国内主机整车 EEA 架构汇总</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/460683077">深度分析汽车芯片的现状与发展（一）汽车电子电气架构的变革</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/461714692">深度分析汽车芯片的现状与发展（二）域控制器时代</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/462675111">深度分析汽车芯片的现状与发展（三）ADAS&#x2F;AD 域控制器及芯片平台分析</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/464930132">深度分析汽车芯片的现状与发展（四）整车控制域</a></li>
-<li><a target="_blank" rel="noopener" href="https://pdf.dfcfw.com/pdf/H3_AP202205181566386836_1.pdf?1652907375000.pdf">2022 年自动驾驶域控制器行业概览</a></li>
+<h3 id="Links-and-Images"><a href="#Links-and-Images" class="headerlink" title="Links and Images"></a>Links and Images</h3><ol>
+<li>C-c C-l: insert link</li>
+<li>C-c C-i: insert image</li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/06/ROS2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/06/ROS2/" class="post-title-link" itemprop="url">ROS2</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-09-06 13:39:31" itemprop="dateCreated datePublished" datetime="2022-09-06T13:39:31+08:00">2022-09-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/09/06/ROS2/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/06/ROS2/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>42</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://fishros.com/d2lros2foxy/#/chapt3/3.1ROS2%E8%8A%82%E7%82%B9%E4%BB%8B%E7%BB%8D">ROS2 节点介绍</a></li>
+<h3 id="Text-Styles-C-c-C-s"><a href="#Text-Styles-C-c-C-s" class="headerlink" title="Text Styles C-c C-s"></a>Text Styles C-c C-s</h3><ol>
+<li>C-c C-s i: <em>italic</em></li>
+<li>C-c C-s b: <strong>bold</strong></li>
+<li>C-c C-s c: <code>inline code</code></li>
+<li>C-c C-s C: code block</li>
 </ol>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.3cst.cn/Information/info/1uwAF7ySxL8111ea8d6300163e0473d8">ROS1 与 ROS2、AUTOSAR 与 ROS2 区别</a></li>
+<h3 id="Headings-C-c-C-s"><a href="#Headings-C-c-C-s" class="headerlink" title="Headings C-c C-s"></a>Headings C-c C-s</h3><h3 id="Horizontal-Rules-C-c-C-s"><a href="#Horizontal-Rules-C-c-C-s" class="headerlink" title="Horizontal Rules C-c C-s -"></a>Horizontal Rules C-c C-s -</h3><h3 id="Footnodes-C-c-C-s-f"><a href="#Footnodes-C-c-C-s-f" class="headerlink" title="Footnodes: C-c C-s f"></a>Footnodes: C-c C-s f</h3><h3 id="Wiki-Links"><a href="#Wiki-Links" class="headerlink" title="Wiki Links"></a>Wiki Links</h3><h3 id="…TODO"><a href="#…TODO" class="headerlink" title="…TODO"></a>…TODO</h3><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://eblog.gitee.io/posts/hexo/hexo-writing-skills.html">(good)markdown 教程</a></li>
+<li><a target="_blank" rel="noopener" href="https://eblog.gitee.io/posts/hexo/hexo-theme-beautify.html">写的好的 markdown, 供参考</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jrblevin/markdown-mode">markdown mode tutorial</a></li>
 </ol>
 
       
@@ -1458,7 +1401,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1526,7 +1469,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">175</span>
+          <span class="site-state-item-count">190</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1559,19 +1502,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
+          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
+          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -1609,13 +1552,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">484k</span>
+    <span title="站点总字数">543k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:20</span>
+    <span title="站点阅读时长">8:13</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

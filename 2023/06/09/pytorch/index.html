@@ -20,17 +20,20 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="base pytorch 导出模型时会显示 ONNX IR, 类似三段式 Functions to export models into the ONNX IR format.   pytorch 模型结构定义之后, 有些算子不一定会使用，导出 onnx 模型时不使用的算子不会导出，应为导出模型进行一次模型推理，在推理的过程中记录所有经过的计算，将这些记录整合成计算图 pytorch 为什么不直接">
+  <meta name="description" content="compile 直接用 torch.compile 编译一个函数(都是用 torch 实现的，可以生成 triton 函数)来加速，getting start CPython 的 Frame Evaluation API（框架评估 API）是一个高级特性，允许开发者定制 Python 解释器执行代码的方式。这个 API 提供了一种方法，能够在 Python 解释器运行时动态插入和替换代码执行的框架">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pytorch">
 <meta property="og:url" content="https://jiaxiyang.github.io/2023/06/09/pytorch/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="base pytorch 导出模型时会显示 ONNX IR, 类似三段式 Functions to export models into the ONNX IR format.   pytorch 模型结构定义之后, 有些算子不一定会使用，导出 onnx 模型时不使用的算子不会导出，应为导出模型进行一次模型推理，在推理的过程中记录所有经过的计算，将这些记录整合成计算图 pytorch 为什么不直接">
+<meta property="og:description" content="compile 直接用 torch.compile 编译一个函数(都是用 torch 实现的，可以生成 triton 函数)来加速，getting start CPython 的 Frame Evaluation API（框架评估 API）是一个高级特性，允许开发者定制 Python 解释器执行代码的方式。这个 API 提供了一种方法，能够在 Python 解释器运行时动态插入和替换代码执行的框架">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pytorch.org/assets/images/pytorch-2.0-img4.jpg">
+<meta property="og:image" content="https://pytorch.org/assets/images/pytorch-2.0-img12.png">
 <meta property="article:published_time" content="2023-06-09T07:28:49.000Z">
-<meta property="article:modified_time" content="2024-02-22T03:06:02.710Z">
+<meta property="article:modified_time" content="2024-08-20T07:36:01.993Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pytorch.org/assets/images/pytorch-2.0-img4.jpg">
 
 <link rel="canonical" href="https://jiaxiyang.github.io/2023/06/09/pytorch/">
 
@@ -130,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -232,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-22 11:06:02" itemprop="dateModified" datetime="2024-02-22T11:06:02+08:00">2024-02-22</time>
+                <time title="修改时间：2024-08-20 15:36:01" itemprop="dateModified" datetime="2024-08-20T15:36:01+08:00">2024-08-20</time>
               </span>
 
           
@@ -262,14 +265,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.7k</span>
+              <span>14k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>13 分钟</span>
             </span>
 
         </div>
@@ -281,9 +284,70 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+        <h2 id="compile"><a href="#compile" class="headerlink" title="compile"></a>compile</h2><ol>
+<li>直接用 torch.compile 编译一个函数(都是用 torch 实现的，可以生成 triton 函数)来加速，<a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/torch.compiler_get_started.html">getting start</a></li>
+<li>CPython 的 Frame Evaluation API（框架评估 API）是一个高级特性，允许开发者定制 Python 解释器执行代码的方式。这个 API 提供了一种方法，能够在 Python 解释器运行时动态插入和替换代码执行的框架，从而可以进行代码插桩、动态优化或其他高级操作。</li>
+<li>torch.compile is a PyTorch function introduced in PyTorch 2.x that aims to solve the problem of accurate graph capturing in PyTorch and ultimately enable software engineers to run their PyTorch programs faster.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/pytorch/pytorch/issues/93794">torch dynamo 加速性能例子</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/torch.compiler.html">torch dynamo 后端</a></li>
+<li>In 2.0, if you wrap your model in model &#x3D; torch.compile(model), your model goes through 3 steps before execution:<ul>
+<li>Graph acquisition: first the model is rewritten as blocks of subgraphs. Subgraphs which can be compiled by TorchDynamo are “flattened” and the other subgraphs (which might contain control-flow code or other unsupported Python constructs) will fall back to Eager-Mode.</li>
+<li>Graph lowering: all the PyTorch operations are decomposed into their constituent kernels specific to the chosen backend.</li>
+<li>Graph compilation, where the kernels call their corresponding low-level device-specific operations.</li>
+</ul>
+</li>
+<li>For instance, something innocuous as a print statement in your model’s forward triggers a graph break. 模型中打印会中断 graph 执行</li>
+<li><code>torch.compile()</code> We expect this one line code change to provide you with between 30%-2x training time speedups on the vast majority of models that you’re already running.</li>
+<li>芯片商可以集成到 dynamo 后端（和 inductor 并列)或 inductor 后端(和 triton 并列)或混合后端<ul>
+<li>目前 Inductor 有两个后端：(1) 生成多线程 CPU 代码的 C++，(2) 生成高性能 GPU 代码的 Triton</li>
+</ul>
+</li>
+<li>编译过程<br><img src="https://pytorch.org/assets/images/pytorch-2.0-img4.jpg" alt="编译过程"></li>
+<li>堆栈<br><img src="https://pytorch.org/assets/images/pytorch-2.0-img12.png" alt="堆栈"></li>
+<li>Our philosophy on PyTorch has always been to keep flexibility and hackability our top priority, and performance as a close second.</li>
+<li>In the past 5 years, we built <code>torch.jit.trace, TorchScript, FX tracing, Lazy Tensors</code>. But none of them felt like they gave us everything we wanted. Some were flexible but not fast, some were fast but not flexible and some were neither fast nor flexible. Some had bad user-experience (like being silently wrong). While TorchScript was promising, it needed substantial changes to your code and the code that your code depended on. This need for substantial change in code made it a non-starter for a lot of PyTorch users. 之前的都不行</li>
+<li><code>TorchDynamo</code> TorchDynamo acquired the graph 99% of the time, correctly, safely and with negligible overhead – without needing any changes to the original code. This is when we knew that we finally broke through the barrier that we were struggling with for many years in terms of flexibility and speed.</li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/get-started/pytorch-2.0/">pytorch 2.0</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/blog/optimizing-production-pytorch-performance-with-graph-transformations">eager mode vs graph mode:</a><ul>
+<li>在 PyTorch 中，”Eager Execution”（即即时执行模式）是指一种动态图计算模式，其中每个操作都立即被执行，而不是被先放入计算图中。这与静态图计算框架（如 TensorFlow 的早期版本）的工作方式不同。在即时执行模式中，你可以像使用 NumPy 一样进行操作，逐步构建计算图，方便调试和交互。</li>
+<li>开发用 eager 模型，部署用 torchscript 来过渡到 graph mode(会做融合)</li>
+<li>With TorchScript, PyTorch provides ease-of-use and flexibility in eager mode, while seamlessly transitioning to graph mode for speed, optimization, and functionality in C++ runtime environments.</li>
+</ul>
+</li>
+<li>torch.jit.trace 基于字节码， torch.jit.script 基于 AST</li>
+<li>torch inductor<ul>
+<li>作为 torch.compile 的基础技术，配备 Nvidia 和 AMD GPU 的 TorchInductor 将依靠 OpenAI Triton 深度学习编译器来生成高性能代码并隐藏底层硬件细节。OpenAI Triton 生成的内核可实现与手写内核和专用 cuda 库(如 cublas)相当的性能。</li>
+</ul>
+</li>
+<li>torch.compile 的基础是新技术——TorchDynamo、AOTAutograd、PrimTorch 和 TorchInductor</li>
+<li>TorchInductor 是一种深度学习编译器，可为多个加速器和后端生成快速代码。对于 NVIDIA 和 AMD GPU，它使用 OpenAI Triton 作为关键构建块。对于 intel CPU，我们使用多线程、向量化指令生成 C++ 代码，并在可能的情况下将适当的操作卸载到 mkldnn。</li>
+</ol>
+<h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li><code>torch.cuda.current_stream().synchronize()</code> 只同步当前 CUDA 流</li>
+<li><a target="_blank" rel="noopener" href="https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch">nvdia docker</a></li>
+<li>比较两个 tensor 是否相近 <a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/generated/torch.isclose.html">torch.isclose</a><ul>
+<li><a target="_blank" rel="noopener" href="https://numpy.org/doc/stable/reference/generated/numpy.isclose.html">numpy.isclose</a></li>
+</ul>
+</li>
+<li>收集 pytorch 环境相关信息：<a target="_blank" rel="noopener" href="https://github.com/pytorch/pytorch/issues/44299#issue-695606076">link</a><ul>
+<li><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/pytorch/pytorch/master/torch/utils/collect_env.py">collect_env.py</a></li>
+</ul>
+</li>
+<li>导出 onnx 时如果遇见 cuda 算子有问题，可以写个 fake 算子, 直接 return out, 不用计算</li>
+<li><code>python -m torch.utils.collect_env</code></li>
+<li>静态图：先编译，如果增加一个计算，需要重新编译, 改变网络意味着重新开始，类似 C++工程的重头编译</li>
+<li>动态图：实时构图，增加一个计算不用编译，直接在原来的图上添加计算节点，类似 C++工程的增量编译</li>
+<li>深度学习模型实际上就是一个计算图。模型部署时通常把模型转换成静态的计算图，即没有控制流（<code>分支语句、循环语句</code>）的计算图。</li>
+<li><code>device = &quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;</code></li>
 <li>pytorch 导出模型时会显示 ONNX IR, 类似三段式<ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/pytorch/pytorch/blob/main/torch/onnx/utils.py#L190">Functions to export models into the ONNX IR format.</a></li>
+<li>verbose &#x3D; True</li>
+</ul>
+</li>
+<li>pytorch 导出 onnx 问题<ul>
+<li>先跑通 model(x)</li>
+<li>Only tuples, lists and Variables are supported as JIT inputs&#x2F;outputs. Dictionaries and strings are also accepted, but their usage is not recommended. Here, received an input of unsupported type: DataContainer</li>
+<li>需要处理 dataloader DataContainer 到 list</li>
 </ul>
 </li>
 <li>pytorch 模型结构定义之后, 有些算子不一定会使用，导出 onnx 模型时不使用的算子不会导出，应为导出模型进行一次模型推理，在推理的过程中记录所有经过的计算，将这些记录整合成计算图</li>
@@ -312,7 +376,35 @@
 <li><code>help(torch.ones)</code> 显示函数 help</li>
 <li><code>print(dir(torch.distributions))</code> 显示 torch 的 distributions</li>
 </ol>
-<h2 id="基础运算"><a href="#基础运算" class="headerlink" title="基础运算"></a><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/basics/tensorqs_tutorial.html">基础运算</a></h2><ol>
+<h2 id="extending"><a href="#extending" class="headerlink" title="extending"></a><a target="_blank" rel="noopener" href="https://pytorch-cn.readthedocs.io/zh/latest/notes/extending/">extending</a></h2><h3 id="Autograd"><a href="#Autograd" class="headerlink" title="Autograd"></a>Autograd</h3><ol>
+<li>Autograd Profiler 可以统计 autograd 性能</li>
+<li><code>c = a.detach().clone()</code> c 不计算 grad, requires_grad&#x3D;False</li>
+<li>通过 watch model[0].weight.data 和 model[0].weight.grad 看 weight 值和 grad 变化， <a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/pytorch_with_examples.html#pytorch-optim">sample</a></li>
+<li>见 deep_learning.md 下的 backward</li>
+<li>通过 loss 函数求各个 module weights 的 grad，存在 weights tensor.grad 里，中间的 activation 没有 grad, 只有叶子节点有</li>
+<li>Operation 对 tensor 求 grad</li>
+<li>自定义 OP 需要继承 torch.autograd.Fuction <a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/pytorch_with_examples.html#pytorch-defining-new-autograd-functions">pytorch-defining-new-autograd-functions</a><ul>
+<li>forward 输入参数个数是 backward 输出参数个数</li>
+<li>backward 输入参数个数是 forward 输出参数个数</li>
+<li>通过 ctx 在 forward 和 backward 中传递 tensor, 用于计算梯度</li>
+</ul>
+</li>
+<li>每个原始的 Autograd 运算符实际上都是在 tensor 上运行的两个函数。 正向函数从输入 tensor 计算输出 tensor。 反向函数接收相对于某个标量值的输出 tensor 的梯度，并计算相对于相同标量值的输入 tensor 的梯度。</li>
+<li>反向传播用于算梯度</li>
+<li>backward()实际上是通过 DCG 图从根张量追溯到每一个叶子节点，然后计算将计算出的梯度存入每个叶子节点的.grad 属性中</li>
+<li>在某种程度上，反向传播只是链式法则的一个花哨的名字—— Jeremy Howard</li>
+<li>backward 不传入参数时，默认为传入 backward(torch.tensor(1.0))。</li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/pytorch_with_examples.html">Learning PyTorch with Examples</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/niexinyu0026/article/details/122262082">用 numpy、PyTorch 自动求导、torch.nn 库实现两层神经网络</a> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/luedong/p/14492361.html">link</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/baidu_38797690/article/details/122180655">PyTorch：梯度计算之反向传播函数 backward()</a></li>
+</ol>
+<h3 id="Module"><a href="#Module" class="headerlink" title="Module"></a>Module</h3><ol>
+<li>print(model)只是打印 self 定义的 layer，并不是计算图</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/szagoruyko/pytorchviz">pytorchviz</a> 在 pytorch 中画计算图</li>
+</ol>
+<h2 id="tensor"><a href="#tensor" class="headerlink" title="tensor"></a>tensor</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/basics/tensorqs_tutorial.html">基础运算</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/introyt/tensors_deeper_tutorial.html">高级</a></li>
 <li><a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_preliminaries/ndarray.html">d2l ndarray</a></li>
 <li><code>x = torch.arange(10)</code> tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])</li>
 <li><code>x = torch.arange(10.0)</code> tensor([0., 1., 2., 3., 4., 5., 6., 7., 8., 9.])</li>
@@ -328,6 +420,11 @@
 <li><code>torch.ones(2, 4)</code></li>
 <li><code>torch.zeros(2, 4)</code></li>
 <li><code>X.reshape(-1)</code> 展平为一维</li>
+<li><code>//</code>向下取整除法</li>
+<li><code>%</code> 求模，取余</li>
+<li><code>math.ceil(x)</code>向上取整数</li>
+<li><code>math.floor(x)</code>向下取整</li>
+<li><code>round(x)</code> 四舍六入五成双（例如 round(2.5)&#x3D;2, round(3.5)&#x3D;4, round(4.5)&#x3D;4, round(5.5)&#x3D;6) 小数部分为 0.5 向偶数</li>
 <li>tensor 基本运算</li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x = torch.tensor([<span class="number">1.0</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">8</span>])  <span class="comment"># 1.0 mean float</span></span><br><span class="line">y = torch.tensor([<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>])</span><br><span class="line">x + y, x - y, x * y, x / y, x ** y  <span class="comment"># **运算符是求幂运算</span></span><br></pre></td></tr></table></figure>
@@ -344,19 +441,24 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">X = torch.arange(<span class="number">12</span>, dtype=torch.float32).reshape((<span class="number">3</span>,<span class="number">4</span>))</span><br><span class="line">Y = torch.tensor([[<span class="number">2.0</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], [<span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>]])</span><br><span class="line">torch.cat((X, Y), dim=<span class="number">0</span>), torch.cat((X, Y), dim=<span class="number">1</span>)  <span class="comment"># dim=0按行拼接， dim=1按列拼接， 0代表最里面一个维度</span></span><br><span class="line">X == Y <span class="comment"># shape: torch.Size([3, 4])</span></span><br><span class="line">X &lt; Y</span><br><span class="line">X &gt; Y</span><br><span class="line">X.<span class="built_in">sum</span>() <span class="comment"># 求和</span></span><br><span class="line">X.mean() <span class="comment"># 求均值</span></span><br></pre></td></tr></table></figure>
 
 <ol>
-<li>索引和切片</li>
+<li>原位操作 下划线</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">X[-<span class="number">1</span>] <span class="comment"># 取最后一个元素</span></span><br><span class="line">X[<span class="number">1</span>:<span class="number">3</span>] <span class="comment"># 取第二个和第三个元素，不包含X[3]</span></span><br><span class="line">X[<span class="number">1</span>,<span class="number">2</span>] = <span class="number">9</span> <span class="comment"># 赋值</span></span><br><span class="line">X[<span class="number">0</span>:<span class="number">2</span>, :] = <span class="number">12</span> <span class="comment"># 前两行赋值为12</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">a = torch.tensor([<span class="number">0</span>, math.pi / <span class="number">4</span>, math.pi / <span class="number">2</span>, <span class="number">3</span> * math.pi / <span class="number">4</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;a:&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"><span class="built_in">print</span>(torch.sin(a))   <span class="comment"># this operation creates a new tensor in memory</span></span><br><span class="line"><span class="built_in">print</span>(a)              <span class="comment"># a has not changed</span></span><br><span class="line"></span><br><span class="line">b = torch.tensor([<span class="number">0</span>, math.pi / <span class="number">4</span>, math.pi / <span class="number">2</span>, <span class="number">3</span> * math.pi / <span class="number">4</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;\nb:&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(b)</span><br><span class="line"><span class="built_in">print</span>(torch.sin_(b))  <span class="comment"># note the underscore</span></span><br><span class="line"><span class="built_in">print</span>(b)</span><br></pre></td></tr></table></figure>
 
 <ol>
-<li>节省内存</li>
+<li>索引和切片</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">X[-<span class="number">1</span>] <span class="comment"># 取最后一个元素</span></span><br><span class="line">X[<span class="number">1</span>:<span class="number">3</span>] <span class="comment"># 取第二个和第三个元素，不包含X[3]</span></span><br><span class="line">X[<span class="number">1</span>,<span class="number">2</span>] = <span class="number">9</span> <span class="comment"># 赋值</span></span><br><span class="line">X[<span class="number">0</span>:<span class="number">2</span>, :] = <span class="number">12</span> <span class="comment"># 前两行赋值为12</span></span><br><span class="line">X = torch.arange(<span class="number">12</span>, dtype=torch.float32).reshape((<span class="number">3</span>,<span class="number">4</span>))</span><br><span class="line">X[<span class="number">1</span>:<span class="number">3</span>, <span class="number">2</span>:<span class="number">4</span>] 取右下角两行两列</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>节省内存: 注意 Y &#x3D; Y + X 与 X +&#x3D; Y 效果不一致</li>
 </ol>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">before = <span class="built_in">id</span>(Y)</span><br><span class="line">Y = Y + X</span><br><span class="line"><span class="built_in">id</span>(Y) == before <span class="comment"># False</span></span><br><span class="line"></span><br><span class="line">Z = torch.zeros_like(Y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;id(Z):&#x27;</span>, <span class="built_in">id</span>(Z))</span><br><span class="line">Z[:] = X + Y</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;id(Z):&#x27;</span>, <span class="built_in">id</span>(Z))</span><br><span class="line"></span><br><span class="line">before = <span class="built_in">id</span>(X)</span><br><span class="line">X += Y</span><br><span class="line"><span class="built_in">id</span>(X) == before <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
 
 <ol>
 <li>和 numpy 转换</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">A = X.numpy()</span><br><span class="line">B = torch.tensor(A)</span><br><span class="line"><span class="built_in">type</span>(A), <span class="built_in">type</span>(B)</span><br><span class="line"></span><br><span class="line">a = torch.tensor([<span class="number">3.5</span>])</span><br><span class="line">a, a.item(), <span class="built_in">float</span>(a), <span class="built_in">int</span>(a) <span class="comment"># (tensor([3.5000]), 3.5, 3.5, 3)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">A = X.numpy()</span><br><span class="line">B = torch.tensor(A)</span><br><span class="line"><span class="built_in">type</span>(A), <span class="built_in">type</span>(B)</span><br><span class="line"></span><br><span class="line">a = torch.tensor([<span class="number">3.5</span>])</span><br><span class="line">a, a.item(), <span class="built_in">float</span>(a), <span class="built_in">int</span>(a) <span class="comment"># (tensor([3.5000]), 3.5, 3.5, 3)  tuple</span></span><br></pre></td></tr></table></figure>
 
 <ol>
 <li>type 转换 <a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/tensors.html">type</a></li>
@@ -364,10 +466,19 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">X = torch.arange(<span class="number">12</span>).reshape(<span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line">X.dtype <span class="comment"># torch.int64</span></span><br><span class="line">X.to(torch.float32)</span><br><span class="line">torch.tensor([<span class="number">1.2</span>]).<span class="built_in">type</span>() <span class="comment"># torch.FloatTensor</span></span><br><span class="line">torch.tensor([<span class="number">1.2</span>]).dtype <span class="comment"># torch.float32</span></span><br></pre></td></tr></table></figure>
 
 <ol>
+<li>判断是否有 gpu</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;We have a GPU!&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Sorry, CPU only.&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">    my_device = torch.device(<span class="string">&#x27;cuda&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    my_device = torch.device(<span class="string">&#x27;cpu&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;Device: &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(my_device))</span><br><span class="line"></span><br><span class="line">x = torch.rand(<span class="number">2</span>, <span class="number">2</span>, device=my_device)</span><br><span class="line"><span class="built_in">print</span>(x)</span><br></pre></td></tr></table></figure>
+
+<ol>
 <li>cpu cuda</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">X.cpu()</span><br><span class="line">X.cuda() <span class="comment"># 默认cuda:0</span></span><br><span class="line">X.to(<span class="string">&quot;cpu&quot;</span>)</span><br><span class="line">X.to(<span class="string">&quot;cuda:0&quot;</span>)</span><br><span class="line"></span><br><span class="line">device = torch.device(<span class="string">&quot;cuda&quot;</span>)</span><br><span class="line">Y = X.to(device)</span><br><span class="line"></span><br><span class="line"><span class="comment"># PyTorch的GPU端对tensor数据类型的支持是有限的,很多运算只实现了float/double类型的GPU支持。</span></span><br><span class="line">X = torch.arange(<span class="number">9</span>).reshape(<span class="number">3</span>,<span class="number">3</span>).cuda().to(torch.float32)</span><br><span class="line">Y = torch.arange(<span class="number">9</span>).reshape(<span class="number">3</span>,<span class="number">3</span>).cuda().to(torch.float32)</span><br><span class="line">torch.matmul(X, Y)</span><br><span class="line">X @ Y</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">tensor.device <span class="comment">#查看在gpu还是cpu</span></span><br><span class="line">X.cpu()</span><br><span class="line">X.cuda() <span class="comment"># 默认cuda:0</span></span><br><span class="line">X.to(<span class="string">&quot;cpu&quot;</span>)</span><br><span class="line">X.to(<span class="string">&quot;cuda:0&quot;</span>)</span><br><span class="line"></span><br><span class="line">device = torch.device(<span class="string">&quot;cuda&quot;</span>)</span><br><span class="line">Y = X.to(device)</span><br><span class="line"></span><br><span class="line"><span class="comment"># PyTorch的GPU端对tensor数据类型的支持是有限的,很多运算只实现了float/double类型的GPU支持。</span></span><br><span class="line">X = torch.arange(<span class="number">9</span>).reshape(<span class="number">3</span>,<span class="number">3</span>).cuda().to(torch.float32)</span><br><span class="line">Y = torch.arange(<span class="number">9</span>).reshape(<span class="number">3</span>,<span class="number">3</span>).cuda().to(torch.float32)</span><br><span class="line">torch.matmul(X, Y)</span><br><span class="line">X @ Y</span><br></pre></td></tr></table></figure>
 
+<ol>
+<li>model cpu cuda</li>
+<li>model.to(“cuda”)会将 model 参数放在显存中</li>
+</ol>
 <h2 id="torchscript"><a href="#torchscript" class="headerlink" title="torchscript"></a><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2010575">torchscript</a></h2><ol>
 <li>TorchScript 是 PyTorch 模型推理部署的中间表示，可以在高性能环境 libtorch（C ++）中直接加载，实现模型推理，而无需 Pytorch 训练框架依赖。torch.jit 是 torchscript Python 语言包支持，支持 pytorch 模型快速，高效，无缝对接到 libtorch 运行时，实现高效推理。</li>
 <li>torchscript 主要包含权重和计算过程(IR; 类似.text; 各种函数，有一个入口)</li>
@@ -381,6 +492,11 @@
 </li>
 </ol>
 <h2 id="model"><a href="#model" class="headerlink" title="model"></a>model</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/thorough-pytorch/%E7%AC%AC%E4%BA%94%E7%AB%A0/5.1%20PyTorch%E6%A8%A1%E5%9E%8B%E5%AE%9A%E4%B9%89%E7%9A%84%E6%96%B9%E5%BC%8F.html">PyTorch 模型定义的方式</a><ul>
+<li>Sequential 适用于快速验证结果</li>
+<li>ModuleList 和 ModuleDict 在某个完全相同的层需要重复出现多次时，非常方便实现，可以一行顶多行；</li>
+</ul>
+</li>
 <li>定义模型时可以直接初始化参数，也可以后期加载<ul>
 <li><code>self.lin1.weight = nn.Parameter(torch.arange(-4.0, 5.0).view(3, 3))</code></li>
 </ul>
@@ -395,9 +511,65 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Load model directly</span></span><br><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoTokenizer, AutoModelForCausalLM</span><br><span class="line"></span><br><span class="line">model = AutoModelForCausalLM.from_pretrained(<span class="string">&quot;./Llama-2-7b-hf&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(model)</span><br><span class="line"><span class="keyword">from</span> prettytable <span class="keyword">import</span> PrettyTable</span><br><span class="line"></span><br><span class="line">table = PrettyTable([<span class="string">&#x27;Name&#x27;</span>, <span class="string">&#x27;Shape&#x27;</span>, <span class="string">&#x27;Param&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> name, param <span class="keyword">in</span> model.named_parameters():</span><br><span class="line">    param_count = param.numel()</span><br><span class="line">    table.add_row([name, param.shape, param_count])</span><br><span class="line"><span class="built_in">print</span>(table)</span><br><span class="line"></span><br><span class="line">num_parameters = <span class="built_in">sum</span>(p.numel() <span class="keyword">for</span> p <span class="keyword">in</span> model.parameters())</span><br><span class="line"><span class="built_in">print</span>(num_parameters)</span><br></pre></td></tr></table></figure>
 
 <ol>
-<li>pytorch model to onnx(导出为 batch 1 时需要设置输入数据第一维度为 1,)</li>
+<li>打印 model parameters <a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/introyt/autogradyt_tutorial.html">autograd_tutorial</a> <a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/introyt/modelsyt_tutorial.html">model turorial</a><ul>
+<li><code>list(model.parameters())</code></li>
+<li><code>list(model.named_parameters())</code></li>
+<li><code>print(model.layer2.weight[0][0:10])</code></li>
+<li><code>print(model[0].weight)</code> sequnce</li>
+<li><code>print(model[0].bias)</code></li>
+<li><code>print([param for name,param in model.named_parameters()][0])</code></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/saving_loading_models.html#save">torch save and load</a></li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision.models <span class="keyword">as</span> models</span><br><span class="line"><span class="keyword">import</span> torch.onnx <span class="keyword">as</span> onnx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载预训练模型</span></span><br><span class="line">model = models.resnet18(pretrained=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个输入张量作为示例; 注意数据和模型要么都在cuda，要么都在cpu</span></span><br><span class="line">input_data = torch.randn(<span class="number">1</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>)</span><br><span class="line">input_data = torch.randn(<span class="number">1</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>).cuda()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置模型为推理模式</span></span><br><span class="line">model.<span class="built_in">eval</span>() <span class="comment"># 只影响, 不启用 Batch Normalization 和 Dropout</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将模型和输入张量转换为ONNX格式</span></span><br><span class="line">onnx_path = <span class="string">&quot;model.onnx&quot;</span></span><br><span class="line">onnx.export(model, input_data, onnx_path)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;模型已成功转换为ONNX格式并保存在:&quot;</span>, onnx_path)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model, PATH)</span><br><span class="line"></span><br><span class="line">model = torch.load(PATH)</span><br><span class="line">model.<span class="built_in">eval</span>()</span><br></pre></td></tr></table></figure>
+
+<h2 id="model-export"><a href="#model-export" class="headerlink" title="model export"></a>model export</h2><ol>
+<li>Expected all tensors to be on the same device<ul>
+<li>vsocde 断点到_jit_pass_onnx_constant_fold， 查看 graph， 会看到每个 op 所在 device 和代码位置</li>
+</ul>
+</li>
+<li>注意 pytorch 模型在转出 onnx 时会做融合或拆分，不是一对一的关系</li>
+<li>nonzero: B&#x3D;A[b &gt; c], b &gt; c 是 bool, B 取 b &gt; c 的值; tensorrt8.6 之前不支持， 可用 topk + mask 替代</li>
+<li>nonzero: Returns the indices of the elements that are non-zero</li>
+<li>squeeze: 如果某一维是 1，把它删掉。需要判断， 也会导致图里面有 If</li>
+<li>update: a[100] &#x3D; 1 不会产生新 tensor, tensorrt 不支持，导出的图会有问题， 用 scatter 替换,scatter 会生成新的 tensor</li>
+<li>a[b&gt;c]会产生 nonzero, 有 nonzero 就会有 if 分支，就是动态图</li>
+<li>export 加 verbose &#x3D; True, # onnx op 显示代码位置; pytorch1.10 还不支持，需要搜 log</li>
+<li>当我们使用了 Pytorch 里面的[]索引操作或者其它需要判断的情况，ONNX 模型会多出一些 if OP，这个时候这个 if OP 的输入已经是一个确定的 True，因为我们已经介绍过为 False 那部分的子图会被丢掉。<a target="_blank" rel="noopener" href="http://giantpandacv.com/project/%E9%83%A8%E7%BD%B2%E4%BC%98%E5%8C%96/AI%20%E9%83%A8%E7%BD%B2%E5%8F%8A%E5%85%B6%E5%AE%83%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/ONNX%E5%86%8D%E6%8E%A2/">link</a></li>
+<li><a target="_blank" rel="noopener" href="https://glaringlee.github.io/onnx.html#id17">不要用 ONNX_FALLTHROUGH</a><ul>
+<li>此模式可用于导出未在 ONNX 中注册和支持的任何运算符（ATen 或非 ATen）。导出失败并按原样导出操作符，作为自定义操作。</li>
+</ul>
+</li>
+<li>copy.deepcopy() 可能导致 export 出问题</li>
+<li>export 有问题需要从最外层一步步定位到内部看哪里出问题了，提前 return,多层次上都提前返回, 一步步定位哪里导出的问题, 注意 export 函数中 model_output 不要填，否则会强制输数个数报错<ul>
+<li>不要的代码先注释掉</li>
+</ul>
+</li>
+<li>export 出问题可以先定位具体哪个 module 出的问题</li>
+<li>Function 类有一个很好的性质：如果它定义了 symbolic 静态方法，该 Function 在执行 torch.onnx.export() 时就可以根据 symbolic 中定义的规则转换成 ONNX 算子。</li>
+<li>导出 onnx 模型时不用 pytorch 自定义算子不用定义 backward, trace 只运行 forward</li>
+<li>ONNX 是一套标准，本身并不包括实现。导出为 onnx 时我们就简略地定义一个 ONNX 可变形卷积算子，而不去写它在某个推理引擎上的实现。</li>
+<li>symbolic 符号函数，可以看成是 PyTorch 算子类的一个静态方法。在把 PyTorch 模型转换成 ONNX 模型时，各个 PyTorch 算子的符号函数 symbolic 会被依次调用，以完成 PyTorch 算子到 ONNX 算子的转换。<ul>
+<li>第一个参数就固定叫 g，它表示和计算图相关的内容。g 有一个方法 op。在把 PyTorch 算子转换成 ONNX 算子时，需要在符号函数中调用此方法来为最终的计算图添加一个 ONNX 算子。</li>
+<li>g.op(“Asinh”, input)则完成了 ONNX 算子的定义。其中，第一个参数”Asinh”是算子在 ONNX 中的名称。</li>
+</ul>
+</li>
+<li>(good)PyTorch 转 ONNX 的跟踪导出法是不是万能的。如果我们在模型中做了一些很“出格”的操作，跟踪法会把某些取决于输入的中间结果变成常量，从而使导出的 ONNX 模型和原来的模型有出入。 <a target="_blank" rel="noopener" href="https://mmdeploy.readthedocs.io/zh-cn/v1.2.0/tutorial/03_pytorch2onnx.html#id4">link</a><ul>
+<li>涉及张量与普通变量转换的逻辑都会导致最终的 ONNX 模型不太正确, 例如 64 要用 torch.tensor(64)</li>
+<li>我们也可以利用这个性质，在保证正确性的前提下令模型的中间结果变成常量。这个技巧常常用于模型的静态化上，即令模型中所有的张量形状都变成常量; shape to constant</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/recipes/recipes/saving_and_loading_a_general_checkpoint.html">Saving and loading a general checkpoint in PyTorch</a></li>
+<li>PyTorch 模型在导出到 ONNX 模型时，模型的输入参数的类型必须全部是 torch.Tensor</li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/onnx/export_simple_model_to_onnx_tutorial.html">Export a PyTorch model to ONNX</a><ul>
+<li>pytorch model to onnx(导出为 batch 1 时需要设置输入数据第一维度为 1,)</li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/onnx/export_simple_model_to_onnx_tutorial.html#compare-the-pytorch-results-with-the-ones-from-the-onnx-runtime">Compare the PyTorch results with the ones from the ONNX Runtime</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/advanced/super_resolution_with_onnxruntime.html">Exporting a Model from PyTorch to ONNX and Running it using ONNX Runtime</a></li>
+</ul>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision.models <span class="keyword">as</span> models</span><br><span class="line"><span class="keyword">import</span> torch.onnx <span class="keyword">as</span> onnx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载预训练模型</span></span><br><span class="line">model = models.resnet18(pretrained=<span class="literal">True</span>) <span class="comment">## 有网络结构</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个输入张量作为示例; 注意数据和模型要么都在cuda，要么都在cpu</span></span><br><span class="line">input_data = torch.randn(<span class="number">1</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>)</span><br><span class="line">input_data = torch.randn(<span class="number">1</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>).cuda()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置模型为推理模式</span></span><br><span class="line">model.<span class="built_in">eval</span>() <span class="comment"># 只影响, 不启用 Batch Normalization 和 Dropout</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将模型和输入张量转换为ONNX格式</span></span><br><span class="line">onnx_path = <span class="string">&quot;model.onnx&quot;</span></span><br><span class="line">onnx.export(model, input_data, onnx_path) <span class="comment"># 有参数可以做常量折叠</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;模型已成功转换为ONNX格式并保存在:&quot;</span>, onnx_path)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Input to the model</span></span><br><span class="line">x = torch.randn(batch_size, <span class="number">1</span>, <span class="number">224</span>, <span class="number">224</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line">torch_out = torch_model(x)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Export the model</span></span><br><span class="line">torch.onnx.export(torch_model,               <span class="comment"># model being run</span></span><br><span class="line">                  x,                         <span class="comment"># model input (or a tuple for multiple inputs)</span></span><br><span class="line">                  <span class="string">&quot;super_resolution.onnx&quot;</span>,   <span class="comment"># where to save the model (can be a file or file-like object)</span></span><br><span class="line">                  export_params=<span class="literal">True</span>,        <span class="comment"># store the trained parameter weights inside the model file</span></span><br><span class="line">                  opset_version=<span class="number">10</span>,          <span class="comment"># the ONNX version to export the model to</span></span><br><span class="line">                  do_constant_folding=<span class="literal">True</span>,  <span class="comment"># whether to execute constant folding for optimization</span></span><br><span class="line">                  input_names = [<span class="string">&#x27;input&#x27;</span>],   <span class="comment"># the model&#x27;s input names</span></span><br><span class="line">                  output_names = [<span class="string">&#x27;output&#x27;</span>], <span class="comment"># the model&#x27;s output names</span></span><br><span class="line">                  verbose = <span class="literal">True</span>,            <span class="comment"># onnx op 显示代码位置</span></span><br><span class="line">                  dynamic_axes=&#123;<span class="string">&#x27;input&#x27;</span> : &#123;<span class="number">0</span> : <span class="string">&#x27;batch_size&#x27;</span>&#125;,    <span class="comment"># variable length axes</span></span><br><span class="line">                                <span class="string">&#x27;output&#x27;</span> : &#123;<span class="number">0</span> : <span class="string">&#x27;batch_size&#x27;</span>&#125;&#125;)</span><br></pre></td></tr></table></figure>
 
 <h2 id="model-info"><a href="#model-info" class="headerlink" title="model info"></a>model info</h2><ol>
 <li>需要 model.eval()； 不会打印 dropout 层, 不启用 Batch Normalization 和 Dropout</li>
@@ -414,6 +586,8 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/pytorch/tutorials/tree/main">tutorials</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/distributed/home.html">分布式训练</a></li>
 <li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/basics/tensorqs_tutorial.html">tutorials</a></li>
 <li><a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/index.html">docs</a></li>
 <li><a target="_blank" rel="noopener" href="https://yiyibooks.cn/yiyibooks/pytorch_131/index.html">中文</a></li>
@@ -518,7 +692,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E8%BF%90%E7%AE%97"><span class="nav-number">2.</span> <span class="nav-text">基础运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#torchscript"><span class="nav-number">3.</span> <span class="nav-text">torchscript</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model"><span class="nav-number">4.</span> <span class="nav-text">model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-info"><span class="nav-number">5.</span> <span class="nav-text">model info</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tools"><span class="nav-number">6.</span> <span class="nav-text">tools</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#samples"><span class="nav-number">7.</span> <span class="nav-text">samples</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">8.</span> <span class="nav-text">links</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#compile"><span class="nav-number">1.</span> <span class="nav-text">compile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">2.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#extending"><span class="nav-number">3.</span> <span class="nav-text">extending</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Autograd"><span class="nav-number">3.1.</span> <span class="nav-text">Autograd</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Module"><span class="nav-number">3.2.</span> <span class="nav-text">Module</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tensor"><span class="nav-number">4.</span> <span class="nav-text">tensor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#torchscript"><span class="nav-number">5.</span> <span class="nav-text">torchscript</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model"><span class="nav-number">6.</span> <span class="nav-text">model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-export"><span class="nav-number">7.</span> <span class="nav-text">model export</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-info"><span class="nav-number">8.</span> <span class="nav-text">model info</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tools"><span class="nav-number">9.</span> <span class="nav-text">tools</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#samples"><span class="nav-number">10.</span> <span class="nav-text">samples</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">11.</span> <span class="nav-text">links</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -534,7 +708,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">175</span>
+          <span class="site-state-item-count">190</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -567,19 +741,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
+          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
+          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -617,13 +791,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">484k</span>
+    <span title="站点总字数">543k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:20</span>
+    <span title="站点阅读时长">8:13</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

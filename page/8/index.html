@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -199,7 +199,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/03/23/neon/">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/07/09/data-view/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/coder2.jpg">
@@ -213,7 +213,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/03/23/neon/" class="post-title-link" itemprop="url">neon</a>
+            <a href="/2023/07/09/data-view/" class="post-title-link" itemprop="url">data_view</a>
         </h2>
 
         <div class="post-meta">
@@ -223,15 +223,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2023-03-23 16:55:28" itemprop="dateCreated datePublished" datetime="2023-03-23T16:55:28+08:00">2023-03-23</time>
+              <time title="创建时间：2023-07-09 10:30:56" itemprop="dateCreated datePublished" datetime="2023-07-09T10:30:56+08:00">2023-07-09</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-08-18 18:27:16" itemprop="dateModified" datetime="2023-08-18T18:27:16+08:00">2023-08-18</time>
+                <time title="修改时间：2024-08-29 17:52:58" itemprop="dateModified" datetime="2024-08-29T17:52:58+08:00">2024-08-29</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DataView/" itemprop="url" rel="index"><span itemprop="name">DataView</span></a>
+                </span>
+            </span>
 
           
   
@@ -242,8 +251,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2023/03/23/neon/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/03/23/neon/" itemprop="commentCount"></span>
+    <a title="valine" href="/2023/07/09/data-view/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/07/09/data-view/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -253,14 +262,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
+              <span>2.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -272,38 +281,58 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>新的 Armv8a 架构有 32 个 128bit 向量寄存器，老的 ArmV7a 架构有 32 个 64bit（可当作 16 个 128bit）向量寄存器，编码时记得数一下占用多少个专用寄存器（例如 1 个 float32x4 就占用 1 个 128bit 寄存器），别用过量了，避免寄存器溢出 (Register Spilling）(<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41112170/article/details/90286091">https://blog.csdn.net/qq_41112170/article/details/90286091</a>) 导致的负优化。</li>
-<li>armv8: 一条 Neon 指令最多可以计算 4 个 float32，或者 8 个 float16，或者 16 个 int8。</li>
-<li><code>uint8x16_t</code> 表示 16 个 uint8</li>
-<li><code>float32x4_t</code> 表示 4 个 float32</li>
+          <h2 id="note"><a href="#note" class="headerlink" title="note"></a>note</h2><ol>
+<li><code>bar with table</code><ul>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/71551678/how-to-turn-a-contingency-table-directly-into-a-bar-graph-when-using-the-base-ta">ggplot2 R language</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0iAbHZ-hN6Mj2c2j2Uw03w">example</a></li>
+</ul>
+</li>
+<li>openai 数据分析可视化</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/rougier/scientific-visualization-book">科学可视化：Python+Matplotlib</a></li>
 </ol>
-<h2 id="要使用-NEON-加速步骤："><a href="#要使用-NEON-加速步骤：" class="headerlink" title="要使用 NEON 加速步骤："></a>要使用 NEON 加速步骤：</h2><ol>
-<li><code>load</code> 将相关数组数据加载到 NEON 寄存器。</li>
-<li><code>calculate</code> 使用 NEON 指令对多个数据元素进行并行操作。</li>
-<li><code>store</code> 将结果从 NEON 寄存器存储回主存储器。</li>
+<h2 id="idea"><a href="#idea" class="headerlink" title="idea"></a>idea</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/Enter-tainer/cxx2flow">cxx2flow C++代码生成流程图</a><ul>
+<li>可以生成 dot 文件</li>
+<li><a target="_blank" rel="noopener" href="http://magjac.com/graphviz-visual-editor/">graphviz-visual-editor 在线编辑 dot</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/tintinweb/vscode-interactive-graphviz">vscode-interactive-graphviz 渲染 dot</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Enter-tainer/cxx2flow/releases">cxx2flow&#x2F;releases</a> 直接下载二进制用</li>
+<li>cxx2flow-linux-amd64 test.cpp –cpp &gt; test.dot</li>
+<li>cxx2flow main.cpp my_custom_func | dot -Tsvg -o test.svg</li>
+<li>注意要有 main 函数才能生成, 一个函数一个函数生成，函数名改为 main</li>
+<li><a target="_blank" rel="noopener" href="https://graphviz.org/docs/attrs/splines/">线条格式</a></li>
+<li>写一个功能：从文件夹中获取所有 cpp, 对每个 cpp, 生成所有函数的 svg, 每个函数一个 svg<ul>
+<li>ctags -x gpu&#x2F;model_process_tensorrt_impl.cpp | grep “(“ | awk ‘{print $1}’ 获取 cpp 中函数名</li>
+<li>提取出函数体到一个文件，再生成 svg <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/37339591/23011500">提取函数体</a></li>
+<li>doxygen 提取</li>
+<li>doxygen</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/51318005/23011500">不使用流程图</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/572327280?utm_id=0">3σ 准则</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.rerun.io/blog#principles-for-a-computer-vision-focused-seeingtool">可视化工具原则</a></li>
+<li>使用 rerun 实时或回放监测的数据: 将可视化代码与算法代码分开</li>
+<li>两二进制文件比较服务器(转成 float 对比)<ul>
+<li>error 画图</li>
+<li>三列, 数据 1， 数据 2， error， error 用色阶表示</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://pandas.pydata.org/docs/user_guide/style.html">pandas table 颜色设置（好用）</a>, 类似 excel 表格色阶</li>
+<li>excel 中可以套用表格格式来美化表格, 利用好色阶，条件格式, 数据条</li>
+<li>将 log 文件拖到浏览器中，生成报告(正则表达式先生成 pandas， 然后生成报告)</li>
+<li>csv server</li>
+<li><a target="_blank" rel="noopener" href="https://www.51cto.com/article/719697.html">提高数据可视化效果的五个原则</a></li>
+<li><a target="_blank" rel="noopener" href="https://techcommunity.microsoft.com/t5/excel-blog/announcing-python-in-excel-combining-the-power-of-python-and-the/ba-p/3893439">excel with python</a></li>
 </ol>
-<h2 id="编译选项"><a href="#编译选项" class="headerlink" title="编译选项"></a>编译选项</h2><ol>
-<li>j5 需要 <code>-ftree-vectorize -funroll-loops</code> 组合才能优化，单独不行</li>
-<li><code>-mfpu=neon</code> 此选项告诉编译器要为 NEON 浮点单元生成代码。这适用于较老的 ARM 架构和编译器版本。</li>
-<li><code>-march</code> 使用此选项指定目标架构，例如<code>-march=armv8-a</code>。这可以确保编译器针对特定的 ARM 版本生成优化代码。</li>
-<li><code>-mfloat-abi</code> 该选项定义了浮点数应该如何在函数调用中传递。有三个选项可以选择：soft、softfp 和 hard。使用 NEON 时，通常建议使用-mfloat-abi&#x3D;hard。</li>
-<li><code>-ftree-vectorize</code> 这是一个优化选项，允许编译器自动将循环转换为使用向量指令。虽然这不是直接与 NEON 相关的，但它可以帮助自动利用 NEON 功能。</li>
-<li><code>-funroll-loops</code>这也是一个优化选项，用于循环展开，可能有助于提高 NEON 代码的性能。</li>
-</ol>
-<h2 id="SVE-Scalable-Vector-Extension"><a href="#SVE-Scalable-Vector-Extension" class="headerlink" title="SVE(Scalable Vector Extension)"></a>SVE(Scalable Vector Extension)</h2><ol>
-<li>是 arm AArch64 架构下的下一代 SIMD 指令集，旨在加速高性能计算，SVE 引入了很多新的架构特点</li>
-<li>SVE（可扩展矢量指令 Scalable Vector Extension）是针对高性能计算（HPC）和机器学习等领域开发的一套全新的矢量指令集，它是下一代 SIMD 指令集实现，而不是 NEON 指令集的简单扩展。SVE 指令集中有很多概念与 NEON 指令集类似，例如矢量、通道、数据元素等。SVE 指令集也提出了一个全新的概念：可变矢量长度编程模型(VectorLength Agnostic，VLA)。</li>
-<li>SVE 指令集的矢量寄存器的长度最小支持 128 位，最大可以支持 2048 位，以 128 位为增量。</li>
-<li>SVE 指令集是在 A64 指令集的基础上新增的一组指令集，而 SVE2 是在 ARMv9 架构上发布的，它是 SVE 指令集的一个超集和扩充。</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/399686472">ARMv9 的 SVE&#x2F;SVE2 入门教程</a></li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="http://www.armadeus.org/wiki/index.php?title=NEON_HelloWorld">hello world</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/Ewenwan/MVision/blob/master/CNN/HighPerformanceComputing/ARM_NEON_CNN%E7%BC%96%E7%A8%8B.md">ARM_NEON_CNN 编程</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/441686632">CPU 优化技术-NEON 指令介绍</a></li>
-</ol>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/07/09/data-view/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -324,7 +353,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/03/13/OpenXLA/">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/07/05/matplotlib/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/coder2.jpg">
@@ -338,7 +367,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/03/13/OpenXLA/" class="post-title-link" itemprop="url">OpenXLA</a>
+            <a href="/2023/07/05/matplotlib/" class="post-title-link" itemprop="url">matplotlib</a>
         </h2>
 
         <div class="post-meta">
@@ -347,16 +376,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2023-03-13 10:34:20" itemprop="dateCreated datePublished" datetime="2023-03-13T10:34:20+08:00">2023-03-13</time>
+              <time title="创建时间：2023-07-05 10:19:07 / 修改时间：10:20:35" itemprop="dateCreated datePublished" datetime="2023-07-05T10:19:07+08:00">2023-07-05</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-07-10 21:52:58" itemprop="dateModified" datetime="2023-07-10T21:52:58+08:00">2023-07-10</time>
-              </span>
 
           
   
@@ -367,110 +390,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2023/03/13/OpenXLA/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/03/13/OpenXLA/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>87</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/openxla/xla">openxla&#x2F;xla</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.tensorflow.org/xla?hl=zh-cn">tensorflow&#x2F;xla</a></li>
-<li><a target="_blank" rel="noopener" href="https://openxla.github.io/iree/#support-matrix">iree</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.sohu.com/a/653633664_129720">简介</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.sohu.com/a/578161914_612370">机器学习访存密集计算编译优化框架 AStitch，大幅提升任务执行效率</a></li>
-<li><a target="_blank" rel="noopener" href="https://tvm.hyper.ai/docs/tutorial/intro/">TVM 中文网站</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/03/06/cross-compile/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/03/06/cross-compile/" class="post-title-link" itemprop="url">cross-compile</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-03-06 20:42:24" itemprop="dateCreated datePublished" datetime="2023-03-06T20:42:24+08:00">2023-03-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/03/06/cross-compile/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/03/06/cross-compile/" itemprop="commentCount"></span>
+    <a title="valine" href="/2023/07/05/matplotlib/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/07/05/matplotlib/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -499,7 +420,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><h2 id="基本组成"><a href="#基本组成" class="headerlink" title="基本组成"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/u012503639/article/details/104159375">基本组成</a></h2><h3 id="binutils"><a href="#binutils" class="headerlink" title="binutils"></a>binutils</h3><h3 id="gcc"><a href="#gcc" class="headerlink" title="gcc"></a>gcc</h3><h3 id="glibc"><a href="#glibc" class="headerlink" title="glibc"></a>glibc</h3>
+          <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://matplotlib.org/stable/gallery/index.html">examples</a></li>
+<li><a target="_blank" rel="noopener" href="https://matplotlib.org/stable/tutorials/introductory/pyplot.html">tutorials</a></li>
+</ol>
+
       
     </div>
 
@@ -520,7 +445,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/02/17/TVM/">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/06/26/pip/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/coder2.jpg">
@@ -534,7 +459,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/02/17/TVM/" class="post-title-link" itemprop="url">TVM</a>
+            <a href="/2023/06/26/pip/" class="post-title-link" itemprop="url">pip</a>
         </h2>
 
         <div class="post-meta">
@@ -544,14 +469,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2023-02-17 15:46:22" itemprop="dateCreated datePublished" datetime="2023-02-17T15:46:22+08:00">2023-02-17</time>
+              <time title="创建时间：2023-06-26 20:31:38" itemprop="dateCreated datePublished" datetime="2023-06-26T20:31:38+08:00">2023-06-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-26 10:52:01" itemprop="dateModified" datetime="2024-02-26T10:52:01+08:00">2024-02-26</time>
+                <time title="修改时间：2024-06-11 10:47:23" itemprop="dateModified" datetime="2024-06-11T10:47:23+08:00">2024-06-11</time>
               </span>
 
           
@@ -563,8 +488,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2023/02/17/TVM/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/02/17/TVM/" itemprop="commentCount"></span>
+    <a title="valine" href="/2023/06/26/pip/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/06/26/pip/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -574,7 +499,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.4k</span>
+              <span>534</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -593,63 +518,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li><p>Apache TVM 是一个用于 CPU、GPU 和机器学习加速器的开源机器学习编译器框架，旨在让机器学习工程师能够在任何硬件后端上高效地优化和运行计算。</p>
-</li>
-<li><p>可以搜索优化模型，提供了 runtime</p>
-</li>
-<li><p>模型相当于语言， TVM 相当于编译器，将模型编译到各种硬件上</p>
-</li>
-<li><p>TVM: Tensor Virtual Machine</p>
-</li>
-<li><p>利用 TVM，机器学习算法可以被自动编译成可供下层硬件执行的机器语言，从而可以利用多种类型的算力。</p>
-</li>
-<li><p>我们希望创建一个简洁的抽象统一解决这些问题，希望用一个干净、统一的管理平台把所有的系统和硬件都清晰地抽象出来，以便能够部署模型，并最大限度地利用好目标硬件。</p>
-</li>
-<li><p>他们致力于打造一个可扩展、开放、中立的端到端栈，用于深度学习模型的<code>优化和部署</code>，目标是减少企业为特定硬件开发和深度学习软件部署所花费的成本和时间。</p>
-</li>
-<li><p>按照官方的定义，TVM 是一套完整的 stack，包括神经网络图优化（比如 op fusion）和单个 operation 优化等部分。我习惯于将图优化的部分归类做 Relay 项目，而仅仅把单个 operation 优化看做 TVM，因此文章之后提到的 TVM 基本是指单个算子优化这部分。</p>
-</li>
-<li><p>做自动代码优化的优秀项目除了 AutoTVM，还有 Halide(<a target="_blank" rel="noopener" href="https://halide-lang.org/papers/autoscheduler2019.html)%EF%BC%8C%E4%B8%AA%E4%BA%BA%E8%AE%A4%E4%B8%BA%E7%9B%AE%E5%89%8DHalide%E5%81%9A%E4%BB%A3%E7%A0%81%E8%87%AA%E5%8A%A8%E4%BC%98%E5%8C%96%E5%81%9A%E7%9A%84%E6%9B%B4%E5%A5%BD%E3%80%82TVM%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF%E5%8F%82%E8%80%83%E8%87%AAHalide%EF%BC%8C">https://halide-lang.org/papers/autoscheduler2019.html)，个人认为目前Halide做代码自动优化做的更好。TVM的基本思路参考自Halide，</a></p>
-</li>
-<li><p>TVM 中的调优是指，在给定 target 上优化模型，使其运行得更快。与训练或微调不同，它不会影响模型的准确性，而只会影响 runtime 性能。作为调优过程的一部分，TVM <code>实现并运行许多不同算子的变体，以查看哪个性能最佳</code>。这些运行的结果存储在调优记录文件（tune 命令的最终输出）中。</p>
-</li>
-<li><p>使用 auto-tuning 模块 AutoTVM 或 AutoScheduler 搜索最佳 schedule</p>
-<ul>
-<li>scheduler 调度器， schedule 具体调度方式</li>
-</ul>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/88188955">初识 TVM</a></p>
-</li>
+          <h2 id="use"><a href="#use" class="headerlink" title="use"></a>use</h2><ol>
+<li><code>pip install viztracer -i https://pypi.tuna.tsinghua.edu.cn/simple</code>使用清华源安装</li>
+<li>注意 conda 源和 pip 源的区别，并不是共用</li>
+<li><code>pip show numpy</code>查看 numpy 信息, 包括安装路径</li>
+<li><code>pip list</code></li>
+<li><code>pip install torchtext --upgrade</code></li>
+<li><code>pip install torchtext==0.6.0</code></li>
+<li><code>pip freeze &gt; requirements.txt</code> 导出 requirements</li>
+<li>注意 conda 源和 pip 源的区别，并不是共用</li>
+<li>set source</li>
 </ol>
-<h2 id="build"><a href="#build" class="headerlink" title="build"></a>build</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://tvm.hyper.ai/docs/install/docker/">docker</a></li>
-<li>使用自己 docker</li>
-<li><a target="_blank" rel="noopener" href="https://hub.docker.com/layers/wadewuu/tvm-test/v2/images/sha256-58a2d0f3f9aefbf1c8d681a32f72ee3ffd2b05971461973ee632f03eaa1fd529?context=explore">wadewuu&#x2F;tvm-test&#x2F;v2</a></li>
-<li>要先现在源码，编译出 docker，再编译 tvm</li>
-<li>替换源</li>
-<li>build 时 llvm 打开</li>
-</ol>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RUN sed -i s@<span class="regexp">/archive.ubuntu.com/</span>@<span class="regexp">/mirrors.tuna.tsinghua.edu.cn/</span>@g <span class="regexp">/etc/</span>apt/sources.list</span><br><span class="line">RUN apt-get clean</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install pip -U -i https://pypi.tuna.tsinghua.edu.<span class="keyword">cn</span>/simple</span><br><span class="line">pip config <span class="keyword">set</span> <span class="keyword">global</span>.<span class="built_in">index</span>-url https://pypi.tuna.tsinghua.edu.<span class="keyword">cn</span>/simple</span><br><span class="line">pip3 install tensorrt_llm -U --extra-<span class="built_in">index</span>-url https://pypi.nvidia.<span class="keyword">com</span> # 可以追加<span class="keyword">source</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="python"><a href="#python" class="headerlink" title="python"></a>python</h2><ol>
-<li><code>python3 -m tvm.driver.tvmc --help</code></li>
-<li><code>alias tvmc=&#39;python3 -m tvm.driver.tvmc&#39;</code></li>
-</ol>
-<h2 id="sample"><a href="#sample" class="headerlink" title="sample"></a><a target="_blank" rel="noopener" href="https://tvm.hyper.ai/docs/tutorial/compile/">sample</a></h2><ol>
-<li><code>wget https://github.com/onnx/models/raw/b9a54e89508f101a1611cd64f4ef56b9cb62c7cf/vision/classification/resnet/model/resnet50-v2-7.onnx</code></li>
-<li><a target="_blank" rel="noopener" href="https://discuss.tvm.apache.org/t/error-when-trying-to-tune-the-resnet-model/13431">Error when trying to tune the ResNet Model</a> model input should frozen</li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/50529704">手把手带你遨游 TVM</a></li>
-<li><a target="_blank" rel="noopener" href="https://tvm.apache.org/#about">TVM</a></li>
-<li><a target="_blank" rel="noopener" href="https://tvm.hyper.ai/docs/tutorial/intro/">TVM 中文网站</a></li>
-<li><a target="_blank" rel="noopener" href="https://tvm.hyper.ai/docs/tutorial/compile/">sample</a></li>
-<li><a target="_blank" rel="noopener" href="https://tvm.hyper.ai/docs/how_to/deploy/vitis_ai">Vitis AI 集成</a></li>
-<li><a target="_blank" rel="noopener" href="https://software-dl.ti.com/codegen/docs/tvm/tvm_tidl_users_guide/index.html">TI TVM</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/401766029/answer/2733700454">机器学习编译器的前世今生</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzU5ODY2MTk3Nw==&mid=2247487015&idx=1&sn=04282e2d15eca05eb56062062b46e781&chksm=fe418011c9360907048966af43299fa55b570c9d634c4bcdb3702c6e4d8101a72ef07d5ec77f&scene=21#wechat_redirect">TVM：成为深度学习领域的“Linux”</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzU5ODY2MTk3Nw==&mid=2247492618&idx=1&sn=a20f4828b9ab3e3cee3fedfd906e0eb2&chksm=fe426a3cc935e32a8312ce9efbb4f2640787508d3e811579bbffe918685cdb07a8bd8e3ffc4b&scene=132&exptype=timeline_recommend_article_extendread_samebiz#wechat_redirect">LLVM 之父 Chris Lattner：我的 AI 基础设施软件构建理念</a></li>
+<ol>
+<li>install from source <code>pip install git+https://github.com/huggingface/transformers</code></li>
 </ol>
 
       
@@ -672,7 +555,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/01/16/JFrog/">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/06/26/conda/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/coder2.jpg">
@@ -686,7 +569,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/01/16/JFrog/" class="post-title-link" itemprop="url">JFrog</a>
+            <a href="/2023/06/26/conda/" class="post-title-link" itemprop="url">conda</a>
         </h2>
 
         <div class="post-meta">
@@ -696,14 +579,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2023-01-16 14:23:18" itemprop="dateCreated datePublished" datetime="2023-01-16T14:23:18+08:00">2023-01-16</time>
+              <time title="创建时间：2023-06-26 15:08:04" itemprop="dateCreated datePublished" datetime="2023-06-26T15:08:04+08:00">2023-06-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-28 13:13:30" itemprop="dateModified" datetime="2023-09-28T13:13:30+08:00">2023-09-28</time>
+                <time title="修改时间：2024-01-04 17:23:13" itemprop="dateModified" datetime="2024-01-04T17:23:13+08:00">2024-01-04</time>
               </span>
 
           
@@ -715,8 +598,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2023/01/16/JFrog/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/01/16/JFrog/" itemprop="commentCount"></span>
+    <a title="valine" href="/2023/06/26/conda/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/06/26/conda/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -726,7 +609,414 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
+              <span>1.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="NOTE"><a href="#NOTE" class="headerlink" title="NOTE"></a>NOTE</h2><ol>
+<li>注意 conda 源和 pip 源的区别，并不是共用</li>
+<li>gcc 版本有要求</li>
+<li><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/">清华源切换</a></li>
+<li><code>unset all_proxy</code> 不能使用代理，可能出现 install 错误 <a target="_blank" rel="noopener" href="https://blog.csdn.net/whatday/article/details/109287343">link</a></li>
+<li><code>conda config --append channels conda-forge</code></li>
+<li><code>wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh &amp;&amp; sh Miniconda3-latest-Linux-x86_64.sh</code> install</li>
+</ol>
+<h2 id="basic-use"><a href="#basic-use" class="headerlink" title="basic use"></a>basic use</h2><ol>
+<li><code>~/miniconda3/bin/conda init</code></li>
+<li><code>conda config --set auto_activate_base false</code> 关闭自启动</li>
+<li><code>conda info</code> 查看安装情况</li>
+<li><code>conda env list</code> list env</li>
+<li><code>conda list</code> list package in env</li>
+<li><code>conda create --name ENVNAME</code> create env</li>
+<li><code>conda create --name d2l python=3.9 -y</code></li>
+<li><code>conda activate ENVNAME</code> activate env</li>
+<li><code>conda deactivate</code> deactivate env</li>
+<li><code>conda install PKGNAME=3.1.4</code> install lib</li>
+<li><code>conda uninstall PKGNAME</code> uninstall lib</li>
+<li>导出导入环境</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda list -e &gt; requirements.txt</span><br><span class="line">conda install --<span class="built_in">yes</span> --file requirements.txt</span><br></pre></td></tr></table></figure>
+
+<h2 id="condarc"><a href="#condarc" class="headerlink" title="~&#x2F;.condarc"></a>~&#x2F;.condarc</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">auto_activate_base: <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">channels:</span><br><span class="line">  - defaults</span><br><span class="line">show_channel_urls: <span class="literal">true</span></span><br><span class="line">default_channels:</span><br><span class="line">  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main</span><br><span class="line">  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r</span><br><span class="line">  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2</span><br><span class="line">custom_channels:</span><br><span class="line">  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">  msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">  bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">  menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">  pytorch-lts: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br><span class="line">  simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud</span><br></pre></td></tr></table></figure>
+
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html">user-guide&#x2F;install</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.conda.io/en/latest/miniconda.html#linux-installers">miniconda</a> 选择对应 python 版本, install 时可以选路径</li>
+<li><a target="_blank" rel="noopener" href="https://docs.conda.io/projects/conda/en/latest/user-guide/configuration/index.html#">user-guide&#x2F;configuration</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/conda/conda/blob/main/docs/source/user-guide/cheatsheets/conda-4.14.pdf">cheatsheets&#x2F;conda-4.14.pdf</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/deadsnakes/docs/blob/main/Building-Deadsnakes-Packages-from-Git.rst">build python from source</a> 编译之后需要前一级目录 <code>sudo dpkg -i *.deb</code></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/06/25/VPN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/06/25/VPN/" class="post-title-link" itemprop="url">VPN</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-06-25 11:45:46" itemprop="dateCreated datePublished" datetime="2023-06-25T11:45:46+08:00">2023-06-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-04 18:06:17" itemprop="dateModified" datetime="2024-01-04T18:06:17+08:00">2024-01-04</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/06/25/VPN/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/06/25/VPN/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>411</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="NOTE"><a href="#NOTE" class="headerlink" title="NOTE"></a>NOTE</h2><ol>
+<li><code>export all_proxy=&quot;socks5://$&#123;IP&#125;:7890&quot;</code> linux 服务器可以设置 all_proxy 来翻墙， clash 鼠标悬浮 <code>Allow Lan</code> 可以看到对应 IP</li>
+<li><code>export http_proxy=&quot;http://10.31.2.35:7890&quot; &amp;&amp; export https_proxy=&quot;https://10.31.2.35:7890&quot;</code> socks5 不起作用时</li>
+<li>Proxies 选择 Rule，可以同时连接公司内网和外网，不要选 Global，不能连接内网</li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://agentneo.tech/">agentneo</a> 使用 clash 客户端</li>
+<li><a target="_blank" rel="noopener" href="https://solidspoon.xyz/2021/02/17/%E9%85%8D%E7%BD%AEWSL2%E4%BD%BF%E7%94%A8Windows%E4%BB%A3%E7%90%86%E4%B8%8A%E7%BD%91/">WSL 2 配置代理 clash</a> 配置 WSL2 使用 Windows 代理上网 有用</li>
+<li><a target="_blank" rel="noopener" href="http://www.debugself.com/2018/01/17/docker_network/">docker build 以及 docker run 时使用 host 网络的方法</a></li>
+<li><a target="_blank" rel="noopener" href="https://device.harmonyos.com/cn/docs/documentation/guide/vscode_proxy-0000001074231144">vscode proxy setting</a><ul>
+<li>注意本地 proxy 和远程 proxy 都要设置对</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/06/12/onnxruntime/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/06/12/onnxruntime/" class="post-title-link" itemprop="url">onnxruntime</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-06-12 14:39:10" itemprop="dateCreated datePublished" datetime="2023-06-12T14:39:10+08:00">2023-06-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-23 16:11:23" itemprop="dateModified" datetime="2024-05-23T16:11:23+08:00">2024-05-23</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/06/12/onnxruntime/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/06/12/onnxruntime/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="concept"><a href="#concept" class="headerlink" title="concept"></a>concept</h2><p><img src="https://developer-blogs.nvidia.com/wp-content/uploads/2022/12/image3-2.png" alt="ONNX 运行时高级架构"><br>ONNX Runtime 是一个性能优秀的跨平台推理（inference）引擎，用于 ONNX（Open Neural Network Exchange）模型。它具有灵活的支持和高效的性能，可用于各种硬件设备（包括在边缘设备上）和操作系统。</p>
+<p>以下是关于 ONNX Runtime 的一些基本概念：</p>
+<ol>
+<li><strong>ONNX 模型执行</strong>：ONNX Runtime 提供了执行 ONNX 模型的能力。你可以加载一个 ONNX 模型，然后使用 ONNX Runtime 来进行推理。</li>
+<li><strong>硬件优化</strong>：ONNX Runtime 被设计为能够充分利用不同的硬件能力。它支持 CPU，GPU，以及更专用的硬件加速器（如 Microsoft 的 DirectML 和 NVIDIA 的 TensorRT）。</li>
+<li><strong>跨平台</strong>：ONNX Runtime 可以在多种操作系统（包括 Windows，Linux，和 Mac OS）上运行，并且支持多种硬件设备，包括在边缘设备上。</li>
+<li><strong>语言绑定</strong>：ONNX Runtime 提供了多种语言的 API，包括 C，C++，Python，C#，Java，和 JavaScript，使得开发者可以在他们选择的语言中使用 ONNX Runtime。</li>
+<li><strong>会话（Session）</strong>：在 ONNX Runtime 中，一次模型的推理被称为一个会话。你可以创建一个会话，然后通过这个会话来执行模型。</li>
+<li><strong>提供者（Providers）</strong>：ONNX Runtime 支持通过不同的“提供者”来执行模型。这些提供者可以是 CPU，CUDA（NVIDIA GPUs），TensorRT（NVIDIA GPUs），DirectML（Windows GPUs），OpenVINO（Intel GPUs）等。<br>通过 ONNX Runtime，开发者可以将 ONNX 模型部署到各种平台和设备上，同时保持良好的性能和灵活性。</li>
+</ol>
+<h3 id="Providers"><a href="#Providers" class="headerlink" title="Providers"></a><a target="_blank" rel="noopener" href="https://onnxruntime.ai/docs/execution-providers/">Providers</a></h3><p>ONNX Runtime 的”提供者”（Providers）是执行 ONNX 模型运算的后端引擎。每种提供者都是为特定的硬件或者软件平台优化的。使用正确的提供者可以大大提高模型的执行效率。<br>以下是一些主要的 ONNX Runtime 提供者：</p>
+<ol>
+<li><strong>CPU Execution Provider</strong>: CPU 提供者是 ONNX Runtime 的默认提供者，它在 CPU 上执行模型运算。CPU 提供者在所有系统上都可用，不需要任何额外的依赖。</li>
+<li><strong>CUDA Execution Provider</strong>: CUDA 提供者是为 NVIDIA 的 GPU 优化的，它使用 CUDA 和 cuDNN 库来在 GPU 上执行模型运算。使用 CUDA 提供者需要安装 CUDA 和 cuDNN。</li>
+<li><strong>TensorRT Execution Provider</strong>: TensorRT 提供者也是为 NVIDIA 的 GPU 优化的，但是它使用 NVIDIA 的 TensorRT 库来执行模型运算。TensorRT 提供者可以提供比 CUDA 提供者更高的性能，但是需要更复杂的设置。</li>
+<li><strong>DirectML Execution Provider</strong>: DirectML 提供者是为 Windows 系统上的 GPU 优化的，它使用 Microsoft 的 DirectML 库来执行模型运算。DirectML 提供者可以在任何支持 DirectX 12 的 Windows 系统上使用。</li>
+<li><strong>OpenVINO Execution Provider</strong>: OpenVINO 提供者是为 Intel 的硬件优化的，包括 CPU，GPU，VPU，和 FPGA。它使用 Intel 的 OpenVINO 库来执行模型运算。</li>
+<li><strong>Nuphar Execution Provider</strong>: Nuphar 是一个为 CPU 优化的 JIT 编译器，主要用于对模型中的循环结构进行优化。</li>
+<li><strong>VitisAI Execution Provider</strong>: VitisAI 提供者是为 Xilinx FPGA 硬件优化的，使用了 Xilinx 的 Vitis AI 库。<br>当你创建一个 ONNX Runtime 会话时，你可以指定用于执行模型运算的提供者。如果你没有指定提供者，ONNX Runtime 会使用默认的 CPU 提供者。如果你在一个支持 GPU 的系统上运行 ONNX Runtime，并且你已经安装了相应的依赖，你可以选择使用 CUDA，TensorRT，DirectML，或者 OpenVINO 提供者来提高模型的执行效率。<br>Note: provider 在 onnxruntime repo 里</li>
+</ol>
+<h2 id="TVM-and-onnxruntime"><a href="#TVM-and-onnxruntime" class="headerlink" title="TVM and onnxruntime"></a>TVM and onnxruntime</h2><p>TVM 是一个开源的机器学习编译器堆栈，它可以将机器学习模型从各种框架（例如 TensorFlow、PyTorch、ONNX、Keras 等）优化编译到各种硬件（例如 CPU、GPU、FPGA、ASIC 等）。<br>ONNX Runtime 是一个用于运行和推理 ONNX 模型的高性能跨平台推理引擎。然而，TVM 的关键优势在于它的自动调度程序和编译器栈，能够生成优化的计算内核，而 ONNX Runtime 的优势在于它对 ONNX 模型的广泛支持以及一系列优化技术。ONNX Runtime 支持多种硬件平台，包括 CPU、GPU 和专用加速器。它可以在不同硬件上运行，无需重新编译模型。<br>TVM 和 ONNX Runtime 的结合可以在两者之间提供一个桥梁，使得开发者可以利用 TVM 的优化能力，同时使用 ONNX Runtime 的灵活性和易用性。<br>ONNX Runtime 和 TVM 结合的一种方式是使用 TVM 作为 ONNX Runtime 的一个执行提供者。TVM 有一个 ONNX 编译器，可以将 ONNX 模型编译成 TVM 模块，然后在 ONNX Runtime 中注册这个模块作为一个提供者，这样 ONNX Runtime 就可以使用 TVM 来执行模型。<br>另一种方式是使用 TVM 来优化 ONNX 模型，然后在 ONNX Runtime 中执行优化后的模型。这种方法的优点是可以使用 TVM 的自动调度程序和编译器栈来优化模型，然后使用 ONNX Runtime 的高效运行时来执行优化后的模型。<br>这两种方法都需要一些设置和配置，并且可能需要修改 ONNX Runtime 或者 TVM 的代码。然而，它们都可以提供更好的性能和更高的灵活性，使得开发者可以更好地利用他们的硬件资源。</p>
+<p>TVM 和 ONNX Runtime 都是用于机器学习模型推理的工具，但它们各自有着不同的优势和设计目标。<br><strong>TVM</strong>是一个开源的深度学习编译器和优化器，它的主要目标是提供一种灵活的方式来优化和部署深度学习模型到各种硬件平台，包括 CPU、GPU、FPGA 和 ASIC 等。TVM 的优势在于：</p>
+<ol>
+<li><strong>硬件无关的优化</strong>：TVM 的自动调度功能可以生成针对特定硬件优化的代码，无论这个硬件是 CPU、GPU 还是其他类型的硬件。</li>
+<li><strong>端到端的编译优化</strong>：TVM 包括了从高层图优化到底层代码生成的全流程优化。</li>
+<li><strong>支持多种深度学习框架</strong>：TVM 可以接受多种框架的模型，包括 TensorFlow、PyTorch、MXNet、Keras、ONNX 等。<br>而<strong>ONNX Runtime</strong>是一个用于运行和推理 ONNX 模型的跨平台高性能推理引擎，它的主要目标是提供一种高效、灵活且易于使用的方式来部署和执行 ONNX 模型。ONNX Runtime 的优势在于：</li>
+<li><strong>广泛的 ONNX 模型支持</strong>：ONNX Runtime 支持 ONNX 模型中的所有运算符和特性。</li>
+<li><strong>性能优化</strong>：ONNX Runtime 包含了一系列优化技术，包括图优化、运算符融合、内存优化等，以提高模型的执行性能。</li>
+<li><strong>硬件加速</strong>：通过不同的执行提供者（如 CUDA、TensorRT、DirectML 等），ONNX Runtime 可以利用硬件加速器来提高模型的执行速度。<br>两者之间并非完全的竞争关系，它们可以相互结合，例如使用 TVM 作为 ONNX Runtime 的一个执行提供者，使得 ONNX Runtime 能够利用 TVM 的优化能力。</li>
+</ol>
+<h2 id="compare-results-with-pytorch"><a href="#compare-results-with-pytorch" class="headerlink" title="compare results with pytorch"></a>compare results with pytorch</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/onnx/export_simple_model_to_onnx_tutorial.html#compare-the-pytorch-results-with-the-ones-from-the-onnx-runtime">Compare the PyTorch results with the ones from the ONNX Runtime</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/advanced/super_resolution_with_onnxruntime.html">Exporting a Model from PyTorch to ONNX and Running it using ONNX Runtime</a></li>
+</ol>
+<h2 id="compare-results-with-tensorrt"><a href="#compare-results-with-tensorrt" class="headerlink" title="compare results with tensorrt"></a>compare results with tensorrt</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/tree/main/tools/Polygraphy/examples/cli/inspect/">polygraph</a><ul>
+<li><code>polygraphy inspect model tensorrt/resnet50/model.onnx</code></li>
+<li><code>polygraphy inspect capability model.onnx</code> Inspecting TensorRT ONNX Support</li>
+<li><code>polygraphy inspect model op16_iter7_refine_filter_fb.trt --model-type=engine --show layers</code></li>
+<li><code>polygraphy run dynamic_identity.onnx --trt --onnxrt</code> Comparing TensorRT And ONNX-Runtime Outputs</li>
+<li><code>polygraphy run dynamic_identity.onnx --trt --fp16 --onnxrt --input-shapes X:[1,2,4,4]</code> Comparing TensorRT Precisions</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT/tree/main/tools/Polygraphy/examples/cli/run/05_comparing_with_custom_input_data">run&#x2F;05_comparing_with_custom_input_data</a></li>
+<li><code>polygraphy surgeon sanitize model.onnx --fold-constants -o folded.onnx</code> 可以 fold constant, 作为 op 参数, 不用作为 input</li>
+</ul>
+</li>
+</ol>
+<h2 id="install"><a href="#install" class="headerlink" title="install"></a>install</h2><ol>
+<li><code>pip install onnxruntime</code></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/onnxruntime/releases">c++直接下载编译好的库</a></li>
+</ol>
+<h2 id="sample"><a href="#sample" class="headerlink" title="sample"></a><a target="_blank" rel="noopener" href="https://github.com/microsoft/onnxruntime-inference-examples/tree/main/c_cxx">sample</a></h2><ol>
+<li>测试</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/microsoft/onnxruntime-inference-examples.git</span><br><span class="line"><span class="built_in">cd</span> onnxruntime-inference-examples/c_cxx/</span><br><span class="line">make -p build</span><br><span class="line"><span class="built_in">cd</span> build</span><br><span class="line">cmake -DONNXRUNTIME_ROOTDIR=/xxx/onnxruntime-linux-x64-1.15.1 ..</span><br><span class="line">make -j4</span><br><span class="line">curl https://media.githubusercontent.com/media/onnx/models/main/vision/classification/squeezenet/model/squeezenet1.0-7.onnx --output squeezenet.onnx</span><br><span class="line">./build/model-explorer/model-explorer squeezenet.onnx</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/onnxruntime-inference-examples/blob/main/c_cxx/model-explorer/model-explorer.cpp">c++ sample code</a></li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;onnxruntime_cxx_api.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Load the model and create InferenceSession</span></span><br><span class="line">Ort::Env env;</span><br><span class="line">std::string model_path = <span class="string">&quot;path/to/your/onnx/model&quot;</span>;</span><br><span class="line"><span class="function">Ort::Session <span class="title">session</span><span class="params">(env, model_path, Ort::SessionOptions&#123; <span class="literal">nullptr</span> &#125;)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Load and preprocess the input image to</span></span><br><span class="line"><span class="comment">// inputTensor, inputNames, and outputNames</span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="comment">// Run inference</span></span><br><span class="line">std::vector outputTensors =</span><br><span class="line"> session.<span class="built_in">Run</span>(Ort::RunOptions&#123;<span class="literal">nullptr</span>&#125;,</span><br><span class="line"> 			inputNames.<span class="built_in">data</span>(),</span><br><span class="line">			&amp;inputTensor,</span><br><span class="line">			inputNames.<span class="built_in">size</span>(),</span><br><span class="line">			outputNames.<span class="built_in">data</span>(),</span><br><span class="line">			outputNames.<span class="built_in">size</span>());</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">float</span>* outputDataPtr = outputTensors[<span class="number">0</span>].<span class="built_in">GetTensorMutableData</span>();</span><br><span class="line">std::cout &lt;&lt; outputDataPtr[<span class="number">0</span>] &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>sample 解析<ul>
+<li>Session 处理各种环境信息，比如模型信息， 环境变量等，同时也进行调度， 不负责管理模型输入输出数据</li>
+<li>由 Ort::Value::CreateTensor 申请模型输入输出的内存， 所有权归上层应用</li>
+</ul>
+</li>
+</ol>
+<h2 id="模型优化"><a href="#模型优化" class="headerlink" title="模型优化"></a>模型优化</h2><h3 id="sample-1"><a href="#sample-1" class="headerlink" title="sample"></a>sample</h3><h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://onnxruntime.ai/index.html#getStartedTable">支持的平台选择</a></li>
+<li><a target="_blank" rel="noopener" href="https://onnxruntime.ai/docs/execution-providers/">onnxruntime.ai</a></li>
+<li><a target="_blank" rel="noopener" href="https://onnxruntime.ai/docs/execution-providers/">docs</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/onnxruntime/tree/eed02a3f782407e569c29a8a86c58a4d398d0b0e/onnxruntime/core/providers">onnxruntime&#x2F;core&#x2F;providers</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-AI/tree/c55b7565bde608dd65dda94abea154ad7db4d594/examples/vai_library/samples_onnx">vitis ai onnxruntime samples</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/search?q=repo:microsoft/onnxruntime%20USE_VITISAI&type=code">onnxruntime vitis support</a></li>
+<li><a target="_blank" rel="noopener" href="https://software-dl.ti.com/jacinto7/esd/processor-sdk-rtos-jacinto7/07_03_00_07/exports/docs/tidl_j7_02_00_00_07/ti_dl/docs/user_guide_html/md_tidl_osr_onnxrt_tidl.html">tda4 onnx runtime</a></li>
+<li><a target="_blank" rel="noopener" href="https://onnxruntime.ai/docs/api/c/struct_ort_1_1_session.html">doxygen</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/582974246">推理模型部署(一)：ONNX runtime 实践</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/06/12/Quantization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/06/12/Quantization/" class="post-title-link" itemprop="url">Quantization</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-06-12 11:43:36" itemprop="dateCreated datePublished" datetime="2023-06-12T11:43:36+08:00">2023-06-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-18 10:24:13" itemprop="dateModified" datetime="2024-06-18T10:24:13+08:00">2024-06-18</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/06/12/Quantization/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/06/12/Quantization/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -745,259 +1035,74 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Artifactory"><a href="#Artifactory" class="headerlink" title="Artifactory"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/274996585">Artifactory</a></h2><ol>
-<li>上传最好不要用 sudo 用户，否则容易覆盖之前文件，不好管理</li>
-<li>guest 用户可以禁止 ui 登录，防止用户被锁</li>
-<li>可以通过界面上传文件</li>
-<li>作为一个二进制包管理工具，可以用于管理构建产物：即把生成的 jar 包存放到 JFrog，当在生产环境进行部署时，Jenkins 直接从 JFrog 中拉取对应的 jar 包即可。</li>
-<li>官方的介绍：JFrog Artifactory 是一个可扩展的通用二进制存储库管理器，可在整个应用程序开发和交付过程中自动管理你的工件和依赖项。一句话概括：Artifactory 是一个存放制品（Artifacts）的工具。</li>
-<li>左下角 getting started</li>
-<li>允许匿名用户，否则 wget curl 下载不下来， <a target="_blank" rel="noopener" href="https://juejin.cn/post/7080707817778184205">link</a></li>
-<li>先创建 repo，再上传</li>
-<li>repo 分为：local, remote 和 virtual</li>
-<li>monitoring -&gt; storage 可以看各 repo 存储大小</li>
-<li>Application -&gt; Artifactory -&gt; artifacts 右上角 Set me up 可以查看 deploy 和 resolve 命令</li>
-<li>set me up 中可以设置 configue 来隐藏密码</li>
-<li>artifacts 中的文件可以单独下载，右上角下载符号</li>
-<li>有些文件可以预览，右上角…展开, 或者选中文件，右击</li>
-<li>可以查看下载次数和被谁下载</li>
-<li><a target="_blank" rel="noopener" href="https://www.jfrog.com/confluence/display/JFROG/Repository+Layouts">artifacts 布局 layouts</a> 可以查看版本, 可以生成各种工具依赖的版本信息</li>
-<li>MD5 check：<code>echo 99 &gt; test.txt &amp;&amp; MD5=$(md5sum test.txt | awk &#39;&#123;print $1&#125;&#39;) &amp;&amp; curl -uxiyang.jia:APAQR97hg1swsSNZ -T test.txt -H &quot;X-Checksum-MD5:$&#123;MD5&#125;&quot; -L &quot;http://artifacts.phigent.io/artifactory/xiyang-test/test/test/test-1.0.3.txt&quot; -v</code></li>
-<li>可以通过 name, checksum, property 搜索 artifacts</li>
-<li><code>wget -O test.tar.gz --no-check-certificate  https://guest:Guest.123@xxx/artifactory/test.tar.gz</code> 下载, 覆盖原来文件</li>
-<li><code>curl -sSfLO https://guest:Guest.123@xxx/artifactory/test.tar.gz</code> 下载</li>
+          <h2 id="量化（定浮点转换）"><a href="#量化（定浮点转换）" class="headerlink" title="量化（定浮点转换）"></a>量化（定浮点转换）</h2><ol>
+<li>If you are using reduced precision, run the network in FP32. If it produces the correct result, it is possible that lower precision has an insufficient dynamic range for the network.<ul>
+<li>如果您使用降低的精度，请以 FP32 运行网络。如果它产生正确的结果，则较低的精度可能导致网络的动态范围不足。</li>
+</ul>
+</li>
+<li>也有人称量化为<code>定点化</code>，但是严格来讲所表示的范围是缩小的。定点化特指 scale 为 2 的幂次的线性量化，是一种更加实用的量化方法。</li>
+<li>由于线性量化引入的额外量化&#x2F;反量化计算都是标准的向量操作，也可以使用 SIMD 进行加速，带来的额外计算耗时不大。</li>
+<li><a target="_blank" rel="noopener" href="https://cms.tinyml.org/wp-content/uploads/industry-news/tinyML_Talks-_Marios_Fournarakis_210929.pdf">A Practical Guide to Neural Network Quantization</a></li>
+<li>量化的是输入和算子的参数</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/niaolianjiulin/article/details/82764511">https://blog.csdn.net/niaolianjiulin/article/details/82764511</a></li>
+<li>NVIDIA’s Turing architecture introduced INT4 precision</li>
+<li>不是所有的 nvidia gpu 都支持 4bit 量化， Turing 架构之前的 Pascal、Volta 等架构就不提供对 4-bit 定点数的硬件加速支持。</li>
+<li>是的,绝大多数 Nvidia GPU 都原生支持 8-bit 整数(INT8)定点数运算。</li>
+<li>如果处理器不支持 4bit 量化； 那么 4bit 量化只能减少内存使用</li>
+<li>模型量化还有一个潜在的好处是降低运行时内存占用，这个特性无论是在移动端还是云端都是具有现实意义的。<ul>
+<li>降低内存占用与内存读写</li>
+</ul>
+</li>
+<li>运行时内存：参数 weight 只占很少一部分， 大部分内存占用来自激活值 activation。如何才能用量化降低内存占用，只有一个方式: 将尽可能多的 layer 的激活值都进行量化 。</li>
+<li>注意 weight, activation 和 op 之间的关系，如果 weight 和 activation 都是 fp32, 需要使用 fp32 op 实现版本，如果都是 int8, 需要使用 int8 op 实现版本。</li>
+<li>为什么权重不能是 pre-tensor 呢？这个对精度的影响太大了，所以一般不用。那输入就可以 pre-tensor？当然可以，也经过测试了，对精度的影响不是很大，完全可以用。</li>
+<li>这就是 pre-channel 或者详细点就是 per-output-channel 也就是卷积输出通道</li>
+<li>Explicit vs Implicit Quantization<ul>
+<li>显示量化：能控制在何处进行量化，例如：pytorch_quantization</li>
+<li>隐私量化：不能控制, 例如：python onnx 转 trt</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/648877516">tensorrt 官方 int8 量化方法汇总</a></li>
+</ul>
+</li>
 </ol>
-<h2 id="with-gilab"><a href="#with-gilab" class="headerlink" title="with gilab"></a><a target="_blank" rel="noopener" href="https://jfrog.com/blog/gitlab-and-artifactory-on-your-mark-get-set-build/">with gilab</a></h2><h3 id="NOTE"><a href="#NOTE" class="headerlink" title="NOTE"></a>NOTE</h3><ol>
-<li>curl -L http:xxx 不加 -L 会自动转换为 https</li>
-<li>curl -v 查看中间过程</li>
-<li>shell</li>
+<h3 id="PTQ"><a href="#PTQ" class="headerlink" title="PTQ"></a>PTQ</h3><ol>
+<li>qat vs ptq<br><img src="https://i.ibb.co/XJnYcYY/i-Rl-Ilz-S8-XJ.png" alt="qat vs ptq"></li>
+<li>交叉熵或者 percentile 的方式进行校准</li>
 </ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">JFROG_USER=xiyang.jia</span><br><span class="line">JFROG_PASSWD=APAQR97hg1swsSNZ</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">push_to_jfrog</span></span>() &#123;</span><br><span class="line">        FILE=<span class="variable">$1</span></span><br><span class="line">        JFROG_PATH=http://artifacts.phigent.io/artifactory/<span class="variable">$2</span></span><br><span class="line">        MD5=$(<span class="built_in">md5sum</span> <span class="variable">$FILE</span> | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span>)</span><br><span class="line">        curl -u<span class="string">&quot;<span class="variable">$&#123;JFROG_USER&#125;</span>:<span class="variable">$&#123;JFROG_PASSWD&#125;</span>&quot;</span> -T <span class="variable">$FILE</span> -H <span class="string">&quot;X-Checksum-MD5:<span class="variable">$&#123;MD5&#125;</span>&quot;</span> -L <span class="string">&quot;<span class="variable">$&#123;JFROG_PATH&#125;</span>&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">push_dir_to_jfrog</span></span>()&#123;</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> $(find <span class="variable">$1</span> -<span class="built_in">type</span> f); <span class="keyword">do</span></span><br><span class="line">                push_to_jfrog <span class="variable">$&#123;file&#125;</span> <span class="variable">$2</span>/<span class="variable">$&#123;file&#125;</span></span><br><span class="line">        <span class="keyword">done</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -d <span class="variable">$1</span> ]; <span class="keyword">then</span></span><br><span class="line">        push_dir_to_jfrog <span class="variable">$1</span> <span class="variable">$2</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">        push_to_jfrog <span class="variable">$1</span> <span class="variable">$2</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/01/13/Cpp20/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/01/13/Cpp20/" class="post-title-link" itemprop="url">Cpp20</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-01-13 15:31:55" itemprop="dateCreated datePublished" datetime="2023-01-13T15:31:55+08:00">2023-01-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/01/13/Cpp20/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/01/13/Cpp20/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>713</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="module"><a href="#module" class="headerlink" title="module"></a>module</h2><h2 id="coroutine"><a href="#coroutine" class="headerlink" title="coroutine"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/172471249">coroutine</a></h2><ol>
-<li>协程并没有增加线程数量，只是在线程的基础之上通过分时复用的方式运行多个协程，而且协程的切换在用户态完成，切换的代价比线程从用户态到内核态的代价小很多。</li>
-<li>协程对计算密集型的任务也没有太大的好处，计算密集型的任务本身不需要大量的线程切换，因此协程的作用也十分有限，反而还增加了协程切换的开销。</li>
-<li>因此在协程中不能调用导致线程阻塞的操作。也就是说，协程只有和异步 IO 结合起来，才能发挥最大的威力。</li>
-<li>协程只有和异步 IO 结合起来才能发挥出最大的威力。</li>
-<li>协程可以通过 yield（取其“让步”之义而非“出产”）来调用其它协程，接下来的每次协程被调用时，从协程上次 yield，返回的位置接着执行，通过 yield 方式转移执行权的协程之间不是调用者与被调用者的关系，而是彼此对称、平等的。</li>
-<li>协程非常类似于线程。但是协程是协作式多任务的，而线程典型是抢占式多任务的。这意味着协程提供并发性而非并行性。协程超过线程的好处是它们可以用于硬性实时的语境（在协程之间的切换不需要涉及任何系统调用或任何阻塞调用），这里不需要用来守卫关键区块的同步性原语（primitive）比如互斥锁、信号量等，并且不需要来自操作系统的支持。有可能以一种对调用代码透明的方式，使用抢占式调度的线程实现协程，但是会失去某些利益（特别是对硬性实时操作的适合性和相对廉价的相互之间切换）。</li>
-<li>协程的核心竞争力在于：它能简化异步并发任务，以同步方式写异步代码, 这也是为什么要引入协程的原因了：简化异步并发任务</li>
-<li>线程是操作系统层面的概念，协程是语言层面的概念, 线程与协程最大的区别在于：线程是被动挂起恢复，协程是主动挂起恢复</li>
+<h3 id="QAT"><a href="#QAT" class="headerlink" title="QAT"></a><a target="_blank" rel="noopener" href="https://oldpan.me/archives/quantize-in-action-tensorrt-8">QAT</a></h3><ol>
+<li>量化后，通常需要调整神经网络(NN)中的参数。这可以通过 retraining 模型来执行，该过程称为量化感知训练（QAT）</li>
+<li>QAT 中需要 QDQ 算子，QuantizeLiner 和 DequantizeLiner</li>
+<li>QAT 量化中最重要的就是 fake 量化算子，fake 算子负责将输入该算子的参数和输入先量化后反量化，然后记录这个 scale，FQ(fake-quan)算子会将 FP32 精度的输入和权重转化为 INT8 再转回 FP32，记住转换过程中的尺度信息。这些 fake-quan 算子在 ONNX 中可以表示为 QDQ 算子</li>
 </ol>
-<h3 id="link"><a href="#link" class="headerlink" title="link"></a>link</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%8D%8F%E7%A8%8B">wikipedia</a></li>
-<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6973650934664527885">进程、线程和协程的区别</a></li>
+<h2 id="LLM"><a href="#LLM" class="headerlink" title="LLM"></a>LLM</h2><ol>
+<li>可量化的参数包括: 权重和激活值（Weight and Activation），对于矩阵乘法 Y &#x3D; WX，W 为权重，X 就是激活值（输入）。</li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/12/26/BPF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/12/26/BPF/" class="post-title-link" itemprop="url">BPF</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-12-26 16:52:00" itemprop="dateCreated datePublished" datetime="2022-12-26T16:52:00+08:00">2022-12-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-03 18:24:06" itemprop="dateModified" datetime="2023-12-03T18:24:06+08:00">2023-12-03</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/12/26/BPF/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/12/26/BPF/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>372</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="tools"><a href="#tools" class="headerlink" title="tools"></a>tools</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_23662505/article/details/125427689?spm=1001.2101.3001.6650.7&utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-7-125427689-blog-119563743.pc_relevant_aa2&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-7-125427689-blog-119563743.pc_relevant_aa2&utm_relevant_index=8">各种 tools</a></li>
+<h2 id="papers"><a href="#papers" class="headerlink" title="papers"></a>papers</h2><h3 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2308.07633">A Survey on Model Compression for Large Language Models</a></li>
 </ol>
-<h2 id="BCC"><a href="#BCC" class="headerlink" title="BCC"></a>BCC</h2><ol>
-<li>需要 sudo 来执行命令</li>
-<li>各命令有 man 手册</li>
-<li><code>sudo apt-get install bpfcc-tools</code></li>
-<li><code> &#39;./include/linux/kconfig.h&#39; file not found</code> &#x3D;&gt; <code>cd /lib/modules/5.10.104-tegra/build/ &amp;&amp; ln -s /lib/modules/5.10.104-tegra/build/kernel-5.10/include .</code></li>
-<li></li>
+<h3 id="SmoothQuant"><a href="#SmoothQuant" class="headerlink" title="SmoothQuant"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2211.10438">SmoothQuant</a></h3><ol>
+<li>SmoothQuant 观察到不同的 token 在它们的通道上展示出类似的变化，引入了逐通道缩放变换，有效地平滑了幅度，使得模型更易于量化。</li>
+<li>INT8 SmoothQuant (W8A8)</li>
+<li>量化模式:Given a matrix (2D tensor) of shape M x N (M rows and N columns) where M is the number of tokens and N is the number of channels. TensorRT-LLM has the three following modes to quantize and dequantize the elements of the tensor:<ul>
+<li>Per-tensor: It uses a single scaling factor for all the elements,</li>
+<li>Per-token: It uses a different scaling factor for each token. There are M scaling factors in that case, 激活和权重都可以</li>
+<li>Per-channel: It uses a different scaling factor for each channel. There are N scaling factors in that case， 激活和权重都可以</li>
+</ul>
+</li>
+<li>可以分别进行 per-tensor, per-token, per-channel 量化</li>
 </ol>
-<h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/iovisor/bcc/blob/master/QUICKSTART.md">docker</a> 需要用宿主机上的内核源码</li>
+<h3 id="GPTQ"><a href="#GPTQ" class="headerlink" title="GPTQ"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2210.17323">GPTQ</a></h3><ol>
+<li>W4A16</li>
 </ol>
-<h2 id="bpftrace"><a href="#bpftrace" class="headerlink" title="bpftrace"></a>bpftrace</h2><ol>
-<li><code>mount -t debugfs none /sys/kernel/debug/</code></li>
-</ol>
-<h3 id="install-1"><a href="#install-1" class="headerlink" title="install"></a>install</h3><ol>
-<li><code>sudo apt-get install -y bpftrace</code></li>
-<li>需要内核开启一些选项</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/iovisor/bpftrace/blob/master/INSTALL.md#ubuntu-packages">ubuntu</a></li>
+<h3 id="AWQ-激活感知权重量化"><a href="#AWQ-激活感知权重量化" class="headerlink" title="AWQ 激活感知权重量化"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2306.00978">AWQ</a> 激活感知权重量化</h3><ol>
+<li>weight int4; Weight-Only 只量化权重, 激活不量化</li>
+<li>The INT4 and INT8 Weight-Only techniques consist in quantizing the weights of a model and dequantizing those weights on-the-fly in linear layers (Matmuls). The activations are encoded using floating-point values (FP16 or BF16). To use INT4&#x2F;INT8 Weight-Only methods, the user must determine the scaling factors to use to quantize and dequantize the weights of the model.</li>
+<li>W4A16</li>
+<li>权重并不是同等重要的，通过保留 1%的显著权重可以大大减少量化误差。</li>
+<li>per-channel(针对 activation) 对权重做量化，权重矩阵的列, 每个 d 一个 scale,如果 tensor 中有几列为 fp16, 其他列为 int8，那么对硬件不友好。</li>
+<li>per-channel 在对权重量化前先求出权重 channel 对应的激活 channel 的平均值， 对权重做量化前，每个 channel 先乘以对应的平均值</li>
 </ol>
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/eunomia-bpf/bpf-developer-tutorial">bpf-developer-tutorial</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/LXP-Never/p/16822727.html">Pytorch 模型量化</a></li>
 </ol>
 
       
@@ -1020,7 +1125,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/12/02/unix/">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/06/09/pytorch/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/coder2.jpg">
@@ -1034,7 +1139,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/12/02/unix/" class="post-title-link" itemprop="url">unix</a>
+            <a href="/2023/06/09/pytorch/" class="post-title-link" itemprop="url">pytorch</a>
         </h2>
 
         <div class="post-meta">
@@ -1044,14 +1149,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-12-02 09:14:27" itemprop="dateCreated datePublished" datetime="2022-12-02T09:14:27+08:00">2022-12-02</time>
+              <time title="创建时间：2023-06-09 15:28:49" itemprop="dateCreated datePublished" datetime="2023-06-09T15:28:49+08:00">2023-06-09</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+                <time title="修改时间：2024-08-20 15:36:01" itemprop="dateModified" datetime="2024-08-20T15:36:01+08:00">2024-08-20</time>
               </span>
 
           
@@ -1063,8 +1168,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2022/12/02/unix/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/12/02/unix/" itemprop="commentCount"></span>
+    <a title="valine" href="/2023/06/09/pytorch/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/06/09/pytorch/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1074,14 +1179,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>954</span>
+              <span>14k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>13 分钟</span>
             </span>
 
         </div>
@@ -1093,282 +1198,740 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="UNIX-环境高级编程"><a href="#UNIX-环境高级编程" class="headerlink" title="UNIX 环境高级编程"></a><a target="_blank" rel="noopener" href="http://www.apuebook.com/apue3e.html">UNIX 环境高级编程</a></h2><ol>
-<li><p>ID</p>
-<ul>
-<li>文件(文件描述符)</li>
-<li>进程</li>
-<li>错误处理(errno)</li>
-<li>用户标识(用户 ID, 组 ID)</li>
-<li>信号(SIG)</li>
+          <h2 id="compile"><a href="#compile" class="headerlink" title="compile"></a>compile</h2><ol>
+<li>直接用 torch.compile 编译一个函数(都是用 torch 实现的，可以生成 triton 函数)来加速，<a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/torch.compiler_get_started.html">getting start</a></li>
+<li>CPython 的 Frame Evaluation API（框架评估 API）是一个高级特性，允许开发者定制 Python 解释器执行代码的方式。这个 API 提供了一种方法，能够在 Python 解释器运行时动态插入和替换代码执行的框架，从而可以进行代码插桩、动态优化或其他高级操作。</li>
+<li>torch.compile is a PyTorch function introduced in PyTorch 2.x that aims to solve the problem of accurate graph capturing in PyTorch and ultimately enable software engineers to run their PyTorch programs faster.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/pytorch/pytorch/issues/93794">torch dynamo 加速性能例子</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/torch.compiler.html">torch dynamo 后端</a></li>
+<li>In 2.0, if you wrap your model in model &#x3D; torch.compile(model), your model goes through 3 steps before execution:<ul>
+<li>Graph acquisition: first the model is rewritten as blocks of subgraphs. Subgraphs which can be compiled by TorchDynamo are “flattened” and the other subgraphs (which might contain control-flow code or other unsupported Python constructs) will fall back to Eager-Mode.</li>
+<li>Graph lowering: all the PyTorch operations are decomposed into their constituent kernels specific to the chosen backend.</li>
+<li>Graph compilation, where the kernels call their corresponding low-level device-specific operations.</li>
 </ul>
 </li>
-<li><p><code>stat</code>: 获取文件各种信息</p>
-<ul>
-<li><code>stat -c %s file</code> 查看文件长度</li>
+<li>For instance, something innocuous as a print statement in your model’s forward triggers a graph break. 模型中打印会中断 graph 执行</li>
+<li><code>torch.compile()</code> We expect this one line code change to provide you with between 30%-2x training time speedups on the vast majority of models that you’re already running.</li>
+<li>芯片商可以集成到 dynamo 后端（和 inductor 并列)或 inductor 后端(和 triton 并列)或混合后端<ul>
+<li>目前 Inductor 有两个后端：(1) 生成多线程 CPU 代码的 C++，(2) 生成高性能 GPU 代码的 Triton</li>
 </ul>
 </li>
-<li><p><code>strace - trace system calls and signals</code></p>
-</li>
-</ol>
-<h2 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h2><h2 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h2><h2 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h2><ol>
-<li>信号是软件中断。</li>
-<li>终端键盘上有两种信号方法：<ul>
-<li>SIGINT 中断键：C-c</li>
-<li>SIGQUIT 退出键：C-\</li>
+<li>编译过程<br><img src="https://pytorch.org/assets/images/pytorch-2.0-img4.jpg" alt="编译过程"></li>
+<li>堆栈<br><img src="https://pytorch.org/assets/images/pytorch-2.0-img12.png" alt="堆栈"></li>
+<li>Our philosophy on PyTorch has always been to keep flexibility and hackability our top priority, and performance as a close second.</li>
+<li>In the past 5 years, we built <code>torch.jit.trace, TorchScript, FX tracing, Lazy Tensors</code>. But none of them felt like they gave us everything we wanted. Some were flexible but not fast, some were fast but not flexible and some were neither fast nor flexible. Some had bad user-experience (like being silently wrong). While TorchScript was promising, it needed substantial changes to your code and the code that your code depended on. This need for substantial change in code made it a non-starter for a lot of PyTorch users. 之前的都不行</li>
+<li><code>TorchDynamo</code> TorchDynamo acquired the graph 99% of the time, correctly, safely and with negligible overhead – without needing any changes to the original code. This is when we knew that we finally broke through the barrier that we were struggling with for many years in terms of flexibility and speed.</li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/get-started/pytorch-2.0/">pytorch 2.0</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/blog/optimizing-production-pytorch-performance-with-graph-transformations">eager mode vs graph mode:</a><ul>
+<li>在 PyTorch 中，”Eager Execution”（即即时执行模式）是指一种动态图计算模式，其中每个操作都立即被执行，而不是被先放入计算图中。这与静态图计算框架（如 TensorFlow 的早期版本）的工作方式不同。在即时执行模式中，你可以像使用 NumPy 一样进行操作，逐步构建计算图，方便调试和交互。</li>
+<li>开发用 eager 模型，部署用 torchscript 来过渡到 graph mode(会做融合)</li>
+<li>With TorchScript, PyTorch provides ease-of-use and flexibility in eager mode, while seamlessly transitioning to graph mode for speed, optimization, and functionality in C++ runtime environments.</li>
 </ul>
 </li>
-<li>使用 system 而不是直接用 fork 和 exec 的优点是： system 有各种错误处理和各种信号处理</li>
-</ol>
-<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><ol>
-<li>进程 ID 用 pid_t 数据类型来表示，是一个非负整数。 线程 ID 是用 pthread_t 数据类型来表示， 是一个结构体， 不同系统类型不同。</li>
-<li>如果进程中的任意线程调用了 exit, _Exit 或者_exit, 那么整个进程就会终止。</li>
-<li><code>nm -C test | grep GLIBC_</code>可以看出 c++程序用 thread 和 mutex 最终调用了 pthread_create 和 pthread_mutex*</li>
-<li>守护进程出错记录使用 syslog，log 位置 &#x2F;var&#x2F;log&#x2F;syslog</li>
-</ol>
-<h4 id="进程间通信-InterProcess-Communication-IPC"><a href="#进程间通信-InterProcess-Communication-IPC" class="headerlink" title="进程间通信 InterProcess Communication IPC"></a>进程间通信 InterProcess Communication IPC</h4><ol>
-<li>同一机器：管道，FIFO, 消息队列，信号量，共享内存。</li>
-<li>不同机器：socket</li>
-</ol>
-<h4 id="线程间通信"><a href="#线程间通信" class="headerlink" title="线程间通信"></a>线程间通信</h4><ol>
-<li>mutex, 读写锁，自旋锁， 条件变量</li>
-<li>mutex 保护的是 lock 和 unlock 之间的代码</li>
-<li>如果线程对一个互斥量加锁两次，那么它自身就会陷入死锁。</li>
-<li>线程间循环依赖锁也会死锁，解决办法：1. 控制互斥量加锁的顺序避免死锁。2. try_lock 如果获得不了想要的锁， 先释放已占有的锁，过一段时间再试试。</li>
-<li>自旋锁与互斥量类似， 但自旋锁获取锁之前线程是非阻塞状态。适用于锁持有时间段，线程不希望在重新调度上花费太多成本。自旋锁在非抢占式内核中非常有用，在用户层，自旋锁并不是很有用。</li>
-<li>很多互斥量实现非常高效，有些互斥量的实现在试图获取互斥量的时候会自选一小段时间，只有自旋计数达到某一阈值的时候才会休眠。</li>
-</ol>
-<h3 id="linux-下源码编译问题"><a href="#linux-下源码编译问题" class="headerlink" title="linux 下源码编译问题"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_29116917/article/details/103786194">linux 下源码编译问题</a></h3><ol>
-<li>minor 找不到： filedir&#x2F;devrdev.c <code>#include &lt;sys/sysmacros.h&gt;</code></li>
-<li><code>sudo apt install libbsd-dev</code></li>
-<li>err_sys 找不到问题， error.c 源码复制到 apue.h 中</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/11/15/version/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/11/15/version/" class="post-title-link" itemprop="url">version</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-11-15 10:21:58" itemprop="dateCreated datePublished" datetime="2022-11-15T10:21:58+08:00">2022-11-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/11/15/version/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/11/15/version/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>184</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Linux-动态库版本管理"><a href="#Linux-动态库版本管理" class="headerlink" title="Linux 动态库版本管理"></a>Linux 动态库版本管理</h2><ol>
-<li>Linux 通过版本号来管理动态库的版本，版本号最多有 3 级，其格式为 libname.so.x.y.z<ul>
-<li>x: major release，非兼容修改，可能对接口做了大改动，比如重命名、增加或减少参数等。</li>
-<li>y: minor release，不改变兼容性，但是增加了新接口</li>
-<li>z: patch release，不改变兼容性，仅仅是修复 bug、或者优化代码实现、优化性能等。</li>
+<li>torch.jit.trace 基于字节码， torch.jit.script 基于 AST</li>
+<li>torch inductor<ul>
+<li>作为 torch.compile 的基础技术，配备 Nvidia 和 AMD GPU 的 TorchInductor 将依靠 OpenAI Triton 深度学习编译器来生成高性能代码并隐藏底层硬件细节。OpenAI Triton 生成的内核可实现与手写内核和专用 cuda 库(如 cublas)相当的性能。</li>
 </ul>
 </li>
+<li>torch.compile 的基础是新技术——TorchDynamo、AOTAutograd、PrimTorch 和 TorchInductor</li>
+<li>TorchInductor 是一种深度学习编译器，可为多个加速器和后端生成快速代码。对于 NVIDIA 和 AMD GPU，它使用 OpenAI Triton 作为关键构建块。对于 intel CPU，我们使用多线程、向量化指令生成 C++ 代码，并在可能的情况下将适当的操作卸载到 mkldnn。</li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/30/github-ci/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/30/github-ci/" class="post-title-link" itemprop="url">github-ci</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-10-30 21:35:59" itemprop="dateCreated datePublished" datetime="2022-10-30T21:35:59+08:00">2022-10-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-28 14:56:00" itemprop="dateModified" datetime="2023-11-28T14:56:00+08:00">2023-11-28</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/10/30/github-ci/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/30/github-ci/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>802</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="actions"><a href="#actions" class="headerlink" title="actions"></a>actions</h2><ol>
-<li>fork 的 repo 需要手动在 actions 里 enable</li>
-<li><a target="_blank" rel="noopener" href="https://docs.github.com/en/actions/managing-workflow-runs/disabling-and-enabling-a-workflow">disabling-and-enabling-a-workflow</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.github.com/cn/actions">actions doc</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/dorny/test-reporter">test-reporter</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/test-summary/">test-summary</a></li>
+<h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li><code>torch.cuda.current_stream().synchronize()</code> 只同步当前 CUDA 流</li>
+<li><a target="_blank" rel="noopener" href="https://catalog.ngc.nvidia.com/orgs/nvidia/containers/pytorch">nvdia docker</a></li>
+<li>比较两个 tensor 是否相近 <a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/generated/torch.isclose.html">torch.isclose</a><ul>
+<li><a target="_blank" rel="noopener" href="https://numpy.org/doc/stable/reference/generated/numpy.isclose.html">numpy.isclose</a></li>
+</ul>
+</li>
+<li>收集 pytorch 环境相关信息：<a target="_blank" rel="noopener" href="https://github.com/pytorch/pytorch/issues/44299#issue-695606076">link</a><ul>
+<li><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/pytorch/pytorch/master/torch/utils/collect_env.py">collect_env.py</a></li>
+</ul>
+</li>
+<li>导出 onnx 时如果遇见 cuda 算子有问题，可以写个 fake 算子, 直接 return out, 不用计算</li>
+<li><code>python -m torch.utils.collect_env</code></li>
+<li>静态图：先编译，如果增加一个计算，需要重新编译, 改变网络意味着重新开始，类似 C++工程的重头编译</li>
+<li>动态图：实时构图，增加一个计算不用编译，直接在原来的图上添加计算节点，类似 C++工程的增量编译</li>
+<li>深度学习模型实际上就是一个计算图。模型部署时通常把模型转换成静态的计算图，即没有控制流（<code>分支语句、循环语句</code>）的计算图。</li>
+<li><code>device = &quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;</code></li>
+<li>pytorch 导出模型时会显示 ONNX IR, 类似三段式<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/pytorch/pytorch/blob/main/torch/onnx/utils.py#L190">Functions to export models into the ONNX IR format.</a></li>
+<li>verbose &#x3D; True</li>
+</ul>
+</li>
+<li>pytorch 导出 onnx 问题<ul>
+<li>先跑通 model(x)</li>
+<li>Only tuples, lists and Variables are supported as JIT inputs&#x2F;outputs. Dictionaries and strings are also accepted, but their usage is not recommended. Here, received an input of unsupported type: DataContainer</li>
+<li>需要处理 dataloader DataContainer 到 list</li>
+</ul>
+</li>
+<li>pytorch 模型结构定义之后, 有些算子不一定会使用，导出 onnx 模型时不使用的算子不会导出，应为导出模型进行一次模型推理，在推理的过程中记录所有经过的计算，将这些记录整合成计算图</li>
+<li>pytorch 为什么不直接用 numpy?<ul>
+<li><code>GPU 支持</code>：PyTorch 设计之初就考虑到了与 GPU 的兼容性，允许其在 GPU 上直接执行张量运算，大大加快了深度学习模型的训练和推理速度。相比之下，NumPy 主要是为 CPU 设计的，不支持 GPU 或其他类型的加速硬件。</li>
+<li><code>自动微分</code>：PyTorch 提供了自动微分功能，这对于深度学习至关重要。通过它的 <code>autograd</code> 系统，PyTorch 能够自动计算模型参数的梯度，这对于训练神经网络来说是必需的。NumPy 没有内置这样的功能。</li>
+<li><code>深度学习特定的操作</code>：PyTorch 提供了许多专为深度学习设计的操作和函数，如卷积、池化等，这些在 NumPy 中不是直接可用的。</li>
+<li><code>动态计算图</code>：PyTorch 使用动态计算图（也称为即时执行），这意味着计算图在运行时动态构建，从而提供了更灵活的编程模式，特别是对于复杂的模型和动态输入。而 NumPy 没有这样的概念。</li>
+<li><code>可扩展性和生态系统</code>：虽然 NumPy 在科学计算方面非常强大，但 PyTorch 提供了更适合于大规模、复杂的深度学习模型和应用的工具和库。</li>
+</ul>
+</li>
+<li>在使用动态图（Dynamic Graph）框架（如 PyTorch 或 TensorFlow 的 Eager Execution 模式）进行单步调试时，并不是每一步操作都会完全重新构建整个计算图。相反，每一步操作通常对应计算图的一部分，这个部分在执行时被动态创建和执行。在单步调试时，整个模型的计算图不会在每一步都被重新构建。只有实际执行的操作会被动态添加到图中。</li>
+<li>在使用动态图框架（如 PyTorch 或 TensorFlow 的 Eager Execution 模式）进行单步调试时，整个模型的计算图并不会在每一步都被重新构建。动态图的特点是在运行时动态构建和执行计算图的一部分，而非整个图。这种方法与静态图框架（如 TensorFlow 的传统模式）形成对比，后者在执行任何计算前需要先构建完整的计算图并对其进行优化。</li>
+<li>循环：<ul>
+<li>不固定：动态图</li>
+<li>固定：可以被展开，构成静态图</li>
+</ul>
+</li>
+<li><code>torch==1.11.0+cu113</code></li>
+<li><code>pip install torch==1.11.0+cu113 --extra-index-url https://download.pytorch.org/whl/cu113</code></li>
+<li><code>pip freeze | grep torch</code>: 查看库版本</li>
+<li><code>pip show torch</code>: 查看库版本</li>
+<li><code>python3 -c &quot;import torch; print(torch.__version__)&quot;</code></li>
+<li>pytorch tensor to binary file: <code>tensor.cpu().numpy().astype(np.float32).tofile(&quot;test.bin&quot;)</code>; c++ read binary file</li>
+<li>tensor 中取单个元素会降维；例如从二维 tensor 取单行或者单列结果会变为一维 tensor</li>
+<li><code>help(torch.ones)</code> 显示函数 help</li>
+<li><code>print(dir(torch.distributions))</code> 显示 torch 的 distributions</li>
 </ol>
-<h2 id="sample"><a href="#sample" class="headerlink" title="sample"></a>sample</h2><ol>
-<li>use 可以连续用</li>
+<h2 id="extending"><a href="#extending" class="headerlink" title="extending"></a><a target="_blank" rel="noopener" href="https://pytorch-cn.readthedocs.io/zh/latest/notes/extending/">extending</a></h2><h3 id="Autograd"><a href="#Autograd" class="headerlink" title="Autograd"></a>Autograd</h3><ol>
+<li>Autograd Profiler 可以统计 autograd 性能</li>
+<li><code>c = a.detach().clone()</code> c 不计算 grad, requires_grad&#x3D;False</li>
+<li>通过 watch model[0].weight.data 和 model[0].weight.grad 看 weight 值和 grad 变化， <a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/pytorch_with_examples.html#pytorch-optim">sample</a></li>
+<li>见 deep_learning.md 下的 backward</li>
+<li>通过 loss 函数求各个 module weights 的 grad，存在 weights tensor.grad 里，中间的 activation 没有 grad, 只有叶子节点有</li>
+<li>Operation 对 tensor 求 grad</li>
+<li>自定义 OP 需要继承 torch.autograd.Fuction <a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/pytorch_with_examples.html#pytorch-defining-new-autograd-functions">pytorch-defining-new-autograd-functions</a><ul>
+<li>forward 输入参数个数是 backward 输出参数个数</li>
+<li>backward 输入参数个数是 forward 输出参数个数</li>
+<li>通过 ctx 在 forward 和 backward 中传递 tensor, 用于计算梯度</li>
+</ul>
+</li>
+<li>每个原始的 Autograd 运算符实际上都是在 tensor 上运行的两个函数。 正向函数从输入 tensor 计算输出 tensor。 反向函数接收相对于某个标量值的输出 tensor 的梯度，并计算相对于相同标量值的输入 tensor 的梯度。</li>
+<li>反向传播用于算梯度</li>
+<li>backward()实际上是通过 DCG 图从根张量追溯到每一个叶子节点，然后计算将计算出的梯度存入每个叶子节点的.grad 属性中</li>
+<li>在某种程度上，反向传播只是链式法则的一个花哨的名字—— Jeremy Howard</li>
+<li>backward 不传入参数时，默认为传入 backward(torch.tensor(1.0))。</li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/pytorch_with_examples.html">Learning PyTorch with Examples</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/niexinyu0026/article/details/122262082">用 numpy、PyTorch 自动求导、torch.nn 库实现两层神经网络</a> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/luedong/p/14492361.html">link</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/baidu_38797690/article/details/122180655">PyTorch：梯度计算之反向传播函数 backward()</a></li>
 </ol>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">Ubuntu</span></span><br><span class="line"><span class="attr">on:</span> <span class="string">push</span></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">release-test:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">dataflow</span> <span class="string">build</span> <span class="string">on</span> <span class="string">ubuntu</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span> <span class="comment">## checkout到分支</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">prefix-dev/setup-pixi@v0.3.0</span> <span class="comment">## 安装pixi</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">install</span> <span class="string">deps</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">apt</span> <span class="string">install</span> <span class="string">-y</span> <span class="string">libc6-dbg</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">run</span> <span class="string">all</span> <span class="string">test</span></span><br><span class="line">        <span class="attr">run:</span> <span class="string">pixi</span> <span class="string">run</span> <span class="string">all</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;Upload Artifact&quot;</span></span><br><span class="line">        <span class="attr">uses:</span> <span class="string">actions/upload-artifact@v3</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">my-artifact</span></span><br><span class="line">          <span class="attr">path:</span> <span class="string">.gitignore</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="upload-artifact"><a href="#upload-artifact" class="headerlink" title="upload-artifact"></a><a target="_blank" rel="noopener" href="https://github.com/actions/upload-artifact#zipped-artifact-downloads">upload-artifact</a></h2><ol>
-<li>config</li>
+<h3 id="Module"><a href="#Module" class="headerlink" title="Module"></a>Module</h3><ol>
+<li>print(model)只是打印 self 定义的 layer，并不是计算图</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/szagoruyko/pytorchviz">pytorchviz</a> 在 pytorch 中画计算图</li>
 </ol>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;Upload Artifact&quot;</span></span><br><span class="line">  <span class="attr">uses:</span> <span class="string">actions/upload-artifact@v3</span></span><br><span class="line">  <span class="attr">with:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">my-artifact</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">.gitignore</span></span><br></pre></td></tr></table></figure>
+<h2 id="tensor"><a href="#tensor" class="headerlink" title="tensor"></a>tensor</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/basics/tensorqs_tutorial.html">基础运算</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/introyt/tensors_deeper_tutorial.html">高级</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_preliminaries/ndarray.html">d2l ndarray</a></li>
+<li><code>x = torch.arange(10)</code> tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])</li>
+<li><code>x = torch.arange(10.0)</code> tensor([0., 1., 2., 3., 4., 5., 6., 7., 8., 9.])</li>
+<li><code>type(x)</code> 打印 x 类型</li>
+<li><code>torch.randn(2)</code> tensor([ 0.6872, -0.3433]); 返回一个填充随机正态分布的张量(mean&#x3D;0, std&#x3D;1)。即,生成的值大概符合平均数为 0,标准差为 1 的正态分布。</li>
+<li><code>X = torch.rand(2,20)</code> 返回一个填充随机均匀分布的张量,即在[0,1)区间内均匀随机。</li>
+<li><code>x = x.reshape(2, 5)</code></li>
+<li><code>x.shape</code> torch.Size([2, 5])</li>
+<li><code>a = torch.tensor(3.4); a.shape</code> torch.Size([]) 标量</li>
+<li><code>a = torch.tensor([3.4]);a.shape</code> torch.Size([1]) 向量</li>
+<li><code>x.numel()</code> 10; element number</li>
+<li><code>len(x)</code> 2; len()为 python 内置函数， 用于 tensor 时是指 tesnor 的维度（dimension）</li>
+<li><code>torch.ones(2, 4)</code></li>
+<li><code>torch.zeros(2, 4)</code></li>
+<li><code>X.reshape(-1)</code> 展平为一维</li>
+<li><code>//</code>向下取整除法</li>
+<li><code>%</code> 求模，取余</li>
+<li><code>math.ceil(x)</code>向上取整数</li>
+<li><code>math.floor(x)</code>向下取整</li>
+<li><code>round(x)</code> 四舍六入五成双（例如 round(2.5)&#x3D;2, round(3.5)&#x3D;4, round(4.5)&#x3D;4, round(5.5)&#x3D;6) 小数部分为 0.5 向偶数</li>
+<li>tensor 基本运算</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x = torch.tensor([<span class="number">1.0</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">8</span>])  <span class="comment"># 1.0 mean float</span></span><br><span class="line">y = torch.tensor([<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>])</span><br><span class="line">x + y, x - y, x * y, x / y, x ** y  <span class="comment"># **运算符是求幂运算</span></span><br></pre></td></tr></table></figure>
 
 <ol>
-<li>ci job 左侧 summary 可以下载 artifacts</li>
+<li>tensor 矩阵运算</li>
 </ol>
-<h2 id="upload-release-asset"><a href="#upload-release-asset" class="headerlink" title="upload-release-asset"></a><a target="_blank" rel="noopener" href="https://github.com/actions/upload-release-asset">upload-release-asset</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/75995802/resource-not-accessible-by-integration-github-action-fails-for-pushed-commit">push 失败问题： 需要设置 repo read_and_write 权限</a></li>
-<li>参考 cpp_sandbox 和 python_sandbox</li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">X = torch.arange(<span class="number">9</span>).reshape(<span class="number">3</span>,<span class="number">3</span>)</span><br><span class="line">Y = torch.arange(<span class="number">9</span>).reshape(<span class="number">3</span>,<span class="number">3</span>)</span><br><span class="line">X.t() <span class="comment"># 转置</span></span><br><span class="line">X @ Y <span class="comment"># 矩阵乘</span></span><br><span class="line">torch.matmul(X, Y) <span class="comment"># 矩阵乘</span></span><br><span class="line">X * Y <span class="comment"># 元素分别相乘</span></span><br><span class="line">X + <span class="number">5</span> <span class="comment"># 广播：分别加5</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>torch.exp(x)</code> tensor 求指数</li>
+<li>concat and condition</li>
 </ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">X = torch.arange(<span class="number">12</span>, dtype=torch.float32).reshape((<span class="number">3</span>,<span class="number">4</span>))</span><br><span class="line">Y = torch.tensor([[<span class="number">2.0</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], [<span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>]])</span><br><span class="line">torch.cat((X, Y), dim=<span class="number">0</span>), torch.cat((X, Y), dim=<span class="number">1</span>)  <span class="comment"># dim=0按行拼接， dim=1按列拼接， 0代表最里面一个维度</span></span><br><span class="line">X == Y <span class="comment"># shape: torch.Size([3, 4])</span></span><br><span class="line">X &lt; Y</span><br><span class="line">X &gt; Y</span><br><span class="line">X.<span class="built_in">sum</span>() <span class="comment"># 求和</span></span><br><span class="line">X.mean() <span class="comment"># 求均值</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>原位操作 下划线</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">a = torch.tensor([<span class="number">0</span>, math.pi / <span class="number">4</span>, math.pi / <span class="number">2</span>, <span class="number">3</span> * math.pi / <span class="number">4</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;a:&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"><span class="built_in">print</span>(torch.sin(a))   <span class="comment"># this operation creates a new tensor in memory</span></span><br><span class="line"><span class="built_in">print</span>(a)              <span class="comment"># a has not changed</span></span><br><span class="line"></span><br><span class="line">b = torch.tensor([<span class="number">0</span>, math.pi / <span class="number">4</span>, math.pi / <span class="number">2</span>, <span class="number">3</span> * math.pi / <span class="number">4</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;\nb:&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(b)</span><br><span class="line"><span class="built_in">print</span>(torch.sin_(b))  <span class="comment"># note the underscore</span></span><br><span class="line"><span class="built_in">print</span>(b)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>索引和切片</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">X[-<span class="number">1</span>] <span class="comment"># 取最后一个元素</span></span><br><span class="line">X[<span class="number">1</span>:<span class="number">3</span>] <span class="comment"># 取第二个和第三个元素，不包含X[3]</span></span><br><span class="line">X[<span class="number">1</span>,<span class="number">2</span>] = <span class="number">9</span> <span class="comment"># 赋值</span></span><br><span class="line">X[<span class="number">0</span>:<span class="number">2</span>, :] = <span class="number">12</span> <span class="comment"># 前两行赋值为12</span></span><br><span class="line">X = torch.arange(<span class="number">12</span>, dtype=torch.float32).reshape((<span class="number">3</span>,<span class="number">4</span>))</span><br><span class="line">X[<span class="number">1</span>:<span class="number">3</span>, <span class="number">2</span>:<span class="number">4</span>] 取右下角两行两列</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>节省内存: 注意 Y &#x3D; Y + X 与 X +&#x3D; Y 效果不一致</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">before = <span class="built_in">id</span>(Y)</span><br><span class="line">Y = Y + X</span><br><span class="line"><span class="built_in">id</span>(Y) == before <span class="comment"># False</span></span><br><span class="line"></span><br><span class="line">Z = torch.zeros_like(Y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;id(Z):&#x27;</span>, <span class="built_in">id</span>(Z))</span><br><span class="line">Z[:] = X + Y</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;id(Z):&#x27;</span>, <span class="built_in">id</span>(Z))</span><br><span class="line"></span><br><span class="line">before = <span class="built_in">id</span>(X)</span><br><span class="line">X += Y</span><br><span class="line"><span class="built_in">id</span>(X) == before <span class="comment"># True</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>和 numpy 转换</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">A = X.numpy()</span><br><span class="line">B = torch.tensor(A)</span><br><span class="line"><span class="built_in">type</span>(A), <span class="built_in">type</span>(B)</span><br><span class="line"></span><br><span class="line">a = torch.tensor([<span class="number">3.5</span>])</span><br><span class="line">a, a.item(), <span class="built_in">float</span>(a), <span class="built_in">int</span>(a) <span class="comment"># (tensor([3.5000]), 3.5, 3.5, 3)  tuple</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>type 转换 <a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/tensors.html">type</a></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">X = torch.arange(<span class="number">12</span>).reshape(<span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line">X.dtype <span class="comment"># torch.int64</span></span><br><span class="line">X.to(torch.float32)</span><br><span class="line">torch.tensor([<span class="number">1.2</span>]).<span class="built_in">type</span>() <span class="comment"># torch.FloatTensor</span></span><br><span class="line">torch.tensor([<span class="number">1.2</span>]).dtype <span class="comment"># torch.float32</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>判断是否有 gpu</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;We have a GPU!&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Sorry, CPU only.&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> torch.cuda.is_available():</span><br><span class="line">    my_device = torch.device(<span class="string">&#x27;cuda&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    my_device = torch.device(<span class="string">&#x27;cpu&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;Device: &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(my_device))</span><br><span class="line"></span><br><span class="line">x = torch.rand(<span class="number">2</span>, <span class="number">2</span>, device=my_device)</span><br><span class="line"><span class="built_in">print</span>(x)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>cpu cuda</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">tensor.device <span class="comment">#查看在gpu还是cpu</span></span><br><span class="line">X.cpu()</span><br><span class="line">X.cuda() <span class="comment"># 默认cuda:0</span></span><br><span class="line">X.to(<span class="string">&quot;cpu&quot;</span>)</span><br><span class="line">X.to(<span class="string">&quot;cuda:0&quot;</span>)</span><br><span class="line"></span><br><span class="line">device = torch.device(<span class="string">&quot;cuda&quot;</span>)</span><br><span class="line">Y = X.to(device)</span><br><span class="line"></span><br><span class="line"><span class="comment"># PyTorch的GPU端对tensor数据类型的支持是有限的,很多运算只实现了float/double类型的GPU支持。</span></span><br><span class="line">X = torch.arange(<span class="number">9</span>).reshape(<span class="number">3</span>,<span class="number">3</span>).cuda().to(torch.float32)</span><br><span class="line">Y = torch.arange(<span class="number">9</span>).reshape(<span class="number">3</span>,<span class="number">3</span>).cuda().to(torch.float32)</span><br><span class="line">torch.matmul(X, Y)</span><br><span class="line">X @ Y</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>model cpu cuda</li>
+<li>model.to(“cuda”)会将 model 参数放在显存中</li>
+</ol>
+<h2 id="torchscript"><a href="#torchscript" class="headerlink" title="torchscript"></a><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2010575">torchscript</a></h2><ol>
+<li>TorchScript 是 PyTorch 模型推理部署的中间表示，可以在高性能环境 libtorch（C ++）中直接加载，实现模型推理，而无需 Pytorch 训练框架依赖。torch.jit 是 torchscript Python 语言包支持，支持 pytorch 模型快速，高效，无缝对接到 libtorch 运行时，实现高效推理。</li>
+<li>torchscript 主要包含权重和计算过程(IR; 类似.text; 各种函数，有一个入口)</li>
+<li>trace 指的是进行一次模型推理，在推理的过程中记录所有经过的计算，将这些记录整合成计算图<ul>
+<li>for 循环被展开</li>
+</ul>
+</li>
+<li>script 会直接解析网络定义的 python 代码，生成抽象语法树 AST，因此这种方法可以解决一些 trace 无法解决的问题，比如对 branch&#x2F;loop 等数据流控制语句的建图。<ul>
+<li>for 循环编程子图</li>
+</ul>
+</li>
+</ol>
+<h2 id="model"><a href="#model" class="headerlink" title="model"></a>model</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://datawhalechina.github.io/thorough-pytorch/%E7%AC%AC%E4%BA%94%E7%AB%A0/5.1%20PyTorch%E6%A8%A1%E5%9E%8B%E5%AE%9A%E4%B9%89%E7%9A%84%E6%96%B9%E5%BC%8F.html">PyTorch 模型定义的方式</a><ul>
+<li>Sequential 适用于快速验证结果</li>
+<li>ModuleList 和 ModuleDict 在某个完全相同的层需要重复出现多次时，非常方便实现，可以一行顶多行；</li>
+</ul>
+</li>
+<li>定义模型时可以直接初始化参数，也可以后期加载<ul>
+<li><code>self.lin1.weight = nn.Parameter(torch.arange(-4.0, 5.0).view(3, 3))</code></li>
+</ul>
+</li>
+<li>basic</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line">model = nn.Sequential(nn.Linear(<span class="number">20</span>, <span class="number">256</span>), nn.ReLU(), nn.Linear(<span class="number">256</span>, <span class="number">10</span>))</span><br><span class="line">X = torch.rand(<span class="number">2</span>, <span class="number">20</span>)</span><br><span class="line">model(X)</span><br><span class="line"><span class="built_in">help</span>(model) <span class="comment">#可以看帮助</span></span><br><span class="line"></span><br><span class="line">output = x</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;输入:&#x27;</span>, output)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看每层输出</span></span><br><span class="line"><span class="keyword">for</span> name, layer <span class="keyword">in</span> model.named_children():</span><br><span class="line">    output = layer(output)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;层:&#x27;</span>, name, <span class="string">&#x27;,&#x27;</span>, <span class="string">&#x27;输出:&#x27;</span>, output)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看每层参数</span></span><br><span class="line"><span class="keyword">for</span> name, param <span class="keyword">in</span> model.named_parameters():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Name: <span class="subst">&#123;name&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Size: <span class="subst">&#123;param.size()&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Values: \n<span class="subst">&#123;param.data&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>model parmas</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Load model directly</span></span><br><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoTokenizer, AutoModelForCausalLM</span><br><span class="line"></span><br><span class="line">model = AutoModelForCausalLM.from_pretrained(<span class="string">&quot;./Llama-2-7b-hf&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(model)</span><br><span class="line"><span class="keyword">from</span> prettytable <span class="keyword">import</span> PrettyTable</span><br><span class="line"></span><br><span class="line">table = PrettyTable([<span class="string">&#x27;Name&#x27;</span>, <span class="string">&#x27;Shape&#x27;</span>, <span class="string">&#x27;Param&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> name, param <span class="keyword">in</span> model.named_parameters():</span><br><span class="line">    param_count = param.numel()</span><br><span class="line">    table.add_row([name, param.shape, param_count])</span><br><span class="line"><span class="built_in">print</span>(table)</span><br><span class="line"></span><br><span class="line">num_parameters = <span class="built_in">sum</span>(p.numel() <span class="keyword">for</span> p <span class="keyword">in</span> model.parameters())</span><br><span class="line"><span class="built_in">print</span>(num_parameters)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>打印 model parameters <a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/introyt/autogradyt_tutorial.html">autograd_tutorial</a> <a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/introyt/modelsyt_tutorial.html">model turorial</a><ul>
+<li><code>list(model.parameters())</code></li>
+<li><code>list(model.named_parameters())</code></li>
+<li><code>print(model.layer2.weight[0][0:10])</code></li>
+<li><code>print(model[0].weight)</code> sequnce</li>
+<li><code>print(model[0].bias)</code></li>
+<li><code>print([param for name,param in model.named_parameters()][0])</code></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/saving_loading_models.html#save">torch save and load</a></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model, PATH)</span><br><span class="line"></span><br><span class="line">model = torch.load(PATH)</span><br><span class="line">model.<span class="built_in">eval</span>()</span><br></pre></td></tr></table></figure>
+
+<h2 id="model-export"><a href="#model-export" class="headerlink" title="model export"></a>model export</h2><ol>
+<li>Expected all tensors to be on the same device<ul>
+<li>vsocde 断点到_jit_pass_onnx_constant_fold， 查看 graph， 会看到每个 op 所在 device 和代码位置</li>
+</ul>
+</li>
+<li>注意 pytorch 模型在转出 onnx 时会做融合或拆分，不是一对一的关系</li>
+<li>nonzero: B&#x3D;A[b &gt; c], b &gt; c 是 bool, B 取 b &gt; c 的值; tensorrt8.6 之前不支持， 可用 topk + mask 替代</li>
+<li>nonzero: Returns the indices of the elements that are non-zero</li>
+<li>squeeze: 如果某一维是 1，把它删掉。需要判断， 也会导致图里面有 If</li>
+<li>update: a[100] &#x3D; 1 不会产生新 tensor, tensorrt 不支持，导出的图会有问题， 用 scatter 替换,scatter 会生成新的 tensor</li>
+<li>a[b&gt;c]会产生 nonzero, 有 nonzero 就会有 if 分支，就是动态图</li>
+<li>export 加 verbose &#x3D; True, # onnx op 显示代码位置; pytorch1.10 还不支持，需要搜 log</li>
+<li>当我们使用了 Pytorch 里面的[]索引操作或者其它需要判断的情况，ONNX 模型会多出一些 if OP，这个时候这个 if OP 的输入已经是一个确定的 True，因为我们已经介绍过为 False 那部分的子图会被丢掉。<a target="_blank" rel="noopener" href="http://giantpandacv.com/project/%E9%83%A8%E7%BD%B2%E4%BC%98%E5%8C%96/AI%20%E9%83%A8%E7%BD%B2%E5%8F%8A%E5%85%B6%E5%AE%83%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95/ONNX%E5%86%8D%E6%8E%A2/">link</a></li>
+<li><a target="_blank" rel="noopener" href="https://glaringlee.github.io/onnx.html#id17">不要用 ONNX_FALLTHROUGH</a><ul>
+<li>此模式可用于导出未在 ONNX 中注册和支持的任何运算符（ATen 或非 ATen）。导出失败并按原样导出操作符，作为自定义操作。</li>
+</ul>
+</li>
+<li>copy.deepcopy() 可能导致 export 出问题</li>
+<li>export 有问题需要从最外层一步步定位到内部看哪里出问题了，提前 return,多层次上都提前返回, 一步步定位哪里导出的问题, 注意 export 函数中 model_output 不要填，否则会强制输数个数报错<ul>
+<li>不要的代码先注释掉</li>
+</ul>
+</li>
+<li>export 出问题可以先定位具体哪个 module 出的问题</li>
+<li>Function 类有一个很好的性质：如果它定义了 symbolic 静态方法，该 Function 在执行 torch.onnx.export() 时就可以根据 symbolic 中定义的规则转换成 ONNX 算子。</li>
+<li>导出 onnx 模型时不用 pytorch 自定义算子不用定义 backward, trace 只运行 forward</li>
+<li>ONNX 是一套标准，本身并不包括实现。导出为 onnx 时我们就简略地定义一个 ONNX 可变形卷积算子，而不去写它在某个推理引擎上的实现。</li>
+<li>symbolic 符号函数，可以看成是 PyTorch 算子类的一个静态方法。在把 PyTorch 模型转换成 ONNX 模型时，各个 PyTorch 算子的符号函数 symbolic 会被依次调用，以完成 PyTorch 算子到 ONNX 算子的转换。<ul>
+<li>第一个参数就固定叫 g，它表示和计算图相关的内容。g 有一个方法 op。在把 PyTorch 算子转换成 ONNX 算子时，需要在符号函数中调用此方法来为最终的计算图添加一个 ONNX 算子。</li>
+<li>g.op(“Asinh”, input)则完成了 ONNX 算子的定义。其中，第一个参数”Asinh”是算子在 ONNX 中的名称。</li>
+</ul>
+</li>
+<li>(good)PyTorch 转 ONNX 的跟踪导出法是不是万能的。如果我们在模型中做了一些很“出格”的操作，跟踪法会把某些取决于输入的中间结果变成常量，从而使导出的 ONNX 模型和原来的模型有出入。 <a target="_blank" rel="noopener" href="https://mmdeploy.readthedocs.io/zh-cn/v1.2.0/tutorial/03_pytorch2onnx.html#id4">link</a><ul>
+<li>涉及张量与普通变量转换的逻辑都会导致最终的 ONNX 模型不太正确, 例如 64 要用 torch.tensor(64)</li>
+<li>我们也可以利用这个性质，在保证正确性的前提下令模型的中间结果变成常量。这个技巧常常用于模型的静态化上，即令模型中所有的张量形状都变成常量; shape to constant</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/recipes/recipes/saving_and_loading_a_general_checkpoint.html">Saving and loading a general checkpoint in PyTorch</a></li>
+<li>PyTorch 模型在导出到 ONNX 模型时，模型的输入参数的类型必须全部是 torch.Tensor</li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/onnx/export_simple_model_to_onnx_tutorial.html">Export a PyTorch model to ONNX</a><ul>
+<li>pytorch model to onnx(导出为 batch 1 时需要设置输入数据第一维度为 1,)</li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/onnx/export_simple_model_to_onnx_tutorial.html#compare-the-pytorch-results-with-the-ones-from-the-onnx-runtime">Compare the PyTorch results with the ones from the ONNX Runtime</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/advanced/super_resolution_with_onnxruntime.html">Exporting a Model from PyTorch to ONNX and Running it using ONNX Runtime</a></li>
+</ul>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torchvision.models <span class="keyword">as</span> models</span><br><span class="line"><span class="keyword">import</span> torch.onnx <span class="keyword">as</span> onnx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载预训练模型</span></span><br><span class="line">model = models.resnet18(pretrained=<span class="literal">True</span>) <span class="comment">## 有网络结构</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个输入张量作为示例; 注意数据和模型要么都在cuda，要么都在cpu</span></span><br><span class="line">input_data = torch.randn(<span class="number">1</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>)</span><br><span class="line">input_data = torch.randn(<span class="number">1</span>, <span class="number">3</span>, <span class="number">224</span>, <span class="number">224</span>).cuda()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置模型为推理模式</span></span><br><span class="line">model.<span class="built_in">eval</span>() <span class="comment"># 只影响, 不启用 Batch Normalization 和 Dropout</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将模型和输入张量转换为ONNX格式</span></span><br><span class="line">onnx_path = <span class="string">&quot;model.onnx&quot;</span></span><br><span class="line">onnx.export(model, input_data, onnx_path) <span class="comment"># 有参数可以做常量折叠</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;模型已成功转换为ONNX格式并保存在:&quot;</span>, onnx_path)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Input to the model</span></span><br><span class="line">x = torch.randn(batch_size, <span class="number">1</span>, <span class="number">224</span>, <span class="number">224</span>, requires_grad=<span class="literal">True</span>)</span><br><span class="line">torch_out = torch_model(x)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Export the model</span></span><br><span class="line">torch.onnx.export(torch_model,               <span class="comment"># model being run</span></span><br><span class="line">                  x,                         <span class="comment"># model input (or a tuple for multiple inputs)</span></span><br><span class="line">                  <span class="string">&quot;super_resolution.onnx&quot;</span>,   <span class="comment"># where to save the model (can be a file or file-like object)</span></span><br><span class="line">                  export_params=<span class="literal">True</span>,        <span class="comment"># store the trained parameter weights inside the model file</span></span><br><span class="line">                  opset_version=<span class="number">10</span>,          <span class="comment"># the ONNX version to export the model to</span></span><br><span class="line">                  do_constant_folding=<span class="literal">True</span>,  <span class="comment"># whether to execute constant folding for optimization</span></span><br><span class="line">                  input_names = [<span class="string">&#x27;input&#x27;</span>],   <span class="comment"># the model&#x27;s input names</span></span><br><span class="line">                  output_names = [<span class="string">&#x27;output&#x27;</span>], <span class="comment"># the model&#x27;s output names</span></span><br><span class="line">                  verbose = <span class="literal">True</span>,            <span class="comment"># onnx op 显示代码位置</span></span><br><span class="line">                  dynamic_axes=&#123;<span class="string">&#x27;input&#x27;</span> : &#123;<span class="number">0</span> : <span class="string">&#x27;batch_size&#x27;</span>&#125;,    <span class="comment"># variable length axes</span></span><br><span class="line">                                <span class="string">&#x27;output&#x27;</span> : &#123;<span class="number">0</span> : <span class="string">&#x27;batch_size&#x27;</span>&#125;&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="model-info"><a href="#model-info" class="headerlink" title="model info"></a>model info</h2><ol>
+<li>需要 model.eval()； 不会打印 dropout 层, 不启用 Batch Normalization 和 Dropout</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/TylerYep/torchinfo">torchinfo</a></li>
+<li><code>summary(model, [(1, 1, 32000), (1,1,32000), (1, 1, 32000), (1,1,32000)], dtypes=[torch.long, torch.long, torch.long, torch.long])</code></li>
+</ol>
+<h2 id="tools"><a href="#tools" class="headerlink" title="tools"></a>tools</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/pytorch/captum">captum</a> Model interpretability and understanding for PyTorch</li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/intermediate/tensorboard_tutorial.html">tensorboard_tutorial</a></li>
+</ol>
+<h2 id="samples"><a href="#samples" class="headerlink" title="samples"></a>samples</h2><ol start="2">
+<li>量化模型</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://docs.github.com/zh/actions/quickstart">官方文档</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/marketplace?type=actions">action samples</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/onnxruntime/blob/main/README.md">readme show build status</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/taskflow/taskflow/tree/master/.github/workflows">taskflow samples</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/250534172">基于 Github Action 的 CI&#x2F;CD 流程</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/pytorch/tutorials/tree/main">tutorials</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/distributed/home.html">分布式训练</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/basics/tensorqs_tutorial.html">tutorials</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/index.html">docs</a></li>
+<li><a target="_blank" rel="noopener" href="https://yiyibooks.cn/yiyibooks/pytorch_131/index.html">中文</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/06/08/colab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/06/08/colab/" class="post-title-link" itemprop="url">colab</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-06-08 17:16:31" itemprop="dateCreated datePublished" datetime="2023-06-08T17:16:31+08:00">2023-06-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/06/08/colab/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/06/08/colab/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>23</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="link"><a href="#link" class="headerlink" title="link"></a>link</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://colab.research.google.com/notebooks/snippets/importing_libraries.ipynb">importing_libraries</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/06/08/roadmap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/06/08/roadmap/" class="post-title-link" itemprop="url">roadmap</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-06-08 13:04:42" itemprop="dateCreated datePublished" datetime="2023-06-08T13:04:42+08:00">2023-06-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-07-09 15:00:33" itemprop="dateModified" datetime="2024-07-09T15:00:33+08:00">2024-07-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Others/" itemprop="url" rel="index"><span itemprop="name">Others</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Others/Roadmap/" itemprop="url" rel="index"><span itemprop="name">Roadmap</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/06/08/roadmap/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/06/08/roadmap/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="如何成为资深-AI-推理软件工程师-chatgpt"><a href="#如何成为资深-AI-推理软件工程师-chatgpt" class="headerlink" title="如何成为资深 AI 推理软件工程师(chatgpt)"></a>如何成为资深 AI 推理软件工程师(chatgpt)</h2><p>成为资深 AI 推理软件工程师需要具备以下关键步骤和能力：</p>
+<ol>
+<li>建立扎实的 AI 基础：首先，建立扎实的人工智能基础知识。深入了解机器学习和深度学习的基本概念、算法和原理，包括神经网络、优化算法、模型评估等。</li>
+<li>学习推理引擎和框架：研究和学习不同的 AI 推理引擎和框架，如 TensorRT、OpenVINO、TVM 等。了解它们的特点、优化技术和部署方法，熟悉使用它们进行模型推理的流程和工具。</li>
+<li>实践推理项目：通过实践推理项目来应用所学的知识。参与真实的 AI 推理项目，涉及模型优化、推理性能调优、模型部署等方面。通过实践，积累经验并提升自己在 AI 推理软件工程方面的能力。</li>
+<li>熟悉硬件加速和优化技术：AI 推理软件工程师需要了解硬件加速和优化技术，如 GPU、FPGA 等。学习并熟悉如何利用硬件加速器进行模型推理的优化，包括模型转换、量化、融合等技术。</li>
+<li>深入了解模型优化和压缩：掌握模型优化和压缩的技术，以减小模型的大小和计算量，提高推理性能。了解剪枝、量化、知识蒸馏等技术，并能够应用到实际项目中。</li>
+<li>掌握性能分析和调优工具：熟悉性能分析和调优工具，如 TensorBoard、NVIDIA Nsight 等。能够使用这些工具来分析和调优模型推理的性能瓶颈，并做出相应的优化策略。</li>
+<li>深入理解模型部署和集成：了解模型部署和集成的流程和工具。掌握常见的部署方式，如嵌入式设备、边缘计算平台、云平台等，能够将优化后的模型成功部署到目标平台上。</li>
+<li>持续学习和关注最新技术：AI 领域发展迅速，持续学习和关注最新的技术和研究成果至关重要。阅读相关的学术论文、技术博客、研讨会等，保持对新技术和方法的敏感度</li>
+</ol>
+<p>要成为 AI 推理软件专家，可以采取以下步骤：</p>
+<ol>
+<li>建立扎实的 AI 基础知识：深入学习机器学习和深度学习的基本理论、算法和模型。了解常见的神经网络结构和优化算法，如卷积神经网络、循环神经网络、注意力机制等。</li>
+<li>学习推理引擎和框架：熟悉不同的 AI 推理引擎和框架，如 TensorRT、OpenVINO、ONNX Runtime 等。了解它们的特点、优化技术和部署方法，掌握使用它们进行模型推理和优化的技巧。</li>
+<li>实践推理项目：参与实际的 AI 推理项目，从数据预处理、模型选择、推理性能优化等方面积累实践经验。通过实践中的挑战和解决方案，提升在 AI 推理软件工程中的能力。</li>
+<li>研究模型优化和压缩技术：深入研究模型优化和压缩技术，如剪枝、量化、蒸馏等。了解如何减小模型的大小和计算量，提高推理性能，并能够应用这些技术来优化和压缩模型。</li>
+<li>掌握性能分析和调优工具：熟悉性能分析和调优工具，如 TensorBoard、Profiler 等。学会使用这些工具来分析和评估模型的推理性能，并针对性地进行调优。</li>
+<li>深入了解硬件加速和优化技术：了解常见的硬件加速器，如 GPU、FPGA 等，并学习如何充分利用硬件加速器提高模型推理的效率和速度。掌握硬件相关的优化技术和工具。</li>
+<li>持续学习和追踪最新技术：AI 领域发展迅速，保持学习和追踪最新技术和研究成果非常重要。阅读学术论文、参加研讨会和会议，关注业界领先公司的技术博客和公开项目，与其他专家进行交流和讨论。</li>
+<li>实践和贡献开源项目：参与开源项目，为 AI 推理软件的开发和优化做出贡献。通过与开源社区的合作和分享，不断提升自己的技能和知识，并展示自己在 AI 推理软件方面的专业能力。</li>
+<li>与领域专家合作：寻求与领域内的专家合作和交流，参与相关的研究团队或实验室，共同探讨和解决 AI 推理软件领域的问题。与其他专家的合作将加速个人成长和知识积累。</li>
+</ol>
+<p>通过持续的学习、实践和不断提升自身能力，成为 AI 推理软件专家需要一定的时间和经验积累，但坚持不懈和热爱学习将助您在这个领域取得成功。</p>
+<h2 id="如何学习推理优化技术"><a href="#如何学习推理优化技术" class="headerlink" title="如何学习推理优化技术"></a>如何学习推理优化技术</h2><p>要学习推理优化技术，可以按照以下步骤进行：</p>
+<ol>
+<li>建立基础知识：首先，建立对深度学习模型推理的基本理解。了解常用的深度学习框架，如 TensorFlow、PyTorch 等，以及它们的推理过程和优化方法。掌握深度学习模型的基本结构和常用的推理算法。</li>
+<li>学习推理优化技术的理论：深入学习推理优化技术的理论知识。这包括模型剪枝、量化、蒸馏、深度压缩等技术。了解这些技术的原理、优势和适用场景。阅读相关的学术论文、研究报告和专业书籍，掌握推理优化技术的最新研究成果。</li>
+<li>掌握推理优化工具和框架：学习使用推理优化工具和框架，如 TVM、ONNX Runtime、NVIDIA TensorRT 等。了解它们的使用方法、API 接口和优化技术支持。通过实际操作和示例代码，掌握如何在具体的环境中应用推理优化技术。</li>
+<li>实践项目和案例研究：选择一些实际的项目和案例，应用推理优化技术进行实践研究。可以使用开源数据集和模型，尝试不同的推理优化方法，并进行性能对比和评估。通过实践项目，加深对推理优化技术的理解和掌握。</li>
+<li>参加培训和研讨会：参加相关的培训课程、研讨会和工作坊，了解推理优化技术的最新进展和应用实践。这些培训活动通常由专业机构、学术界和工业界组织举办，提供专业指导和实际操作经验。</li>
+<li>加入社区和论坛：加入相关的学术社区、开发者论坛和技术交流平台，与其他学习者和专家进行交流和讨论。这些社区和论坛提供了学习资源、问题解答和经验分享，可以获取更多的学习资料和实践建议。</li>
+<li>持续学习和实践：推理优化技术是一个不断发展和演进的领域，需要持续学习和实践。跟踪最新的研究成果和技术进展，参与相关的竞赛和挑战，与行业内的专家保持联系，不断提升自己的技能和知识水平。<br>总之，学习推理优化技术需要坚实的基础知识、实践项目的经验和与专家的交流。通过不断学习和实践，逐步提升自己的技能，成为一名熟练的推理优化技术专家。</li>
+</ol>
+<h2 id="如何学习推理框架"><a href="#如何学习推理框架" class="headerlink" title="如何学习推理框架"></a>如何学习推理框架</h2><p>学习推理框架的步骤如下：</p>
+<ol>
+<li>确定学习目标：明确你想学习的推理框架，如 TensorRT、ONNX Runtime、OpenVINO 等。了解每个框架的特点、适用场景和优势，选择符合你学习目标和需求的框架。</li>
+<li>学习基础知识：掌握深度学习的基础知识，包括神经网络的结构、训练和推理过程等。了解常见的深度学习框架，如 TensorFlow、PyTorch 等，并学习它们的基本使用方法和 API。</li>
+<li>框架官方文档：查阅所选推理框架的官方文档。官方文档是学习和使用框架的最重要资源，其中包含框架的详细说明、API 文档、示例代码和教程。仔细阅读官方文档，了解框架的功能、接口和使用方法。</li>
+<li>在线教程和视频：寻找相关的在线教程和视频资源。许多推理框架提供官方的在线教程，可以帮助你快速入门和掌握基本操作。此外，还可以搜索其他人分享的教程和视频，如博客文章、YouTube 视频等。</li>
+<li>实践项目：选择一些实际的项目来应用所学的推理框架。可以使用开源的深度学习模型和数据集，将它们加载到推理框架中，进行模型推理和结果分析。通过实践项目，加深对框架的理解和掌握。</li>
+<li>社区交流和讨论：参与相关的开发者社区和技术论坛，与其他学习者和专家进行交流和讨论。这些社区和论坛提供了宝贵的学习资源、问题解答和经验分享，可以从中获得更多的学习资料和实践建议。</li>
+<li>持续学习和更新：推理框架和相关技术在不断发展和更新，保持学习的持续性非常重要。关注最新的技术进展、研究成果和开发者社区的动态，了解最新的框架版本和功能，不断更新自己的知识和技能。</li>
+</ol>
+<h2 id="如何学习-python"><a href="#如何学习-python" class="headerlink" title="如何学习 python"></a>如何学习 python</h2><p>成为 Python 专家需要付出一定的努力和持续的学习。以下是一些建议：</p>
+<ol>
+<li>扎实的基础知识：掌握 Python 的基础知识，包括语法、数据类型、流程控制、函数、模块等。理解 Python 的核心概念和特性，建立坚实的基础。</li>
+<li>深入学习核心库：熟悉 Python 的核心库，如 NumPy、Pandas、Matplotlib 等。这些库是 Python 数据分析和科学计算的基石，深入学习它们的使用方法和高级特性。</li>
+<li>探索常用库和框架：学习并熟悉 Python 的常用库和框架，如 Django、Flask、TensorFlow、PyTorch 等。了解它们的特点、用途和 API，能够使用它们构建实际项目。</li>
+<li>阅读优秀的 Python 代码：阅读优秀的 Python 代码可以帮助你学习和理解高效、优雅的编程风格和技巧。参考开源项目、博客文章、书籍等资源，学习其他 Python 专家的实际应用。</li>
+<li>实践项目：选择一些实际的项目来应用 Python 技术。通过实践项目，深入理解 Python 在不同领域的应用，掌握解决问题的实际方法和技巧。</li>
+<li>参与社区和开源项目：积极参与 Python 开发者社区和开源项目。与其他 Python 专家交流和讨论，分享自己的经验和知识。通过参与开源项目，提升自己的编码能力和项目管理能力。</li>
+<li>持续学习和更新：Python 生态系统在不断发展和更新，保持学习的持续性非常重要。关注最新的 Python 版本、库和框架的发布，了解最新的技术趋势和最佳实践。</li>
+<li>掌握调试和性能优化技巧：学会使用调试工具和技巧来解决代码中的问题。了解 Python 的性能优化技巧，提高代码的执行效率和资源利用率。</li>
+<li>教学和分享经验：通过教学和分享经验，巩固自己的知识，并帮助其他人学习 Python。可以编写博客文章、教程，参与技术分享活动等。<br>最重要的是保持对 Python 的热情和持续的学习态度。不断学习新知识，探索新技术，并将其应用到实际项目中，才能逐步成为 Python 专家。</li>
+</ol>
+<h2 id="AI-推理框架"><a href="#AI-推理框架" class="headerlink" title="AI 推理框架"></a>AI 推理框架</h2><p>AI 推理框架是用于部署和执行训练好的深度学习模型进行推理（预测）的软件工具。这些框架提供了一套接口和工具，使得将训练好的模型部署到生产环境中变得更加容易和高效。<br>以下是一些常见的 AI 推理框架：</p>
+<ol>
+<li>TensorFlow：由 Google 开发的开源深度学习框架，提供了高度灵活的图计算模型和丰富的工具和库。TensorFlow 的推理部分包括 TensorFlow Serving 和 TensorFlow Lite，用于在服务器和嵌入式设备上进行推理。</li>
+<li>PyTorch：由 Facebook 开发的开源深度学习框架，提供了动态图计算模型和易用性。PyTorch 的推理部分包括 TorchScript 和 TorchServe，用于在生产环境中进行高性能推理。</li>
+<li>ONNX：开放神经网络交换格式（Open Neural Network Exchange），是一种开放的中间表示格式，可用于在不同的深度学习框架之间转换和共享模型。ONNX 定义了一套通用的推理规范，使得模型能够在支持 ONNX 的框架中进行部署和执行。</li>
+<li>TensorRT：英伟达（NVIDIA）推出的推理加速引擎，针对英伟达 GPU 进行了优化。TensorRT 通过网络优化、低精度推理和并行计算等技术，提供高性能和低延迟的深度学习推理能力。</li>
+<li>OpenVINO：英特尔（Intel）推出的开放式视觉推理和神经网络优化工具包，用于在英特尔硬件上进行高效的深度学习推理。OpenVINO 支持多种模型优化技术，包括量化、剪枝和硬件加速等。<br>这些 AI 推理框架都有各自的特点和优势，选择合适的框架取决于你的应用需求、硬件平台和编程偏好。学习和掌握这些框架可以帮助你有效地进行深度学习模型的推理部署，并实现高性能和高效能的预测任务。</li>
+</ol>
+<h2 id="collect"><a href="#collect" class="headerlink" title="collect"></a>collect</h2><ol>
+<li>模型部署<ul>
+<li><a target="_blank" rel="noopener" href="https://mmdeploy.readthedocs.io/zh-cn/latest/tutorial/01_introduction_to_model_deployment.html">(good)mmdeploy 文档</a></li>
+<li>Transform DNNs to Low Level Code: <code>model -&gt; graph -&gt; kernel -&gt; device</code> <a target="_blank" rel="noopener" href="https://www.jokeren.tech/slides/triton_next.pdf">triton next</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://microsoft.github.io/AI-System/SystemforAI-8-Inference.pdf">部署优化</a><ul>
+<li>延迟优化<ul>
+<li>量化</li>
+<li>剪枝</li>
+<li>layer or tensor fusion</li>
+<li>内存优化</li>
+<li>调度优化</li>
+<li>cache</li>
+</ul>
+</li>
+<li>吞吐优化<ul>
+<li>batch</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://microsoft.github.io/AI-System/SystemforAI-9-Compilation%20and%20Optimization.pdf">(very good)神经网络编译器优化</a><ul>
+<li>计算图优化(graph)</li>
+<li>内存优化</li>
+<li>调度优化</li>
+<li>kernel 优化 - 算子表示与调度逻辑分离 - 自动调度搜索与代码生成<br><img src="https://i.ibb.co/mHM8NPV/pl-Uhf-F2-HIN.png" alt="架构图"></li>
+</ul>
+</li>
+<li>深度学习基础, 熟悉常见的模型架构，先不用管精度，专注在推理和性能<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/mlabonne/llm-course">llm-course</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.d2l.ai/">李沐《动手学深度学习》</a></li>
+<li>李宏毅</li>
+<li><a target="_blank" rel="noopener" href="https://www.kaggle.com/learn">kaggle learn</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/chenzomi12/DeepLearningSystem">DeepLearningSystem</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/generative-ai-for-beginners">microsoft&#x2F;generative-ai-for-beginners</a> 注意仓库里有中文翻译</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/AI-For-Beginners">AI-For-Beginners</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/@statquest">statquest</a></li>
+</ul>
+</li>
+<li>大模型推理<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/karpathy/llm.c">llm.c</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM">TensorRT-LLM</a> faster transformer 后续</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mlc-ai/mlc-llm">mlc-ai&#x2F;mlc-llm</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/karpathy/llama2.c">llama2.c</a> 可以放到 chatgpt 中解释基本流程</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ggerganov/llama.cpp">llama.cpp</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/DeepSpeed">DeepSpeed</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ggerganov/ggml">ggerganov&#x2F;ggml</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nomic-ai/gpt4all">nomic-ai&#x2F;gpt4all</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/vllm-project/vllm">vllm</a><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.google.com/presentation/d/1QL-XPFXiFpDBh86DbEegFXBXFXjix4v032GhShbKf3s/edit#slide=id.g24ad94a0065_0_209">slides</a></li>
+<li>In vLLM, we identify that the performance of LLM serving is bottlenecked by memory.</li>
+<li><a target="_blank" rel="noopener" href="https://blog.vllm.ai/2023/06/20/vllm.html">blog</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/huggingface/text-generation-inference">TGI: huggingface&#x2F;text-generation-inference</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Mozilla-Ocho/llamafile">Mozilla-Ocho&#x2F;llamafile</a></li>
+<li><a target="_blank" rel="noopener" href="https://ggml.ai/">GGML - AI at the edge</a></li>
+</ul>
+</li>
+<li>大模型推理优化<ul>
+<li>xformers, flash attention</li>
+<li><a target="_blank" rel="noopener" href="https://www.databricks.com/blog/llm-inference-performance-engineering-best-practices">LLM Inference Performance Engineering: Best Practices</a><ul>
+<li>Our goal? <code>The fastest time to first token, the highest throughput, and the quickest time per output token</code>. In other words, we want our models to generate text as fast as possible for as many users as we can support.</li>
+<li>Optimizing LLM inference benefits from general techniques such as: Operator Fusion, Quantization, Compression, Parallelization, KV caching</li>
+<li>Identify your optimization target: Do you care about interactive performance? Maximizing throughput? Minimizing cost? There are predictable trade-offs here.</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=7WeraZ0LLlg">韩松大模型优化介绍</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/tree/main?tab=readme-ov-file#key-features">TensorRT-LLM key-features</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cvmart.net/community/detail/7069">一文总结当下常用的大型 transformer 效率优化方案</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mit-han-lab/streaming-llm">mit-han-lab&#x2F;streaming-llm</a> 韩松论文</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/655325832">LLM 推理优化技术综述：KVCache、PageAttention、FlashAttention、MQA、GQA</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/DeepSpeed/blob/master/blogs/deepspeed-fastgen/chinese/README.md">DeepSpeed-FastGen：通过 MII 和 DeepSpeed-Inference 实现 LLM 高吞吐量文本生成</a></li>
+<li>推理性能关键在： 矩阵乘法， kv cache 索引， embedding 索引（数据库技术）</li>
+<li>NCCL is a communication framework used by PyTorch to do distributed training&#x2F;inference. text-generation-inference make use of NCCL to enable Tensor Parallelism to dramatically speed up inference for large language models.</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/651359908">大模型推理妙招—投机采样（Speculative Decoding）</a><ul>
+<li>大小模型：小模型运行 n 次，大模型运行一次(输入为 n 次的拼接，利用 batch，多 batch 的延迟和单 batch 相差不大)，如果两个结果相差不多，接收，如果相差较大, 从相差较大的 token 重新生成，大模型的输出作为该位置的输出</li>
+</ul>
+</li>
+<li>矩阵运算：<ul>
+<li>GEMM</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass">cutlass</a></li>
+</ul>
+</li>
+<li>token merging</li>
+<li>diffusers 加速技术<ul>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/diffusers/tutorials/fast_diffusion#accelerate-inference-of-text-to-image-diffusion-models">accelerate-inference-of-text-to-image-diffusion-models</a></li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/diffusers/optimization/fp16">diffusers&#x2F;optimization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>大模型量化<ul>
+<li>韩松视频</li>
+</ul>
+</li>
+<li>大模型训练（选）<ul>
+<li>finetune</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/Megatron-LM">NVIDIA&#x2F;Megatron-LM</a></li>
+</ul>
+</li>
+<li>onnx<ul>
+<li>熟悉规范</li>
+</ul>
+</li>
+<li>onnx runtime<ul>
+<li>推理</li>
+<li>模型优化， 量化</li>
+</ul>
+</li>
+<li>TVM</li>
+<li>MLIR IREE</li>
+<li>TensorRT<ul>
+<li>各种教程</li>
+<li>c++ 推理接口, sample, plugin</li>
+</ul>
+</li>
+<li>pytorch<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/pytorch/tutorials/tree/main">tutorials</a></li>
+</ul>
+</li>
+<li>模型优化和压缩技术(剪枝、量化、 蒸馏)</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Tencent/ncnn">ncnn</a></li>
+<li>Modular vs OctoML (MLIR vs TVM)<ul>
+<li>OctoML: 是一个真正的“输入模型，自动化输出硬件和软件”，而且随时可以部署</li>
+</ul>
+</li>
+<li>LLVM<ul>
+<li>学习模块化</li>
+</ul>
+</li>
+<li>汇编</li>
+<li>neon</li>
+<li>dsp</li>
+<li>gpu cuda 加速</li>
+<li>计算机体系结构</li>
+<li>熟悉常用的算子</li>
+<li>chatgpt 使用: vscode …</li>
+<li>线性代数</li>
+<li>python</li>
+<li>性能优化</li>
+<li>推理两大主题： 内存管理(onnx runtime tensor) + 调度(onnx runtime session)</li>
+<li>内存管理<ul>
+<li><a target="_blank" rel="noopener" href="https://arjunsreedharan.org/post/148675821737/memory-allocators-101-write-a-simple-memory">memory-allocators-101-write-a-simple-memory</a></li>
+<li>malloc 源码</li>
+</ul>
+</li>
+<li>调度</li>
+</ol>
+<ul>
+<li>dag</li>
+</ul>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/column/frozengene">深度学习推理引擎的一些思考</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/kamranahmedse/developer-roadmap">developer-roadmap</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzU5ODY2MTk3Nw==&mid=2247492618&idx=1&sn=a20f4828b9ab3e3cee3fedfd906e0eb2&chksm=fe426a3cc935e32a8312ce9efbb4f2640787508d3e811579bbffe918685cdb07a8bd8e3ffc4b&scene=132&exptype=timeline_recommend_article_extendread_samebiz#wechat_redirect">LLVM 之父 Chris Lattner：我的 AI 基础设施软件构建理念</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzU5ODY2MTk3Nw==&mid=2247487015&idx=1&sn=04282e2d15eca05eb56062062b46e781&chksm=fe418011c9360907048966af43299fa55b570c9d634c4bcdb3702c6e4d8101a72ef07d5ec77f&scene=21#wechat_redirect">TVM：成为深度学习领域的“Linux”</a></li>
 </ol>
 
       
@@ -1390,7 +1953,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1458,7 +2021,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">175</span>
+          <span class="site-state-item-count">190</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1491,19 +2054,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
+          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
+          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -1541,13 +2104,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">484k</span>
+    <span title="站点总字数">543k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:20</span>
+    <span title="站点阅读时长">8:13</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

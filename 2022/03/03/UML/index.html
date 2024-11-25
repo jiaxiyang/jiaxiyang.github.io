@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://pica.zhimg.com/v2-941a070601f399d992125ef31261637e_1440w.jpg?source=172ae18b">
 <meta property="article:published_time" content="2022-03-02T18:32:22.000Z">
-<meta property="article:modified_time" content="2023-10-07T05:50:16.067Z">
+<meta property="article:modified_time" content="2024-09-05T02:46:13.606Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="UML">
 <meta name="twitter:card" content="summary">
@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-07 13:50:16" itemprop="dateModified" datetime="2023-10-07T13:50:16+08:00">2023-10-07</time>
+                <time title="修改时间：2024-09-05 10:46:13" itemprop="dateModified" datetime="2024-09-05T10:46:13+08:00">2024-09-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -274,14 +274,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.5k</span>
+              <span>3.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -485,9 +485,15 @@ Bob--&gt;&gt;John: Jolly good!
 <li><a target="_blank" rel="noopener" href="https://itopic.org/graphviz.html">属性</a></li>
 <li><a target="_blank" rel="noopener" href="http://www.graphviz.org/gallery/">samples</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.zywvvd.com/notes/tools/graphviz/graphviz/">Graphviz 使用教程</a></li>
+<li>流程图条件分支连接线不居中的原因是 portpos 不对齐</li>
 <li>sample</li>
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">digraph test123 &#123;</span><br><span class="line">        pack=8</span><br><span class="line">        subgraph cluster0 &#123;</span><br><span class="line">          packmode=array</span><br><span class="line">          x y x0 y0 x1</span><br><span class="line">          subgraph cluster1 &#123;</span><br><span class="line">            m n</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        b [shape=box];</span><br><span class="line">        c [label=&quot;helloenworld&quot;,color=blue,fontsize=24,</span><br><span class="line">             fontname=&quot;Palatino-Italic&quot;,fontcolor=red,style=filled];</span><br><span class="line">        a -&gt; z</span><br><span class="line">        x -&gt; z</span><br><span class="line">        a -&gt; b -&gt; c;</span><br><span class="line">        a -&gt; &#123;x y&#125;;</span><br><span class="line">        edge [style=dashed,color=red];</span><br><span class="line">        b -&gt; x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>颜色, 给 node 加上属性</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">digraph G &#123;</span><br><span class="line">  node [style=filled, color=&quot;#999999&quot;, fillcolor=&quot;#eeeeee&quot;]; edge [color=&quot;#666666&quot;];</span><br><span class="line">  node [</span><br><span class="line">    style=&quot;filled&quot;</span><br><span class="line">    color=&quot;#9370db&quot;</span><br><span class="line">    fillcolor=&quot;#ececff&quot;</span><br><span class="line">  ]</span><br><span class="line">  start -&gt; a0;</span><br><span class="line">  start -&gt; b0;</span><br><span class="line">  a1 -&gt; b3;</span><br><span class="line">  b2 -&gt; a3;</span><br><span class="line">  a3 -&gt; a0;</span><br><span class="line">  a3 -&gt; end;</span><br><span class="line">  b3 -&gt; end;</span><br><span class="line"></span><br><span class="line">  start [shape=Mdiamond];</span><br><span class="line">  end [shape=Msquare];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="doxygen-生成-UML"><a href="#doxygen-生成-UML" class="headerlink" title="doxygen 生成 UML"></a>doxygen 生成 UML</h2><h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/shindo/p/5579191.html">关系</a></li>
@@ -614,7 +620,7 @@ Bob--&gt;&gt;John: Jolly good!
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">175</span>
+          <span class="site-state-item-count">190</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -647,19 +653,19 @@ Bob--&gt;&gt;John: Jolly good!
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
+          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
+          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -697,13 +703,13 @@ Bob--&gt;&gt;John: Jolly good!
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">484k</span>
+    <span title="站点总字数">543k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:20</span>
+    <span title="站点阅读时长">8:13</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

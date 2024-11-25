@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -199,7 +199,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/02/23/Gstreamer/">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/07/20/Cpp-concurrency-in-action/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/coder2.jpg">
@@ -213,7 +213,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/02/23/Gstreamer/" class="post-title-link" itemprop="url">Gstreamer</a>
+            <a href="/2021/07/20/Cpp-concurrency-in-action/" class="post-title-link" itemprop="url">Cpp-concurrency-in-action</a>
         </h2>
 
         <div class="post-meta">
@@ -223,14 +223,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2021-02-23 08:43:01" itemprop="dateCreated datePublished" datetime="2021-02-23T08:43:01+08:00">2021-02-23</time>
+              <time title="创建时间：2021-07-20 09:05:48" itemprop="dateCreated datePublished" datetime="2021-07-20T09:05:48+08:00">2021-07-20</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+                <time title="修改时间：2024-11-24 20:49:26" itemprop="dateModified" datetime="2024-11-24T20:49:26+08:00">2024-11-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -242,7 +242,7 @@
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Gstreamer/" itemprop="url" rel="index"><span itemprop="name">Gstreamer</span></a>
+                  <a href="/categories/Program/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a>
                 </span>
             </span>
 
@@ -255,8 +255,786 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2021/02/23/Gstreamer/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/02/23/Gstreamer/" itemprop="commentCount"></span>
+    <a title="valine" href="/2021/07/20/Cpp-concurrency-in-action/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/20/Cpp-concurrency-in-action/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://b-ok.lat/book/3688262/d57395?dsource=recommend&regionChanged=&redirect=4729105">C++ Concurrency in action 2</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/xiaoweiChen/CPP-Concurrency-In-Action-2ed-2019">C++ Concurrency in action Chinese</a></li>
+<li>多线程写共享数据时，需要加锁<code>const std::lock_guard&lt;std::mutex&gt; lock(results_len_mutex_);</code></li>
+<li>异步程序并行度跟有几个耗时的模块相关，例如：yolox 推理和后处理最耗时，异步并行度设为 2，做当前帧的后处理同时做下一帧的模型推理。</li>
+<li>异步需要考虑 timeout 问题， 可以使用 <code>condition_variable</code></li>
+<li>. 流控：</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="keyword">auto</span> time_start = std::chrono::steady_clock::<span class="built_in">now</span>();</span><br><span class="line"><span class="type">const</span> <span class="keyword">auto</span> time_end = std::chrono::steady_clock::<span class="built_in">now</span>();</span><br><span class="line"><span class="keyword">auto</span> cost_ms =</span><br><span class="line">    std::chrono::<span class="built_in">duration_cast</span>&lt;std::chrono::milliseconds&gt;(time_end - time_start);</span><br><span class="line">std::this_thread::<span class="built_in">sleep_for</span>(</span><br><span class="line">    std::chrono::<span class="built_in">milliseconds</span>(<span class="built_in">static_cast</span>&lt;<span class="type">int</span>&gt;(<span class="number">1000.0</span> / fps)) - cost_ms);</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-Hello-world-of-concurrency-in-C"><a href="#1-Hello-world-of-concurrency-in-C" class="headerlink" title="1. Hello, world of concurrency in C++"></a>1. Hello, world of concurrency in C++</h2><h3 id="1-1-并发是什么"><a href="#1-1-并发是什么" class="headerlink" title="1.1 并发是什么"></a>1.1 并发是什么</h3><ol>
+<li>多进程并发优点： 操作系统在进程间提供的保护操作和更高级别的通信机制，可以更容易编写安全的并发代码。还有一个优势，可以使用远程连接的方式，在不同的机器上运行独立的进程。</li>
+</ol>
+<h3 id="1-2-为什么使用并发"><a href="#1-2-为什么使用并发" class="headerlink" title="1.2 为什么使用并发"></a>1.2 为什么使用并发</h3><ol>
+<li><code>分离程序</code>： 将相互独立的部分分开就行操作。如 DVD 用户界面和播放功能应分离。</li>
+<li><code>性能</code>：两种方式：任务并行（将单一任务分成几部分并行）和数据并行（每个线程在不同的数据块上执行相同的操作）</li>
+</ol>
+<h4 id="1-2-1-什么时候不使用并发"><a href="#1-2-1-什么时候不使用并发" class="headerlink" title="1.2.1 什么时候不使用并发"></a>1.2.1 什么时候不使用并发</h4><ol>
+<li>收益比不上成本，除非潜在性能足够大，否则不使用并发，需要脑力成本和维护成本，代码更复杂，难以理解。</li>
+<li>资源有限： 太多线程的会耗尽资源。可以使用线程池进行优化。太多的线程上下文切换导致的性能损耗可能比增加线程的收益更多。</li>
+</ol>
+<h3 id="1-3-并发和多线程"><a href="#1-3-并发和多线程" class="headerlink" title="1.3 并发和多线程"></a>1.3 并发和多线程</h3><h4 id="1-3-1-C-多线程历史"><a href="#1-3-1-C-多线程历史" class="headerlink" title="1.3.1 C++多线程历史"></a>1.3.1 C++多线程历史</h4><ol>
+<li>C++98 标准不支持多线程，没有内存模型。</li>
+<li>各种非标准多线程库：MFC，Boost，大部分使用的是 RAII</li>
+</ol>
+<h4 id="1-3-2-支持并发"><a href="#1-3-2-支持并发" class="headerlink" title="1.3.2 支持并发"></a>1.3.2 支持并发</h4><ol>
+<li>C++11: <code>线程管理，共享数据保护，线程间同步操作，原子操作</code></li>
+<li>C++11 之后，C++标准支持多线程，也就是说可以跨平台编写高效，可移植的代码。编译器可以搞定具体平台，用户无需担心。</li>
+</ol>
+<h4 id="1-3-4-C-线程库的效率"><a href="#1-3-4-C-线程库的效率" class="headerlink" title="1.3.4 C++线程库的效率"></a>1.3.4 C++线程库的效率</h4><ol>
+<li>高级工具（使用高级 API, 抽象高）和低级工具（使用低级 API，抽象低)有开销差，即抽象代价（abstraction penalty)。C++标准库设计时尽量使得高级 API 和低级 API 具有相同的性能。</li>
+<li>低级工具：为了达到终极性能，需要提供给硬件打交道的低级 API。为了这个目的，形成了原子操作库。</li>
+<li>高级工具：为了使得编写多线程代码更简单。因为有额外的代码需要执行，这些工具会带来性能开销。</li>
+<li>如果很看重性能或者高级工具开销过高，可以通过低层工具来实现。绝大多数情况，有过高的复杂度和过大的出错率，来交换小幅度的性能收益是不划算的。</li>
+</ol>
+<h2 id="2-Managing-threads"><a href="#2-Managing-threads" class="headerlink" title="2. Managing threads"></a>2. Managing threads</h2><ol>
+<li>文件锁用在进程之间，线程之间锁不住，文件锁是应用于进程中的一种锁，由于多线程是通过修改文件描述符指向的文件结构体中的成员变量实现，所以文件锁不能用于线程之间。 见<a target="_blank" rel="noopener" href="https://docs.rs/fslock/0.1.6/fslock/struct.LockFile.html">fslock</a></li>
+</ol>
+<h3 id="2-5-线程标识"><a href="#2-5-线程标识" class="headerlink" title="2.5 线程标识"></a>2.5 线程标识</h3><ol>
+<li><code>std::this_thread::get_id()</code>获取当前线程的 ID.</li>
+</ol>
+<h2 id="3-Sharing-data-between-threads"><a href="#3-Sharing-data-between-threads" class="headerlink" title="3. Sharing data between threads"></a>3. Sharing data between threads</h2><ol>
+<li>错误的数据共享是多线程产生 bug 的主要原因。</li>
+<li><code>data race</code>: the specific type of race condition that arises because of concurrent modification to a single object</li>
+<li>数据竞争时间敏感，Bug 可能很难复现，很难查找。</li>
+</ol>
+<h3 id="3-2-使用互斥量"><a href="#3-2-使用互斥量" class="headerlink" title="3.2 使用互斥量"></a>3.2 使用互斥量</h3><ol>
+<li>访问共享数据前将数据锁住，访问结束将数据解锁。</li>
+<li>互斥量是 C++保护数据最通用的机制。</li>
+<li>互斥量问题： 死锁，对数据保护太多。</li>
+<li>一个互斥量只能用于一个资源的互斥访问。</li>
+<li>互斥量(互斥锁)本质上是一把锁。</li>
+</ol>
+<h4 id="3-2-1-互斥量"><a href="#3-2-1-互斥量" class="headerlink" title="3.2.1 互斥量"></a>3.2.1 互斥量</h4><ol>
+<li><code>std::mutex</code>创建互斥量，<code>lock</code>对互斥量上锁，unlock 为解锁。</li>
+<li>RAII 管理互斥量：C++标准库为互斥量提供了 RAII 模板类<code>std::lock_guard</code>，在构造时提供已锁的互斥量（lock_guard 对象在构造时对传进来的 mutex 上锁），并在析构时解锁，从而保证互斥量被正确的解锁。</li>
+<li>大多数情况下，互斥量通常会与需要保护的数据放在同一类中，而不是定义成全局变量。</li>
+<li>C++17 提供<code>std::scoped_lock</code>加强版的<code>std::lock_guard</code>, 可以接受多个参数。</li>
+</ol>
+<h4 id="3-2-4-死锁"><a href="#3-2-4-死锁" class="headerlink" title="3.2.4 死锁"></a>3.2.4 死锁</h4><ol>
+<li>死锁一般解决方法：按顺序上锁。要么将两个都锁住，要么一个都不锁。</li>
+<li><code>std::lock</code>能同时锁住多个互斥量。</li>
+<li>C++17 中的<code>std::scoped_lock&lt;&gt;</code>是一种新的 RAII 模板类型。能接受不定数量的互斥量类型作为模板参数。在构造 scoped_lock 对象时对传入的 mutex 上锁，析构时解锁。</li>
+<li><code>std::lock</code>锁上 mutex 之后不负责释放，还需要配合 lock_guard 或者手动释放 mutex。<code>std::scoped_lock</code>生命周期结束后会自动释放锁。</li>
+<li>C++17 特性：<code>自动推导模板参数</code>。可以简写为<code>std::scoped_lock lk(m1, m2);</code> 而不用写为<code>std::scoped_lock&lt;std::mutex, std::mutex&gt; lk(m1, m2);</code></li>
+</ol>
+<h3 id="atomic"><a href="#atomic" class="headerlink" title="atomic"></a>atomic</h3><ol>
+<li>从效率上来说，原子操作要比互斥量的方式效率要高。</li>
+<li>互斥量的加锁一般是针对一个代码段，而原子操作针对的一般都是一个变量。</li>
+<li>store 和 load 来赋值和读取， 除了初始化不要使用赋值</li>
+<li><a target="_blank" rel="noopener" href="https://zh.cppreference.com/w/cpp/atomic/atomic/is_lock_free">atomic 不一定免锁</a></li>
+<li>对结构体需要链接 <code>-latomic</code></li>
+<li><code>-fsanitize=thread</code>可以检测数据竞争</li>
+</ol>
+<h2 id="4-Synchronizing-concurrent-operations-on-atomic-types"><a href="#4-Synchronizing-concurrent-operations-on-atomic-types" class="headerlink" title="4. Synchronizing concurrent operations on atomic types"></a>4. Synchronizing concurrent operations on atomic types</h2><h3 id="4-1-等待时间或条件"><a href="#4-1-等待时间或条件" class="headerlink" title="4.1 等待时间或条件"></a>4.1 等待时间或条件</h3><ol>
+<li>当一个线程等待另一个线程完成时，有几种选择：<ul>
+<li>持续检查共享数据标志，浪费资源查询</li>
+<li>在等待线程时，使用<code>std::this_thread::sleep_for()</code>进行周期性间歇，节省执行时间，问题：很难确定休眠时间</li>
+<li>通过标准库提供的工具。例如：<code>condition variable</code></li>
+</ul>
+</li>
+</ol>
+<h4 id="condition-variable"><a href="#condition-variable" class="headerlink" title="condition_variable"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/wxj1992/article/details/116888582">condition_variable</a></h4><ol>
+<li>condition<em>variable 是一个类，搭配互斥量 mutex 来用，这个类有它自己的一些函数，这里就主要讲 wait 函数和 notify</em>*函数，故名思意，wait 就是有一个等待的作用，notify 就是有一个通知的作用。主要用法这里就不再赘述了，简而言之就是程序运行到 wait 函数的时候会先在此阻塞，然后自动 unlock，那么其他线程在拿到锁以后就会往下运行，当运行到 notify_one()函数的时候，就会唤醒 wait 函数，然后自动 lock 并继续下运行。</li>
+<li>wait 线程：当 condition 不满足的时候需要等待，直到条件满足了才做自己的事情。</li>
+<li>notify 线程：做完自己的事情后修改 condition 变量并唤醒等待线程。</li>
+<li>wait 时未持有锁，wait 之后占有锁</li>
+<li>wait 会先判断条件，如果满足，直接返回。</li>
+<li>wait_for() 解阻塞时获得 lock， 无论是 notify_all() 或 notify_one() 还是超时都会解阻塞。</li>
+<li><code>wait_for() 若经过 rel_time 时限后谓词 pred 仍求值为 false 则为 false ，否则为 true</code> 中途被通知后 pred 为 true 则直接返回 true，如果为 false，继续等待。</li>
+<li>先获得锁，再检测条件？</li>
+<li>解锁之后再 notify， 否则可能出现当前线程还未释放锁，被接收的线程被唤醒后拿不到锁立即就又休眠。</li>
+</ol>
+<h3 id="4-2-future"><a href="#4-2-future" class="headerlink" title="4.2 future"></a>4.2 future</h3><ol>
+<li>async（sender)函数是一种 promise,负责发送数据， future（receiver)负责接收数据。<code>future fut = async([]&#123;return 3+4;&#125;); cout &lt;&lt; fut.get() &lt;&lt; endl;</code></li>
+</ol>
+<h2 id="5-The-C-memory-model-and-operations-on-atomic-types"><a href="#5-The-C-memory-model-and-operations-on-atomic-types" class="headerlink" title="5. The C++ memory model and operations on atomic types"></a>5. The C++ memory model and operations on atomic types</h2><h3 id="5-1-内存模型"><a href="#5-1-内存模型" class="headerlink" title="5.1 内存模型"></a>5.1 内存模型</h3><h4 id="5-1-1-对象和内存模型"><a href="#5-1-1-对象和内存模型" class="headerlink" title="5.1.1 对象和内存模型"></a>5.1.1 对象和内存模型</h4><ol>
+<li>C++程序中数据都是由对象构成。</li>
+<li>每个变量都是对象</li>
+<li>每个对象至少占有一个内存位置。</li>
+</ol>
+<h4 id="5-1-2-对象，内存位置和并发"><a href="#5-1-2-对象，内存位置和并发" class="headerlink" title="5.1.2 对象，内存位置和并发"></a>5.1.2 对象，内存位置和并发</h4><ol>
+<li>当多个线程访问同一内存位置时，如果只读数据，不需要保护，如果有线程对数据进行修改，就可能会产生条件竞争。</li>
+<li>为了避免条件竞争，两个线程就要以一定的<code>顺序执行</code>。有两种方式：<code>互斥量</code>和<code>原子操作</code></li>
+</ol>
+<h3 id="5-2-原子操作和原子类型"><a href="#5-2-原子操作和原子类型" class="headerlink" title="5.2 原子操作和原子类型"></a>5.2 原子操作和原子类型</h3><ol>
+<li><code>原子操作</code>是不可分割的操作。系统的所有线程中，不可能观察到原子操作完成了一半，要么是做了，要么是没做，只有两种可能。非原子操作可能会被另一线程观察到只完成一半，如果是一个存储操作，那么其他线程看到的值，可能既不是存储前的值，也不是存储后的值。</li>
+<li>原子操作是一种操作（函数），互斥量（一种锁）是实现这种操作的一种方式。</li>
+</ol>
+<h4 id="5-2-1-标准的原子类型"><a href="#5-2-1-标准的原子类型" class="headerlink" title="5.2.1 标准的原子类型"></a>5.2.1 标准的原子类型</h4><ol>
+<li>标准的原子类型定义在头文件<code>&lt;atomic&gt;</code>中，这些类型操作都是原子的。</li>
+<li>可以使用互斥量来模拟原子操作。</li>
+<li>原子操作可以替代互斥量来完成同步操作。如果操作内部使用互斥量实现，那么不可能有性能提升，可以使用无锁数据结构来实现。</li>
+<li>通常标准的原子类型是不能进行拷贝和赋值的，他们没有拷贝构造函数和拷贝赋值函数。但是可以隐式的转化为内置类型进行赋值。</li>
+</ol>
+<h2 id="6-Designing-lock-based-concurrent-data-structures"><a href="#6-Designing-lock-based-concurrent-data-structures" class="headerlink" title="6. Designing lock-based concurrent data structures."></a>6. Designing lock-based concurrent data structures.</h2><h2 id="7-Designing-lock-free-concurrent-data-structures"><a href="#7-Designing-lock-free-concurrent-data-structures" class="headerlink" title="7. Designing lock-free concurrent data structures"></a>7. Designing lock-free concurrent data structures</h2><h2 id="8-Designing-concurrent-code"><a href="#8-Designing-concurrent-code" class="headerlink" title="8. Designing concurrent code"></a>8. Designing concurrent code</h2><h2 id="9-Advanced-thread-managment"><a href="#9-Advanced-thread-managment" class="headerlink" title="9. Advanced thread managment"></a>9. Advanced thread managment</h2><h2 id="10-Parallel-algorithms"><a href="#10-Parallel-algorithms" class="headerlink" title="10. Parallel algorithms"></a>10. Parallel algorithms</h2><h2 id="11-Testing-and-debugging-multithreaded-applications"><a href="#11-Testing-and-debugging-multithreaded-applications" class="headerlink" title="11. Testing and debugging multithreaded applications"></a>11. Testing and debugging multithreaded applications</h2><h2 id="others"><a href="#others" class="headerlink" title="others"></a>others</h2><h3 id="什么是临界区"><a href="#什么是临界区" class="headerlink" title="什么是临界区"></a>什么是临界区</h3><ol>
+<li>临界区(critical section)是指包含有共享资源的一段代码，这些代码可能被多个线程访问 或修改。 临界区的存在就是为了保证当有一个线程在临界区内执行的时候，不能有其他任何 线程被允许在临界区执行。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/07/11/Rust-grammar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/07/11/Rust-grammar/" class="post-title-link" itemprop="url">Rust grammar</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-07-11 18:34:03" itemprop="dateCreated datePublished" datetime="2021-07-11T18:34:03+08:00">2021-07-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-13 11:15:05" itemprop="dateModified" datetime="2024-01-13T11:15:05+08:00">2024-01-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/Rust/" itemprop="url" rel="index"><span itemprop="name">Rust</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/07/11/Rust-grammar/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/07/11/Rust-grammar/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>19k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>18 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="顶层概念"><a href="#顶层概念" class="headerlink" title="顶层概念"></a><a target="_blank" rel="noopener" href="https://www.infoq.cn/article/Uugi_eIJusEka1aSPmQM">顶层概念</a></h2><p><img src="https://static001.infoq.cn/resource/image/2d/91/2d36b45f6905a13a310e6447778ca391.jpg" alt="概念层次图"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/07/11/Rust-grammar/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/06/29/Bash-usage/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/29/Bash-usage/" class="post-title-link" itemprop="url">Tools and Linux Command</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-29 20:39:09" itemprop="dateCreated datePublished" datetime="2021-06-29T20:39:09+08:00">2021-06-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-22 14:15:26" itemprop="dateModified" datetime="2024-08-22T14:15:26+08:00">2024-08-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/Bash/" itemprop="url" rel="index"><span itemprop="name">Bash</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/29/Bash-usage/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/29/Bash-usage/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>14k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>13 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Useful-Tools-can-install-from-github-release"><a href="#Useful-Tools-can-install-from-github-release" class="headerlink" title="Useful Tools (can install from github release)"></a>Useful Tools (can install from github release)</h2><h3 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h3><ol>
+<li>滴答清单 windows + phone</li>
+<li>sticky 便利贴 <code>win+alt+t</code> always on top</li>
+<li><a target="_blank" rel="noopener" href="https://files.community/">files 文件管理器</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/PowerToys">PowerToys</a><ul>
+<li>color pick: win + shift + c</li>
+<li>鼠标荧光笔</li>
+</ul>
+</li>
+<li>罗技 master3 鼠标， 大拇指 + 左右， workspace 切换</li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/powertoys/run">PowerToys&#x2F;run 快速启动</a><ul>
+<li>alt + space</li>
+<li>search startup 开机启动</li>
+<li><code>ctl + win + A</code> app 置顶，超有用，配合任务栏使用, 点击任务栏最小化，置顶和最小化切换</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/terminal">windows terminal</a><ul>
+<li>win + &#96; 上半部分显示</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/QL-Win/QuickLook">windows quicklook 预览</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/QL-Win/QuickLook/wiki/Available-Plugins">quicklook plugins</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/hluk/CopyQ">CopyQ 粘贴板</a><ul>
+<li>F6</li>
+<li>win + v(系统自带)</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://zh.snipaste.com/index.html">snipaste 截图</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ShareX/ShareX">ShareX</a><ul>
+<li>tools OCR 图片文字识别</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/flameshot-org/flameshot">flameshot 截图工具</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.screentogif.com/">screentogif</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/sysinternals/downloads/zoomit">zoomit 投影演示 倒计时</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/wsl/install">WSL2</a></li>
+<li><a target="_blank" rel="noopener" href="https://dadroit.com/">Dadroit JSON Viewer</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/hellzerg/optimizer">Windows 优化器</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/zhongyang219/TrafficMonitor">TrafficMonitor</a></li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/29/Bash-usage/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/06/27/Elisp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/27/Elisp/" class="post-title-link" itemprop="url">Elisp</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-27 22:37:13" itemprop="dateCreated datePublished" datetime="2021-06-27T22:37:13+08:00">2021-06-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-10-12 19:22:48" itemprop="dateModified" datetime="2023-10-12T19:22:48+08:00">2023-10-12</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/27/Elisp/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/27/Elisp/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Useful-Command"><a href="#Useful-Command" class="headerlink" title="Useful Command"></a>Useful Command</h2><ol>
+<li>C-u before command to insert the result into the current buffer.</li>
+<li>crux-eval-and-replace 将表达式替换为结果， 例如(+ 1 1) -&gt; 2</li>
+<li>创建新 buffer: switch-to-buffer</li>
+<li>需要到命令行工作时，不用关闭 emacs, 使用 suspend-frame(C-z) 回到命令行，使用 fg 命令返回 emacs</li>
+</ol>
+<h2 id="grammer"><a href="#grammer" class="headerlink" title="grammer"></a>grammer</h2><ol>
+<li>(car list) first element</li>
+<li>(nth n list) nth element</li>
+<li>(car (last list)) last element</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(car (list &quot;a&quot; &quot;b&quot; &quot;c&quot;) )   ; &quot;a&quot;</span><br><span class="line">(nth 1 (list &quot;a&quot; &quot;b&quot; &quot;c&quot;) ) ; &quot;b&quot;</span><br><span class="line">(car (last (list &quot;a&quot; &quot;b&quot; &quot;c&quot;)) )   ; &quot;c&quot;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>(setq temp (append temp (list 1)))</code> addpend to list temp</li>
+<li>loop list</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(dolist (element (extract-rectangle start end)) ;; extract-rectangle to lists</span><br><span class="line">  (setq LIST (append LIST (split-string element)))) ;; apend to list</span><br></pre></td></tr></table></figure>
+
+<h2 id="functions"><a href="#functions" class="headerlink" title="functions"></a>functions</h2><ol>
+<li><code>(message &quot;%s=%d&quot; &quot;test&quot; 1)</code> minibuf 打印</li>
+<li><code> (split-string &quot;1 2 3 4&quot;)</code> &#x3D;&gt; (“1” “2” “3” “4”)</li>
+<li><code> (seq-map &#39;string-to-number (split-string &quot;1 2 3 4&quot;))</code> &#x3D;&gt; (1 2 3 4)</li>
+<li><code>(vconcat [] (split-string &quot;1.2.3&quot; &quot;\\.&quot;))</code> &#x3D;&gt; [“1” “2” “3”]</li>
+<li>max, min, sum and mean</li>
+<li><code>(extract-rectangle start end)</code> extract-rectangle to lists</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">(defun count-of-nums (xs)</span><br><span class="line">  (length xs))</span><br><span class="line"></span><br><span class="line">(defun min-of-nums (xs)</span><br><span class="line">  (apply #&#x27;min xs))</span><br><span class="line"></span><br><span class="line">(defun max-of-nums (xs)</span><br><span class="line">  (apply #&#x27;max xs))</span><br><span class="line"></span><br><span class="line">(defun sum-of-nums (xs)</span><br><span class="line">  (apply #&#x27;+ xs))</span><br><span class="line"></span><br><span class="line">(defun mean-of-nums (xs)</span><br><span class="line">  (float (/ (float (sum-of-nums xs))</span><br><span class="line">            (count-of-nums xs))))</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>对 region 进行统计，注意不能是 rectangle <a href="link">http://sugano-nu.github.io/emacs-lisp-stat-attitude/</a></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">(defun statistics-in-region (start end)</span><br><span class="line">  (interactive &quot;r&quot;)</span><br><span class="line">  (setq LIST (split-string (buffer-substring start end)))</span><br><span class="line">  (setq LIST (mapcar* #&#x27;(lambda (X) (math-read-number X)) LIST))</span><br><span class="line">  (message &quot;length:%s, mean:%s, variance:%s, standard deviation:%s, meidan:%s, max:%s, min:%s&quot;</span><br><span class="line">           (length LIST)</span><br><span class="line">           (math-format-number (calcFunc-vmean (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vvar (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vsdev (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmedian (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmax (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmin (cons &#x27;vec LIST)))))</span><br><span class="line"></span><br><span class="line">;; not chose a string with character, it will be as 0</span><br><span class="line">(defun statistics-in-rectangle (start end)</span><br><span class="line">  &quot;statistics-in-rectangle.&quot;</span><br><span class="line">  (interactive &quot;r&quot;)</span><br><span class="line">  (setq LIST nil)</span><br><span class="line">  (dolist (element (extract-rectangle start end)) ;; extract-rectangle to lists</span><br><span class="line">    (setq LIST (append LIST (split-string element)))) ;; apend to list</span><br><span class="line">  ;; (setq LIST (seq-map &#x27;string-to-number LIST)) ;;  convert to num</span><br><span class="line">  (setq LIST (mapcar* #&#x27;(lambda (X) (math-read-number X)) LIST))</span><br><span class="line">  (message &quot;length:%s, mean:%s, variance:%s, standard deviation:%s, meidan:%s, max:%s, min:%s&quot;</span><br><span class="line">           (length LIST)</span><br><span class="line">           (math-format-number (calcFunc-vmean (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vvar (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vsdev (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmedian (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmax (cons &#x27;vec LIST)))</span><br><span class="line">           (math-format-number (calcFunc-vmin (cons &#x27;vec LIST)))))</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>toggle function: cycle status</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">;; http://xahlee.info/emacs/emacs/elisp_toggle_command.html</span><br><span class="line">(defun company-toggle-delay (@n)</span><br><span class="line">  &quot;Company toggle idle delay.&quot;</span><br><span class="line">  (interactive &quot;p&quot;)</span><br><span class="line">  (let* (</span><br><span class="line">         ($values [0.2 nil])</span><br><span class="line">         ($index-before</span><br><span class="line">          (if (get &#x27;company-toggle-delay &#x27;state)</span><br><span class="line">              (get &#x27;company-toggle-delay &#x27;state)</span><br><span class="line">            0))</span><br><span class="line">         ($index-after (% (+ $index-before (length $values) @n) (length $values)))</span><br><span class="line">         ($next-value (aref $values $index-after)))</span><br><span class="line"></span><br><span class="line">    (put &#x27;company-toggle-delay &#x27;state $index-after)</span><br><span class="line">    (setq company-idle-delay  $next-value)</span><br><span class="line">    (message &quot;company idle delay to %s&quot; $next-value)))</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>if mode then</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(if (derived-mode-p &#x27;c++-mode)</span><br><span class="line">    (message &quot;The mode is on&quot;)</span><br><span class="line">    (message &quot;The mode is off&quot;)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>yes or no</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(if (yes-or-no-p &quot;Do you really want to remove everything?&quot;)</span><br><span class="line">    (message &quot;yes&quot;)</span><br><span class="line">    (message &quot;no&quot;))</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>auto add, commit and push</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">(defun aborn/simple-git-commit-push ()</span><br><span class="line">  &quot;Simple commit current git project and push to its upstream.&quot;</span><br><span class="line">  ;; (interactive &quot;sCommit Message: &quot;)</span><br><span class="line">  (interactive)</span><br><span class="line">  (when (and buffer-file-name</span><br><span class="line">             (buffer-modified-p))</span><br><span class="line">    (save-buffer))                   ;; save it first if modified.</span><br><span class="line">  (magit-diff-unstaged)</span><br><span class="line">  (when (yes-or-no-p &quot;Do you really want to commit everything?&quot;)</span><br><span class="line">    (magit-stage-modified)</span><br><span class="line">    ;; (magit-mode-bury-buffer)</span><br><span class="line">    (magit-diff-staged)</span><br><span class="line">    (setq msg (read-string &quot;Commit Message: &quot;))</span><br><span class="line">    (when (= 0 (length msg))</span><br><span class="line">      (setq msg (format-time-string &quot;commit by magit in emacs@%Y-%m-%d %H:%M:%S&quot;</span><br><span class="line">                                    (current-time))))</span><br><span class="line">    (message &quot;commit message is %s&quot; msg)</span><br><span class="line">    ;;(magit-commit (list &quot;-m&quot; msg))</span><br><span class="line">    (magit-call-git &quot;commit&quot; &quot;-m&quot; msg)</span><br><span class="line">    (magit-push-current-to-upstream nil)</span><br><span class="line">    (message &quot;now do async push to %s&quot; (magit-get &quot;remote&quot; &quot;origin&quot; &quot;url&quot;)))</span><br><span class="line">  (magit-mode-bury-buffer))</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://ergoemacs.org/emacs/elisp_basics.html">Xah 教程</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ksco/BuildYourOwnLispCn">BuildYourOwnLispCn</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/06/22/Haskell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/06/22/Haskell/" class="post-title-link" itemprop="url">Haskell</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-22 10:47:46" itemprop="dateCreated datePublished" datetime="2021-06-22T10:47:46+08:00">2021-06-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/06/22/Haskell/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/22/Haskell/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Higher-Order-Functions"><a href="#Higher-Order-Functions" class="headerlink" title="Higher Order Functions"></a>Higher Order Functions</h2><ol>
+<li>Haskell functions can take functions as parameters and return functions as return values. A function that does either of those is called a higher order function.</li>
+<li>Every function in Haskell officially only takes one parameter.</li>
+<li><code>map</code> takes a function and a list and applies that function to every element in the list, producing a new list.</li>
+<li><code>filter</code> is a function that takes a predicate (a predicate is a function that tells whether something is true or not, so in our case, a function that returns a boolean value) and a list and then returns the list of elements that satisfy the predicate.</li>
+<li><code>folds</code> They’re sort of like the map function, only they reduce the list to some <code>single value</code>.<br>1.<a target="_blank" rel="noopener" href="https://excalidraw.com/#json=5033777575231488,ixM2dP13DMyzxCvIDEpzqg">map, filter, fold 示意图</a></li>
+<li>map是一种抽象，屏蔽了对list操作的具体实现，不用关心是迭代或是递归实现的，只能感受到list每个元素都经过了转化，不用考虑控制结构，只需要考虑策略。(link: SICP)</li>
+</ol>
+<h2 id="Functors-Applicatives-And-Monads"><a href="#Functors-Applicatives-And-Monads" class="headerlink" title="Functors, Applicatives And Monads"></a>Functors, Applicatives And Monads</h2><ol>
+<li>defination</li>
+</ol>
+<figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class Functor f <span class="keyword">where</span></span><br><span class="line">    <span class="function"><span class="title">fmap</span> :: (a -&gt;</span> <span class="function"><span class="title">b</span>) -&gt;</span> <span class="function"><span class="title">f</span> a -&gt;</span> f b</span><br><span class="line"></span><br><span class="line">class (Functor f) =&gt; Applicative f <span class="keyword">where</span></span><br><span class="line">    <span class="function"><span class="title">pure</span> :: a -&gt;</span> f a</span><br><span class="line">    (&lt;*&gt;) :: <span class="function"><span class="title">f</span> (a -&gt;</span> <span class="function"><span class="title">b</span>) -&gt;</span> <span class="function"><span class="title">f</span> a -&gt;</span> f b</span><br><span class="line"></span><br><span class="line">class (Applicative m) =&gt; Monad m <span class="keyword">where</span></span><br><span class="line">    <span class="function"><span class="title">return</span> :: a -&gt;</span> m a</span><br><span class="line">    (&gt;&gt;=) :: <span class="function"><span class="title">m</span> a -&gt;</span> (<span class="function"><span class="title">a</span> -&gt;</span> <span class="function"><span class="title">m</span> b) -&gt;</span> m b</span><br><span class="line">    (&gt;&gt;) :: <span class="function"><span class="title">m</span> a -&gt;</span> <span class="function"><span class="title">m</span> b -&gt;</span> m b</span><br><span class="line">    <span class="function"><span class="title">x</span> &gt;&gt; y = x &gt;&gt;= \_ -&gt;</span> y</span><br><span class="line">    <span class="function"><span class="title">fail</span> :: String -&gt;</span> m a</span><br><span class="line">    fail msg = error msg</span><br><span class="line"></span><br><span class="line">class Monoid m <span class="keyword">where</span>  -- 注意是Monoid不是Monad</span><br><span class="line">    mempty :: m</span><br><span class="line">    <span class="function"><span class="title">mappend</span> :: m -&gt;</span> <span class="function"><span class="title">m</span> -&gt;</span> m</span><br><span class="line">    <span class="function"><span class="title">mconcat</span> :: [m] -&gt;</span> m</span><br><span class="line">    mconcat = foldr mappend mempty</span><br></pre></td></tr></table></figure>
+<ol>
+<li>type of fmap, (&lt;*&gt;) and (&gt;&gt;&#x3D;)</li>
+</ol>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fmap :: <span class="function"><span class="params">(Functor f)</span> =&gt; <span class="params">(a -&gt; b)</span> -&gt;</span> f a -&gt; f b           -- 先解f a封装到a, a -&gt; b, b再封装到f b; 操作<span class="number">2</span>次封装</span><br><span class="line"><span class="function"><span class="params">(&lt;*&gt;)</span> :: <span class="params">(Applicative f)</span> =&gt; <span class="title">f</span> <span class="params">(a -&gt; b)</span> -&gt;</span> f a -&gt; f b    -- 先解f a封装到a, 解f(a -&gt; b)封装， a -&gt; b, b再封装到f b; 操作<span class="number">3</span>次封装</span><br><span class="line"><span class="function"><span class="params">(&gt;&gt;=)</span> :: <span class="params">(Monad m)</span> =&gt; <span class="title">m</span> <span class="title">a</span> -&gt;</span> <span class="function"><span class="params">(a -&gt; m b)</span> -&gt;</span> m b          -- 先解m a封装到a, a -&gt; mb; 操作<span class="number">1</span>次封装</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>Functor, Applicative and Monad都是封装，可以封装原始类型。</li>
+<li>&lt;$&gt; 是 fmap 的中缀表达式版本</li>
+<li>functors: you apply a function to a wrapped value using fmap or &lt;$&gt;</li>
+<li>applicatives: you apply a wrapped function to a wrapped value using &lt;*&gt; or liftA</li>
+<li>monads: you apply a function that returns a wrapped value, to a wrapped value using &gt;&gt;&#x3D; or liftM</li>
+<li>conclusion</li>
+</ol>
+<ul>
+<li>A functor is a data type that implements the Functor typeclass.</li>
+<li>An applicative is a data type that implements the Applicative typeclass.</li>
+<li>A monad is a data type that implements the Monad typeclass.</li>
+<li>A Maybe implements all three, so it is a functor, an applicative, and a monad.</li>
+</ul>
+<ol start="9">
+<li>区别</li>
+</ol>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://learnyouahaskell.com/chapters">Learn you haskell book</a></li>
+<li><a target="_blank" rel="noopener" href="https://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html">Functors, Applicatives, And Monads In Pictures</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/05/21/Chrome-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/05/21/Chrome-config/" class="post-title-link" itemprop="url">Chrome shortcuts</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-05-21 15:56:05" itemprop="dateCreated datePublished" datetime="2021-05-21T15:56:05+08:00">2021-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-31 12:05:05" itemprop="dateModified" datetime="2024-01-31T12:05:05+08:00">2024-01-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/Chrome/" itemprop="url" rel="index"><span itemprop="name">Chrome</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/05/21/Chrome-config/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/05/21/Chrome-config/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -285,805 +1063,86 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Why-Gstreamer"><a href="#Why-Gstreamer" class="headerlink" title="Why Gstreamer"></a>Why Gstreamer</h2><ol>
-<li>构建一个视频分析应用，需要考虑的内容有：视频流获取、视频流解码、预处理、算法推理、数据编码、数据显示、数据传输等。常常需要引入一些第三方的开发包，如 OpenCV，FFmpeg，Caffe，TensorRT，OpenGL 等。GStreamer 是一个用于开发流式多媒体应用的跨平台开源框架，应用程序可以通过管道(Pipeline)的方式，<code>将多媒体处理的各个步骤串联起来</code>，达到预期的效果。</li>
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>对视频右键两次，选择画中画模式，方便记笔记</li>
+<li><a target="_blank" rel="noopener" href="https://lazy-guy.github.io/tomodoro/index.html">番茄时钟画中画</a></li>
 </ol>
-<h2 id="Gstreamer"><a href="#Gstreamer" class="headerlink" title="Gstreamer"></a>Gstreamer</h2><ol>
-<li><code>核心</code>为<code>Pipeline</code>框架以及用于扩展功能的<code>Plugins</code>。plugin 负责实现音视频传输协议、音视频输入输出源、音视频编解转码等真实的媒体处理功能，而 plugin 之间通过 pipeline 关联在一起，pipeline 负责将上一个 plugin 的数据流(data flow)传输给下一个 plugin，最终形成一个完整的多媒体处理应用；</li>
-<li>原理：GStreamer 的程序通过连接数字媒体处理的元素注入管道（pipeline）。每个元素(element)是由一个插件提供。元素可组合为箱（bins），箱可以进一步聚合，从而形成架构图。元素沟通是透过垫（pads）。来源垫（source pad）上一个元素可以被连接到一个接收垫（sink pad）在另一个。当管道是在播放状态，数据缓冲流（data buffers flow）从来源垫（source pad）流向接收垫（sink pad）。</li>
-<li>箱柜(bin)是由多个 element 构成的容器，同时 bin 本身也是一种 element，所以能够像操作普通 element 一样操作一个 bin，改变 bin 的状态可以改变 bin 内部所有 elements 的状态。bin 可以发送总线消息给它的子集 elements ，包括：错误消息(error messages)，标签消息(tag messages)，EOS 消息(EOS messages)。</li>
-<li>管道(pipeline)是一个特殊的 bin，当设定管道暂停或播放状态的时候，数据流将开始流动，并且媒体数据处理也开始处理。</li>
-<li>element 被封装成 plugin 才能被 gstreamer 使用。</li>
+<h2 id="shortcuts"><a href="#shortcuts" class="headerlink" title="shortcuts"></a><a target="_blank" rel="noopener" href="https://support.google.com/chrome/answer/157179?hl=zh-Hans&co=GENIE.Platform=Desktop">shortcuts</a></h2><ol>
+<li><code>C-l</code>或<code>M-d</code>: 地址栏</li>
+<li><code>M-Enter</code>: open another tab when search: it’s very usefull</li>
+<li><code>C-k</code> 或 <code>C-e</code>: 搜索</li>
+<li><code>Tab</code>: 下一个可点击项</li>
+<li><code>M-left</code>: 后退浏览历史</li>
+<li><code>M-right</code>: 前进浏览历史</li>
+<li><code>C-r</code>: 刷新网页</li>
+<li><code>Space</code>: pgDn</li>
+<li><code>S-Space</code>: pgUp</li>
+<li><code>C-t</code>: 新标签</li>
+<li><code>C-n</code>: 新窗口</li>
+<li><code>C-w</code>: 关闭当前标签</li>
+<li><code>C-Tab</code>: 切换标签</li>
+<li><code>C-S-t</code>: 恢复关闭的标签</li>
+<li><code>C-h</code>: history</li>
+<li><code>C-j</code>: download</li>
+<li><code>C-1</code>: 跳转到第一个标签</li>
+<li><code>C-9</code>: 跳转到第一个标签</li>
+<li><code>C-Backspace</code>: 删除一个单词</li>
+<li><code>S-Esc</code>: 任务管理器</li>
+<li><code>C-S-b</code>: 显示或隐藏书签栏</li>
+<li><code>C-f</code> + <code>C-g</code>: 查找与跳转</li>
 </ol>
-<h2 id="3-层架构（plugin-core-app"><a href="#3-层架构（plugin-core-app" class="headerlink" title="3 层架构（plugin, core, app)"></a>3 层架构（plugin, core, app)</h2><p><img src="https://gstreamer.freedesktop.org/documentation/application-development/introduction/images/gstreamer-overview.png" alt="overview"></p>
-<ol>
-<li>最底层：element(plugins)</li>
-<li>中间层：插件框架、pipeline 架构、媒体类型处理机制、等等，也就是处理 Elements 的方式方法.</li>
-<li>最上层：tools, 多媒体应用</li>
+<h2 id="自定义-shortcuts"><a href="#自定义-shortcuts" class="headerlink" title="自定义 shortcuts"></a><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/shortkeys-custom-keyboard/logpjaacgmcbpdkdchjiaagddngobkck?hl=zh-CN">自定义 shortcuts</a></h2><ol>
+<li><code>M-h</code>：Select previous tab</li>
+<li><code>M-l</code>：Select next tab</li>
+<li><code>M-k</code>：Select last tab</li>
+<li><code>M-b</code>: 后退浏览历史</li>
+<li><code>M-f</code>: 前进浏览历史</li>
+<li><code>M-s</code>: fullscreen</li>
+<li><code>M-3</code>：new tab</li>
+<li><code>M-8</code>：close tab</li>
+<li><code>M-w</code>：Duplicate current tab</li>
 </ol>
-<h2 id="GStreamer-plug-ins-could-be-classified"><a href="#GStreamer-plug-ins-could-be-classified" class="headerlink" title="GStreamer plug-ins could be classified"></a>GStreamer plug-ins could be classified</h2><ol>
-<li>protocols handling</li>
-<li>sources: for audio and video (involves protocol plugins)</li>
-<li>formats: parsers, formaters, muxers, demuxers, metadata, subtitles</li>
-<li>codecs: coders and decoders</li>
-<li>filters: converters, mixers, effects, …</li>
-<li>sinks: for audio and video (involves protocol plugins)</li>
+<h2 id="vimium-快捷键"><a href="#vimium-快捷键" class="headerlink" title="vimium 快捷键"></a><a target="_blank" rel="noopener" href="https://vimium.github.io/">vimium 快捷键</a></h2><ol>
+<li><code>yy</code>: copy URL to clipboard</li>
+<li><code>/</code>: find</li>
+<li><code>j</code>: Scroll down</li>
+<li><code>k</code>: Scroll up</li>
+<li><code>h</code>: Scroll left</li>
+<li><code>l</code>: Scroll right</li>
+<li><code>gg</code>: Scroll to the top of the page</li>
+<li><code>G</code>: Scroll to the bottom of the page</li>
 </ol>
-<h2 id="GStreamer-tools"><a href="#GStreamer-tools" class="headerlink" title="GStreamer tools"></a>GStreamer tools</h2><ol>
-<li>gst-launch-1.0: 命令行建立和运行 pipeline, 不用编写 C 代码； <code>gst-launch-1.0 videotestsrc ! autovideosink</code></li>
-<li>gst-inspect-1.0: 查看可用的插件和它们的相关信息； <code>gst-inspect-1.0 videotestsrc</code></li>
-<li>gst-discoverer-1.0: 查看媒体文件的内部结构； <code>gst-discoverer-1.0 /root/Desktop/video.mp4</code></li>
-<li>GST*DEBUG&#x3D;”GST_TRACER:7” GST_TRACERS&#x3D;”proctime” gst-launch-1.0 … <code>查看每个element性能</code> <a target="_blank" rel="noopener" href="https://developer.ridgerun.com/wiki/index.php?title=GstShark*-_Processing_Time_tracer">link</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/RidgeRun/gst-shark">gst-shark</a></li>
+<h2 id="搜索设置"><a href="#搜索设置" class="headerlink" title="搜索设置"></a>搜索设置</h2><ol>
+<li>chrome 快捷搜索设置</li>
 </ol>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://gstreamer.freedesktop.org/documentation/application-development/introduction/index.html?gi-language=c">About Gstreamer</a></li>
-<li><a target="_blank" rel="noopener" href="https://gstreamer.freedesktop.org/documentation/tutorials/basic/gstreamer-tools.html?gi-language=c">Gstreamer tools</a></li>
-<li><a target="_blank" rel="noopener" href="https://gstreamer.freedesktop.org/documentation/tutorials/basic/index.html?gi-language=c">Gstreamer tutorials</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/sdroege/gstreamer-rs/tree/master/tutorials">Gstreamer tutorials rust</a></li>
-<li><a target="_blank" rel="noopener" href="http://orangeamoy.com/2019/06/28/GStreamerAndDeepStream/">由 GStreamer 到 DeepStream</a></li>
-<li><a target="_blank" rel="noopener" href="http://ericnode.info/post/gstreamer_intro/">插件例子</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.shangyexinzhi.com/article/571316.html">中文基础概念</a></li>
-</ol>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">gitlab l https:<span class="regexp">//gi</span>tlab.phigent.io/?sort=name_asc&amp;name=%s&amp;sort=name_asc</span><br><span class="line">github g https:<span class="regexp">//gi</span>thub.com/search?q=%s</span><br><span class="line">cppreference cpp https:<span class="regexp">//</span>duckduckgo.com/?sites=cppreference.com&amp;q=%s&amp;ia=web</span><br><span class="line">translate t https:<span class="regexp">//</span>translate.google.cn/?source=osdd&amp;who=test&amp;sl=en&amp;tl=zh-CN&amp;text=%s&amp;op=translate</span><br><span class="line">blog blog https:<span class="regexp">//gi</span>thub.com<span class="regexp">/jiaxiyang/</span>blog<span class="regexp">/tree/m</span>aster<span class="regexp">/source/</span>_posts</span><br><span class="line">links links https:<span class="regexp">//</span>jiaxiyang.github.io<span class="regexp">/2020/</span><span class="number">06</span><span class="regexp">/29/</span>Links/</span><br><span class="line"><span class="number">100</span>ms <span class="number">100</span>ms https:<span class="regexp">//gi</span>thub.com<span class="regexp">/jiaxiyang/</span><span class="number">100</span>ms_dot_emacs<span class="regexp">/blob/m</span>aster/init.el</span><br><span class="line">lead lead https:<span class="regexp">//gi</span>thub.com<span class="regexp">/jiaxiyang/</span>leader-key-mode<span class="regexp">/blob/m</span>aster/leader-key-mode.el</span><br><span class="line">melpa m https:<span class="regexp">//m</span>elpa.org<span class="regexp">/#/</span>?q=test&amp;sort=downloads&amp;asc=false</span><br><span class="line">excalidraw e https:<span class="regexp">//</span>excalidraw.com/</span><br><span class="line">baidu b https:<span class="regexp">//</span>www.baidu.com/<span class="comment">#ie=&#123;inputEncoding&#125;&amp;wd=%s</span></span><br></pre></td></tr></table></figure>
 
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/02/02/Docker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/02/Docker/" class="post-title-link" itemprop="url">Docker</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-02-02 18:29:14" itemprop="dateCreated datePublished" datetime="2021-02-02T18:29:14+08:00">2021-02-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-16 14:50:00" itemprop="dateModified" datetime="2024-01-16T14:50:00+08:00">2024-01-16</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/02/02/Docker/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/02/02/Docker/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="NOTES"><a href="#NOTES" class="headerlink" title="NOTES"></a>NOTES</h2><ol>
-<li>dockerhub 下载 images 到磁盘, 传到服务器: docker pull and docker save</li>
-<li>wsl2 中设置<code>--net=host</code>会影响 docker port 设置</li>
-<li><code>docker image prune -a</code> 清理任何为用的的 image</li>
-<li><a target="_blank" rel="noopener" href="http://www.debugself.com/2018/01/17/docker_network/">docker build 以及 docker run 时使用 host 网络的方法</a></li>
-<li>docker 开发使用： docker image(路径无关) + docker.sh(路径相关)</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/apache/tvm/blob/main/docker/bash.sh">tvm docker 启动 bash</a></li>
-<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-containers">windwos wsl2 + docker 开发</a> docker desktop 需要启动</li>
-<li><code>docker attach CONTAINER</code></li>
-<li><code>docker info</code> 查看 docker 信息</li>
-<li><code>docker stats</code> 可以看哪个 container 占用率高</li>
-<li><code>sudo usermod -aG docker $USER</code> 将当前用户加入到 docker 组中，否则必须使用 sudo 来运行 docker</li>
-<li><code>--user root --gpus all</code> 使用 gpu</li>
-<li><code>--privileged</code> 使用 systemctl</li>
-<li><code>docker save -o fedora-all.tar fedora</code> 保存镜像到磁盘；container 需要先 commit 才能保存到磁盘</li>
-<li><code>docker commit my-container my-image</code> 保存 container 为镜像</li>
-<li><code>docker load --input fedora.tar</code> or <code>docker load &lt; busybox.tar.gz</code></li>
-<li><code>docker login --username=xiyang.jia hub.xxx.io</code> 登录后才能 push</li>
-<li><code>docker commit efb954281fd3 j5-dsp-xiyang-dev:v1</code></li>
-<li><code>docker tag [ImageId] hub.xx.io/avp/[ImageName]:[镜像版本号]</code></li>
-<li><code>docker push docker.io/my-username/my-image:v1.0.0</code></li>
-<li><code>docker docker image rm eb3f9d403e36</code> 删除 image</li>
-</ol>
-<h2 id="docker-container-install-ssh-server"><a href="#docker-container-install-ssh-server" class="headerlink" title="docker container install ssh server"></a>docker container install ssh server</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sed -i s@/archive.ubuntu.com/@/mirrors.tuna.tsinghua.edu.cn/@g /etc/apt/sources.list &amp;&amp; apt-get update -y</span><br><span class="line">sudo apt install -y openssh-server</span><br><span class="line">/etc/init.d/ssh start</span><br><span class="line"><span class="comment"># vi /etc/ssh/sshd_config</span></span><br><span class="line"><span class="comment"># 设置 PermitRootLogin yes和 PasswordAuthentication yes</span></span><br><span class="line">/etc/init.d/ssh restart</span><br><span class="line">passwd <span class="comment"># 设置密码</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="usefull-docker"><a href="#usefull-docker" class="headerlink" title="usefull docker"></a>usefull docker</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://hub.docker.com/_/gcc">gcc</a></li>
-</ol>
-<h2 id="Command"><a href="#Command" class="headerlink" title="Command"></a>Command</h2><ol>
-<li><p><img src="https://user-gold-cdn.xitu.io/2019/4/9/16a02cdbf14142a0?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="一图胜千言"></p>
-</li>
-<li></li>
-</ol>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="language-bash"> -<span class="built_in">id</span> --name gcc.xiyang -v /data0/users/teams/software/heterogeneous/xiyang.jia/:/data0/users/xiyang.jia -w /data0/users/xiyang.jia/d/working -p 10099:22 -v /etc/localtime:/etc/localtime gcc</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li></li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">% docker pull openexplorer/ai_toolchain_centos_7:v1.12.5</span><br><span class="line">% docker run -<span class="built_in">id</span> \</span><br><span class="line">    --name openexplorer.xiyang \</span><br><span class="line">    -v /data0/users/xiyang.jia:/data0/users/xiyang.jia \</span><br><span class="line">    -w /data0/users/xiyang.jia/d/working \</span><br><span class="line">    -p 10090:22 \</span><br><span class="line">    --privileged \</span><br><span class="line">    -v /etc/localtime:/etc/localtime \</span><br><span class="line">    openexplorer/ai_toolchain_centos_7:v1.12.5</span><br><span class="line"></span><br><span class="line">% docker <span class="built_in">exec</span> -it openexplorer.xiyang bash</span><br><span class="line">% docker ps</span><br><span class="line">% docker stop openexplorer.xiyang</span><br><span class="line">% docker <span class="built_in">rm</span> openexplorer.xiyang</span><br><span class="line">% docker images</span><br><span class="line">% docker image <span class="built_in">rm</span> xxx</span><br><span class="line">% docker logs openexplorer.xiyang</span><br><span class="line">% docker start &lt;name&gt; // start docker when it <span class="built_in">exit</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="docker-load"><a href="#docker-load" class="headerlink" title="docker load"></a><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/load/">docker load</a></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">% docker load &lt; busybox.tar.gz</span><br><span class="line">% docker load --input fedora.tar</span><br></pre></td></tr></table></figure>
-
-<h2 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h2><p>Docker 包括三个基本概念:</p>
-<ol>
-<li>镜像（Image）</li>
-<li>容器（Container）</li>
-<li>仓库（Repository）<br>理解了这三个概念，就理解了 Docker 的整个生命周期。</li>
-</ol>
-<h3 id="Image"><a href="#Image" class="headerlink" title="Image"></a><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/basic_concept/image">Image</a></h3><ol>
-<li>Docker 镜像（Image），就相当于是一个 root 文件系统</li>
-<li>Docker 镜像是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。镜像不包含任何动态数据，其内容在构建之后也不会被改变。</li>
-</ol>
-<h3 id="Container"><a href="#Container" class="headerlink" title="Container"></a><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/basic_concept/container">Container</a></h3><ol>
-<li>镜像（Image）和容器（Container）的关系，就像是面向对象程序设计中的 类 和 实例 一样，镜像是静态的定义，容器是镜像运行时的实体。容器可以被创建、启动、停止、删除、暂停等。</li>
-</ol>
-<h3 id="Repository"><a href="#Repository" class="headerlink" title="Repository"></a><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/basic_concept/repository">Repository</a></h3><ol>
-<li><code>Docker Registry</code>: 一个集中的存储、分发镜像的服务</li>
-<li>一个 Docker Registry 中可以包含多个 仓库（Repository）；每个仓库可以包含多个 标签（Tag）；每个标签对应一个镜像。</li>
-<li>通常，一个仓库会包含同一个软件不同版本的镜像，而标签就常用于对应该软件的各个版本。我们可以通过 <code>&lt;仓库名&gt;:&lt;标签&gt;</code> 的格式来指定具体是这个软件哪个版本的镜像。如果不给出标签，将以 latest 作为默认标签。</li>
-</ol>
-<h2 id="传统虚拟化与-docker-虚拟化"><a href="#传统虚拟化与-docker-虚拟化" class="headerlink" title="传统虚拟化与 docker 虚拟化"></a>传统虚拟化与 docker 虚拟化</h2><p><img src="https://gblobscdn.gitbook.com/assets%2F-M5xTVjmK7ax94c8ZQcm%2F-M5xT_hHX2g5ldlyp9nm%2F-M5xTdXNYDmRWNH-Lqez%2Fvirtualization.png?alt=media" alt="传统虚拟化"><br><img src="https://gblobscdn.gitbook.com/assets%2F-M5xTVjmK7ax94c8ZQcm%2F-M5xT_hHX2g5ldlyp9nm%2F-M5xTdXP2scg0hxytUHA%2Fdocker.png?alt=media" alt="docker虚拟化"></p>
-<h2 id="VNC"><a href="#VNC" class="headerlink" title="VNC"></a>VNC</h2><ol>
-<li><code>vncserver :1</code></li>
-<li><code>vncserver -kill :1</code></li>
-<li><code>ps -ef | grep vnc</code>查看是否运行及端口号</li>
-<li><code>cat .vnc/password.txt</code> 查看密码(自己设置)</li>
-</ol>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/introduction/why">从入门到实践</a></li>
-<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5cacbfd7e51d456e8833390c">30 分钟快速入门</a></li>
-<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903450203914253">资源整理</a></li>
-<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7224149297951195193">简单聊聊 k8s，和 docker 之间的关系</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/01/30/Kalman-Filters/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/30/Kalman-Filters/" class="post-title-link" itemprop="url">Kalman Filters</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-01-30 11:43:37" itemprop="dateCreated datePublished" datetime="2021-01-30T11:43:37+08:00">2021-01-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Algorithm/Kalman/" itemprop="url" rel="index"><span itemprop="name">Kalman</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/01/30/Kalman-Filters/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/30/Kalman-Filters/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>576</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h2><ol>
-<li>卡尔曼滤波是一个递归的<code>估计</code>，只要获知<code>上一时刻的状态估计</code>和<code>当前状态的观测</code>就可以计算<code>当前状态的估计</code>。</li>
-<li>卡尔曼滤波器不需要观测&#x2F;估计的历史记录。</li>
-<li>卡尔曼滤波器是一个纯粹的<code>时域滤波器</code>，而不像低通滤波器那样，需要在频率设计，然后转到时域应用。</li>
-<li>两个阶段：<ul>
-<li><code>预测</code>：由上一状态的估计做出对当前状态的估计</li>
-<li><code>更新</code>：利用当前状态的观测值<code>优化</code>预测阶段的估计值，以获取一个<code>更精确的当前状态估计</code></li>
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/onetab/chphlpgkkbolifaimnlloiipkdnihall">onetab 节省内存</a> 快捷键<code>alt+shift+1</code> 改为 <code>alt+1</code>。 <code>alt+2</code>发送当前标签页至 OneTab</li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/adblocker-ultimate/ohahllgiabjaoigichmmfljhkcfikeof/related?hl=zh-CN">广告屏蔽</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/sourcegraph/dgjhfomjieaadpoljlnidmbgkdffpack">sourcegraph 插件</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/octotree-github-code-tree/bkhaagjahfmjljalopjnoealnfndnagc?hl=zh-CN">octotree</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/gitzip-for-github/ffabmkklhbepgcgfonabamgnfafbdlkn">gitzip 插件</a></li>
+<li><a target="_blank" rel="noopener" href="https://vimium.github.io/">vimiu</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/shortkeys-custom-keyboard/logpjaacgmcbpdkdchjiaagddngobkck/related?hl=zh-CN">shortkeys</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/magical-text-expansion/iibninhmiggehlcdolcilmhacighjamp/related?hl=zh-CN">magical</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/colorzilla/bhlhnicpbhignbdhedgjhgdocnmhomnp?hl=zh-CN">colorzilla</a></li>
+<li>（good)<a target="_blank" rel="noopener" href="https://immersivetranslate.com/">沉侵式翻译</a><ul>
+<li>arxiv 的文章也可以用</li>
+<li>youtube 双语字幕</li>
+<li><code>Alt A</code></li>
 </ul>
 </li>
-<li>两种数据：<ul>
-<li><code>估计值</code></li>
-<li><code>观测值</code>：传感器测量值，如GPS位置。</li>
-</ul>
-</li>
-<li>线性系统与非线性系统：<ul>
-<li>判断标准：能不能通过上一次系统估计状态直接乘以某个矩阵得到预测状态？ 矩阵都是具体的值，与估计状态相乘后只是估计状态的线性变换。（还是测量状态不能直接与估计状态求差？）</li>
-<li><code>线性系统</code>： 预测状态 &#x3D; F * 上一次估计状态。例如：预测汽车位置，传感器获得位置值，假设很短时间内，系统是匀速运动或匀加速运动（对应两种模型）。可以通过上一时刻状态乘以矩阵得到预测值。</li>
-<li><code>非线性系统</code>：预测状态不能直接由上一次估计状态乘以一个矩阵得到。 如雷达跟踪飞机，估计状态为(x, y). 测量状态为径向距离r和夹脚。</li>
-</ul>
-</li>
+<li><a target="_blank" rel="noopener" href="https://chromewebstore.google.com/detail/imtranslator-%E7%BF%BB%E8%AF%91%EF%BC%8C%E5%AD%97%E5%85%B8%EF%BC%8C%E5%A3%B0%E9%9F%B3/noaijdpnepcgjemiklgfkcfbkokogabh">ImTranslator: 翻译，字典，声音</a></li>
+<li>(good)<a target="_blank" rel="noopener" href="https://chromewebstore.google.com/detail/%E4%BE%A7%E8%BE%B9%E7%BF%BB%E8%AF%91/bocbaocobfecmglnmeaeppambideimao?hl=zh-CN">侧边翻译</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb/related?hl=en">google translate</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/alyssaxuu/omni">omni</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/easy-auto-refresh/aabcgdmkeabbnleenpncegpcngjpnjkc/related">easy-auto-refresh</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/markdown-diagrams/pmoglnmodacnbbofbgcagndelmgaclel">markdown-diagrams</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/svg-export/naeaaedieihlkmdajjefioajbbdbdjgp/related?hl=zh-CN">svg-export</a></li>
+<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/whatfont/jabopobgcpjmedljpbcaablpmlmfcogm/related?hl=zh-CN">whatfont</a></li>
+<li><a target="_blank" rel="noopener" href="https://chromewebstore.google.com/detail/%E6%8D%95%E6%8D%89%E7%BD%91%E9%A1%B5%E6%88%AA%E5%9B%BE-fireshot%E7%9A%84/mcbpblocgmgfnpjjppndjkmgjaogfceg?hl=zh-CN&utm_source=ext_sidebar">fireshot 截屏工具</a></li>
 </ol>
-<h2 id="Formulas"><a href="#Formulas" class="headerlink" title="Formulas"></a>Formulas</h2><ol>
-<li><img src="/images/kalman/formulas.jpg" alt="5 basic formulas"></li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/rlabbe/Kalman-and-Bayesian-Filters-in-Python">Kalman-and-Bayesian-Filters-in-Python</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/codesamer/article/details/81191487">Using in car</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d51a3a7736ca">基于Kalman滤波器的进行物体的跟踪</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/39912633">图说卡尔曼滤波</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=VFXf1lIZ3p8">Youtube Matlab tutorial</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/01/11/Redis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/11/Redis/" class="post-title-link" itemprop="url">Redis</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-01-11 21:27:34" itemprop="dateCreated datePublished" datetime="2021-01-11T21:27:34+08:00">2021-01-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Database/" itemprop="url" rel="index"><span itemprop="name">Database</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/01/11/Redis/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/11/Redis/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="锁设计原则"><a href="#锁设计原则" class="headerlink" title="锁设计原则"></a>锁设计原则</h2><ol>
-<li>所有操作都可分为增删改查，改可用删除和增加来实现，但改更快并且具有原子性。</li>
-<li>只有获得锁才能对锁进行删和改。</li>
-<li>注意区分又状态和无状态。凡是涉及到有状态的API(lock, unlock)要特别小心。要与无状态API(圆的面积)模块区分开。</li>
-<li>系统状态尽可能的少，太多状态容易出问题。</li>
-</ol>
-<h2 id="基于Redis的分布式锁"><a href="#基于Redis的分布式锁" class="headerlink" title="基于Redis的分布式锁"></a>基于Redis的分布式锁</h2><ol>
-<li>Redis Lua脚本具有原子性</li>
-</ol>
-<h3 id="实现思想："><a href="#实现思想：" class="headerlink" title="实现思想："></a>实现思想：</h3><ol>
-<li>获取锁的时候，使用setnx加锁，并使用expire命令为锁添加一个超时时间，超过该时间则自动释放锁，锁的value值为一个随机生成的UUID，通过此在释放锁的时候进行判断。</li>
-<li>获取锁的时候还设置一个获取的超时时间，若超过这个时间则放弃获取锁。</li>
-<li>释放锁的时候，通过UUID判断是不是该锁，若是该锁，则执行delete进行锁释放。</li>
-</ol>
-<h3 id="超时后又多个程序获得锁解决方法"><a href="#超时后又多个程序获得锁解决方法" class="headerlink" title="超时后又多个程序获得锁解决方法"></a>超时后又多个程序获得锁解决方法</h3><ol>
-<li>将过期时间设置足够长，确保代码逻辑在锁释放之前能够执行完成</li>
-<li><code>为获取锁的线程增加守护线程，为将要过期但未释放的锁增加有效时间</code></li>
-</ol>
-<h3 id="使用守护线程特点"><a href="#使用守护线程特点" class="headerlink" title="使用守护线程特点"></a><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000022935064">使用守护线程特点</a></h3><ol>
-<li><code>一定要用SET key value NX PX milliseconds 命令</code>:如果不用，先设置了值，再设置过期时间，这个不是原子性操作，有可能在设置过期时间之前宕机，会造成死锁(key永久存在)</li>
-<li><code>value要具有唯一性</code>:这个是为了在解锁的时候，需要验证value是和加锁的一致才删除key。这是避免了一种情况：假设A获取了锁，过期时间30s，此时35s之后，锁已经自动释放了，A去释放锁，但是此时可能B获取了锁。A客户端就不能删除B的锁了。</li>
-</ol>
-<h2 id="Redis-server"><a href="#Redis-server" class="headerlink" title="Redis server"></a>Redis server</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/redis/redis.git</span><br><span class="line">cd redis &amp;&amp; make</span><br><span class="line">cd src</span><br><span class="line">./redis-server</span><br></pre></td></tr></table></figure>
-
-<h2 id="Redis-client"><a href="#Redis-client" class="headerlink" title="Redis client"></a>Redis client</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">./redis-cli</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># cmd</span></span></span><br><span class="line">set foo bar</span><br><span class="line">get foo</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># change dump.rdb path</span></span></span><br><span class="line">config set dir /home/xxx</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">save data to dump.rdb</span></span><br><span class="line">save</span><br></pre></td></tr></table></figure>
-
-<h2 id="hiredis-just-a-C-client-not-include-server"><a href="#hiredis-just-a-C-client-not-include-server" class="headerlink" title="hiredis (just a C client; not include server)"></a>hiredis (just a C client; not include server)</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/redis/hiredis.git</span><br><span class="line">cd hiredis</span><br><span class="line">mkdir build; cd build; cmake ..; make;</span><br><span class="line">sudo make install</span><br><span class="line">./hiredis-test</span><br><span class="line"></span><br><span class="line">## NOTE: sample are easier than hiredis-test</span><br></pre></td></tr></table></figure>
-
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://bbs.huaweicloud.com/blogs/209955">redis lock华为漫画</a></li>
-<li><a target="_blank" rel="noopener" href="https://bbs.huaweicloud.com/blogs/209954">Zookeeper 华为漫画</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/xlgen157387/article/details/79036337">redis实现分布式锁</a></li>
-<li><a target="_blank" rel="noopener" href="https://xiaomi-info.github.io/2019/12/17/redis-distributed-lock/">小米解决方案</a></li>
-<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903830442737671">redis分布式锁</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/yuhanfang/redislock">redislock C++ sample</a></li>
-<li><a target="_blank" rel="noopener" href="https://redis.io/commands/set">Redis set command(note: NX)</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/redisson/redisson">Redisson</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/12/07/Tmux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/07/Tmux/" class="post-title-link" itemprop="url">Tmux config</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-12-07 15:19:28" itemprop="dateCreated datePublished" datetime="2020-12-07T15:19:28+08:00">2020-12-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-28 13:13:03" itemprop="dateModified" datetime="2023-09-28T13:13:03+08:00">2023-09-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/Tmux/" itemprop="url" rel="index"><span itemprop="name">Tmux</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/12/07/Tmux/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/12/07/Tmux/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="tmux-plugin"><a href="#tmux-plugin" class="headerlink" title="tmux plugin"></a>tmux plugin</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/tmux-plugins/tpm">tpm</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/orgs/tmux-plugins/repositories?q=&type=all&language=&sort=stargazers">tmux-plgins</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/tmux-plugins/tmux-resurrect">tmux-resurrect</a></li>
-<li>prefix + I install</li>
-</ol>
-<h2 id="clear-history"><a href="#clear-history" class="headerlink" title="clear-history"></a>clear-history</h2><ol>
-<li>Just type<code>&lt;prefix&gt; + :</code>in the relevant pane and then type <code>clear-history</code> and press enter.</li>
-</ol>
-<h2 id="windows-layerout"><a href="#windows-layerout" class="headerlink" title="windows layerout"></a>windows layerout</h2><ol>
-<li><code>&lt;prefix&gt; + M-1</code> 垂直对齐</li>
-<li><code>&lt;prefix&gt; + M-2</code> 水平对齐</li>
-<li><code>&lt;prefix&gt; + M-3</code></li>
-<li><code>&lt;prefix&gt; + M-4</code></li>
-<li><code>&lt;prefix&gt; + M-5</code></li>
-</ol>
-<h2 id="resize-window"><a href="#resize-window" class="headerlink" title="resize window"></a>resize window</h2><ol>
-<li>:resize-window -A</li>
-</ol>
-<h2 id="Tmux-config"><a href="#Tmux-config" class="headerlink" title="Tmux config"></a>Tmux config</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># use mouse to scroll history</span></span><br><span class="line"><span class="built_in">set</span> -g mouse on        <span class="comment">#For tmux version 2.1 and up</span></span><br><span class="line"><span class="comment"># set -g mode-mouse on   #For tmux versions &lt; 2.1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># set history lenth</span></span><br><span class="line"><span class="built_in">set</span> -g history-limit 15000</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> -g default-terminal <span class="string">&quot;xterm&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># change prefix key</span></span><br><span class="line"><span class="built_in">set</span> -g prefix C-t</span><br><span class="line">unbind C-b</span><br><span class="line"><span class="built_in">bind</span> C-t send-prefix</span><br><span class="line"><span class="built_in">set</span> -g prefix2 C-j</span><br><span class="line"><span class="built_in">bind</span> C-j send-prefix -2</span><br><span class="line"></span><br><span class="line"><span class="comment"># more intuitive keybindings for splitting and create window</span></span><br><span class="line"><span class="built_in">bind</span> \\ split-window -h -c <span class="string">&quot;#&#123;pane_current_path&#125;&quot;</span></span><br><span class="line"><span class="built_in">bind</span> - split-window -v -c <span class="string">&quot;#&#123;pane_current_path&#125;&quot;</span></span><br><span class="line"><span class="built_in">bind</span> c new-window -c <span class="string">&quot;#&#123;pane_current_path&#125;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># swap window bind</span></span><br><span class="line"><span class="built_in">bind</span> M-l swap-window -t + \; next-window</span><br><span class="line"><span class="built_in">bind</span> M-h swap-window -t - \; previous-window</span><br><span class="line"></span><br><span class="line"><span class="comment"># display</span></span><br><span class="line"><span class="built_in">set</span> -g base-index 1</span><br><span class="line">set-window-option -g pane-base-index 1</span><br><span class="line"><span class="built_in">set</span> -g renumber-windows on</span><br><span class="line"></span><br><span class="line"><span class="comment"># set terminal title</span></span><br><span class="line"><span class="built_in">set</span> -g set-titles on</span><br><span class="line"></span><br><span class="line"><span class="comment"># redraw status line every 10 seconds</span></span><br><span class="line"><span class="built_in">set</span> -g status-interval 10</span><br><span class="line"></span><br><span class="line"><span class="comment"># right status: tmux show-options -g | grep status-right</span></span><br><span class="line"><span class="built_in">set</span> -g status-right <span class="string">&quot;#&#123;=21:host_short&#125; &quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Remove delay when sending commands</span></span><br><span class="line"><span class="comment"># (default is 500 milliseconds)</span></span><br><span class="line"><span class="built_in">set</span> -sg escape-time 1</span><br><span class="line"></span><br><span class="line"><span class="comment"># reference C-t ?</span></span><br><span class="line">bind-key -T prefix a select-window -t :=1</span><br><span class="line">bind-key -T prefix s select-window -t :=2</span><br><span class="line">bind-key -T prefix d select-window -t :=3</span><br><span class="line">bind-key -T prefix f select-window -t :=4</span><br><span class="line">bind-key -T prefix g select-window -t :=5</span><br><span class="line">bind-key -T prefix h select-window -t :=6</span><br><span class="line">bind-key -T prefix j select-window -t :=7</span><br><span class="line">bind-key -T prefix k select-window -t :=8</span><br><span class="line">bind-key -T prefix \; select-window -t :=1 \; select-window -t -1</span><br></pre></td></tr></table></figure>
-
-<h2 id="Reload-config"><a href="#Reload-config" class="headerlink" title="Reload config"></a>Reload config</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux source-file ~/.tmux.conf</span><br></pre></td></tr></table></figure>
-
-<h2 id="Tmux-Zsh-CheatSheet"><a href="#Tmux-Zsh-CheatSheet" class="headerlink" title="Tmux Zsh CheatSheet"></a>Tmux Zsh CheatSheet</h2><p><a target="_blank" rel="noopener" href="https://github.com/ohmyzsh/ohmyzsh/wiki/Cheatsheet">https://github.com/ohmyzsh/ohmyzsh/wiki/Cheatsheet</a></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ta    : tmux attach -t</span><br><span class="line">tad   : tmux attach -d -t</span><br><span class="line">ts    : tmux new-session -s</span><br><span class="line">tl    : tmux list-sessions</span><br><span class="line">tksv  : tmux kill-server</span><br><span class="line">tkss  : tmux kill-session -t</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/11/28/Shell-script/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/28/Shell-script/" class="post-title-link" itemprop="url">Shell Script</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-11-28 10:38:00" itemprop="dateCreated datePublished" datetime="2020-11-28T10:38:00+08:00">2020-11-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-28 13:13:38" itemprop="dateModified" datetime="2023-09-28T13:13:38+08:00">2023-09-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Shell/" itemprop="url" rel="index"><span itemprop="name">Shell</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/11/28/Shell-script/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/28/Shell-script/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
-<li>判断 linux 命令是否存在</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">BUILD_SYSTEM=Ninja</span><br><span class="line"><span class="keyword">if</span> ! [ -x <span class="string">&quot;<span class="subst">$(command -v ninja)</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">    BUILD_SYSTEM=<span class="string">&#x27;Unix Makefiles&#x27;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ! <span class="built_in">command</span> -v &lt;the_command&gt; &amp;&gt; /dev/null</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;&lt;the_command&gt; could not be found&quot;</span></span><br><span class="line">    <span class="built_in">exit</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>分支，循环、 case， 函数、正则表达式</li>
-<li>shell 风格指南 <a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-shell-styleguide/contents/">link</a></li>
-<li>seq 产生顺序数 for i in <code>seq 1 10</code>;do echo jia; sleep 1; done</li>
-<li>cat</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span>  &gt;&gt; a.txt &lt;&lt;<span class="string">EOF        追加</span></span><br><span class="line"><span class="string">    hello,world</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span>  &gt; a.txt &lt;&lt;<span class="string">EOF      覆盖</span></span><br><span class="line"><span class="string">    hello,world</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>set -xe 显示运行的每一条命令，出错退出。 -x 显示 -e 退出</li>
-<li>echo -e “jiaxiyang\c” 脚本输出不换行</li>
-<li>16 进制转化为 10 进制 num&#x3D;”ABCD1234” &amp;&amp; echo $((16#${num}))</li>
-<li>产生随机数 cat &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;random&#x2F;uuid</li>
-<li>获取本机 IP 地址： ifconfig | grep “inet addr:” | awk ‘{ print $2 }’| sed ‘s&#x2F;addr:&#x2F;&#x2F;g’</li>
-<li>awk 按列过滤参数 ls -l test.sh | awk ‘{ print $5 }’ 输出：454</li>
-<li>shell 小程序<a target="_blank" rel="noopener" href="https://www.jb51.net/article/54488.htm">link</a></li>
-<li>shell 得到文件信息 <code>ll /var/log/messages | cut -d &quot; &quot; -f 5</code></li>
-<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#106;&#105;&#x61;&#x78;&#105;&#121;&#97;&#x6e;&#x67;&#64;&#x31;&#x30;&#x2e;&#x31;&#x30;&#x2e;&#x30;&#46;&#49;&#x37;">&#106;&#105;&#x61;&#x78;&#105;&#121;&#97;&#x6e;&#x67;&#64;&#x31;&#x30;&#x2e;&#x31;&#x30;&#x2e;&#x30;&#46;&#49;&#x37;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
-<li>读文件内容，记录到变量中 var&#x3D;$(cat name.txt)</li>
-<li>计时 start&#x3D;$(date+%s) &amp;&amp; sleep 2 &amp;&amp; end&#x3D;$(date+%s)&amp;&amp; echo $(($end - $start)) <a target="_blank" rel="noopener" href="http://blog.csdn.net/gengshenghong/article/details/7583580">link</a></li>
-<li>sleep: sleep 1 睡眠 1 秒 sleep 1s 睡眠 1 秒 sleep 1m 睡眠 1 分 sleep 1h 睡眠 1 小时</li>
-<li>[ -f test ] &amp;&amp; rm test 如果存在 test 文件 删除 test ，逻辑运算代替 if<br>对于包含至少一个其他函数的足够长的脚本，需要称为  main  的函数。main “$@”</li>
-<li>比较二进制文件</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">process</span></span>()</span><br><span class="line">&#123;</span><br><span class="line">    file=<span class="variable">$1</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;file  : <span class="subst">$(realpath $&#123;file&#125;)</span>&quot;</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;date  : <span class="subst">$(date -r $&#123;file&#125;)</span>&quot;</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;length: <span class="subst">$(wc -c $&#123;file&#125; | awk &#x27;&#123;print $1&#125;&#x27;)</span>&quot;</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;md5sum: <span class="subst">$(md5sum $(realpath $&#123;file&#125;)</span> | awk &#x27;&#123;print <span class="variable">$1</span>&#125;&#x27;)&quot;</span></span><br><span class="line">    xxd -l 96 <span class="variable">$&#123;file&#125;</span></span><br><span class="line">    <span class="built_in">echo</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;date now: <span class="subst">$(date)</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span></span><br><span class="line"><span class="keyword">for</span> var <span class="keyword">in</span> <span class="variable">$@</span>; <span class="keyword">do</span></span><br><span class="line">    process <span class="variable">$var</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>function(in .bashrc)</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">loop</span></span> ()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">eval</span> <span class="string">&quot;<span class="variable">$@</span>&quot;</span>;</span><br><span class="line">    <span class="keyword">while</span> <span class="built_in">sleep</span> 1; <span class="keyword">do</span></span><br><span class="line">        <span class="built_in">eval</span> <span class="string">&quot;<span class="variable">$@</span>&quot;</span>;</span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>copy link libs</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">libs</span></span>() &#123;</span><br><span class="line">    OUTPUT_DIR=$(<span class="built_in">date</span> -u +<span class="string">&quot;%Y-%m-%d-%H:%M:%S&quot;</span>)</span><br><span class="line">    <span class="built_in">mkdir</span> -p <span class="variable">$&#123;OUTPUT_DIR&#125;</span>/bin <span class="variable">$&#123;OUTPUT_DIR&#125;</span>/lib</span><br><span class="line">    BINS=<span class="string">&quot;<span class="variable">$@</span>&quot;</span></span><br><span class="line">    <span class="built_in">cp</span> <span class="variable">$&#123;BINS&#125;</span> <span class="variable">$&#123;OUTPUT_DIR&#125;</span>/bin/</span><br><span class="line">    <span class="string">&quot;<span class="subst">$(ldd $&#123;BINS&#125; | grep <span class="string">&quot;=&gt; /&quot;</span> | awk &#x27;&#123;print $3&#125;&#x27; | xargs -I &#x27;&#123;&#125;&#x27; cp -v &#x27;&#123;&#125;&#x27; $&#123;OUTPUT_DIR&#125;/lib)</span>&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>创建固定个数 panel，每个 panel 执行不同命令</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">PANEL_NUM=6</span><br><span class="line"><span class="keyword">while</span> [ $(tmux list-panes | <span class="built_in">wc</span> -l) -lt <span class="variable">$&#123;PANEL_NUM&#125;</span> ]; <span class="keyword">do</span></span><br><span class="line">	tmux split-window \; <span class="comment">#select-pane -L</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># even-horizontal even-vertical main-horizontal main-vertical tiled</span></span><br><span class="line"><span class="comment"># tmux select-layout even-horizontal</span></span><br><span class="line">tmux select-layout tiled</span><br><span class="line"></span><br><span class="line">CURRENT_PANEL=$(tmux display -pt <span class="string">&quot;<span class="variable">$&#123;TMUX_PANE:?&#125;</span>&quot;</span> <span class="string">&#x27;#&#123;pane_index&#125;&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(<span class="built_in">seq</span> 1 <span class="variable">$&#123;PANEL_NUM&#125;</span>); <span class="keyword">do</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="variable">$&#123;i&#125;</span></span><br><span class="line">	<span class="keyword">if</span> [ <span class="variable">$&#123;i&#125;</span> -ne <span class="variable">$&#123;CURRENT_PANEL&#125;</span> ]; <span class="keyword">then</span></span><br><span class="line">		tmux send-keys -t .<span class="variable">$&#123;i&#125;</span> <span class="string">&quot;echo <span class="variable">$&#123;i&#125;</span>; ls -al&quot;</span> c-m</span><br><span class="line">	<span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>删除和添加版权信息</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## remove license</span></span><br><span class="line"><span class="comment"># for i in $(/usr/bin/fdfind -e h -e cpp -e hpp -e cc); do</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(find . -regex <span class="string">&#x27;.*\.\(cpp\|cc\|cxx\|hpp\|h\)&#x27;</span>); <span class="keyword">do</span></span><br><span class="line">	line=$(<span class="built_in">cat</span> <span class="variable">$i</span> | grep -n <span class="string">&quot;#i[fn]\|#pragma&quot;</span> | awk -F <span class="string">&#x27;:&#x27;</span> <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> | awk <span class="string">&#x27;NR==1&#x27;</span>)</span><br><span class="line">	line=$((<span class="variable">$&#123;line&#125;</span> - <span class="number">1</span>))</span><br><span class="line">	<span class="keyword">if</span> ((<span class="variable">$&#123;line&#125;</span> &gt; <span class="number">0</span>)); <span class="keyword">then</span></span><br><span class="line">		sed -i <span class="string">&quot;1, <span class="variable">$&#123;line&#125;</span>d&quot;</span> <span class="variable">$i</span></span><br><span class="line">	<span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## add license</span></span><br><span class="line"><span class="built_in">cat</span> &gt;pgcopyright.txt &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">/**</span></span><br><span class="line"><span class="string"> * @copyright PhiGent.ai @ 2022</span></span><br><span class="line"><span class="string"> */</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(find . -regex <span class="string">&#x27;.*\.\(cpp\|cc\|cxx\|hpp\|h\)&#x27;</span>); <span class="keyword">do</span></span><br><span class="line">	<span class="built_in">cat</span> pgcopyright.txt <span class="variable">$i</span> &gt;<span class="variable">$i</span>.new &amp;&amp; <span class="built_in">mv</span> <span class="variable">$i</span>.new <span class="variable">$i</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> pgcopyright.txt</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>push to jfrog</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">JFROG_USER=xiyang.jia</span><br><span class="line">JFROG_PASSWD=</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">push_to_jfrog</span></span>() &#123;</span><br><span class="line">        FILE=<span class="variable">$1</span></span><br><span class="line">        JFROG_PATH=http://artifacts.phigent.io/artifactory/<span class="variable">$2</span></span><br><span class="line">        MD5=$(<span class="built_in">md5sum</span> <span class="variable">$FILE</span> | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span>)</span><br><span class="line">        curl -u<span class="string">&quot;<span class="variable">$&#123;JFROG_USER&#125;</span>:<span class="variable">$&#123;JFROG_PASSWD&#125;</span>&quot;</span> -T <span class="variable">$FILE</span> -H <span class="string">&quot;X-Checksum-MD5:<span class="variable">$&#123;MD5&#125;</span>&quot;</span> -L <span class="string">&quot;<span class="variable">$&#123;JFROG_PATH&#125;</span>&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">push_dir_to_jfrog</span></span>()&#123;</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> $(find <span class="variable">$1</span> -<span class="built_in">type</span> f); <span class="keyword">do</span></span><br><span class="line">                push_to_jfrog <span class="variable">$&#123;file&#125;</span> <span class="variable">$2</span>/<span class="variable">$&#123;file&#125;</span></span><br><span class="line">        <span class="keyword">done</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -d <span class="variable">$1</span> ]; <span class="keyword">then</span></span><br><span class="line">        push_dir_to_jfrog <span class="variable">$1</span> <span class="variable">$2</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">        push_to_jfrog <span class="variable">$1</span> <span class="variable">$2</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -1104,7 +1163,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/25/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/27/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/25/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/27/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1172,7 +1231,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">175</span>
+          <span class="site-state-item-count">190</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1205,19 +1264,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
+          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
+          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -1255,13 +1314,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">484k</span>
+    <span title="站点总字数">543k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:20</span>
+    <span title="站点阅读时长">8:13</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

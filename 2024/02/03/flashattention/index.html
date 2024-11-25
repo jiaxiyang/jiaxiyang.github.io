@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="note 在计算机编程和软件项目中，csrc 通常是 “C Source” 的缩写，意为 “C 源代码”。即使 csrc 目录可能包含 C++ 代码，这个名字仍然被保留，因为它沿用了这一传统的命名惯例 flash attention pytorch xformer vllm   (不考虑 softmax)Attention 不融合消耗大量内存，如果 n 很大 qk 结果非常大; 如果 kenel">
+  <meta name="description" content="note 在计算机编程和软件项目中，csrc 通常是 “C Source” 的缩写，意为 “C 源代码”。即使 csrc 目录可能包含 C++ 代码，这个名字仍然被保留，因为它沿用了这一传统的命名惯例 flash attention pytorch xformer vllm   (不考虑 softmax)Attention 不融合消耗大量内存，如果 n 很大 qk (atttion 矩阵 nxn)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="flashattention">
 <meta property="og:url" content="https://jiaxiyang.github.io/2024/02/03/flashattention/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="note 在计算机编程和软件项目中，csrc 通常是 “C Source” 的缩写，意为 “C 源代码”。即使 csrc 目录可能包含 C++ 代码，这个名字仍然被保留，因为它沿用了这一传统的命名惯例 flash attention pytorch xformer vllm   (不考虑 softmax)Attention 不融合消耗大量内存，如果 n 很大 qk 结果非常大; 如果 kenel">
+<meta property="og:description" content="note 在计算机编程和软件项目中，csrc 通常是 “C Source” 的缩写，意为 “C 源代码”。即使 csrc 目录可能包含 C++ 代码，这个名字仍然被保留，因为它沿用了这一传统的命名惯例 flash attention pytorch xformer vllm   (不考虑 softmax)Attention 不融合消耗大量内存，如果 n 很大 qk (atttion 矩阵 nxn)">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-02-03T06:55:42.000Z">
-<meta property="article:modified_time" content="2024-02-18T10:29:55.303Z">
+<meta property="article:modified_time" content="2024-05-13T07:01:14.919Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 
@@ -130,7 +130,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-18 18:29:55" itemprop="dateModified" datetime="2024-02-18T18:29:55+08:00">2024-02-18</time>
+                <time title="修改时间：2024-05-13 15:01:14" itemprop="dateModified" datetime="2024-05-13T15:01:14+08:00">2024-05-13</time>
               </span>
 
           
@@ -262,7 +262,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
+              <span>3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -289,7 +289,7 @@
 <li>vllm</li>
 </ul>
 </li>
-<li>(不考虑 softmax)Attention 不融合消耗大量内存，如果 n 很大 qk 结果非常大; 如果 kenel 进行融合；分块计算，只需要保存中间结果，见 xformer 示意图：<a target="_blank" rel="noopener" href="https://twitter.com/fvsmassa/status/1580229170629849089">xformer link</a></li>
+<li>(不考虑 softmax)Attention 不融合消耗大量内存，如果 n 很大 qk (atttion 矩阵 nxn)结果非常大; 如果 kenel 进行融合；分块计算，只需要保存中间结果，见 xformer 示意图：<a target="_blank" rel="noopener" href="https://twitter.com/fvsmassa/status/1580229170629849089">xformer link</a></li>
 <li>FlashAttention 在<code>batch和heads两个维度上进行了并行化</code>：使用一个 thread block 来处理一个 attention head，总共需要 thread block 的数量等于 batch size × number of heads。每个 block 被调到到一个 SM 上运行，例如 A100 GPU 上有 108 个 SMs。当 block 数量很大时（例如 ≥80），这种调度方式是高效的，因为几乎可以有效利用 GPU 上所有计算资源。但是在处理长序列输入时，由于内存限制，通常会减小 batch size 和 head 数量，这样并行化成都就降低了。 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/645376942">link</a></li>
 <li>FlashAttention-2 还在<code>序列长度这一维度上进行并行化</code>，显著提升了计算速度。此外，当 batch size 和 head 数量较小时，在序列长度上增加并行性有助于提高 GPU 占用率。</li>
 <li><code>FlashAttention目的不是节约FLOPs，而是减少对HBM的访问。</code></li>
@@ -307,15 +307,20 @@
 <li>先讲述 FlashAttention-2 对 FlashAttention 的改进，从而<code>减少了非矩阵乘法运算（non-matmul）的FLOPs</code>。然后说明如何将任务分配给不同的<code>thread block</code>进行并行计算，充分利用 GPU 资源。最后描述了如何在一个 thread block 内部分配任务给<code>不同的warps</code>，以减少访问共<br>享内存次数。这些优化方案使得 FlashAttention-2 的性能提升了 2-3 倍</li>
 <li>softmax 将 rescale 最后一起进行，中间结果可以多利用 tensor core 矩阵乘</li>
 </ol>
-<h3 id="flash-decoding"><a href="#flash-decoding" class="headerlink" title="flash decoding"></a>flash decoding</h3><ol>
+<h3 id="flash-decoding"><a href="#flash-decoding" class="headerlink" title="flash decoding"></a><a target="_blank" rel="noopener" href="https://crfm.stanford.edu/2023/10/12/flashdecoding.html">flash decoding</a></h3><ol>
 <li>flash attention 是针对模型训练时的 forward 和 backward; 训练时的 forward 是并行运算的</li>
 <li>flash decoding 是针对模型推理时的 inference； 推理时的 inference 是 Autoregressive(AR)</li>
 <li>flash attention 的优化不适合直接应用于推理过程。因为在训练过程中，FlashAttention 对 batch size 和 query length 进行了并行化加速。而在推理过程中，<code>query length 通常为 1</code>，这意味着如果 batch size 小于 GPU 上的 SM 数量（例如 A100 上有 108 个 SMs），那么整个计算过程只使用了 GPU 的一小部分！特别是当上下文较长时，通常会减小 batch size 来适应 GPU 内存。例如 batch size &#x3D; 1 时，FlashAttention 对 GPU 利用率小于 1%！</li>
+<li>流程：对 K 和 V 进行划分成多块，并行计算各块 attention，最后各块结果做 reduction</li>
 </ol>
 <h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/61a777247900f6c2a37376f3ffd7134385fdc95c/setup.py#L133">编译 cuda</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/61a777247900f6c2a37376f3ffd7134385fdc95c/csrc/flash_attn/flash_api.cpp#L1462">pybind11 python interface</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/search?q=repo:Dao-AILab/flash-attention%20flash_attn_cuda&type=code">python using pybind11 api</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/61a777247900f6c2a37376f3ffd7134385fdc95c/csrc/flash_attn/flash_api.cpp#L317">mha_fwd</a><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/9c0e9ee86d0e0022b60deddb405c20ab77481582/flash_attn/flash_attn_interface.py#L51">python call place</a></li>
+</ul>
+</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/61a777247900f6c2a37376f3ffd7134385fdc95c/csrc/flash_attn/flash_api.cpp#L221C17-L221C29">run_mha_fwd</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/search?q=repo:Dao-AILab/flash-attention%20run_mha_fwd_&type=code">run_mha_fwd 多种实现</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/5cdabc2809095b98c311283125c05d222500c8ff/csrc/flash_attn/src/flash_fwd_launch_template.h#L31">run_flash_fwd</a></li>
@@ -446,7 +451,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">175</span>
+          <span class="site-state-item-count">190</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -479,19 +484,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
+          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
+          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -529,13 +534,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">484k</span>
+    <span title="站点总字数">543k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:20</span>
+    <span title="站点阅读时长">8:13</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

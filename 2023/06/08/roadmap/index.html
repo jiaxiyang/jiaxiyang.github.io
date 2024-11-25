@@ -27,11 +27,13 @@
 <meta property="og:site_name" content="Xiyang">
 <meta property="og:description" content="如何成为资深 AI 推理软件工程师(chatgpt)成为资深 AI 推理软件工程师需要具备以下关键步骤和能力：  建立扎实的 AI 基础：首先，建立扎实的人工智能基础知识。深入了解机器学习和深度学习的基本概念、算法和原理，包括神经网络、优化算法、模型评估等。 学习推理引擎和框架：研究和学习不同的 AI 推理引擎和框架，如 TensorRT、OpenVINO、TVM 等。了解它们的特点、优化技术和部">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.ibb.co/mHM8NPV/pl-Uhf-F2-HIN.png">
 <meta property="article:published_time" content="2023-06-08T05:04:42.000Z">
-<meta property="article:modified_time" content="2024-01-25T10:06:12.889Z">
+<meta property="article:modified_time" content="2024-07-09T07:00:33.326Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="Roadmap">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.ibb.co/mHM8NPV/pl-Uhf-F2-HIN.png">
 
 <link rel="canonical" href="https://jiaxiyang.github.io/2023/06/08/roadmap/">
 
@@ -131,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -233,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-25 18:06:12" itemprop="dateModified" datetime="2024-01-25T18:06:12+08:00">2024-01-25</time>
+                <time title="修改时间：2024-07-09 15:00:33" itemprop="dateModified" datetime="2024-07-09T15:00:33+08:00">2024-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -276,14 +278,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6k</span>
+              <span>6.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>6 分钟</span>
             </span>
 
         </div>
@@ -360,6 +362,34 @@
 <li>OpenVINO：英特尔（Intel）推出的开放式视觉推理和神经网络优化工具包，用于在英特尔硬件上进行高效的深度学习推理。OpenVINO 支持多种模型优化技术，包括量化、剪枝和硬件加速等。<br>这些 AI 推理框架都有各自的特点和优势，选择合适的框架取决于你的应用需求、硬件平台和编程偏好。学习和掌握这些框架可以帮助你有效地进行深度学习模型的推理部署，并实现高性能和高效能的预测任务。</li>
 </ol>
 <h2 id="collect"><a href="#collect" class="headerlink" title="collect"></a>collect</h2><ol>
+<li>模型部署<ul>
+<li><a target="_blank" rel="noopener" href="https://mmdeploy.readthedocs.io/zh-cn/latest/tutorial/01_introduction_to_model_deployment.html">(good)mmdeploy 文档</a></li>
+<li>Transform DNNs to Low Level Code: <code>model -&gt; graph -&gt; kernel -&gt; device</code> <a target="_blank" rel="noopener" href="https://www.jokeren.tech/slides/triton_next.pdf">triton next</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://microsoft.github.io/AI-System/SystemforAI-8-Inference.pdf">部署优化</a><ul>
+<li>延迟优化<ul>
+<li>量化</li>
+<li>剪枝</li>
+<li>layer or tensor fusion</li>
+<li>内存优化</li>
+<li>调度优化</li>
+<li>cache</li>
+</ul>
+</li>
+<li>吞吐优化<ul>
+<li>batch</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://microsoft.github.io/AI-System/SystemforAI-9-Compilation%20and%20Optimization.pdf">(very good)神经网络编译器优化</a><ul>
+<li>计算图优化(graph)</li>
+<li>内存优化</li>
+<li>调度优化</li>
+<li>kernel 优化 - 算子表示与调度逻辑分离 - 自动调度搜索与代码生成<br><img src="https://i.ibb.co/mHM8NPV/pl-Uhf-F2-HIN.png" alt="架构图"></li>
+</ul>
+</li>
 <li>深度学习基础, 熟悉常见的模型架构，先不用管精度，专注在推理和性能<ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/mlabonne/llm-course">llm-course</a></li>
 <li><a target="_blank" rel="noopener" href="https://zh.d2l.ai/">李沐《动手学深度学习》</a></li>
@@ -372,6 +402,7 @@
 </ul>
 </li>
 <li>大模型推理<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/karpathy/llm.c">llm.c</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM">TensorRT-LLM</a> faster transformer 后续</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/mlc-ai/mlc-llm">mlc-ai&#x2F;mlc-llm</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/karpathy/llama2.c">llama2.c</a> 可以放到 chatgpt 中解释基本流程</li>
@@ -392,6 +423,12 @@
 </li>
 <li>大模型推理优化<ul>
 <li>xformers, flash attention</li>
+<li><a target="_blank" rel="noopener" href="https://www.databricks.com/blog/llm-inference-performance-engineering-best-practices">LLM Inference Performance Engineering: Best Practices</a><ul>
+<li>Our goal? <code>The fastest time to first token, the highest throughput, and the quickest time per output token</code>. In other words, we want our models to generate text as fast as possible for as many users as we can support.</li>
+<li>Optimizing LLM inference benefits from general techniques such as: Operator Fusion, Quantization, Compression, Parallelization, KV caching</li>
+<li>Identify your optimization target: Do you care about interactive performance? Maximizing throughput? Minimizing cost? There are predictable trade-offs here.</li>
+</ul>
+</li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=7WeraZ0LLlg">韩松大模型优化介绍</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/tree/main?tab=readme-ov-file#key-features">TensorRT-LLM key-features</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.cvmart.net/community/detail/7069">一文总结当下常用的大型 transformer 效率优化方案</a></li>
@@ -409,9 +446,20 @@
 <li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass">cutlass</a></li>
 </ul>
 </li>
+<li>token merging</li>
+<li>diffusers 加速技术<ul>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/diffusers/tutorials/fast_diffusion#accelerate-inference-of-text-to-image-diffusion-models">accelerate-inference-of-text-to-image-diffusion-models</a></li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/diffusers/optimization/fp16">diffusers&#x2F;optimization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>大模型量化<ul>
+<li>韩松视频</li>
 </ul>
 </li>
 <li>大模型训练（选）<ul>
+<li>finetune</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/Megatron-LM">NVIDIA&#x2F;Megatron-LM</a></li>
 </ul>
 </li>
@@ -431,7 +479,10 @@
 <li>c++ 推理接口, sample, plugin</li>
 </ul>
 </li>
-<li>pytorch</li>
+<li>pytorch<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/pytorch/tutorials/tree/main">tutorials</a></li>
+</ul>
+</li>
 <li>模型优化和压缩技术(剪枝、量化、 蒸馏)</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/Tencent/ncnn">ncnn</a></li>
 <li>Modular vs OctoML (MLIR vs TVM)<ul>
@@ -589,7 +640,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">175</span>
+          <span class="site-state-item-count">190</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -622,19 +673,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
+          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
+          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -672,13 +723,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">484k</span>
+    <span title="站点总字数">543k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:20</span>
+    <span title="站点阅读时长">8:13</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

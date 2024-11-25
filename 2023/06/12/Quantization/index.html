@@ -20,19 +20,21 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="量化（定浮点转换） https:&#x2F;&#x2F;blog.csdn.net&#x2F;niaolianjiulin&#x2F;article&#x2F;details&#x2F;82764511 NVIDIA’s Turing architecture introduced INT4 precision 不是所有的 nvidia gpu 都支持 4bit 量化， Turing 架构之前的 Pascal、Volta 等架构就不提供对 4-bit 定点">
+  <meta name="description" content="量化（定浮点转换） If you are using reduced precision, run the network in FP32. If it produces the correct result, it is possible that lower precision has an insufficient dynamic range for the network. 如果您使用降低">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Quantization">
 <meta property="og:url" content="https://jiaxiyang.github.io/2023/06/12/Quantization/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="量化（定浮点转换） https:&#x2F;&#x2F;blog.csdn.net&#x2F;niaolianjiulin&#x2F;article&#x2F;details&#x2F;82764511 NVIDIA’s Turing architecture introduced INT4 precision 不是所有的 nvidia gpu 都支持 4bit 量化， Turing 架构之前的 Pascal、Volta 等架构就不提供对 4-bit 定点">
+<meta property="og:description" content="量化（定浮点转换） If you are using reduced precision, run the network in FP32. If it produces the correct result, it is possible that lower precision has an insufficient dynamic range for the network. 如果您使用降低">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.ibb.co/XJnYcYY/i-Rl-Ilz-S8-XJ.png">
 <meta property="article:published_time" content="2023-06-12T03:43:36.000Z">
-<meta property="article:modified_time" content="2024-02-27T03:10:39.505Z">
+<meta property="article:modified_time" content="2024-06-18T02:24:13.807Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="Quantization">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.ibb.co/XJnYcYY/i-Rl-Ilz-S8-XJ.png">
 
 <link rel="canonical" href="https://jiaxiyang.github.io/2023/06/12/Quantization/">
 
@@ -132,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -234,7 +236,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-27 11:10:39" itemprop="dateModified" datetime="2024-02-27T11:10:39+08:00">2024-02-27</time>
+                <time title="修改时间：2024-06-18 10:24:13" itemprop="dateModified" datetime="2024-06-18T10:24:13+08:00">2024-06-18</time>
               </span>
 
           
@@ -264,14 +266,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.4k</span>
+              <span>2.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -284,11 +286,42 @@
 
       
         <h2 id="量化（定浮点转换）"><a href="#量化（定浮点转换）" class="headerlink" title="量化（定浮点转换）"></a>量化（定浮点转换）</h2><ol>
+<li>If you are using reduced precision, run the network in FP32. If it produces the correct result, it is possible that lower precision has an insufficient dynamic range for the network.<ul>
+<li>如果您使用降低的精度，请以 FP32 运行网络。如果它产生正确的结果，则较低的精度可能导致网络的动态范围不足。</li>
+</ul>
+</li>
+<li>也有人称量化为<code>定点化</code>，但是严格来讲所表示的范围是缩小的。定点化特指 scale 为 2 的幂次的线性量化，是一种更加实用的量化方法。</li>
+<li>由于线性量化引入的额外量化&#x2F;反量化计算都是标准的向量操作，也可以使用 SIMD 进行加速，带来的额外计算耗时不大。</li>
+<li><a target="_blank" rel="noopener" href="https://cms.tinyml.org/wp-content/uploads/industry-news/tinyML_Talks-_Marios_Fournarakis_210929.pdf">A Practical Guide to Neural Network Quantization</a></li>
+<li>量化的是输入和算子的参数</li>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/niaolianjiulin/article/details/82764511">https://blog.csdn.net/niaolianjiulin/article/details/82764511</a></li>
 <li>NVIDIA’s Turing architecture introduced INT4 precision</li>
 <li>不是所有的 nvidia gpu 都支持 4bit 量化， Turing 架构之前的 Pascal、Volta 等架构就不提供对 4-bit 定点数的硬件加速支持。</li>
 <li>是的,绝大多数 Nvidia GPU 都原生支持 8-bit 整数(INT8)定点数运算。</li>
 <li>如果处理器不支持 4bit 量化； 那么 4bit 量化只能减少内存使用</li>
+<li>模型量化还有一个潜在的好处是降低运行时内存占用，这个特性无论是在移动端还是云端都是具有现实意义的。<ul>
+<li>降低内存占用与内存读写</li>
+</ul>
+</li>
+<li>运行时内存：参数 weight 只占很少一部分， 大部分内存占用来自激活值 activation。如何才能用量化降低内存占用，只有一个方式: 将尽可能多的 layer 的激活值都进行量化 。</li>
+<li>注意 weight, activation 和 op 之间的关系，如果 weight 和 activation 都是 fp32, 需要使用 fp32 op 实现版本，如果都是 int8, 需要使用 int8 op 实现版本。</li>
+<li>为什么权重不能是 pre-tensor 呢？这个对精度的影响太大了，所以一般不用。那输入就可以 pre-tensor？当然可以，也经过测试了，对精度的影响不是很大，完全可以用。</li>
+<li>这就是 pre-channel 或者详细点就是 per-output-channel 也就是卷积输出通道</li>
+<li>Explicit vs Implicit Quantization<ul>
+<li>显示量化：能控制在何处进行量化，例如：pytorch_quantization</li>
+<li>隐私量化：不能控制, 例如：python onnx 转 trt</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/648877516">tensorrt 官方 int8 量化方法汇总</a></li>
+</ul>
+</li>
+</ol>
+<h3 id="PTQ"><a href="#PTQ" class="headerlink" title="PTQ"></a>PTQ</h3><ol>
+<li>qat vs ptq<br><img src="https://i.ibb.co/XJnYcYY/i-Rl-Ilz-S8-XJ.png" alt="qat vs ptq"></li>
+<li>交叉熵或者 percentile 的方式进行校准</li>
+</ol>
+<h3 id="QAT"><a href="#QAT" class="headerlink" title="QAT"></a><a target="_blank" rel="noopener" href="https://oldpan.me/archives/quantize-in-action-tensorrt-8">QAT</a></h3><ol>
+<li>量化后，通常需要调整神经网络(NN)中的参数。这可以通过 retraining 模型来执行，该过程称为量化感知训练（QAT）</li>
+<li>QAT 中需要 QDQ 算子，QuantizeLiner 和 DequantizeLiner</li>
+<li>QAT 量化中最重要的就是 fake 量化算子，fake 算子负责将输入该算子的参数和输入先量化后反量化，然后记录这个 scale，FQ(fake-quan)算子会将 FP32 精度的输入和权重转化为 INT8 再转回 FP32，记住转换过程中的尺度信息。这些 fake-quan 算子在 ONNX 中可以表示为 QDQ 算子</li>
 </ol>
 <h2 id="LLM"><a href="#LLM" class="headerlink" title="LLM"></a>LLM</h2><ol>
 <li>可量化的参数包括: 权重和激活值（Weight and Activation），对于矩阵乘法 Y &#x3D; WX，W 为权重，X 就是激活值（输入）。</li>
@@ -297,11 +330,12 @@
 <li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2308.07633">A Survey on Model Compression for Large Language Models</a></li>
 </ol>
 <h3 id="SmoothQuant"><a href="#SmoothQuant" class="headerlink" title="SmoothQuant"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2211.10438">SmoothQuant</a></h3><ol>
+<li>SmoothQuant 观察到不同的 token 在它们的通道上展示出类似的变化，引入了逐通道缩放变换，有效地平滑了幅度，使得模型更易于量化。</li>
 <li>INT8 SmoothQuant (W8A8)</li>
 <li>量化模式:Given a matrix (2D tensor) of shape M x N (M rows and N columns) where M is the number of tokens and N is the number of channels. TensorRT-LLM has the three following modes to quantize and dequantize the elements of the tensor:<ul>
 <li>Per-tensor: It uses a single scaling factor for all the elements,</li>
-<li>Per-token: It uses a different scaling factor for each token. There are M scaling factors in that case,</li>
-<li>Per-channel: It uses a different scaling factor for each channel. There are N scaling factors in that case.</li>
+<li>Per-token: It uses a different scaling factor for each token. There are M scaling factors in that case, 激活和权重都可以</li>
+<li>Per-channel: It uses a different scaling factor for each channel. There are N scaling factors in that case， 激活和权重都可以</li>
 </ul>
 </li>
 <li>可以分别进行 per-tensor, per-token, per-channel 量化</li>
@@ -309,12 +343,12 @@
 <h3 id="GPTQ"><a href="#GPTQ" class="headerlink" title="GPTQ"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2210.17323">GPTQ</a></h3><ol>
 <li>W4A16</li>
 </ol>
-<h3 id="AWQ"><a href="#AWQ" class="headerlink" title="AWQ"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2306.00978,">AWQ</a></h3><ol>
+<h3 id="AWQ-激活感知权重量化"><a href="#AWQ-激活感知权重量化" class="headerlink" title="AWQ 激活感知权重量化"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2306.00978">AWQ</a> 激活感知权重量化</h3><ol>
 <li>weight int4; Weight-Only 只量化权重, 激活不量化</li>
 <li>The INT4 and INT8 Weight-Only techniques consist in quantizing the weights of a model and dequantizing those weights on-the-fly in linear layers (Matmuls). The activations are encoded using floating-point values (FP16 or BF16). To use INT4&#x2F;INT8 Weight-Only methods, the user must determine the scaling factors to use to quantize and dequantize the weights of the model.</li>
 <li>W4A16</li>
 <li>权重并不是同等重要的，通过保留 1%的显著权重可以大大减少量化误差。</li>
-<li>per-channel 对权重做量化，权重矩阵的列, 每个 d 一个 scale,如果 tensor 中有几列为 fp16, 其他列为 int8，那么对硬件不友好。</li>
+<li>per-channel(针对 activation) 对权重做量化，权重矩阵的列, 每个 d 一个 scale,如果 tensor 中有几列为 fp16, 其他列为 int8，那么对硬件不友好。</li>
 <li>per-channel 在对权重量化前先求出权重 channel 对应的激活 channel 的平均值， 对权重做量化前，每个 channel 先乘以对应的平均值</li>
 </ol>
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
@@ -440,7 +474,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8F%E5%8C%96%EF%BC%88%E5%AE%9A%E6%B5%AE%E7%82%B9%E8%BD%AC%E6%8D%A2%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">量化（定浮点转换）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LLM"><span class="nav-number">2.</span> <span class="nav-text">LLM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#papers"><span class="nav-number">3.</span> <span class="nav-text">papers</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%BC%E8%BF%B0"><span class="nav-number">3.1.</span> <span class="nav-text">综述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SmoothQuant"><span class="nav-number">3.2.</span> <span class="nav-text">SmoothQuant</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GPTQ"><span class="nav-number">3.3.</span> <span class="nav-text">GPTQ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AWQ"><span class="nav-number">3.4.</span> <span class="nav-text">AWQ</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">4.</span> <span class="nav-text">links</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8F%E5%8C%96%EF%BC%88%E5%AE%9A%E6%B5%AE%E7%82%B9%E8%BD%AC%E6%8D%A2%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">量化（定浮点转换）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PTQ"><span class="nav-number">1.1.</span> <span class="nav-text">PTQ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QAT"><span class="nav-number">1.2.</span> <span class="nav-text">QAT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LLM"><span class="nav-number">2.</span> <span class="nav-text">LLM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#papers"><span class="nav-number">3.</span> <span class="nav-text">papers</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%BC%E8%BF%B0"><span class="nav-number">3.1.</span> <span class="nav-text">综述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SmoothQuant"><span class="nav-number">3.2.</span> <span class="nav-text">SmoothQuant</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GPTQ"><span class="nav-number">3.3.</span> <span class="nav-text">GPTQ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AWQ-%E6%BF%80%E6%B4%BB%E6%84%9F%E7%9F%A5%E6%9D%83%E9%87%8D%E9%87%8F%E5%8C%96"><span class="nav-number">3.4.</span> <span class="nav-text">AWQ 激活感知权重量化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">4.</span> <span class="nav-text">links</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -456,7 +490,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">175</span>
+          <span class="site-state-item-count">190</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -489,19 +523,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
+          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
+          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -539,13 +573,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">484k</span>
+    <span title="站点总字数">543k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:20</span>
+    <span title="站点阅读时长">8:13</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

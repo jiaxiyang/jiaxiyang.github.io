@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -199,7 +199,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/12/26/jupyter/">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/05/09/op/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/coder2.jpg">
@@ -213,7 +213,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/12/26/jupyter/" class="post-title-link" itemprop="url">jupyter</a>
+            <a href="/2024/05/09/op/" class="post-title-link" itemprop="url">op</a>
         </h2>
 
         <div class="post-meta">
@@ -222,10 +222,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2023-12-26 11:51:34 / 修改时间：15:57:05" itemprop="dateCreated datePublished" datetime="2023-12-26T11:51:34+08:00">2023-12-26</time>
+              <time title="创建时间：2024-05-09 14:07:39" itemprop="dateCreated datePublished" datetime="2024-05-09T14:07:39+08:00">2024-05-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-28 19:38:08" itemprop="dateModified" datetime="2024-08-28T19:38:08+08:00">2024-08-28</time>
+              </span>
 
           
   
@@ -236,8 +242,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2023/12/26/jupyter/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/26/jupyter/" itemprop="commentCount"></span>
+    <a title="valine" href="/2024/05/09/op/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/05/09/op/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -247,14 +253,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>228</span>
+              <span>1.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -266,11 +272,146 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">conda create --name d2l python=3.9 -y</span><br><span class="line">conda activate d2l</span><br><span class="line">pip install torch==1.12.0 torchvision==0.13.0 d2l==0.17.6 RICE</span><br><span class="line">jupyter notebook <span class="comment"># 映射端口号 注意不用使用机器自带jupyter</span></span><br><span class="line">jupyter notebook --port 5900 <span class="comment"># 映射端口号, 可能不好使</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="shortkeys"><a href="#shortkeys" class="headerlink" title="shortkeys"></a>shortkeys</h2><ol>
-<li><code>S-Enter</code> 运行并到下一 cell</li>
-<li><code>C-Enter</code> 运行 code</li>
+          <h2 id="plan"><a href="#plan" class="headerlink" title="plan"></a>plan</h2><ol>
+<li>基础工程<ul>
+<li>unit test</li>
+<li>benchmark</li>
+<li>ci</li>
+</ul>
+</li>
+<li>加速技术<ul>
+<li>simd</li>
+</ul>
+</li>
+<li>profiling 工具<ul>
+<li>perf</li>
+<li>nsight system&#x2F;compute</li>
+</ul>
+</li>
+<li>编程语言<ul>
+<li>cuda<ul>
+<li>cutlass</li>
+</ul>
+</li>
+<li>triton</li>
+<li>halide</li>
+<li>opencl</li>
+</ul>
+</li>
+<li>平台<ul>
+<li>gpu</li>
+<li>arm</li>
+<li>dsp</li>
+</ul>
+</li>
+<li>自定义算子<ul>
+<li>(重要)注意插件和自定义算子区别：C++ or Cuda 自定义算子可以直接被 pytorch 使用，不用封装成插件，也不用为导出 onnx 模型做一些额外工作。导出 onnx 时需要做一些操作，在运行 trt 模型时需要将算子封装成 plugin</li>
+<li>c++算子：cuda 实现，c++封装，python 调用，不用实现前后 forward</li>
+<li>pytorch 自定义算子：需要继承 torch.autograd.Function，实现前后 forward, 可以是 python 算子；如果是 C 算子，在 python 中调用 c++ or cuda, 如果不考虑导出 onnx 不用做封装，导出的话需要 symbolic，opset15 更简单 <a target="_blank" rel="noopener" href="https://leimao.github.io/blog/PyTorch-Custom-ONNX-Operator-Export/">link</a> <a target="_blank" rel="noopener" href="https://godweiyang.com/2021/03/21/torch-cpp-cuda-2/">详解 PyTorch 编译并调用自定义 CUDA 算子的三种方式</a><ul>
+<li>隐藏 cuda 实现：编译 cuda 到 cubin， 在 cpp 中读 cubin，再用 pytorch setup.py 编译 <a target="_blank" rel="noopener" href="https://chatgpt.com/share/8fb13ae5-3d21-4c1e-be5a-7648d8b2ea9a">link</a></li>
+<li>cuda 需要 torch tensor 包一层，tensorrt 插件不用</li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/recipes/torch_compile_user_defined_triton_kernel_tutorial.html">triton</a></li>
+</ul>
+</li>
+<li>tensorrt 插件：将 c++ or cuda 实现的算子封装成 tensorrt plugin</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/godweiyang/NN-CUDA-Example">plugin</a></li>
+<li>tensorrt 两种方法支持自定义 op<ul>
+<li>onnx graphsurgeon 修改 op <a target="_blank" rel="noopener" href="https://leimao.github.io/blog/TensorRT-Custom-Plugin-Example/">link</a></li>
+<li>pytorch 直接导出带自定义 op 的 onnx <a target="_blank" rel="noopener" href="https://leimao.github.io/blog/PyTorch-Custom-ONNX-Operator-Export/">link</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://numba.readthedocs.io/en/stable/user/examples.html">numba jit 加速</a></li>
+</ul>
+</li>
+<li>常见算子列表</li>
+<li>大模型算子</li>
+<li>库<ul>
+<li>openblas</li>
+<li>cudnn</li>
+<li>cublas</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/OAID/Tengine">Tengine</a> (久未更新代码)</li>
+<li>tensorrt-llm plugins kernel</li>
+</ul>
+</li>
+<li>算子融合<ul>
+<li>conv + elementwise(relu, add, BN ….)</li>
+<li>elementwise + elementwise</li>
+<li>conv + conv</li>
+</ul>
+</li>
+<li>python 驱动测试 (开发板上可能无开发环境，需要 c++单测)<ul>
+<li>setup.py 编译 kernel</li>
+<li>pybind11 封装 kernel</li>
+<li>python 直接调用 kernel，可用于训练和推理</li>
+<li>python 调用 trt plugin 来验证 plugin 正确性</li>
+</ul>
+</li>
+<li>训练加速<ul>
+<li>正向反向传播算子</li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/autograd.html">torch.autograd.function</a><ul>
+<li>实现函数的前向传播、反向传播，已经封装好了，理解起来很快，看一个案例就能理解。</li>
+</ul>
+</li>
+<li>viztracer + nsys + ncu + nvtx 分析性能瓶颈</li>
+<li>多卡加速</li>
+<li>ddp</li>
+<li>dataloader 取数据的能力和计算的能力要平衡</li>
+<li>1 gpu 4 worker</li>
+<li>读数据和解码耗时<ul>
+<li>cpu: <a target="_blank" rel="noopener" href="https://github.com/dev0x13/pywuffs">pywuffs</a> png 更有效，jpg 和 cv 差不太多</li>
+<li>gpu: <a target="_blank" rel="noopener" href="https://github.com/NVIDIA/nvImageCodec/tree/main/example/python">nvImageCodec</a><ul>
+<li>png decode 也是 cpu 做的</li>
+</ul>
+</li>
+<li>torch: <a target="_blank" rel="noopener" href="https://pytorch.org/vision/main/io.html">vision io</a></li>
+</ul>
+</li>
+<li>当 cpu 是瓶颈的时候，增加 worker 数量对数据读取帮助不大，反而会增加内存的消耗，将低 worker 数可以减少存储的消耗</li>
+</ul>
+</li>
+<li>推理加速（主要是减少 latency, 增大吞吐可以数据并行，多台机器，每台运行不同数据)<ul>
+<li>单机多卡</li>
+<li>分布式</li>
+</ul>
+</li>
+<li>量化支持</li>
+<li>调试<ul>
+<li>vscode + nsight + cuda-gdb</li>
+</ul>
+</li>
+<li>dump 实测数据方式<ul>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/saving_loading_models.html#save">torch save</a><ul>
+<li>op 输入输出先写到一个 dict 里，一起 save;</li>
+<li>追加功能，读 pt 文件到 dict, 插入新的键值，重新写</li>
+</ul>
+</li>
+<li>pickle(python 自带)</li>
+</ul>
+</li>
+<li>python 与 C++ 交互方式<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/pytorch/extension-cpp.git">pytorch&#x2F;extension-cpp</a><ul>
+<li>c++ op forward backward &#x3D;&gt; pybind11 &#x3D;&gt; python op(torch.autograd.Fuction) with forward and backward &#x3D;&gt; layer(torch.nn.Module) forward 中调用 op.apply()</li>
+<li>onnx export 时 symbol 会替换 module 中 forward 调用继承了 torch.autograd.Function 的自定义算子 apply 函数</li>
+</ul>
+</li>
+<li>pytorch tensor + pybind11</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/pybind/python_example">Setuptools example</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/459955492">pytorch 之 c++&#x2F;cuda 拓展</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/348555597">PyTorch 源码解读之 cpp_extension：揭秘 C++&#x2F;CUDA 算子实现和调用全流程</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/pytorch/pytorch/blob/main/setup.py">pytorch setup.py</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/open-mmlab/mmdetection3d">mmdetection3d</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/open-mmlab/mmdetection3d/tree/main/projects/BEVFusion">BEVFusion</a></li>
+<li><code>pip install -v -e .</code></li>
+</ul>
+</li>
+<li>torch compile<ul>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/intermediate/torch_compile_tutorial.html">doc</a></li>
+<li>需要 pytorch 2</li>
+</ul>
+</li>
+</ol>
+<h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.hiascend.com/document/detail/zh/CANNCommunityEdition/80RC1alpha003/devguide/opdevg/tbeaicpudevg/atlasopdev_10_0006.html">算子基本概念</a></li>
 </ol>
 
       
@@ -293,7 +434,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/12/24/llama2-c/">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/05/06/dsp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/coder2.jpg">
@@ -307,7 +448,106 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/12/24/llama2-c/" class="post-title-link" itemprop="url">llama2</a>
+            <a href="/2024/05/06/dsp/" class="post-title-link" itemprop="url">dsp</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-05-06 10:45:16 / 修改时间：14:17:50" itemprop="dateCreated datePublished" datetime="2024-05-06T10:45:16+08:00">2024-05-06</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/05/06/dsp/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/05/06/dsp/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>195</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="cadence"><a href="#cadence" class="headerlink" title="cadence"></a>cadence</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.cadence.com/content/dam/cadence-www/global/en_US/documents/solutions/automotive/tensilica-vision-dsp-wp.pdf">Tensilica Vision DSP Family</a><ul>
+<li>包含 P6, Q8 参数</li>
+</ul>
+</li>
+</ol>
+<h2 id="VLIW"><a href="#VLIW" class="headerlink" title="VLIW"></a>VLIW</h2><ol>
+<li>VLIW 架构在嵌入式市场，如 DSP，领域获得了成功应用。</li>
+<li>总而言之，VLIW 指令集架构简化了硬件设计，将最复杂的工作推给了编译器。</li>
+<li>通常，常用的应用中，发现足够的并行指令填满 VLIW 的可执行单元是非常困难的。这就导致 VLIW 的利用率较低，即出现设计&#x2F;宣称处理能力很高，但是实际的性能却较低的现象。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/03/19/ollama/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/19/ollama/" class="post-title-link" itemprop="url">ollama</a>
         </h2>
 
         <div class="post-meta">
@@ -317,14 +557,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2023-12-24 18:23:45" itemprop="dateCreated datePublished" datetime="2023-12-24T18:23:45+08:00">2023-12-24</time>
+              <time title="创建时间：2024-03-19 19:25:56" itemprop="dateCreated datePublished" datetime="2024-03-19T19:25:56+08:00">2024-03-19</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-10 17:07:17" itemprop="dateModified" datetime="2024-01-10T17:07:17+08:00">2024-01-10</time>
+                <time title="修改时间：2024-03-20 11:22:08" itemprop="dateModified" datetime="2024-03-20T11:22:08+08:00">2024-03-20</time>
               </span>
 
           
@@ -336,8 +576,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2023/12/24/llama2-c/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/24/llama2-c/" itemprop="commentCount"></span>
+    <a title="valine" href="/2024/03/19/ollama/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/03/19/ollama/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -347,7 +587,320 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.8k</span>
+              <span>169</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/ollama/ollama">ollama&#x2F;ollama</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ollama-ui/ollama-ui">ollama-ui&#x2F;ollama-ui</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/open-webui/open-webui">open-webui&#x2F;open-webui</a></li>
+<li>可以在多个操作系统上开启大语言模型服务</li>
+<li>windows 先安装 ollama 工具，在 powershell 上可以运行</li>
+<li><code>ollama run llama2</code></li>
+<li><code>ollama run gemma:2b</code></li>
+<li><code>ollama serve</code></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/02/29/gemma/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/02/29/gemma/" class="post-title-link" itemprop="url">gemma</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-02-29 15:42:05" itemprop="dateCreated datePublished" datetime="2024-02-29T15:42:05+08:00">2024-02-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-03-04 15:04:12" itemprop="dateModified" datetime="2024-03-04T15:04:12+08:00">2024-03-04</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/02/29/gemma/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/02/29/gemma/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>337</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="gemma-cpp"><a href="#gemma-cpp" class="headerlink" title="gemma.cpp"></a><a target="_blank" rel="noopener" href="https://github.com/google/gemma.cpp">gemma.cpp</a></h2><ol>
+<li>使用了 hightway 加速</li>
+<li><a target="_blank" rel="noopener" href="https://www.kaggle.com/models/google/gemma/frameworks/gemmaCpp?select=tokenizer.spm">下载模型</a></li>
+<li><code>./build/gemma --verbosity 2 --tokenizer tokenizer.spm --compressed_weights 2b-it-sfp.sbs --model 2b-it</code></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/google/gemma.cpp/blob/main/gemma.cc">关键代码</a><ul>
+<li>GenerateImpl() 包含 prefill 和 generate 两个阶段</li>
+<li>prefill 阶段使用了 Prefill()函数<ul>
+<li>每次处理 kPrefillBatchSize 个输入，循环处理</li>
+</ul>
+</li>
+<li>generate 阶段使用了 Transformer()，Softmax(), SampleTopK()函数</li>
+</ul>
+</li>
+<li>add_definitions(-DPROFILER_ENABLED&#x3D;1), 打开 hightway profiler, 命令行%q 退出，<a target="_blank" rel="noopener" href="https://github.com/google/gemma.cpp/issues/73#issuecomment-1973230523">link</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/02/22/pagedattention/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/02/22/pagedattention/" class="post-title-link" itemprop="url">pagedattention</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-02-22 13:54:28 / 修改时间：14:17:17" itemprop="dateCreated datePublished" datetime="2024-02-22T13:54:28+08:00">2024-02-22</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/02/22/pagedattention/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/02/22/pagedattention/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>392</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>attention 输入为 q k v 输出 q 维度类似的结果; 参数可能为各种 shape 信息 地址 head num, scale, mask 等。如果是 paged attention 需要处理 q k v 地址不连续的情况, 也需要考虑计算并行度问题</li>
+<li>cuda core 计算的</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/vllm-project/vllm/blob/main/csrc/attention/attention_kernels.cu">attention 代码</a></li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/638468472">从 FlashAttention 到 PagedAttention, 如何进一步优化 Attention 性能</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/673284781">vLLM 皇冠上的明珠：深入浅出理解 PagedAttention CUDA 实现</a><ul>
+<li>vLLM 中，LLM 推理的 prefill 阶段 attention 计算使用第三方库 xformers 的优化实现，decoding 阶段 attention 计算则使用项目编译 CUDA 代码实现。具体代码在 vllm 的 csrc&#x2F;attention&#x2F;attention_kernels.cu 文件里，开发者洋洋洒洒写了八百多行 CUDA 代码。</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/02/03/flashattention/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/02/03/flashattention/" class="post-title-link" itemprop="url">flashattention</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-02-03 14:55:42" itemprop="dateCreated datePublished" datetime="2024-02-03T14:55:42+08:00">2024-02-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-13 15:01:14" itemprop="dateModified" datetime="2024-05-13T15:01:14+08:00">2024-05-13</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/02/03/flashattention/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/02/03/flashattention/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -366,508 +919,57 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><h3 id="llama2-参数量计算"><a href="#llama2-参数量计算" class="headerlink" title="llama2 参数量计算"></a>llama2 参数量计算</h3><ol>
-<li>见 transformer 参数计算</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/649125936">LLAMA2 的参数计算</a></li>
-<li><a target="_blank" rel="noopener" href="https://medium.com/@saratbhargava/mastering-llama-math-part-1-a-step-by-step-guide-to-counting-parameters-in-llama-2-b3d73bc3ae31">Mastering Llama Math (Part-1): A Step-by-Step Guide to Counting Parameters in Llama-2</a></li>
-<li><code>窗口长度, 上下文长度(Context Length)</code>指的是模型在做预测时能够看到的上下文单词的数量。具体来说,在 transformer 等注意力机制的模型中,输入是一个定长的窗口,窗口中的每个词会通过自注意力机制关联到窗口中的其他词。这个窗口的长度就是上下文长度。</li>
-<li><code>词向量</code>：embeding 层的输出就是词向量</li>
-<li>推理时间复杂度：整体级别是 l<em>n</em>d^2+l<em>d</em>n^2，其中：d 是词向量维度，n 是窗口或序列长度，l：层数<ul>
-<li>无论是窗口长度还是词向量维度，都会让推理时间呈平方指数级上升。</li>
-<li>层数对推理时间的影响是线性的。</li>
-<li>而词表大小对推理时间基本没有影响。</li>
+          <h2 id="note"><a href="#note" class="headerlink" title="note"></a>note</h2><ol>
+<li>在计算机编程和软件项目中，csrc 通常是 “C Source” 的缩写，意为 “C 源代码”。即使 csrc 目录可能包含 C++ 代码，这个名字仍然被保留，因为它沿用了这一传统的命名惯例<ul>
+<li>flash attention</li>
+<li>pytorch</li>
+<li>xformer</li>
+<li>vllm</li>
 </ul>
 </li>
+<li>(不考虑 softmax)Attention 不融合消耗大量内存，如果 n 很大 qk (atttion 矩阵 nxn)结果非常大; 如果 kenel 进行融合；分块计算，只需要保存中间结果，见 xformer 示意图：<a target="_blank" rel="noopener" href="https://twitter.com/fvsmassa/status/1580229170629849089">xformer link</a></li>
+<li>FlashAttention 在<code>batch和heads两个维度上进行了并行化</code>：使用一个 thread block 来处理一个 attention head，总共需要 thread block 的数量等于 batch size × number of heads。每个 block 被调到到一个 SM 上运行，例如 A100 GPU 上有 108 个 SMs。当 block 数量很大时（例如 ≥80），这种调度方式是高效的，因为几乎可以有效利用 GPU 上所有计算资源。但是在处理长序列输入时，由于内存限制，通常会减小 batch size 和 head 数量，这样并行化成都就降低了。 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/645376942">link</a></li>
+<li>FlashAttention-2 还在<code>序列长度这一维度上进行并行化</code>，显著提升了计算速度。此外，当 batch size 和 head 数量较小时，在序列长度上增加并行性有助于提高 GPU 占用率。</li>
+<li><code>FlashAttention目的不是节约FLOPs，而是减少对HBM的访问。</code></li>
+<li>重点是 FlashAttention 在<code>训练和预测过程中的结果和标准Attention一样</code>，对用户是无感的，而其他加速方法做不到这点。</li>
+<li>FlashAttention does not read and write the large attention NxN matrix to HBM, FlashAttention 不会读取大型 NxN 注意力矩阵并将其写入 HBM</li>
+<li>In this paper, we argue that a missing principle is making attention algorithms IO-aware [1]—that is, carefully accounting for reads and writes to different levels of fast and slow memory</li>
+<li>Our main goal is to avoid reading and writing the <code>attention matrix to and from HBM</code>. 没有优化前 multihead attation 每个 head 都需要一个 NxN attention matrix</li>
+<li>The most common approach to accelerate memory-bound operations is kernel fusion: if there are multiple operations applied to the same input, the input can be loaded once from HBM, instead of multiple times for each operation. Compilers can automatically fuse many elementwise operations</li>
+<li>注意训练时的 forward 和推理时的 forward 的区别; 训练时输入 N 固定; 推理是 LLM inference（或称为 decoding）</li>
+<li>there have been many attempts to fuse several elementwise operations, such as fusing masking with softmax</li>
+<li>Let N be the sequence length, d be the head dimension, and M be size of SRAM with d &lt;&#x3D; M &lt;&#x3D; Nd;. Standard attention (Algorithm ) requires <code>O(Nd + NN)</code> HBM accesses, while FlashAttention (Algorithm 1) requires <code>O(NNdd/M)</code> HBM accesses.</li>
+<li>对于 d(64-128) 和 N（大约 100KB）的典型值，d2 比 M 小很多倍，并且因此，FlashAttention 所需的 HBM 访问次数比标准实现少很多倍。</li>
 </ol>
-<h3 id="长文本-输入输出更长-token"><a href="#长文本-输入输出更长-token" class="headerlink" title="长文本(输入输出更长 token)"></a>长文本(输入输出更长 token)</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/657210829">大模型长文本建模的难点与方案</a></li>
-<li><a target="_blank" rel="noopener" href="https://36kr.com/p/2470939687950470">卷完参数后，大模型公司又盯上了“长文本”？</a></li>
+<h3 id="flash-attenion-v2"><a href="#flash-attenion-v2" class="headerlink" title="flash attenion v2"></a>flash attenion v2</h3><ol>
+<li>先讲述 FlashAttention-2 对 FlashAttention 的改进，从而<code>减少了非矩阵乘法运算（non-matmul）的FLOPs</code>。然后说明如何将任务分配给不同的<code>thread block</code>进行并行计算，充分利用 GPU 资源。最后描述了如何在一个 thread block 内部分配任务给<code>不同的warps</code>，以减少访问共<br>享内存次数。这些优化方案使得 FlashAttention-2 的性能提升了 2-3 倍</li>
+<li>softmax 将 rescale 最后一起进行，中间结果可以多利用 tensor core 矩阵乘</li>
 </ol>
-<h2 id="llama2-c"><a href="#llama2-c" class="headerlink" title="llama2.c"></a><a target="_blank" rel="noopener" href="https://github.com/karpathy/llama2.c">llama2.c</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=zjkBMFhNj_g">Intro to Large Language Models</a> ka</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/llama/blob/main/llama/model.py">python 推理代码</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=oM4VmoabDAI">Coding LLaMA 2 from scratch in PyTorch - KV Cache, Grouped Query Attention, Rotary PE, RMSNorm</a></li>
-<li>build and run</li>
+<h3 id="flash-decoding"><a href="#flash-decoding" class="headerlink" title="flash decoding"></a><a target="_blank" rel="noopener" href="https://crfm.stanford.edu/2023/10/12/flashdecoding.html">flash decoding</a></h3><ol>
+<li>flash attention 是针对模型训练时的 forward 和 backward; 训练时的 forward 是并行运算的</li>
+<li>flash decoding 是针对模型推理时的 inference； 推理时的 inference 是 Autoregressive(AR)</li>
+<li>flash attention 的优化不适合直接应用于推理过程。因为在训练过程中，FlashAttention 对 batch size 和 query length 进行了并行化加速。而在推理过程中，<code>query length 通常为 1</code>，这意味着如果 batch size 小于 GPU 上的 SM 数量（例如 A100 上有 108 个 SMs），那么整个计算过程只使用了 GPU 的一小部分！特别是当上下文较长时，通常会减小 batch size 来适应 GPU 内存。例如 batch size &#x3D; 1 时，FlashAttention 对 GPU 利用率小于 1%！</li>
+<li>流程：对 K 和 V 进行划分成多块，并行计算各块 attention，最后各块结果做 reduction</li>
 </ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/karpathy/llama2.c.git</span><br><span class="line"><span class="built_in">cd</span> llama2.c</span><br><span class="line">make run; make rundebug</span><br><span class="line">wget https://huggingface.co/karpathy/tinyllamas/resolve/main/stories15M.bin</span><br><span class="line">./run stories15M.bin</span><br><span class="line">make runfast  <span class="comment"># 加速运行， 80 tok/s =&gt; 180 tok/s</span></span><br><span class="line">make runomp &amp;&amp; OMP_NUM_THREADS=4 ./run out/model.bin <span class="comment"># 多核加速， from 80 tok/s =&gt; 320 tok/s 主要加速matmul</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="代码理解"><a href="#代码理解" class="headerlink" title="代码理解"></a>代码理解</h3><ol>
-<li>固定长 n 的 kv cache, 并且最大支持 n 的序列，使用 for 循环计算 attention，没有使用矩阵乘， 不用移动 kv cache; 矩阵乘时需要 kv cache 是矩阵，如果 kv cache 矩阵 padding, 是固定长, 需要移动 cache</li>
-<li><code>Tokenizer, Transformer, Sampler</code> 三大部分</li>
-<li>tokenizer 也是一个模型，需要训练</li>
-<li>Tokenizer 的主要作用是将自然语言文本转换为机器学习模型可以理解的格式。这通常意味着将文本拆分成词汇、子词或字符单元（即 tokens），然后将这些 tokens 转换为数字 ID。这些 ID 对应于模型的词汇表中的索引。</li>
-<li>当有 prompt 时，有预热过程，从第一个 prompt_tokens 开始推理，if we are still processing the input prompt, force the next prompt token， otherwise sample the next token from the logits</li>
-<li>Sampler 的主要作用是根据模型输出的 logits（未归一化的概率对数）来决定下一个生成的 token</li>
-<li>Temperature Scaling：通过温度参数调整 logits。温度较低（&lt;1）会使输出分布更加尖锐（更确定），温度较高（&gt;1）则使分布更平滑（更随机）</li>
-<li>采样策略对生成文本的质量和多样性有显著影响。例如，argmax 采样可能导致非常重复和可预测的文本，而合适的随机采样可以增加多样性和创造性，同时保持文本的连贯性和可读性。通过合理配置 temperature 和 topp 参数，可以在随机性和确定性之间找到平衡，生成符合预期的文本。</li>
-<li>top-p 采样：<ul>
-<li>模型输出的 logits（未归一化的概率对数），转换为 softmax 概率</li>
-<li>创建一个结构体数组，每个元素包含 token 的索引和对应的概率。</li>
-<li>概率小于 cutoff 过滤掉</li>
-<li>排序</li>
-<li>计算累计概率， 累计概率超过 topp 后不选择</li>
-<li>随机数*累计概率；找到这个随机数对应的累积概率区间内的 token。</li>
-<li>返回所选 token 的索引</li>
-<li>控制生成质量：通过调整 p 的值，可以控制生成文本的随机性和确定性。较低的 p 值会导致更确定性的输出（更少的 token 可供选择），而较高的 p 值会增加输出的多样性。</li>
-<li>避免不合理的 token：Top-p 采样可以有效地避免选择那些极不可能的 token，这对于生成更加连贯和自然的文本至关重要。</li>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/61a777247900f6c2a37376f3ffd7134385fdc95c/setup.py#L133">编译 cuda</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/61a777247900f6c2a37376f3ffd7134385fdc95c/csrc/flash_attn/flash_api.cpp#L1462">pybind11 python interface</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/search?q=repo:Dao-AILab/flash-attention%20flash_attn_cuda&type=code">python using pybind11 api</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/61a777247900f6c2a37376f3ffd7134385fdc95c/csrc/flash_attn/flash_api.cpp#L317">mha_fwd</a><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/9c0e9ee86d0e0022b60deddb405c20ab77481582/flash_attn/flash_attn_interface.py#L51">python call place</a></li>
 </ul>
 </li>
-<li>前馈神经网络（Feed-Forward Neural Network, <code>FFN</code>）</li>
-<li><code>forward</code> 跟 all you need is attention 论文描述的结构非常像</li>
-<li>相对位置编码（RoPE）：模型利用 RoPE 来给序列中的每个 token 引入位置信息。这种方式与原始 Transformer 中的绝对位置编码不同。</li>
-<li>对于每个输入 token， 生成 q, k, v, q 用来和之前的 k 做 attention 得到 scores, scores 和 k 做加权得到多头输出; 缓存 k, v 用于之后的推理</li>
-<li>q 和之前所有 k 做 attension, 结果在和 v 做加权</li>
-<li><a target="_blank" rel="noopener" href="https://paperswithcode.com/method/grouped-query-attention">grouped-query-attention</a></li>
-<li>Config 中通过 n_heads 和 n_kv_heads 可以看出是 multi-head, group-query, multi-query； 相同时（不为 1）是 multi-head, 都为 1 时是 multi-query; n_kv_heads &lt; n_heads 时是 group_query</li>
-<li>MQA，全称 Multi Query Attention, 而 GQA 则是前段时间 Google 提出的 MQA 变种，全称 Group-Query Attention。MHA（Multi-head Attention）是标准的多头注意力机制，h 个 Query、Key 和 Value 矩阵。</li>
-<li>推理的过程是一个自回归的过程，也就是说前 i 次的 token 会作为第 i+1 次的预测数据送入模型，拿到第 i+1 次的推理 token。</li>
-<li>embedding 还能起到降维的作用，将 one-hot 的[s,vocab_size]大小变成了[s,d]。</li>
-<li>在大多数基于 Transformer 的模型中，embedding 层输出的词向量维度通常与 Transformer 的隐藏层(attention layer)维度（也称为 Transformer dimension）相匹配。</li>
-<li>Config 中的 dim 和 hidden_dim:<ul>
-<li>dim（Transformer Dimension）: 这个参数指的是 Transformer 模型中主要的隐藏层维度。在标准的 Transformer 模型中，这包括自注意力层（Self-Attention Layer）的输出维度和 embedding 层的维度。因此，dim 通常与 embedding 层输出的词向量的大小相匹配。</li>
-<li>hidden_dim（Feed-Forward Network Dimension）: 这个参数指的是 Transformer 模型中前馈网络（Feed-Forward Network, FFN）层的内部隐藏层的维度。FFN 是 Transformer 每个注意力层之后的一个子层，它的维度通常与主要隐藏层维度不同。这个维度通常更大，用于在模型中引入额外的非线性。</li>
-</ul>
-</li>
-<li>Config 中的窗口长度等于 seq_len， 词向量维度等于 dim</li>
-</ol>
-<h3 id="embedding-和-tokenizer-的区别"><a href="#embedding-和-tokenizer-的区别" class="headerlink" title="embedding 和 tokenizer 的区别"></a>embedding 和 tokenizer 的区别</h3><ol>
-<li>Tokenizer 是第一步：它将原始文本转换为一系列的 token 索引。Embedding 是第二步：利用这些索引在 embedding 层中查找或生成每个 token 的向量表示。互补关系：Tokenizer 和 embedding 层一起工作，将自然语言文本转换为机器学习模型可以有效处理的数值形式。</li>
-<li>tokenizer 负责将文本转换为一系列的 token，而 embedding 则负责将这些 token 转换为机器学习模型可以理解的语义向量。</li>
-<li>通过 token_embedding_table 查找 token 对应的的向量</li>
-</ol>
-<h3 id="模型基本结构"><a href="#模型基本结构" class="headerlink" title="模型基本结构"></a>模型基本结构</h3><ol>
-<li>层的堆叠：模型由多个相同的层堆叠而成，每层包含两个主要子模块：多头自注意力（Multi-Head Self-Attention）和前馈神经网络（Feed-Forward Neural Network, FFN）。</li>
-</ol>
-<h2 id="others"><a href="#others" class="headerlink" title="others"></a>others</h2><ol>
-<li>openmp 加速会获得较大加速比, 编译选项加<code>-fopenmp -march=native</code></li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">matmul</span><span class="params">(<span class="type">float</span>* xout, <span class="type">float</span>* x, <span class="type">float</span>* w, <span class="type">int</span> n, <span class="type">int</span> d)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// W (d,n) @ x (n,) -&gt; xout (d,)</span></span><br><span class="line">    <span class="comment">// by far the most amount of time is spent inside this little function</span></span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="meta">#<span class="keyword">pragma</span> omp parallel for private(i)</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; d; i++) &#123;</span><br><span class="line">        <span class="type">float</span> val = <span class="number">0.0f</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; j++) &#123;</span><br><span class="line">            val += w[i * n + j] * x[j];</span><br><span class="line">        &#125;</span><br><span class="line">        xout[i] = val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://chat.openai.com/c/4e520557-e827-40c5-9357-db76b5a5e6ba">chatgpt 解释</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/651248009">一文看懂 llama2(原理,模型,训练)</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/83814532">Embedding 的作用</a></li>
-<li><a target="_blank" rel="noopener" href="https://kexue.fm/archives/9529">为什么现在的 LLM 都是 Decoder-only 的架构？</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/ggerganov/ggml/blob/master/docs/gguf.md">gguf doc</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/mit-han-lab/streaming-llm">pytorch llama</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/hpcaitech/SwiftInfer?tab=readme-ov-file">tensorrt llm llama</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/12/21/deep-learning/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/12/21/deep-learning/" class="post-title-link" itemprop="url">deep-learning</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-12-21 13:18:24" itemprop="dateCreated datePublished" datetime="2023-12-21T13:18:24+08:00">2023-12-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-22 15:59:20" itemprop="dateModified" datetime="2024-02-22T15:59:20+08:00">2024-02-22</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/12/21/deep-learning/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/21/deep-learning/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><ol>
-<li><p><code>Deep learning</code> is an approach to machine learning characterized by deep stacks of computations. This depth of computation is what has enabled deep learning models to disentangle the kinds of complex and hierarchical patterns found in the most challenging real-world datasets.</p>
-</li>
-<li><p><code>SGD</code>: 全称为 Stochastic Gradient Descent 即随机梯度下降,是机器学习中常用的优化算法,用于训练各种模型(如神经网络)寻找最优参数, optimizer</p>
-</li>
-<li><p><code>neuron</code> : the Linear Unit y &#x3D; wx + b; w: weight, b: bias</p>
-</li>
-<li><p><code>layers</code>: Neural networks typically organize their neurons into layers. When we collect together linear units having a common set of inputs we get a <code>dense layer</code>.</p>
-</li>
-<li><p>一个 layer 共享一个 bias: y &#x3D; w1 _ x1 + b1 + w2 _ x2 + b2 &#x3D;&#x3D;&gt; y &#x3D; w1 _ x1 + w2 _ x2 + b</p>
-</li>
-<li><p><code>ReLU</code>: rectified linear unit</p>
-</li>
-<li><p><code>Linear Unit + ReLU</code>: y &#x3D; max(0, w * x + b)</p>
-</li>
-<li><p>relu 没有参数， leakyrelu 有参数</p>
-</li>
-<li><p>Without activation functions, neural networks can only learn linear relationships.</p>
-</li>
-<li><p>A <code>loss function</code> that measures how good the network’s predictions are.</p>
-</li>
-<li><p>An <code>optimizer</code> that can tell the network how to change its weights.</p>
-</li>
-<li><p><code>MAE</code>: mean absolute error; loss function, for regression</p>
-</li>
-<li><p>Each iteration’s sample of training data is called a <code>minibatch</code> (or often just “batch”), while a complete round of the training data is called an <code>epoch</code>.</p>
-</li>
-<li><p>The <code>learning rate</code> and the size of the <code>minibatches</code> are the two parameters that have the largest effect on how the SGD training proceeds.</p>
-</li>
-<li><p><code>Adam</code> is an SGD algorithm that has an adaptive learning rate that makes it suitable for most problems without any parameter tuning (it is “self tuning”, in a sense). Adam is a great general-purpose optimizer.</p>
-</li>
-<li><p><code>Underfitting the training set</code> is when the loss is not as low as it could be because the model hasn’t learned enough signal.</p>
-</li>
-<li><p><code>Overfitting the training set</code> is when the loss is not as low as it could be because the model learned too much noise. The trick to training deep learning models is finding the best balance between the two.</p>
-</li>
-<li><p><code>Early Stopping</code>: stop the training whenever it seems the validation loss isn’t decreasing anymore. Interrupting the training this way is called early stopping. Once we detect that the validation loss is starting to rise again, we can reset the weights back to where the minimum occured.</p>
-</li>
-<li><p><code>dropout layer</code> we randomly drop out some fraction of a layer’s input units every step of training, making it much harder for the network to learn those spurious patterns in the training data. Instead, it has to search for broad, general patterns, whose weight patterns tend to be more robust. 可以纠正过拟合</p>
-</li>
-<li><p><code>Batch Normalization layer</code></p>
-<ul>
-<li>why? Features that tend to produce activations of very different sizes can make for unstable training behavior.</li>
-<li>A batch normalization layer looks at each batch as it comes in, first normalizing the batch with its own mean and standard deviation, and then also putting the data on a new scale with two trainable rescaling parameters.</li>
-<li>做两次 normalize, 先基于输入的 batch 数据做， 后基于训练的均值和方差来做</li>
-<li>Models with batchnorm tend to need fewer epochs to complete training. Moreover, batchnorm can also fix various problems that can cause the training to get “stuck”.</li>
-<li>get better performance if you standardize your data before using it for training</li>
-</ul>
-</li>
-<li><p>The main difference regression and classification is in the loss function we use and in what kind of outputs we want the final layer to produce. 主要区别是损失函数和最后一层的输出类型</p>
-</li>
-<li><p><code>Accuracy</code> is one of the many metrics in use for measuring success on a classification problem. Accuracy is the ratio of correct predictions to total predictions: <code>accuracy = number_correct / total</code></p>
-</li>
-<li><p><code>Cross-Entropy</code> 交叉熵</p>
-<ul>
-<li>Cross-entropy is a sort of measure for the distance from one probability distribution to another.</li>
-<li>SGD needs a loss function that changes smoothly, but accuracy, being a ratio of counts, changes in “jumps”. So, we have to choose a substitute to act as the loss function. This substitute is the cross-entropy function.</li>
-<li>With regression, our goal was to minimize the distance between the expected outcome and the predicted outcome. We chose MAE to measure this distance.</li>
-<li>For classification, what we want instead is a distance between probabilities, and this is what cross-entropy provides.</li>
-</ul>
-</li>
-<li><p><code>softmax</code> 也是激活函数， layer to layer; not functions of a single fold x; 在 softmax 函数的实现中减去最大值是一种数值稳定性的技巧。从所有输入值中减去同一个常数不会改变函数的输出。如果 x 很大，可能导致 exp(x)溢出</p>
-</li>
-<li><p><code>relu</code> 是 single x 的激活函数</p>
-</li>
-<li><p><code>MLP, CNN, RNN, Transformer</code> 四大深度学习架构 Multilayer Perceptron(MLP)</p>
-</li>
-<li><p>样本和特征, batch 是样本</p>
-</li>
-<li><p><code>正则化(Regularization)</code> 指的是在训练过程中添加额外信息以防止模型过度拟合的技术。</p>
-<ul>
-<li>L1 正则化:在损失函数中添加模型权重参数绝对值的和,使权重 decay 到 0,从而使模型更稀疏。</li>
-<li>L2 正则化:在损失函数中添加模型权重参数平方和,惩罚大的参数值,使权重较为平均分布,避免个别权重参数过大。也称为权重衰减(weight decay)。</li>
-<li>Early Stopping:在模型测试指标不再改善时中止训练,防止过拟合。</li>
-<li>Dropout:以一定概率随机置部分节点为 0,增加模型泛化能力</li>
-<li>Data Augmentation:人工生成更多训练数据,改善模型泛化能力。</li>
-<li>Batch Normalization: 通过调整网络中间层的激活值，使其在训练时保持一个更稳定的分布。虽然其主要目的是加快训练过程，但它也有一定的正则化效果。</li>
-</ul>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_convolutional-modern/batch-norm.html">Batch Normalization 计算</a></p>
-<ul>
-<li>全连接层<br>仿射变换和激活函数之间;对 minibatch 整体做 normalization</li>
-<li>卷积<br>卷积层之后和非线性激活函数之前; 对每个通道分别做 normalization; NCHW, 固定 C; 对于 RGB， 相当于 R, G, B 单独做 normalization</li>
-<li>预测时：均值和方差为整个训练数据集的样本均值和方差(或者学习的均值和方差)</li>
-</ul>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/LXP-Never/p/11566064.html">各种 normlization 方法， 带图</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://blog.tensorflow.org/2022/11/whats-new-in-tensorflow-211.html">文本 normalization 图示</a></p>
-<ul>
-<li>layer norm:输入一句话直接对其输出做 norm，不用管其他句子</li>
-</ul>
-</li>
-<li><p><code>SiLU: f(x) = s * sigmoid(x)</code></p>
-</li>
-<li><p>图神经网络（Graph Neural Networks，GNN)</p>
-</li>
-</ol>
-<h3 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a><a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_convolutional-neural-networks/channels.html">卷积</a></h3><ol>
-<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/performance/dl-performance-convolutional/index.html#tc-usage">Convolutional Layers User’s Guide</a></li>
-<li>每个卷积核输出一个 feature map； 代表一种特征</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63974249">卷积转换为矩阵乘</a><ul>
-<li>batch conv 转化为 gemm， 注意不是 batch gemm</li>
-<li>stride 有重叠还是矩阵乘,行多输出</li>
-</ul>
-</li>
-<li>tensor core 用 Implicit GEMM 实现的卷积不用生成中间的矩阵，直接原位计算， 不需要 im2col <a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/performance/dl-performance-convolutional/index.html#tc-usage">link</a></li>
-<li>因为为 Tensor Core 实现的卷积需要 NHWC 布局，并且当输入张量以 NHWC 布局时速度最快</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/61a777247900f6c2a37376f3ffd7134385fdc95c/csrc/flash_attn/flash_api.cpp#L221C17-L221C29">run_mha_fwd</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/search?q=repo:Dao-AILab/flash-attention%20run_mha_fwd_&type=code">run_mha_fwd 多种实现</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/5cdabc2809095b98c311283125c05d222500c8ff/csrc/flash_attn/src/flash_fwd_launch_template.h#L31">run_flash_fwd</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/5cdabc2809095b98c311283125c05d222500c8ff/csrc/flash_attn/src/flash_fwd_kernel.h#L1043">compute_attn kernel 实现</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/5cdabc2809095b98c311283125c05d222500c8ff/csrc/flash_attn/src/flash_fwd_kernel.h#L28">compute_attn_1rowblock 最关键实现函数</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Dao-AILab/flash-attention/blob/5cdabc2809095b98c311283125c05d222500c8ff/csrc/flash_attn/src/utils.h#L138">flash::gemm</a></li>
 </ol>
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.kaggle.com/learn/intro-to-deep-learning">kaggle intro-to-deep-learning</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.kaggle.com/code/ryanholbrook/deep-learning-animations-and-illustrations/notebook">sgd 动画</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.kaggle.com/code/ryanholbrook/overfitting-and-underfitting">overfitting-and-underfitting</a></li>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Activation_function">激活函数</a></li>
-</ol>
-<h3 id="术语表"><a href="#术语表" class="headerlink" title="术语表"></a>术语表</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0evrjcivb5ArZGLQ4tGrmg">深度学习速查词典</a></li>
-<li><a target="_blank" rel="noopener" href="https://developers.google.com/machine-learning/glossary?hl=zh-cn">google 机器学习术语表</a></li>
-</ol>
-<h3 id="全连接层与矩阵计算"><a href="#全连接层与矩阵计算" class="headerlink" title="全连接层与矩阵计算"></a>全连接层与矩阵计算</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://excalidraw.com/#json=EUPwP_pkPfoNDDVEC4b71,-89u61cxUzIS_dhKYsdHQQ">图示</a><br><img src="https://i.ibb.co/bWthfyQ/o-XLOSNus4-J.png" alt="图"></li>
-<li>输出的每个神经元可以看到所有输入，提取了输入的某种特征</li>
-<li>两个相乘的矩阵分别为 m×k 和 k×n 时，计算强度的计算略有不同。在这种情况下，矩阵乘法需要进行大约 m×n×k 次乘法和相同数量的加法操作。<ul>
-<li><code>浮点运算次数</code>：每个元素的计算涉及 k 次乘法和 k-1 次加法（对于每行和每列中的每个交叉点）。因此，总的浮点运算次数大约是 2m×n×k 次。</li>
-<li><code>内存操作</code>：如果每个矩阵元素是单精度浮点数（4 字节），那么矩阵 A 需要 m×k×4 字节，矩阵 B 需要 k×n×4 字节，矩阵 C 需要 m×n×4 字节的内存。因此，总的内存操作大约是 (m×k + k×n + m×n)×4 字节。</li>
-<li><code>计算强度（算术强度)</code>可以表示为： <code>2mnk/(4(mk + kn + mn)) = 0.5/((1/n + 1/m + 1/k))</code>; 计算强度与 m, k, n 成正比, 实际中，由于现代处理器和 GPU 上的内存缓存效应，以及各种数学库和编译器优化技术的应用，真实的计算强度可能会有所不同。</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/index.html">dl-performance-matrix-multiplication</a><ul>
-<li>包含 tensor core 计算</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/flame/how-to-optimize-gemm/blob/master/src/MMult_4x4_5.c#L54C2-L78C4">矩阵分块减少访存示例</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/12/19/multimodal/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/12/19/multimodal/" class="post-title-link" itemprop="url">multimodal</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-12-19 14:15:19 / 修改时间：14:15:36" itemprop="dateCreated datePublished" datetime="2023-12-19T14:15:19+08:00">2023-12-19</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/12/19/multimodal/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/19/multimodal/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>32</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://openai.com/research/clip">clip</a> <a target="_blank" rel="noopener" href="https://imzhanghao.com/2022/10/27/multimodal-learning/">multimodal-learning 中文解析</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/12/19/diffusion/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/12/19/diffusion/" class="post-title-link" itemprop="url">diffusion</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-12-19 13:08:48 / 修改时间：16:08:19" itemprop="dateCreated datePublished" datetime="2023-12-19T13:08:48+08:00">2023-12-19</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/12/19/diffusion/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/19/diffusion/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>173</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="papers"><a href="#papers" class="headerlink" title="papers"></a>papers</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/595866176">必读的 10 篇经典论文</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2006.11239">Denoising Diffusion Probabilistic Models</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2112.10752">High-Resolution Image Synthesis with Latent Diffusion Models</a> stable diffusion 的原型<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/CompVis/latent-diffusion">code</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/CompVis/stable-diffusion">stable-diffusion code</a></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2204.03458">Video Diffusion Models</a><ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/lucidrains/video-diffusion-pytorch">code</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/apex/blob/master/apex/contrib/csrc/fmha/fmha_api.cpp">软件架构参考 apex fmha</a><ul>
+<li>fmha: fast_multihead_attn</li>
+<li>We use FMHA code as a starting point, and apply two well-established techniques (tiling and recomputa-tion) to deal with long sequences and to save memory as mentioned; we can support much longer sequences (e.g., up to length 64K). We also support more head dimensions (16, 32, 64, 128) and broader GPU types (all Turing and Ampere GPUs at the time of writing).</li>
 </ul>
 </li>
 </ol>
@@ -892,7 +994,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/12/18/ai-papers/">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/01/26/cutlass/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/coder2.jpg">
@@ -906,7 +1008,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/12/18/ai-papers/" class="post-title-link" itemprop="url">ai-papers</a>
+            <a href="/2024/01/26/cutlass/" class="post-title-link" itemprop="url">cutlass</a>
         </h2>
 
         <div class="post-meta">
@@ -916,14 +1018,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2023-12-18 15:58:38" itemprop="dateCreated datePublished" datetime="2023-12-18T15:58:38+08:00">2023-12-18</time>
+              <time title="创建时间：2024-01-26 10:20:32" itemprop="dateCreated datePublished" datetime="2024-01-26T10:20:32+08:00">2024-01-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-09 15:20:35" itemprop="dateModified" datetime="2024-01-09T15:20:35+08:00">2024-01-09</time>
+                <time title="修改时间：2024-02-19 13:37:22" itemprop="dateModified" datetime="2024-02-19T13:37:22+08:00">2024-02-19</time>
               </span>
 
           
@@ -935,135 +1037,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2023/12/18/ai-papers/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/18/ai-papers/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>708</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="alexnet"><a href="#alexnet" class="headerlink" title="alexnet"></a><a target="_blank" rel="noopener" href="https://papers.nips.cc/paper_files/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html">alexnet</a></h2><ol>
-<li>关键是 end2end, 直接 rgb 到结果，不用做各种专业处理</li>
-<li>CNN 关键是压缩(特征一层一层压缩)</li>
-<li>SGD: 全称为 Stochastic Gradient Descent,即随机梯度下降,是机器学习中常用的优化算法,用于训练各种模型(如神经网络)寻找最优参数</li>
-<li>dropout</li>
-</ol>
-<h2 id="resnet"><a href="#resnet" class="headerlink" title="resnet"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1512.03385">resnet</a></h2><ol>
-<li>加残差， 能训练很深，计算量未增加</li>
-</ol>
-<h2 id="unet"><a href="#unet" class="headerlink" title="unet"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1505.04597">unet</a></h2><h2 id="transformer"><a href="#transformer" class="headerlink" title="transformer"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.03762">transformer</a></h2><h2 id="ViT-Vision-Transformer"><a href="#ViT-Vision-Transformer" class="headerlink" title="ViT Vision Transformer,"></a>ViT Vision Transformer,</h2><h2 id="flash-attention"><a href="#flash-attention" class="headerlink" title="flash attention"></a>flash attention</h2><h2 id="PagedAttention"><a href="#PagedAttention" class="headerlink" title="PagedAttention"></a><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2309.06180.pdf">PagedAttention</a></h2><ol>
-<li>分块 KV 缓存通过消除 KV 缓存引起的内存碎片化，增加了潜在的序列并发量，从而增加了系统吞吐量。</li>
-<li>没有减少 KV cache</li>
-<li>类似于现有的框架如 TRT-LLM、TGI 和 vLLM，DeepSpeed-FastGen 的目标是利用连续批处理和非连续 KV 缓存技术，以提升数据中心服务大型语言模型（LLM）的硬件利用率和响应速度。为了实现更高的性能，DeepSpeed-FastGen 提出了 SplitFuse 技术，它利用动态提示和生成分解, 统一来进一步改善连续批处理和系统吞吐量。</li>
-</ol>
-<h2 id="diffusion"><a href="#diffusion" class="headerlink" title="diffusion"></a>diffusion</h2><h2 id="stable-diffusion"><a href="#stable-diffusion" class="headerlink" title="stable diffusion"></a>stable diffusion</h2><h2 id="UniAD"><a href="#UniAD" class="headerlink" title="UniAD"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2212.10156">UniAD</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/OpenDriveLab/UniAD">github</a></li>
-</ol>
-<h2 id="BEVFormer"><a href="#BEVFormer" class="headerlink" title="BEVFormer"></a><a target="_blank" rel="noopener" href="https://github.com/fundamentalvision/BEVFormer">BEVFormer</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1dKnD6gUHhBXZ8gT733cIU_A7dHEEzNTP/view">中文版</a></li>
-</ol>
-<h2 id="如何使用-arxiv"><a href="#如何使用-arxiv" class="headerlink" title="如何使用 arxiv"></a>如何使用 arxiv</h2><h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1AAIebjNsnJj_uKALHbXNfn3_YsT6sHXtCU0q7OIPuc4/edit#gid=0">Parameter, Compute and Data Trends in Machine Learning</a> good：包含参数，计算量, 训练数据量，论文引用</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/labmlai/annotated_deep_learning_paper_implementations">labml.ai Deep Learning Paper Implementations</a><ul>
-<li>colab 中有测试代码</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/labmlai/annotated_deep_learning_paper_implementations/tree/master?tab=readme-ov-file#highlighted-research-paper-pdfs">papers 画了重点</a></li>
-<li><a target="_blank" rel="noopener" href="https://paperswithcode.com/">paperwithcode</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLFXJ6jwg0qW-7UM8iUTj3qKqdhbQULP5I">李沐论文精度</a></li>
-<li><a target="_blank" rel="noopener" href="https://zh.d2l.ai/">李沐《动手学深度学习》</a></li>
-<li><a target="_blank" rel="noopener" href="https://zh-v2.d2l.ai/d2l-zh.pdf">《动手学深度学习》pdf</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/huggingface/pytorch-image-models">images-models-papaers</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/11/21/transformer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/21/transformer/" class="post-title-link" itemprop="url">transformer</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-11-21 17:20:45" itemprop="dateCreated datePublished" datetime="2023-11-21T17:20:45+08:00">2023-11-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-20 15:56:28" itemprop="dateModified" datetime="2024-02-20T15:56:28+08:00">2024-02-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/11/21/transformer/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/11/21/transformer/" itemprop="commentCount"></span>
+    <a title="valine" href="/2024/01/26/cutlass/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/01/26/cutlass/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1080,7 +1055,7 @@
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>11 分钟</span>
+              <span>10 分钟</span>
             </span>
 
         </div>
@@ -1092,244 +1067,277 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>硬 train 一发</li>
-<li><a target="_blank" rel="noopener" href="https://zhouyifan.net/2022/11/12/20220925-Transformer/">attention</a></li>
-<li><a target="_blank" rel="noopener" href="https://stats.stackexchange.com/a/424127">What exactly are keys, queries, and values in attention mechanisms?</a><ul>
-<li>The key&#x2F;value&#x2F;query concept is analogous to retrieval systems. For example, when you search for videos on Youtube, the search engine will map your query (text in the search bar) against a set of keys (video title, description, etc.) associated with candidate videos in their database, then present you the best matched videos (values).</li>
-<li>搜索是 query, 每个视频的信息是 key, query 和所有视频 key 做相关， 然后推荐最相关的视频(value)</li>
+          <h2 id="note"><a href="#note" class="headerlink" title="note"></a>note</h2><ol>
+<li>主动设置<code>--cache-control=all</code>选项来保证在进行 kernel profiling 的时候清空历史 cache 数据，通过设置<code>--clock-control=base</code>选项来锁定 GPU 运行的频率，避免动态调频对性能测量的影响。</li>
+<li><code>Swizzle</code>主要是在到 8192 以后，且 B 矩阵 transpose 的情况下必须要用（不用则效率腰斩，调出来 SWIZZLE 最优是 8）</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cub">cutlass 参考了 cub 的设计</a></li>
+<li>cutlass 是对 gemm 实现过程的各种级别的抽象；手写搬数时需要进行大量计算<ul>
+<li>block tile 矩阵乘法内积； thread tile 矩阵乘法外积</li>
+<li>global memory &lt;-&gt; shared memory &lt;-&gt; register &lt;-&gt; core</li>
+<li>double buffering: shared memory, register</li>
+<li>bank conflict: permute</li>
 </ul>
 </li>
-<li>只不过解码器的输入是编码器的状态的加权和，而不再是一个简单的中间状态。每一个输出对每一个输入的权重叫做注意力，注意力的大小取决于输出和输入的相关关系</li>
-<li>注意力机制能够无视序列的先后顺序，捕捉序列间的关系</li>
-<li>RNN 本轮的输入状态取决于上一轮的输出状态，这使 RNN 的计算必须串行执行。因此，RNN 的训练通常比较缓慢。</li>
-<li>transformer: 需要对每个输入向量做 3 次 transform, Wq, Wk, Wv，转换矩阵都是学习得到的</li>
-<li>score matrix:自相关矩阵</li>
-<li>预测时就相当于使用编码器(输入)和之前的输出来预测下一个输出； 考虑了输入和输出信息 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=4Bdc55j80l8">Illustrated Guide to Transformers Neural Network: A step by step explanation</a> 图示非常好</li>
-<li>多头是想模拟卷积，可以输出多个通道 由多个 feature，识别多个模式</li>
-<li>模型训练好之后，推理时每个 token 对应的 q,k,v 都固定了，因为 token embedding 后的词向量是固定的，Q,K V 矩阵也是固定的</li>
-<li>每一个 token 都会生成 q,k,v，用 q 去和所有 token 的 k 做相关，根据结果从 k 中提取特征; 例如： how are you How 的 q 会和每个 token 中的 k 提取出一些信息，根据这些信息决定下一个生成的字符，比如 you 中的 k 和 I 很相关（embeding 和训练 决定），从 you 中很可能提取出 I, 然后再根据 how are you I 中重复上一步动作，这就是为什么 token 要和自己做相关，所有 token 相关性是由 embeding 和训练一起决定的?</li>
-<li>kv cache 的长度分别为 <code>head 长度 * 每个 head 向量维度 * token 个数 * 层数</code></li>
-<li>transform llama 各层 shape 参数量和计算量</li>
-<li>推理时才自回归；训练时用相关矩阵(下三角)一步算出所有输出，推理时每次算出当前值与之前 token 注意力，相当于在下三角矩阵加一层，只输出一个预测 token;</li>
-<li>添加 position 信息在输入之后，attention 之前</li>
-<li>decode 训练时加掩码并行，同时输出； 推理时自回归一步一步输出</li>
-<li>encode decoder 架构推理直接有输入和起始符输出，decode only 需要预热</li>
-<li>batch 指的是在模型训练或推理的时候,同时输入模型的样本数量。<ul>
-<li>Transformer 可处理变长序列输入。不同的样本序列长度本来就可能不同,每个 batch 中的最大 token 长度是固定的,短的序列会 padding 补 0。对超长序列做截断,限制最大 token 数</li>
-<li>Transformer 模型的参数在不同的 batch 之间是共享的，而 KV cache 的共享则取决于具体的应用场景和模型配置。在自回归生成任务中，KV cache 通常是特定于单个样本的，不是共享的.</li>
-<li>在 Transformer 模型中,batch size 越大,则 key-value 缓存需要占用的内存空间也越大。</li>
+<li>排列（英语：Permutation）是将相异对象或符号根据确定的顺序重排。每个顺序都称作一个排列</li>
+<li>MMA &#x3D; matrix multiply accumulate</li>
+<li>cutlass kernel 融合效果好</li>
+<li>可以看一下 cutlass 发版历史，了解一下过程</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/v0.1.1/README.md">v0.1.1&#x2F;README.md</a><ul>
+<li>thread block tile, warp tile, thread tile</li>
 </ul>
 </li>
-<li>每个词向量(word vectors)代表了“词空间（word space）”中的一个点，具有相似含义的词的位置会更接近彼此。例如，在向量空间中与猫最接近的词包括狗、小猫和宠物。用实数向量表示单词（相对于“C-A-T”这样的字母串）的一个主要优点是，数字能够进行字母无法进行的运算。 <a target="_blank" rel="noopener" href="https://www.understandingai.org/p/large-language-models-explained-with">link</a></li>
-<li>像 ChatGPT 这样的语言模型能够根据单词出现的上下文以不同的向量表示同一个词(前几层 transformer 自动修改)。有一个针对“bank（金融机构）”的向量，还有一个针对“bank（河岸）”的向量。</li>
-<li>前几层专注于理解句子的语法,后面的层则致力于对整个段落的高层次理解。</li>
-<li><code>注意力层</code>从提示的较早部分检索信息，而<code>前馈层</code>使语言模型能够“记住”未在提示中出现的信息。事实上，可以将前馈层视为模型从训练数据中学到的信息的数据库。记忆力在前馈层。靠前的前馈层更可能编码与特定单词相关的简单事实，例如“特朗普经常在唐纳德之后出现”。靠后的层则编码更复杂的关系，如“添加这个向量以将一个国家转换为其首都。</li>
-<li>LLM 的一个关键创新之处在于，它们不需要显式标记的数据。相反，它们通过尝试预测文本段落中下一个单词来学习。几乎任何书面材料都适用于训练这些模型——从维基百科页面到新闻文章再到计算机代码。</li>
-<li>multi head 可能也是一维 把一维 head 当作多维 head</li>
-<li>Perplexity (PPL) 是一个衡量语言模型预测能力的指标。当评估大型语言模型时，PPL 是一个关键指标，因为它直接关系到模型对语言的处理能力。它反映了模型对语言的理解程度，特别是在预测下一个词时的不确定性。PPL 通常是通过在测试集上计算模型的交叉熵损失（cross-entropy loss）并将其转换为 PPL 来得到的。数学上，PPL 定义为交叉熵的指数。<ul>
-<li>低 PPL：意味着模型对数据的预测更准确，对语言的理解更深入。</li>
-<li>高 PPL：表明模型预测不准确，对语言的理解较浅。</li>
+<li>CUTLASS is a collection of CUDA C++ template abstractions for implementing high-performance <code>matrix-matrix multiplication (GEMM)</code> and <code>related computations</code> at all levels and scales within CUDA<ul>
+<li><code>GEMM</code></li>
+<li><code>related computations</code> 主要指的是接在 GEMM 后面的 activation 或者一些 pointwise 计算，比如 bias，scales，这些计算可以和 GEMM 融合在一起，从而减少访存压力，由于这类计算一般发生在 GEMM 之后，我们管这类计算叫 epilogue(中文：结语)</li>
 </ul>
 </li>
-</ol>
-<h2 id="attention-计算"><a href="#attention-计算" class="headerlink" title="attention 计算"></a><a target="_blank" rel="noopener" href="https://excalidraw.com/#json=0Es8o7IlBTF7Enynbr6Pb,yNTjZuZeNWYLdDYxy_dGzg">attention 计算</a></h2><p><img src="https://i.ibb.co/ZhBZMds/fz-L82-OZ7od.png" alt="矩阵计算"></p>
-<h2 id="attention-种类"><a href="#attention-种类" class="headerlink" title="attention 种类"></a><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/t4ytOIuPx0799kkjFs5lbQ">attention 种类</a></h2><h2 id="kv-cache"><a href="#kv-cache" class="headerlink" title="kv cache"></a>kv cache</h2><p><img src="https://i.ibb.co/XCJ85TL/p3k-B45-Mhaj.png" alt="四种attention策略"></p>
-<ol>
-<li>多种 attention 策略<ul>
-<li>dense attention: 计算复杂度为 O(T*T), 缓存 T cache; 当句子超过训练长度时，PPL 增大, 计算复杂度：因为句子长为 T, 需要计算 T 次，每次需要和前 T 个 token 做 attention</li>
-<li>window attention: 计算复杂度为 O(T*L), 缓存 L cache，当句子大于窗口长度时， 模型的 PPL 会急速变大, 因为前几个 token 非常重要， 被换出后影响模型性能； <code>绝对位置编码</code></li>
-<li>sliding window attention with re-computing : 计算复杂度为 O(T<em>L</em>L), T 个字符，L 窗口内类似 dense attention, 重新计算 L kv, 相当于缓存 L cache; 每层中会为每个生成的 token 重建最近 token 的 KV 状态。这种方法虽然性能强大，但由于需要在窗口内计算 quadratic attention，因此速度明显较慢; <a target="_blank" rel="noopener" href="https://github.com/mit-han-lab/streaming-llm/issues/33#issuecomment-1758597666">和 window attention 区别</a> The critical distinction is that in sliding window with re-computation, some key states are treated as initial tokens, whereas in window attention, all previous tokens’ KV are computed as if they were middle tokens.<ul>
-<li>re-computation 重置了状态，窗口第一个 token 位置变为 0(位置改变，kv cache 需要重新计算)， 可以扩展为无限长输出，但没有记住无限长; 窗口应该会添加 BOS； <code>相对位置编码</code></li>
+<li>大量使用模板以及各种各种手段，把尽可能多的事情放在编译期完成。</li>
+<li>对用户暴露大量的实现策略，用户需要自己做出实现策略的选择。这是 CUTLASS 和 CUBLAS,CUDNN 的重要差别所在，CUBLAS 和 CUDNN 用户只需要描述计算问题，所有的策略选择在内部完成。这意味着从软件分层上来说，CUTLASS 可以是 CUBLAS 和 CUDNN 的 backend，换而言之，CUBLAS 和 CUDNN 可以是 CUTLASS 的用户</li>
+<li>c++模板，只用包含头文件</li>
+<li>CUDA Templates for Linear Algebra Subroutines and Solvers</li>
+<li>CUTLASS 和 cuBLAS 都是与 NVIDIA GPUs 相关的库，专门用于高效地执行线性代数运算</li>
+<li>大矩阵 GEMM 运算 CuTlass 可以显著提速,是目前 GPU 上最快的 GEMM 库。</li>
+<li>它允许开发者使用模板元编程自定义和优化矩阵乘法（GEMM）等线性代数运算，更加灵活。</li>
+<li>cuBLAS 提供了一个简单、标准的 BLAS 接口，易于使用，而 CUTLASS 提供了更多的定制性和灵活性，但需要更深入的理解和控制。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/functionality.md">缩写的含义</a><ul>
+<li>N: Column Major Matrix</li>
+<li>T: Row Major matrix</li>
+<li>{N,T} x {N,T}: All combinations, i.e., NN, NT, TN, TT(blas 中约定 Normal(N)矩阵为列优先，T 表示 transpose，即对列优先的矩阵进行转置则为行优先)</li>
+<li>f: floating point</li>
+<li>s: signed int</li>
+<li>b: bit</li>
+<li>cf: complex float</li>
+<li>bf16: bfloat16</li>
+<li>tf32: tfloat32</li>
+<li>Simt: Use Simt CUDA Core MMA(使用 cuda core)</li>
+<li>TensorOp: Use Tensor Core MMA</li>
+<li>SpTensorOp: Use Sparse Tensor Core MMA</li>
+<li>WmmaTensorOp: Use WMMA abstraction to use Tensor Core MMA</li>
 </ul>
 </li>
-<li>sliding window attention:(和 re-computing 有较大区别) 计算复杂度为 O(T*L), 这种方法类似卷积， 一层一层增加感受范围，<ul>
-<li>对于 m 层的 Transformer，receptive field 的大小为 m * L； 增加了感知范围，但没有到无限长， decoder only 时注意有掩码，看不到之前节点的(这条不需要专门处理，多层 decoder 自动有这个特性)<br><img src="https://i.ibb.co/r2c3DLY/p5h-Alp-Fh-TT.png" alt="类似卷积"></li>
-<li><a target="_blank" rel="noopener" href="https://ahelhady.medium.com/understanding-longformers-sliding-window-attention-mechanism-f5d61048a907">Understanding LongFormer’s Sliding Window Attention Mechanism</a> 有图</li>
-</ul>
-</li>
-<li>streaming LLM: 计算复杂度为 O(T*L)</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/mit-han-lab/streaming-llm">streaming-llm</a><ul>
-<li>这个方法并没有增加 LLM 的对上文的记忆，只是让它输入输出无限长</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/mit-han-lab/streaming-llm/blob/main/assets/StreamingLLM.pdf">slides</a></li>
-<li>介绍了多种 cache 方法</li>
-<li>上下文窗口保持不变。只保留最近的标记和注意力汇，丢弃中间的标记。这意味着模型只能处理最新的标记。需要重新计算 position</li>
-<li>StreamingLLM 的优势在于无需刷新缓存就能从最近的标记生成流畅的文本</li>
-<li>利用了 attention sink 现象, 由于 softmax，训练时前几个 token 对最终生成的内容非常关键，是生成内容稳定的关键 token, 如果保留前几个 token， 加上 window attention, 长文本时生成的内容就比较稳定</li>
-<li>这文章感觉就是之前 softmax 的 bug 带来的; 如果流式推理保证 system prompt 不被换出 不就没问题了…</li>
-<li>如何处理后面窗口位置信息的？有技巧，了解一下</li>
-</ul>
-</li>
-<li>llama kv cache<br><img src="https://i.ibb.co/88sYM2f/Cnc1i7-G0qy.png" alt="llama-2-7B"></li>
-<li>在基于 Transformer 的 decoder-only 模型中，包括<code>起始符号</code>在内的每个标记都有与之对应的键值（KV）缓存。</li>
-<li>decoder-only 推理过程，假设 prompt 为 how are you; 先输入 bos token, 生成对应 kv cache, 输入 how, 和 bos 做 attention, 不用管预测，将 are 作为输入，和之前做 attention， 不用管输出，将 you 作为输入， 输出为 I, 将 I 作为输入……<ul>
-<li>注意，如果有随机，每次 bos 生成的 kv cache 不同，对后面结果都有影响</li>
-<li>只要有输出不一样， 每一层的 kv cache 也不同， 会传递</li>
-</ul>
-</li>
-<li>encoder 也要存多有</li>
-</ol>
-<h4 id="变长矩阵乘"><a href="#变长矩阵乘" class="headerlink" title="变长矩阵乘"></a>变长矩阵乘</h4><ol>
-<li>预先申请长为 n 的 kv cache 内存, 使用 for 循环或变长矩阵乘计算 attention，<ul>
-<li>kv cache 长度小于 n 时， 不用移动 kv cache; <a target="_blank" rel="noopener" href="https://chat.openai.com/c/405fe374-fd46-4ec2-85be-ce08e32912ce">link</a></li>
-<li>大于 n 时，<ul>
-<li>环形缓冲区, 先放入到最早的 cache 位置; 不用关心顺序； 然后和所有 kv cache 做 attention; 和 q 直接矩阵乘; 由于每个 KV 对都与序列中的特定位置相关联，移除操作不会改变剩余 KV 对之间的相对位置关系。</li>
-<li>当前 kv 放到 cache 中的末尾，之前的 kv cache 需要向前移动</li>
-</ul>
-</li>
+<li><code>One of CUTLASS&#39;s design patterns is to define gemm argument objects that are constructible in host code and passed to kernels by value.</code> These may include pointers, strides, scalars, and other arguments needed by Gemm and its components.The benefits of this pattern are <code>(1.) a structured, composable strategy for passing host-constructible arguments to kernels and (2.) minimized initialization overhead on kernel entry.</code></li>
+<li>group gemm 和 batch gemm 区别： group 是 batch 更通用的形式，允许有不同尺寸的矩阵，batch 则需要多个矩阵尺寸相同</li>
+<li>三种 tile<ul>
+<li>thread block tile(例如：128x128x32)</li>
+<li>warp tile(例如：64x64x32)</li>
+<li>mma tile(例如：16x8x16)</li>
 </ul>
 </li>
 </ol>
-<h4 id="定长矩阵乘"><a href="#定长矩阵乘" class="headerlink" title="定长矩阵乘"></a>定长矩阵乘</h4><ol>
-<li>矩阵乘时需要 kv cache 是固定长的矩阵，刚开始 kv cache 矩阵需要 padding, 如果分配固定长的 kv cache 矩阵</li>
-<li>padding 利用优化的定长矩阵乘法来加速, 会浪费一些计算</li>
+<h2 id="cute-cuda-tensor-tools"><a href="#cute-cuda-tensor-tools" class="headerlink" title="cute (cuda tensor tools)"></a>cute (cuda tensor tools)</h2><ol>
+<li>CUTLASS 对 stream-K GEMM 算法的实现，该算法使用了 CuTe 的许多特性。</li>
+<li>One could summarize almost all CuTe use cases as follows:<ul>
+<li>create Layouts,</li>
+<li>create Tensors with those Layouts</li>
+<li>invoke (either CuTe’s, or custom) algorithms on those Tensors.</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=PWWOGrLZtZg">youtube 介绍</a></li>
+<li><code>Layout maps from coordinate space(s) to an index space</code>. 从坐标(逻辑存储)映射到索引(物理存储);</li>
+<li>需要十分明确 coordinate 和 index 概念， 1D coordinate 和 index 是不同的</li>
+<li>The map from a natural coordinate to an index is performed by taking the inner product of the natural coordinate with the Layout’s Stride. coordinate 和 stride 内积来实现到 index 的映射;</li>
+<li><code>cute::crd2idx(c, shape, stride)</code>来计算 c(coordinate)的 index</li>
+<li>直接根据 coordinate 顺序计算 index， 不要用想象， 用公式； 例如 A &#x3D; (2,2):(4,1); coordinate 顺序为 A(0) &#x3D; A(0, 0) &#x3D; 0; A(1) &#x3D; A(1, 0) &#x3D; 4x1 &#x3D; 4; A(2) &#x3D; A(0, 1) &#x3D; 1; A(3) &#x3D; A(1, 1) &#x3D; 5; 所以 A(c)为 0 4 1 5</li>
+<li>Layout 对象调用,返回 index，layout(i)</li>
+<li>The core abstraction of CuTe are the hierarchically multidimensional layouts which can be composed with data arrays to represent tensors.</li>
+<li>tensor</li>
 </ol>
-<h2 id="推理过程："><a href="#推理过程：" class="headerlink" title="推理过程："></a>推理过程：</h2><ol>
-<li>有两个阶段 Prefill Phase 和 Decoding Phase（ FlexGen 中讲的比较清楚）。</li>
-<li>Prefill Phase：称为预处理&#x2F;Encoding。计算并缓存每一层的 key 和 value，其他的不需要缓存。每一个请求的 prompt 需要经过这个阶段，它只计算一次，是并行计算的。这个缓存称为 KV Cache，KV Cache 是整个解码过程中最为核心关键的一块。</li>
-<li>Decoding Phase：生成新 token 阶段，它是串行的，也就是 decode one by one。它用上一步生成的 token，称为当前 token 放到 input 中，然后生成下一个 token。具体包括两步，一是 Lookup KV Cache 计算并输出当前 token 最终 embedding 用来预测下一个 token，二是缓存计算过程中得到的当前 token 在每一层的 key 和 value，update 到第一阶段 Prefill Phase 中的 KV Cache 中。</li>
-<li>无问苍穹 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2311.01282">paper</a>, 有介绍各种推理框架<br><img src="https://i.ibb.co/T1DZvdD/0pemezw-XTa.png" alt="inference"></li>
-</ol>
-<h2 id="decode-only-推理过程-prompt（“how-are-you”）"><a href="#decode-only-推理过程-prompt（“how-are-you”）" class="headerlink" title="decode only 推理过程: prompt（“how are you”）"></a>decode only 推理过程: prompt（“how are you”）</h2><ol>
-<li>BOS Token：<ul>
-<li>开始：推理过程以输入一个特殊的开始标记（BOS, Begin Of Sentence）开始。</li>
-<li>生成 KV 缓存：对于 BOS 标记，模型计算出对应的键（Key）和值（Value），并将它们存储在 KV 缓存中。</li>
-</ul>
-</li>
-<li>逐个处理 Prompt 中的词：<ul>
-<li>对于 prompt 中的每个词（如”how”, “are”, “you”），模型依次进行处理。在处理每个词时，会使用到目前为止累积的 KV 缓存来进行注意力计算。例如，处理”how”时，它会与 BOS 的 KV 进行注意力计算；处理”are”时，它会与 BOS 和”how”的 KV 进行注意力计算，以此类推。<br>每个新词的处理结果也会生成新的 KV 对，这些新的 KV 对被添加到缓存中。</li>
-</ul>
-</li>
-<li>生成响应：<ul>
-<li>当处理完 prompt 中的所有词后，模型开始生成响应。假设首个生成的词是”I”。生成”I”时，会利用到目前为止（包括 BOS 标记和 prompt 中所有词）的所有 KV 缓存。</li>
-</ul>
-</li>
-<li>递归生成：<ul>
-<li>随后，模型继续基于累积的 KV 缓存和已生成的词（如”I”）来生成下一个词。这个过程会持续进行，直到生成一个完整的响应或达到某个终止条件（如特殊的结束标记或达到最大长度限制）。</li>
-</ul>
-</li>
-</ol>
-<h2 id="encoder-only-推理过程"><a href="#encoder-only-推理过程" class="headerlink" title="encoder only 推理过程"></a>encoder only 推理过程</h2><ol>
-<li>在 encoder-only 的 LLM 中，KV 缓存并不是一个主要问题，因为这些模型的设计和应用方式与需要逐步生成和维护上下文状态的 decoder-only 模型不同。在 encoder-only 模型中，更关注的是整个输入序列的一次性处理和理解。</li>
-<li>在 encoder-only 模型中的推理过程与 decoder-only 模型有所不同。encoder-only 模型，如 BERT，通常用于理解、分析或分类文本，而不是像 decoder-only 模型那样用于生成文本。以下是 encoder-only 模型的典型推理过程</li>
-<li><code>输入处理</code>：<ul>
-<li><code>完整的输入</code>：与 decoder-only 模型不同，encoder-only 模型在推理时接收完整的输入序列，如一个句子或段落。这个输入通常包括特殊的标记，如开始（BOS）和结束（EOS）标记。</li>
-<li><code>预处理</code>：输入文本经过标记化（tokenization），转换成模型能够理解的标记序列。</li>
-</ul>
-</li>
-<li><code>通过Encoder层传递</code>：<ul>
-<li><code>编码</code>：整个输入序列被送入模型的多个 encoder 层。在每一层中，通过自注意力机制和前馈神经网络，模型学习到输入中每个标记的上下文表示。</li>
-<li><code>自注意力计算</code>：在自注意力阶段，每个标记都考虑到序列中所有其他标记的信息，以捕捉内部的上下文关系。</li>
-</ul>
-</li>
-<li><code>输出提取</code>：<ul>
-<li><code>特定任务的输出</code>：根据任务的不同，模型的输出被相应地处理。例如，对于分类任务，模型可能只使用特定标记（如[CLS]）的最终隐藏状态；对于命名实体识别或问答任务，模型可能输出每个标记的特征表示。</li>
-</ul>
-</li>
-<li><code>后处理</code>：<ul>
-<li><code>映射到任务</code>：模型输出被映射到具体任务的要求上，如将隐藏状态映射到类别标签或其他输出格式。</li>
-<li><code>生成最终结果</code>：模型的输出经过适当的后处理步骤（如 softmax 层，用于分类任务），以生成最终的推理结果。</li>
-</ul>
-</li>
-<li>推理特点<ul>
-<li><code>不生成文本</code>：encoder-only 模型通常不用于生成文本，而是用于理解或分类输入文本。</li>
-<li><code>全局上下文</code>：模型在处理输入时同时考虑所有标记的上下文，与 decoder-only 模型逐步生成的方式不同。</li>
-<li><code>特定任务适用</code>：这类模型通常针对特定的 NLP 任务进行训练和优化，如情感分析、文本分类、实体识别等。</li>
-</ul>
-</li>
-</ol>
-<h2 id="关键操作"><a href="#关键操作" class="headerlink" title="关键操作"></a>关键操作</h2><ol>
-<li>multi head attention</li>
-<li>feed forward</li>
-<li>layernorm</li>
-<li>softmax</li>
-<li>matmul</li>
-<li>concat</li>
-<li>linear(生成 q, k, v) Q, K, V</li>
-</ol>
-<h2 id="参数、计算复杂度和-cache-统计"><a href="#参数、计算复杂度和-cache-统计" class="headerlink" title="参数、计算复杂度和 cache 统计"></a>参数、计算复杂度和 cache 统计</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://epochai.org/mlinputs/visualization?yAxis=Parameters">Model Size of Notable Machine Learning Systems Over Time</a> 可交互, 右上角 option 可搜索，可直接到论文</li>
-<li><a target="_blank" rel="noopener" href="https://kipp.ly/transformer-inference-arithmetic/">transformer-inference-arithmetic</a></li>
-</ol>
-<h3 id="transformer-all-you-need-is-attention"><a href="#transformer-all-you-need-is-attention" class="headerlink" title="transformer(all you need is attention)"></a>transformer(all you need is attention)</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/harvardnlp/annotated-transformer">harvardnlp&#x2F;annotated-transformer</a></li>
-<li>注意：模型结构定义并不决定 forward 流程，可以有多个函数，使用网络中不同的部分</li>
-<li>base model info: embeding 参数可能会共享</li>
-</ol>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line">EncoderDecoder(</span><br><span class="line">  (encoder): Encoder(</span><br><span class="line">    (layers): ModuleList(</span><br><span class="line">      (0-5): EncoderLayer(</span><br><span class="line">        (self_attn): MultiHeadedAttention(</span><br><span class="line">          (linears): ModuleList(</span><br><span class="line">            (0): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (1): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (2): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (3): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">          )</span><br><span class="line">          (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">        )</span><br><span class="line">        (feed_forward): PositionwiseFeedForward(</span><br><span class="line">          (w_1): Linear(in_features=512, out_features=2048, bias=True)</span><br><span class="line">          (w_2): Linear(in_features=2048, out_features=512, bias=True)</span><br><span class="line">          (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">        )</span><br><span class="line">        (sublayer): ModuleList(</span><br><span class="line">          (0): SublayerConnection(</span><br><span class="line">            (norm): LayerNorm()</span><br><span class="line">            (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">          )</span><br><span class="line">          (1): SublayerConnection(</span><br><span class="line">            (norm): LayerNorm()</span><br><span class="line">            (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">          )</span><br><span class="line">        )</span><br><span class="line">      )</span><br><span class="line">    (norm): LayerNorm()</span><br><span class="line">  )</span><br><span class="line">  (decoder): Decoder(</span><br><span class="line">    (layers): ModuleList(</span><br><span class="line">      (0-5): DecoderLayer(</span><br><span class="line">        (self_attn): MultiHeadedAttention(</span><br><span class="line">          (linears): ModuleList(</span><br><span class="line">            (0): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (1): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (2): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (3): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">          )</span><br><span class="line">          (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">        )</span><br><span class="line">        (src_attn): MultiHeadedAttention(</span><br><span class="line">          (linears): ModuleList(</span><br><span class="line">            (0): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (1): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (2): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">            (3): Linear(in_features=512, out_features=512, bias=True)</span><br><span class="line">          )</span><br><span class="line">          (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">        )</span><br><span class="line">        (feed_forward): PositionwiseFeedForward(</span><br><span class="line">          (w_1): Linear(in_features=512, out_features=2048, bias=True)</span><br><span class="line">          (w_2): Linear(in_features=2048, out_features=512, bias=True)</span><br><span class="line">          (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">        )</span><br><span class="line">        (sublayer): ModuleList(</span><br><span class="line">          (0): SublayerConnection(</span><br><span class="line">            (norm): LayerNorm()</span><br><span class="line">            (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">          )</span><br><span class="line">          (1): SublayerConnection(</span><br><span class="line">            (norm): LayerNorm()</span><br><span class="line">            (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">          )</span><br><span class="line">          (2): SublayerConnection(</span><br><span class="line">            (norm): LayerNorm()</span><br><span class="line">            (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">          )</span><br><span class="line">        )</span><br><span class="line">      )</span><br><span class="line">    (norm): LayerNorm()</span><br><span class="line">  )</span><br><span class="line">  (src_embed): Sequential(</span><br><span class="line">    (0): Embeddings(</span><br><span class="line">      (lut): Embedding(32000, 512)</span><br><span class="line">    )</span><br><span class="line">    (1): PositionalEncoding(</span><br><span class="line">      (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line">  (tgt_embed): Sequential(</span><br><span class="line">    (0): Embeddings(</span><br><span class="line">      (lut): Embedding(32000, 512)</span><br><span class="line">    )</span><br><span class="line">    (1): PositionalEncoding(</span><br><span class="line">      (dropout): Dropout(p=0.1, inplace=False)</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line">  (generator): Generator(</span><br><span class="line">    (proj): Linear(in_features=512, out_features=32000, bias=True)</span><br><span class="line">  )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tensor = ptr + layout <span class="comment">## 根据coodinate得到元素value</span></span><br><span class="line">layout = shape + stride <span class="comment">## 根据coodinate得到index</span></span><br></pre></td></tr></table></figure>
 
 <ol>
-<li>参数总量：65M,论文中有提及</li>
+<li><code>从右往左读</code> The map from an input coordinate to a natural coordinate is the application of a colexicographical order (reading right to left, instead of “lexicographical,” which reads left to right) within the Shape</li>
+<li>shape and stride 是 IntTupple, A Layout is a tuple of (Shape, Stride).</li>
+<li>CuTe 的 Tensor 类表示一个多维数组。数组的元素可以驻留在任何类型的内存中，包括<code>全局内存、共享内存和寄存器内存</code>。</li>
+<li>Tensor 的行为完全由它的两个组件决定，这两个组件对应于它的两个模板参数： Engine 和 Layout 。Engine 表示元素的一维数组。当用户对 Tensor 执行数组访问时， Tensor 使用其 Layout 从逻辑坐标映射到一维索引。然后， Tensor 使用其 Engine 将一维索引映射到对该元素的引用。</li>
+<li>tensor Ownership of the elements; Tensors can be owning or nonowning.<ul>
+<li>Whether a Tensor is “owning” or “nonowning” depends entirely on its Engine.</li>
+<li>ViewEngine 和 ConstViewEngine 包装指向各种内存的指针。</li>
+<li>make_gmem_ptr(g) when g is a pointer to global memory, or make_smem_ptr(s) when s is a pointer to shared memory.</li>
+</ul>
+</li>
+<li>print 会打印 tensor 存储空间所在的位置和 shape、stride 信息，而 print_tensor 除了以上信息还会打印 Tensor 中具体的每一个数值：</li>
+<li>We wrap each MMA’s PTX instruction in an “Operation” struct.</li>
+<li>For each Operation struct, we define a “Traits” struct that defines all of the meta-information needed to use the Operation. 对于每个操作结构，我们定义一个“Traits”结构，它定义使用该操作所需的所有信息。</li>
+<li>mma ptx -&gt; mma_operation -&gt; mma_trait(封装各种信息) -&gt; mma_atom -&gt; tiled_mma -&gt; thr_mma -&gt; cute::gemm()</li>
+<li>copy ptx -&gt; copy_operation -&gt; copy_trait -&gt; copy_atom -&gt; tiled_copy -&gt; thr_copy -&gt; cute::copy()</li>
+<li>通过 Tensor 和 Layout 抽象我们可以实现对计算矩阵的分块；基于 Copy 抽象，我们可以完成块状矩阵 A、B 数据从 global 内存到寄存器的加载；通过 MMA 抽象我们可以利用 Tensor Core 完成寄存器上小块矩阵的乘法运算；再次通过 Copy 抽象，我们可以将寄存器上的结果拷贝到 global 内存，完成完整的 GEMM 运算</li>
+<li>A has shape (M, K) and strides (1, ldA). Since A has stride 1 in the M mode, we say that A is <code>M major</code>. B has shape (N, K) and strides (1, ldB), so B is “N-major.” Similarly, C has shape (M, N) and strides (1, ldC), so C is “M major.”</li>
+<li>layout 两个核心概念<ul>
+<li>shape: define the coordinate mappings</li>
+<li>stride: defines the index mappings, 在逻辑位置和物理（数据）做映射的时候每一个元素之间的差为 n</li>
+</ul>
+</li>
+<li>thread layout and data layout</li>
+<li>mapping correct threads to correct values for you computation</li>
+<li>layout is a function</li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/column/c_1696937812497235968">CUDA 高性能编程</a></li>
+<li>计算机中的内存是一维的线性地址空间，而数学计算问题所要处理的空间经常是高维的。如 GEMM（General Matrix Multiplication）问题的数学计算体系是二维计算空间，Deep Learning 计算体系是三维以上的计算空间(batch, height, width, channel, etc.)。如何高效的表达高维计算空间，如何高效便捷的将计算所要求的高维空间映射到一维空间变得越来越重要。历史上对该问题的探究可以分为三个阶段：<ul>
+<li>第一阶段 BLAS 的 row&#x2F;col-major + leading dimension 描述阶段；</li>
+<li>第二阶段 Tensor 的 shape + stride 阶段；</li>
+<li>第三阶段为 Hierarchy Tensor 阶段。(组合设计模式实现？)</li>
+</ul>
+</li>
+<li>引入有层次的描述（Layout）代数来表达计算空间和一维地址空间的映射问题。Layout 是一个数据排列的描述体系，其可以实现将<code>逻辑坐标</code>映射到<code>索引(物理)坐标</code>（offset 表示）</li>
+<li>Tensor 是数据的表达，其表达一个相对独立且有结构的数据体，而 Tensor 内的数据排布则由 Layout 来表达</li>
+<li>二维矩阵的描述和一维类似，shape 表示其逻辑形状，stride 表示具体的某个元素和物理空间的映射时的间隔量。</li>
+<li>逻辑空间到物理空间的映射通过点积来完成。如 shape: (3,4); stride: (4, 1); cood: (2, 2), 物理 offset &#x3D; 2x4 + 2x1 &#x3D; 10</li>
+<li>Layout 的本质是函数，其可以实现由一种坐标系统变换到一个表示偏移量的标量</li>
+<li>Layout 的本质是函数，函数的本质是集合</li>
+<li>((2, 4), (3, 5))，同样我们可以得到其 stride: ((3, 6), (1, 24)) <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/662089556">link</a><ul>
+<li>(2, 4)表示行方向按 2 个一组，分 4 组</li>
+<li>(3, 5)表示列方向按 3 个一组，分 5 组</li>
+<li>(3, 6)表示行方向内层元素之间 stride 为 3，外层元素 stride 为 6</li>
+<li>(1, 24)表示列方向内存元素之间 stride 为 1，外层元素 stride 为 24</li>
+<li>行为：2x4 &#x3D; 8</li>
+<li>列为：3x5 &#x3D; 15</li>
+<li>(6, 4)表示：((6%2, 6&#x2F;2), (4%3, 4&#x2F;3)) &#x3D; ((0, 3), (1, 1))， offset &#x3D; 0<em>3 + 3</em>6 + 1<em>1 + 24</em>1 &#x3D; 43</li>
+<li>((1, 3), (2, 4))位置如何找？在行上，先看 3，后看 1，确定外围 tensor 是第 4 个，内层 tensor 是第 1 个；列同理</li>
+</ul>
+</li>
+<li>Layout 描述了数据的排列和底层存储位置关系，但 Layout 并没有指定存储。Tensor 就是在 Layout 的基础上包含了存储，即<code>Tensor = Layout + storage</code>, 数据存储的具体表现上可以是指针表达的数据或则是栈上数据（GPU 上表现为寄存器）</li>
+<li>深度学习框架中的 Tensor 更强调数据的表达实体，通过 Tensor 实体与实体之间的计算产生新的 Tensor 实体，即<code>多份数据实体</code>，cute 中的 Tensor 更多的是对 Tensor 进行分解和组合等操作，而这些操作多是对 Layout 的变换（只是逻辑层面的数据组织形式），<code>底层的数据实体一般不变更</code>。</li>
+<li>深度学习框架中的 Tensor 是用来表达数据实体，cute 中的 Tensor 是偏向描述的实体。</li>
+<li>使用 Tensor 语义和工具能够更形象化的表达我们的逻辑，方便我们的思考，而 CUDA 的优化思路和技巧并不会因为 Tensor 的引入而变简单或困难。Tensor 只是工具，可以方便我们的表达，至于深层次的优化思路那还是对经验的挑战。</li>
+<li>Tensor 表达虽然提供了很多方便，但也只限于表达的高效和便捷，如何对程序进行优化，Tensor 表达的引入并没有提供额外帮助，它仍然需要我们从别的途径来获得。即便如此，<code>表达和抽象依然无比重要</code>，那正如：伽罗瓦如果没有群这一表达工具，就难以解决多项式根的问题；杨振宁没有群这一工具就难以构思举世的杨-米尔斯理论。</li>
+<li>抽象和工具让我们可以在更高的维度上思考。</li>
+<li>cute 提供了 MMA 能力来完成 D &#x3D; A x B + C 的矩阵乘法运算，其针对指令封装，适配层，原子能力、块状 MMA、线程划分和执行进行了抽象，形成了 MMAOperation、MMA_Traits、MMA_Atom、TiledMMA、ThrMMA、cute::gemm 数据结构和函数，我们通过这些结构能够完成逻辑块状矩阵乘法的划分和执行。这些抽象通过软件分层设计使得各层次独立，我们不必关注底层细节，只需要从提供的模块中组合我们的逻辑即可，同时抽象的解偶设计，使得我们可以专注于顶层逻辑而降低对底层细节的要求。</li>
+<li>swizzle 抽象， Layout 的作用是给定坐标返回 offset，而 swizzle 的作用则是给定 offset 返回 bank conflict free 的 offset。 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/671419093">link</a><ul>
+<li>shared memory 读写都按逻辑坐标，真实物理坐标都是 bank free 的(太强了)</li>
+<li>先从一维映射到逻辑二维，再从逻辑二维找到 bank free 二维，最后再返回一维</li>
+<li>ibank &#x3D; irow ^ icol 真是妙啊</li>
+<li>在做全局内存到共享内存数据搬运时，<code>思考模型是逻辑空间，而执行时需要考虑存储空间以避免bank conflict</code></li>
+</ul>
+</li>
+<li><code>layout和swizzle都是一种抽象，可以使用逻辑的方式思考，具体存储交给映射关系</code></li>
+<li><code>new layout language to describe coordinate and index bookkeepings; coordinate 是思考时用到的逻辑方式，具体的存储由 layout 映射关系来处理，可以将经历放在逻辑上</code></li>
+<li><code>Any problem in computer science can be solved by another layer of indirection</code> 计算机科学领域的任何问题都可以通过增加一个间接的中间层来解决;例如虚拟地址<ul>
+<li>layout 和 swizzle 都可以看做是中间层或者代理</li>
+</ul>
+</li>
+<li><code>loccal tile</code> 是 Tensor 中用户可以使用到的重要的函数，可以通过 tile 方法对 tensor 进行分块，通过 local_tile 可以实现从大的 tensor 中切取 tile 块，并且通过 coord 进行块的选取<ul>
+<li>用于数据分块</li>
+</ul>
+</li>
+<li><code>local partition</code>和 local tile 类似，现将大的 Tensor 按照 tile 大小进行分块，分块后每一块取出 coordinate 指定的元素拼拼成新的块<ul>
+<li>用于给线程分数据</li>
+</ul>
+</li>
 </ol>
-<h3 id="llama2-7b"><a href="#llama2-7b" class="headerlink" title="llama2-7b"></a><a target="_blank" rel="noopener" href="https://huggingface.co/meta-llama/Llama-2-7b-hf/blob/main/config.json">llama2-7b</a></h3><ol>
-<li>model info</li>
+<h2 id="cutlass-优化手段"><a href="#cutlass-优化手段" class="headerlink" title="cutlass 优化手段"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/677616101">cutlass 优化手段</a></h2><ol>
+<li><code>bank conflict free的shared memory layout</code></li>
+<li><code>thread block swizzle</code>：这个优化对于中大型矩阵乘法比较明显，更改了发射 block 的顺序，以增加 locality，从而提高 l2cache 的命中率，实现上非常简单，核心代码就是一个取余操作，但有用多级流水线(software pipeline)：2 条可以不要 async.copy 这个指令(sm80 才有的)，大于 2 条流水就需要了，原理上没什么，和 CPU 的多级流水一个道理，主要是指令的应用。</li>
+<li><code>predicate iterator</code>：这个是一个软件层组件写法的优化，叫 predicate 的原因是，这个 iterator 会返回一个布尔值，在 gpu 的指令里是一个 special register，用来表示这块内存是不是需要 load，这个在软件层会涉及一些优化手段，比较有趣的是会在 host 侧 precompute 了哪些下标需要 load，用位运算来 mask，计算开销(位运算在 gpu 里开销较小)和存储开销(一个 byte 可以存 8 个 mask 值)都很小。为什么需要让存储开销很小？因为在 gpu 架构里，register 是很贵的，一个 thread 只能使用 255 个 register，如果超出了就会存在 local memory 里，register 读取很快，一个 cycle 就可以完成，而 local memory 就会慢非常多，register 用超了会非常非常影响性能！</li>
+<li><code>shared memory重排搬出</code>：mma 指令计算完成之后，结果是存在 register 里的，且 register 中存储的数据是不连续的(32bits 连续)，原因是由于 mma 指令造成的，我们知道 vectorize load&#x2F;store 会提高访存带宽，所以我们可以在 shared memory 里重新排序，一并搬出。但并不是什么情况下重排都是正优化，因为重排还是会增加一次 shared memory store&#x2F;load，比如在小 channel 的 conv2d 中，直接从 register 搬出到 global memory 性能会更好</li>
+<li><code>cooperative fetching和vectorize load</code>：这两个是 GPU 的一些基本优化方法，即尽量用更大的 data type 来搬运，以及尽量让一个 warp 里的不同线程是连续地访存同一块内存地址，原理可以参考</li>
+<li><code>tiling description</code>: 提供了实例化方法，来调整 block 计算量和 warp 计算量，</li>
 </ol>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">LlamaForCausalLM(</span><br><span class="line">  (model): LlamaModel(</span><br><span class="line">    (embed_tokens): Embedding(32000, 4096, padding_idx=0)</span><br><span class="line">    (layers): ModuleList(</span><br><span class="line">      (0-31): 32 x LlamaDecoderLayer(</span><br><span class="line">        (self_attn): LlamaAttention(</span><br><span class="line">          (q_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (k_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (v_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (o_proj): Linear(in_features=4096, out_features=4096, bias=False)</span><br><span class="line">          (rotary_emb): LlamaRotaryEmbedding()</span><br><span class="line">        )</span><br><span class="line">        (mlp): LlamaMLP(</span><br><span class="line">          (gate_proj): Linear(in_features=4096, out_features=11008, bias=False) # 输入是 in_features, 输出为 out_features, 矩阵参数shape为（out_features, in_features); 因为矩阵乘法：(out_features, in_features)(in_features, 1) = (out_features, 1)</span><br><span class="line">          (up_proj): Linear(in_features=4096, out_features=11008, bias=False)</span><br><span class="line">          (down_proj): Linear(in_features=11008, out_features=4096, bias=False)</span><br><span class="line">          (act_fn): SiLUActivation()</span><br><span class="line">        )</span><br><span class="line">        (input_layernorm): LlamaRMSNorm()</span><br><span class="line">        (post_attention_layernorm): LlamaRMSNorm()</span><br><span class="line">      )</span><br><span class="line">    )</span><br><span class="line">    (norm): LlamaRMSNorm()</span><br><span class="line">  )</span><br><span class="line">  (lm_head): Linear(in_features=4096, out_features=32000, bias=False)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h2 id="type"><a href="#type" class="headerlink" title="type"></a>type</h2><ol>
+<li><code>cutlass::half_t</code> 不支持 half</li>
+<li><code>cutlass::bfloat16</code> Ampere ElementAccumulator 应该为 float, 看手册可以看到只支持 float32 的 accumulate <a target="_blank" rel="noopener" href="https://www.nvidia.com/content/PDF/nvidia-ampere-ga-102-gpu-architecture-whitepaper-v2.pdf">link</a><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/examples/23_ampere_gemm_operand_reduction_fusion/ampere_gemm_operand_reduction_fusion.cu#L68">ampere_gemm_operand_reduction_fusion</a></li>
+</ul>
+</li>
+</ol>
+<h2 id="fusion"><a href="#fusion" class="headerlink" title="fusion"></a>fusion</h2><ol>
+<li>为了减少核启动(launch)和内存访问的开销</li>
+<li>It also removes kernel launch overhead 减少 kernel launch 开销</li>
+<li>注意融合分两种：<ul>
+<li>简单融合：简单将两个 kernel 合并成一个，并没有减少从主存加载数据次数，只是减少了 kernel 调度的开销</li>
+<li>高效融合：利用 shared memory 减少从主存加载数据次数</li>
+</ul>
+</li>
+<li>两个 gemm 融合， 关键在 k 维度， 假设 A@B@C， 分块时 A，B 矩阵滑动取数，结果放到 C 中，只能取一块，结果和 C 相乘的时候需要所有的分块矩阵</li>
+</ol>
+<h2 id="docs"><a href="#docs" class="headerlink" title="docs"></a>docs</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/cutlass_3x_design.md">cutlass_3x_design</a><ul>
+<li>CUTLASS 3.0 将其接口层与硬件分离，将它们集中在 GEMM 算法的自然结构周围，不依赖于任何特定的 GPU generation</li>
+<li>CUTLASS 2.x 将 GEMM 操作的移动部分分解为一个层次结构，该层次结构密切反映了 GPU 架构的组织。然而，这种设计有时会导致耦合过于紧密，无法扩展到不适合同一架构层次结构的较新 GPU。</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/gemm_api_3x.md">gemm_api_3x</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/gemm_api.md">gemm_api</a><ul>
+<li>包含层级结构</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/code_organization.md">代码组织</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/fundamental_types.md">数据类型</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/cute/01_layout.md">CuTe layout</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/efficient_gemm.md">efficient_gemm.md</a></li>
+<li>最全流程图<br><img src="https://github.com/NVIDIA/cutlass/blob/main/media/images/gemm-structural-components.png" alt="gemm-structural-components"></li>
+</ol>
+<h3 id="build"><a href="#build" class="headerlink" title="build"></a>build</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/quickstart.md">quickstart</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/quickstart.md#building-for-multiple-architectures">选择 arch</a></li>
+<li>下不下来 google test, 修改 cmakelists.txt, 注释掉 gtest</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libgtest-dev</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/NVIDIA/cutlass.git</span><br><span class="line"><span class="built_in">export</span> CUDACXX=<span class="variable">$&#123;CUDA_INSTALL_PATH&#125;</span>/bin/nvcc</span><br><span class="line"><span class="built_in">export</span> PATH=/usr/local/cuda/bin/:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">mkdir</span> build &amp;&amp; <span class="built_in">cd</span> build</span><br><span class="line">cmake .. -DCUTLASS_NVCC_ARCHS=86</span><br><span class="line">make cutlass_profiler -j12</span><br><span class="line">./tools/profiler/cutlass_profiler --kernels=sgemm --m=4352 --n=4096 --k=4096</span><br></pre></td></tr></table></figure>
 
-<ol>
-<li><p>参数: 见 pytorch params 计算，<a target="_blank" rel="noopener" href="https://medium.com/@saratbhargava/mastering-llama-math-part-1-a-step-by-step-guide-to-counting-parameters-in-llama-2-b3d73bc3ae31">link</a></p>
+<h2 id="samples"><a href="#samples" class="headerlink" title="samples"></a>samples</h2><ol>
+<li><p>00 basic gemm</p>
 <ul>
-<li>total: 131072000 + 6476267520 + 4096 + 131072000 &#x3D; 6738415616 &#x3D; 6.7B<ul>
-<li>embed_tokens: (32000, 4096) &#x3D; 131072000</li>
-<li>attention block x 32 &#x3D; 202383360 x 32 &#x3D; 6476267520<ul>
-<li>attention layer:4 x (4096, 4096) &#x3D; 67108864</li>
-<li>mlp: 2 x (11008, 4096) + (4096, 11008) &#x3D; 135266304 (占比最大)</li>
-<li>input layernorm: (4096) &#x3D; 4096</li>
-<li>post_attention_layernorm: (4096) &#x3D; 4096</li>
+<li>创建 cutlass::gemm::device::Gemm，CutlassGemm::Arguments 实例 gemm_operator 和 args</li>
+<li>gemm_operator(args) launch kernel</li>
 </ul>
 </li>
-<li>norm: (4096) &#x3D; 4096</li>
-<li>lm_head:(32000, 4096) &#x3D; 131072000</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>计算复杂度：</p>
+<li><p>01 cutlass utilities</p>
 <ul>
-<li>total: O(l(n^2 x d + ndd’ + nd)) ; l 为层数; 不要考虑 kv cache 更好理解, 加掩码的矩阵乘<ul>
-<li>Multi-head self-attention 层 计算复杂度主要来自注意力机制的计算。对于序列长度为 n,hidden size 为 d 的 self-attention,其复杂度为 O(n^2 x d)；（n, d)(d, n) &#x3D;&gt; O(n^2 x d); 包含 cache 的也等价矩阵乘</li>
-<li>前馈全连接层 这一层包含两个仿射变换,如果其 width 为 d’,那么复杂度为 O(n x d x d’)； (n, d)(d, d’) &#x3D;&gt; O(ndd’)</li>
-<li>Layer normalization 对序列长度为 n, 向量维度为 d,其复杂度为 O(n x d)</li>
+<li>HostTensor contributes management for both host and device memory. HostTensor allocates host and device memory upon construction. Basic element-wise operations on host memory synchronize device memory automatically.</li>
+<li>cutlass::reference::host::Gemm</li>
+<li>cutlass::reference::device::TensorFillRandomGaussian()</li>
+<li>cutlass::reference::host::BlockFillSequential()</li>
+<li>cutlass::reference::host::TensorEquals()</li>
 </ul>
 </li>
-</ul>
-</li>
-<li><p>kv cache</p>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/tree/main/examples/02_dump_reg_shmem">02_dump_reg_shmem</a></p>
 <ul>
-<li><code>BS * layers * kv-heads * heads-d * N * 2(kv) * sizeof(fp16) = BS * 32 * 32 * 128 * N * 2 * 2 = 0.5MB * BS * N</code> 注：128 &#x3D; 4096 &#x2F; 32</li>
+<li>Don’t use cuda-gdb to debug any heavy templated CUDA code. We just insert printf to dump the information to debug. We have some utilities to help you to do it. <a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/issues/372#issuecomment-987532556">link</a></li>
+</ul>
+</li>
+<li><p>41_fused_multi_head_attention</p>
+</li>
+<li><p>cute&#x2F;tutorial&#x2F;sgemm_nt_1.cu</p>
+<ul>
+<li>thread layout tA, tB 是读 AB 数据时线程 layout, tC 是计算 C 时的线程 layout</li>
+<li>tAsA 搬 block tile 数据用， tCsA 计算 block tile 用</li>
+<li>tCrC 每个线程算 8x8 数据， shared memory 中 A、B 数据也为 8x8，</li>
+<li>使用 cuda core 计算，并没使用 tensor core</li>
+<li>tAsA 表示 copy 时 thr_copy A 时 Shared memory 上的 thread 数据</li>
+<li>tCsA, tCsB, tCrC 表示 mma 计算 thr_mma 用到的 A，B shared memory thread 数据和 C 寄存器数据; 提供线程号，则获得具体线程的数据划分能力，对给定的数据块进行划分，得到线程级的数据描述。</li>
+<li>可以顺序赋值给 A, B, 类型改为 int, 来模仿各 tile layout</li>
+<li>axpby:alpha x plus beta y <code>y = alpha*x + beta*y</code>; where x and y are vectors of n elements and alpha and beta are scalars.</li>
+<li>axpy here is simply an abbreviation of alpha times x plus y.</li>
 </ul>
 </li>
 </ol>
-<h2 id="hugging-face-transformers"><a href="#hugging-face-transformers" class="headerlink" title="hugging face transformers"></a><a target="_blank" rel="noopener" href="https://github.com/huggingface/transformers">hugging face transformers</a></h2><ol>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/index">doc</a></li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/installation#offline-mode">offline-model</a></li>
-<li>模型文件页面右侧有对应使用方法</li>
-<li>模型里有 onnx</li>
-<li>只需要模型和对应的 config.json</li>
-<li>sample: <a target="_blank" rel="noopener" href="https://huggingface.co/Xenova/llama2.c-stories15M/tree/main">llama2.c-stories15M</a></li>
+<h2 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h2><h3 id="cutlass-device-dump"><a href="#cutlass-device-dump" class="headerlink" title="cutlass device dump"></a><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/tools/util/include/cutlass/util/device_dump.h#L131">cutlass device dump</a></h3><ol>
+<li>cutlass::debug::dump_shmem()<ul>
+<li>每行 128B，bank: 4B x 32 &#x3D; 128B</li>
+</ul>
+</li>
+<li>cutlass::debug::dump_fragment()</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoTokenizer, AutoModelForCausalLM</span><br><span class="line">tokenizer = AutoTokenizer.from_pretrained(<span class="string">&quot;/home/xiyang/d/working/transformers/models/&quot;</span>)</span><br><span class="line">model = AutoModelForCausalLM.from_pretrained(<span class="string">&quot;/home/xiyang/d/working/transformers/models/&quot;</span>)</span><br><span class="line">model <span class="comment"># 查看模型结构</span></span><br></pre></td></tr></table></figure>
-
+<h3 id="cute-tensor"><a href="#cute-tensor" class="headerlink" title="cute tensor"></a><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/include/cute/tensor.hpp#L985">cute tensor</a></h3><ol>
+<li>cute::print(tensor)</li>
+<li>cute::print_tensor(tensor); 可以打印各种维度</li>
+<li>cute::print_tensor_os()</li>
+<li>operator&lt;&lt;()</li>
+<li>print 会打印 tensor 存储空间所在的位置和 shape、stride 信息，而 print_tensor 除了以上信息还会打印 Tensor 中具体的每一个数值：</li>
+</ol>
+<h3 id="cute-layout"><a href="#cute-layout" class="headerlink" title="cute layout"></a><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/include/cute/layout.hpp#L1694">cute layout</a></h3><ol>
+<li>cute::print(layout): <code>print(layout.shape()); print(&quot;:&quot;); print(layout.stride());</code></li>
+<li>cute::print_layout(layout)<ul>
+<li>NOTE: 只能打印二维 layout; 代码会做检查 <code>CUTE_STATIC_ASSERT_V(rank(layout) == Int&lt;2&gt;&#123;&#125;);</code> 可以 slice 成二维的再打印</li>
+</ul>
+</li>
+<li>cute::print_layout(tensor.layout());</li>
+<li>operator&lt;&lt;(): <code> os &lt;&lt; shape(layout) &lt;&lt; &quot;:&quot; &lt;&lt; stride(layout);</code></li>
+</ol>
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/model_summary">transformers&#x2F;model_summary</a></li>
-<li><a target="_blank" rel="noopener" href="https://pytorch.org/tutorials/beginner/transformer_tutorial.html">pytorch transformer_tutorial</a></li>
-<li><a target="_blank" rel="noopener" href="https://nn.labml.ai/transformers/mha.html">nn.labml.ai&#x2F;transformers&#x2F;mha</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=4Bdc55j80l8">Illustrated Guide to Transformers Neural Network: A step by step explanation</a> 图示非常好</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/harvardnlp/annotated-transformer">harvardnlp&#x2F;annotated-transformer</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=nzqlFIcCSWQ">Transformer 论文逐段精读</a><br>代码带解说 李沐](<a target="_blank" rel="noopener" href="https://zh.d2l.ai/chapter_attention-mechanisms/transformer.html">https://zh.d2l.ai/chapter_attention-mechanisms/transformer.html</a>)</li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/quicktour">quicktour</a> can run in colab</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2009.06732">Efficient Transformers: A Survey</a>s</li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/installation#fetch-models-and-tokenizers-to-use-offline">fetch-models-and-tokenizers-to-use-offline</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/huggingface/transformers">huggingface&#x2F;transformers</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1706.03762.pdf">Attention Is All You Need (Transformer) 论文</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhouyifan.net/2022/11/12/20220925-Transformer/">(good)Attention Is All You Need (Transformer) 论文精读</a></li>
-</ol>
-<h3 id="李宏毅"><a href="#李宏毅" class="headerlink" title="李宏毅"></a><a target="_blank" rel="noopener" href="https://www.youtube.com/@HungyiLeeNTU/playlists">李宏毅</a></h3><ol>
-<li><a target="_blank" rel="noopener" href="https://hackmd.io/@shaoeChen/rJlRfP7mL">Transformer</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=hYdO9CscNes">self attention</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/505105707">Self-attention 自注意力机制讲解 李宏毅版 v.s 吴恩达版</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=QLdUML5MCfE&t=42s">CUTLASS 3 0 Next Generation Composable and Reusable GPU Linear Algebra Library - TVMCon2023</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/blog/cutlass-linear-algebra-cuda/">nvidia cutlass-linear-algebra-cuda</a></li>
+<li><a target="_blank" rel="noopener" href="https://dl.acm.org/doi/pdf/10.1145/3582016.3582018">Graphene: An IR for Optimized Tensor Computations on GPUs</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/column/c_1696937812497235968">CUDA 高性能编程</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/588953452">cutlass 源码导读（1）——API 与设计理念</a></li>
 </ol>
 
       
@@ -1352,7 +1360,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/11/21/LLM/">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/01/25/OpenCL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/coder2.jpg">
@@ -1366,7 +1374,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/11/21/LLM/" class="post-title-link" itemprop="url">LLM</a>
+            <a href="/2024/01/25/OpenCL/" class="post-title-link" itemprop="url">OpenCL</a>
         </h2>
 
         <div class="post-meta">
@@ -1375,16 +1383,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2023-11-21 16:24:03" itemprop="dateCreated datePublished" datetime="2023-11-21T16:24:03+08:00">2023-11-21</time>
+              <time title="创建时间：2024-01-25 11:02:48 / 修改时间：11:03:42" itemprop="dateCreated datePublished" datetime="2024-01-25T11:02:48+08:00">2024-01-25</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-14 22:43:33" itemprop="dateModified" datetime="2024-01-14T22:43:33+08:00">2024-01-14</time>
-              </span>
 
           
   
@@ -1395,8 +1397,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2023/11/21/LLM/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/11/21/LLM/" itemprop="commentCount"></span>
+    <a title="valine" href="/2024/01/25/OpenCL/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/01/25/OpenCL/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1406,286 +1408,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="LLM-进化树"><a href="#LLM-进化树" class="headerlink" title="LLM 进化树"></a><a target="_blank" rel="noopener" href="https://github.com/Mooler0410/LLMsPracticalGuide">LLM 进化树</a></h2><p><img src="https://github.com/Mooler0410/LLMsPracticalGuide/raw/main/imgs/tree.jpg" alt="LLM 进化树"></p>
-<h2 id="语言模型质量评测"><a href="#语言模型质量评测" class="headerlink" title="语言模型质量评测"></a>语言模型质量评测</h2><ol>
-<li>信息论中，困惑度度量概率分布或概率模型的预测结果与样本的契合程度，困惑度越低则契合越准确。该度量可以用于比较不同模型之优劣。</li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/perplexity">PPL: perplexity</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/ggerganov/llama.cpp?tab=readme-ov-file#perplexity-measuring-model-quality">perplexity-measuring-model-quality</a></li>
-</ol>
-<h2 id="concept"><a href="#concept" class="headerlink" title="concept"></a>concept</h2><ol>
-<li>“zero-shot”, “one-shot”, 和 “few-shot” 学习是指训练模型以使其能够处理它在训练过程中未直接遇到过的任务或类别的方法。<ul>
-<li>zero shot: 实际应用时，它需要对它在训练时从未见过的类别做出预测或决策。</li>
-<li>one shot: 模型对每个类别仅看到一个样本就要学会识别该类别</li>
-</ul>
-</li>
-<li><code>General Matrix Multiply (GeMM)</code><ul>
-<li><code>C = αAB + βC</code></li>
-<li>GEMM 是一种更通用的矩阵乘法操作。它不仅包括两个矩阵的乘法，还可以包括对这两个矩阵进行转置或共轭转置，以及将结果乘以一个标量或与另一个矩阵的和。</li>
-<li>在函数接口上,GEMM 通常需要传入更多的参数,包括缩放因子、转置选项等。而 matmul 接口更加简洁。</li>
-<li>在一些深度学习框架如 TensorFlow 和 PyTorch 中,matmul 是矩阵乘法的默认操作。而 GEMM 则由于其优化,常被用在需要高性能的场景。</li>
-</ul>
-</li>
-<li>奇怪的话可以放到 midjouney(or dell-e) 画出图像，助于理解</li>
-<li>token(令牌?) 是某个领域中一个抽象的语法或逻辑单元的称呼。在自然语言处理中,token 指一个文本串中基本的符号。比如一个句子可以被切分为多个词(word),每个词就是一个 token。</li>
-<li>prompt 提示很重要</li>
-<li>机器来找 prompt(提示)： hard prompt, soft prompt(adpter 放在 input), using reinforcement learning(加 generator), 让 llm 自己产生自己 prompt</li>
-<li>toolformer: 使用工具</li>
-<li>token 中文是字， 英文是 word piece, word 太多; unbreakable -&gt; un break able</li>
-<li>model 本质是函数</li>
-<li>prompting 给 chatgpt 催眠，设置限制，让 chatgpt 回答某方便问题，如设置中文聊天</li>
-<li>neural editing 训练好模型改参数</li>
-<li>machine unlearning 忘记曾经学过的东西， 遗忘某些涉密问题</li>
-<li>hyperparameter 超参数，学习算法的参数，不是神经网络的参数</li>
-<li>文字冒险游戏： chatgpt + midjourney + 语音</li>
-<li>腾讯语音情感 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2301.13662">https://arxiv.org/abs/2301.13662</a> <a target="_blank" rel="noopener" href="https://dongchaoyang.top/InstructTTS/">https://dongchaoyang.top/InstructTTS/</a></li>
-<li>embeddings:在某种程度上，就是用来降维的，降维的原理就是矩阵乘法 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/164502624">一文读懂 Embedding 的概念</a></li>
-<li><a target="_blank" rel="noopener" href="https://platform.openai.com/tokenizer">tokenizer</a></li>
-<li>tokenizer 是将文本进行分词,通常分为单词(word)或子词(subword)单元。它的目标是划分语料的基本符号。embeddings 是将语料库中的词或字符映射到 dense 向量表示。通常先经过 tokenizer 得到词单元,然后再映射为稠密词向量。tokenizer 侧重文本符号的划分,主要方法是基于词典或规则进行分割。embeddings 侧重语义信息的编码,主要方法是基于语料训练词向量。</li>
-<li>AGI (Artificial General Intelligence): 人工通用智能或通用人工智能，是指在任何智能任务上都能表现得与人类智能相媲美的人工智能系统。</li>
-<li>AIGC (AI-Generated Content): 人工智能生成内容，指的是通过人工智能算法和模型自动或半自动生成的内容。这包括文本、图像、音乐、视频和其他媒体形式。</li>
-<li>大模型（Large Language Model，LLM）<br><img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/original_images/1_Welcome_GenerativeMeena_CL_V02_150521_v2_720_25fps.gif" alt="示意"></li>
-<li>模型大小 7B(billion), 7B 表示 70 亿个可训练参数。吉比（gigabyte）是一个信息技术单位，。十亿（billion）是一个计数单位， 参数类型(float, int8)和数量(billion)决定模型的大小(gigabyte)</li>
-<li>Bard 是由 Google 开发的生成式人工智能聊天机器人，最初基于大型语言模型的 LaMDA 系列，后来基于 PaLM2。</li>
-<li>基础架构 transformer</li>
-<li><a target="_blank" rel="noopener" href="https://claude.ai/chats">claude</a> chatgpt 主要竞争对手</li>
-<li>webgpt: 产生的内容带引用网址, 先 gpt 处理文字， 得到关键字用于搜索引擎搜索，得到各网页结果，然后处理搜索结果，然后点选，处理网页中的内容，关联的收藏起来， 可以产生多个关键字， 多次搜索， 最终有多个收藏， 只处理这些收藏</li>
-<li>chatgpt 文字接龙， bert 文字填空</li>
-<li>大模型可以帮助完成强有力的事情 “A mouse riding on the head of an elephant, using reins to steer the giant creature.” (powered by Midjourney )</li>
-<li>对于大模型的期待：专才(finetune, adapter)，通才(instruction learning， in-context learning)</li>
-<li>finetune: update network parameters by gradient descent</li>
-<li>adapter(efficient fine tuning): 大模型加入插件(例如：加一层)， 只调整新添加插件参数, 优势：不用调整大模型原始参数</li>
-<li>in-context learning(示例学习): 给一些例子， 例子可能只是用于启动任务, 唤醒记忆。 更大的模型可能从例子学习到信息更多, 输入一些分类 feature 例子(直接给数字和 label)，可以将大模型变为一个分类器</li>
-<li>learing in-context learning: 学习示例学习结果更好，但数据难收集</li>
-<li>instruction learning</li>
-<li>chain-of-thought(CoT) prompting: 训练时给出推论再给结果， 结果正确率会高很多。多次推论有不同的答案再投票.。 （chatgpt 默认列出计算过程，如果不让列详细过程， 结果可能会差）</li>
-<li>参数越多，数据越多， 效果越好</li>
-<li>emergent ability 顿悟时刻 <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2206.07682.pdf">Emergent Abilities of Large Language Models</a> 10B</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2207.05221">Language Models (Mostly) Know What They Know</a></li>
-<li>calibration: 大模型 softmax 分数越高，正确率越高，大模型知道知己是否在瞎掰</li>
-<li>模型越大结果越差例子： <a target="_blank" rel="noopener" href="https://github.com/inverse-scaling/prize">inverse-scaling&#x2F;prize</a>, 更大的模型可能会顿悟，结果会更好; U-shaped U 型曲线</li>
-<li><a target="_blank" rel="noopener" href="https://www.jmlr.org/papers/v23/21-0998.html">Switch Transformers</a> 训练时用所有参数，推理时只用部分参数，加快推理运行</li>
-<li>从数据中学习语言：世界知识(尝试)， 语言知识</li>
-<li>data preparation: 数据处理<ul>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2112.11446">Scaling Language Models: Methods, Analysis &amp; Insights from Training Gopher</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2107.06499">Deduplicating Training Data Makes Language Models Better</a></li>
-</ul>
-</li>
-<li>固定算力资源情况下：模型参数(思考)， data(学习) 成反比； 大模型小数据(思而不学)， 小模型大数据(学而不思); 学思应该平衡<ul>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2203.15556">Training Compute-Optimal Large Language Models</a> 给出算力，参数量和数据量如何确定</li>
-<li>LLaMa 使用了这个知识</li>
-</ul>
-</li>
-<li>fintuning 和 reinforcement lerning 效果很好 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2203.02155">Training language models to follow instructions with human feedback</a> 小模型也可以胜大模型</li>
-<li>openai 收齐了很多问题，所以即使 chatgpt 模型不那么大，也比更大模型好</li>
-<li><code>MoE(Mixture of Experts)</code>模型指的是专家混合模型,是一类将多个模型专家进行混合的组合结构。例如： Mixtral 8x7B</li>
-</ol>
-<h2 id="生成内容"><a href="#生成内容" class="headerlink" title="生成内容"></a>生成内容</h2><ol>
-<li>文本</li>
-<li>语音</li>
-<li>声音</li>
-<li>图像</li>
-<li>视频</li>
-</ol>
-<h2 id="生成方式"><a href="#生成方式" class="headerlink" title="生成方式"></a>生成方式</h2><ol>
-<li><p>各个击破 Autoregressive(AR) model</p>
-<ul>
-<li>速度慢 无法并行</li>
-<li>质量高</li>
-<li>常用于文字生成</li>
-</ul>
-</li>
-<li><p>一次到位 Non-autoregressive(NAR) model</p>
-<ul>
-<li>速度快</li>
-<li>质量较差</li>
-<li>冲用于图片生成</li>
-</ul>
-</li>
-<li><p>各个击破和一次到位结合</p>
-<ul>
-<li>先各个击破产生中间产物(先决定大方向)，再一次到位</li>
-<li>一次到位改成 N 次到位(先一次到位再各个击破) diffusion model</li>
-</ul>
-</li>
-</ol>
-<h3 id="多任务学习-Multi-Task-Learning-和多模态学习-Multimodal-Learning"><a href="#多任务学习-Multi-Task-Learning-和多模态学习-Multimodal-Learning" class="headerlink" title="多任务学习(Multi-Task Learning)和多模态学习(Multimodal Learning)"></a>多任务学习(Multi-Task Learning)和多模态学习(Multimodal Learning)</h3><ol>
-<li><p>目标差异</p>
-<ul>
-<li>多任务学习的目标是同时学习多个相关的任务,在不同任务间实现知识迁移,从而 mutually improve 模型的泛化性能。</li>
-<li>而多模态学习是为了建模和理解包含多个模态(文本、图像、语音等)的单一任务或场景。</li>
-</ul>
-</li>
-<li><p>方法差异</p>
-<ul>
-<li>多任务学习通常是共享底层特征表示,在顶层分出多个 task-specific 的输出层。</li>
-<li>多模态学习则更关注不同模态间的交互建模、对齐、融合,学习联合的媒体表征。</li>
-</ul>
-</li>
-<li><p>应用差异</p>
-<ul>
-<li>多任务学习的应用更广泛,从计算机视觉、NLP 到健康领域都有。</li>
-<li>多模态应用更集中在人机交互、信息检索、场景理解等领域。</li>
-</ul>
-</li>
-<li><p>总结</p>
-<ul>
-<li>多任务学习 optimize 同一模型在不同任务上的泛化性能</li>
-<li>多模态学习 optimize 不同媒体表征的融合,用于理解复杂的多模态场景或问题。</li>
-</ul>
-</li>
-</ol>
-<h3 id="多模态"><a href="#多模态" class="headerlink" title="多模态"></a>多模态</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://openai.com/research/clip">clip</a> <a target="_blank" rel="noopener" href="https://imzhanghao.com/2022/10/27/multimodal-learning/">multimodal-learning 中文解析</a></li>
-</ol>
-<h2 id="排名"><a href="#排名" class="headerlink" title="排名"></a>排名</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://crfm.stanford.edu/helm/lite/latest/#/leaderboard">stanford helm leaderboard</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/CLUEbenchmark/SuperCLUE">SuperCLUE 中文通用大模型综合性基准</a></li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard">open_llm_leaderboard</a></li>
-<li><a target="_blank" rel="noopener" href="https://arena.lmsys.org/">UC 伯克利发布大模型排行榜 需要查看 leaderboard</a></li>
-</ol>
-<h2 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://laion.ai/">laion</a> 5B images, 图像生成训练集<ul>
-<li><a target="_blank" rel="noopener" href="https://rom1504.github.io/clip-retrieval/?back=https://knn.laion.ai&index=laion5B-H-14&useMclip=false">online search</a></li>
-</ul>
-</li>
-</ol>
-<h2 id="huggine-face"><a href="#huggine-face" class="headerlink" title="huggine face"></a>huggine face</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/models">models</a></li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard">open_llm_leaderboard</a></li>
-<li><code>dataset = load_dataset(&quot;/mnt/data-2/home/xiyang.jia/TensorRT-LLM/examples/bloom/cnn_dailymail/cnn_dailymail.py&quot;, &quot;3.0.0&quot;)</code> 从本地加载数据集</li>
-</ol>
-<h2 id="sota-models"><a href="#sota-models" class="headerlink" title="sota models"></a>sota models</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://openai.com/gpt-4">gpt-4</a></li>
-<li><a target="_blank" rel="noopener" href="https://ai.meta.com/llama/">llama</a></li>
-<li><a target="_blank" rel="noopener" href="https://ai.google/discover/palm2/">palm2</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.anthropic.com/index/claude-2">claude-2</a></li>
-</ol>
-<h2 id="llama"><a href="#llama" class="headerlink" title="llama"></a><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/llama">llama</a></h2><ol>
-<li>读音： 拉马（西班牙语通话的意思)</li>
-<li>clone 之后执行 download.sh, 需要官网申请的 url</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/llama-recipes/tree/main/demo_apps">demo_apps</a></li>
-</ol>
-<h2 id="gpt"><a href="#gpt" class="headerlink" title="gpt"></a>gpt</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=kCc8FmEb1nY">Let’s build GPT: from scratch, in code, spelled out.</a></li>
-<li>GPT(generative pre-trained transformer)</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/run-llama/rags">rags</a> RAGs is a Streamlit app that lets you create a RAG pipeline from a data source using natural language.</li>
-<li>chatgpt：文字接龙</li>
-<li>gpt 自监督学习(pre train)得到的模型(基础模型)，chatgpt 在 gpt 基础上监督学习(finetune)</li>
-<li>chatgpt 实际是分类问题， 从使用者角度是生成式学习（生成句子：多个分类问题）</li>
-<li>chatgpt 评价是增强学习</li>
-<li>chatgpt: gpt -&gt; 监督学习 -&gt; 增强学习</li>
-</ol>
-<h2 id="bing-copilot"><a href="#bing-copilot" class="headerlink" title="bing copilot"></a><a target="_blank" rel="noopener" href="https://www.bing.com/">bing copilot</a></h2><h2 id="precision-精度"><a href="#precision-精度" class="headerlink" title="precision 精度"></a>precision 精度</h2><ol>
-<li>float32</li>
-<li>float16</li>
-<li>bfloat16</li>
-<li>8bit</li>
-<li>4bit</li>
-<li>GPTQ</li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/Mooler0410/LLMsPracticalGuide">LLMsPracticalGuide</a></li>
-<li><a target="_blank" rel="noopener" href="https://z7nobhiey2.feishu.cn/file/JTa0bZ38RohzwTx9zjucuDmunVe">oneflow 技术年货 2023</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=yiY4nPOzJEg&list=PLJV_el3uVTsOePyfmkfivYZ7Rqr2nMk3W">李宏毅 生成式 AI</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=zjkBMFhNj_g">Intro to Large Language Models</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLFXJ6jwg0qW-7UM8iUTj3qKqdhbQULP5I">李沐论文精度</a></li>
-<li><a target="_blank" rel="noopener" href="https://openai.com/research/clip">openai.com&#x2F;research</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/11/15/shareX/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/15/shareX/" class="post-title-link" itemprop="url">shareX</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-11-15 14:11:38" itemprop="dateCreated datePublished" datetime="2023-11-15T14:11:38+08:00">2023-11-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-11-16 10:47:54" itemprop="dateModified" datetime="2023-11-16T10:47:54+08:00">2023-11-16</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/11/15/shareX/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/11/15/shareX/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>66</span>
+              <span>44</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1705,16 +1428,10 @@
 
       
           <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>设置上传 url<br><img src="https://i.ibb.co/3C66vgd/UQTv-UKxj-Vi.png" alt="设置上传url"></li>
-</ol>
-<h2 id="设置自定义服务器"><a href="#设置自定义服务器" class="headerlink" title="设置自定义服务器"></a>设置自定义服务器</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://api.imgbb.com/">imagebb 生成 key</a><br><img src="https://i.ibb.co/Dz3Xkyn/Jf4m-Fd-WXg-F.png" alt="生成key"></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/ShareX/CustomUploaders/blob/master/imgbb.com.sxcu">自定义目标设置贴入，修改 key</a><br><img src="https://i.ibb.co/MM2mLg5/2z4l9e-PS2x.png" alt="修改key"><br><img src="https://i.ibb.co/TwmGMk8/BUHj-Zwd0ke.png" alt="key"></li>
+<li><code>OpenCL(Open Computing Language)</code></li>
 </ol>
 <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://getsharex.com/">shareX</a></li>
-<li><a target="_blank" rel="noopener" href="https://imgbb.com/">图片共享</a></li>
-<li><a target="_blank" rel="noopener" href="https://imgur.com/">imgur</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.khronos.org/opencl/">opencl</a></li>
 </ol>
 
       
@@ -1737,7 +1454,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/11/10/nvidia/">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/01/14/Efficient-LLM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/coder2.jpg">
@@ -1751,7 +1468,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/11/10/nvidia/" class="post-title-link" itemprop="url">nvidia</a>
+            <a href="/2024/01/14/Efficient-LLM/" class="post-title-link" itemprop="url">Efficient-LLM</a>
         </h2>
 
         <div class="post-meta">
@@ -1761,14 +1478,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2023-11-10 11:45:20" itemprop="dateCreated datePublished" datetime="2023-11-10T11:45:20+08:00">2023-11-10</time>
+              <time title="创建时间：2024-01-14 18:44:21" itemprop="dateCreated datePublished" datetime="2024-01-14T18:44:21+08:00">2024-01-14</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-25 10:41:25" itemprop="dateModified" datetime="2024-01-25T10:41:25+08:00">2024-01-25</time>
+                <time title="修改时间：2024-02-22 14:09:16" itemprop="dateModified" datetime="2024-02-22T14:09:16+08:00">2024-02-22</time>
               </span>
 
           
@@ -1780,8 +1497,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2023/11/10/nvidia/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/11/10/nvidia/" itemprop="commentCount"></span>
+    <a title="valine" href="/2024/01/14/Efficient-LLM/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/01/14/Efficient-LLM/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -1791,7 +1508,173 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
+              <span>1.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><h3 id="大模型推理综述-Towards-Efficient-Generative-Large-Language-Model-Serving-A-Survey-from-Algorithms-to-Systems"><a href="#大模型推理综述-Towards-Efficient-Generative-Large-Language-Model-Serving-A-Survey-from-Algorithms-to-Systems" class="headerlink" title="大模型推理综述 Towards Efficient Generative Large Language Model Serving: A Survey from Algorithms to Systems"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2312.15234">大模型推理综述 Towards Efficient Generative Large Language Model Serving: A Survey from Algorithms to Systems</a></h3><ol>
+<li>Context or initial or prefil 阶段: input token 是并行的，可以利用 flash attention 来加速</li>
+<li>Generation or incremental or decode 阶段: input token 是 1， Autoregressive(AR)，使用 paged attention 来实现<ul>
+<li>如果是 batch 为 1， 可以填充为 8 来利用 tensor core; 或者使用优化的 cuda core GEMV</li>
+<li>解码阶段的过程主要由 GEMV（batch size&#x3D;1）或 flat GEMM（batch size &gt; 1）操作组成</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Uue0SxH6W_tI8K4Zb0igLQ">中文解读</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/675101140">黄浴中文翻译</a></li>
+<li><code>低延迟和高吞吐量</code>是 LLM 服务系统中的双重优化目标，代表了互补但往往相互冲突的目标，需要一种平衡的策略来优化单个任务的快速响应和指定时间内最大化处理任务量之间的权衡</li>
+<li>除了注意计算之外，对于线性投影算子，最近还出现了用<code>通用矩阵向量积（GEMV，general matrix-vector product）代替GEMM的趋势</code>，更有效地处理小批量（即大小为 1）的情况。</li>
+</ol>
+<h3 id="Full-Stack-Optimization-of-Transformer-Inference-a-Survey"><a href="#Full-Stack-Optimization-of-Transformer-Inference-a-Survey" class="headerlink" title="Full Stack Optimization of Transformer Inference: a Survey"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2302.14017">Full Stack Optimization of Transformer Inference: a Survey</a></h3><ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/677595064">黄浴中文翻译</a></li>
+</ul>
+<h3 id="Efficient-Large-Language-Models-A-Survey"><a href="#Efficient-Large-Language-Models-A-Survey" class="headerlink" title="Efficient Large Language Models: A Survey"></a><a target="_blank" rel="noopener" href="https://github.com/AIoT-MLSys-Lab/Efficient-LLMs-Survey">Efficient Large Language Models: A Survey</a></h3><h3 id="Efficient-Deep-Learning-Book"><a href="#Efficient-Deep-Learning-Book" class="headerlink" title="Efficient Deep Learning Book"></a><a target="_blank" rel="noopener" href="https://www.jiqizhixin.com/articles/2022-05-03-4">Efficient Deep Learning Book</a></h3><ol>
+<li><a target="_blank" rel="noopener" href="https://efficientdlbook.com/#download">https://efficientdlbook.com</a></li>
+</ol>
+<h2 id="sampling"><a href="#sampling" class="headerlink" title="sampling"></a>sampling</h2><ol>
+<li>top-K</li>
+<li>top-P</li>
+</ol>
+<h2 id="系统优化技术"><a href="#系统优化技术" class="headerlink" title="系统优化技术"></a>系统优化技术</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/">nvidia mastering-llm-techniques-inference-optimization</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2312.15234">大模型推理综述 Towards Efficient Generative Large Language Model Serving: A Survey from Algorithms to Systems</a><ul>
+<li>量化</li>
+<li>并行计算</li>
+<li>内存管理</li>
+<li>请求调度</li>
+<li>kernel 优化</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/tree/main?tab=readme-ov-file#advanced-topics">tensorrt llm 高级主题</a><ul>
+<li>量化</li>
+<li>in-flight batching</li>
+<li>attention</li>
+<li>graph rewriting</li>
+</ul>
+</li>
+</ol>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><ol>
+<li>vllm</li>
+<li>tensorrt-llm</li>
+</ol>
+<h2 id="attention-优化"><a href="#attention-优化" class="headerlink" title="attention 优化"></a>attention 优化</h2><ol>
+<li>flash attention -&gt; flash attention v2 -&gt; flash decoding</li>
+<li>xformers</li>
+<li>paged attention</li>
+<li>token attention</li>
+<li>cublas</li>
+<li>cutlass</li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/horseee/Awesome-Efficient-LLM">Awesome-Efficient-LLM</a></li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/spaces/optimum/llm-perf-leaderboard">llm-perf-leaderboard</a><ul>
+<li>lantency vs memory vs score</li>
+</ul>
+</li>
+</ol>
+<h2 id="指标"><a href="#指标" class="headerlink" title="指标"></a>指标</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/perplexity">PPL: perplexity</a></li>
+<li>hugging face 显示指标<br><img src="https://i.ibb.co/THp5xHd/Ijz-O30-Ae96.png" alt="指标"></li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/spaces/optimum/llm-perf-leaderboard">llm-perf-leaderboard</a><ul>
+<li>lantency vs memory vs score</li>
+<li>e2e lantency</li>
+<li>e2e throughput</li>
+<li>prefil lantency</li>
+<li>decode throughput</li>
+</ul>
+</li>
+<li>TTFT 表示 Time To First Token，TPOT 表示 Time Per Output Token。前者由初始相位处理速度驱动，而后者直接取决于增量解码中的每次迭代执行时间。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/01/11/blas/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/11/blas/" class="post-title-link" itemprop="url">blas</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-01-11 16:31:34" itemprop="dateCreated datePublished" datetime="2024-01-11T16:31:34+08:00">2024-01-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-20 10:48:46" itemprop="dateModified" datetime="2024-02-20T10:48:46+08:00">2024-02-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/01/11/blas/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/01/11/blas/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1810,127 +1693,104 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://epochai.org/blog/trends-in-machine-learning-hardware">trends-in-machine-learning-hardware</a></li>
-<li><code>export CUDA_VISIBLE_DEVICES=0,1</code>强制使用哪几个 GPU 上</li>
-<li>sdk manager 图像界面安装各种工具</li>
-<li>fp32 -&gt; fp16(int8)是否加速要看芯片手册</li>
-<li>芯片手册中有 cuda core 算力和 tensor core 算力 <a target="_blank" rel="noopener" href="https://www.nvidia.com/content/PDF/nvidia-ampere-ga-102-gpu-architecture-whitepaper-v2.pdf">link</a><ul>
-<li>3090 的 cuda core int32 算力是 fp21 的一半</li>
-<li>3090 的 cuda core fp32 和 fp16 算力一样</li>
-<li>3090 的 fp32 cuda core 和 tensor core 算力一样</li>
-<li>3090 的 tensor core fp16 算力是 fp32 的 2 倍或 4 倍</li>
-<li>3070 一样的现象</li>
+          <h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
+<li>先选定 TileC，然后沿着 k 轴移动小块进行累加求和的策略为 sliced-k，它对于 m、n 维度较大的场景（m n 分块所需要的 block 数目足以填充所有的 SM）比较有效。<code>对于k比较大，而m、n比较小的场景，由于m、n较小而我们根据C来划分thread block，这时需要的thread block数目比较小，当这个数目无法填充所有的SM时，则存在很多SM无任务，而有任务的SM需却又需要循环多次的问题</code>，这时候可以考虑将 k 轴拆分成多段，每一段都计算一个 TileC 结果，最后再通过额外的累加过程将多段的结果进行求和，这种模式的任务划分方法成为 split-k 方法。<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/667521327">link</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2301.03598">Stream-K: Work-Centric Parallel Decomposition for Dense Matrix-Matrix Multiplication on the GPU</a><ul>
+<li>矩阵乘分块方法： sliced-k, split-k, stream-k</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013701860/article/details/128674224">split-k</a><ul>
+<li>k 维度由多个 thread 计算， 减少单 thread 的延迟， 增加并行性</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/efficient_gemm.md#parallelized-reductions">efficient_gemm.md parallelized-reductions</a><ul>
+<li>split-k</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Basic_Linear_Algebra_Subprograms#Level_3">各种 blas 实现</a></li>
+<li>BLAS 是 Basic Linear Algebra Subprograms 的缩写,即基本线性代数子程序,它是一系列线性代数运算函数的标准说明和接口规范。通常情况下,BLAS 函数库会为矩阵和向量运算提供高效、经过优化的实现,这些函数被广泛使用于科学计算、机器学习、数据分析等领域需要大量数值计算的场景中。常见的 BLAS 函数标准说明有:<ul>
+<li>BLAS level 1:向量-向量运算</li>
+<li>BLAS level 2:矩阵-向量运算</li>
+<li>BLAS level 3:矩阵-矩阵运算</li>
+</ul>
+</li>
+<li><code>GEMM(General Matrix-Matrix Multiplication)</code> 是通用矩阵乘法,表示 <code>C = αAB + β*C</code>。它计算两个矩阵的乘积,是最常见的数值密集型运算之一。</li>
+<li><code>GEMV(General Matrix-Vector Multiplication)</code>是矩阵向量乘法,表示<code>y = αAx + β*y</code>。它计算矩阵和向量的乘积得到一个向量。 αβ 是标量，A 是矩阵，xy 是向量</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/flame/how-to-optimize-gemm">how-to-optimize-gemm</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NervanaSystems/maxas/wiki/SGEMM">maxas&#x2F;wiki&#x2F;SGEMM</a></li>
+<li>blas 库命名规则<br><img src="https://i.ibb.co/8MWgXfn/atg4bmz-C9l.png" alt="name rule"></li>
+<li>sgemm: <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/AukKpQU0XDH1YrDH_U8i1g">link</a><ul>
+<li>s: single</li>
+<li>ge: general</li>
+<li>mm:matirx matrix matrix product</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/350470257">矩阵乘法的内积与外积</a><ul>
+<li>cuda thread tile 时用了外积，可以缓存 shared memory 到 register</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://kl66.top/2019/05/30/%E5%90%91%E9%87%8F%E5%92%8C%E7%9F%A9%E9%98%B5%E7%9A%84%E5%90%84%E7%A7%8D%E7%A7%AF/">向量和矩阵的各种积</a></li>
+<li><code>lda</code> leading dimension of two-dimensional array used to store matrix A.</li>
+<li><code>batch gemm</code> 拼接，在 thread block tile 时只计算对角线上的数据, 优化技术跟 gemm 一样，就是 thread block tile 方式不同</li>
+</ol>
+<h2 id="optimize"><a href="#optimize" class="headerlink" title="optimize"></a>optimize</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/flame/how-to-optimize-gemm">how-to-optimize-gemm</a><ul>
+<li>列优先</li>
+<li>Optimization2: 循环展开</li>
+<li>Optimization_1x4_4: 使用内联</li>
+<li>Optimization_1x4_5: 循环合并</li>
+<li>Optimization_1x4_6: 使用寄存器：register double test;</li>
+<li>Optimization_1x4_7: 减少 for 循环变量访存</li>
+<li>Optimization_4x4_5 MMult_4x4_5.c: 可以显示 block 计算过程, 可以看出分块之后有很多访存可以合并, A 和 B 分别可以减少到 1&#x2F;4</li>
+<li>Optimization_4x4_10: 使用 vector 计算 block</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/tpoisonooo/how-to-optimize-gemm/blob/master/README_ZH_CN.md">how-to-optimize-gemm C++ 中文版</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/njuhope/cuda_sgemm/tree/master">cuda_sgemm 旷视</a></li>
+<li>(good)<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/441146275">CUDA GEMM 理论性能分析与 kernel 优化</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/410278370">CUDA 矩阵乘法终极优化指南</a><ul>
+<li>如果是 float4(128bit)，一个 warp 访问 16B，32x16B 得分 4 次做，那么会把一个 warp 分成 0-7&#x2F;8-15&#x2F;16-23&#x2F;24-31 这么 4 组，只要组内没有 bank conflict 就行了。</li>
+<li>shared memory: float4 0 和 8 线程确实读的都是 0-3bank，但是 0-7 8-15 是分别的两组，这时候一个 warp 会分成 4 组 4 次读取，在不同组是不会冲突的，只需要组内没有冲突就可以了。我之前说了 shared memory 是 32 bank，每 bank 4B，你要一个 warp 访问 float4，数据量是 32*16B，是 shared memory 一次性能提供的数据量的 4 倍，那么必然要分 4 次获得，然后架构设计就是我说的分组情况。如果你一个线程访问 float2，那么就会是 0-15 16-31 两组</li>
+<li>shared memory 一次不冲突只能读 32x4B， 看一次读取的数据量，多于 32x4B 需要读取多次 n&#x2F;(32x4)，只要在 n&#x2F;(32x4) 次内读完就是最高效的。</li>
+</ul>
+</li>
+<li>使用 float4 类型访存，用向量化的 LDG.128 和 STG.128 指令一次读 4 个元素，以减少指令数</li>
+<li>block tile 时，第一个矩阵在 shared memory 上要按列存储，为了连续存储，好利用 LDG.128 和 STG.128 指令</li>
+</ol>
+<h2 id="blas"><a href="#blas" class="headerlink" title="blas"></a><a target="_blank" rel="noopener" href="https://www.netlib.org/blas/">blas</a></h2><ol>
+<li>名词出自 blas 库，例如<ul>
+<li>SGEMM: single matrix matrix multiply;</li>
+<li>DGEMM: double matrix matrix multiply</li>
+<li>SGEMV: single matrix vector multiply</li>
 </ul>
 </li>
 </ol>
-<h2 id="查看-GPU-info"><a href="#查看-GPU-info" class="headerlink" title="查看 GPU info"></a>查看 GPU info</h2><ol>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/nvidia/cuda-samples">cuda-sample</a> 见 cuda.md</p>
-<ul>
-<li><code>cd /usr/local/cuda-12/samples/1_Utilities/deviceQuery &amp;&amp; make &amp;&amp; ./deviceQuery</code> 查看 gpu 详细信息,<ul>
-<li>arch: 3080， 3090 是 sm_86, orin 是 sm_87</li>
-<li>sm num</li>
-<li>cuda core num &#x2F; per sm</li>
-<li>Maximum number of threads per block</li>
-<li>Maximum number of threads per multiprocessor</li>
-<li>Max dimension size of a thread block (x,y,z)</li>
-<li>Max dimension size of a grid size (x,y,z)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>通过对比 sm 个数等信息可以估算大致性能差距</p>
-</li>
-<li><p>查看 driver 版本 <code>cat /proc/driver/nvidia/version</code></p>
-</li>
+<h2 id="NVIDIA-cutlass"><a href="#NVIDIA-cutlass" class="headerlink" title="NVIDIA&#x2F;cutlass"></a><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass">NVIDIA&#x2F;cutlass</a></h2><h2 id="cuBLAS"><a href="#cuBLAS" class="headerlink" title="cuBLAS"></a><a target="_blank" rel="noopener" href="https://developer.nvidia.com/cublas">cuBLAS</a></h2><ol>
+<li>CUDA Basic Linear Algebra Subprograms</li>
+<li>cuBLAS（CUDA Basic Linear Algebra Subprograms）是由 NVIDIA 提供的官方库，它是经典 BLAS（Basic Linear Algebra Subprograms）库的 CUDA 实现。</li>
+<li>列优先</li>
+<li>cublasSgemmBatched 支持 batch 运算</li>
 </ol>
-<h3 id="server"><a href="#server" class="headerlink" title="server"></a>server</h3><ol>
-<li><code>nvitop</code></li>
-<li><code>nvtop</code> 有风险</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/wookayin/gpustat">gpustat</a><ul>
-<li>不要用源码装：否则 NVML 版本不匹配</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/michaelcjl/p/16657548.html">nvidia-smi 命令参数含义</a></li>
-<li><code>nvidia-smi</code> 可以看出每个 GPU 的显存总量和使用量 还可以看到 cuda 版本</li>
-<li><code>nvidia-smi -L</code>列出 GPU 列表, 查看 GPU 先开显卡型号</li>
-<li><code>nvidia-smi -l 1</code> 会每秒更新一次显示信息。<code>watch -n 1 nvidia-smi</code> 类似 top</li>
-<li><code>nvidia-smi -q</code> 查看 GPU 信息</li>
-<li><code>free -h</code> 看内存，注意服务器上内存和显存不一样, 不共享; PCIe 接在服务器上。 服务器市场的需求与集成设备（如 Jetson 系列）不同。服务器用户通常需要高度定制化的解决方案，可以独立升级和优化各个组件，而集成设备则更注重成本效益和空间效率。</li>
-<li>加速器：不包含 arm</li>
+<h2 id="OpenBLAS"><a href="#OpenBLAS" class="headerlink" title="OpenBLAS"></a><a target="_blank" rel="noopener" href="https://github.com/OpenMathLib/OpenBLAS">OpenBLAS</a></h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2023-2/cblas-gemm-001.html#GUID-97718E5C-6E0A-44F0-B2B1-A551F0F164B2">intel cblas interface</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/accelerate/1513264-cblas_sgemm?language=objc">apple 接口文档</a></li>
+<li><code>sudo apt-get install libopenblas-dev</code></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/OpenMathLib/OpenBLAS?tab=readme-ov-file#usage">usage</a></li>
 </ol>
-<h2 id="edge"><a href="#edge" class="headerlink" title="edge"></a>edge</h2><ol>
-<li>SOC: 包含 arm</li>
-<li>NVIDIA Jetson 系列设备，包括像 Jetson Nano、Jetson TX1&#x2F;TX2、Jetson Xavier、 Jetson Orin 等，使用的是 NVIDIA 的 <code>Tegra</code> 架构。在这种架构中，CPU 和 GPU 确实共享内存，这被称为<code>统一内存（Unified Memory）或共享内存</code>。</li>
-<li>统一内存的优缺点：<a target="_blank" rel="noopener" href="https://chat.openai.com/c/c4285778-9988-4bba-80b2-0ae08689af88">link</a><ul>
-<li>优点：简化编程模型， 提高效率</li>
-<li>缺点：内存访问延迟，带宽限制，复杂的内存管理</li>
-</ul>
-</li>
-<li>tegra 是 SOC 架构</li>
-<li><code>jtop</code> <a target="_blank" rel="noopener" href="https://github.com/rbonghi/jetson_stats">jetson_stats</a> jetson-stats is a package for monitoring and control your NVIDIA Jetson [Orin, Xavier, Nano, TX] series.</li>
-<li><code>jetson_release</code></li>
-</ol>
-<h2 id="指标"><a href="#指标" class="headerlink" title="指标"></a>指标</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.techpowerup.com/gpu-specs/">gpu specs</a></li>
-</ol>
-<h3 id="performance"><a href="#performance" class="headerlink" title="performance"></a>performance</h3><ol>
-<li><code>FLOPS = 2 x freqs * cores</code> fma 有 2 个 flop， f32 性能 cores 就是 f32 cuda core number</li>
-</ol>
-<h3 id="memory"><a href="#memory" class="headerlink" title="memory"></a>memory</h3><ol>
-<li><code>B/s = bps * width / 8</code></li>
-</ol>
-<h3 id="pcie"><a href="#pcie" class="headerlink" title="pcie"></a>pcie</h3><h2 id="产品"><a href="#产品" class="headerlink" title="产品"></a>产品</h2><ol>
-<li>性能参数：产品 -&gt; 规格</li>
-<li><a target="_blank" rel="noopener" href="https://www.nvidia.cn/autonomous-machines/embedded-systems/">边缘计算产品</a> 查看模组对比， 可以看到各个芯片的参数<ul>
-<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/embedded/develop/roadmap">jetson roadmap</a></li>
-</ul>
-</li>
-<li>数据中心： A, H, L, V 系列<ul>
-<li><a target="_blank" rel="noopener" href="https://www.nvidia.cn/data-center/h100/">H100 性能参数</a> 游戏：RTX, GTX</li>
-<li>RTX: Ray Tracing eXtreme</li>
-<li>GTX: Graphics Processor protoType eXtreme</li>
-<li><a target="_blank" rel="noopener" href="https://www.nvidia.cn/geforce/graphics-cards/compare/?section=compare-specs">GeForce 显卡比较</a></li>
-<li>在 NVIDIA 的 GeForce 系列显卡中，Ti 是一个特殊的标识，用来表示某个型号的改进或升级版。从本意来讲，TI 属于’Titanium’的缩写，和太空金属’钛’是一个意思，在显卡中他代表着更高级版本。</li>
-</ul>
-</li>
-</ol>
-<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><ol>
-<li>搜 white paper 看细节</li>
-<li><a target="_blank" rel="noopener" href="https://www.nvidia.com/en-us/design-visualization/ampere-architecture/">ampere-architecture 官方架构详细介绍</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.nvidia.com/en-us/data-center/technologies/hopper-architecture/">hopper-architecture</a><ul>
-<li>下方的白皮书</li>
-<li>手册中有芯片 cuda core 算力和 tensor core 算力</li>
-<li>利用 tensor core 才能达到最大算力</li>
-<li>int32 不一定有 float32 算力高，因为 float32 计算单元更多</li>
-<li>多关注 SM 架构<br><img src="https://i.ibb.co/2c186WT/g-LTQhd-K40g.png" alt="sm"></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/nsight-compute/2023.3/ProfilingGuide/index.html#metrics-hw-model">Hardware Model</a><ul>
-<li>对 sm 介绍比较好</li>
-</ul>
-</li>
-<li>可以从架构图上看出一个 SM 有多少个 cuda core</li>
-<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#gpu-feature-list">cuda-compiler-driver-nvcc gpu-feature-list</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/kunhe0512/article/details/126247243">https://blog.csdn.net/kunhe0512/article/details/126247243</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/394352476">NVIDIA GPU 架构梳理</a></li>
-<li>天梯图</li>
-<li>架构演进</li>
-<li>tegra 是 SOC 架构, tesla 是 GPU 架构</li>
-<li>NVIDIA GeForce RTX 3090 使用的是 NVIDIA 的 Ampere 架构 sm_86</li>
-<li>NVIDIA Jetson Orin 是基于 NVIDIA 的 Ampere 架构的高性能 AI 计算平台</li>
-<li>CUDA_ARCHS 是指定 CUDA 代码编译目标 NVIDIA GPU 架构的编译标志。</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/631850036">为各种 NVIDIA 架构匹配 CUDA arch 和 CUDA gencode</a></li>
-<li>架构历史</li>
-<li><a target="_blank" rel="noopener" href="https://www.baseten.co/blog/understanding-nvidias-datacenter-gpu-line/">understanding-nvidias-datacenter-gpu-line</a><br><img src="https://i.ibb.co/hZVxQFd/ZEI0-D9zw-C5.png" alt="历史"></li>
-</ol>
-<h2 id="JetPack"><a href="#JetPack" class="headerlink" title="JetPack"></a><a target="_blank" rel="noopener" href="https://docs.nvidia.com/jetson/jetpack/introduction/index.html">JetPack</a></h2><ol>
-<li>NVIDIA JetPack SDK is the most comprehensive solution for building AI applications. JetPack SDK provides a full development environment for hardware-accelerated AI-at-the-edge development.JetPack SDK includes Jetson Linux Driver Package with bootloader, Linux kernel, Ubuntu desktop environment, and a complete set of libraries for acceleration of GPU computing, multimedia, graphics, and computer vision. It also includes samples, documentation, and developer tools for both host computer and developer kit, and supports higher level SDKs such as DeepStream for streaming video analytics, Isaac for robotics and Riva for conversational AI.</li>
-</ol>
-<h2 id="vpi"><a href="#vpi" class="headerlink" title="vpi"></a><a target="_blank" rel="noopener" href="https://docs.nvidia.com/vpi/algorithms.html">vpi</a></h2><ol>
-<li>支持多种硬件做前处理, 如 resize, convert color, remap (VIC 都支持，可以释放 GPU 资源)</li>
-</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export OPENBLAS_NUM_THREADS=4</span><br><span class="line">export GOTO_NUM_THREADS=4</span><br><span class="line">export OMP_NUM_THREADS=4</span><br></pre></td></tr></table></figure>
 
+<ol>
+<li>If you compile this library with USE_OPENMP&#x3D;1, you should set the OMP_NUM_THREADS environment variable; OpenBLAS ignores OPENBLAS_NUM_THREADS and GOTO_NUM_THREADS when compiled with USE_OPENMP&#x3D;1.</li>
+<li>For a general introduction to the BLAS routines, please refer to the extensive documentation of their reference implementation hosted at netlib: <a target="_blank" rel="noopener" href="https://www.netlib.org/blas">https://www.netlib.org/blas</a>. On that site you will likewise find documentation for the reference implementation of the higher-level library <code>LAPACK - the Linear Algebra Package</code> that comes included with OpenBLAS</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/OpenMathLib/OpenBLAS/blob/develop/docs/distributing.md#performance-and-runtime-behavior-related-build-options">performance-and-runtime-behavior-related-build-options</a></li>
+<li>openblas.pc 中可以看到 <code>USE_OPENMP=0 MAX_THREADS=24</code></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1609.00076.pdf">论文</a></li>
+</ol>
+<h2 id="blis"><a href="#blis" class="headerlink" title="blis"></a><a target="_blank" rel="noopener" href="https://github.com/flame/blis">blis</a></h2><h2 id="hipBLAS"><a href="#hipBLAS" class="headerlink" title="hipBLAS"></a><a target="_blank" rel="noopener" href="https://github.com/ROCm/hipBLAS">hipBLAS</a></h2><h2 id="Intel-oneMKL"><a href="#Intel-oneMKL" class="headerlink" title="Intel oneMKL"></a><a target="_blank" rel="noopener" href="https://github.com/oneapi-src/oneMKL">Intel oneMKL</a></h2><ol>
+<li>oneAPI Math Kernel Library (oneMKL)</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/oneapi-src/oneMKL?tab=readme-ov-file#supported-configurations">统一多种 blas</a></li>
+</ol>
+<h2 id="CLBlast"><a href="#CLBlast" class="headerlink" title="CLBlast"></a><a target="_blank" rel="noopener" href="https://github.com/CNugteren/CLBlast">CLBlast</a></h2>
       
     </div>
 
@@ -1950,7 +1810,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2018,7 +1878,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">175</span>
+          <span class="site-state-item-count">190</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2051,19 +1911,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
+          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
+          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -2101,13 +1961,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">484k</span>
+    <span title="站点总字数">543k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:20</span>
+    <span title="站点阅读时长">8:13</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

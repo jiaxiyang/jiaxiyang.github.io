@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="NOTE 没 link 报undefined reference to, link 但没 found xxx was not found, cannot find xxx target_link_options(xxx PUBLIC -Wl,-unresolved-symbols&#x3D;ignore-in-shared-libs) 只要能找到 xxx 中的符号就行， link 的 shared lib">
+  <meta name="description" content="NOTE (good)log 太多可以把 error 重定向到文件 command 2&gt; error_log.txt std::numeric_limits&lt;float&gt;::max() float 最大值 -Wno-xxx 不启动 xxx warning gcc 编译阶段打印宏定义的内容 100-gcc-tips 没 link 报undefined reference to, l">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Debug">
 <meta property="og:url" content="https://jiaxiyang.github.io/2022/02/03/Cpp-debug/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="NOTE 没 link 报undefined reference to, link 但没 found xxx was not found, cannot find xxx target_link_options(xxx PUBLIC -Wl,-unresolved-symbols&#x3D;ignore-in-shared-libs) 只要能找到 xxx 中的符号就行， link 的 shared lib">
+<meta property="og:description" content="NOTE (good)log 太多可以把 error 重定向到文件 command 2&gt; error_log.txt std::numeric_limits&lt;float&gt;::max() float 最大值 -Wno-xxx 不启动 xxx warning gcc 编译阶段打印宏定义的内容 100-gcc-tips 没 link 报undefined reference to, l">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-03T09:02:35.000Z">
-<meta property="article:modified_time" content="2024-01-18T03:31:11.530Z">
+<meta property="article:modified_time" content="2024-11-14T09:27:45.905Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="Debug">
 <meta name="twitter:card" content="summary">
@@ -131,7 +131,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -233,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-18 11:31:11" itemprop="dateModified" datetime="2024-01-18T11:31:11+08:00">2024-01-18</time>
+                <time title="修改时间：2024-11-14 17:27:45" itemprop="dateModified" datetime="2024-11-14T17:27:45+08:00">2024-11-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -283,7 +283,7 @@
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>15 分钟</span>
+              <span>16 分钟</span>
             </span>
 
         </div>
@@ -296,8 +296,17 @@
 
       
         <h2 id="NOTE"><a href="#NOTE" class="headerlink" title="NOTE"></a>NOTE</h2><ol>
+<li>(good)log 太多可以把 error 重定向到文件 <code>command 2&gt; error_log.txt</code></li>
+<li><code>std::numeric_limits&lt;float&gt;::max()</code> float 最大值</li>
+<li><code>-Wno-xxx</code> 不启动 xxx warning</li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/suiyek/p/14164160.html">gcc 编译阶段打印宏定义的内容</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/hellogcc/100-gcc-tips/blob/master/src/index.md">100-gcc-tips</a></li>
 <li>没 link 报<code>undefined reference to</code>, link 但没 found <code>xxx was not found, cannot find xxx</code></li>
 <li><code>target_link_options(xxx PUBLIC -Wl,-unresolved-symbols=ignore-in-shared-libs)</code> 只要能找到 xxx 中的符号就行， link 的 shared lib 中未找到符号不报错， 忽略 link 的库解析，用于交叉编译，运行时能找到库</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/sharkdp/dbg-macro">dbg-macro</a><ul>
+<li>灵感来源<a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/macro.dbg.html">rust !dbg</a></li>
+</ul>
+</li>
 <li>c++23 支持 stack trace <a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/utility/basic_stacktrace">basic_stacktrace</a><ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/bombela/backward-cpp">backward-cpp</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/jeremy-rifkin/cpptrace">cpptrace</a></li>
@@ -309,7 +318,10 @@
 <li>op PUBLIC 依赖 glog: target was not found 错误, 传递出 glog 依赖</li>
 </ul>
 </li>
-<li><code>gcc/g++  --verbose</code>显示编译过程</li>
+<li><code>gcc/g++  --verbose</code>显示编译过程<ul>
+<li><code>set(CMAKE_CXX_FLAGS &quot;--verbose&quot;) or -DCMAKE_CXX_FLAGS=&quot;--verbose&quot;</code> cmake 也可以显示编译信息； 比 <code>-DCMAKE_VERBOSE_MAKEFILE=ON</code> 显示更详细</li>
+</ul>
+</li>
 <li>strip 是一个在 Unix-like 操作系统中用于删除或剥离目标文件或对象文件的符号信息的工具。<ul>
 <li>删除符号表信息：符号表包含了源代码中的函数和变量的名称。</li>
 <li>删除调试信息：debug section 被删除</li>
@@ -318,6 +330,11 @@
 <li>function tracing 只需要 symbols，不需要 debug symbols（gcc -g）。strip 之后不能跟踪</li>
 <li>动态符号（.dynsym）vs. 局部符号（.symtab）， .symtab 包含.dynsym; 可以用命令 strip 来手动去掉局部符号表， strip 前后用<code>readelf -s ./test</code>看, strip 只去除了.symtab</li>
 <li>strip 之后 gdb 不能使用 function 名字加断点</li>
+<li>strip 保留 symbol 文件，gdb 可使用 symbol-file 命令加载 symbol</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p symbol</span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历lib文件夹下的所有.so文件</span></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> lib/*.so*; <span class="keyword">do</span></span><br><span class="line">    <span class="comment"># 提取文件名（不包括路径和扩展名）</span></span><br><span class="line">    filename=$(<span class="built_in">basename</span> -- <span class="string">&quot;<span class="variable">$file</span>&quot;</span>)</span><br><span class="line">    filename_no_ext=<span class="string">&quot;<span class="variable">$&#123;filename%.*&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 去除符号表并将其保存到symbol文件夹下</span></span><br><span class="line">    strip -s -o symbol/<span class="string">&quot;<span class="variable">$filename_no_ext</span>.sym&quot;</span> <span class="string">&quot;<span class="variable">$file</span>&quot;</span></span><br><span class="line">    strip -s <span class="string">&quot;<span class="variable">$file</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<ol>
 <li>debug info 作用：<ul>
 <li>将内存地址映射到具体某行源代码</li>
 <li>调用栈展开（stack unwinding）</li>
@@ -387,6 +404,7 @@
 </ol>
 <h2 id="对数"><a href="#对数" class="headerlink" title="对数"></a>对数</h2><ol>
 <li>opencv yml 文件</li>
+<li>python</li>
 <li>dump to file</li>
 <li>gdbserver + gdb + vscode</li>
 <li>gdb script to dump binary + tools(转为 float， 对比数值) 工具一键获取</li>
@@ -946,7 +964,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">175</span>
+          <span class="site-state-item-count">190</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -979,19 +997,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
+          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
+          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -1029,13 +1047,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">484k</span>
+    <span title="站点总字数">543k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:20</span>
+    <span title="站点阅读时长">8:13</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

@@ -28,7 +28,7 @@
 <meta property="og:description" content="basellama2 参数量计算 见 transformer 参数计算 LLAMA2 的参数计算 Mastering Llama Math (Part-1): A Step-by-Step Guide to Counting Parameters in Llama-2 窗口长度, 上下文长度(Context Length)指的是模型在做预测时能够看到的上下文单词的数量。具体来说,在 transfo">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-12-24T10:23:45.000Z">
-<meta property="article:modified_time" content="2024-01-10T09:07:17.223Z">
+<meta property="article:modified_time" content="2024-04-25T07:45:22.122Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 
@@ -130,7 +130,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">175</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-10 17:07:17" itemprop="dateModified" datetime="2024-01-10T17:07:17+08:00">2024-01-10</time>
+                <time title="修改时间：2024-04-25 15:45:22" itemprop="dateModified" datetime="2024-04-25T15:45:22+08:00">2024-04-25</time>
               </span>
 
           
@@ -262,14 +262,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.8k</span>
+              <span>3.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -313,7 +313,7 @@
 <li>Tokenizer 的主要作用是将自然语言文本转换为机器学习模型可以理解的格式。这通常意味着将文本拆分成词汇、子词或字符单元（即 tokens），然后将这些 tokens 转换为数字 ID。这些 ID 对应于模型的词汇表中的索引。</li>
 <li>当有 prompt 时，有预热过程，从第一个 prompt_tokens 开始推理，if we are still processing the input prompt, force the next prompt token， otherwise sample the next token from the logits</li>
 <li>Sampler 的主要作用是根据模型输出的 logits（未归一化的概率对数）来决定下一个生成的 token</li>
-<li>Temperature Scaling：通过温度参数调整 logits。温度较低（&lt;1）会使输出分布更加尖锐（更确定），温度较高（&gt;1）则使分布更平滑（更随机）</li>
+<li>Temperature Scaling：通过温度参数调整 logits。温度较低（&lt;1）会使 softmax 输出分布更加尖锐（更确定），温度较高（&gt;1）则使分布更平滑（更随机），由 softmax 前的 scale 决定</li>
 <li>采样策略对生成文本的质量和多样性有显著影响。例如，argmax 采样可能导致非常重复和可预测的文本，而合适的随机采样可以增加多样性和创造性，同时保持文本的连贯性和可读性。通过合理配置 temperature 和 topp 参数，可以在随机性和确定性之间找到平衡，生成符合预期的文本。</li>
 <li>top-p 采样：<ul>
 <li>模型输出的 logits（未归一化的概率对数），转换为 softmax 概率</li>
@@ -483,7 +483,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">175</span>
+          <span class="site-state-item-count">190</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -516,19 +516,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/22/pagedattention/" title="2024&#x2F;02&#x2F;22&#x2F;pagedattention&#x2F;">pagedattention</a>
+          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/02/03/flashattention/" title="2024&#x2F;02&#x2F;03&#x2F;flashattention&#x2F;">flashattention</a>
+          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/26/cutlass/" title="2024&#x2F;01&#x2F;26&#x2F;cutlass&#x2F;">cutlass</a>
+          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/25/OpenCL/" title="2024&#x2F;01&#x2F;25&#x2F;OpenCL&#x2F;">OpenCL</a>
+          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
         </li>
         <li class="links-of-recent-posts-item">
-          <a href="/2024/01/14/Efficient-LLM/" title="2024&#x2F;01&#x2F;14&#x2F;Efficient-LLM&#x2F;">Efficient-LLM</a>
+          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -566,13 +566,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">484k</span>
+    <span title="站点总字数">543k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">7:20</span>
+    <span title="站点阅读时长">8:13</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
