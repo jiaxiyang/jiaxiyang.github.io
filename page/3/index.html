@@ -546,7 +546,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-07-25 17:24:53" itemprop="dateModified" datetime="2024-07-25T17:24:53+08:00">2024-07-25</time>
+                <time title="修改时间：2024-12-04 17:53:20" itemprop="dateModified" datetime="2024-12-04T17:53:20+08:00">2024-12-04</time>
               </span>
 
           
@@ -569,7 +569,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.4k</span>
+              <span>3.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -604,7 +604,11 @@
 <li>大部分的框架都以 python 的 DSL 暴露给用户，然后用户通过写对应的 python 语法，调用已经用 C++&#x2F;CUDA 或者 assemble 写好的高性能组件。</li>
 <li><code>pip show triton</code> &#x2F;usr&#x2F;local&#x2F;lib&#x2F;python3.10&#x2F;dist-packages&#x2F;triton&#x2F;_C&#x2F;libtriton.so</li>
 <li>支持 nvidia, AMD GPU； &#x2F;usr&#x2F;local&#x2F;lib&#x2F;python3.10&#x2F;dist-packages&#x2F;triton&#x2F;backends&#x2F;amd&#x2F;lib&#x2F;libamdhip64.so</li>
-<li><code>~/.triton/cache</code> cache 路径, 里面有 ptx, cubin, 各种 ir 文件</li>
+<li><code>~/.triton/cache</code> cache 路径, 里面有 ptx, cubin, 各种 ir 文件 <a target="_blank" rel="noopener" href="https://chatgpt.com/share/6750222c-3c44-8004-b0a4-483b2d45dead">link</a><br><img src="https://i.ibb.co/qFsBwJv/YMws76l-KOI.png" alt="各文件作用"><ul>
+<li>TTIR（Triton Tensor Intermediate Representation）TTIR 是 Triton 编译器的一个中间表示，专门用于描述张量级别的操作。它是一个较高层次的中间表示，关注计算任务中的张量操作和计算模式。</li>
+<li>TTGIR（Triton Tensor GPU Intermediate Representation）TTGIR 是 Triton 的低层中间表示，专注于描述与 GPU 硬件架构相关的计算细节。它建立在 TTIR 之上，但更加贴近 GPU 的执行模型。</li>
+</ul>
+</li>
 <li>Triton, a <code>language</code> and <code>compiler</code> for writing highly efficient custom Deep-Learning primitives. The aim of Triton is to provide an open-source environment to write fast code at higher productivity than CUDA, but also with higher flexibility than other existing DSLs.</li>
 <li>An open-source python-like programming language which enables researchers with no CUDA experience to write highly efficient GPU code – most of the time on par with what an expert would be able to produce</li>
 <li>开发效率<br><img src="https://i.ibb.co/NYSS9WV/Xrz-Qku-ZLSo.png" alt="img"></li>
@@ -645,6 +649,8 @@
 <li><a target="_blank" rel="noopener" href="https://triton-lang.org/main/programming-guide/chapter-3/debugging.html">官方指导</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/triton-lang/triton?tab=readme-ov-file#tips-for-building">源码 debug</a></li>
 <li><code>TRITON_INTERPRET=1</code> 使用 Triton 解释器而不是在 GPU 上运行。您可以在内核代码中插入 Python 断点！NOTE:注意真正运行的时候不要打开</li>
+<li><code>MLIR_ENABLE_DUMP=1</code></li>
+<li><code>LLVM_IR_ENABLE_DUMP=1</code></li>
 <li><code>TRITON_PRINT_AUTOTUNING=1</code>可以打印 autotune 选择的最快配置 prints out the best autotuning config and total time spent for each kernel after autotuning is complete.</li>
 </ol>
 <h2 id="c-调用-triton-kernel"><a href="#c-调用-triton-kernel" class="headerlink" title="c++调用 triton kernel"></a>c++调用 triton kernel</h2><ol>
