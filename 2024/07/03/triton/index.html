@@ -20,21 +20,24 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="base 使得算子开发的部分复杂度分配给上层 kernel 开发用户，部分复杂度分配给底层的 Triton compiler。同时对接上层框架的工作则交给了上层软件栈，使得 Triton 能够专注在自己这个层次需要解决的核心问题上，找到了一个比较不错的”product&#x2F;technology” fit。 Triton 的核心设计思想—-Block-wise 编程，Block 上面的归用户，">
+  <meta name="description" content="适配 DSL intel intel-xpu-backend-for-triton 高通 Triton Conference 2024: Afternoon Session microsoft&#x2F;triton-shared tablegen 来生成 MLIR 代码  base 使得算子开发的部分复杂度分配给上层 kernel 开发用户，部分复杂度分配给底层的 Triton compiler">
 <meta property="og:type" content="article">
 <meta property="og:title" content="triton">
 <meta property="og:url" content="https://jiaxiyang.github.io/2024/07/03/triton/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="base 使得算子开发的部分复杂度分配给上层 kernel 开发用户，部分复杂度分配给底层的 Triton compiler。同时对接上层框架的工作则交给了上层软件栈，使得 Triton 能够专注在自己这个层次需要解决的核心问题上，找到了一个比较不错的”product&#x2F;technology” fit。 Triton 的核心设计思想—-Block-wise 编程，Block 上面的归用户，">
+<meta property="og:description" content="适配 DSL intel intel-xpu-backend-for-triton 高通 Triton Conference 2024: Afternoon Session microsoft&#x2F;triton-shared tablegen 来生成 MLIR 代码  base 使得算子开发的部分复杂度分配给上层 kernel 开发用户，部分复杂度分配给底层的 Triton compiler">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.ibb.co/cF3yF0K/e-Hk7ps-HTk-M.png">
+<meta property="og:image" content="https://i.ibb.co/6NMJ8Yk/xo5-Pqj-RPDT.png">
+<meta property="og:image" content="https://i.ibb.co/9VLhpNk/du-T6l-PNQfg.png">
 <meta property="og:image" content="https://i.ibb.co/qFsBwJv/YMws76l-KOI.png">
 <meta property="og:image" content="https://i.ibb.co/NYSS9WV/Xrz-Qku-ZLSo.png">
 <meta property="og:image" content="https://i.ibb.co/qszbhN4/NYmmor-R0l-P.png">
 <meta property="article:published_time" content="2024-07-03T07:04:53.000Z">
-<meta property="article:modified_time" content="2024-12-04T09:53:20.603Z">
+<meta property="article:modified_time" content="2024-12-09T09:45:44.035Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.ibb.co/qFsBwJv/YMws76l-KOI.png">
+<meta name="twitter:image" content="https://i.ibb.co/cF3yF0K/e-Hk7ps-HTk-M.png">
 
 <link rel="canonical" href="https://jiaxiyang.github.io/2024/07/03/triton/">
 
@@ -236,7 +239,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-12-04 17:53:20" itemprop="dateModified" datetime="2024-12-04T17:53:20+08:00">2024-12-04</time>
+                <time title="修改时间：2024-12-09 17:45:44" itemprop="dateModified" datetime="2024-12-09T17:45:44+08:00">2024-12-09</time>
               </span>
 
           
@@ -266,7 +269,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.6k</span>
+              <span>3.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -285,7 +288,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+        <h2 id="适配-DSL"><a href="#适配-DSL" class="headerlink" title="适配 DSL"></a>适配 DSL</h2><ol>
+<li>intel<br><img src="https://i.ibb.co/cF3yF0K/e-Hk7ps-HTk-M.png" alt="intel backend architecture"></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/intel/intel-xpu-backend-for-triton">intel-xpu-backend-for-triton</a></li>
+<li>高通<br><img src="https://i.ibb.co/6NMJ8Yk/xo5-Pqj-RPDT.png" alt="architecture"><br><img src="https://i.ibb.co/9VLhpNk/du-T6l-PNQfg.png" alt="pytorch"></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=ONrKkI7KhU4&list=PLc_vA1r0qoiTjlrINKUuFrI8Ptoopm8Vz&index=18">Triton Conference 2024: Afternoon Session</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/microsoft/triton-shared">microsoft&#x2F;triton-shared</a></li>
+<li><a target="_blank" rel="noopener" href="https://llvm.org/docs/TableGen/ProgRef.html">tablegen 来生成 MLIR 代码</a></li>
+</ol>
+<h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
 <li>使得算子开发的部分复杂度分配给上层 kernel 开发用户，部分复杂度分配给底层的 Triton compiler。同时对接上层框架的工作则交给了上层软件栈，使得 Triton 能够专注在自己这个层次需要解决的核心问题上，找到了一个比较不错的”product&#x2F;technology” fit。</li>
 <li>Triton 的核心设计思想—-Block-wise 编程，Block 上面的归用户，Block 内部的归 Triton compiler 自动化处理。相应地，Block 内部的优化细节，也交由 Triton compiler 处理了。</li>
 <li>Triton 这个项目目前还更像是一个满足细分场景(高效高性能 Kernel 开发)需求的“小而美”的项目</li>
@@ -472,7 +483,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">装饰器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#debug"><span class="nav-number">3.</span> <span class="nav-text">debug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c-%E8%B0%83%E7%94%A8-triton-kernel"><span class="nav-number">4.</span> <span class="nav-text">c++调用 triton kernel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">5.</span> <span class="nav-text">links</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%82%E9%85%8D-DSL"><span class="nav-number">1.</span> <span class="nav-text">适配 DSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">2.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">装饰器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#debug"><span class="nav-number">4.</span> <span class="nav-text">debug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c-%E8%B0%83%E7%94%A8-triton-kernel"><span class="nav-number">5.</span> <span class="nav-text">c++调用 triton kernel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">6.</span> <span class="nav-text">links</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -577,7 +588,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:13</span>
+    <span title="站点阅读时长">8:14</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
