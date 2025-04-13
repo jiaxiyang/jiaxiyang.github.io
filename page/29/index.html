@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,339 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/02/02/Docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/02/Docker/" class="post-title-link" itemprop="url">Docker</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-02 18:29:14" itemprop="dateCreated datePublished" datetime="2021-02-02T18:29:14+08:00">2021-02-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-01-24 10:57:26" itemprop="dateModified" datetime="2025-01-24T10:57:26+08:00">2025-01-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/02/02/Docker/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/02/02/Docker/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>10k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="vscode-docker"><a href="#vscode-docker" class="headerlink" title="vscode docker"></a><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/containers/overview">vscode docker</a></h2><h2 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker compose"></a><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/containers/docker-compose">docker compose</a></h2><ol>
+<li>用于运行docker image</li>
+</ol>
+<h2 id="NOTES"><a href="#NOTES" class="headerlink" title="NOTES"></a>NOTES</h2><ol>
+<li><code>docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/ubuntu:22.04</code><ul>
+<li><a target="_blank" rel="noopener" href="https://docker.aityp.com/s/docker.io">link</a></li>
+</ul>
+</li>
+<li><code>docker pull hello-world --registry-mirror=https://docker.mirrors.ustc.edu.cn</code></li>
+<li>dockerhub 下载 images 到磁盘, 传到服务器: docker pull and docker save</li>
+<li>wsl2 中设置<code>--net=host</code>会影响 docker port 设置</li>
+<li><code>docker image prune -a</code> 清理任何为用的的 image</li>
+<li><a target="_blank" rel="noopener" href="http://www.debugself.com/2018/01/17/docker_network/">docker build 以及 docker run 时使用 host 网络的方法</a></li>
+<li>docker 开发使用： docker image(路径无关) + docker.sh(路径相关)</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/apache/tvm/blob/main/docker/bash.sh">tvm docker 启动 bash</a></li>
+<li><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-containers">windwos wsl2 + docker 开发</a> docker desktop 需要启动</li>
+<li><code>docker attach CONTAINER</code></li>
+<li><code>docker info</code> 查看 docker 信息</li>
+<li><code>docker stats</code> 可以看哪个 container 占用率高</li>
+<li><code>sudo usermod -aG docker $USER</code> 将当前用户加入到 docker 组中，否则必须使用 sudo 来运行 docker</li>
+<li><code>--user root --gpus all</code> 使用 gpu</li>
+<li><code>--privileged</code> 使用 systemctl</li>
+<li><code>--name orin</code></li>
+<li><code>docker save -o fedora-all.tar fedora</code> 保存镜像到磁盘；container 需要先 commit 才能保存到磁盘</li>
+<li><code>docker commit my-container my-image</code> 保存 container 为镜像</li>
+<li><code>docker load --input fedora.tar</code> or <code>docker load &lt; busybox.tar.gz</code></li>
+<li><code>docker login --username=xiyang.jia hub.xxx.io</code> 登录后才能 push</li>
+<li><code>docker commit efb954281fd3 j5-dsp-xiyang-dev:v1</code></li>
+<li><code>docker tag [ImageId] hub.xx.io/avp/[ImageName]:[镜像版本号]</code></li>
+<li><code>docker push docker.io/my-username/my-image:v1.0.0</code></li>
+<li><code>docker image rm eb3f9d403e36</code> 删除 image</li>
+</ol>
+<h2 id="docker-container-install-ssh-server"><a href="#docker-container-install-ssh-server" class="headerlink" title="docker container install ssh server"></a>docker container install ssh server</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sed -i s@/archive.ubuntu.com/@/mirrors.tuna.tsinghua.edu.cn/@g /etc/apt/sources.list &amp;&amp; apt-get update -y</span><br><span class="line">sudo apt install -y openssh-server</span><br><span class="line">PORT=22; sed -i -e <span class="string">&quot;s/^#Port 22/Port <span class="variable">$PORT</span>/&quot;</span> -e <span class="string">&#x27;s/^#PermitRootLogin prohibit-password/PermitRootLogin yes/&#x27;</span> -e <span class="string">&#x27;s/^#PasswordAuthentication yes/PasswordAuthentication yes/&#x27;</span> /etc/ssh/sshd_config</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;root:root&#x27;</span> | chpasswd &amp;&amp; /etc/init.d/ssh start</span><br><span class="line"><span class="comment"># /etc/init.d/ssh start</span></span><br><span class="line"><span class="comment"># vi /etc/ssh/sshd_config</span></span><br><span class="line"><span class="comment"># 设置 PermitRootLogin yes和 PasswordAuthentication yes</span></span><br><span class="line">/etc/init.d/ssh restart</span><br><span class="line">passwd <span class="comment"># 设置密码</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="network-host"><a href="#network-host" class="headerlink" title="network&#x3D;host"></a>network&#x3D;host</h2><ol>
+<li>–network&#x3D;host 和 -p 选项不能同时使用</li>
+<li>当使用 –network&#x3D;host 时，容器中的端口直接暴露在宿主机上，-p 的端口映射功能就没有意义了，因此 Docker 会忽略 -p 选项。</li>
+<li>直接在sshd_config设置port</li>
+</ol>
+<h2 id="usefull-docker"><a href="#usefull-docker" class="headerlink" title="usefull docker"></a>usefull docker</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://hub.docker.com/_/gcc">gcc</a></li>
+</ol>
+<h2 id="Command"><a href="#Command" class="headerlink" title="Command"></a>Command</h2><ol>
+<li><p><img src="https://user-gold-cdn.xitu.io/2019/4/9/16a02cdbf14142a0?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="一图胜千言"></p>
+</li>
+<li></li>
+</ol>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="keyword">run</span><span class="language-bash"> -<span class="built_in">id</span> --name gcc.xiyang -v /data0/users/teams/software/heterogeneous/xiyang.jia/:/data0/users/xiyang.jia -w /data0/users/xiyang.jia/d/working -p 10099:22 -v /etc/localtime:/etc/localtime gcc</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li></li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">% docker pull openexplorer/ai_toolchain_centos_7:v1.12.5</span><br><span class="line">% docker run -<span class="built_in">id</span> \</span><br><span class="line">    --name openexplorer.xiyang \</span><br><span class="line">    -v /data0/users/xiyang.jia:/data0/users/xiyang.jia \</span><br><span class="line">    -w /data0/users/xiyang.jia/d/working \</span><br><span class="line">    -p 10090:22 \</span><br><span class="line">    --privileged \</span><br><span class="line">    -v /etc/localtime:/etc/localtime \</span><br><span class="line">    openexplorer/ai_toolchain_centos_7:v1.12.5</span><br><span class="line"></span><br><span class="line">% docker <span class="built_in">exec</span> -it openexplorer.xiyang bash</span><br><span class="line">% docker ps</span><br><span class="line">% docker stop openexplorer.xiyang</span><br><span class="line">% docker <span class="built_in">rm</span> openexplorer.xiyang</span><br><span class="line">% docker images</span><br><span class="line">% docker image <span class="built_in">rm</span> xxx</span><br><span class="line">% docker logs openexplorer.xiyang</span><br><span class="line">% docker start &lt;name&gt; // start docker when it <span class="built_in">exit</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="docker-load"><a href="#docker-load" class="headerlink" title="docker load"></a><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/load/">docker load</a></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">% docker load &lt; busybox.tar.gz</span><br><span class="line">% docker load --input fedora.tar</span><br></pre></td></tr></table></figure>
+
+<h2 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h2><p>Docker 包括三个基本概念:</p>
+<ol>
+<li>镜像（Image）</li>
+<li>容器（Container）</li>
+<li>仓库（Repository）<br>理解了这三个概念，就理解了 Docker 的整个生命周期。</li>
+</ol>
+<h3 id="Image"><a href="#Image" class="headerlink" title="Image"></a><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/basic_concept/image">Image</a></h3><ol>
+<li>Docker 镜像（Image），就相当于是一个 root 文件系统</li>
+<li>Docker 镜像是一个特殊的文件系统，除了提供容器运行时所需的程序、库、资源、配置等文件外，还包含了一些为运行时准备的一些配置参数（如匿名卷、环境变量、用户等）。镜像不包含任何动态数据，其内容在构建之后也不会被改变。</li>
+</ol>
+<h3 id="Container"><a href="#Container" class="headerlink" title="Container"></a><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/basic_concept/container">Container</a></h3><ol>
+<li>镜像（Image）和容器（Container）的关系，就像是面向对象程序设计中的 类 和 实例 一样，镜像是静态的定义，容器是镜像运行时的实体。容器可以被创建、启动、停止、删除、暂停等。</li>
+</ol>
+<h3 id="Repository"><a href="#Repository" class="headerlink" title="Repository"></a><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/basic_concept/repository">Repository</a></h3><ol>
+<li><code>Docker Registry</code>: 一个集中的存储、分发镜像的服务</li>
+<li>一个 Docker Registry 中可以包含多个 仓库（Repository）；每个仓库可以包含多个 标签（Tag）；每个标签对应一个镜像。</li>
+<li>通常，一个仓库会包含同一个软件不同版本的镜像，而标签就常用于对应该软件的各个版本。我们可以通过 <code>&lt;仓库名&gt;:&lt;标签&gt;</code> 的格式来指定具体是这个软件哪个版本的镜像。如果不给出标签，将以 latest 作为默认标签。</li>
+</ol>
+<h2 id="传统虚拟化与-docker-虚拟化"><a href="#传统虚拟化与-docker-虚拟化" class="headerlink" title="传统虚拟化与 docker 虚拟化"></a>传统虚拟化与 docker 虚拟化</h2><p><img src="https://gblobscdn.gitbook.com/assets%2F-M5xTVjmK7ax94c8ZQcm%2F-M5xT_hHX2g5ldlyp9nm%2F-M5xTdXNYDmRWNH-Lqez%2Fvirtualization.png?alt=media" alt="传统虚拟化"><br><img src="https://gblobscdn.gitbook.com/assets%2F-M5xTVjmK7ax94c8ZQcm%2F-M5xT_hHX2g5ldlyp9nm%2F-M5xTdXP2scg0hxytUHA%2Fdocker.png?alt=media" alt="docker虚拟化"></p>
+<h2 id="VNC"><a href="#VNC" class="headerlink" title="VNC"></a>VNC</h2><ol>
+<li><code>vncserver :1</code></li>
+<li><code>vncserver -kill :1</code></li>
+<li><code>ps -ef | grep vnc</code>查看是否运行及端口号</li>
+<li><code>cat .vnc/password.txt</code> 查看密码(自己设置)</li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/introduction/why">从入门到实践</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5cacbfd7e51d456e8833390c">30 分钟快速入门</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903450203914253">资源整理</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7224149297951195193">简单聊聊 k8s，和 docker 之间的关系</a></li>
+</ol>
+<h2 id="run-sh"><a href="#run-sh" class="headerlink" title="run.sh"></a>run.sh</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">CONTAINER_NAME=&quot;triton-xiyang&quot;</span><br><span class="line">IMAGE_NAME=&quot;triton:latest&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">定义挂载路径数组</span></span><br><span class="line">declare -a MOUNT_PATHS=(</span><br><span class="line">    &quot;/data/&quot;</span><br><span class="line">    # &quot;/home/xiyang/&quot;</span><br><span class="line">    # &quot;/workspace/&quot;</span><br><span class="line">)</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">指定工作目录</span></span><br><span class="line">WORKDIR=&quot;/data/xiyang&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测试是否需要sudo来运行docker命令</span></span><br><span class="line">check_docker_permission() &#123;</span><br><span class="line">    if docker ps &gt;/dev/null 2&gt;&amp;1; then</span><br><span class="line">        echo false  # 不需要sudo</span><br><span class="line">    else</span><br><span class="line">        if sudo docker ps &gt;/dev/null 2&gt;&amp;1; then</span><br><span class="line">            echo true   # 需要sudo</span><br><span class="line">        else</span><br><span class="line">            echo &quot;错误: 无法访问docker，请确保docker已安装且用户有相应权限&quot;</span><br><span class="line">            exit 1</span><br><span class="line">        fi</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">自动检测是否需要sudo</span></span><br><span class="line">USE_SUDO=$(check_docker_permission)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">根据USE_SUDO设置docker命令前缀</span></span><br><span class="line">DOCKER_CMD=&quot;docker&quot;</span><br><span class="line">if [ &quot;$USE_SUDO&quot; = true ]; then</span><br><span class="line">    echo &quot;需要sudo权限运行docker命令&quot;</span><br><span class="line">    DOCKER_CMD=&quot;sudo docker&quot;</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">定义颜色</span></span><br><span class="line">RED=&#x27;\033[0;31m&#x27;</span><br><span class="line">GREEN=&#x27;\033[0;32m&#x27;</span><br><span class="line">YELLOW=&#x27;\033[1;33m&#x27;</span><br><span class="line">BLUE=&#x27;\033[0;34m&#x27;</span><br><span class="line">CYAN=&#x27;\033[0;36m&#x27;</span><br><span class="line">NC=&#x27;\033[0m&#x27; # No Color</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">生成挂载参数字符串</span></span><br><span class="line">generate_mount_args() &#123;</span><br><span class="line">    local mount_args=&quot;&quot;</span><br><span class="line">    for path in &quot;$&#123;MOUNT_PATHS[@]&#125;&quot;; do</span><br><span class="line">        mount_args+=&quot; -v $&#123;path&#125;:$&#123;path&#125;&quot;</span><br><span class="line">    done</span><br><span class="line">    echo &quot;$mount_args&quot;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查容器状态的函数</span></span><br><span class="line">check_container_status() &#123;</span><br><span class="line">    # 检查容器是否存在</span><br><span class="line">    if $&#123;DOCKER_CMD&#125; ps -a --format &#x27;&#123;&#123;.Names&#125;&#125;&#x27; | grep -q &quot;^$&#123;CONTAINER_NAME&#125;$&quot;; then</span><br><span class="line">        # 检查容器是否运行</span><br><span class="line">        if $&#123;DOCKER_CMD&#125; ps --format &#x27;&#123;&#123;.Names&#125;&#125;&#x27; | grep -q &quot;^$&#123;CONTAINER_NAME&#125;$&quot;; then</span><br><span class="line">            echo &quot;容器正在运行，直接进入...&quot;</span><br><span class="line">            return 0  # 运行中</span><br><span class="line">        else</span><br><span class="line">            echo &quot;容器存在但未运行，正在启动...&quot;</span><br><span class="line">            return 1  # 已存在但未运行</span><br><span class="line">        fi</span><br><span class="line">    else</span><br><span class="line">        echo &quot;容器不存在，正在创建新容器...&quot;</span><br><span class="line">        return 2  # 不存在</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动已存在的容器</span></span><br><span class="line">start_container() &#123;</span><br><span class="line">    $&#123;DOCKER_CMD&#125; start $&#123;CONTAINER_NAME&#125; &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建新容器</span></span><br><span class="line">create_container() &#123;</span><br><span class="line">    local mount_args=$(generate_mount_args)</span><br><span class="line">    $&#123;DOCKER_CMD&#125; run -id \</span><br><span class="line">        --name $&#123;CONTAINER_NAME&#125; \</span><br><span class="line">        $&#123;mount_args&#125; \</span><br><span class="line">        -w $&#123;WORKDIR&#125; \</span><br><span class="line">        --network host \</span><br><span class="line">        --privileged \</span><br><span class="line">        -v /etc/localtime:/etc/localtime \</span><br><span class="line">        $&#123;IMAGE_NAME&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示容器信息</span></span><br><span class="line">show_container_info() &#123;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;╔════════════════════════════════════════════════════════════╗$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;                      $&#123;YELLOW&#125;容器信息$&#123;NC&#125;                              $&#123;BLUE&#125;║$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;╠════════════════════════════════════════════════════════════╣$&#123;NC&#125;&quot;</span><br><span class="line">    </span><br><span class="line">    # 基本信息</span><br><span class="line">    local container_id=$($&#123;DOCKER_CMD&#125; ps -f name=$&#123;CONTAINER_NAME&#125; --format &quot;&#123;&#123;.ID&#125;&#125;&quot;)</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125; $&#123;CYAN&#125;▎ 基本信息$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   容器名称: $&#123;GREEN&#125;$&#123;CONTAINER_NAME&#125;$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   容器ID:   $&#123;GREEN&#125;$&#123;container_id&#125;$&#123;NC&#125;&quot;</span><br><span class="line">    </span><br><span class="line">    # 镜像信息</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125; $&#123;CYAN&#125;▎ 镜像信息$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   镜像ID:   $&#123;GREEN&#125;$($&#123;DOCKER_CMD&#125; inspect -f &#x27;&#123;&#123;.Image&#125;&#125;&#x27; $&#123;CONTAINER_NAME&#125; | sed &#x27;s/sha256://&#x27; | cut -c1-12)$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   镜像标签: $&#123;GREEN&#125;$($&#123;DOCKER_CMD&#125; inspect -f &#x27;&#123;&#123;.Config.Image&#125;&#125;&#x27; $&#123;CONTAINER_NAME&#125;)$&#123;NC&#125;&quot;</span><br><span class="line">    </span><br><span class="line">    # 时间信息</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125; $&#123;CYAN&#125;▎ 时间信息$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   创建时间: $&#123;GREEN&#125;$($&#123;DOCKER_CMD&#125; inspect -f &#x27;&#123;&#123;.Created&#125;&#125;&#x27; $&#123;CONTAINER_NAME&#125; | sed &#x27;s/T/ /&#x27; | cut -d. -f1)$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   启动时间: $&#123;GREEN&#125;$($&#123;DOCKER_CMD&#125; inspect -f &#x27;&#123;&#123;.State.StartedAt&#125;&#125;&#x27; $&#123;CONTAINER_NAME&#125; | sed &#x27;s/T/ /&#x27; | cut -d. -f1)$&#123;NC&#125;&quot;</span><br><span class="line">    </span><br><span class="line">    # 运行时长</span><br><span class="line">    local start_time=$(date -d &quot;$($&#123;DOCKER_CMD&#125; inspect -f &#x27;&#123;&#123;.State.StartedAt&#125;&#125;&#x27; $&#123;CONTAINER_NAME&#125;)&quot; +%s)</span><br><span class="line">    local current_time=$(date +%s)</span><br><span class="line">    local uptime=$((current_time - start_time))</span><br><span class="line">    local days=$((uptime / 86400))</span><br><span class="line">    local hours=$(((uptime % 86400) / 3600))</span><br><span class="line">    local minutes=$(((uptime % 3600) / 60))</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   运行时长: $&#123;GREEN&#125;$&#123;days&#125;天 $&#123;hours&#125;小时 $&#123;minutes&#125;分钟$&#123;NC&#125;&quot;</span><br><span class="line">    </span><br><span class="line">    # 资源使用情况</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125; $&#123;CYAN&#125;▎ 资源使用情况$&#123;NC&#125;&quot;</span><br><span class="line">    local stats=$($&#123;DOCKER_CMD&#125; stats $&#123;CONTAINER_NAME&#125; --no-stream --format &quot;&#123;&#123;.CPUPerc&#125;&#125;|&#123;&#123;.MemUsage&#125;&#125;&quot;)</span><br><span class="line">    local cpu_usage=$(echo $stats | cut -d&#x27;|&#x27; -f1)</span><br><span class="line">    local mem_usage=$(echo $stats | cut -d&#x27;|&#x27; -f2)</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   CPU使用率: $&#123;YELLOW&#125;$&#123;cpu_usage&#125;$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   内存使用:  $&#123;YELLOW&#125;$&#123;mem_usage&#125;$&#123;NC&#125;&quot;</span><br><span class="line">    </span><br><span class="line">    # 网络信息</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125; $&#123;CYAN&#125;▎ 网络配置$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   网络模式: $&#123;GREEN&#125;$($&#123;DOCKER_CMD&#125; inspect -f &#x27;&#123;&#123;.HostConfig.NetworkMode&#125;&#125;&#x27; $&#123;CONTAINER_NAME&#125;)$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   主机名:   $&#123;GREEN&#125;$($&#123;DOCKER_CMD&#125; inspect -f &#x27;&#123;&#123;.Config.Hostname&#125;&#125;&#x27; $&#123;CONTAINER_NAME&#125;)$&#123;NC&#125;&quot;</span><br><span class="line">    </span><br><span class="line">    # 挂载信息</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125; $&#123;CYAN&#125;▎ 挂载信息$&#123;NC&#125;&quot;</span><br><span class="line">    $&#123;DOCKER_CMD&#125; inspect -f &#x27;&#123;&#123;range .Mounts&#125;&#125;&#123;&#123;.Source&#125;&#125; -&gt; &#123;&#123;.Destination&#125;&#125;&#123;&#123;println&#125;&#125;&#123;&#123;end&#125;&#125;&#x27; $&#123;CONTAINER_NAME&#125; | while IFS= read -r line; do</span><br><span class="line">        if [ ! -z &quot;$line&quot; ]; then</span><br><span class="line">            echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   路径: $&#123;GREEN&#125;$&#123;line&#125;$&#123;NC&#125;&quot;</span><br><span class="line">        fi</span><br><span class="line">    done</span><br><span class="line">    </span><br><span class="line">    # 工作目录</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125; $&#123;CYAN&#125;▎ 工作目录$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   $&#123;GREEN&#125;$($&#123;DOCKER_CMD&#125; inspect -f &#x27;&#123;&#123;.Config.WorkingDir&#125;&#125;&#x27; $&#123;CONTAINER_NAME&#125;)$&#123;NC&#125;&quot;</span><br><span class="line">    </span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;╚════════════════════════════════════════════════════════════╝$&#123;NC&#125;&quot;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进入容器</span></span><br><span class="line">enter_container() &#123;</span><br><span class="line">    show_container_info</span><br><span class="line">    $&#123;DOCKER_CMD&#125; exec -it $&#123;CONTAINER_NAME&#125; bash</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">主函数</span></span><br><span class="line">main() &#123;</span><br><span class="line">    check_container_status</span><br><span class="line">    status=$?</span><br><span class="line">    </span><br><span class="line">    case $status in</span><br><span class="line">        0)  # 容器运行中</span><br><span class="line">            enter_container</span><br><span class="line">            ;;</span><br><span class="line">        1)  # 容器存在但未运行</span><br><span class="line">            start_container &amp;&amp; enter_container</span><br><span class="line">            ;;</span><br><span class="line">        2)  # 容器不存在</span><br><span class="line">            create_container &amp;&amp; enter_container</span><br><span class="line">            ;;</span><br><span class="line">    esac</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">执行主函数</span></span><br><span class="line">main</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用说明（注释）</span></span><br><span class="line">: &#x27;</span><br><span class="line">常用Docker命令：</span><br><span class="line">1. 查看运行中的容器：docker ps</span><br><span class="line">2. 停止容器：docker stop triton-xiyang</span><br><span class="line">3. 删除容器：docker rm triton-xiyang</span><br><span class="line">4. 查看镜像列表：docker images</span><br><span class="line">5. 删除镜像：docker image rm &lt;image_id&gt;</span><br><span class="line">&#x27;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/01/30/Kalman-Filters/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/30/Kalman-Filters/" class="post-title-link" itemprop="url">Kalman Filters</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-30 11:43:37" itemprop="dateCreated datePublished" datetime="2021-01-30T11:43:37+08:00">2021-01-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/Kalman/" itemprop="url" rel="index"><span itemprop="name">Kalman</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/01/30/Kalman-Filters/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/01/30/Kalman-Filters/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>576</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h2><ol>
+<li>卡尔曼滤波是一个递归的<code>估计</code>，只要获知<code>上一时刻的状态估计</code>和<code>当前状态的观测</code>就可以计算<code>当前状态的估计</code>。</li>
+<li>卡尔曼滤波器不需要观测&#x2F;估计的历史记录。</li>
+<li>卡尔曼滤波器是一个纯粹的<code>时域滤波器</code>，而不像低通滤波器那样，需要在频率设计，然后转到时域应用。</li>
+<li>两个阶段：<ul>
+<li><code>预测</code>：由上一状态的估计做出对当前状态的估计</li>
+<li><code>更新</code>：利用当前状态的观测值<code>优化</code>预测阶段的估计值，以获取一个<code>更精确的当前状态估计</code></li>
+</ul>
+</li>
+<li>两种数据：<ul>
+<li><code>估计值</code></li>
+<li><code>观测值</code>：传感器测量值，如GPS位置。</li>
+</ul>
+</li>
+<li>线性系统与非线性系统：<ul>
+<li>判断标准：能不能通过上一次系统估计状态直接乘以某个矩阵得到预测状态？ 矩阵都是具体的值，与估计状态相乘后只是估计状态的线性变换。（还是测量状态不能直接与估计状态求差？）</li>
+<li><code>线性系统</code>： 预测状态 &#x3D; F * 上一次估计状态。例如：预测汽车位置，传感器获得位置值，假设很短时间内，系统是匀速运动或匀加速运动（对应两种模型）。可以通过上一时刻状态乘以矩阵得到预测值。</li>
+<li><code>非线性系统</code>：预测状态不能直接由上一次估计状态乘以一个矩阵得到。 如雷达跟踪飞机，估计状态为(x, y). 测量状态为径向距离r和夹脚。</li>
+</ul>
+</li>
+</ol>
+<h2 id="Formulas"><a href="#Formulas" class="headerlink" title="Formulas"></a>Formulas</h2><ol>
+<li><img src="/images/kalman/formulas.jpg" alt="5 basic formulas"></li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/rlabbe/Kalman-and-Bayesian-Filters-in-Python">Kalman-and-Bayesian-Filters-in-Python</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/codesamer/article/details/81191487">Using in car</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d51a3a7736ca">基于Kalman滤波器的进行物体的跟踪</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/39912633">图说卡尔曼滤波</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=VFXf1lIZ3p8">Youtube Matlab tutorial</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -375,7 +708,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-28 13:13:03" itemprop="dateModified" datetime="2023-09-28T13:13:03+08:00">2023-09-28</time>
+                <time title="修改时间：2024-12-21 22:19:14" itemprop="dateModified" datetime="2024-12-21T22:19:14+08:00">2024-12-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -411,7 +744,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
+              <span>2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -449,7 +782,7 @@
 <h2 id="resize-window"><a href="#resize-window" class="headerlink" title="resize window"></a>resize window</h2><ol>
 <li>:resize-window -A</li>
 </ol>
-<h2 id="Tmux-config"><a href="#Tmux-config" class="headerlink" title="Tmux config"></a>Tmux config</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># use mouse to scroll history</span></span><br><span class="line"><span class="built_in">set</span> -g mouse on        <span class="comment">#For tmux version 2.1 and up</span></span><br><span class="line"><span class="comment"># set -g mode-mouse on   #For tmux versions &lt; 2.1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># set history lenth</span></span><br><span class="line"><span class="built_in">set</span> -g history-limit 15000</span><br><span class="line"></span><br><span class="line"><span class="built_in">set</span> -g default-terminal <span class="string">&quot;xterm&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># change prefix key</span></span><br><span class="line"><span class="built_in">set</span> -g prefix C-t</span><br><span class="line">unbind C-b</span><br><span class="line"><span class="built_in">bind</span> C-t send-prefix</span><br><span class="line"><span class="built_in">set</span> -g prefix2 C-j</span><br><span class="line"><span class="built_in">bind</span> C-j send-prefix -2</span><br><span class="line"></span><br><span class="line"><span class="comment"># more intuitive keybindings for splitting and create window</span></span><br><span class="line"><span class="built_in">bind</span> \\ split-window -h -c <span class="string">&quot;#&#123;pane_current_path&#125;&quot;</span></span><br><span class="line"><span class="built_in">bind</span> - split-window -v -c <span class="string">&quot;#&#123;pane_current_path&#125;&quot;</span></span><br><span class="line"><span class="built_in">bind</span> c new-window -c <span class="string">&quot;#&#123;pane_current_path&#125;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># swap window bind</span></span><br><span class="line"><span class="built_in">bind</span> M-l swap-window -t + \; next-window</span><br><span class="line"><span class="built_in">bind</span> M-h swap-window -t - \; previous-window</span><br><span class="line"></span><br><span class="line"><span class="comment"># display</span></span><br><span class="line"><span class="built_in">set</span> -g base-index 1</span><br><span class="line">set-window-option -g pane-base-index 1</span><br><span class="line"><span class="built_in">set</span> -g renumber-windows on</span><br><span class="line"></span><br><span class="line"><span class="comment"># set terminal title</span></span><br><span class="line"><span class="built_in">set</span> -g set-titles on</span><br><span class="line"></span><br><span class="line"><span class="comment"># redraw status line every 10 seconds</span></span><br><span class="line"><span class="built_in">set</span> -g status-interval 10</span><br><span class="line"></span><br><span class="line"><span class="comment"># right status: tmux show-options -g | grep status-right</span></span><br><span class="line"><span class="built_in">set</span> -g status-right <span class="string">&quot;#&#123;=21:host_short&#125; &quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Remove delay when sending commands</span></span><br><span class="line"><span class="comment"># (default is 500 milliseconds)</span></span><br><span class="line"><span class="built_in">set</span> -sg escape-time 1</span><br><span class="line"></span><br><span class="line"><span class="comment"># reference C-t ?</span></span><br><span class="line">bind-key -T prefix a select-window -t :=1</span><br><span class="line">bind-key -T prefix s select-window -t :=2</span><br><span class="line">bind-key -T prefix d select-window -t :=3</span><br><span class="line">bind-key -T prefix f select-window -t :=4</span><br><span class="line">bind-key -T prefix g select-window -t :=5</span><br><span class="line">bind-key -T prefix h select-window -t :=6</span><br><span class="line">bind-key -T prefix j select-window -t :=7</span><br><span class="line">bind-key -T prefix k select-window -t :=8</span><br><span class="line">bind-key -T prefix \; select-window -t :=1 \; select-window -t -1</span><br></pre></td></tr></table></figure>
+<h2 id="Tmux-config"><a href="#Tmux-config" class="headerlink" title="Tmux config"></a>Tmux config</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#use mouse to scroll history</span></span><br><span class="line"><span class="built_in">set</span> -g mouse on        <span class="comment">#For tmux version 2.1 and up</span></span><br><span class="line"><span class="comment"># set -g mode-mouse on   #For tmux versions &lt; 2.1</span></span><br><span class="line"><span class="comment">#set -g default-terminal &quot;xterm-256color&quot;</span></span><br><span class="line"><span class="built_in">set</span> -g default-terminal <span class="string">&quot;xterm&quot;</span></span><br><span class="line"><span class="built_in">set</span> -g status-style <span class="built_in">bg</span>=yellow,<span class="built_in">fg</span>=black</span><br><span class="line"></span><br><span class="line"><span class="comment"># set history lenth</span></span><br><span class="line"><span class="built_in">set</span> -g history-limit 15000</span><br><span class="line"></span><br><span class="line"><span class="comment"># change prefix key</span></span><br><span class="line"><span class="built_in">set</span> -g prefix C-q</span><br><span class="line">unbind C-b</span><br><span class="line"><span class="built_in">bind</span> C-q send-prefix</span><br><span class="line"><span class="built_in">set</span> -g prefix2 C-j</span><br><span class="line"><span class="built_in">bind</span> C-j send-prefix -2</span><br><span class="line"></span><br><span class="line"><span class="comment"># more intuitive keybindings for splitting and create window</span></span><br><span class="line"><span class="built_in">bind</span> \\ split-window -h -c <span class="string">&quot;#&#123;pane_current_path&#125;&quot;</span></span><br><span class="line"><span class="built_in">bind</span> - split-window -v -c <span class="string">&quot;#&#123;pane_current_path&#125;&quot;</span></span><br><span class="line"><span class="built_in">bind</span> c new-window -c <span class="string">&quot;#&#123;pane_current_path&#125;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># swap window bind</span></span><br><span class="line"><span class="built_in">bind</span> M-l swap-window -t + \; next-window</span><br><span class="line"><span class="built_in">bind</span> M-h swap-window -t - \; previous-window</span><br><span class="line"></span><br><span class="line"><span class="comment"># display</span></span><br><span class="line"><span class="built_in">set</span> -g base-index 1</span><br><span class="line">set-window-option -g pane-base-index 1</span><br><span class="line"><span class="built_in">set</span> -g renumber-windows on</span><br><span class="line"></span><br><span class="line"><span class="comment"># set terminal title</span></span><br><span class="line"><span class="built_in">set</span> -g set-titles on</span><br><span class="line"></span><br><span class="line"><span class="comment"># redraw status line every 10 seconds</span></span><br><span class="line"><span class="built_in">set</span> -g status-interval 10</span><br><span class="line"></span><br><span class="line"><span class="comment"># right status: tmux show-options -g | grep status-right</span></span><br><span class="line"><span class="built_in">set</span> -g status-right <span class="string">&quot;#&#123;=21:host_short&#125; &quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Remove delay when sending commands</span></span><br><span class="line"><span class="comment"># (default is 500 milliseconds)</span></span><br><span class="line"><span class="built_in">set</span> -sg escape-time 1</span><br><span class="line"></span><br><span class="line"><span class="comment"># reference C-t ?</span></span><br><span class="line">bind-key -T prefix a select-window -t :=1</span><br><span class="line">bind-key -T prefix s select-window -t :=2</span><br><span class="line">bind-key -T prefix d select-window -t :=3</span><br><span class="line">bind-key -T prefix f select-window -t :=4</span><br><span class="line">bind-key -T prefix g select-window -t :=5</span><br><span class="line">bind-key -T prefix h select-window -t :=6</span><br><span class="line">bind-key -T prefix j select-window -t :=7</span><br><span class="line">bind-key -T prefix k select-window -t :=8</span><br><span class="line">bind-key -T prefix \; select-window -t :=1 \; select-window -t -1</span><br></pre></td></tr></table></figure>
 
 <h2 id="Reload-config"><a href="#Reload-config" class="headerlink" title="Reload config"></a>Reload config</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux source-file ~/.tmux.conf</span><br></pre></td></tr></table></figure>
 
@@ -586,7 +919,7 @@
 <li>awk 按列过滤参数 ls -l test.sh | awk ‘{ print $5 }’ 输出：454</li>
 <li>shell 小程序<a target="_blank" rel="noopener" href="https://www.jb51.net/article/54488.htm">link</a></li>
 <li>shell 得到文件信息 <code>ll /var/log/messages | cut -d &quot; &quot; -f 5</code></li>
-<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#106;&#x69;&#x61;&#120;&#105;&#121;&#97;&#110;&#x67;&#64;&#x31;&#48;&#46;&#49;&#x30;&#x2e;&#48;&#46;&#49;&#x37;">&#106;&#x69;&#x61;&#120;&#105;&#121;&#97;&#110;&#x67;&#64;&#x31;&#48;&#46;&#49;&#x30;&#x2e;&#48;&#46;&#49;&#x37;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
+<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#106;&#105;&#97;&#x78;&#105;&#121;&#x61;&#110;&#103;&#x40;&#49;&#x30;&#46;&#49;&#48;&#x2e;&#x30;&#x2e;&#49;&#x37;">&#106;&#105;&#97;&#x78;&#105;&#121;&#x61;&#110;&#103;&#x40;&#49;&#x30;&#46;&#49;&#48;&#x2e;&#x30;&#x2e;&#49;&#x37;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
 <li>读文件内容，记录到变量中 var&#x3D;$(cat name.txt)</li>
 <li>计时 start&#x3D;$(date+%s) &amp;&amp; sleep 2 &amp;&amp; end&#x3D;$(date+%s)&amp;&amp; echo $(($end - $start)) <a target="_blank" rel="noopener" href="http://blog.csdn.net/gengshenghong/article/details/7583580">link</a></li>
 <li>sleep: sleep 1 睡眠 1 秒 sleep 1s 睡眠 1 秒 sleep 1m 睡眠 1 分 sleep 1h 睡眠 1 小时</li>
@@ -671,7 +1004,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-05 11:20:14" itemprop="dateModified" datetime="2024-09-05T11:20:14+08:00">2024-09-05</time>
+                <time title="修改时间：2025-03-19 10:26:25" itemprop="dateModified" datetime="2025-03-19T10:26:25+08:00">2025-03-19</time>
               </span>
 
           
@@ -937,12 +1270,19 @@
 <h2 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h2><ol>
 <li>vscode debug</li>
 <li>vscode 无法跳转可能是 interpreter 问题</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/singxsy/article/details/123730161">不跳转问题修复</a></li>
+<li>lsp language server 使用 pylance, jedi</li>
+<li><code>&quot;justMyCode&quot;:False</code> 可以跳转到三方库源代码</li>
 <li><code>python -i test.py</code> 执行之后会停下来，可以查看变量</li>
 <li><code>python -m pdb test.py</code></li>
 <li><code>import pdb; pdb.set_trace()</code></li>
 <li><code>python -m trace --trackcalls pyscript.py</code></li>
 <li><code>python -m trace --trace pyscript.py</code></li>
+<li>打印动态库</li>
 </ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">for</span> name, module <span class="keyword">in</span> sys.modules.items():</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">hasattr</span>(module, <span class="string">&#x27;__file__&#x27;</span>) <span class="keyword">and</span> module.__file__:</span><br><span class="line">        <span class="keyword">if</span> module.__file__.endswith((<span class="string">&#x27;.so&#x27;</span>, <span class="string">&#x27;.dll&#x27;</span>, <span class="string">&#x27;.pyd&#x27;</span>)):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;name&#125;</span>: <span class="subst">&#123;module.__file__&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
 <h3 id="Debug-方法"><a href="#Debug-方法" class="headerlink" title="Debug 方法"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38542085/article/details/78562458">Debug 方法</a></h3><ol>
 <li>elpy-pdb-debug-buffer</li>
 <li>logging</li>
@@ -1007,251 +1347,6 @@
 </ol>
 <h2 id="Logging"><a href="#Logging" class="headerlink" title="Logging"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/360306588">Logging</a></h2><ol>
 <li>format 配置: &#96;’[%(asctime)s]</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/10/06/Eclipse-Cpp-IDE-on-Windows10/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/06/Eclipse-Cpp-IDE-on-Windows10/" class="post-title-link" itemprop="url">Eclipse Cpp</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-10-06 09:32:38" itemprop="dateCreated datePublished" datetime="2020-10-06T09:32:38+08:00">2020-10-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/10/06/Eclipse-Cpp-IDE-on-Windows10/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/10/06/Eclipse-Cpp-IDE-on-Windows10/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>103</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="install-Eclipse-IDE-for-C-C-Developers"><a href="#install-Eclipse-IDE-for-C-C-Developers" class="headerlink" title="install Eclipse IDE for C&#x2F;C++ Developers"></a>install Eclipse IDE for C&#x2F;C++ Developers</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.eclipse.org/downloads/packages/release/kepler/sr2/eclipse-ide-cc-developers">Officail Download</a></li>
-</ol>
-<h2 id="install-compiler-MinGW"><a href="#install-compiler-MinGW" class="headerlink" title="install compiler MinGW"></a>install compiler MinGW</h2><ol>
-<li><a target="_blank" rel="noopener" href="http://mingw.org/wiki/InstallationHOWTOforMinGW">Official Install</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/done1182818968/article/details/105385382">Lose Packages</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/09/30/Emacs-on-Windows10/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/09/30/Emacs-on-Windows10/" class="post-title-link" itemprop="url">Emacs on Windows10</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-09-30 08:05:00" itemprop="dateCreated datePublished" datetime="2020-09-30T08:05:00+08:00">2020-09-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/Emacs/" itemprop="url" rel="index"><span itemprop="name">Emacs</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/09/30/Emacs-on-Windows10/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/30/Emacs-on-Windows10/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>524</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Install-msys2-on-windindows"><a href="#Install-msys2-on-windindows" class="headerlink" title="Install msys2 on windindows"></a>Install msys2 on windindows</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/msys2/distrib/x86_64/">Tsing hua source</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.msys2.org/">Official web</a></li>
-</ol>
-<h2 id="Config-msys2"><a href="#Config-msys2" class="headerlink" title="Config msys2"></a>Config msys2</h2><ol>
-<li>Theme: dracula</li>
-<li>Font: Consolas 14</li>
-<li>Transparency: Medium</li>
-<li>Right mouse: paste</li>
-<li>Terminal Type: xterm-256color</li>
-<li>Cursor: bold, not blinking</li>
-</ol>
-<h2 id="Install-git-vim-oh-my-zsh-emacs"><a href="#Install-git-vim-oh-my-zsh-emacs" class="headerlink" title="Install git vim oh-my-zsh emacs"></a>Install git vim oh-my-zsh emacs</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013938484/article/details/83539008">Tutorial</a></li>
-<li>Note: Change package source. No vim at first, you can edit the file on windows</li>
-<li>Emacs install: <code>pacman -S mingw-w64-x86_64-emacs</code></li>
-<li>Libs install: <code>pacman -S mingw-w64-x86_64-libpng &amp;&amp; pacman -S mingw-w64-x86_64-libjpeg-turbo</code></li>
-<li>Config .bashrc and .zshrc</li>
-</ol>
-<h2 id="Build-emacs-plugins-in-Ubuntu-on-VMvare"><a href="#Build-emacs-plugins-in-Ubuntu-on-VMvare" class="headerlink" title="Build emacs plugins in Ubuntu on VMvare"></a>Build emacs plugins in Ubuntu on VMvare</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/jiaxiyang/100ms_dot_emacs">100ms emacs</a></li>
-<li>build and copy the tar package to msys2</li>
-<li>install package on msys2</li>
 </ol>
 
       
@@ -1341,7 +1436,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-count">192</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1374,6 +1469,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1381,12 +1482,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -1414,7 +1509,7 @@
 <div class="copyright">
   
   &copy; 2021 – 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1424,13 +1519,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">543k</span>
+    <span title="站点总字数">587k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:14</span>
+    <span title="站点阅读时长">8:54</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

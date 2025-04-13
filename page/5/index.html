@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,369 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/01/14/Efficient-LLM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/14/Efficient-LLM/" class="post-title-link" itemprop="url">Efficient-LLM</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-01-14 18:44:21" itemprop="dateCreated datePublished" datetime="2024-01-14T18:44:21+08:00">2024-01-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-22 14:09:16" itemprop="dateModified" datetime="2024-02-22T14:09:16+08:00">2024-02-22</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/01/14/Efficient-LLM/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/01/14/Efficient-LLM/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h2><h3 id="大模型推理综述-Towards-Efficient-Generative-Large-Language-Model-Serving-A-Survey-from-Algorithms-to-Systems"><a href="#大模型推理综述-Towards-Efficient-Generative-Large-Language-Model-Serving-A-Survey-from-Algorithms-to-Systems" class="headerlink" title="大模型推理综述 Towards Efficient Generative Large Language Model Serving: A Survey from Algorithms to Systems"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2312.15234">大模型推理综述 Towards Efficient Generative Large Language Model Serving: A Survey from Algorithms to Systems</a></h3><ol>
+<li>Context or initial or prefil 阶段: input token 是并行的，可以利用 flash attention 来加速</li>
+<li>Generation or incremental or decode 阶段: input token 是 1， Autoregressive(AR)，使用 paged attention 来实现<ul>
+<li>如果是 batch 为 1， 可以填充为 8 来利用 tensor core; 或者使用优化的 cuda core GEMV</li>
+<li>解码阶段的过程主要由 GEMV（batch size&#x3D;1）或 flat GEMM（batch size &gt; 1）操作组成</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/Uue0SxH6W_tI8K4Zb0igLQ">中文解读</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/675101140">黄浴中文翻译</a></li>
+<li><code>低延迟和高吞吐量</code>是 LLM 服务系统中的双重优化目标，代表了互补但往往相互冲突的目标，需要一种平衡的策略来优化单个任务的快速响应和指定时间内最大化处理任务量之间的权衡</li>
+<li>除了注意计算之外，对于线性投影算子，最近还出现了用<code>通用矩阵向量积（GEMV，general matrix-vector product）代替GEMM的趋势</code>，更有效地处理小批量（即大小为 1）的情况。</li>
+</ol>
+<h3 id="Full-Stack-Optimization-of-Transformer-Inference-a-Survey"><a href="#Full-Stack-Optimization-of-Transformer-Inference-a-Survey" class="headerlink" title="Full Stack Optimization of Transformer Inference: a Survey"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2302.14017">Full Stack Optimization of Transformer Inference: a Survey</a></h3><ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/677595064">黄浴中文翻译</a></li>
+</ul>
+<h3 id="Efficient-Large-Language-Models-A-Survey"><a href="#Efficient-Large-Language-Models-A-Survey" class="headerlink" title="Efficient Large Language Models: A Survey"></a><a target="_blank" rel="noopener" href="https://github.com/AIoT-MLSys-Lab/Efficient-LLMs-Survey">Efficient Large Language Models: A Survey</a></h3><h3 id="Efficient-Deep-Learning-Book"><a href="#Efficient-Deep-Learning-Book" class="headerlink" title="Efficient Deep Learning Book"></a><a target="_blank" rel="noopener" href="https://www.jiqizhixin.com/articles/2022-05-03-4">Efficient Deep Learning Book</a></h3><ol>
+<li><a target="_blank" rel="noopener" href="https://efficientdlbook.com/#download">https://efficientdlbook.com</a></li>
+</ol>
+<h2 id="sampling"><a href="#sampling" class="headerlink" title="sampling"></a>sampling</h2><ol>
+<li>top-K</li>
+<li>top-P</li>
+</ol>
+<h2 id="系统优化技术"><a href="#系统优化技术" class="headerlink" title="系统优化技术"></a>系统优化技术</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/blog/mastering-llm-techniques-inference-optimization/">nvidia mastering-llm-techniques-inference-optimization</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2312.15234">大模型推理综述 Towards Efficient Generative Large Language Model Serving: A Survey from Algorithms to Systems</a><ul>
+<li>量化</li>
+<li>并行计算</li>
+<li>内存管理</li>
+<li>请求调度</li>
+<li>kernel 优化</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/tree/main?tab=readme-ov-file#advanced-topics">tensorrt llm 高级主题</a><ul>
+<li>量化</li>
+<li>in-flight batching</li>
+<li>attention</li>
+<li>graph rewriting</li>
+</ul>
+</li>
+</ol>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><ol>
+<li>vllm</li>
+<li>tensorrt-llm</li>
+</ol>
+<h2 id="attention-优化"><a href="#attention-优化" class="headerlink" title="attention 优化"></a>attention 优化</h2><ol>
+<li>flash attention -&gt; flash attention v2 -&gt; flash decoding</li>
+<li>xformers</li>
+<li>paged attention</li>
+<li>token attention</li>
+<li>cublas</li>
+<li>cutlass</li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/horseee/Awesome-Efficient-LLM">Awesome-Efficient-LLM</a></li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/spaces/optimum/llm-perf-leaderboard">llm-perf-leaderboard</a><ul>
+<li>lantency vs memory vs score</li>
+</ul>
+</li>
+</ol>
+<h2 id="指标"><a href="#指标" class="headerlink" title="指标"></a>指标</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/perplexity">PPL: perplexity</a></li>
+<li>hugging face 显示指标<br><img src="https://i.ibb.co/THp5xHd/Ijz-O30-Ae96.png" alt="指标"></li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/spaces/optimum/llm-perf-leaderboard">llm-perf-leaderboard</a><ul>
+<li>lantency vs memory vs score</li>
+<li>e2e lantency</li>
+<li>e2e throughput</li>
+<li>prefil lantency</li>
+<li>decode throughput</li>
+</ul>
+</li>
+<li>TTFT 表示 Time To First Token，TPOT 表示 Time Per Output Token。前者由初始相位处理速度驱动，而后者直接取决于增量解码中的每次迭代执行时间。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/01/11/blas/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/11/blas/" class="post-title-link" itemprop="url">blas</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-01-11 16:31:34" itemprop="dateCreated datePublished" datetime="2024-01-11T16:31:34+08:00">2024-01-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-04-11 11:34:53" itemprop="dateModified" datetime="2025-04-11T11:34:53+08:00">2025-04-11</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/01/11/blas/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/01/11/blas/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
+<li>先选定 TileC，然后沿着 k 轴移动小块进行累加求和的策略为 sliced-k，它对于 m、n 维度较大的场景（m n 分块所需要的 block 数目足以填充所有的 SM）比较有效。<code>对于k比较大，而m、n比较小的场景，由于m、n较小而我们根据C来划分thread block，这时需要的thread block数目比较小，当这个数目无法填充所有的SM时，则存在很多SM无任务，而有任务的SM需却又需要循环多次的问题</code>，这时候可以考虑将 k 轴拆分成多段，每一段都计算一个 TileC 结果，最后再通过额外的累加过程将多段的结果进行求和，这种模式的任务划分方法成为 split-k 方法。<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/667521327">link</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2301.03598">Stream-K: Work-Centric Parallel Decomposition for Dense Matrix-Matrix Multiplication on the GPU</a><ul>
+<li>矩阵乘分块方法： sliced-k, split-k, stream-k</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013701860/article/details/128674224">split-k</a><ul>
+<li>k 维度由多个 thread block 计算， 减少单 thread block 的延迟， 增加并行性</li>
+<li>算完之后需要同步多个TB</li>
+</ul>
+</li>
+<li>split-k和slice-k区别：<ul>
+<li>Split-K 是一种 矩阵乘法加速技术，把 C &#x3D; A x B 中 K 维度拆成多个部分 并行计算，最后结果归约（加和）。提高并行度，适用于 K 非常大、单个线程块处理不完时。</li>
+<li>slice-K（或叫 tiled-K）把矩阵乘法中的 K 维度切分成多个 tile，每次只加载一小段 K 来乘， 通常用于 节省寄存器和共享内存使用，适用于单个线程块处理较大 K 的情形。</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass/blob/main/media/docs/efficient_gemm.md#parallelized-reductions">efficient_gemm.md parallelized-reductions</a><ul>
+<li>split-k</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Basic_Linear_Algebra_Subprograms#Level_3">各种 blas 实现</a></li>
+<li>BLAS 是 Basic Linear Algebra Subprograms 的缩写,即基本线性代数子程序,它是一系列线性代数运算函数的标准说明和接口规范。通常情况下,BLAS 函数库会为矩阵和向量运算提供高效、经过优化的实现,这些函数被广泛使用于科学计算、机器学习、数据分析等领域需要大量数值计算的场景中。常见的 BLAS 函数标准说明有:<ul>
+<li>BLAS level 1:向量-向量运算</li>
+<li>BLAS level 2:矩阵-向量运算</li>
+<li>BLAS level 3:矩阵-矩阵运算</li>
+</ul>
+</li>
+<li><code>GEMM(General Matrix-Matrix Multiplication)</code> 是通用矩阵乘法,表示 <code>C = αAB + β*C</code>。它计算两个矩阵的乘积,是最常见的数值密集型运算之一。</li>
+<li><code>GEMV(General Matrix-Vector Multiplication)</code>是矩阵向量乘法,表示<code>y = αAx + β*y</code>。它计算矩阵和向量的乘积得到一个向量。 αβ 是标量，A 是矩阵，xy 是向量</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/flame/how-to-optimize-gemm">how-to-optimize-gemm</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NervanaSystems/maxas/wiki/SGEMM">maxas&#x2F;wiki&#x2F;SGEMM</a></li>
+<li>blas 库命名规则<br><img src="https://i.ibb.co/8MWgXfn/atg4bmz-C9l.png" alt="name rule"></li>
+<li>sgemm: <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/AukKpQU0XDH1YrDH_U8i1g">link</a><ul>
+<li>s: single</li>
+<li>ge: general</li>
+<li>mm:matirx matrix matrix product</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/350470257">矩阵乘法的内积与外积</a><ul>
+<li>cuda thread tile 时用了外积，可以缓存 shared memory 到 register</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://kl66.top/2019/05/30/%E5%90%91%E9%87%8F%E5%92%8C%E7%9F%A9%E9%98%B5%E7%9A%84%E5%90%84%E7%A7%8D%E7%A7%AF/">向量和矩阵的各种积</a></li>
+<li><code>lda</code> leading dimension of two-dimensional array used to store matrix A.</li>
+<li><code>batch gemm</code> 拼接，在 thread block tile 时只计算对角线上的数据, 优化技术跟 gemm 一样，就是 thread block tile 方式不同</li>
+</ol>
+<h2 id="optimize"><a href="#optimize" class="headerlink" title="optimize"></a>optimize</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/flame/how-to-optimize-gemm">how-to-optimize-gemm</a><ul>
+<li>列优先</li>
+<li>Optimization2: 循环展开</li>
+<li>Optimization_1x4_4: 使用内联</li>
+<li>Optimization_1x4_5: 循环合并</li>
+<li>Optimization_1x4_6: 使用寄存器：register double test;</li>
+<li>Optimization_1x4_7: 减少 for 循环变量访存</li>
+<li>Optimization_4x4_5 MMult_4x4_5.c: 可以显示 block 计算过程, 可以看出分块之后有很多访存可以合并, A 和 B 分别可以减少到 1&#x2F;4</li>
+<li>Optimization_4x4_10: 使用 vector 计算 block</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/tpoisonooo/how-to-optimize-gemm/blob/master/README_ZH_CN.md">how-to-optimize-gemm C++ 中文版</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/njuhope/cuda_sgemm/tree/master">cuda_sgemm 旷视</a></li>
+<li>(good)<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/441146275">CUDA GEMM 理论性能分析与 kernel 优化</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/410278370">CUDA 矩阵乘法终极优化指南</a><ul>
+<li>如果是 float4(128bit)，一个 warp 访问 16B，32x16B 得分 4 次做，那么会把一个 warp 分成 0-7&#x2F;8-15&#x2F;16-23&#x2F;24-31 这么 4 组，只要组内没有 bank conflict 就行了。</li>
+<li>shared memory: float4 0 和 8 线程确实读的都是 0-3bank，但是 0-7 8-15 是分别的两组，这时候一个 warp 会分成 4 组 4 次读取，在不同组是不会冲突的，只需要组内没有冲突就可以了。我之前说了 shared memory 是 32 bank，每 bank 4B，你要一个 warp 访问 float4，数据量是 32*16B，是 shared memory 一次性能提供的数据量的 4 倍，那么必然要分 4 次获得，然后架构设计就是我说的分组情况。如果你一个线程访问 float2，那么就会是 0-15 16-31 两组</li>
+<li>shared memory 一次不冲突只能读 32x4B， 看一次读取的数据量，多于 32x4B 需要读取多次 n&#x2F;(32x4)，只要在 n&#x2F;(32x4) 次内读完就是最高效的。</li>
+</ul>
+</li>
+<li>使用 float4 类型访存，用向量化的 LDG.128 和 STG.128 指令一次读 4 个元素，以减少指令数</li>
+<li>block tile 时，第一个矩阵在 shared memory 上要按列存储，为了连续存储，好利用 LDG.128 和 STG.128 指令</li>
+</ol>
+<h2 id="blas"><a href="#blas" class="headerlink" title="blas"></a><a target="_blank" rel="noopener" href="https://www.netlib.org/blas/">blas</a></h2><ol>
+<li>名词出自 blas 库，例如<ul>
+<li>SGEMM: single matrix matrix multiply;</li>
+<li>DGEMM: double matrix matrix multiply</li>
+<li>SGEMV: single matrix vector multiply</li>
+</ul>
+</li>
+</ol>
+<h2 id="NVIDIA-cutlass"><a href="#NVIDIA-cutlass" class="headerlink" title="NVIDIA&#x2F;cutlass"></a><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cutlass">NVIDIA&#x2F;cutlass</a></h2><h2 id="cuBLAS"><a href="#cuBLAS" class="headerlink" title="cuBLAS"></a><a target="_blank" rel="noopener" href="https://developer.nvidia.com/cublas">cuBLAS</a></h2><ol>
+<li>CUDA Basic Linear Algebra Subprograms</li>
+<li>cuBLAS（CUDA Basic Linear Algebra Subprograms）是由 NVIDIA 提供的官方库，它是经典 BLAS（Basic Linear Algebra Subprograms）库的 CUDA 实现。</li>
+<li>列优先</li>
+<li>cublasSgemmBatched 支持 batch 运算</li>
+</ol>
+<h2 id="OpenBLAS"><a href="#OpenBLAS" class="headerlink" title="OpenBLAS"></a><a target="_blank" rel="noopener" href="https://github.com/OpenMathLib/OpenBLAS">OpenBLAS</a></h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.intel.com/content/www/us/en/docs/onemkl/developer-reference-c/2023-2/cblas-gemm-001.html#GUID-97718E5C-6E0A-44F0-B2B1-A551F0F164B2">intel cblas interface</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/accelerate/1513264-cblas_sgemm?language=objc">apple 接口文档</a></li>
+<li><code>sudo apt-get install libopenblas-dev</code></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/OpenMathLib/OpenBLAS?tab=readme-ov-file#usage">usage</a></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export OPENBLAS_NUM_THREADS=4</span><br><span class="line">export GOTO_NUM_THREADS=4</span><br><span class="line">export OMP_NUM_THREADS=4</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>If you compile this library with USE_OPENMP&#x3D;1, you should set the OMP_NUM_THREADS environment variable; OpenBLAS ignores OPENBLAS_NUM_THREADS and GOTO_NUM_THREADS when compiled with USE_OPENMP&#x3D;1.</li>
+<li>For a general introduction to the BLAS routines, please refer to the extensive documentation of their reference implementation hosted at netlib: <a target="_blank" rel="noopener" href="https://www.netlib.org/blas">https://www.netlib.org/blas</a>. On that site you will likewise find documentation for the reference implementation of the higher-level library <code>LAPACK - the Linear Algebra Package</code> that comes included with OpenBLAS</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/OpenMathLib/OpenBLAS/blob/develop/docs/distributing.md#performance-and-runtime-behavior-related-build-options">performance-and-runtime-behavior-related-build-options</a></li>
+<li>openblas.pc 中可以看到 <code>USE_OPENMP=0 MAX_THREADS=24</code></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1609.00076.pdf">论文</a></li>
+</ol>
+<h2 id="blis"><a href="#blis" class="headerlink" title="blis"></a><a target="_blank" rel="noopener" href="https://github.com/flame/blis">blis</a></h2><h2 id="hipBLAS"><a href="#hipBLAS" class="headerlink" title="hipBLAS"></a><a target="_blank" rel="noopener" href="https://github.com/ROCm/hipBLAS">hipBLAS</a></h2><h2 id="Intel-oneMKL"><a href="#Intel-oneMKL" class="headerlink" title="Intel oneMKL"></a><a target="_blank" rel="noopener" href="https://github.com/oneapi-src/oneMKL">Intel oneMKL</a></h2><ol>
+<li>oneAPI Math Kernel Library (oneMKL)</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/oneapi-src/oneMKL?tab=readme-ov-file#supported-configurations">统一多种 blas</a></li>
+</ol>
+<h2 id="CLBlast"><a href="#CLBlast" class="headerlink" title="CLBlast"></a><a target="_blank" rel="noopener" href="https://github.com/CNugteren/CLBlast">CLBlast</a></h2>
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1375,230 +1738,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/12/19/multimodal/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/12/19/multimodal/" class="post-title-link" itemprop="url">multimodal</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-12-19 14:15:19 / 修改时间：14:15:36" itemprop="dateCreated datePublished" datetime="2023-12-19T14:15:19+08:00">2023-12-19</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/12/19/multimodal/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/19/multimodal/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>32</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://openai.com/research/clip">clip</a> <a target="_blank" rel="noopener" href="https://imzhanghao.com/2022/10/27/multimodal-learning/">multimodal-learning 中文解析</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/12/19/diffusion/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/12/19/diffusion/" class="post-title-link" itemprop="url">diffusion</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-12-19 13:08:48" itemprop="dateCreated datePublished" datetime="2023-12-19T13:08:48+08:00">2023-12-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-17 19:59:19" itemprop="dateModified" datetime="2024-06-17T19:59:19+08:00">2024-06-17</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/12/19/diffusion/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/12/19/diffusion/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>952</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="diffusers"><a href="#diffusers" class="headerlink" title="diffusers"></a>diffusers</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/huggingface/diffusers">huggingface&#x2F;diffusers</a><ul>
-<li>Diffusers: State-of-the-art diffusion models for image and audio generation in PyTorch and FLAX.</li>
-<li>可以用 xformers 来加速推理和训练 <a target="_blank" rel="noopener" href="https://github.com/huggingface/diffusers/blob/main/docs/source/en/optimization/xformers.md">readme</a></li>
-<li>State-of-the-art diffusion pipelines that can be run in inference with just a few lines of code.</li>
-</ul>
-</li>
-<li>diffusers 加速技术<ul>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/diffusers/tutorials/fast_diffusion#accelerate-inference-of-text-to-image-diffusion-models">accelerate-inference-of-text-to-image-diffusion-models</a></li>
-<li><a target="_blank" rel="noopener" href="https://huggingface.co/docs/diffusers/optimization/fp16">diffusers&#x2F;optimization</a></li>
-</ul>
-</li>
-</ol>
-<h2 id="MagicDrive"><a href="#MagicDrive" class="headerlink" title="MagicDrive"></a><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2310.02601">MagicDrive</a></h2><ol>
-<li>MagicDrive can be used for data augmentation, facilitating the training for perception models on both BEV segmentation and 3D object detection tasks.</li>
-<li>bevfusion 用来处理原始 bev 数据得到 bev map 和 3d box</li>
-<li>可以不自己产生 bev map 和 3d boxes, 从真实数据拿。只需要不同的 prompt 就能生成不同的场景</li>
-<li>可以使用 diffusion model 替换真实场景中的物体</li>
-<li>Training Support for BEV Segmentation and 3D Object Detection. MagicDrive can produce augmented data with accurate annotation controls, enhancing the training for perception tasks.</li>
-<li>生成的数据可以用于训练</li>
-<li>用了 control-net diffusers pipeline 和 xformers 来加速</li>
-</ol>
-<h2 id="papers"><a href="#papers" class="headerlink" title="papers"></a>papers</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/595866176">必读的 10 篇经典论文</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2006.11239">Denoising Diffusion Probabilistic Models</a></li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2112.10752">High-Resolution Image Synthesis with Latent Diffusion Models</a> stable diffusion 的原型<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/CompVis/latent-diffusion">code</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/CompVis/stable-diffusion">stable-diffusion code</a></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2204.03458">Video Diffusion Models</a><ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/lucidrains/video-diffusion-pytorch">code</a></li>
-</ul>
-</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1666,7 +1809,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-count">192</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1699,6 +1842,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1706,12 +1855,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -1739,7 +1882,7 @@
 <div class="copyright">
   
   &copy; 2021 – 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1749,13 +1892,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">543k</span>
+    <span title="站点总字数">587k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:14</span>
+    <span title="站点阅读时长">8:54</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

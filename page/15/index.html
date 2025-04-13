@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,340 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/04/13/AI-models/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/13/AI-models/" class="post-title-link" itemprop="url">AI-models</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-13 16:45:08" itemprop="dateCreated datePublished" datetime="2022-04-13T16:45:08+08:00">2022-04-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-14 22:29:54" itemprop="dateModified" datetime="2024-01-14T22:29:54+08:00">2024-01-14</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/04/13/AI-models/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/04/13/AI-models/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>588</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>发布的模型包括模型的结构，模型的参数(onnx)</li>
+<li>LLM 获取参数很关键</li>
+</ol>
+<h2 id="模型参数计算量数据量趋势"><a href="#模型参数计算量数据量趋势" class="headerlink" title="模型参数计算量数据量趋势"></a>模型参数计算量数据量趋势</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://epochai.org/mlinputs/visualization?yAxis=Parameters">Model Size of Notable Machine Learning Systems Over Time</a> 可交互, 右上角 option 可搜索，可直接到论文</li>
+<li><a target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1AAIebjNsnJj_uKALHbXNfn3_YsT6sHXtCU0q7OIPuc4/edit#gid=0">Parameter, Compute and Data Trends in Machine Learning</a> good：包含参数，计算量, 训练数据量，论文引用</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2207.02852">Machine Learning Model Sizes and the Parameter Gap</a></li>
+<li><a target="_blank" rel="noopener" href="https://towardsdatascience.com/parameter-counts-in-machine-learning-a312dc4753d0">parameter-counts-in-machine-learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2202.05924.pdf">COMPUTE TRENDS ACROSS THREE ERAS OF MACHINE LEARNING</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Lyken17/pytorch-OpCounter">常用模型参数量</a><br><img src="https://i.ibb.co/hHLnMp7/LAmu-Jv4-DId.png" alt="常用模型参数量"></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ThanatosShinji/onnx-tool/blob/main/README_CN.md#results-of-onnx-model-zoo-and-sota-models">results-of-onnx-model-zoo-and-sota-models</a></li>
+<li>可以通过模型文件大小和数据类型估计模型参数量</li>
+<li><a target="_blank" rel="noopener" href="https://i.ibb.co/RCVGL1j/2s-Zv-Zl-E5-Ns.png">Pre-training costs of representative LLMs</a></li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/spaces/optimum/llm-perf-leaderboard">llm-perf-leaderboard</a><ul>
+<li>lantency vs memory vs score</li>
+</ul>
+</li>
+</ol>
+<h2 id="model-zoo"><a href="#model-zoo" class="headerlink" title="model zoo"></a>model zoo</h2><h3 id="caffe"><a href="#caffe" class="headerlink" title="caffe"></a>caffe</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/SnailTyan/caffe-model-zoo">SnailTyan&#x2F;caffe-model-zoo</a></li>
+</ol>
+<h3 id="onnx"><a href="#onnx" class="headerlink" title="onnx"></a>onnx</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/onnx/models">onnx&#x2F;models</a></li>
+</ol>
+<h3 id="pytorch"><a href="#pytorch" class="headerlink" title="pytorch"></a>pytorch</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/Cadene/pretrained-models.pytorch">Cadene&#x2F;pretrained-models.pytorch</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/vision/stable/models.html">pytorch official</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/04/11/AI-performance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/11/AI-performance/" class="post-title-link" itemprop="url">AI-chip-performance</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-11 16:30:54" itemprop="dateCreated datePublished" datetime="2022-04-11T16:30:54+08:00">2022-04-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-24 17:37:37" itemprop="dateModified" datetime="2024-09-24T17:37:37+08:00">2024-09-24</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/04/11/AI-performance/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/04/11/AI-performance/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="throughput-and-latency"><a href="#throughput-and-latency" class="headerlink" title="throughput and latency"></a>throughput and latency</h2><ol>
+<li>throughput：吞吐量一般指相当一段时间内测量出来的系统单位时间处理的任务数或事务数。如：1s 处理 10 帧图片 (10FPS)</li>
+<li>latency: 执行一次任务需要的时间。如：处理一帧图片耗时 10ms</li>
+<li>Throughput – successful transactions per second</li>
+<li>Latency – response time per transaction</li>
+</ol>
+<h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li><code>计算芯片的峰值算力</code> 理论计算得出的、理想状况下的峰值算力。具体通过计算核的主频、核数量、单核运算能力等来输出理论峰值，与实际场景中的真实有效处理能力有很大差距。</li>
+<li><code>计算芯片的有效算力</code> 设备在实际运作过程中能真实输出的算力。比如 ResNet50 在浮点 16 位精度下，推理一次的计算量是 7.8Gflops 左右，芯片每秒钟处理的 ResNet50 的帧率乘以 7.8G 就是真实有效的输出算力。如果推理帧率是 400fps，真实算力是 400*7.G&#x3D;3Tflops。</li>
+<li><code>计算芯片的有效利用率</code> 代表了芯片真实输出的运算能力。其计算方式为：真实有效的输出算力&#x2F;理论算力。计算结果值越高，表明该芯片工作越高效。实际应用场景中，多数传统架构计算芯片，有效利用率一般在 30%左右，而新型架构的计算芯片，芯片有效利用率可以到 50%以上。领启 KA200 异构众核、存算一体芯片有效利用率可达 60%以上。<ul>
+<li>利用率： 模型计算量 * FPS &#x2F; 芯片性能</li>
+<li>VCK190 133T, tf_resnetv1_50_imagenet_224_224_6.97G, 1421FPS, 使用率：6.97 * 1421 &#x2F; 1000 &#x2F; 133 &#x3D; 7.4%</li>
+</ul>
+</li>
+<li><code>计算芯片对主流神经网络的支持程度</code> 下一代人工智能有两个不同的发展线路图，一个是以深度学习算法为代表的传统计算科学，一个是以生物神经网络为代表脑科学。多数计算芯片只能支持二者之一。是否能将二者兼并支持，也是衡量计算芯片的核心指标之一，异构融合是达到这一指标的重要途径之一。</li>
+<li><code>芯片能效比</code> 计算方式为：典型网络（如 ResNet50）的推理能力&#x2F;芯片的功耗，单位：推理帧率（fps&#x2F;w）。</li>
+<li><code>芯片的性价比</code> 每平方毫米推理的帧率数，计算方式为：典型网络（如 ResNet50）的推理能力&#x2F;芯片的面积。</li>
+<li>多<code>batch</code>会增加模型计算量</li>
+<li>浮点转定点会降低计算量，可能剪枝优化</li>
+<li>NCHW 和 NHWC 会影响性能</li>
+</ol>
+<h2 id="模型计算量"><a href="#模型计算量" class="headerlink" title="模型计算量"></a>模型计算量</h2><h3 id="caffe"><a href="#caffe" class="headerlink" title="caffe"></a>caffe</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://dgschwend.github.io/netscope/#/editor">netscope</a></li>
+<li><a target="_blank" rel="noopener" href="https://dgschwend.github.io/netscope/quickstart.html">quickstart</a></li>
+<li>复制 prototxt 内容, <code>shift + enter</code>: 查看计算量</li>
+</ol>
+<h3 id="onnx"><a href="#onnx" class="headerlink" title="onnx"></a>onnx</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/gmalivenko/onnx-opcounter">onnx-opcounter</a> 需要模型结构，只有 pt 文件不行</li>
+</ol>
+<h3 id="pytorch"><a href="#pytorch" class="headerlink" title="pytorch"></a>pytorch</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/Lyken17/pytorch-OpCounter">pytorch-OpCounter</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/open-mmlab/mmdetection/blob/master/README_zh-CN.md">mmdetection</a></li>
+</ol>
+<h3 id="tensorflow"><a href="#tensorflow" class="headerlink" title="tensorflow"></a>tensorflow</h3><h2 id="芯片性能"><a href="#芯片性能" class="headerlink" title="芯片性能"></a>芯片性能</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.horizon.ai/journey2.html">地平线 J2</a><ul>
+<li>4TOPS</li>
+<li>2W</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.horizon.ai/journey3.html">J3</a><ul>
+<li>5TOPS</li>
+<li>2.5W</li>
+<li>16nm</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.horizon.ai/journey5.html">J5</a><ul>
+<li>128TOPS</li>
+<li>30W</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.nvidia.cn/autonomous-machines/embedded-systems/jetson-orin/">Nvidia Xavier</a> 比较 Jetson Orin 和 Jetson Xavier 的规格<ul>
+<li>21-32TOPS</li>
+<li>10-40W</li>
+<li>12nm</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.nvidia.cn/autonomous-machines/embedded-systems/jetson-orin/">Nvidia Orin</a> 比较 Jetson Orin 和 Jetson Xavier 的规格<ul>
+<li>70-274TOPS</li>
+<li>10-60W</li>
+<li>8nm</li>
+</ul>
+</li>
+<li><a href="">Xilinx Versal ACAP VC1902(VCK190)</a><ul>
+<li>133TOPS</li>
+<li>7ns</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.hisilicon.com/cn/products/Ascend/Ascend-910">昇腾（HUAWEI Ascend) 910</a><ul>
+<li>FP16: 320TFLOPS</li>
+<li>INT8: 640TOPS</li>
+<li>310W</li>
+<li>7nm</li>
+</ul>
+</li>
+<li><a href="">特斯拉 FSD 计算平台</a><ul>
+<li>144TOPS</li>
+<li>单芯片 72TOPS</li>
+<li>72W</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.mobileye.com/eyeq-chip/">Mobileye EQ4 High</a><ul>
+<li>2TOPS</li>
+<li>28nm</li>
+</ul>
+</li>
+<li><a href="">Mobileye EQ5 High</a><ul>
+<li>16TOPS</li>
+<li>7nm</li>
+</ul>
+</li>
+<li><a href="">Mobileye EQ6 High</a><ul>
+<li>34TOPS</li>
+<li>7nm</li>
+</ul>
+</li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.eefocus.com/article/1726287.html">佐思汽研《2024 年自动驾驶 SoC 研究报告》</a><ul>
+<li>各种芯片算力</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-xavier-series/">jetson xavier params</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/embedded/jetson-modules">jetson parms</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/337618803">TOPS GOPS FLOPS</a></li>
+<li><a target="_blank" rel="noopener" href="https://wuchenxu.com/2021/10/02/computing-power-metrices/">指标</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.horizon.ai/journey5.html">J5 官方介绍</a></li>
+<li><a target="_blank" rel="noopener" href="https://auto.gasgoo.com/a/70266230.html">link1</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/embedded/jetson-benchmarks">jetson-benchmark</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/deep-learning-performance-training-inference">deep-learning-performance-training-inference</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/blog/delivering-server-class-performance-at-the-edge-with-nvidia-jetson-orin/">orin performance</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.nvidia.cn/autonomous-machines/embedded-systems/jetson-orin/">orin 产品系列</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-AI/tree/master/models/AI-Model-Zoo#performance-on-vck190">VCK190 性能</a></li>
+<li><a target="_blank" rel="noopener" href="https://new.qq.com/omn/20220127/20220127A06JD900.html">地平线 MAPS</a></li>
+<li><a target="_blank" rel="noopener" href="https://img3.gelonghui.com/pdf/bc70f-43194a12-e915-4416-9ffa-2e241931ae61.pdf">中信车载芯片调研</a></li>
+<li><a target="_blank" rel="noopener" href="https://pdf.dfcfw.com/pdf/H3_AP202112301537477959_1.pdf?1640871632000.pdf">亿欧网调研</a></li>
+<li><a target="_blank" rel="noopener" href="https://pdf.dfcfw.com/pdf/H3_AP202112061533188037_1.pdf?1639041416000.pdf">艾瑞咨询-中国智能驾驶行业研究报告</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1145,7 +1479,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-12-06 15:15:04" itemprop="dateModified" datetime="2024-12-06T15:15:04+08:00">2024-12-06</time>
+                <time title="修改时间：2025-04-11 11:58:57" itemprop="dateModified" datetime="2025-04-11T11:58:57+08:00">2025-04-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1181,14 +1515,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>27k</span>
+              <span>30k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>25 分钟</span>
+              <span>27 分钟</span>
             </span>
 
         </div>
@@ -1201,6 +1535,23 @@
 
       
           <h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#execution-configuration">Execution Configuration</a><ul>
+<li>&lt;&lt;&lt; &gt;&gt;&gt; 叫做 kernel launch configuration（核函数启动配置）, launch参数：&lt;&lt;&lt;gridDim, blockDim, sharedMemSize, stream&gt;&gt;&gt;  CUDA核函数运行参数</li>
+<li>&lt;&lt;&lt; Dg, Db, Ns, S &gt;&gt;&gt;</li>
+</ul>
+</li>
+<li>在 CUDA 编程中，CTA（Cooperative Thread Array） 是 线程块（Thread Block） 的另一种称呼。</li>
+<li>Block and Tile<ul>
+<li>Block (线程块) 是CUDA线程层次结构中的一部分，位于网格（grid） 之下。它是CUDA中的一个基本执行单元，由多个线程（thread） 组成，每个线程在一个SM（Streaming Multiprocessor）上执行。</li>
+<li>Tile（数据分片） 通常是手动优化时的计算划分方式，用于块状处理数据（类似分块矩阵计算）。它不属于CUDA的核心执行模型，而是开发者用来优化CUDA程序时的概念。</li>
+<li>Block是线程的概念，Tile是数据划分的概念; Tile数据并不等于Block处理的数据，如矩阵运算是，A矩阵划分为Tile: bm x bk, Block对应的C数据为bm x bn; Block也可能处理多个tile的数据</li>
+</ul>
+</li>
+<li>block swizzle:<ul>
+<li>runtime按idx线性调度：0, 1, 2….</li>
+<li>用户自己将idx映射到要处理的block</li>
+</ul>
+</li>
 <li><code>CUDA_LAUNCH_BLOCKING=1</code> 有错误立即停下来，效率会差一点，主要用于调试</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/pytorch/pytorch/blob/main/aten/src/ATen/cuda/detail/KernelUtils.h">kernel utils</a> 简化写 kernel 流程</li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/480719273">手动释放显存</a></li>
@@ -1305,6 +1656,27 @@
 <ol>
 <li>kernel 第三个参数是动态共享内存的大小</li>
 </ol>
+<h2 id="TMA"><a href="#TMA" class="headerlink" title="TMA"></a><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#asynchronous-data-copies-using-the-tensor-memory-accelerator-tma">TMA</a></h2><ol>
+<li>The primary goal of TMA is to provide an efficient data transfer mechanism from global memory to shared memory for multi-dimensional arrays. TMA 的主要目标是为多维数组提供一种从全局内存到共享内存的高效数据传输机制。</li>
+<li>TMA 根据tensor_map和coord等信息产生ptr，用于搬数</li>
+<li>批量异步复制操作的源和目标地址可以位于共享或全局内存中。这些操作可以将数据从全局内存读取到共享内存，将数据从共享内存写入全局内存，还可以从共享内存复制到同一集群中另一个块的分布式共享内存 。此外，在cluster中时，可以将批量异步操作指定为多播(multicast)。在这种情况下，数据可以从全局内存传输到cluster内多个块的共享内存。</li>
+<li>mbarrier（内存屏障）是 CUDA 12 引入的新机制，用于 跨线程块（CTA） 进行同步，主要用于 生产者-消费者（producer-consumer）模式的通信。<ul>
+<li>可以多个SM</li>
+<li>支持多个线程块（CTA）之间的同步，比 __syncthreads() 更强大。</li>
+<li>允许 生产者线程（Producer） 和 消费者线程（Consumer） 在不同的 CTA 中进行数据交换和同步。</li>
+</ul>
+</li>
+<li>Bulk Async Group 是 CUDA 12.2 引入的 批量任务管理机制，允许在 SM（流式多处理器） 内进行任务分配，同时异步调度多个 warp 或 CTA 执行任务.</li>
+</ol>
+<ul>
+<li>单个SM内部</li>
+</ul>
+<ol>
+<li>tensor_map创建完在host memory上 <a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#asynchronous-data-copies-using-the-tensor-memory-accelerator-tma:~:text=Host%2Dto%2Ddevice%20transfer.">link</a><ul>
+<li>tensor_map中的tensor_ptr需要指向device global memory上</li>
+</ul>
+</li>
+</ol>
 <h2 id="driver"><a href="#driver" class="headerlink" title="driver"></a><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-driver-api/index.html">driver</a></h2><h2 id="runtime"><a href="#runtime" class="headerlink" title="runtime"></a>runtime</h2><h2 id="cuda-graph"><a href="#cuda-graph" class="headerlink" title="cuda graph"></a>cuda graph</h2><ol>
 <li>减少 Launch 开销</li>
 <li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/blog/cuda-graphs/">cuda-graphs blog</a></li>
@@ -1358,6 +1730,7 @@
 <h3 id="优化技术"><a href="#优化技术" class="headerlink" title="优化技术"></a>优化技术</h3><ol>
 <li>memory coalescing<ul>
 <li>让连续的线程访问连续的内存地址。这样就有合并机会，多个线程间会合并访存，可能并不是 32 个线程都合并, 比如一个线程访问 4 个 32bit float 数据，8 个线程可合并，8 x 4 x 32 &#x2F; 8 &#x3D; 128Bx</li>
+<li>不连续的时候每个数据都需要load一次，合并了之后能减少load次数，完全合并后需要n&#x2F;32次，32个线程的数据一次load进来(不考虑cache的情况)</li>
 </ul>
 </li>
 <li>swizzle</li>
@@ -1514,12 +1887,64 @@
 </li>
 </ol>
 <h2 id="cuda-grammer"><a href="#cuda-grammer" class="headerlink" title="cuda grammer"></a>cuda grammer</h2><ol>
-<li>所有的 kernel 函数返回类型都是 void</li>
-<li><code>&lt;&lt;&lt; M , T &gt;&gt;&gt;</code> Which indicate that a kernel launches with a grid of M thread blocks. Each thread block has T parallel threads.</li>
-<li><code>vectorAdd&lt;&lt;&lt;blocksPerGrid, threadsPerBlock&gt;&gt;&gt;</code></li>
-<li>可以认为 M, T 对应图片的 H, W; 一个 thread 对应一个像素点；一个 block 对应一行，一个 grid 对应一张图片</li>
-<li><code>int tid = blockIdx.x * blockDim.x + threadIdx.x; =&gt; int index = h * W + w;</code></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cuda-samples/blob/master/Common/helper_cuda.h#L595">checkCudaErrors</a> helper_cuda.h</li>
+<li><p>在 CUDA 编程中，高效的并行算法往往需要线程协作(threads cooperate)以及共享数据(share data)来完成集体计算(collective computations)。要共享数据，线程间必然会涉及同步，而共享的粒度因算法而异，因此线程间的同步应尽量足够灵活，比如开发者可以显示地指定线程间同步，这样就可以确保程序的安全性、可维护性和模块化设计。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/#cooperative-groups:~:text=do%20not%20match.-,8.%20Cooperative%20Groups,%EF%83%81,-8.1.%20Introduction">Cooperative Groups</a></p>
+<ul>
+<li>CUDA Cooperative Groups 提供了一种更灵活、更高效的线程协作方式，适用于高性能并行计算。它增强了传统 __syncthreads() 的能力，并支持 warp 级、block 级、grid 级的同步，在某些场景下可以显著提升计算效率。</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/#function-execution-space-specifiers">Function Execution Space Specifiers</a></p>
+<ul>
+<li><code>__global__</code> 在设备上执行，在主机上调用</li>
+<li><code>__device__</code> 在设备上执行，在设备上调用</li>
+<li><code>__host__</code> 在主机上执行，在主机上调用</li>
+<li>不填默认在<code>__host__</code></li>
+<li>__global__和__host__执行空间说明符不能一起使用。</li>
+<li>__device__和__host__执行空间说明符可以一起使用，在这种情况下，函数将针对主机和设备分别进行编译。</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-c-programming-guide/#shared:~:text=7.2.3.-,__shared__,-%EF%83%81">shared</a></p>
+<ul>
+<li>要共享数据，线程间必然会涉及同步   </li>
+<li>__shared__： <code>__shared__ unsigned int u1 = 1;</code></li>
+<li>extern:<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> __shared__ <span class="type">float</span> array[];</span><br><span class="line"><span class="function">__device__ <span class="type">void</span> <span class="title">func</span><span class="params">()</span>      <span class="comment">// __device__ or __global__ function</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">short</span>* array0 = (<span class="type">short</span>*)array;</span><br><span class="line">    <span class="type">float</span>* array1 = (<span class="type">float</span>*)&amp;array0[<span class="number">128</span>];</span><br><span class="line">    <span class="type">int</span>*   array2 =   (<span class="type">int</span>*)&amp;array1[<span class="number">64</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>算index的时候需要用到built-in variables, 由Index确定要处理的数据</p>
+<ul>
+<li>blockIdx</li>
+<li>blockDim</li>
+<li>threadIdx</li>
+<li>总体的原则是 global_index &#x3D; block首地址的index + local_index <code>int tid = blockIdx.x * blockDim.x + threadIdx.x;</code></li>
+</ul>
+</li>
+<li><p><code>int tid = blockIdx.x * blockDim.x + threadIdx.x; =&gt; int index = h * W + w;</code></p>
+</li>
+<li><p>所有的 kernel 函数返回类型都是 void</p>
+</li>
+<li><p><code>&lt;&lt;&lt; M , T &gt;&gt;&gt;</code> Which indicate that a kernel launches with a grid of M thread blocks. Each thread block has T parallel threads.</p>
+</li>
+<li><p>dim3 threadsPerBlock(16, 16); dim3 numBlocks(N &#x2F; threadsPerBlock.x, N &#x2F; threadsPerBlock.y); MatAdd&lt;&lt;&lt;numBlocks, threadsPerBlock&gt;&gt;&gt;(A, B, C);</p>
+</li>
+<li><p>NOTE: dim3是按(x, y, z)设置的，矩阵输入数据是按(y1, x1)索引的</p>
+<ul>
+<li>dim3 dimBlock(BLOCK_SIZE, BLOCK_SIZE); name: blockDim,</li>
+<li>dim3 dimGrid(B.width &#x2F; dimBlock.x, A.height &#x2F; dimBlock.y); name: gridDim</li>
+</ul>
+</li>
+<li><p>首先确定thread和block处理的数据shape, 根据input shape， 推出gridDim(blocksPerGrid)</p>
+<ul>
+<li>注意cuda的block处理的数据shape和threadsPerBlock的区别，threadsPerBlock和一个thread处理的数据shape共同确定一个block处理的数据shape，等效triton的BLOCK_SIZE</li>
+<li>triton tuning 一般是tune 一个block要处理的数据大小, block处理的数据大小确定也能算出一个thread处理的数据大小</li>
+</ul>
+</li>
+<li><p><code>vectorAdd&lt;&lt;&lt;blocksPerGrid, threadsPerBlock&gt;&gt;&gt;</code></p>
+</li>
+<li><p>可以认为 M, T 对应图片的 H, W; 一个 thread 对应一个像素点；一个 block 对应一行，一个 grid 对应一张图片</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cuda-samples/blob/master/Common/helper_cuda.h#L595">checkCudaErrors</a> helper_cuda.h</p>
+</li>
 </ol>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">check</span><span class="params">(T result, <span class="type">char</span> <span class="type">const</span> *<span class="type">const</span> func, <span class="type">const</span> <span class="type">char</span> *<span class="type">const</span> file,</span></span></span><br><span class="line"><span class="params"><span class="function">           <span class="type">int</span> <span class="type">const</span> line)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (result) &#123;</span><br><span class="line">    <span class="built_in">fprintf</span>(stderr, <span class="string">&quot;CUDA error at %s:%d code=%d(%s) \&quot;%s\&quot; \n&quot;</span>, file, line,</span><br><span class="line">            <span class="built_in">static_cast</span>&lt;<span class="type">unsigned</span> <span class="type">int</span>&gt;(result), _cudaGetErrorEnum(result), func);</span><br><span class="line">    <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// This will output the proper CUDA error strings in the event</span></span><br><span class="line"><span class="comment">// that a CUDA host call returns an error</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> checkCudaErrors(val) check((val), #val, __FILE__, __LINE__)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -1968,390 +2393,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/03/03/Doxygen/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/03/Doxygen/" class="post-title-link" itemprop="url">Doxygen</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-03-03 03:58:22" itemprop="dateCreated datePublished" datetime="2022-03-03T03:58:22+08:00">2022-03-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-12 17:16:25" itemprop="dateModified" datetime="2024-09-12T17:16:25+08:00">2024-09-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/03/03/Doxygen/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/03/03/Doxygen/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>markdown 添加 [toc] 为 html 生成目录</li>
-<li>参考 opencv</li>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/57979732">multi projects</a></li>
-<li>可以用 cmake 生成 doxygen 配置 <a target="_blank" rel="noopener" href="https://github.com/opencv/opencv/blob/17234f82d025e3bbfbf611089637e5aa2038e7b8/doc/Doxyfile.in">link</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/doxygen/doxygen/tree/master/templates">templates</a></li>
-</ol>
-<h2 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h2><h3 id="moritz"><a href="#moritz" class="headerlink" title="moritz"></a>moritz</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/moritz/">moritz 插件 生成流程图</a><ul>
-<li>可以单独使用，也可以和 doxygen 一起使用 doxywizard</li>
-<li><a target="_blank" rel="noopener" href="https://sourceforge.net/p/moritz/wiki/Home/#31b2">pdf 文档</a></li>
-<li>Moritz_Linux_2020_06_10.zip 执行 ansi_c_create.sh 生成 dot 和 html</li>
-<li>默认 arm 二进制， x86 需要源码编译 src_abc2xml_xml2abc_2020_06_10.zip, 需要 codeblocks 图形界面来编译，String_help.h 找不到直接替换字符</li>
-<li>cfg&#x2F;Doxyfile_ansi_c_xml 中 INPUT 改源码位置， RECURSIVE 要改为 YES</li>
-</ul>
-</li>
-</ol>
-<h3 id="XML-pareser"><a href="#XML-pareser" class="headerlink" title="XML pareser"></a>XML pareser</h3><ol>
-<li><code>pip install  doxmlparser</code></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/doxygen/doxygen/blob/master/addon/doxmlparser/examples/metrics/metrics.py">metrics</a><ul>
-<li><code>python metrics.py xml/</code>能够输出统计信息</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/doxygen/doxygen/blob/master/addon/doxmlparser/doxmlparser/compound.py#L7025">location 来获取定义文件，start end line</a></li>
-</ul>
-</li>
-<li>跟据 xml 信息提取函数再加上 cxx2flow 生成流程图</li>
-<li>如果使用宏定义来区分平台，doxygen 生成 xml 时需要删除其他平台的代码或者提供 compile_commands.json 来生成；否则类的关系会有问题，生成不了具体实现的流程图</li>
-<li>也可以配置 doxygen 中的 INPUT, 只包含要使用的平台</li>
-<li>给别人生成时需要提供 compile_commands.json 和源码，根据路径在自己电脑创建相应目录，放入源码</li>
-<li><code>sed -i &#39;s/\/builds\/platform/\/home\/xiyang\/d\/working/g&#39; compile_commands.json</code>修改路径</li>
-<li>compile_commands.json 不太好使;</li>
-<li>(good)可以 grep compile_commands.json 要用的 cpp 文件，写到 INPUT(注意 INPUT 不支持正则), FILE_PATTERN 只设置搜索头文件(INPUT 要填最外层文件夹)， EXCLUDE 排除一些文件, 头文件路径设置到 INCLUDE_PATH，</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">sudo apt install jq</span></span><br><span class="line">rm file_list.txt; cat compile_commands.json | jq &#x27;.[] | .file&#x27; | while read -r line; do</span><br><span class="line">  echo &quot;$line\\&quot;</span><br><span class="line">done | sort &gt;&gt; file_list.txt</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>写个脚本处理 compile_commands.json 文件， 得到文件和 include 路径，设置到 INPUT 里面</li>
-<li>doxyxml</li>
-<li><a target="_blank" rel="noopener" href="https://gitlab.com/graphviz/graphviz">graphviz 要用最新的，否则生成的图片有问题</a></li>
-</ol>
-<h3 id="word-文档"><a href="#word-文档" class="headerlink" title="word 文档"></a>word 文档</h3><ol>
-<li><p>XML 格式： Word 文档本质上是一个 XML 文件。可以使用文本编辑器或编程语言（如 Python、C#）打开 Word 文档的 XML 格式，搜索&lt;w:altText&gt;标签，即可找到图片的 Alt 文本。</p>
-<ul>
-<li>unzip docx: 解压 docx 文件，在 word 里查看 document.xml</li>
-<li>windows 下另存为 xml</li>
-<li>通过 xml 可以看出通过图片的 name 和 descr 属性可以区分图片</li>
-</ul>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/python-openxml/python-docx?tab=readme-ov-file">python-docx</a></p>
-<ul>
-<li>加入可选文字，后面使用 template 替换</li>
-<li>把图片写在 bytesIO 里面然后用 from docxtpl import InlineImage 插入的，用了快两年了，很稳 就是楼上这个</li>
-<li>通过 descr 属性来处理图片替换问题 <a target="_blank" rel="noopener" href="https://chatgpt.com/c/66e15cd9-20f4-8004-a2fd-945070c91601">link</a></li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">inline_shape = run.add_picture(image_path, width=Inches(<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加 descr（图片描述）</span></span><br><span class="line">inline_shape._inline.graphic.graphicData.pic.nvPicPr.cNvPr.<span class="built_in">set</span>(<span class="string">&#x27;descr&#x27;</span>, descr)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/elapouya/python-docx-template">python-docx-template</a></p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/elapouya/python-docx-template/blob/master/tests/merge_docx.py">merge_doc</a><ul>
-<li>合并之后在下面添加用于下次合并</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/elapouya/python-docx-template/blob/master/tests/module_execute.py">通过 json 来生成 docx</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/elapouya/python-docx-template/blob/master/tests/replace_picture.py">replace_picture</a><ul>
-<li>右击图片，可选文字显示名称</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/h1773655323/article/details/119876821">sample</a></li>
-</ul>
-</li>
-<li><p>流程图加到文档里</p>
-</li>
-<li><p>pandoc</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/yuetaope/article/details/119444970">详解 Python-docx 自动生成 word 图文报告</a></p>
-</li>
-</ol>
-<h2 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/jothepro/doxygen-awesome-css">doxygen-awesome-css</a></li>
-<li><a target="_blank" rel="noopener" href="https://jothepro.github.io/doxygen-awesome-css/index.html">效果</a></li>
-</ol>
-<h2 id="doxygen-config"><a href="#doxygen-config" class="headerlink" title="doxygen config"></a>doxygen config</h2><ol>
-<li><code>sudo apt install doxygen</code></li>
-<li><code>doxygen -g &lt;config-name&gt;</code> 产生配置文件，默认为 Doxyfile <code>-s</code> 生成不带注释的配置文件</li>
-<li><code>doxygen &lt;config-name&gt;</code> 生成文档</li>
-<li>UML 生成 svg 图片<ul>
-<li><code>DOT_IMAGE_FORMAT       = svg(png)</code></li>
-<li><code>INTERACTIVE_SVG        = YES</code></li>
-</ul>
-</li>
-<li>生成 UML, 需要修改配置文件, 以下改为 YES</li>
-</ol>
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RECURSIVE</span><br><span class="line">HAVE<span class="emphasis">_DOT</span></span><br><span class="line"><span class="emphasis">UML_LOOK</span></span><br><span class="line"><span class="emphasis">EXTRACT_</span>ALL</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><code>CLANG_DATABASE_PATH=compile_commands.json</code>提供编译信息更准确的拿到信息 <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/64476238/23011500">link</a></li>
-<li><code>INLINE_SOURCES</code>标签。如果设置为 YES，可以将源代码直接包含到文档中。</li>
-<li><code>INPUT</code> 标签是输入的源码文件的目录, 空格分开 例如： <code>INPUT = README.md include/pg</code></li>
-<li><code>OUTPUT_LANGUAGE</code> &#x3D; 改为 Chinese</li>
-<li><code>HTML_TIMESTAMP</code>标签设置为 YES，则每个生成的 HTML 页面的页脚将包含生成页面的日期和时间。将此设置为“是”有助于显示上次运行 doxygen 的时间，从而显示文档是否最新。</li>
-<li><code>GENERATE_TREEVIEW</code> 标签用于指定是否应生成树状索引结构以显示分层信息。</li>
-<li><code>GENERATE_XML = YES</code> 产生 xml</li>
-<li><code>GENERATE_HTML = YES</code> 产生 html</li>
-<li><code>EXTRACT_ALL</code></li>
-<li><code>EXTRACT_PRIVATE</code> If the EXTRACT_PRIVATE tag is set to YES, all private members of a class will be included in the documentation.</li>
-<li><code>EXTRACT_STATIC</code></li>
-<li><code>EXTRACT_LOCAL_METHODS</code></li>
-<li><code>EXTRACT_ANON_NSPACES</code>提取匿名函数</li>
-<li><code>PROJECT_NAME</code></li>
-<li><code>PROJECT_NUMBER</code></li>
-<li><code>PROJECT_LOGO</code> 首页左侧图标</li>
-<li><code>EXTRACT_STATIC</code> 如果设置为 YES，一个文件的所有静态成员都将包含在文档中。</li>
-<li><code>EXTRACT_PRIVATE</code> 如果设置为 YES，一个类的所有私有成员都将包含在文档中。</li>
-<li><code>IMAGE_PATH</code> 修复 markdown 生成网页时 doc 出错问题</li>
-<li><code>USE_MDFILE_AS_MAINPAGE = ./README.md</code> 主页</li>
-<li><code>HTML_OUTPUT = doc_html</code></li>
-<li><code>LATEX_OUTPUT = doc_latex</code></li>
-<li>输出 color <a target="_blank" rel="noopener" href="https://github.com/jothepro/doxygen-awesome-css/blob/main/docs/customization.md#doxygen-generator">link</a></li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HTML_COLORSTYLE_HUE    = 209</span><br><span class="line">HTML_COLORSTYLE_SAT    = 255</span><br><span class="line">HTML_COLORSTYLE_GAMMA  = 113</span><br></pre></td></tr></table></figure>
-
-<h2 id="pdf"><a href="#pdf" class="headerlink" title="pdf"></a>pdf</h2><ol>
-<li><code>sudo apt-get install texlive-full texlive-latex-base</code> <a target="_blank" rel="noopener" href="https://tex.stackexchange.com/a/481681">link</a></li>
-<li><code>cd latex &amp;&amp; make</code></li>
-<li><code>doxygen -w latex header.tex footer.tex doxygen.sty</code> 先生成默认配置，修改 doxygen.config 指定<code>LATEX_HEADER = header.tex</code> <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/16222657">link</a></li>
-<li>修改 refman.tex 来改变 pdf 生成</li>
-<li><code>sed -i &quot;s/Doxygen/xx xx/&quot; refman.tex</code>修改制作者名字</li>
-<li>中文问题 <code>\begin&#123;CJK&#125;&#123;UTF8&#125;</code> 换成 <code>\begin&#123;CJK&#125;&#123;gbsn&#125;</code> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/zyl910/archive/2013/06/02/doxygen_pdf_chinese.html">link</a></li>
-<li>空页问题： <code>COMPACT_LATEX</code> to YES</li>
-<li>换页问题： <code>\doxysection</code> 之前加 <code>\newpage</code></li>
-<li>refman.tex 处理</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sed -i <span class="string">&quot;/fancyfoot/d&quot;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&quot;/fancyhead/d&quot;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&#x27;/&#123;fancyplain&#125;/a\\\cfoot&#123;\\thepage&#125;&#x27;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&#x27;/&#123;fancyplain&#125;/a\\\rhead&#123;&#125;&#x27;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&#x27;/&#123;fancyplain&#125;/a\\\lhead&#123;&#125;&#x27;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&#x27;/doxysection/i\\\newpage&#x27;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&quot;s/Doxygen 1.8.17/PhiGent Robotics/&quot;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&quot;s/&#123;min&#125;/&#123;gbsn&#125;/&quot;</span> latex/refman.tex</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><code>\pagestyle&#123;fancyplain&#125;</code> 删除之后页眉页脚不再有横杠 <code>\pagestyle&#123;plain&#125;</code></li>
-</ol>
-<h2 id="notes"><a href="#notes" class="headerlink" title="notes"></a>notes</h2><ol>
-<li>不要在有 build 的目录下</li>
-<li>如果想生成详细的 UML 图，需要设置<code>EXTRACT_STATIC</code> <code>EXTRACT_PRIVATE</code>为 YES</li>
-</ol>
-<h2 id="文档解析"><a href="#文档解析" class="headerlink" title="文档解析"></a>文档解析</h2><ol>
-<li>Class Hierarchy 可以查看类层级关系</li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://fossies.org/dox/all.html">fossies doxygen lists</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.doxygen.nl/manual/starting.html">getting start</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.guyuehome.com/35640">参数详解</a></li>
-<li><a target="_blank" rel="noopener" href="https://doxygen.nl/projects.html">使用 doxygen 的项目</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/metropolis/deepstream/sdk-api/index.html">deepstream doxygen</a></li>
-<li><a target="_blank" rel="noopener" href="https://google.github.io/ion/base_2logging_8h.html">ion</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.opencv.org/4.x/d9/df8/tutorial_root.html">opencv tutorial</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/opencv/opencv/blob/17234f82d025e3bbfbf611089637e5aa2038e7b8/doc/Doxyfile.in">opencv config</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/doxygen/doxygen/tree/master/templates">templates</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/03/02/Nvidia-NPP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/02/Nvidia-NPP/" class="post-title-link" itemprop="url">Nvidia-NPP</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-03-02 11:30:48" itemprop="dateCreated datePublished" datetime="2022-03-02T11:30:48+08:00">2022-03-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-09 19:56:16" itemprop="dateModified" datetime="2023-10-09T19:56:16+08:00">2023-10-09</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/03/02/Nvidia-NPP/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/03/02/Nvidia-NPP/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="notes"><a href="#notes" class="headerlink" title="notes"></a>notes</h2><ol>
-<li>need <code>sudo</code> to run exe</li>
-<li><code>export CUDACXX=/usr/local/cuda/bin/nvcc</code> when build cuda</li>
-<li>CMakeLists.txt: <code>CUDA_ADD_EXECUTABLE(resize resize.cpp)</code></li>
-</ol>
-<h2 id="yuyv-2-rgb"><a href="#yuyv-2-rgb" class="headerlink" title="yuyv 2 rgb"></a>yuyv 2 rgb</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/71473363">link</a> nvcc 替换成 g++也可用</li>
-</ol>
-<h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
-<li>install path: <code>/usr/local/cuda-xxx/</code></li>
-<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/npp/nppi_conventions_lb.html">函数名称中简写的意义</a></li>
-<li></li>
-</ol>
-<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&quot;A&quot; <span class="keyword">if</span> the image <span class="keyword">is</span> a <span class="number">4</span> channel image this indicates the result alpha channel <span class="keyword">is</span> <span class="keyword">not</span> affected <span class="keyword">by</span> the primitive.</span><br><span class="line">&quot;Cn&quot; the image consists <span class="keyword">of</span> n channel packed pixels, <span class="keyword">where</span> n can be <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> <span class="keyword">or</span> <span class="number">4.</span></span><br><span class="line">&quot;Pn&quot; the image consists <span class="keyword">of</span> n separate image planes, <span class="keyword">where</span> n can be <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> <span class="keyword">or</span> <span class="number">4.</span></span><br><span class="line">&quot;C&quot; (<span class="keyword">following</span> the channel information) indicates that the primitive <span class="keyword">only</span> operates <span class="keyword">on</span> one <span class="keyword">of</span> the color channels, the &quot;channel-of-interest&quot;. <span class="keyword">All</span> other output channels are <span class="keyword">not</span> affected <span class="keyword">by</span> the primitive.</span><br><span class="line">&quot;I&quot; indicates that the primitive works &quot;in-place&quot;. <span class="keyword">In</span> this <span class="keyword">case</span> the image-data pointer <span class="keyword">is</span> usually named pSrcDst <span class="keyword">to</span> indicate that the image data serves <span class="keyword">as</span> source <span class="keyword">and</span> destination at the same <span class="type">time</span>.</span><br><span class="line">&quot;M&quot; indicates &quot;masked operation&quot;. These <span class="keyword">types</span> <span class="keyword">of</span> primitives have an additional &quot;mask image&quot; <span class="keyword">as</span> <span class="keyword">as</span> <span class="keyword">input</span>. <span class="keyword">Each</span> pixel <span class="keyword">in</span> the destination image corresponds <span class="keyword">to</span> a pixel <span class="keyword">in</span> the mask image. <span class="keyword">Only</span> pixels <span class="keyword">with</span> a corresponding non-zero mask pixel are being processed.</span><br><span class="line">&quot;R&quot; indicates the primitive operates <span class="keyword">only</span> <span class="keyword">on</span> a rectangular &quot;region-of-interest&quot; <span class="keyword">or</span> &quot;ROI&quot;. <span class="keyword">All</span> ROI primitives take an additional <span class="keyword">input</span> parameter <span class="keyword">of</span> <span class="keyword">type</span> NppiSize, which specifies the width <span class="keyword">and</span> height <span class="keyword">of</span> the rectangular region that the primitive should process. <span class="keyword">For</span> details <span class="keyword">on</span> how primitives operate <span class="keyword">on</span> ROIs see: Region-<span class="keyword">of</span>-Interest (ROI).</span><br><span class="line">&quot;Sfs&quot; indicates the result <span class="keyword">values</span> are processed <span class="keyword">by</span> fixed scaling <span class="keyword">and</span> saturation <span class="keyword">before</span> they<span class="string">&#x27;re written out.</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/npp/nppi__support__functions_8h_source.html">image malloc functions</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/npp/nppi__geometry__transforms_8h_source.html">resize function</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cuda-samples/tree/master/Common/UtilNPP">npp utils</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/npp/group__image__color__model__conversion.html">cvtcolor</a></li>
-</ol>
-<h2 id="samples"><a href="#samples" class="headerlink" title="samples"></a>samples</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/CUDALibrarySamples.git">NVIDIA-CUDALibrarySamples</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_15357586/3790330">simple sample</a></li>
-<li><a target="_blank" rel="noopener" href="https://sourcegraph.com/github.com/PacktPublishing/Learn-CUDA-Programming/-/blob/Chapter08/08_cuda_libs_and_other_languages/05_npp/imageFilter.cpp">malloc sample</a></li>
-</ol>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/npp/index.html">main page</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/14/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/16/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2419,7 +2464,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-count">192</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2452,6 +2497,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -2459,12 +2510,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -2492,7 +2537,7 @@
 <div class="copyright">
   
   &copy; 2021 – 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -2502,13 +2547,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">543k</span>
+    <span title="站点总字数">587k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:14</span>
+    <span title="站点阅读时长">8:54</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

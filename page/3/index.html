@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,282 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/12/29/LLVM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/12/29/LLVM/" class="post-title-link" itemprop="url">LLVM</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-12-29 15:42:47" itemprop="dateCreated datePublished" datetime="2024-12-29T15:42:47+08:00">2024-12-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-02-14 13:17:05" itemprop="dateModified" datetime="2025-02-14T13:17:05+08:00">2025-02-14</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/12/29/LLVM/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/12/29/LLVM/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="LLVM-IR"><a href="#LLVM-IR" class="headerlink" title="LLVM IR"></a>LLVM IR</h2><ol>
+<li>br: branch; “br”在LLVM IR (中间表示) 中是一个分支指令，它用于控制流跳转，可以是有条件的也可以是无条件的。<ul>
+<li>br label %target</li>
+<li>br i1 %cond, label %if.true, label %if.false</li>
+</ul>
+</li>
+</ol>
+<h2 id="llvm-ir"><a href="#llvm-ir" class="headerlink" title="llvm ir"></a>llvm ir</h2><ol>
+<li>LLVM IR 中的 phi 指令用于实现 SSA（静态单赋值）形式下的变量合并。在一个基本块（basic block）中，如果存在多个前驱块（predecessor），那么在该块的开始处就需要一个 phi 指令来选择正确的值。它的基本语法如下：<ul>
+<li><code>%result = phi &lt;type&gt; [ %val1, %pred1 ], [ %val2, %pred2 ], …</code> </li>
+<li>这表示：如果控制流是从前驱块 %pred1 进入当前块，则 %result 的值为 %val1；如果是从 %pred2 进入，则 %result 为 %val2，依此类推。</li>
+</ul>
+</li>
+</ol>
+<h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
+<li>语法(Syntax)：关注代码的结构和形式，通过预定义的文法规则来判断源代码是否“写对了格式”。它是编译器前端的第一道防线，主要产生的是语法树。</li>
+<li>语义(Semantic)：关注代码的意义和逻辑，确保程序各部分之间的关系正确、类型匹配、作用域清晰等。它依赖于语法树，并进一步填充具体的含义信息，为中间代码生成提供依据。</li>
+</ol>
+<h1 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h1><ol>
+<li><a target="_blank" rel="noopener" href="https://llvm.org/docs/ProgrammersManual.html#the-llvm-debug-macro-and-debug-option">the-llvm-debug-macro-and-debug-option</a></li>
+<li>speed up build</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Using clang and lld speeds up the build, we recommend adding:</span></span><br><span class="line">-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DLLVM_ENABLE_LLD=ON</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">CCache can drastically speed up further rebuilds, try adding:</span></span><br><span class="line">-DLLVM_CCACHE_BUILD=ON</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Optionally, using ASAN/UBSAN can find bugs early <span class="keyword">in</span> development, <span class="built_in">enable</span> with:</span></span><br><span class="line">-DLLVM_USE_SANITIZER=&quot;Address;Undefined&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Optionally, enabling integration tests as well</span></span><br><span class="line">-DMLIR_INCLUDE_INTEGRATION_TESTS=ON</span><br></pre></td></tr></table></figure>
+<ol>
+<li>install path <code>-DCMAKE_INSTALL_PREFIX=/data/xiyang/mlir-tutorial/install</code></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/11/13/deformable-attention/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/11/13/deformable-attention/" class="post-title-link" itemprop="url">deformable_attention</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-11-13 11:51:24 / 修改时间：11:51:49" itemprop="dateCreated datePublished" datetime="2024-11-13T11:51:24+08:00">2024-11-13</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/11/13/deformable-attention/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/11/13/deformable-attention/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p><strong>Deformable Attention</strong> 是一种在视觉任务中用于增强自注意力机制的技术，特别是在处理图像、视频等高维数据时，能够有效地处理不规则、非均匀的空间或时间分布。它的关键思想是通过对关注区域进行选择性采样，而不是计算所有位置的注意力权重，从而显著提高计算效率和精度，尤其是在处理大规模数据时。</p>
+<p>Deformable Attention 最初应用于<strong>Deformable DETR</strong>（Deformable Detection Transformer）中，针对检测任务优化了传统的自注意力机制，后来被推广到其他任务，如图像分割、姿态估计等。下面是 Deformable Attention 的一些关键特性和原理：</p>
+<h3 id="1-传统自注意力的瓶颈"><a href="#1-传统自注意力的瓶颈" class="headerlink" title="1. 传统自注意力的瓶颈"></a>1. <strong>传统自注意力的瓶颈</strong></h3><p>标准的自注意力机制（如在 Transformer 中使用的注意力机制）通常会计算输入的每一个位置与所有其他位置的关系，这导致了计算复杂度是输入序列长度的平方。在图像中，若处理的是高分辨率图像或长序列数据，这样的计算开销会非常巨大。具体来说：</p>
+<ul>
+<li><strong>计算复杂度</strong>：对于长序列，计算每一对位置之间的相似度需要 ( O(N^2) ) 的时间复杂度，其中 ( N ) 是序列的长度。对于图像数据而言，每个像素与所有其他像素的关系计算量也非常庞大。</li>
+</ul>
+<h3 id="2-Deformable-Attention-的设计思想"><a href="#2-Deformable-Attention-的设计思想" class="headerlink" title="2. Deformable Attention 的设计思想"></a>2. <strong>Deformable Attention 的设计思想</strong></h3><p>Deformable Attention 通过限制计算注意力的区域来减少计算量。与标准的全局自注意力机制不同，Deformable Attention 仅关注输入数据中的 <strong>少量关键位置</strong>，这些关键位置通过学习自适应地选择，能够有效地捕捉到重要的上下文信息。</p>
+<ul>
+<li><strong>选择性采样</strong>：而不是计算每个位置和所有其他位置的关系，Deformable Attention 只选择一些特定的、与当前查询相关的关键位置进行计算。这些关键位置通常是通过一个学习的<strong>采样位置</strong>来选择的，因此能关注到更多有用的信息。</li>
+</ul>
+<h3 id="3-Deformable-Attention-的实现原理"><a href="#3-Deformable-Attention-的实现原理" class="headerlink" title="3. Deformable Attention 的实现原理"></a>3. <strong>Deformable Attention 的实现原理</strong></h3><p>Deformable Attention 的核心思想是通过<strong>可变形采样</strong>（deformable sampling）来动态选择哪些位置会参与到注意力的计算中。这通常通过引入一个采样的位置信息来完成，该信息在训练过程中不断优化，以便能自适应地选择合适的区域。</p>
+<ul>
+<li><p><strong>采样位置的生成</strong>：在 Deformable Attention 中，会对每个查询（query）生成一组采样位置（采样点），这些位置不一定是规则网格上的点，而是通过某种方式（如通过网络学习的偏移量）选择的。采样位置通常会覆盖输入特征的局部区域，从而捕获重要的上下文信息。</p>
+</li>
+<li><p><strong>注意力计算</strong>：通过对选定的局部位置进行自注意力计算，可以大大减少计算量，因为只需要计算局部区域的注意力，而不是全局的每一对位置之间的关系。</p>
+</li>
+<li><p><strong>位置信息</strong>：Deformable Attention 采用相对位置信息来进一步增强模型的表达能力，能够处理不同位置间的空间关系。</p>
+</li>
+</ul>
+<h3 id="4-Deformable-Attention-与标准自注意力的比较"><a href="#4-Deformable-Attention-与标准自注意力的比较" class="headerlink" title="4. Deformable Attention 与标准自注意力的比较"></a>4. <strong>Deformable Attention 与标准自注意力的比较</strong></h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>标准自注意力</th>
+<th>Deformable Attention</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>计算复杂度</strong></td>
+<td>( O(N^2) )</td>
+<td>( O(N \cdot M) )，( M \ll N )</td>
+</tr>
+<tr>
+<td><strong>注意力区域</strong></td>
+<td>全局注意力，计算所有位置间的关系</td>
+<td>局部区域注意力，选择关键位置进行计算</td>
+</tr>
+<tr>
+<td><strong>效率</strong></td>
+<td>计算开销大，内存消耗大</td>
+<td>更高效，内存消耗少</td>
+</tr>
+<tr>
+<td><strong>灵活性</strong></td>
+<td>对所有位置进行相同的注意力计算</td>
+<td>动态选择关键位置，自适应性强</td>
+</tr>
+</tbody></table>
+<h3 id="5-Deformable-Attention-的优势"><a href="#5-Deformable-Attention-的优势" class="headerlink" title="5. Deformable Attention 的优势"></a>5. <strong>Deformable Attention 的优势</strong></h3><ul>
+<li><strong>计算效率</strong>：由于仅计算少量的关键位置，Deformable Attention 在计算效率上相较于传统的自注意力机制有显著提升，尤其是在处理大规模输入数据时（如高分辨率图像、长时间序列等）。</li>
+<li><strong>灵活性与自适应性</strong>：Deformable Attention 可以根据任务和输入数据的不同，自适应地选择最相关的位置进行注意力计算，而不是使用固定的网格结构。这样可以更灵活地处理复杂的空间或时间关系。</li>
+<li><strong>减少计算冗余</strong>：在传统自注意力中，每个位置都与所有其他位置进行计算，这会带来大量冗余计算。Deformable Attention 通过局部采样减少了这些冗余计算，特别是在高分辨率图像的情况下，计算的效率提升尤为明显。</li>
+</ul>
+<h3 id="6-应用领域"><a href="#6-应用领域" class="headerlink" title="6. 应用领域"></a>6. <strong>应用领域</strong></h3><p>Deformable Attention 在多个领域中取得了显著的成果，特别是在计算机视觉任务中：</p>
+<ul>
+<li><p><strong>目标检测</strong>：Deformable DETR（Deformable Detection Transformer）是 Deformable Attention 的一个重要应用，改进了传统 DETR 模型在目标检测中的性能，尤其是在处理大尺度图像时更为高效。</p>
+</li>
+<li><p><strong>图像分割</strong>：Deformable Attention 也被用于图像分割任务，能够有效地捕捉到图像中的细节信息，特别是在处理不规则形状和边界时。</p>
+</li>
+<li><p><strong>姿态估计</strong>：通过对特定关键点的注意力计算，Deformable Attention 在姿态估计任务中也得到了广泛应用，能够更准确地捕捉人体姿态变化。</p>
+</li>
+</ul>
+<h3 id="7-Deformable-Attention-的进一步发展"><a href="#7-Deformable-Attention-的进一步发展" class="headerlink" title="7. Deformable Attention 的进一步发展"></a>7. <strong>Deformable Attention 的进一步发展</strong></h3><p>Deformable Attention 的应用仍在不断扩展，研究者正在探索其在其他领域的潜力，例如：</p>
+<ul>
+<li><strong>自然语言处理</strong>：在自然语言处理中，Deformable Attention 可能能够帮助捕捉长文本中的重要上下文信息，尤其是当文本存在复杂的依赖关系时。</li>
+<li><strong>视频处理</strong>：Deformable Attention 可以在视频处理任务中，通过自适应选择关键帧或区域，从而提高效率并降低计算量。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Deformable Attention 通过对注意力计算的局部化和选择性采样，大大提高了计算效率和灵活性，尤其在处理高维数据（如高分辨率图像和长序列）时展现了优势。它在计算机视觉领域，特别是目标检测和图像分割中，取得了显著的成果，并且有潜力应用于其他领域，如自然语言处理和视频分析等。</p>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -546,7 +822,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-12-09 17:45:44" itemprop="dateModified" datetime="2024-12-09T17:45:44+08:00">2024-12-09</time>
+                <time title="修改时间：2025-03-26 18:29:16" itemprop="dateModified" datetime="2025-03-26T18:29:16+08:00">2025-03-26</time>
               </span>
 
           
@@ -569,14 +845,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.7k</span>
+              <span>11k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>10 分钟</span>
             </span>
 
         </div>
@@ -588,7 +864,65 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="适配-DSL"><a href="#适配-DSL" class="headerlink" title="适配 DSL"></a>适配 DSL</h2><ol>
+          <h2 id="cuda和triton区别"><a href="#cuda和triton区别" class="headerlink" title="cuda和triton区别"></a>cuda和triton区别</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://chatgpt.com/share/67dcd467-b918-8004-886d-5d3381653365">gpt</a></li>
+<li>编程粒度： cuda 是thread, triton 是thread block</li>
+</ol>
+<h2 id="对数"><a href="#对数" class="headerlink" title="对数"></a>对数</h2><ol>
+<li>mma生成比较矩阵txt</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">result = (matmul_outputs_sipu.to(<span class="string">&quot;cpu&quot;</span>)- matmul_outputs_golden).<span class="built_in">abs</span>() &gt; <span class="number">0.1</span>  <span class="comment"># 误差大于 0.1 的地方设为 True</span></span><br><span class="line">result = result.to(torch.<span class="built_in">int</span>)  <span class="comment"># 转换为整数 (1 表示误差超出，0 表示正常)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 NumPy 加速写入</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">np.savetxt(<span class="string">&quot;result1.txt&quot;</span>, result.cpu().numpy()[:<span class="number">64</span>, :<span class="number">64</span>], fmt=<span class="string">&quot;%d&quot;</span>)</span><br><span class="line"></span><br><span class="line">result = (C - golden_C).<span class="built_in">abs</span>() &gt; <span class="number">0.1</span></span><br><span class="line">result = result.to(torch.<span class="built_in">int</span>)  <span class="comment"># 将布尔值转换为整数</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;result1.txt&quot;</span>, <span class="string">&quot;w&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(result.shape[<span class="number">0</span>]):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(result.shape[<span class="number">1</span>]):</span><br><span class="line">            f.write(<span class="string">f&quot;<span class="subst">&#123;result[i, j].item()&#125;</span> &quot;</span>)</span><br><span class="line">        f.write(<span class="string">&quot;\n&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="coordinate-到-index的映射"><a href="#coordinate-到-index的映射" class="headerlink" title="coordinate 到 index的映射"></a>coordinate 到 index的映射</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#  坐标(x, y)到index的转换, 将M行N列矩阵划分为（m, n) 的block,block内部行优先存储，block之间也是行优先</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#  block index </span></span><br><span class="line"><span class="comment">#  block_row = x // m</span></span><br><span class="line"><span class="comment">#  block_col = y // n</span></span><br><span class="line"><span class="comment">#  blocks_per_row = N // n</span></span><br><span class="line"><span class="comment">#  block_index = block_row * blocks_per_row + block_col = x // m * (N // n) + y // n</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#  local index</span></span><br><span class="line"><span class="comment">#  local_row = x % m</span></span><br><span class="line"><span class="comment">#  local_col = y % n</span></span><br><span class="line"><span class="comment">#  local_index = local_row * n + local_col = x % m * n + y % n</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#  global index</span></span><br><span class="line"><span class="comment">#  global_index = block_index * m * n + local_index = (x // m * (N // n) + y // n) * m * n + x % m * n + y % n</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># (x, y) -&gt; (x // m * (N // n) + y // n) * m * n + x % m * n + y % n</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#坐标(x, y)到index的转换, 将M行N列矩阵划分为（m, n) 的block,block内部列优先存储，block之间也是列优先</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#  block index </span></span><br><span class="line"><span class="comment">#  block_row = x // m</span></span><br><span class="line"><span class="comment">#  block_col = y // n</span></span><br><span class="line"><span class="comment">#  blocks_per_col = M // m</span></span><br><span class="line"><span class="comment">#  block_index = block_col * blocks_per_col + block_row = y // n * (M // m) + x // m</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#  local index</span></span><br><span class="line"><span class="comment">#  local_row = x % m</span></span><br><span class="line"><span class="comment">#  local_col = y % n</span></span><br><span class="line"><span class="comment">#  local_index = local_col * m + local_row = y % n * m + x % m</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#  global index</span></span><br><span class="line"><span class="comment">#  global_index = block_index * m * n + local_index = (y // n * (M // m) + x // m) * m * n + y % n * m + x % m</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># (x, y) -&gt; (y // n * (M // m) + x // m) * m * n + y % n * m + x % m</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a><a target="_blank" rel="noopener" href="https://github.com/triton-lang/triton/tree/main/bin">Tools</a></h2><ol>
+<li>vscode mlir 插件配置 triton-lsp<ul>
+<li>op可以跳转到src定义</li>
+<li>loc可以看行数</li>
+<li>log.txt中可以看outline，能找到IR Dump Before</li>
+<li>需要注册自定义dialet <a target="_blank" rel="noopener" href="https://github.com/triton-lang/triton/blob/main/bin/RegisterTritonDialects.h">link</a>：头文件和registry.insert dialect, 注册pass</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;siorigin/include/Dialect/TritonSIPU/IR/Dialect.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;siorigin/include/TritonToTritonSIPU/Passes.h&quot;</span></span></span><br><span class="line">mlir::triton::siorigin::<span class="built_in">registerConvertLoadStoreOpsPass</span>();</span><br><span class="line">registry.insert&lt;mlir::triton::siorigin::TritonSIPUDialect&gt;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/Tools/MLIRLSP/#build-system-integration-1">tablegen_compile_commands.yml</a><ul>
+<li>配置mlir tblgen-lsp-server 和 tablen_compile_commands.yml</li>
+<li>可以从td文件跳转到生成的定义</li>
+<li>hover</li>
+</ul>
+</li>
+<li>triton-opt</li>
+<li>triton-llvm-opt</li>
+<li>graphiviz<ul>
+<li><code>triton-opt matmul_kernel.ttir --view-op-graph --allow-unregistered-dialect &gt; test.dot 2&gt;&amp;1</code></li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=tintinweb.graphviz-interactive-preview">vscode plugin open dot file</a></li>
+<li><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/Passes/#-view-op-graph">view-op-graph</a></li>
+</ul>
+</li>
+<li>triton-tensor-layout<ul>
+<li><code>triton-tensor-layout -l &quot;#ttg.blocked&lt;&#123;sizePerThread = [1, 4], threadsPerWarp = [4, 8], warpsPerCTA = [4, 1], order = [1, 0]&#125;&gt;&quot; -t &quot;tensor&lt;16x16xf16&gt;&quot;</code> 注意：用ttg，不用triton_gpu</li>
+<li><code>triton-tensor-layout -l &quot;#ttg.nvidia_mma&lt;&#123;versionMajor = 3, versionMinor = 0, warpsPerCTA = [8, 1], CTAsPerCGA = [1, 1], CTASplitNum = [1, 1], CTAOrder = [1, 0], instrShape = [16, 256, 32]&#125;&gt;&quot; -t &quot;tensor&lt;128x256xf16&gt;&quot;</code></li>
+<li>unittest&#x2F;Dialect&#x2F;TritonGPU&#x2F;DumpLayoutTest.cpp里有测试代码</li>
+<li>关键代码: shared layout, distribute layout<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">std::string mlir::triton::gpu::<span class="built_in">getLayoutStr</span>(RankedTensorType tensorType,</span><br><span class="line">                                            <span class="type">bool</span> useHWPointOfView) &#123;</span><br><span class="line">  <span class="keyword">auto</span> layout = tensorType.<span class="built_in">getEncoding</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// tensorType is needed later on (e.g., getDimSize(j)), so we still have to</span></span><br><span class="line">  <span class="comment">// pass it as a param</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">auto</span> sharedLayout = mlir::<span class="built_in">dyn_cast</span>&lt;SharedEncodingAttr&gt;(layout)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">getSharedLayoutStr</span>(tensorType, useHWPointOfView);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">auto</span> distributedLayout =</span><br><span class="line">                 mlir::<span class="built_in">dyn_cast</span>&lt;DistributedEncodingTrait&gt;(layout)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">getDistributedLayoutStr</span>(tensorType, useHWPointOfView);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// else unimplemented, return error</span></span><br><span class="line">  llvm::<span class="built_in">report_fatal_error</span>(<span class="string">&quot;Unimplemented usage of getLayoutStr&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><ol>
+<li>tt.splat 操作用于将一个标量值扩展为一个张量，其中所有元素都具有相同的标量值。</li>
+<li>tt.broadcast 操作用于将一个较小的张量扩展为一个较大的张量，通过复制其元素来匹配目标张量的形状。</li>
+<li>NOTE: tutorial 中的BLOCK_SIZE和cuda中的block_size不是一样的， BLOCK_SIZE是data size, block size是cuda中一个block有多少thread<ul>
+<li>BLOCK_SIZE 是一个编译时常量，用来指定每个 kernel 实例（也可以看作是“tile”或“block”）要处理的数据量，即每个程序实例负责处理多少个元素。</li>
+<li>block_size 通常是指每个 block 中的线程总数（即 num_warps × 32）以及每个线程负责的工作量（sizePerThread）</li>
+<li>Triton 编译器和运行时会根据这个 BLOCK_SIZE 自动确定实际的线程组织（比如如何分配到 warps 中），从而隐式地管理 num_warps 和 sizePerThread</li>
+<li>教程中定义的 BLOCK_SIZE 并没有和我们之前讨论的概念冲突，而是用一种更高层的抽象来表达同样的思想。它既代表了一个 block 中需要处理的数据总量，也间接影响了内部线程数和每个线程的工作量，只不过这些底层细节由 Triton 自动处理了。</li>
+<li><code>BLOCK_SIZE = block_size × sizePerThread = num_warps x threadsPerWarp × sizePerThread</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="适配-DSL"><a href="#适配-DSL" class="headerlink" title="适配 DSL"></a>适配 DSL</h2><ol>
 <li>intel<br><img src="https://i.ibb.co/cF3yF0K/e-Hk7ps-HTk-M.png" alt="intel backend architecture"></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/intel/intel-xpu-backend-for-triton">intel-xpu-backend-for-triton</a></li>
 <li>高通<br><img src="https://i.ibb.co/6NMJ8Yk/xo5-Pqj-RPDT.png" alt="architecture"><br><img src="https://i.ibb.co/9VLhpNk/du-T6l-PNQfg.png" alt="pytorch"></li>
@@ -596,7 +930,72 @@
 <li><a target="_blank" rel="noopener" href="https://github.com/microsoft/triton-shared">microsoft&#x2F;triton-shared</a></li>
 <li><a target="_blank" rel="noopener" href="https://llvm.org/docs/TableGen/ProgRef.html">tablegen 来生成 MLIR 代码</a></li>
 </ol>
+<h2 id="tensor和线程layout-即layout"><a href="#tensor和线程layout-即layout" class="headerlink" title="tensor和线程layout(即layout)"></a>tensor和线程layout(即layout)</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/triton-lang/triton/blob/main/unittest/Dialect/TritonGPU/LinearLayoutConversionsTest.cpp">LinearLayoutConversionsTest</a></li>
+<li><code>ptr+index &lt;-shape stride-&gt; coodinate &lt;-layout-&gt; thread id</code><ul>
+<li>tensor提供coodinate到index, value的映射</li>
+<li>layout提供coodinate到thread id映射, layout(coodinate) &#x3D; thread id</li>
+</ul>
+</li>
+<li>不同的Layout可以看作是不同的映射函数，代表了不同访问模式。</li>
+<li>Layout是tensor coodinate到线程的映射，we define a layout as a function that maps a multi-dimensional tensor index to a set of integers T corresponding to the indices of the CUDA threads allowed to access some data at index i. <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/672720213">link</a><ul>
+<li>coodinate到index是由tensor axis info决定的</li>
+</ul>
+</li>
+<li>triton也通过Layout来表征Thread对数据(tensor)的访问模式，例如blocked和blocked1分别表示A,B两个Operand的访问模式，即每个Thread取连续的8个f16等等。<ul>
+<li>tensor&lt;64x64x!tt.ptr<f32>, #blocked1&gt; 既有tensor, 也有layout, data layout </li>
+<li>AxisInfo 会记录张量各轴的尺寸、步幅以及与硬件映射相关的信息，用于指导后续的内存合并（coalesce）和其它优化操作，“AxisInfo”并不是存储张量所有信息的容器，它主要关注那些对高效内存访存至关重要的轴信息（例如各轴的大小、步幅、排列顺序等），而完整的张量信息还可能分布在其他 IR 属性或数据结构中。因此，可以说，Triton 的 AxisInfo 分析提取并表达了张量中与访存和并行调度密切相关的那部分信息。</li>
+</ul>
+</li>
+<li>data layout 是 TritonGPU Dialect 的 Type system 的关键，确定了 Data(各层级memory中的Tensor) 到 thread 之间的映射关系。</li>
+<li>总的来说 tensor 为数据在内存中的物理组织提供静态描述，而layout 则通过运行时索引决定每个线程应处理数据中的哪一部分。两者必须配合，才能让每个执行单元正确且高效地读取、处理和写回数据，从而充分发挥 GPU 的并行计算能力</li>
+</ol>
+<h2 id="axis-info"><a href="#axis-info" class="headerlink" title="axis info"></a>axis info</h2><ol>
+<li>先Analysis再Transform <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/687394750">link</a></li>
+<li>AxisInfo Analysis<ul>
+<li>Divisibility：可分性, 在处理数组或矩阵时，如果数据维度的长度能整除分块大小，则可以将数据分割为连续且大小均一的块（例如在 tiling 操作中），这有助于内存访问的局部性和缓存利用率。<ul>
+<li>tt.divisibility 属性就是用来给出对数据（通常是指针或者整数值）的整除性（或对齐性）的保证</li>
+<li>这种机制类似于其他编译器中通过“对齐”说明符（如 attribute((aligned(16))) 等）提供的优化提示，但在 Triton IR 中以一种专用的方式表达。</li>
+</ul>
+</li>
+<li>Contiguity: 连续性，当数据（如数组或向量）的各个元素在内存中按照顺序排列、地址连续时，我们称该数据结构是连续的</li>
+<li>Constancy(Constant Value): 指这个Tensor是常量，得到其常量的长度，对于%1是通过arith.constant得到的，其长度为128，constant value为1</li>
+</ul>
+</li>
+<li>gpu blocked layout是线程分配数据的layout，不是数据的layout   </li>
+<li>访存合并需要看load store的oprand的<code>线程访问顺序和数据的排布</code>决定是不是需要合并访存  sample:</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#blocked1 = #triton_gpu.blocked&lt;&#123;sizePerThread = [1, 1], threadsPerWarp = [32, 1], warpsPerCTA = [4, 1], order = [0, 1]&#125;&gt;</span><br><span class="line">%10 = tt.addptr %7, %9 : tensor&lt;64x64x!tt.ptr&lt;f32&gt;, #blocked1&gt;, tensor&lt;64x64xi32, #blocked1&gt;</span><br><span class="line">%19 = tt.load %10, %cst, %cst_0 &#123;cache = 1 : i32, evict = 1 : i32, isVolatile = false&#125; : tensor&lt;64x64xf32, #blocked1&gt;</span><br><span class="line">// %10 的AxisInfo contiguity = [1, 64], divisibility = [4, 16], constancy = [1, 1], constant_value = &lt;none&gt;</span><br><span class="line">// %10的blocked threadsPerWarp = [32, 1]表明线程按列取数，AxisInfo  contiguity = [1, 64]表明数据是行优先的，load的时候访存效率不高，需要访存合并coalesce,  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="lowering"><a href="#lowering" class="headerlink" title="lowering"></a>lowering</h2><h3 id="for"><a href="#for" class="headerlink" title="for"></a><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/Dialects/SCFDialect/#scffor-scfforop">for</a></h3><ol>
+<li>for -&gt; scf -&gt; cf -&gt; llvm.cf -&gt; br</li>
+</ol>
+<h3 id="make-range"><a href="#make-range" class="headerlink" title="make_range"></a>make_range</h3><ol>
+<li>tt.make_range决定每一个线程计算的数据量，triton是block level的编程，通过make_range变成thread level</li>
+<li>sipu 中tile_format输入时， make_range决定数据偏移</li>
+</ol>
 <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>sizePerThread &#x3D; [2, 2], threadsPerWarp &#x3D; [8, 4], warpsPerCTA &#x3D; [1, 2]. 因为此时sizePerThread<em>threadsPerWarp</em>warpsPerCTA &#x3D; 16x16, 小于tensor的shape 32x32, 所以这个16x16的layout会按照[2, 2]的shape进行广播, 填满整个32x32的tensor.</li>
+<li><code>./triton-tensor-layout -l &quot;#triton_gpu.blocked&lt;&#123;sizePerThread = [1, 1], threadsPerWarp = [8, 4], warpsPerCTA =  [2, 2], order = [1, 0]&#125;&gt;&quot; -t &quot;tensor&lt;16x8xf32&gt;&quot;</code></li>
+<li>intrinsic（内在函数）和 asm（Inline assembly 内联汇编）各有优缺点：内在函数提供了一种较高级、便捷且安全的方式调用底层指令，同时让编译器能充分优化代码；而内联汇编则提供了极致的控制能力，但也带来可移植性和维护性上的挑战。</li>
+<li>在编译器和编程语言文档中，”intrinsic” 通常指由编译器直接内置的函数，用于提高效率，将函数调用转化为内联代码或特定的机器指令。”builtin” 则多用作 “intrinsic” 的同义词</li>
+<li>polyhedral compilation，  scheduling languages与triton<ul>
+<li>如果你做编译优化（LLVM, 编译器后端开发）→ 选择 Polyhedral Compilation</li>
+<li>如果你优化计算图（Halide, TVM, 计算调度）→ 选择 Scheduling Languages</li>
+<li>如果你优化深度学习（GPU kernel 加速）→ 选择 Triton</li>
+</ul>
+</li>
+<li>假设要优化矩阵乘法 C &#x3D; A × B：<ul>
+<li>Polyhedral Compilation：自动分析 for 循环依赖，调整 i, j, k 计算顺序，进行 loop tiling 和 向量化。生成适用于 CPU&#x2F;GPU 的高效代码。</li>
+<li>Scheduling Languages（Halide, TVM）：允许用户手动设定计算顺序，比如先计算小块矩阵、再合并结果。适用于自动调度和搜索最优策略。</li>
+<li>Triton：直接编写 triton.kernel，自动生成高效 CUDA 代码。通过 memory tiling 和 寄存器优化 提高 GPU 执行效率。</li>
+</ul>
+</li>
+<li>第一次编译时会在&#x2F;tmp目录下生成main.cpp然后编译成运行kernel时所需so，编译后删除main.cpp，生成内容见driver.py。<ul>
+<li>main.cpp不包含main函数，有函数用于调用kernel</li>
+<li>main.cpp中包含生成的kenerl路径, 需要加载</li>
+</ul>
+</li>
 <li>使得算子开发的部分复杂度分配给上层 kernel 开发用户，部分复杂度分配给底层的 Triton compiler。同时对接上层框架的工作则交给了上层软件栈，使得 Triton 能够专注在自己这个层次需要解决的核心问题上，找到了一个比较不错的”product&#x2F;technology” fit。</li>
 <li>Triton 的核心设计思想—-Block-wise 编程，Block 上面的归用户，Block 内部的归 Triton compiler 自动化处理。相应地，Block 内部的优化细节，也交由 Triton compiler 处理了。</li>
 <li>Triton 这个项目目前还更像是一个满足细分场景(高效高性能 Kernel 开发)需求的“小而美”的项目</li>
@@ -620,7 +1019,7 @@
 <li>Triton, a <code>language</code> and <code>compiler</code> for writing highly efficient custom Deep-Learning primitives. The aim of Triton is to provide an open-source environment to write fast code at higher productivity than CUDA, but also with higher flexibility than other existing DSLs.</li>
 <li>An open-source python-like programming language which enables researchers with no CUDA experience to write highly efficient GPU code – most of the time on par with what an expert would be able to produce</li>
 <li>开发效率<br><img src="https://i.ibb.co/NYSS9WV/Xrz-Qku-ZLSo.png" alt="img"></li>
-<li>领域特定语言（DSLs)</li>
+<li>领域特定语言（domain-specific language DSL)</li>
 <li>本质上来说，Triton 和 TVM&#x2F;XLA 这类工作的定位有所不同，如果说 TVM&#x2F;XLA 是比较纯正的 AI 编译器的话，Triton 更像是一个面向 AI 加速器算子开发的领域开发语言，为了能够将用户使用 Triton 语言开发的 kernel 映射到具体硬件上的执行码，需要设计开发相应的 Triton compiler 来完成这层映射。所以当我们说 Triton 的时候，其实隐指了 Triton 语言+Triton 编译器这两个事物的综合体。</li>
 <li>从 triton 的源码来看，triton 目前在 NV 的 GPU 上已经有了一套自己比较成熟的 mapping 路线，通过先对 python 语言层，也就是 triton DSL 进行抽象，得到 AST，然后将 AST 中的每个节点 lower 到 Triton Dialect 上，Triton Dialect 则是一个比较贴近上层语言表达的 IR，他的主要作用则是为了保持用户在书写对应算法时的准确性。接下来会进一步被 map 到 TritonGPU Dialect 上，那么 TritonGPU Dialect 则是一个更加贴近 GPU 层面的 IR，它则是为了具体的性能优化而设计。图中其他的蓝色模块，比如 SCF，Arith，Tensor 等都是 MLIR 生态中已经被实现好并且广为使用的 Dialect。这些 Dialect 会一起和 TritonGPU Dialect 共存，然后被 lower 到对应的 LLVM Dialect，LLVM Dialect 则是最贴近 LLVM IR 的一层设计，从 LLVM Dialect 到 LLVM IR 的转换是非常容易的，最终代码就会被接入到 LLVM 的 NVPTX 的后端，从而生成后续能跑在 GPU 上的高性能 machine code. <a target="_blank" rel="noopener" href="http://giantpandacv.com/project/%E9%83%A8%E7%BD%B2%E4%BC%98%E5%8C%96/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%BC%96%E8%AF%91%E5%99%A8/OpenAI%20Triton%20MLIR%20%E7%AC%AC%E9%9B%B6%E7%AB%A0%20%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/">link</a></li>
 <li>和 cuda pytorch 区别 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=AtbnRIzpwho&t=273s">link</a><br><img src="https://i.ibb.co/qszbhN4/NYmmor-R0l-P.png" alt="区别"></li>
@@ -654,11 +1053,16 @@
 <li>torch.compile</li>
 </ol>
 <h2 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h2><ol>
+<li><code>./python/triton/_C/libtriton.so</code> libtrion位置</li>
 <li><a target="_blank" rel="noopener" href="https://triton-lang.org/main/programming-guide/chapter-3/debugging.html">官方指导</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/triton-lang/triton?tab=readme-ov-file#tips-for-building">源码 debug</a></li>
+<li><code>TRITON_ENABLE_LLVM_DEBUG=1</code> 打印详细信息</li>
+<li><code>TRITON_LLVM_DEBUG_ONLY=&quot;tritongpu-remove-layout-conversions,regalloc&quot;</code> 只打印一些pass</li>
 <li><code>TRITON_INTERPRET=1</code> 使用 Triton 解释器而不是在 GPU 上运行。您可以在内核代码中插入 Python 断点！NOTE:注意真正运行的时候不要打开</li>
-<li><code>MLIR_ENABLE_DUMP=1</code></li>
+<li><code>TRITON_HOME=/home/data</code></li>
+<li><code>MLIR_ENABLE_DUMP=1</code> 只dump mlir, 不dump llvm ir</li>
 <li><code>LLVM_IR_ENABLE_DUMP=1</code></li>
+<li><code>TRITON_ALWAYS_COMPILE=1</code> 每次都重新编译</li>
 <li><code>TRITON_PRINT_AUTOTUNING=1</code>可以打印 autotune 选择的最快配置 prints out the best autotuning config and total time spent for each kernel after autotuning is complete.</li>
 </ol>
 <h2 id="c-调用-triton-kernel"><a href="#c-调用-triton-kernel" class="headerlink" title="c++调用 triton kernel"></a>c++调用 triton kernel</h2><ol>
@@ -1243,225 +1647,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/06/14/llm-c/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/06/14/llm-c/" class="post-title-link" itemprop="url">llm.c</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-06-14 14:54:17 / 修改时间：14:59:11" itemprop="dateCreated datePublished" datetime="2024-06-14T14:54:17+08:00">2024-06-14</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2024/06/14/llm-c/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2024/06/14/llm-c/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>161</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="download-models"><a href="#download-models" class="headerlink" title="download models"></a>download models</h2><ol>
-<li>gitee</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone https://gitee.com/hf-models/openai-community-gpt2.git</span><br><span class="line">cd gpt2</span><br><span class="line">apt install git-lfs</span><br><span class="line">git lfs pull</span><br></pre></td></tr></table></figure>
-
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/karpathy/llm.c">karpathy&#x2F;llm.c</a></li>
-<li><a target="_blank" rel="noopener" href="https://gitee.com/hf-models/openai-community-gpt2.git">gitee hugging face gpt2</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/06/12/bev/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/06/12/bev/" class="post-title-link" itemprop="url">bev</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-06-12 15:19:55 / 修改时间：17:47:47" itemprop="dateCreated datePublished" datetime="2024-06-12T15:19:55+08:00">2024-06-12</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2024/06/12/bev/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2024/06/12/bev/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>具体到智能驾驶系统，因为感知、预测、决策和规划等模块，都是在 3D 空间内进行的，而摄像头看到的图像信息，只是真实物理世界在透视视图（Perspective View）下的投影，从图像得到的信息，需要经过复杂的后处理才能使用，信息损失也很多。而<code>将视觉信息转换到 BEV 空间，则可以很方便地连接感知与下游的规划控制模块</code>。</li>
-<li>BEV 空间内的感知任务，在精度上也有优势。做 2D 感知时，面对远处的物体，可能几个像素的误差便可能导致几十米的真实误差，而在 BEV 空间内训练模型时，对远处误差的损失（loss）更加明显，所以感知结果也会更准确一些。</li>
-<li>BEV 在线构建的语义地图可以一定程度上代替高精地图的作用，在城市 NOA 中发挥重要作用。</li>
-<li>HDMapNet、BEVSegFormer、BEVerse 等方法，可以基于多摄像头信息，将 BEV 空间内的车道线、路沿、斑马线等静态目标物，在线生成局部语义地图供下游规控任务使用，大大降低了语义地图的构建和维护成本，从而可能会给行业带来地图构建和更新的新范式。</li>
-</ol>
-<h2 id="bevdet"><a href="#bevdet" class="headerlink" title="bevdet"></a>bevdet</h2><h2 id="bevformer"><a href="#bevformer" class="headerlink" title="bevformer"></a>bevformer</h2><h2 id="bevfuison"><a href="#bevfuison" class="headerlink" title="bevfuison"></a>bevfuison</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/mit-han-lab/bevfusion/tree/main/mmdet3d/ops/bev_pool/src">bev_pool code</a></li>
-</ol>
-<h2 id="bev-pool"><a href="#bev-pool" class="headerlink" title="bev pool"></a>bev pool</h2><ol>
-<li>bevfusion 先实现</li>
-<li>Voxel Pooling 用来把多视角的 3D 特征 F3d(视锥特征) 聚合成统一的基于 BEV 的特征 Fbev 。<ul>
-<li>voxel 体素，对应 3d 特征点， pixel 像素，对应 2d 特征点</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2211.17111">BEVPoolv2: A Cutting-edge Implementation of BEVDet Toward Deployment</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/djfjkj52/article/details/138722692">BEVDet 的 Voxel pooling 新版本 BEVPoolv2: A Cutting-edge Implementation of BEVDet Toward Deplo</a></li>
-<li>根据 NDHW voxel index(3d 特征点到 bev pillar 映射索引) 和 NDHWC frustum feature（视锥特征) 可以得到 bev feature</li>
-<li>估计深度原理可能是近大远小，同一个物体如果占用了很多像素则说明物体离的近，占用很少像素说明离的远</li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/539951496">一文读懂 BEV 空间内的特征级融合</a><ul>
-<li>前融合：是指把各传感器的数据采集后，经过数据同步后，对这些原始数据进行融合</li>
-<li>中融合：就是先将各个传感器通过神经网络模型提取中间层特征（即有效特征），再对多种传感器的有效主要特征进行融合，从而更有可能得到最佳推理。</li>
-<li>后融合：是指各传感器针对目标物体单独进行深度学习模型推理，从而各自输出带有传感器自身属性的结果，并在决策层进行融合，</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/567880155">一文读懂 BEV 自底向上方法：LSS 和 BEVDepth</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA-AI-IOT/Lidar_AI_Solution/">NVIDIA-AI-IOT&#x2F;Lidar_AI_Solution&#x2F;</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1529,7 +1718,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-count">192</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1562,6 +1751,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1569,12 +1764,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -1602,7 +1791,7 @@
 <div class="copyright">
   
   &copy; 2021 – 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1612,13 +1801,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">543k</span>
+    <span title="站点总字数">587k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:14</span>
+    <span title="站点阅读时长">8:54</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="适配 DSL intel intel-xpu-backend-for-triton 高通 Triton Conference 2024: Afternoon Session microsoft&#x2F;triton-shared tablegen 来生成 MLIR 代码  base 使得算子开发的部分复杂度分配给上层 kernel 开发用户，部分复杂度分配给底层的 Triton compiler">
+  <meta name="description" content="cuda和triton区别 gpt 编程粒度： cuda 是thread, triton 是thread block  对数 mma生成比较矩阵txt  1234567891011121314result &#x3D; (matmul_outputs_sipu.to(&quot;cpu&quot;)- matmul_outputs_golden).abs() &gt; 0.1  # 误差大于 0.1 的地方">
 <meta property="og:type" content="article">
 <meta property="og:title" content="triton">
 <meta property="og:url" content="https://jiaxiyang.github.io/2024/07/03/triton/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="适配 DSL intel intel-xpu-backend-for-triton 高通 Triton Conference 2024: Afternoon Session microsoft&#x2F;triton-shared tablegen 来生成 MLIR 代码  base 使得算子开发的部分复杂度分配给上层 kernel 开发用户，部分复杂度分配给底层的 Triton compiler">
+<meta property="og:description" content="cuda和triton区别 gpt 编程粒度： cuda 是thread, triton 是thread block  对数 mma生成比较矩阵txt  1234567891011121314result &#x3D; (matmul_outputs_sipu.to(&quot;cpu&quot;)- matmul_outputs_golden).abs() &gt; 0.1  # 误差大于 0.1 的地方">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.ibb.co/cF3yF0K/e-Hk7ps-HTk-M.png">
 <meta property="og:image" content="https://i.ibb.co/6NMJ8Yk/xo5-Pqj-RPDT.png">
@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://i.ibb.co/NYSS9WV/Xrz-Qku-ZLSo.png">
 <meta property="og:image" content="https://i.ibb.co/qszbhN4/NYmmor-R0l-P.png">
 <meta property="article:published_time" content="2024-07-03T07:04:53.000Z">
-<meta property="article:modified_time" content="2024-12-09T09:45:44.035Z">
+<meta property="article:modified_time" content="2025-03-26T10:29:16.493Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.ibb.co/cF3yF0K/e-Hk7ps-HTk-M.png">
@@ -137,7 +137,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -239,7 +239,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-12-09 17:45:44" itemprop="dateModified" datetime="2024-12-09T17:45:44+08:00">2024-12-09</time>
+                <time title="修改时间：2025-03-26 18:29:16" itemprop="dateModified" datetime="2025-03-26T18:29:16+08:00">2025-03-26</time>
               </span>
 
           
@@ -269,14 +269,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.7k</span>
+              <span>11k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>10 分钟</span>
             </span>
 
         </div>
@@ -288,7 +288,65 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="适配-DSL"><a href="#适配-DSL" class="headerlink" title="适配 DSL"></a>适配 DSL</h2><ol>
+        <h2 id="cuda和triton区别"><a href="#cuda和triton区别" class="headerlink" title="cuda和triton区别"></a>cuda和triton区别</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://chatgpt.com/share/67dcd467-b918-8004-886d-5d3381653365">gpt</a></li>
+<li>编程粒度： cuda 是thread, triton 是thread block</li>
+</ol>
+<h2 id="对数"><a href="#对数" class="headerlink" title="对数"></a>对数</h2><ol>
+<li>mma生成比较矩阵txt</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">result = (matmul_outputs_sipu.to(<span class="string">&quot;cpu&quot;</span>)- matmul_outputs_golden).<span class="built_in">abs</span>() &gt; <span class="number">0.1</span>  <span class="comment"># 误差大于 0.1 的地方设为 True</span></span><br><span class="line">result = result.to(torch.<span class="built_in">int</span>)  <span class="comment"># 转换为整数 (1 表示误差超出，0 表示正常)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 NumPy 加速写入</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">np.savetxt(<span class="string">&quot;result1.txt&quot;</span>, result.cpu().numpy()[:<span class="number">64</span>, :<span class="number">64</span>], fmt=<span class="string">&quot;%d&quot;</span>)</span><br><span class="line"></span><br><span class="line">result = (C - golden_C).<span class="built_in">abs</span>() &gt; <span class="number">0.1</span></span><br><span class="line">result = result.to(torch.<span class="built_in">int</span>)  <span class="comment"># 将布尔值转换为整数</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;result1.txt&quot;</span>, <span class="string">&quot;w&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(result.shape[<span class="number">0</span>]):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(result.shape[<span class="number">1</span>]):</span><br><span class="line">            f.write(<span class="string">f&quot;<span class="subst">&#123;result[i, j].item()&#125;</span> &quot;</span>)</span><br><span class="line">        f.write(<span class="string">&quot;\n&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="coordinate-到-index的映射"><a href="#coordinate-到-index的映射" class="headerlink" title="coordinate 到 index的映射"></a>coordinate 到 index的映射</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#  坐标(x, y)到index的转换, 将M行N列矩阵划分为（m, n) 的block,block内部行优先存储，block之间也是行优先</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#  block index </span></span><br><span class="line"><span class="comment">#  block_row = x // m</span></span><br><span class="line"><span class="comment">#  block_col = y // n</span></span><br><span class="line"><span class="comment">#  blocks_per_row = N // n</span></span><br><span class="line"><span class="comment">#  block_index = block_row * blocks_per_row + block_col = x // m * (N // n) + y // n</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#  local index</span></span><br><span class="line"><span class="comment">#  local_row = x % m</span></span><br><span class="line"><span class="comment">#  local_col = y % n</span></span><br><span class="line"><span class="comment">#  local_index = local_row * n + local_col = x % m * n + y % n</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#  global index</span></span><br><span class="line"><span class="comment">#  global_index = block_index * m * n + local_index = (x // m * (N // n) + y // n) * m * n + x % m * n + y % n</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># (x, y) -&gt; (x // m * (N // n) + y // n) * m * n + x % m * n + y % n</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#坐标(x, y)到index的转换, 将M行N列矩阵划分为（m, n) 的block,block内部列优先存储，block之间也是列优先</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#  block index </span></span><br><span class="line"><span class="comment">#  block_row = x // m</span></span><br><span class="line"><span class="comment">#  block_col = y // n</span></span><br><span class="line"><span class="comment">#  blocks_per_col = M // m</span></span><br><span class="line"><span class="comment">#  block_index = block_col * blocks_per_col + block_row = y // n * (M // m) + x // m</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#  local index</span></span><br><span class="line"><span class="comment">#  local_row = x % m</span></span><br><span class="line"><span class="comment">#  local_col = y % n</span></span><br><span class="line"><span class="comment">#  local_index = local_col * m + local_row = y % n * m + x % m</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#  global index</span></span><br><span class="line"><span class="comment">#  global_index = block_index * m * n + local_index = (y // n * (M // m) + x // m) * m * n + y % n * m + x % m</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># (x, y) -&gt; (y // n * (M // m) + x // m) * m * n + y % n * m + x % m</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a><a target="_blank" rel="noopener" href="https://github.com/triton-lang/triton/tree/main/bin">Tools</a></h2><ol>
+<li>vscode mlir 插件配置 triton-lsp<ul>
+<li>op可以跳转到src定义</li>
+<li>loc可以看行数</li>
+<li>log.txt中可以看outline，能找到IR Dump Before</li>
+<li>需要注册自定义dialet <a target="_blank" rel="noopener" href="https://github.com/triton-lang/triton/blob/main/bin/RegisterTritonDialects.h">link</a>：头文件和registry.insert dialect, 注册pass</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;siorigin/include/Dialect/TritonSIPU/IR/Dialect.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;siorigin/include/TritonToTritonSIPU/Passes.h&quot;</span></span></span><br><span class="line">mlir::triton::siorigin::<span class="built_in">registerConvertLoadStoreOpsPass</span>();</span><br><span class="line">registry.insert&lt;mlir::triton::siorigin::TritonSIPUDialect&gt;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/Tools/MLIRLSP/#build-system-integration-1">tablegen_compile_commands.yml</a><ul>
+<li>配置mlir tblgen-lsp-server 和 tablen_compile_commands.yml</li>
+<li>可以从td文件跳转到生成的定义</li>
+<li>hover</li>
+</ul>
+</li>
+<li>triton-opt</li>
+<li>triton-llvm-opt</li>
+<li>graphiviz<ul>
+<li><code>triton-opt matmul_kernel.ttir --view-op-graph --allow-unregistered-dialect &gt; test.dot 2&gt;&amp;1</code></li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=tintinweb.graphviz-interactive-preview">vscode plugin open dot file</a></li>
+<li><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/Passes/#-view-op-graph">view-op-graph</a></li>
+</ul>
+</li>
+<li>triton-tensor-layout<ul>
+<li><code>triton-tensor-layout -l &quot;#ttg.blocked&lt;&#123;sizePerThread = [1, 4], threadsPerWarp = [4, 8], warpsPerCTA = [4, 1], order = [1, 0]&#125;&gt;&quot; -t &quot;tensor&lt;16x16xf16&gt;&quot;</code> 注意：用ttg，不用triton_gpu</li>
+<li><code>triton-tensor-layout -l &quot;#ttg.nvidia_mma&lt;&#123;versionMajor = 3, versionMinor = 0, warpsPerCTA = [8, 1], CTAsPerCGA = [1, 1], CTASplitNum = [1, 1], CTAOrder = [1, 0], instrShape = [16, 256, 32]&#125;&gt;&quot; -t &quot;tensor&lt;128x256xf16&gt;&quot;</code></li>
+<li>unittest&#x2F;Dialect&#x2F;TritonGPU&#x2F;DumpLayoutTest.cpp里有测试代码</li>
+<li>关键代码: shared layout, distribute layout<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">std::string mlir::triton::gpu::<span class="built_in">getLayoutStr</span>(RankedTensorType tensorType,</span><br><span class="line">                                            <span class="type">bool</span> useHWPointOfView) &#123;</span><br><span class="line">  <span class="keyword">auto</span> layout = tensorType.<span class="built_in">getEncoding</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// tensorType is needed later on (e.g., getDimSize(j)), so we still have to</span></span><br><span class="line">  <span class="comment">// pass it as a param</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">auto</span> sharedLayout = mlir::<span class="built_in">dyn_cast</span>&lt;SharedEncodingAttr&gt;(layout)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">getSharedLayoutStr</span>(tensorType, useHWPointOfView);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">auto</span> distributedLayout =</span><br><span class="line">                 mlir::<span class="built_in">dyn_cast</span>&lt;DistributedEncodingTrait&gt;(layout)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">getDistributedLayoutStr</span>(tensorType, useHWPointOfView);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// else unimplemented, return error</span></span><br><span class="line">  llvm::<span class="built_in">report_fatal_error</span>(<span class="string">&quot;Unimplemented usage of getLayoutStr&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><ol>
+<li>tt.splat 操作用于将一个标量值扩展为一个张量，其中所有元素都具有相同的标量值。</li>
+<li>tt.broadcast 操作用于将一个较小的张量扩展为一个较大的张量，通过复制其元素来匹配目标张量的形状。</li>
+<li>NOTE: tutorial 中的BLOCK_SIZE和cuda中的block_size不是一样的， BLOCK_SIZE是data size, block size是cuda中一个block有多少thread<ul>
+<li>BLOCK_SIZE 是一个编译时常量，用来指定每个 kernel 实例（也可以看作是“tile”或“block”）要处理的数据量，即每个程序实例负责处理多少个元素。</li>
+<li>block_size 通常是指每个 block 中的线程总数（即 num_warps × 32）以及每个线程负责的工作量（sizePerThread）</li>
+<li>Triton 编译器和运行时会根据这个 BLOCK_SIZE 自动确定实际的线程组织（比如如何分配到 warps 中），从而隐式地管理 num_warps 和 sizePerThread</li>
+<li>教程中定义的 BLOCK_SIZE 并没有和我们之前讨论的概念冲突，而是用一种更高层的抽象来表达同样的思想。它既代表了一个 block 中需要处理的数据总量，也间接影响了内部线程数和每个线程的工作量，只不过这些底层细节由 Triton 自动处理了。</li>
+<li><code>BLOCK_SIZE = block_size × sizePerThread = num_warps x threadsPerWarp × sizePerThread</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="适配-DSL"><a href="#适配-DSL" class="headerlink" title="适配 DSL"></a>适配 DSL</h2><ol>
 <li>intel<br><img src="https://i.ibb.co/cF3yF0K/e-Hk7ps-HTk-M.png" alt="intel backend architecture"></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/intel/intel-xpu-backend-for-triton">intel-xpu-backend-for-triton</a></li>
 <li>高通<br><img src="https://i.ibb.co/6NMJ8Yk/xo5-Pqj-RPDT.png" alt="architecture"><br><img src="https://i.ibb.co/9VLhpNk/du-T6l-PNQfg.png" alt="pytorch"></li>
@@ -296,7 +354,72 @@
 <li><a target="_blank" rel="noopener" href="https://github.com/microsoft/triton-shared">microsoft&#x2F;triton-shared</a></li>
 <li><a target="_blank" rel="noopener" href="https://llvm.org/docs/TableGen/ProgRef.html">tablegen 来生成 MLIR 代码</a></li>
 </ol>
+<h2 id="tensor和线程layout-即layout"><a href="#tensor和线程layout-即layout" class="headerlink" title="tensor和线程layout(即layout)"></a>tensor和线程layout(即layout)</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/triton-lang/triton/blob/main/unittest/Dialect/TritonGPU/LinearLayoutConversionsTest.cpp">LinearLayoutConversionsTest</a></li>
+<li><code>ptr+index &lt;-shape stride-&gt; coodinate &lt;-layout-&gt; thread id</code><ul>
+<li>tensor提供coodinate到index, value的映射</li>
+<li>layout提供coodinate到thread id映射, layout(coodinate) &#x3D; thread id</li>
+</ul>
+</li>
+<li>不同的Layout可以看作是不同的映射函数，代表了不同访问模式。</li>
+<li>Layout是tensor coodinate到线程的映射，we define a layout as a function that maps a multi-dimensional tensor index to a set of integers T corresponding to the indices of the CUDA threads allowed to access some data at index i. <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/672720213">link</a><ul>
+<li>coodinate到index是由tensor axis info决定的</li>
+</ul>
+</li>
+<li>triton也通过Layout来表征Thread对数据(tensor)的访问模式，例如blocked和blocked1分别表示A,B两个Operand的访问模式，即每个Thread取连续的8个f16等等。<ul>
+<li>tensor&lt;64x64x!tt.ptr<f32>, #blocked1&gt; 既有tensor, 也有layout, data layout </li>
+<li>AxisInfo 会记录张量各轴的尺寸、步幅以及与硬件映射相关的信息，用于指导后续的内存合并（coalesce）和其它优化操作，“AxisInfo”并不是存储张量所有信息的容器，它主要关注那些对高效内存访存至关重要的轴信息（例如各轴的大小、步幅、排列顺序等），而完整的张量信息还可能分布在其他 IR 属性或数据结构中。因此，可以说，Triton 的 AxisInfo 分析提取并表达了张量中与访存和并行调度密切相关的那部分信息。</li>
+</ul>
+</li>
+<li>data layout 是 TritonGPU Dialect 的 Type system 的关键，确定了 Data(各层级memory中的Tensor) 到 thread 之间的映射关系。</li>
+<li>总的来说 tensor 为数据在内存中的物理组织提供静态描述，而layout 则通过运行时索引决定每个线程应处理数据中的哪一部分。两者必须配合，才能让每个执行单元正确且高效地读取、处理和写回数据，从而充分发挥 GPU 的并行计算能力</li>
+</ol>
+<h2 id="axis-info"><a href="#axis-info" class="headerlink" title="axis info"></a>axis info</h2><ol>
+<li>先Analysis再Transform <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/687394750">link</a></li>
+<li>AxisInfo Analysis<ul>
+<li>Divisibility：可分性, 在处理数组或矩阵时，如果数据维度的长度能整除分块大小，则可以将数据分割为连续且大小均一的块（例如在 tiling 操作中），这有助于内存访问的局部性和缓存利用率。<ul>
+<li>tt.divisibility 属性就是用来给出对数据（通常是指针或者整数值）的整除性（或对齐性）的保证</li>
+<li>这种机制类似于其他编译器中通过“对齐”说明符（如 attribute((aligned(16))) 等）提供的优化提示，但在 Triton IR 中以一种专用的方式表达。</li>
+</ul>
+</li>
+<li>Contiguity: 连续性，当数据（如数组或向量）的各个元素在内存中按照顺序排列、地址连续时，我们称该数据结构是连续的</li>
+<li>Constancy(Constant Value): 指这个Tensor是常量，得到其常量的长度，对于%1是通过arith.constant得到的，其长度为128，constant value为1</li>
+</ul>
+</li>
+<li>gpu blocked layout是线程分配数据的layout，不是数据的layout   </li>
+<li>访存合并需要看load store的oprand的<code>线程访问顺序和数据的排布</code>决定是不是需要合并访存  sample:</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#blocked1 = #triton_gpu.blocked&lt;&#123;sizePerThread = [1, 1], threadsPerWarp = [32, 1], warpsPerCTA = [4, 1], order = [0, 1]&#125;&gt;</span><br><span class="line">%10 = tt.addptr %7, %9 : tensor&lt;64x64x!tt.ptr&lt;f32&gt;, #blocked1&gt;, tensor&lt;64x64xi32, #blocked1&gt;</span><br><span class="line">%19 = tt.load %10, %cst, %cst_0 &#123;cache = 1 : i32, evict = 1 : i32, isVolatile = false&#125; : tensor&lt;64x64xf32, #blocked1&gt;</span><br><span class="line">// %10 的AxisInfo contiguity = [1, 64], divisibility = [4, 16], constancy = [1, 1], constant_value = &lt;none&gt;</span><br><span class="line">// %10的blocked threadsPerWarp = [32, 1]表明线程按列取数，AxisInfo  contiguity = [1, 64]表明数据是行优先的，load的时候访存效率不高，需要访存合并coalesce,  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="lowering"><a href="#lowering" class="headerlink" title="lowering"></a>lowering</h2><h3 id="for"><a href="#for" class="headerlink" title="for"></a><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/Dialects/SCFDialect/#scffor-scfforop">for</a></h3><ol>
+<li>for -&gt; scf -&gt; cf -&gt; llvm.cf -&gt; br</li>
+</ol>
+<h3 id="make-range"><a href="#make-range" class="headerlink" title="make_range"></a>make_range</h3><ol>
+<li>tt.make_range决定每一个线程计算的数据量，triton是block level的编程，通过make_range变成thread level</li>
+<li>sipu 中tile_format输入时， make_range决定数据偏移</li>
+</ol>
 <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>sizePerThread &#x3D; [2, 2], threadsPerWarp &#x3D; [8, 4], warpsPerCTA &#x3D; [1, 2]. 因为此时sizePerThread<em>threadsPerWarp</em>warpsPerCTA &#x3D; 16x16, 小于tensor的shape 32x32, 所以这个16x16的layout会按照[2, 2]的shape进行广播, 填满整个32x32的tensor.</li>
+<li><code>./triton-tensor-layout -l &quot;#triton_gpu.blocked&lt;&#123;sizePerThread = [1, 1], threadsPerWarp = [8, 4], warpsPerCTA =  [2, 2], order = [1, 0]&#125;&gt;&quot; -t &quot;tensor&lt;16x8xf32&gt;&quot;</code></li>
+<li>intrinsic（内在函数）和 asm（Inline assembly 内联汇编）各有优缺点：内在函数提供了一种较高级、便捷且安全的方式调用底层指令，同时让编译器能充分优化代码；而内联汇编则提供了极致的控制能力，但也带来可移植性和维护性上的挑战。</li>
+<li>在编译器和编程语言文档中，”intrinsic” 通常指由编译器直接内置的函数，用于提高效率，将函数调用转化为内联代码或特定的机器指令。”builtin” 则多用作 “intrinsic” 的同义词</li>
+<li>polyhedral compilation，  scheduling languages与triton<ul>
+<li>如果你做编译优化（LLVM, 编译器后端开发）→ 选择 Polyhedral Compilation</li>
+<li>如果你优化计算图（Halide, TVM, 计算调度）→ 选择 Scheduling Languages</li>
+<li>如果你优化深度学习（GPU kernel 加速）→ 选择 Triton</li>
+</ul>
+</li>
+<li>假设要优化矩阵乘法 C &#x3D; A × B：<ul>
+<li>Polyhedral Compilation：自动分析 for 循环依赖，调整 i, j, k 计算顺序，进行 loop tiling 和 向量化。生成适用于 CPU&#x2F;GPU 的高效代码。</li>
+<li>Scheduling Languages（Halide, TVM）：允许用户手动设定计算顺序，比如先计算小块矩阵、再合并结果。适用于自动调度和搜索最优策略。</li>
+<li>Triton：直接编写 triton.kernel，自动生成高效 CUDA 代码。通过 memory tiling 和 寄存器优化 提高 GPU 执行效率。</li>
+</ul>
+</li>
+<li>第一次编译时会在&#x2F;tmp目录下生成main.cpp然后编译成运行kernel时所需so，编译后删除main.cpp，生成内容见driver.py。<ul>
+<li>main.cpp不包含main函数，有函数用于调用kernel</li>
+<li>main.cpp中包含生成的kenerl路径, 需要加载</li>
+</ul>
+</li>
 <li>使得算子开发的部分复杂度分配给上层 kernel 开发用户，部分复杂度分配给底层的 Triton compiler。同时对接上层框架的工作则交给了上层软件栈，使得 Triton 能够专注在自己这个层次需要解决的核心问题上，找到了一个比较不错的”product&#x2F;technology” fit。</li>
 <li>Triton 的核心设计思想—-Block-wise 编程，Block 上面的归用户，Block 内部的归 Triton compiler 自动化处理。相应地，Block 内部的优化细节，也交由 Triton compiler 处理了。</li>
 <li>Triton 这个项目目前还更像是一个满足细分场景(高效高性能 Kernel 开发)需求的“小而美”的项目</li>
@@ -320,7 +443,7 @@
 <li>Triton, a <code>language</code> and <code>compiler</code> for writing highly efficient custom Deep-Learning primitives. The aim of Triton is to provide an open-source environment to write fast code at higher productivity than CUDA, but also with higher flexibility than other existing DSLs.</li>
 <li>An open-source python-like programming language which enables researchers with no CUDA experience to write highly efficient GPU code – most of the time on par with what an expert would be able to produce</li>
 <li>开发效率<br><img src="https://i.ibb.co/NYSS9WV/Xrz-Qku-ZLSo.png" alt="img"></li>
-<li>领域特定语言（DSLs)</li>
+<li>领域特定语言（domain-specific language DSL)</li>
 <li>本质上来说，Triton 和 TVM&#x2F;XLA 这类工作的定位有所不同，如果说 TVM&#x2F;XLA 是比较纯正的 AI 编译器的话，Triton 更像是一个面向 AI 加速器算子开发的领域开发语言，为了能够将用户使用 Triton 语言开发的 kernel 映射到具体硬件上的执行码，需要设计开发相应的 Triton compiler 来完成这层映射。所以当我们说 Triton 的时候，其实隐指了 Triton 语言+Triton 编译器这两个事物的综合体。</li>
 <li>从 triton 的源码来看，triton 目前在 NV 的 GPU 上已经有了一套自己比较成熟的 mapping 路线，通过先对 python 语言层，也就是 triton DSL 进行抽象，得到 AST，然后将 AST 中的每个节点 lower 到 Triton Dialect 上，Triton Dialect 则是一个比较贴近上层语言表达的 IR，他的主要作用则是为了保持用户在书写对应算法时的准确性。接下来会进一步被 map 到 TritonGPU Dialect 上，那么 TritonGPU Dialect 则是一个更加贴近 GPU 层面的 IR，它则是为了具体的性能优化而设计。图中其他的蓝色模块，比如 SCF，Arith，Tensor 等都是 MLIR 生态中已经被实现好并且广为使用的 Dialect。这些 Dialect 会一起和 TritonGPU Dialect 共存，然后被 lower 到对应的 LLVM Dialect，LLVM Dialect 则是最贴近 LLVM IR 的一层设计，从 LLVM Dialect 到 LLVM IR 的转换是非常容易的，最终代码就会被接入到 LLVM 的 NVPTX 的后端，从而生成后续能跑在 GPU 上的高性能 machine code. <a target="_blank" rel="noopener" href="http://giantpandacv.com/project/%E9%83%A8%E7%BD%B2%E4%BC%98%E5%8C%96/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%BC%96%E8%AF%91%E5%99%A8/OpenAI%20Triton%20MLIR%20%E7%AC%AC%E9%9B%B6%E7%AB%A0%20%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91/">link</a></li>
 <li>和 cuda pytorch 区别 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=AtbnRIzpwho&t=273s">link</a><br><img src="https://i.ibb.co/qszbhN4/NYmmor-R0l-P.png" alt="区别"></li>
@@ -354,11 +477,16 @@
 <li>torch.compile</li>
 </ol>
 <h2 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h2><ol>
+<li><code>./python/triton/_C/libtriton.so</code> libtrion位置</li>
 <li><a target="_blank" rel="noopener" href="https://triton-lang.org/main/programming-guide/chapter-3/debugging.html">官方指导</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/triton-lang/triton?tab=readme-ov-file#tips-for-building">源码 debug</a></li>
+<li><code>TRITON_ENABLE_LLVM_DEBUG=1</code> 打印详细信息</li>
+<li><code>TRITON_LLVM_DEBUG_ONLY=&quot;tritongpu-remove-layout-conversions,regalloc&quot;</code> 只打印一些pass</li>
 <li><code>TRITON_INTERPRET=1</code> 使用 Triton 解释器而不是在 GPU 上运行。您可以在内核代码中插入 Python 断点！NOTE:注意真正运行的时候不要打开</li>
-<li><code>MLIR_ENABLE_DUMP=1</code></li>
+<li><code>TRITON_HOME=/home/data</code></li>
+<li><code>MLIR_ENABLE_DUMP=1</code> 只dump mlir, 不dump llvm ir</li>
 <li><code>LLVM_IR_ENABLE_DUMP=1</code></li>
+<li><code>TRITON_ALWAYS_COMPILE=1</code> 每次都重新编译</li>
 <li><code>TRITON_PRINT_AUTOTUNING=1</code>可以打印 autotune 选择的最快配置 prints out the best autotuning config and total time spent for each kernel after autotuning is complete.</li>
 </ol>
 <h2 id="c-调用-triton-kernel"><a href="#c-调用-triton-kernel" class="headerlink" title="c++调用 triton kernel"></a>c++调用 triton kernel</h2><ol>
@@ -483,7 +611,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%82%E9%85%8D-DSL"><span class="nav-number">1.</span> <span class="nav-text">适配 DSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">2.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">装饰器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#debug"><span class="nav-number">4.</span> <span class="nav-text">debug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c-%E8%B0%83%E7%94%A8-triton-kernel"><span class="nav-number">5.</span> <span class="nav-text">c++调用 triton kernel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">6.</span> <span class="nav-text">links</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#cuda%E5%92%8Ctriton%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">cuda和triton区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">对数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#coordinate-%E5%88%B0-index%E7%9A%84%E6%98%A0%E5%B0%84"><span class="nav-number">3.</span> <span class="nav-text">coordinate 到 index的映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tools"><span class="nav-number">4.</span> <span class="nav-text">Tools</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%82%E9%85%8D-DSL"><span class="nav-number">6.</span> <span class="nav-text">适配 DSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tensor%E5%92%8C%E7%BA%BF%E7%A8%8Blayout-%E5%8D%B3layout"><span class="nav-number">7.</span> <span class="nav-text">tensor和线程layout(即layout)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#axis-info"><span class="nav-number">8.</span> <span class="nav-text">axis info</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lowering"><span class="nav-number">9.</span> <span class="nav-text">lowering</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#for"><span class="nav-number">9.1.</span> <span class="nav-text">for</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#make-range"><span class="nav-number">9.2.</span> <span class="nav-text">make_range</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">10.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-number">11.</span> <span class="nav-text">装饰器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#debug"><span class="nav-number">12.</span> <span class="nav-text">debug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c-%E8%B0%83%E7%94%A8-triton-kernel"><span class="nav-number">13.</span> <span class="nav-text">c++调用 triton kernel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">14.</span> <span class="nav-text">links</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -499,7 +627,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-count">192</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -532,6 +660,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -539,12 +673,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -572,7 +700,7 @@
 <div class="copyright">
   
   &copy; 2021 – 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -582,13 +710,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">543k</span>
+    <span title="站点总字数">587k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:14</span>
+    <span title="站点阅读时长">8:54</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

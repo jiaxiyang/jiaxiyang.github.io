@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,386 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/03/03/Doxygen/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/03/Doxygen/" class="post-title-link" itemprop="url">Doxygen</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-03 03:58:22" itemprop="dateCreated datePublished" datetime="2022-03-03T03:58:22+08:00">2022-03-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-12 17:16:25" itemprop="dateModified" datetime="2024-09-12T17:16:25+08:00">2024-09-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/03/03/Doxygen/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/03/03/Doxygen/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>markdown 添加 [toc] 为 html 生成目录</li>
+<li>参考 opencv</li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/57979732">multi projects</a></li>
+<li>可以用 cmake 生成 doxygen 配置 <a target="_blank" rel="noopener" href="https://github.com/opencv/opencv/blob/17234f82d025e3bbfbf611089637e5aa2038e7b8/doc/Doxyfile.in">link</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/doxygen/doxygen/tree/master/templates">templates</a></li>
+</ol>
+<h2 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h2><h3 id="moritz"><a href="#moritz" class="headerlink" title="moritz"></a>moritz</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://sourceforge.net/projects/moritz/">moritz 插件 生成流程图</a><ul>
+<li>可以单独使用，也可以和 doxygen 一起使用 doxywizard</li>
+<li><a target="_blank" rel="noopener" href="https://sourceforge.net/p/moritz/wiki/Home/#31b2">pdf 文档</a></li>
+<li>Moritz_Linux_2020_06_10.zip 执行 ansi_c_create.sh 生成 dot 和 html</li>
+<li>默认 arm 二进制， x86 需要源码编译 src_abc2xml_xml2abc_2020_06_10.zip, 需要 codeblocks 图形界面来编译，String_help.h 找不到直接替换字符</li>
+<li>cfg&#x2F;Doxyfile_ansi_c_xml 中 INPUT 改源码位置， RECURSIVE 要改为 YES</li>
+</ul>
+</li>
+</ol>
+<h3 id="XML-pareser"><a href="#XML-pareser" class="headerlink" title="XML pareser"></a>XML pareser</h3><ol>
+<li><code>pip install  doxmlparser</code></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/doxygen/doxygen/blob/master/addon/doxmlparser/examples/metrics/metrics.py">metrics</a><ul>
+<li><code>python metrics.py xml/</code>能够输出统计信息</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/doxygen/doxygen/blob/master/addon/doxmlparser/doxmlparser/compound.py#L7025">location 来获取定义文件，start end line</a></li>
+</ul>
+</li>
+<li>跟据 xml 信息提取函数再加上 cxx2flow 生成流程图</li>
+<li>如果使用宏定义来区分平台，doxygen 生成 xml 时需要删除其他平台的代码或者提供 compile_commands.json 来生成；否则类的关系会有问题，生成不了具体实现的流程图</li>
+<li>也可以配置 doxygen 中的 INPUT, 只包含要使用的平台</li>
+<li>给别人生成时需要提供 compile_commands.json 和源码，根据路径在自己电脑创建相应目录，放入源码</li>
+<li><code>sed -i &#39;s/\/builds\/platform/\/home\/xiyang\/d\/working/g&#39; compile_commands.json</code>修改路径</li>
+<li>compile_commands.json 不太好使;</li>
+<li>(good)可以 grep compile_commands.json 要用的 cpp 文件，写到 INPUT(注意 INPUT 不支持正则), FILE_PATTERN 只设置搜索头文件(INPUT 要填最外层文件夹)， EXCLUDE 排除一些文件, 头文件路径设置到 INCLUDE_PATH，</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">sudo apt install jq</span></span><br><span class="line">rm file_list.txt; cat compile_commands.json | jq &#x27;.[] | .file&#x27; | while read -r line; do</span><br><span class="line">  echo &quot;$line\\&quot;</span><br><span class="line">done | sort &gt;&gt; file_list.txt</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>写个脚本处理 compile_commands.json 文件， 得到文件和 include 路径，设置到 INPUT 里面</li>
+<li>doxyxml</li>
+<li><a target="_blank" rel="noopener" href="https://gitlab.com/graphviz/graphviz">graphviz 要用最新的，否则生成的图片有问题</a></li>
+</ol>
+<h3 id="word-文档"><a href="#word-文档" class="headerlink" title="word 文档"></a>word 文档</h3><ol>
+<li><p>XML 格式： Word 文档本质上是一个 XML 文件。可以使用文本编辑器或编程语言（如 Python、C#）打开 Word 文档的 XML 格式，搜索&lt;w:altText&gt;标签，即可找到图片的 Alt 文本。</p>
+<ul>
+<li>unzip docx: 解压 docx 文件，在 word 里查看 document.xml</li>
+<li>windows 下另存为 xml</li>
+<li>通过 xml 可以看出通过图片的 name 和 descr 属性可以区分图片</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/python-openxml/python-docx?tab=readme-ov-file">python-docx</a></p>
+<ul>
+<li>加入可选文字，后面使用 template 替换</li>
+<li>把图片写在 bytesIO 里面然后用 from docxtpl import InlineImage 插入的，用了快两年了，很稳 就是楼上这个</li>
+<li>通过 descr 属性来处理图片替换问题 <a target="_blank" rel="noopener" href="https://chatgpt.com/c/66e15cd9-20f4-8004-a2fd-945070c91601">link</a></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">inline_shape = run.add_picture(image_path, width=Inches(<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加 descr（图片描述）</span></span><br><span class="line">inline_shape._inline.graphic.graphicData.pic.nvPicPr.cNvPr.<span class="built_in">set</span>(<span class="string">&#x27;descr&#x27;</span>, descr)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/elapouya/python-docx-template">python-docx-template</a></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/elapouya/python-docx-template/blob/master/tests/merge_docx.py">merge_doc</a><ul>
+<li>合并之后在下面添加用于下次合并</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/elapouya/python-docx-template/blob/master/tests/module_execute.py">通过 json 来生成 docx</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/elapouya/python-docx-template/blob/master/tests/replace_picture.py">replace_picture</a><ul>
+<li>右击图片，可选文字显示名称</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/h1773655323/article/details/119876821">sample</a></li>
+</ul>
+</li>
+<li><p>流程图加到文档里</p>
+</li>
+<li><p>pandoc</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/yuetaope/article/details/119444970">详解 Python-docx 自动生成 word 图文报告</a></p>
+</li>
+</ol>
+<h2 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/jothepro/doxygen-awesome-css">doxygen-awesome-css</a></li>
+<li><a target="_blank" rel="noopener" href="https://jothepro.github.io/doxygen-awesome-css/index.html">效果</a></li>
+</ol>
+<h2 id="doxygen-config"><a href="#doxygen-config" class="headerlink" title="doxygen config"></a>doxygen config</h2><ol>
+<li><code>sudo apt install doxygen</code></li>
+<li><code>doxygen -g &lt;config-name&gt;</code> 产生配置文件，默认为 Doxyfile <code>-s</code> 生成不带注释的配置文件</li>
+<li><code>doxygen &lt;config-name&gt;</code> 生成文档</li>
+<li>UML 生成 svg 图片<ul>
+<li><code>DOT_IMAGE_FORMAT       = svg(png)</code></li>
+<li><code>INTERACTIVE_SVG        = YES</code></li>
+</ul>
+</li>
+<li>生成 UML, 需要修改配置文件, 以下改为 YES</li>
+</ol>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RECURSIVE</span><br><span class="line">HAVE<span class="emphasis">_DOT</span></span><br><span class="line"><span class="emphasis">UML_LOOK</span></span><br><span class="line"><span class="emphasis">EXTRACT_</span>ALL</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>CLANG_DATABASE_PATH=compile_commands.json</code>提供编译信息更准确的拿到信息 <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/64476238/23011500">link</a></li>
+<li><code>INLINE_SOURCES</code>标签。如果设置为 YES，可以将源代码直接包含到文档中。</li>
+<li><code>INPUT</code> 标签是输入的源码文件的目录, 空格分开 例如： <code>INPUT = README.md include/pg</code></li>
+<li><code>OUTPUT_LANGUAGE</code> &#x3D; 改为 Chinese</li>
+<li><code>HTML_TIMESTAMP</code>标签设置为 YES，则每个生成的 HTML 页面的页脚将包含生成页面的日期和时间。将此设置为“是”有助于显示上次运行 doxygen 的时间，从而显示文档是否最新。</li>
+<li><code>GENERATE_TREEVIEW</code> 标签用于指定是否应生成树状索引结构以显示分层信息。</li>
+<li><code>GENERATE_XML = YES</code> 产生 xml</li>
+<li><code>GENERATE_HTML = YES</code> 产生 html</li>
+<li><code>EXTRACT_ALL</code></li>
+<li><code>EXTRACT_PRIVATE</code> If the EXTRACT_PRIVATE tag is set to YES, all private members of a class will be included in the documentation.</li>
+<li><code>EXTRACT_STATIC</code></li>
+<li><code>EXTRACT_LOCAL_METHODS</code></li>
+<li><code>EXTRACT_ANON_NSPACES</code>提取匿名函数</li>
+<li><code>PROJECT_NAME</code></li>
+<li><code>PROJECT_NUMBER</code></li>
+<li><code>PROJECT_LOGO</code> 首页左侧图标</li>
+<li><code>EXTRACT_STATIC</code> 如果设置为 YES，一个文件的所有静态成员都将包含在文档中。</li>
+<li><code>EXTRACT_PRIVATE</code> 如果设置为 YES，一个类的所有私有成员都将包含在文档中。</li>
+<li><code>IMAGE_PATH</code> 修复 markdown 生成网页时 doc 出错问题</li>
+<li><code>USE_MDFILE_AS_MAINPAGE = ./README.md</code> 主页</li>
+<li><code>HTML_OUTPUT = doc_html</code></li>
+<li><code>LATEX_OUTPUT = doc_latex</code></li>
+<li>输出 color <a target="_blank" rel="noopener" href="https://github.com/jothepro/doxygen-awesome-css/blob/main/docs/customization.md#doxygen-generator">link</a></li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HTML_COLORSTYLE_HUE    = 209</span><br><span class="line">HTML_COLORSTYLE_SAT    = 255</span><br><span class="line">HTML_COLORSTYLE_GAMMA  = 113</span><br></pre></td></tr></table></figure>
+
+<h2 id="pdf"><a href="#pdf" class="headerlink" title="pdf"></a>pdf</h2><ol>
+<li><code>sudo apt-get install texlive-full texlive-latex-base</code> <a target="_blank" rel="noopener" href="https://tex.stackexchange.com/a/481681">link</a></li>
+<li><code>cd latex &amp;&amp; make</code></li>
+<li><code>doxygen -w latex header.tex footer.tex doxygen.sty</code> 先生成默认配置，修改 doxygen.config 指定<code>LATEX_HEADER = header.tex</code> <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/16222657">link</a></li>
+<li>修改 refman.tex 来改变 pdf 生成</li>
+<li><code>sed -i &quot;s/Doxygen/xx xx/&quot; refman.tex</code>修改制作者名字</li>
+<li>中文问题 <code>\begin&#123;CJK&#125;&#123;UTF8&#125;</code> 换成 <code>\begin&#123;CJK&#125;&#123;gbsn&#125;</code> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/zyl910/archive/2013/06/02/doxygen_pdf_chinese.html">link</a></li>
+<li>空页问题： <code>COMPACT_LATEX</code> to YES</li>
+<li>换页问题： <code>\doxysection</code> 之前加 <code>\newpage</code></li>
+<li>refman.tex 处理</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sed -i <span class="string">&quot;/fancyfoot/d&quot;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&quot;/fancyhead/d&quot;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&#x27;/&#123;fancyplain&#125;/a\\\cfoot&#123;\\thepage&#125;&#x27;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&#x27;/&#123;fancyplain&#125;/a\\\rhead&#123;&#125;&#x27;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&#x27;/&#123;fancyplain&#125;/a\\\lhead&#123;&#125;&#x27;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&#x27;/doxysection/i\\\newpage&#x27;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&quot;s/Doxygen 1.8.17/PhiGent Robotics/&quot;</span> latex/refman.tex</span><br><span class="line">sed -i <span class="string">&quot;s/&#123;min&#125;/&#123;gbsn&#125;/&quot;</span> latex/refman.tex</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>\pagestyle&#123;fancyplain&#125;</code> 删除之后页眉页脚不再有横杠 <code>\pagestyle&#123;plain&#125;</code></li>
+</ol>
+<h2 id="notes"><a href="#notes" class="headerlink" title="notes"></a>notes</h2><ol>
+<li>不要在有 build 的目录下</li>
+<li>如果想生成详细的 UML 图，需要设置<code>EXTRACT_STATIC</code> <code>EXTRACT_PRIVATE</code>为 YES</li>
+</ol>
+<h2 id="文档解析"><a href="#文档解析" class="headerlink" title="文档解析"></a>文档解析</h2><ol>
+<li>Class Hierarchy 可以查看类层级关系</li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://fossies.org/dox/all.html">fossies doxygen lists</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.doxygen.nl/manual/starting.html">getting start</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.guyuehome.com/35640">参数详解</a></li>
+<li><a target="_blank" rel="noopener" href="https://doxygen.nl/projects.html">使用 doxygen 的项目</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/metropolis/deepstream/sdk-api/index.html">deepstream doxygen</a></li>
+<li><a target="_blank" rel="noopener" href="https://google.github.io/ion/base_2logging_8h.html">ion</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.opencv.org/4.x/d9/df8/tutorial_root.html">opencv tutorial</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/opencv/opencv/blob/17234f82d025e3bbfbf611089637e5aa2038e7b8/doc/Doxyfile.in">opencv config</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/doxygen/doxygen/tree/master/templates">templates</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/03/02/Nvidia-NPP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/02/Nvidia-NPP/" class="post-title-link" itemprop="url">Nvidia-NPP</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-02 11:30:48" itemprop="dateCreated datePublished" datetime="2022-03-02T11:30:48+08:00">2022-03-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-10-09 19:56:16" itemprop="dateModified" datetime="2023-10-09T19:56:16+08:00">2023-10-09</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/03/02/Nvidia-NPP/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/03/02/Nvidia-NPP/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="notes"><a href="#notes" class="headerlink" title="notes"></a>notes</h2><ol>
+<li>need <code>sudo</code> to run exe</li>
+<li><code>export CUDACXX=/usr/local/cuda/bin/nvcc</code> when build cuda</li>
+<li>CMakeLists.txt: <code>CUDA_ADD_EXECUTABLE(resize resize.cpp)</code></li>
+</ol>
+<h2 id="yuyv-2-rgb"><a href="#yuyv-2-rgb" class="headerlink" title="yuyv 2 rgb"></a>yuyv 2 rgb</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/71473363">link</a> nvcc 替换成 g++也可用</li>
+</ol>
+<h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
+<li>install path: <code>/usr/local/cuda-xxx/</code></li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/npp/nppi_conventions_lb.html">函数名称中简写的意义</a></li>
+<li></li>
+</ol>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&quot;A&quot; <span class="keyword">if</span> the image <span class="keyword">is</span> a <span class="number">4</span> channel image this indicates the result alpha channel <span class="keyword">is</span> <span class="keyword">not</span> affected <span class="keyword">by</span> the primitive.</span><br><span class="line">&quot;Cn&quot; the image consists <span class="keyword">of</span> n channel packed pixels, <span class="keyword">where</span> n can be <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> <span class="keyword">or</span> <span class="number">4.</span></span><br><span class="line">&quot;Pn&quot; the image consists <span class="keyword">of</span> n separate image planes, <span class="keyword">where</span> n can be <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> <span class="keyword">or</span> <span class="number">4.</span></span><br><span class="line">&quot;C&quot; (<span class="keyword">following</span> the channel information) indicates that the primitive <span class="keyword">only</span> operates <span class="keyword">on</span> one <span class="keyword">of</span> the color channels, the &quot;channel-of-interest&quot;. <span class="keyword">All</span> other output channels are <span class="keyword">not</span> affected <span class="keyword">by</span> the primitive.</span><br><span class="line">&quot;I&quot; indicates that the primitive works &quot;in-place&quot;. <span class="keyword">In</span> this <span class="keyword">case</span> the image-data pointer <span class="keyword">is</span> usually named pSrcDst <span class="keyword">to</span> indicate that the image data serves <span class="keyword">as</span> source <span class="keyword">and</span> destination at the same <span class="type">time</span>.</span><br><span class="line">&quot;M&quot; indicates &quot;masked operation&quot;. These <span class="keyword">types</span> <span class="keyword">of</span> primitives have an additional &quot;mask image&quot; <span class="keyword">as</span> <span class="keyword">as</span> <span class="keyword">input</span>. <span class="keyword">Each</span> pixel <span class="keyword">in</span> the destination image corresponds <span class="keyword">to</span> a pixel <span class="keyword">in</span> the mask image. <span class="keyword">Only</span> pixels <span class="keyword">with</span> a corresponding non-zero mask pixel are being processed.</span><br><span class="line">&quot;R&quot; indicates the primitive operates <span class="keyword">only</span> <span class="keyword">on</span> a rectangular &quot;region-of-interest&quot; <span class="keyword">or</span> &quot;ROI&quot;. <span class="keyword">All</span> ROI primitives take an additional <span class="keyword">input</span> parameter <span class="keyword">of</span> <span class="keyword">type</span> NppiSize, which specifies the width <span class="keyword">and</span> height <span class="keyword">of</span> the rectangular region that the primitive should process. <span class="keyword">For</span> details <span class="keyword">on</span> how primitives operate <span class="keyword">on</span> ROIs see: Region-<span class="keyword">of</span>-Interest (ROI).</span><br><span class="line">&quot;Sfs&quot; indicates the result <span class="keyword">values</span> are processed <span class="keyword">by</span> fixed scaling <span class="keyword">and</span> saturation <span class="keyword">before</span> they<span class="string">&#x27;re written out.</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/npp/nppi__support__functions_8h_source.html">image malloc functions</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/npp/nppi__geometry__transforms_8h_source.html">resize function</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/cuda-samples/tree/master/Common/UtilNPP">npp utils</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/npp/group__image__color__model__conversion.html">cvtcolor</a></li>
+</ol>
+<h2 id="samples"><a href="#samples" class="headerlink" title="samples"></a>samples</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/CUDALibrarySamples.git">NVIDIA-CUDALibrarySamples</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_15357586/3790330">simple sample</a></li>
+<li><a target="_blank" rel="noopener" href="https://sourcegraph.com/github.com/PacktPublishing/Learn-CUDA-Programming/-/blob/Chapter08/08_cuda_libs_and_other_languages/05_npp/imageFilter.cpp">malloc sample</a></li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/npp/index.html">main page</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -871,7 +1251,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-11-14 17:27:39" itemprop="dateModified" datetime="2024-11-14T17:27:39+08:00">2024-11-14</time>
+                <time title="修改时间：2025-04-13 12:23:53" itemprop="dateModified" datetime="2025-04-13T12:23:53+08:00">2025-04-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -926,7 +1306,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="code-generate"><a href="#code-generate" class="headerlink" title="code generate"></a>code generate</h2><ol>
+          <h2 id="cmake-base"><a href="#cmake-base" class="headerlink" title="cmake base"></a>cmake base</h2><ol>
+<li><code>g++ -o test test.cpp -Iglog/include -lglog -Lglog/lib</code><ul>
+<li><code>-I</code> 表示从后面路径找头文件</li>
+<li><code>-l</code> 表示链接库，glog -&gt; libglog.so&#x2F;libglog.a, 只需要指定glog，libglog.so会自动补全</li>
+<li><code>-L</code> 表示从后面路径找链接库</li>
+<li><code>-l</code> 和 <code>-L</code> 配合找到要链接的库</li>
+</ul>
+</li>
+<li>常见的两个问题：<ul>
+<li><code>No such file or directory</code> 找不到头文件或共享库，需要指定-I或-L</li>
+<li><code>undefined reference to xxx</code> 未定义符号xxx, 需要-l链接xxx定义所在的共享库</li>
+</ul>
+</li>
+</ol>
+<h2 id="code-generate"><a href="#code-generate" class="headerlink" title="code generate"></a>code generate</h2><ol>
 <li>vitis ai library overview generate test_performance…. <a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-AI/blob/v2.5/src/Vitis-AI-Library/overview/cmake/XilinxTest.cmake#L346">link</a></li>
 </ol>
 <h2 id="FetchContent"><a href="#FetchContent" class="headerlink" title="FetchContent"></a>FetchContent</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>(FetchContent)</span><br><span class="line">FetchContent_Declare(backward</span><br><span class="line">    GIT_REPOSITORY https://github.com/bombela/backward-cpp</span><br><span class="line">    GIT_TAG master  <span class="comment"># or a version tag, such as v1.6</span></span><br><span class="line">    SYSTEM          <span class="comment"># optional, the Backward include directory will be treated as system directory</span></span><br><span class="line">)</span><br><span class="line">FetchContent_MakeAvailable(backward)</span><br><span class="line"><span class="keyword">target_link_libraries</span>(mytarget PUBLIC Backward::Interface)</span><br></pre></td></tr></table></figure>
@@ -943,6 +1337,11 @@
 <li><code>CMAKE_CURRENT_BINARY_DIR</code>: 指向当前正在处理的 CMakeLists.txt 文件对应的构建目录。</li>
 </ol>
 <h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><ol>
+<li>cmake 和 make的区别<ul>
+<li>工程设计师	CMake	设计蓝图（生成构建脚本，比如 Makefile）</li>
+<li>工地工人	Make	根据蓝图（Makefile）来干活（编译）</li>
+</ul>
+</li>
 <li>(good)编译 log 太多可以把 error 重定向到文件 <code>command 2&gt; error_log.txt</code></li>
 <li>include_directories 加 SYSTEM 防止第三方库报 warning <a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/latest/command/include_directories.html">link</a></li>
 <li>makefile 传参</li>
@@ -1611,329 +2010,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/06/22/Haskell/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/06/22/Haskell/" class="post-title-link" itemprop="url">Haskell</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-06-22 10:47:46" itemprop="dateCreated datePublished" datetime="2021-06-22T10:47:46+08:00">2021-06-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/06/22/Haskell/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/06/22/Haskell/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Higher-Order-Functions"><a href="#Higher-Order-Functions" class="headerlink" title="Higher Order Functions"></a>Higher Order Functions</h2><ol>
-<li>Haskell functions can take functions as parameters and return functions as return values. A function that does either of those is called a higher order function.</li>
-<li>Every function in Haskell officially only takes one parameter.</li>
-<li><code>map</code> takes a function and a list and applies that function to every element in the list, producing a new list.</li>
-<li><code>filter</code> is a function that takes a predicate (a predicate is a function that tells whether something is true or not, so in our case, a function that returns a boolean value) and a list and then returns the list of elements that satisfy the predicate.</li>
-<li><code>folds</code> They’re sort of like the map function, only they reduce the list to some <code>single value</code>.<br>1.<a target="_blank" rel="noopener" href="https://excalidraw.com/#json=5033777575231488,ixM2dP13DMyzxCvIDEpzqg">map, filter, fold 示意图</a></li>
-<li>map是一种抽象，屏蔽了对list操作的具体实现，不用关心是迭代或是递归实现的，只能感受到list每个元素都经过了转化，不用考虑控制结构，只需要考虑策略。(link: SICP)</li>
-</ol>
-<h2 id="Functors-Applicatives-And-Monads"><a href="#Functors-Applicatives-And-Monads" class="headerlink" title="Functors, Applicatives And Monads"></a>Functors, Applicatives And Monads</h2><ol>
-<li>defination</li>
-</ol>
-<figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class Functor f <span class="keyword">where</span></span><br><span class="line">    <span class="function"><span class="title">fmap</span> :: (a -&gt;</span> <span class="function"><span class="title">b</span>) -&gt;</span> <span class="function"><span class="title">f</span> a -&gt;</span> f b</span><br><span class="line"></span><br><span class="line">class (Functor f) =&gt; Applicative f <span class="keyword">where</span></span><br><span class="line">    <span class="function"><span class="title">pure</span> :: a -&gt;</span> f a</span><br><span class="line">    (&lt;*&gt;) :: <span class="function"><span class="title">f</span> (a -&gt;</span> <span class="function"><span class="title">b</span>) -&gt;</span> <span class="function"><span class="title">f</span> a -&gt;</span> f b</span><br><span class="line"></span><br><span class="line">class (Applicative m) =&gt; Monad m <span class="keyword">where</span></span><br><span class="line">    <span class="function"><span class="title">return</span> :: a -&gt;</span> m a</span><br><span class="line">    (&gt;&gt;=) :: <span class="function"><span class="title">m</span> a -&gt;</span> (<span class="function"><span class="title">a</span> -&gt;</span> <span class="function"><span class="title">m</span> b) -&gt;</span> m b</span><br><span class="line">    (&gt;&gt;) :: <span class="function"><span class="title">m</span> a -&gt;</span> <span class="function"><span class="title">m</span> b -&gt;</span> m b</span><br><span class="line">    <span class="function"><span class="title">x</span> &gt;&gt; y = x &gt;&gt;= \_ -&gt;</span> y</span><br><span class="line">    <span class="function"><span class="title">fail</span> :: String -&gt;</span> m a</span><br><span class="line">    fail msg = error msg</span><br><span class="line"></span><br><span class="line">class Monoid m <span class="keyword">where</span>  -- 注意是Monoid不是Monad</span><br><span class="line">    mempty :: m</span><br><span class="line">    <span class="function"><span class="title">mappend</span> :: m -&gt;</span> <span class="function"><span class="title">m</span> -&gt;</span> m</span><br><span class="line">    <span class="function"><span class="title">mconcat</span> :: [m] -&gt;</span> m</span><br><span class="line">    mconcat = foldr mappend mempty</span><br></pre></td></tr></table></figure>
-<ol>
-<li>type of fmap, (&lt;*&gt;) and (&gt;&gt;&#x3D;)</li>
-</ol>
-<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fmap :: <span class="function"><span class="params">(Functor f)</span> =&gt; <span class="params">(a -&gt; b)</span> -&gt;</span> f a -&gt; f b           -- 先解f a封装到a, a -&gt; b, b再封装到f b; 操作<span class="number">2</span>次封装</span><br><span class="line"><span class="function"><span class="params">(&lt;*&gt;)</span> :: <span class="params">(Applicative f)</span> =&gt; <span class="title">f</span> <span class="params">(a -&gt; b)</span> -&gt;</span> f a -&gt; f b    -- 先解f a封装到a, 解f(a -&gt; b)封装， a -&gt; b, b再封装到f b; 操作<span class="number">3</span>次封装</span><br><span class="line"><span class="function"><span class="params">(&gt;&gt;=)</span> :: <span class="params">(Monad m)</span> =&gt; <span class="title">m</span> <span class="title">a</span> -&gt;</span> <span class="function"><span class="params">(a -&gt; m b)</span> -&gt;</span> m b          -- 先解m a封装到a, a -&gt; mb; 操作<span class="number">1</span>次封装</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>Functor, Applicative and Monad都是封装，可以封装原始类型。</li>
-<li>&lt;$&gt; 是 fmap 的中缀表达式版本</li>
-<li>functors: you apply a function to a wrapped value using fmap or &lt;$&gt;</li>
-<li>applicatives: you apply a wrapped function to a wrapped value using &lt;*&gt; or liftA</li>
-<li>monads: you apply a function that returns a wrapped value, to a wrapped value using &gt;&gt;&#x3D; or liftM</li>
-<li>conclusion</li>
-</ol>
-<ul>
-<li>A functor is a data type that implements the Functor typeclass.</li>
-<li>An applicative is a data type that implements the Applicative typeclass.</li>
-<li>A monad is a data type that implements the Monad typeclass.</li>
-<li>A Maybe implements all three, so it is a functor, an applicative, and a monad.</li>
-</ul>
-<ol start="9">
-<li>区别</li>
-</ol>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a target="_blank" rel="noopener" href="http://learnyouahaskell.com/chapters">Learn you haskell book</a></li>
-<li><a target="_blank" rel="noopener" href="https://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html">Functors, Applicatives, And Monads In Pictures</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/05/21/Chrome-config/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/05/21/Chrome-config/" class="post-title-link" itemprop="url">Chrome shortcuts</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-05-21 15:56:05" itemprop="dateCreated datePublished" datetime="2021-05-21T15:56:05+08:00">2021-05-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-31 12:05:05" itemprop="dateModified" datetime="2024-01-31T12:05:05+08:00">2024-01-31</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/Chrome/" itemprop="url" rel="index"><span itemprop="name">Chrome</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2021/05/21/Chrome-config/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2021/05/21/Chrome-config/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>对视频右键两次，选择画中画模式，方便记笔记</li>
-<li><a target="_blank" rel="noopener" href="https://lazy-guy.github.io/tomodoro/index.html">番茄时钟画中画</a></li>
-</ol>
-<h2 id="shortcuts"><a href="#shortcuts" class="headerlink" title="shortcuts"></a><a target="_blank" rel="noopener" href="https://support.google.com/chrome/answer/157179?hl=zh-Hans&co=GENIE.Platform=Desktop">shortcuts</a></h2><ol>
-<li><code>C-l</code>或<code>M-d</code>: 地址栏</li>
-<li><code>M-Enter</code>: open another tab when search: it’s very usefull</li>
-<li><code>C-k</code> 或 <code>C-e</code>: 搜索</li>
-<li><code>Tab</code>: 下一个可点击项</li>
-<li><code>M-left</code>: 后退浏览历史</li>
-<li><code>M-right</code>: 前进浏览历史</li>
-<li><code>C-r</code>: 刷新网页</li>
-<li><code>Space</code>: pgDn</li>
-<li><code>S-Space</code>: pgUp</li>
-<li><code>C-t</code>: 新标签</li>
-<li><code>C-n</code>: 新窗口</li>
-<li><code>C-w</code>: 关闭当前标签</li>
-<li><code>C-Tab</code>: 切换标签</li>
-<li><code>C-S-t</code>: 恢复关闭的标签</li>
-<li><code>C-h</code>: history</li>
-<li><code>C-j</code>: download</li>
-<li><code>C-1</code>: 跳转到第一个标签</li>
-<li><code>C-9</code>: 跳转到第一个标签</li>
-<li><code>C-Backspace</code>: 删除一个单词</li>
-<li><code>S-Esc</code>: 任务管理器</li>
-<li><code>C-S-b</code>: 显示或隐藏书签栏</li>
-<li><code>C-f</code> + <code>C-g</code>: 查找与跳转</li>
-</ol>
-<h2 id="自定义-shortcuts"><a href="#自定义-shortcuts" class="headerlink" title="自定义 shortcuts"></a><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/shortkeys-custom-keyboard/logpjaacgmcbpdkdchjiaagddngobkck?hl=zh-CN">自定义 shortcuts</a></h2><ol>
-<li><code>M-h</code>：Select previous tab</li>
-<li><code>M-l</code>：Select next tab</li>
-<li><code>M-k</code>：Select last tab</li>
-<li><code>M-b</code>: 后退浏览历史</li>
-<li><code>M-f</code>: 前进浏览历史</li>
-<li><code>M-s</code>: fullscreen</li>
-<li><code>M-3</code>：new tab</li>
-<li><code>M-8</code>：close tab</li>
-<li><code>M-w</code>：Duplicate current tab</li>
-</ol>
-<h2 id="vimium-快捷键"><a href="#vimium-快捷键" class="headerlink" title="vimium 快捷键"></a><a target="_blank" rel="noopener" href="https://vimium.github.io/">vimium 快捷键</a></h2><ol>
-<li><code>yy</code>: copy URL to clipboard</li>
-<li><code>/</code>: find</li>
-<li><code>j</code>: Scroll down</li>
-<li><code>k</code>: Scroll up</li>
-<li><code>h</code>: Scroll left</li>
-<li><code>l</code>: Scroll right</li>
-<li><code>gg</code>: Scroll to the top of the page</li>
-<li><code>G</code>: Scroll to the bottom of the page</li>
-</ol>
-<h2 id="搜索设置"><a href="#搜索设置" class="headerlink" title="搜索设置"></a>搜索设置</h2><ol>
-<li>chrome 快捷搜索设置</li>
-</ol>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">gitlab l https:<span class="regexp">//gi</span>tlab.phigent.io/?sort=name_asc&amp;name=%s&amp;sort=name_asc</span><br><span class="line">github g https:<span class="regexp">//gi</span>thub.com/search?q=%s</span><br><span class="line">cppreference cpp https:<span class="regexp">//</span>duckduckgo.com/?sites=cppreference.com&amp;q=%s&amp;ia=web</span><br><span class="line">translate t https:<span class="regexp">//</span>translate.google.cn/?source=osdd&amp;who=test&amp;sl=en&amp;tl=zh-CN&amp;text=%s&amp;op=translate</span><br><span class="line">blog blog https:<span class="regexp">//gi</span>thub.com<span class="regexp">/jiaxiyang/</span>blog<span class="regexp">/tree/m</span>aster<span class="regexp">/source/</span>_posts</span><br><span class="line">links links https:<span class="regexp">//</span>jiaxiyang.github.io<span class="regexp">/2020/</span><span class="number">06</span><span class="regexp">/29/</span>Links/</span><br><span class="line"><span class="number">100</span>ms <span class="number">100</span>ms https:<span class="regexp">//gi</span>thub.com<span class="regexp">/jiaxiyang/</span><span class="number">100</span>ms_dot_emacs<span class="regexp">/blob/m</span>aster/init.el</span><br><span class="line">lead lead https:<span class="regexp">//gi</span>thub.com<span class="regexp">/jiaxiyang/</span>leader-key-mode<span class="regexp">/blob/m</span>aster/leader-key-mode.el</span><br><span class="line">melpa m https:<span class="regexp">//m</span>elpa.org<span class="regexp">/#/</span>?q=test&amp;sort=downloads&amp;asc=false</span><br><span class="line">excalidraw e https:<span class="regexp">//</span>excalidraw.com/</span><br><span class="line">baidu b https:<span class="regexp">//</span>www.baidu.com/<span class="comment">#ie=&#123;inputEncoding&#125;&amp;wd=%s</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/onetab/chphlpgkkbolifaimnlloiipkdnihall">onetab 节省内存</a> 快捷键<code>alt+shift+1</code> 改为 <code>alt+1</code>。 <code>alt+2</code>发送当前标签页至 OneTab</li>
-<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/adblocker-ultimate/ohahllgiabjaoigichmmfljhkcfikeof/related?hl=zh-CN">广告屏蔽</a></li>
-<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/sourcegraph/dgjhfomjieaadpoljlnidmbgkdffpack">sourcegraph 插件</a></li>
-<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/octotree-github-code-tree/bkhaagjahfmjljalopjnoealnfndnagc?hl=zh-CN">octotree</a></li>
-<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/gitzip-for-github/ffabmkklhbepgcgfonabamgnfafbdlkn">gitzip 插件</a></li>
-<li><a target="_blank" rel="noopener" href="https://vimium.github.io/">vimiu</a></li>
-<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/shortkeys-custom-keyboard/logpjaacgmcbpdkdchjiaagddngobkck/related?hl=zh-CN">shortkeys</a></li>
-<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/magical-text-expansion/iibninhmiggehlcdolcilmhacighjamp/related?hl=zh-CN">magical</a></li>
-<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/colorzilla/bhlhnicpbhignbdhedgjhgdocnmhomnp?hl=zh-CN">colorzilla</a></li>
-<li>（good)<a target="_blank" rel="noopener" href="https://immersivetranslate.com/">沉侵式翻译</a><ul>
-<li>arxiv 的文章也可以用</li>
-<li>youtube 双语字幕</li>
-<li><code>Alt A</code></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://chromewebstore.google.com/detail/imtranslator-%E7%BF%BB%E8%AF%91%EF%BC%8C%E5%AD%97%E5%85%B8%EF%BC%8C%E5%A3%B0%E9%9F%B3/noaijdpnepcgjemiklgfkcfbkokogabh">ImTranslator: 翻译，字典，声音</a></li>
-<li>(good)<a target="_blank" rel="noopener" href="https://chromewebstore.google.com/detail/%E4%BE%A7%E8%BE%B9%E7%BF%BB%E8%AF%91/bocbaocobfecmglnmeaeppambideimao?hl=zh-CN">侧边翻译</a></li>
-<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/google-translate/aapbdbdomjkkjkaonfhkkikfgjllcleb/related?hl=en">google translate</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/alyssaxuu/omni">omni</a></li>
-<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/easy-auto-refresh/aabcgdmkeabbnleenpncegpcngjpnjkc/related">easy-auto-refresh</a></li>
-<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/markdown-diagrams/pmoglnmodacnbbofbgcagndelmgaclel">markdown-diagrams</a></li>
-<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/svg-export/naeaaedieihlkmdajjefioajbbdbdjgp/related?hl=zh-CN">svg-export</a></li>
-<li><a target="_blank" rel="noopener" href="https://chrome.google.com/webstore/detail/whatfont/jabopobgcpjmedljpbcaablpmlmfcogm/related?hl=zh-CN">whatfont</a></li>
-<li><a target="_blank" rel="noopener" href="https://chromewebstore.google.com/detail/%E6%8D%95%E6%8D%89%E7%BD%91%E9%A1%B5%E6%88%AA%E5%9B%BE-fireshot%E7%9A%84/mcbpblocgmgfnpjjppndjkmgjaogfceg?hl=zh-CN&utm_source=ext_sidebar">fireshot 截屏工具</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2001,7 +2081,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-count">192</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2034,6 +2114,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -2041,12 +2127,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -2074,7 +2154,7 @@
 <div class="copyright">
   
   &copy; 2021 – 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -2084,13 +2164,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">543k</span>
+    <span title="站点总字数">587k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:14</span>
+    <span title="站点阅读时长">8:54</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

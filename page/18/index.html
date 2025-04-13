@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -199,6 +199,323 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/02/23/FFmpeg/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/23/FFmpeg/" class="post-title-link" itemprop="url">FFmpeg</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-23 20:21:13" itemprop="dateCreated datePublished" datetime="2021-02-23T20:21:13+08:00">2021-02-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/FFmpeg/" itemprop="url" rel="index"><span itemprop="name">FFmpeg</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/02/23/FFmpeg/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/02/23/FFmpeg/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="视频处理基本概念"><a href="#视频处理基本概念" class="headerlink" title="视频处理基本概念"></a><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2020/01/ffmpeg.html">视频处理基本概念</a></h2><ol>
+<li><code>容器(封装)</code>：<code>ffmpeg-formats</code> 视频文件本身其实是一个容器（container），里面包括了视频和音频，也可能有字幕等其他内容。</li>
+<li><code>编码格式</code>：<code>ffmpeg-codecs</code> 视频和音频都需要经过编码，才能保存成文件。不同的编码格式（CODEC），有不同的压缩率，会导致文件大小和清晰度的差异。</li>
+<li><code>编码器</code>：<code>ffmpeg-encoders</code> 编码器（encoders）是实现某种编码格式的库文件。只有安装了某种格式的编码器，才能实现该格式视频&#x2F;音频的编码和解码。</li>
+</ol>
+<h2 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h2><ol>
+<li>ffmpeg的主要工作流程相对比较简单，具体如下。</li>
+</ol>
+<ul>
+<li>解封装（Demuxing）</li>
+<li>解码（Decoding）</li>
+<li>编码（Encoding）</li>
+<li>封装（Muxing）</li>
+</ul>
+<ol>
+<li>其中需要经过6个步骤，具体如下。</li>
+</ol>
+<ul>
+<li>读取输入源</li>
+<li>进行音视频的解封装</li>
+<li>解码每一帧音视频数据</li>
+<li>进行音视频的重新封装</li>
+<li>输出到目标</li>
+</ul>
+<p>1.<br>                _______              ______________<br>               |       |            |              |<br>               | input |  demuxer   | encoded data |   decoder<br>               | file  | ———&gt; | packets      | —–+<br>               |<em><strong><strong><strong>|            |</strong></strong></strong><strong><strong><strong><strong>|      |<br>                                                          v<br>                                                      _________<br>                                                     |         |<br>                                                     | decoded |<br>                                                     | frames  |<br>                                                     |</strong></strong></strong></strong></em>|<br>                ________             ______________       |<br>               |        |           |              |      |<br>               | output | &lt;——– | encoded data | &lt;—-+<br>               | file   |   muxer   | packets      |   encoder<br>               |<strong><strong><strong><strong>|           |</strong></strong></strong></strong>______|</p>
+<h2 id="ffmpeg"><a href="#ffmpeg" class="headerlink" title="ffmpeg"></a>ffmpeg</h2><ol>
+<li>FFmpeg框架的基本组成包含AVFormat、AVCodec、AVFilter、AVDevice、AVUtil等模块库</li>
+<li>主要命令</li>
+</ol>
+<ul>
+<li>ffmpeg主要用于音视频编解码</li>
+<li>ffprobe主要用于音视频内容分析</li>
+<li>ffplay主要用于音视频播放、可视化分析</li>
+</ul>
+<h3 id="ffmpeg-1"><a href="#ffmpeg-1" class="headerlink" title="ffmpeg"></a>ffmpeg</h3><ol>
+<li>总共分为5部分：<code>ffmpeg &#123;1&#125; &#123;2&#125; -i &#123;3&#125; &#123;4&#125; &#123;5&#125;</code></li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ffmpeg \</span><br><span class="line"><span class="selector-attr">[全局参数]</span> \</span><br><span class="line"><span class="selector-attr">[输入文件参数]</span> \</span><br><span class="line">-<span class="selector-tag">i</span> <span class="selector-attr">[输入文件]</span> \</span><br><span class="line"><span class="selector-attr">[输出文件参数]</span> \</span><br><span class="line"><span class="selector-attr">[输出文件]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ffplay"><a href="#ffplay" class="headerlink" title="ffplay"></a>ffplay</h3><ol>
+<li>FFmpeg不但可以提供转码、转封装等功能，同时还提供了播放器相关功能，使用FFmpeg的avformat与avcodec，可以播放各种媒体文件或者流。如果想要使用ffplay，那么系统首先需要有SDL来进行ffplay的基础支撑。</li>
+</ol>
+<h3 id="ffprobe"><a href="#ffprobe" class="headerlink" title="ffprobe"></a>ffprobe</h3><ol>
+<li>ffprobe也是FFmpeg源码编译后生成的一个可执行程序。ffprobe是一个非常强大的多媒体分析工具，可以从媒体文件或者媒体流中获得你想要了解的媒体信息，比如音频的参数、视频的参数、媒体容器的参数信息等。</li>
+<li><code>./ffprobe –show_streams output.mp4</code></li>
+</ol>
+<h2 id="ffmpeg硬编解码"><a href="#ffmpeg硬编解码" class="headerlink" title="ffmpeg硬编解码"></a>ffmpeg硬编解码</h2><ol>
+<li>当使用FFmpeg进行软编码时，常见的基于CPU进行H.264或H.265编码其相对成本会比较高，CPU编码时的性能也很低，所以出于编码效率及成本考虑，很多时候都会考虑采用硬编码，常见的硬编码包含Nvidia GPU与Intel QSV两种，还有常见的嵌入式平台，如树莓派、瑞芯微等</li>
+</ol>
+<h2 id="ffmpeg流媒体"><a href="#ffmpeg流媒体" class="headerlink" title="ffmpeg流媒体"></a>ffmpeg流媒体</h2><ol>
+<li>随着互联网、移动互联网的发展，人们获取信息的方式开始从纸质媒体转向互联网文字媒体，又从文字媒体转向音视频流媒体。音视频流媒体又称为流媒体，而用于处理流媒体的压缩、录制、编辑操作，开源并强大的工具屈指可数，FFmpeg就是常见的流媒体处理工具。</li>
+<li>流类型：RTMP, RTSP, HTTP, UDP&#x2F;TCP, HDS, DASH</li>
+</ol>
+<h2 id="ffmpeg-filter"><a href="#ffmpeg-filter" class="headerlink" title="ffmpeg filter"></a>ffmpeg filter</h2><ol>
+<li>FFmpeg除了具有强大的封装&#x2F;解封装、编&#x2F;解码功能之外，还包含了一个非常强大的组件——avfilter。avfilter组件经常用于进行多媒体的处理与编辑。例如加水印，画中画，多宫格视频等</li>
+</ol>
+<h2 id="ffmpeg视频采集"><a href="#ffmpeg视频采集" class="headerlink" title="ffmpeg视频采集"></a>ffmpeg视频采集</h2><ol>
+<li>可以使用FFmpeg采集本地的音视频采集设备的数据，然后进行编码、封装、传输等操作</li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://ffmpeg.org/documentation.html">Official Documents</a></li>
+<li><a target="_blank" rel="noopener" href="http://jxz1.j9p.com/pc/dgsdfhghgh.pdf">FFmpeg从入门到精通（书）</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/02/23/Gstreamer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/23/Gstreamer/" class="post-title-link" itemprop="url">Gstreamer</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-23 08:43:01" itemprop="dateCreated datePublished" datetime="2021-02-23T08:43:01+08:00">2021-02-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/Gstreamer/" itemprop="url" rel="index"><span itemprop="name">Gstreamer</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/02/23/Gstreamer/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/02/23/Gstreamer/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Why-Gstreamer"><a href="#Why-Gstreamer" class="headerlink" title="Why Gstreamer"></a>Why Gstreamer</h2><ol>
+<li>构建一个视频分析应用，需要考虑的内容有：视频流获取、视频流解码、预处理、算法推理、数据编码、数据显示、数据传输等。常常需要引入一些第三方的开发包，如 OpenCV，FFmpeg，Caffe，TensorRT，OpenGL 等。GStreamer 是一个用于开发流式多媒体应用的跨平台开源框架，应用程序可以通过管道(Pipeline)的方式，<code>将多媒体处理的各个步骤串联起来</code>，达到预期的效果。</li>
+</ol>
+<h2 id="Gstreamer"><a href="#Gstreamer" class="headerlink" title="Gstreamer"></a>Gstreamer</h2><ol>
+<li><code>核心</code>为<code>Pipeline</code>框架以及用于扩展功能的<code>Plugins</code>。plugin 负责实现音视频传输协议、音视频输入输出源、音视频编解转码等真实的媒体处理功能，而 plugin 之间通过 pipeline 关联在一起，pipeline 负责将上一个 plugin 的数据流(data flow)传输给下一个 plugin，最终形成一个完整的多媒体处理应用；</li>
+<li>原理：GStreamer 的程序通过连接数字媒体处理的元素注入管道（pipeline）。每个元素(element)是由一个插件提供。元素可组合为箱（bins），箱可以进一步聚合，从而形成架构图。元素沟通是透过垫（pads）。来源垫（source pad）上一个元素可以被连接到一个接收垫（sink pad）在另一个。当管道是在播放状态，数据缓冲流（data buffers flow）从来源垫（source pad）流向接收垫（sink pad）。</li>
+<li>箱柜(bin)是由多个 element 构成的容器，同时 bin 本身也是一种 element，所以能够像操作普通 element 一样操作一个 bin，改变 bin 的状态可以改变 bin 内部所有 elements 的状态。bin 可以发送总线消息给它的子集 elements ，包括：错误消息(error messages)，标签消息(tag messages)，EOS 消息(EOS messages)。</li>
+<li>管道(pipeline)是一个特殊的 bin，当设定管道暂停或播放状态的时候，数据流将开始流动，并且媒体数据处理也开始处理。</li>
+<li>element 被封装成 plugin 才能被 gstreamer 使用。</li>
+</ol>
+<h2 id="3-层架构（plugin-core-app"><a href="#3-层架构（plugin-core-app" class="headerlink" title="3 层架构（plugin, core, app)"></a>3 层架构（plugin, core, app)</h2><p><img src="https://gstreamer.freedesktop.org/documentation/application-development/introduction/images/gstreamer-overview.png" alt="overview"></p>
+<ol>
+<li>最底层：element(plugins)</li>
+<li>中间层：插件框架、pipeline 架构、媒体类型处理机制、等等，也就是处理 Elements 的方式方法.</li>
+<li>最上层：tools, 多媒体应用</li>
+</ol>
+<h2 id="GStreamer-plug-ins-could-be-classified"><a href="#GStreamer-plug-ins-could-be-classified" class="headerlink" title="GStreamer plug-ins could be classified"></a>GStreamer plug-ins could be classified</h2><ol>
+<li>protocols handling</li>
+<li>sources: for audio and video (involves protocol plugins)</li>
+<li>formats: parsers, formaters, muxers, demuxers, metadata, subtitles</li>
+<li>codecs: coders and decoders</li>
+<li>filters: converters, mixers, effects, …</li>
+<li>sinks: for audio and video (involves protocol plugins)</li>
+</ol>
+<h2 id="GStreamer-tools"><a href="#GStreamer-tools" class="headerlink" title="GStreamer tools"></a>GStreamer tools</h2><ol>
+<li>gst-launch-1.0: 命令行建立和运行 pipeline, 不用编写 C 代码； <code>gst-launch-1.0 videotestsrc ! autovideosink</code></li>
+<li>gst-inspect-1.0: 查看可用的插件和它们的相关信息； <code>gst-inspect-1.0 videotestsrc</code></li>
+<li>gst-discoverer-1.0: 查看媒体文件的内部结构； <code>gst-discoverer-1.0 /root/Desktop/video.mp4</code></li>
+<li>GST*DEBUG&#x3D;”GST_TRACER:7” GST_TRACERS&#x3D;”proctime” gst-launch-1.0 … <code>查看每个element性能</code> <a target="_blank" rel="noopener" href="https://developer.ridgerun.com/wiki/index.php?title=GstShark*-_Processing_Time_tracer">link</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/RidgeRun/gst-shark">gst-shark</a></li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://gstreamer.freedesktop.org/documentation/application-development/introduction/index.html?gi-language=c">About Gstreamer</a></li>
+<li><a target="_blank" rel="noopener" href="https://gstreamer.freedesktop.org/documentation/tutorials/basic/gstreamer-tools.html?gi-language=c">Gstreamer tools</a></li>
+<li><a target="_blank" rel="noopener" href="https://gstreamer.freedesktop.org/documentation/tutorials/basic/index.html?gi-language=c">Gstreamer tutorials</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/sdroege/gstreamer-rs/tree/master/tutorials">Gstreamer tutorials rust</a></li>
+<li><a target="_blank" rel="noopener" href="http://orangeamoy.com/2019/06/28/GStreamerAndDeepStream/">由 GStreamer 到 DeepStream</a></li>
+<li><a target="_blank" rel="noopener" href="http://ericnode.info/post/gstreamer_intro/">插件例子</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.shangyexinzhi.com/article/571316.html">中文基础概念</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/02/02/Docker/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -230,7 +547,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-21 17:39:32" itemprop="dateModified" datetime="2024-05-21T17:39:32+08:00">2024-05-21</time>
+                <time title="修改时间：2025-01-24 10:57:26" itemprop="dateModified" datetime="2025-01-24T10:57:26+08:00">2025-01-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -266,14 +583,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.6k</span>
+              <span>10k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>9 分钟</span>
             </span>
 
         </div>
@@ -285,7 +602,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="NOTES"><a href="#NOTES" class="headerlink" title="NOTES"></a>NOTES</h2><ol>
+          <h2 id="vscode-docker"><a href="#vscode-docker" class="headerlink" title="vscode docker"></a><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/containers/overview">vscode docker</a></h2><h2 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker compose"></a><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/containers/docker-compose">docker compose</a></h2><ol>
+<li>用于运行docker image</li>
+</ol>
+<h2 id="NOTES"><a href="#NOTES" class="headerlink" title="NOTES"></a>NOTES</h2><ol>
+<li><code>docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/ubuntu:22.04</code><ul>
+<li><a target="_blank" rel="noopener" href="https://docker.aityp.com/s/docker.io">link</a></li>
+</ul>
+</li>
+<li><code>docker pull hello-world --registry-mirror=https://docker.mirrors.ustc.edu.cn</code></li>
 <li>dockerhub 下载 images 到磁盘, 传到服务器: docker pull and docker save</li>
 <li>wsl2 中设置<code>--net=host</code>会影响 docker port 设置</li>
 <li><code>docker image prune -a</code> 清理任何为用的的 image</li>
@@ -309,8 +634,13 @@
 <li><code>docker push docker.io/my-username/my-image:v1.0.0</code></li>
 <li><code>docker image rm eb3f9d403e36</code> 删除 image</li>
 </ol>
-<h2 id="docker-container-install-ssh-server"><a href="#docker-container-install-ssh-server" class="headerlink" title="docker container install ssh server"></a>docker container install ssh server</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sed -i s@/archive.ubuntu.com/@/mirrors.tuna.tsinghua.edu.cn/@g /etc/apt/sources.list &amp;&amp; apt-get update -y</span><br><span class="line">sudo apt install -y openssh-server</span><br><span class="line">/etc/init.d/ssh start</span><br><span class="line"><span class="comment"># vi /etc/ssh/sshd_config</span></span><br><span class="line"><span class="comment"># 设置 PermitRootLogin yes和 PasswordAuthentication yes</span></span><br><span class="line">/etc/init.d/ssh restart</span><br><span class="line">passwd <span class="comment"># 设置密码</span></span><br></pre></td></tr></table></figure>
+<h2 id="docker-container-install-ssh-server"><a href="#docker-container-install-ssh-server" class="headerlink" title="docker container install ssh server"></a>docker container install ssh server</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sed -i s@/archive.ubuntu.com/@/mirrors.tuna.tsinghua.edu.cn/@g /etc/apt/sources.list &amp;&amp; apt-get update -y</span><br><span class="line">sudo apt install -y openssh-server</span><br><span class="line">PORT=22; sed -i -e <span class="string">&quot;s/^#Port 22/Port <span class="variable">$PORT</span>/&quot;</span> -e <span class="string">&#x27;s/^#PermitRootLogin prohibit-password/PermitRootLogin yes/&#x27;</span> -e <span class="string">&#x27;s/^#PasswordAuthentication yes/PasswordAuthentication yes/&#x27;</span> /etc/ssh/sshd_config</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;root:root&#x27;</span> | chpasswd &amp;&amp; /etc/init.d/ssh start</span><br><span class="line"><span class="comment"># /etc/init.d/ssh start</span></span><br><span class="line"><span class="comment"># vi /etc/ssh/sshd_config</span></span><br><span class="line"><span class="comment"># 设置 PermitRootLogin yes和 PasswordAuthentication yes</span></span><br><span class="line">/etc/init.d/ssh restart</span><br><span class="line">passwd <span class="comment"># 设置密码</span></span><br></pre></td></tr></table></figure>
 
+<h2 id="network-host"><a href="#network-host" class="headerlink" title="network&#x3D;host"></a>network&#x3D;host</h2><ol>
+<li>–network&#x3D;host 和 -p 选项不能同时使用</li>
+<li>当使用 –network&#x3D;host 时，容器中的端口直接暴露在宿主机上，-p 的端口映射功能就没有意义了，因此 Docker 会忽略 -p 选项。</li>
+<li>直接在sshd_config设置port</li>
+</ol>
 <h2 id="usefull-docker"><a href="#usefull-docker" class="headerlink" title="usefull docker"></a>usefull docker</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://hub.docker.com/_/gcc">gcc</a></li>
 </ol>
@@ -359,6 +689,7 @@
 <li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903450203914253">资源整理</a></li>
 <li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7224149297951195193">简单聊聊 k8s，和 docker 之间的关系</a></li>
 </ol>
+<h2 id="run-sh"><a href="#run-sh" class="headerlink" title="run.sh"></a>run.sh</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">CONTAINER_NAME=&quot;triton-xiyang&quot;</span><br><span class="line">IMAGE_NAME=&quot;triton:latest&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">定义挂载路径数组</span></span><br><span class="line">declare -a MOUNT_PATHS=(</span><br><span class="line">    &quot;/data/&quot;</span><br><span class="line">    # &quot;/home/xiyang/&quot;</span><br><span class="line">    # &quot;/workspace/&quot;</span><br><span class="line">)</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">指定工作目录</span></span><br><span class="line">WORKDIR=&quot;/data/xiyang&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">测试是否需要sudo来运行docker命令</span></span><br><span class="line">check_docker_permission() &#123;</span><br><span class="line">    if docker ps &gt;/dev/null 2&gt;&amp;1; then</span><br><span class="line">        echo false  # 不需要sudo</span><br><span class="line">    else</span><br><span class="line">        if sudo docker ps &gt;/dev/null 2&gt;&amp;1; then</span><br><span class="line">            echo true   # 需要sudo</span><br><span class="line">        else</span><br><span class="line">            echo &quot;错误: 无法访问docker，请确保docker已安装且用户有相应权限&quot;</span><br><span class="line">            exit 1</span><br><span class="line">        fi</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">自动检测是否需要sudo</span></span><br><span class="line">USE_SUDO=$(check_docker_permission)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">根据USE_SUDO设置docker命令前缀</span></span><br><span class="line">DOCKER_CMD=&quot;docker&quot;</span><br><span class="line">if [ &quot;$USE_SUDO&quot; = true ]; then</span><br><span class="line">    echo &quot;需要sudo权限运行docker命令&quot;</span><br><span class="line">    DOCKER_CMD=&quot;sudo docker&quot;</span><br><span class="line">fi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">定义颜色</span></span><br><span class="line">RED=&#x27;\033[0;31m&#x27;</span><br><span class="line">GREEN=&#x27;\033[0;32m&#x27;</span><br><span class="line">YELLOW=&#x27;\033[1;33m&#x27;</span><br><span class="line">BLUE=&#x27;\033[0;34m&#x27;</span><br><span class="line">CYAN=&#x27;\033[0;36m&#x27;</span><br><span class="line">NC=&#x27;\033[0m&#x27; # No Color</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">生成挂载参数字符串</span></span><br><span class="line">generate_mount_args() &#123;</span><br><span class="line">    local mount_args=&quot;&quot;</span><br><span class="line">    for path in &quot;$&#123;MOUNT_PATHS[@]&#125;&quot;; do</span><br><span class="line">        mount_args+=&quot; -v $&#123;path&#125;:$&#123;path&#125;&quot;</span><br><span class="line">    done</span><br><span class="line">    echo &quot;$mount_args&quot;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查容器状态的函数</span></span><br><span class="line">check_container_status() &#123;</span><br><span class="line">    # 检查容器是否存在</span><br><span class="line">    if $&#123;DOCKER_CMD&#125; ps -a --format &#x27;&#123;&#123;.Names&#125;&#125;&#x27; | grep -q &quot;^$&#123;CONTAINER_NAME&#125;$&quot;; then</span><br><span class="line">        # 检查容器是否运行</span><br><span class="line">        if $&#123;DOCKER_CMD&#125; ps --format &#x27;&#123;&#123;.Names&#125;&#125;&#x27; | grep -q &quot;^$&#123;CONTAINER_NAME&#125;$&quot;; then</span><br><span class="line">            echo &quot;容器正在运行，直接进入...&quot;</span><br><span class="line">            return 0  # 运行中</span><br><span class="line">        else</span><br><span class="line">            echo &quot;容器存在但未运行，正在启动...&quot;</span><br><span class="line">            return 1  # 已存在但未运行</span><br><span class="line">        fi</span><br><span class="line">    else</span><br><span class="line">        echo &quot;容器不存在，正在创建新容器...&quot;</span><br><span class="line">        return 2  # 不存在</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动已存在的容器</span></span><br><span class="line">start_container() &#123;</span><br><span class="line">    $&#123;DOCKER_CMD&#125; start $&#123;CONTAINER_NAME&#125; &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建新容器</span></span><br><span class="line">create_container() &#123;</span><br><span class="line">    local mount_args=$(generate_mount_args)</span><br><span class="line">    $&#123;DOCKER_CMD&#125; run -id \</span><br><span class="line">        --name $&#123;CONTAINER_NAME&#125; \</span><br><span class="line">        $&#123;mount_args&#125; \</span><br><span class="line">        -w $&#123;WORKDIR&#125; \</span><br><span class="line">        --network host \</span><br><span class="line">        --privileged \</span><br><span class="line">        -v /etc/localtime:/etc/localtime \</span><br><span class="line">        $&#123;IMAGE_NAME&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示容器信息</span></span><br><span class="line">show_container_info() &#123;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;╔════════════════════════════════════════════════════════════╗$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;                      $&#123;YELLOW&#125;容器信息$&#123;NC&#125;                              $&#123;BLUE&#125;║$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;╠════════════════════════════════════════════════════════════╣$&#123;NC&#125;&quot;</span><br><span class="line">    </span><br><span class="line">    # 基本信息</span><br><span class="line">    local container_id=$($&#123;DOCKER_CMD&#125; ps -f name=$&#123;CONTAINER_NAME&#125; --format &quot;&#123;&#123;.ID&#125;&#125;&quot;)</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125; $&#123;CYAN&#125;▎ 基本信息$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   容器名称: $&#123;GREEN&#125;$&#123;CONTAINER_NAME&#125;$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   容器ID:   $&#123;GREEN&#125;$&#123;container_id&#125;$&#123;NC&#125;&quot;</span><br><span class="line">    </span><br><span class="line">    # 镜像信息</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125; $&#123;CYAN&#125;▎ 镜像信息$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   镜像ID:   $&#123;GREEN&#125;$($&#123;DOCKER_CMD&#125; inspect -f &#x27;&#123;&#123;.Image&#125;&#125;&#x27; $&#123;CONTAINER_NAME&#125; | sed &#x27;s/sha256://&#x27; | cut -c1-12)$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   镜像标签: $&#123;GREEN&#125;$($&#123;DOCKER_CMD&#125; inspect -f &#x27;&#123;&#123;.Config.Image&#125;&#125;&#x27; $&#123;CONTAINER_NAME&#125;)$&#123;NC&#125;&quot;</span><br><span class="line">    </span><br><span class="line">    # 时间信息</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125; $&#123;CYAN&#125;▎ 时间信息$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   创建时间: $&#123;GREEN&#125;$($&#123;DOCKER_CMD&#125; inspect -f &#x27;&#123;&#123;.Created&#125;&#125;&#x27; $&#123;CONTAINER_NAME&#125; | sed &#x27;s/T/ /&#x27; | cut -d. -f1)$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   启动时间: $&#123;GREEN&#125;$($&#123;DOCKER_CMD&#125; inspect -f &#x27;&#123;&#123;.State.StartedAt&#125;&#125;&#x27; $&#123;CONTAINER_NAME&#125; | sed &#x27;s/T/ /&#x27; | cut -d. -f1)$&#123;NC&#125;&quot;</span><br><span class="line">    </span><br><span class="line">    # 运行时长</span><br><span class="line">    local start_time=$(date -d &quot;$($&#123;DOCKER_CMD&#125; inspect -f &#x27;&#123;&#123;.State.StartedAt&#125;&#125;&#x27; $&#123;CONTAINER_NAME&#125;)&quot; +%s)</span><br><span class="line">    local current_time=$(date +%s)</span><br><span class="line">    local uptime=$((current_time - start_time))</span><br><span class="line">    local days=$((uptime / 86400))</span><br><span class="line">    local hours=$(((uptime % 86400) / 3600))</span><br><span class="line">    local minutes=$(((uptime % 3600) / 60))</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   运行时长: $&#123;GREEN&#125;$&#123;days&#125;天 $&#123;hours&#125;小时 $&#123;minutes&#125;分钟$&#123;NC&#125;&quot;</span><br><span class="line">    </span><br><span class="line">    # 资源使用情况</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125; $&#123;CYAN&#125;▎ 资源使用情况$&#123;NC&#125;&quot;</span><br><span class="line">    local stats=$($&#123;DOCKER_CMD&#125; stats $&#123;CONTAINER_NAME&#125; --no-stream --format &quot;&#123;&#123;.CPUPerc&#125;&#125;|&#123;&#123;.MemUsage&#125;&#125;&quot;)</span><br><span class="line">    local cpu_usage=$(echo $stats | cut -d&#x27;|&#x27; -f1)</span><br><span class="line">    local mem_usage=$(echo $stats | cut -d&#x27;|&#x27; -f2)</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   CPU使用率: $&#123;YELLOW&#125;$&#123;cpu_usage&#125;$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   内存使用:  $&#123;YELLOW&#125;$&#123;mem_usage&#125;$&#123;NC&#125;&quot;</span><br><span class="line">    </span><br><span class="line">    # 网络信息</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125; $&#123;CYAN&#125;▎ 网络配置$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   网络模式: $&#123;GREEN&#125;$($&#123;DOCKER_CMD&#125; inspect -f &#x27;&#123;&#123;.HostConfig.NetworkMode&#125;&#125;&#x27; $&#123;CONTAINER_NAME&#125;)$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   主机名:   $&#123;GREEN&#125;$($&#123;DOCKER_CMD&#125; inspect -f &#x27;&#123;&#123;.Config.Hostname&#125;&#125;&#x27; $&#123;CONTAINER_NAME&#125;)$&#123;NC&#125;&quot;</span><br><span class="line">    </span><br><span class="line">    # 挂载信息</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125; $&#123;CYAN&#125;▎ 挂载信息$&#123;NC&#125;&quot;</span><br><span class="line">    $&#123;DOCKER_CMD&#125; inspect -f &#x27;&#123;&#123;range .Mounts&#125;&#125;&#123;&#123;.Source&#125;&#125; -&gt; &#123;&#123;.Destination&#125;&#125;&#123;&#123;println&#125;&#125;&#123;&#123;end&#125;&#125;&#x27; $&#123;CONTAINER_NAME&#125; | while IFS= read -r line; do</span><br><span class="line">        if [ ! -z &quot;$line&quot; ]; then</span><br><span class="line">            echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   路径: $&#123;GREEN&#125;$&#123;line&#125;$&#123;NC&#125;&quot;</span><br><span class="line">        fi</span><br><span class="line">    done</span><br><span class="line">    </span><br><span class="line">    # 工作目录</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125; $&#123;CYAN&#125;▎ 工作目录$&#123;NC&#125;&quot;</span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;║$&#123;NC&#125;   $&#123;GREEN&#125;$($&#123;DOCKER_CMD&#125; inspect -f &#x27;&#123;&#123;.Config.WorkingDir&#125;&#125;&#x27; $&#123;CONTAINER_NAME&#125;)$&#123;NC&#125;&quot;</span><br><span class="line">    </span><br><span class="line">    echo -e &quot;$&#123;BLUE&#125;╚════════════════════════════════════════════════════════════╝$&#123;NC&#125;&quot;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进入容器</span></span><br><span class="line">enter_container() &#123;</span><br><span class="line">    show_container_info</span><br><span class="line">    $&#123;DOCKER_CMD&#125; exec -it $&#123;CONTAINER_NAME&#125; bash</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">主函数</span></span><br><span class="line">main() &#123;</span><br><span class="line">    check_container_status</span><br><span class="line">    status=$?</span><br><span class="line">    </span><br><span class="line">    case $status in</span><br><span class="line">        0)  # 容器运行中</span><br><span class="line">            enter_container</span><br><span class="line">            ;;</span><br><span class="line">        1)  # 容器存在但未运行</span><br><span class="line">            start_container &amp;&amp; enter_container</span><br><span class="line">            ;;</span><br><span class="line">        2)  # 容器不存在</span><br><span class="line">            create_container &amp;&amp; enter_container</span><br><span class="line">            ;;</span><br><span class="line">    esac</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">执行主函数</span></span><br><span class="line">main</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用说明（注释）</span></span><br><span class="line">: &#x27;</span><br><span class="line">常用Docker命令：</span><br><span class="line">1. 查看运行中的容器：docker ps</span><br><span class="line">2. 停止容器：docker stop triton-xiyang</span><br><span class="line">3. 删除容器：docker rm triton-xiyang</span><br><span class="line">4. 查看镜像列表：docker images</span><br><span class="line">5. 删除镜像：docker image rm &lt;image_id&gt;</span><br><span class="line">&#x27;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -694,7 +1025,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-05 11:20:14" itemprop="dateModified" datetime="2024-09-05T11:20:14+08:00">2024-09-05</time>
+                <time title="修改时间：2025-03-19 10:26:25" itemprop="dateModified" datetime="2025-03-19T10:26:25+08:00">2025-03-19</time>
               </span>
 
           
@@ -960,12 +1291,19 @@
 <h2 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h2><ol>
 <li>vscode debug</li>
 <li>vscode 无法跳转可能是 interpreter 问题</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/singxsy/article/details/123730161">不跳转问题修复</a></li>
+<li>lsp language server 使用 pylance, jedi</li>
+<li><code>&quot;justMyCode&quot;:False</code> 可以跳转到三方库源代码</li>
 <li><code>python -i test.py</code> 执行之后会停下来，可以查看变量</li>
 <li><code>python -m pdb test.py</code></li>
 <li><code>import pdb; pdb.set_trace()</code></li>
 <li><code>python -m trace --trackcalls pyscript.py</code></li>
 <li><code>python -m trace --trace pyscript.py</code></li>
+<li>打印动态库</li>
 </ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">for</span> name, module <span class="keyword">in</span> sys.modules.items():</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">hasattr</span>(module, <span class="string">&#x27;__file__&#x27;</span>) <span class="keyword">and</span> module.__file__:</span><br><span class="line">        <span class="keyword">if</span> module.__file__.endswith((<span class="string">&#x27;.so&#x27;</span>, <span class="string">&#x27;.dll&#x27;</span>, <span class="string">&#x27;.pyd&#x27;</span>)):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;name&#125;</span>: <span class="subst">&#123;module.__file__&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
 <h3 id="Debug-方法"><a href="#Debug-方法" class="headerlink" title="Debug 方法"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38542085/article/details/78562458">Debug 方法</a></h3><ol>
 <li>elpy-pdb-debug-buffer</li>
 <li>logging</li>
@@ -1328,7 +1666,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-07-31 15:12:56" itemprop="dateModified" datetime="2024-07-31T15:12:56+08:00">2024-07-31</time>
+                <time title="修改时间：2025-03-31 11:47:15" itemprop="dateModified" datetime="2025-03-31T11:47:15+08:00">2025-03-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1364,14 +1702,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7.4k</span>
+              <span>8.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
+              <span>8 分钟</span>
             </span>
 
         </div>
@@ -1383,7 +1721,29 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="workflow"><a href="#workflow" class="headerlink" title="workflow"></a>workflow</h2><ol>
+          <h2 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h2><ol>
+<li><code>git merge --ff-only feature-branch</code> 不产生merge commit</li>
+</ol>
+<h2 id="patch"><a href="#patch" class="headerlink" title="patch"></a>patch</h2><ol>
+<li><code>git format-patch ab51eccf88f5321e7c60591c5546b254b6afab99..1b3ed340943eeb7a73c6c21270e86b507e85afbb -o /data/xiyang/llvm_sipu.patch</code></li>
+<li><code>git apply *.patch</code></li>
+</ol>
+<h2 id="pre-commit"><a href="#pre-commit" class="headerlink" title="pre commit"></a>pre commit</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/triton-lang/triton/blob/main/.pre-commit-config.yaml">triton precommit config</a></li>
+<li><code>pip install pre-commit</code></li>
+<li><code>pre-commit install</code></li>
+<li><code>git commit</code>会自动修复</li>
+<li><code>python3 -m pre_commit run --all-files --verbose</code> verbose</li>
+<li><code>pre-commit run --from-ref origin/main --to-ref HEAD</code> 修复当前分支问题</li>
+<li><code>pre-commit run --all-files</code>修复所有文件</li>
+<li><code>git diff --name-only --cached | xargs pre-commit run --files</code>修复staged</li>
+<li><code>git config --global alias.fix-staged &#39;!git diff --name-only --cached | xargs pre-commit run --files&#39;</code> <ul>
+<li>配置之后用<code>git fix-staged</code></li>
+</ul>
+</li>
+<li>可以使用本地的Hook <code>file:///tmp/precommit_hooks/pre-commit-hooks</code></li>
+</ol>
+<h2 id="workflow"><a href="#workflow" class="headerlink" title="workflow"></a>workflow</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://docs.gitlab.cn/jh/topics/gitlab_flow.html#gitlab-flow-%E4%BB%8B%E7%BB%8D">GitLab Flow 介绍</a></li>
 <li><a target="_blank" rel="noopener" href="http://dockone.io/article/2350">GitLab Flow 的 11 条规则</a></li>
 <li>dev 分支开发新功能</li>
@@ -1395,6 +1755,15 @@
 <li><code>git submodule update --init --recursive</code></li>
 </ol>
 <h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><ol>
+<li><code>git remote set-url origin git@xxx</code> 更新remote</li>
+<li><code>git config --global core.editor &quot;vi&quot;</code> 设置编辑器为vi</li>
+<li><code>git clone -b llvmorg-19.1.3 --depth=1 https://github.com/llvm/llvm-project</code></li>
+<li>获取某个commit：<code>wget https://github.com/llvm/llvm-project/archive/186a4b3b657878ae2aea23caf684b6e103901162.zip</code></li>
+<li>获取某个commit:</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone --depth 1 &lt;repository_url&gt;</span><br><span class="line">cd &lt;repository_name&gt;</span><br><span class="line">git fetch --depth=1 origin &lt;commit_hash&gt;</span><br><span class="line">git checkout &lt;commit_hash&gt;</span><br></pre></td></tr></table></figure>
+
+<ol>
 <li><code>git-lfs</code> - Work with large files in Git repositories</li>
 <li><code>git lfs clone https://xxx</code></li>
 <li><code>git lfs install &amp;&amp; git lfs pull</code> 已经存在的 repo</li>
@@ -1411,7 +1780,8 @@
 <li><code>--no-pager</code> 直接显示，不用按 q 退出 git –no-pager log -n 20</li>
 <li>magit <code>$</code> 查看具体命令</li>
 <li><code>git add --update</code> 添加所有修改的文件</li>
-<li><code>git describe --always --dirty --match &#39;NOT A TAG&#39;</code>当前信息 无 tag<br>1 <code>git describe --dirty --tags</code>: 显示当前 commit 信息；例如 v1.0.1-100-gad0ddd0-dirty; v1.0.1 是最近 tag, 100 是第多少次提交；gxxx 是 commit 号， dirty 是有改动</li>
+<li><code>git describe --always --dirty --match &#39;NOT A TAG&#39;</code>当前信息 无 tag</li>
+<li><code>git describe --dirty --tags</code>: 显示当前 commit 信息；例如 v1.0.1-100-gad0ddd0-dirty; v1.0.1 是最近 tag, 100 是第多少次提交；gxxx 是 commit 号， dirty 是有改动</li>
 <li><code>tldr git tag</code>: show how to use git tag</li>
 <li><code>origin</code>为<code>远程</code>仓库名，不是分支。 .git&#x2F;config 中有远程仓库 origin 对应的 url 和 fetch</li>
 <li>upstream 上游仓库: <a target="_blank" rel="noopener" href="https://blog.csdn.net/xo3ylAF9kGs/article/details/114810781">Git 的 origin 和 upstream，如何用？</a><br><img src="https://img-blog.csdnimg.cn/img_convert/3753944fa6c4d586d337464233e75a61.png" alt="upstream"></li>
@@ -1786,430 +2156,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/08/18/Bjarny-Stroustrup-Cpp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/18/Bjarny-Stroustrup-Cpp/" class="post-title-link" itemprop="url">Bjarny Stroustrup cpp</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-08-18 09:34:33" itemprop="dateCreated datePublished" datetime="2020-08-18T09:34:33+08:00">2020-08-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/08/18/Bjarny-Stroustrup-Cpp/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/18/Bjarny-Stroustrup-Cpp/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="What-is-C-20"><a href="#What-is-C-20" class="headerlink" title="What is C++20?"></a>What is C++20?</h2><ol>
-<li>The best approximation of C++’s ideals so far.</li>
-<li>As big an improvement over C++11 as C++11 was over C++98: A major “release”</li>
-<li>Lots of useful features<ul>
-<li>Simpler, more expressive, faster code that compiles faster</li>
-<li>Modeles</li>
-<li>Concepts</li>
-<li>Coroutines</li>
-<li>Ranges</li>
-<li>Dates</li>
-<li>Span</li>
-<li>Better compile-time programing support</li>
-<li>Many “minor features”</li>
-</ul>
-</li>
-<li>C++23 and C++26 is better than C++20, not the major “release”.</li>
-<li>Diretly learn C++20. It’s the outside layer of the onion.</li>
-<li>C++23:<ul>
-<li>“Completes C++20”</li>
-<li>Plus: standard modules, library support for coroutines, executors &amp; networking</li>
-<li>Maybe: static reflection, pattern matching</li>
-</ul>
-</li>
-</ol>
-<h2 id="Keys-C-“Rules-of-Thumb”"><a href="#Keys-C-“Rules-of-Thumb”" class="headerlink" title="Keys C++ “Rules of Thumb”"></a>Keys C++ “Rules of Thumb”</h2><ol>
-<li><code>A static type system</code> with equal support for build-in and user-defined types<ul>
-<li>A type: specifies the set of operations that can be applied to an object and specifies how an object is laid out in memory</li>
-<li>A static type system: the base of all</li>
-<li>static mean compile time will determine all the type(not the run-time).</li>
-<li>compile-time error detection</li>
-<li>performance</li>
-<li>flexibility through compile-time resolution(overloading, generic programming, metaprogramming…)</li>
-</ul>
-</li>
-<li><code>Value and reference semantics</code><ul>
-<li>value types: Inegers, characters, strings, containers,…</li>
-<li>Pointers&#x2F;references: T*, T&amp;, unique_ptr<T>, Forward_iterator</li>
-</ul>
-</li>
-<li><code>Direct use</code> of machine and operating system resources<ul>
-<li>bitset and span(modern c++)</li>
-<li>the onion principle: the more layers you peel off, the more control, the more error.</li>
-</ul>
-</li>
-<li>Systematic and general <code>resource management</code>(RAII)<ul>
-<li>manage heap, file…</li>
-<li>every resource must have an owner: responsible for its cleanup.</li>
-<li>control the complete object life cycle: creation, copy, move, destruction</li>
-</ul>
-</li>
-<li>Support <code>composition</code> of software from separately developed parts.<ul>
-<li>modules</li>
-<li>all major features support composition: moduls, classes, concepts, templates, functions, aliases</li>
-</ul>
-</li>
-<li>Support for <code>object-oriented programming</code></li>
-<li>Support for <code>generic programming</code><ul>
-<li>concepts</li>
-</ul>
-</li>
-<li>Support <code>compile-time programming</code><ul>
-<li>Move computation from run-time to compile-time(performace, do once)</li>
-<li>It’s everywhere: overloading and virtual functions, templates, variadic templates, constexp functions…</li>
-</ul>
-</li>
-<li><code>Concurency</code> through libraries supported by intrinsics</li>
-<li><code>Libraries</code><ul>
-<li>A user shouldn’t have to care whether a feature is implemented in the language or in a library</li>
-</ul>
-</li>
-</ol>
-<h2 id="Philosophy-CppCoreGuidelines"><a href="#Philosophy-CppCoreGuidelines" class="headerlink" title="Philosophy (CppCoreGuidelines)"></a>Philosophy (CppCoreGuidelines)</h2><ol>
-<li>Express ideas directly in code</li>
-<li>Write in ISO Stardard C++</li>
-<li>Express intent</li>
-<li>Ideally, a program should be statically type safe.</li>
-<li>Prefer compile-time checking to run-time checking.</li>
-<li>What cannot be checked at compile time should be checkable at run time</li>
-<li>Catch run-time errors early.</li>
-<li>Don’t leak any resources.</li>
-<li>Don’t waste time or space.</li>
-<li>Prefer immutable data to mutable data</li>
-<li>Encapsulate messy constructs, rather than spreading through the code.</li>
-<li>Use supporting tools as appropriate</li>
-<li>Use support libraries as appropriate</li>
-</ol>
-<h2 id="Lower-levels-of-abstaction"><a href="#Lower-levels-of-abstaction" class="headerlink" title="Lower levels of abstaction"></a>Lower levels of abstaction</h2><ol>
-<li>Samples:<ul>
-<li>Sizes</li>
-<li>Raw pointers</li>
-<li>Allocation and deallocation</li>
-<li>Loop-control variables</li>
-<li>Casts</li>
-<li>Macros</li>
-</ul>
-</li>
-<li>Except as implementation details and asides</li>
-<li>Don’t go to lower level if you have to.</li>
-</ol>
-<h2 id="What-really-matters"><a href="#What-really-matters" class="headerlink" title="What really matters?"></a>What really matters?</h2><ol>
-<li>People</li>
-<li>A programming language is a tool, not an end goal: peopeo want great systems, not programming languages.</li>
-<li>Software developers want great tools: not just programming language features.</li>
-</ol>
-<h2 id="Abstraction"><a href="#Abstraction" class="headerlink" title="Abstraction"></a>Abstraction</h2><ol>
-<li>Often, the software is more complicated than the hardware.</li>
-<li>abstraction in code:<ul>
-<li>resource mangement: vector</li>
-<li>generic programing: concepts: compile-time predicates.</li>
-</ul>
-</li>
-</ol>
-<h2 id="The-onion-principle"><a href="#The-onion-principle" class="headerlink" title="The onion principle"></a>The onion principle</h2><ol>
-<li>Mangagement of complexity: make simple thing simple.</li>
-<li>Layers of abstraction: the more layers you peel off, the more you cry.</li>
-</ol>
-<h2 id="An-engineering-approach"><a href="#An-engineering-approach" class="headerlink" title="An engineering approach"></a>An engineering approach</h2><ol>
-<li>Design c++ is not pure math.</li>
-<li>Principled and pragmatic design</li>
-<li>Progress gradually guided by feedback</li>
-<li>There are always many tradeoffs: choosing is hard</li>
-<li>Design decisions have consequences</li>
-</ol>
-<h2 id="C-in-two-lines"><a href="#C-in-two-lines" class="headerlink" title="C++ in two lines"></a>C++ in two lines</h2><ol>
-<li>Direct map to hardware<ul>
-<li>of instructions and fundamental data types</li>
-<li>initially from C</li>
-<li>Future: use novel hardware better(caches, multicores, GPUs, FPGAs, SIMD, …)</li>
-</ul>
-</li>
-<li>Zero-overhead abstraction<ul>
-<li>classes, inheritance, generic programming, …</li>
-<li>initially from Simula(where it wasn’t zero-overhead)</li>
-<li>Future: Type- and resouce-safety, concepts, modules, concurrency, …</li>
-</ul>
-</li>
-</ol>
-<h2 id="C-’s-role"><a href="#C-’s-role" class="headerlink" title="C++’s role"></a>C++’s role</h2><ol>
-<li>A language for<ul>
-<li>writing elegant and efficiaent programs</li>
-<li>for definning and using light-weight abstractions</li>
-<li>a language for resource-constrained applications</li>
-<li>building software infrastructure</li>
-</ul>
-</li>
-<li>Offers<ul>
-<li>a direct map to hardware</li>
-<li>Zero-overhead abstraction</li>
-</ul>
-</li>
-<li>No language is perfect<ul>
-<li>for everthing</li>
-<li>for everyone</li>
-</ul>
-</li>
-</ol>
-<h2 id="C-is-tunable"><a href="#C-is-tunable" class="headerlink" title="C++ is tunable"></a>C++ is tunable</h2><ol>
-<li>Make simple things simple<ul>
-<li>Don’t make complicated tasks impossible</li>
-<li>Don’t make complicated tasks unreasonable hard to do</li>
-<li>The onion principle</li>
-</ul>
-</li>
-<li>Don’t drop to lower levels of abstraction<ul>
-<li>Unless you really, really need to</li>
-<li>Hide messy code behind clean interfaces</li>
-</ul>
-</li>
-<li>Alwasy measure</li>
-</ol>
-<h2 id="Write-better-code"><a href="#Write-better-code" class="headerlink" title="Write better code"></a>Write better code</h2><ol>
-<li>Cleaner</li>
-<li>Simpler</li>
-<li>More readable</li>
-<li>More maintainable</li>
-<li>Faster</li>
-<li>Less clever</li>
-<li>More general</li>
-<li>More usable and re-usable</li>
-<li>Type safe</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/08/14/Effective-modern-cpp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/14/Effective-modern-cpp/" class="post-title-link" itemprop="url">Effective modern cpp</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-08-14 10:56:45" itemprop="dateCreated datePublished" datetime="2020-08-14T10:56:45+08:00">2020-08-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/08/14/Effective-modern-cpp/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/14/Effective-modern-cpp/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h2><ol>
-<li><code>右值</code>对应的是函数返回的临时对象，<code>左值</code>是可指涉的对象，可通过名字，指针等来标识。</li>
-<li>判断左值右值方法： 判断是否能取得地址。如果能取得地址则是左值，不能则为右值。例如<code>Widget(Widget&amp;&amp; rhs);</code>其中rhs为左值，因为函数体内对rhs取地址没有问题。相当于rhs被右值初始化，接受了右值。</li>
-<li>函数中，<code>实参</code>是用来初始化<code>形参</code>的。</li>
-<li>形参都是左值，而作为其初始化依据的实参，既能是右值，也可能是左值。例：<code>Widget(Widget&amp; rhs);</code>rhs是左值，传入的实参也是左值。<code>Widget(Widget&amp;&amp; rhs);</code>rhs是左值，传入的实参是右值。</li>
-<li><code>声明</code>的作用是引入名字和类型，而不给出细节。如存储位置或具体实现。<code>定义</code>则会给存储位置和具体实现的细节。定义同时也可以当声明用。</li>
-<li><code>函数的签名</code>：只包含形参类别和返回值类别，不包含函数名字和形参名字。例如：<code>bool(const Widget&amp;)</code></li>
-</ol>
-<h2 id="第一章-类型推到"><a href="#第一章-类型推到" class="headerlink" title="第一章 类型推到"></a>第一章 类型推到</h2><ol>
-<li>C++98仅有一套类型推导规则，用于函数模板。C++11对其进行改进，并增加了两套，一套用于auto，一套用于decltype。C++14又扩展了使用语义。</li>
-</ol>
-<h3 id="条款1：-理解模板类别推导"><a href="#条款1：-理解模板类别推导" class="headerlink" title="条款1： 理解模板类别推导"></a>条款1： 理解模板类别推导</h3><ol>
-<li></li>
-</ol>
-<h2 id="第三章-转向现代C"><a href="#第三章-转向现代C" class="headerlink" title="第三章 转向现代C++"></a>第三章 转向现代C++</h2><h3 id="在创建对象时注意区分-和"><a href="#在创建对象时注意区分-和" class="headerlink" title="在创建对象时注意区分()和{}"></a>在创建对象时注意区分()和{}</h3><ol>
-<li>对象初始化的方式包括使用小括号，使用等号，或是使用大括号：<code>int x(0); int y = 0; int z&#123;0&#125;;</code> 等号加大括号等效于大括号<code>int z = &#123;0&#125;;</code></li>
-<li>大括号初始化又称为<code>统一初始化</code>。</li>
-<li>大括号可以用来对容器进行初始化，例如: <code>vector&lt;int&gt; v&#123;1, 2, 3, 4&#125;;</code></li>
-<li>类的成员变量在类的定义时可以用<code>&#123;&#125;</code>或者<code>=</code>进行初始化，不能使用<code>()</code></li>
-<li>不可复制对象(例如：std::atomic)可以使用<code>&#123;&#125;</code>或者<code>()</code>进行初始化，不能使用<code>=</code></li>
-<li>大括号初始化<code>禁止内建类型进行隐式窄化类型转化</code>。如：<code>double x, y; ... ; int sum&#123;x+y&#125;;</code>编译出错，double无法用int表示。</li>
-<li>C++规定，任何能够解析为声明的都要解析为声明。大括号初始化免疫。<code>Widget w1();</code>此处被解析为函数声明，而不是初始化w1调用构造函数。<code>Widget w2&#123;&#125;;</code>调用无形参的构造函数来构造w2。</li>
-<li>大括号初始化时如果形参出现std::initializer_list会优先调用，此时可以小括号。</li>
-<li>模板内容进行创建时，应该使用小括号还是大括号是一个棘手问题。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2277,7 +2227,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-count">192</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2310,6 +2260,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -2317,12 +2273,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -2350,7 +2300,7 @@
 <div class="copyright">
   
   &copy; 2021 – 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -2360,13 +2310,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">543k</span>
+    <span title="站点总字数">587k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:14</span>
+    <span title="站点阅读时长">8:54</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

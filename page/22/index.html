@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,340 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/04/13/AI-models/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/13/AI-models/" class="post-title-link" itemprop="url">AI-models</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-13 16:45:08" itemprop="dateCreated datePublished" datetime="2022-04-13T16:45:08+08:00">2022-04-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-14 22:29:54" itemprop="dateModified" datetime="2024-01-14T22:29:54+08:00">2024-01-14</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/04/13/AI-models/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/04/13/AI-models/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>588</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>发布的模型包括模型的结构，模型的参数(onnx)</li>
+<li>LLM 获取参数很关键</li>
+</ol>
+<h2 id="模型参数计算量数据量趋势"><a href="#模型参数计算量数据量趋势" class="headerlink" title="模型参数计算量数据量趋势"></a>模型参数计算量数据量趋势</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://epochai.org/mlinputs/visualization?yAxis=Parameters">Model Size of Notable Machine Learning Systems Over Time</a> 可交互, 右上角 option 可搜索，可直接到论文</li>
+<li><a target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1AAIebjNsnJj_uKALHbXNfn3_YsT6sHXtCU0q7OIPuc4/edit#gid=0">Parameter, Compute and Data Trends in Machine Learning</a> good：包含参数，计算量, 训练数据量，论文引用</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2207.02852">Machine Learning Model Sizes and the Parameter Gap</a></li>
+<li><a target="_blank" rel="noopener" href="https://towardsdatascience.com/parameter-counts-in-machine-learning-a312dc4753d0">parameter-counts-in-machine-learning</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2202.05924.pdf">COMPUTE TRENDS ACROSS THREE ERAS OF MACHINE LEARNING</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Lyken17/pytorch-OpCounter">常用模型参数量</a><br><img src="https://i.ibb.co/hHLnMp7/LAmu-Jv4-DId.png" alt="常用模型参数量"></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ThanatosShinji/onnx-tool/blob/main/README_CN.md#results-of-onnx-model-zoo-and-sota-models">results-of-onnx-model-zoo-and-sota-models</a></li>
+<li>可以通过模型文件大小和数据类型估计模型参数量</li>
+<li><a target="_blank" rel="noopener" href="https://i.ibb.co/RCVGL1j/2s-Zv-Zl-E5-Ns.png">Pre-training costs of representative LLMs</a></li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/spaces/optimum/llm-perf-leaderboard">llm-perf-leaderboard</a><ul>
+<li>lantency vs memory vs score</li>
+</ul>
+</li>
+</ol>
+<h2 id="model-zoo"><a href="#model-zoo" class="headerlink" title="model zoo"></a>model zoo</h2><h3 id="caffe"><a href="#caffe" class="headerlink" title="caffe"></a>caffe</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/SnailTyan/caffe-model-zoo">SnailTyan&#x2F;caffe-model-zoo</a></li>
+</ol>
+<h3 id="onnx"><a href="#onnx" class="headerlink" title="onnx"></a>onnx</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/onnx/models">onnx&#x2F;models</a></li>
+</ol>
+<h3 id="pytorch"><a href="#pytorch" class="headerlink" title="pytorch"></a>pytorch</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/Cadene/pretrained-models.pytorch">Cadene&#x2F;pretrained-models.pytorch</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/vision/stable/models.html">pytorch official</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/04/11/AI-performance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/11/AI-performance/" class="post-title-link" itemprop="url">AI-chip-performance</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-11 16:30:54" itemprop="dateCreated datePublished" datetime="2022-04-11T16:30:54+08:00">2022-04-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-24 17:37:37" itemprop="dateModified" datetime="2024-09-24T17:37:37+08:00">2024-09-24</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/04/11/AI-performance/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/04/11/AI-performance/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="throughput-and-latency"><a href="#throughput-and-latency" class="headerlink" title="throughput and latency"></a>throughput and latency</h2><ol>
+<li>throughput：吞吐量一般指相当一段时间内测量出来的系统单位时间处理的任务数或事务数。如：1s 处理 10 帧图片 (10FPS)</li>
+<li>latency: 执行一次任务需要的时间。如：处理一帧图片耗时 10ms</li>
+<li>Throughput – successful transactions per second</li>
+<li>Latency – response time per transaction</li>
+</ol>
+<h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li><code>计算芯片的峰值算力</code> 理论计算得出的、理想状况下的峰值算力。具体通过计算核的主频、核数量、单核运算能力等来输出理论峰值，与实际场景中的真实有效处理能力有很大差距。</li>
+<li><code>计算芯片的有效算力</code> 设备在实际运作过程中能真实输出的算力。比如 ResNet50 在浮点 16 位精度下，推理一次的计算量是 7.8Gflops 左右，芯片每秒钟处理的 ResNet50 的帧率乘以 7.8G 就是真实有效的输出算力。如果推理帧率是 400fps，真实算力是 400*7.G&#x3D;3Tflops。</li>
+<li><code>计算芯片的有效利用率</code> 代表了芯片真实输出的运算能力。其计算方式为：真实有效的输出算力&#x2F;理论算力。计算结果值越高，表明该芯片工作越高效。实际应用场景中，多数传统架构计算芯片，有效利用率一般在 30%左右，而新型架构的计算芯片，芯片有效利用率可以到 50%以上。领启 KA200 异构众核、存算一体芯片有效利用率可达 60%以上。<ul>
+<li>利用率： 模型计算量 * FPS &#x2F; 芯片性能</li>
+<li>VCK190 133T, tf_resnetv1_50_imagenet_224_224_6.97G, 1421FPS, 使用率：6.97 * 1421 &#x2F; 1000 &#x2F; 133 &#x3D; 7.4%</li>
+</ul>
+</li>
+<li><code>计算芯片对主流神经网络的支持程度</code> 下一代人工智能有两个不同的发展线路图，一个是以深度学习算法为代表的传统计算科学，一个是以生物神经网络为代表脑科学。多数计算芯片只能支持二者之一。是否能将二者兼并支持，也是衡量计算芯片的核心指标之一，异构融合是达到这一指标的重要途径之一。</li>
+<li><code>芯片能效比</code> 计算方式为：典型网络（如 ResNet50）的推理能力&#x2F;芯片的功耗，单位：推理帧率（fps&#x2F;w）。</li>
+<li><code>芯片的性价比</code> 每平方毫米推理的帧率数，计算方式为：典型网络（如 ResNet50）的推理能力&#x2F;芯片的面积。</li>
+<li>多<code>batch</code>会增加模型计算量</li>
+<li>浮点转定点会降低计算量，可能剪枝优化</li>
+<li>NCHW 和 NHWC 会影响性能</li>
+</ol>
+<h2 id="模型计算量"><a href="#模型计算量" class="headerlink" title="模型计算量"></a>模型计算量</h2><h3 id="caffe"><a href="#caffe" class="headerlink" title="caffe"></a>caffe</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://dgschwend.github.io/netscope/#/editor">netscope</a></li>
+<li><a target="_blank" rel="noopener" href="https://dgschwend.github.io/netscope/quickstart.html">quickstart</a></li>
+<li>复制 prototxt 内容, <code>shift + enter</code>: 查看计算量</li>
+</ol>
+<h3 id="onnx"><a href="#onnx" class="headerlink" title="onnx"></a>onnx</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/gmalivenko/onnx-opcounter">onnx-opcounter</a> 需要模型结构，只有 pt 文件不行</li>
+</ol>
+<h3 id="pytorch"><a href="#pytorch" class="headerlink" title="pytorch"></a>pytorch</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/Lyken17/pytorch-OpCounter">pytorch-OpCounter</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/open-mmlab/mmdetection/blob/master/README_zh-CN.md">mmdetection</a></li>
+</ol>
+<h3 id="tensorflow"><a href="#tensorflow" class="headerlink" title="tensorflow"></a>tensorflow</h3><h2 id="芯片性能"><a href="#芯片性能" class="headerlink" title="芯片性能"></a>芯片性能</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.horizon.ai/journey2.html">地平线 J2</a><ul>
+<li>4TOPS</li>
+<li>2W</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.horizon.ai/journey3.html">J3</a><ul>
+<li>5TOPS</li>
+<li>2.5W</li>
+<li>16nm</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.horizon.ai/journey5.html">J5</a><ul>
+<li>128TOPS</li>
+<li>30W</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.nvidia.cn/autonomous-machines/embedded-systems/jetson-orin/">Nvidia Xavier</a> 比较 Jetson Orin 和 Jetson Xavier 的规格<ul>
+<li>21-32TOPS</li>
+<li>10-40W</li>
+<li>12nm</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.nvidia.cn/autonomous-machines/embedded-systems/jetson-orin/">Nvidia Orin</a> 比较 Jetson Orin 和 Jetson Xavier 的规格<ul>
+<li>70-274TOPS</li>
+<li>10-60W</li>
+<li>8nm</li>
+</ul>
+</li>
+<li><a href="">Xilinx Versal ACAP VC1902(VCK190)</a><ul>
+<li>133TOPS</li>
+<li>7ns</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.hisilicon.com/cn/products/Ascend/Ascend-910">昇腾（HUAWEI Ascend) 910</a><ul>
+<li>FP16: 320TFLOPS</li>
+<li>INT8: 640TOPS</li>
+<li>310W</li>
+<li>7nm</li>
+</ul>
+</li>
+<li><a href="">特斯拉 FSD 计算平台</a><ul>
+<li>144TOPS</li>
+<li>单芯片 72TOPS</li>
+<li>72W</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.mobileye.com/eyeq-chip/">Mobileye EQ4 High</a><ul>
+<li>2TOPS</li>
+<li>28nm</li>
+</ul>
+</li>
+<li><a href="">Mobileye EQ5 High</a><ul>
+<li>16TOPS</li>
+<li>7nm</li>
+</ul>
+</li>
+<li><a href="">Mobileye EQ6 High</a><ul>
+<li>34TOPS</li>
+<li>7nm</li>
+</ul>
+</li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.eefocus.com/article/1726287.html">佐思汽研《2024 年自动驾驶 SoC 研究报告》</a><ul>
+<li>各种芯片算力</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-xavier-series/">jetson xavier params</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/embedded/jetson-modules">jetson parms</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/337618803">TOPS GOPS FLOPS</a></li>
+<li><a target="_blank" rel="noopener" href="https://wuchenxu.com/2021/10/02/computing-power-metrices/">指标</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.horizon.ai/journey5.html">J5 官方介绍</a></li>
+<li><a target="_blank" rel="noopener" href="https://auto.gasgoo.com/a/70266230.html">link1</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/embedded/jetson-benchmarks">jetson-benchmark</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/deep-learning-performance-training-inference">deep-learning-performance-training-inference</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/blog/delivering-server-class-performance-at-the-edge-with-nvidia-jetson-orin/">orin performance</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.nvidia.cn/autonomous-machines/embedded-systems/jetson-orin/">orin 产品系列</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Xilinx/Vitis-AI/tree/master/models/AI-Model-Zoo#performance-on-vck190">VCK190 性能</a></li>
+<li><a target="_blank" rel="noopener" href="https://new.qq.com/omn/20220127/20220127A06JD900.html">地平线 MAPS</a></li>
+<li><a target="_blank" rel="noopener" href="https://img3.gelonghui.com/pdf/bc70f-43194a12-e915-4416-9ffa-2e241931ae61.pdf">中信车载芯片调研</a></li>
+<li><a target="_blank" rel="noopener" href="https://pdf.dfcfw.com/pdf/H3_AP202112301537477959_1.pdf?1640871632000.pdf">亿欧网调研</a></li>
+<li><a target="_blank" rel="noopener" href="https://pdf.dfcfw.com/pdf/H3_AP202112061533188037_1.pdf?1639041416000.pdf">艾瑞咨询-中国智能驾驶行业研究报告</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -703,306 +1037,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/03/26/eigen/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/26/eigen/" class="post-title-link" itemprop="url">eigen</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-03-26 07:08:50" itemprop="dateCreated datePublished" datetime="2022-03-26T07:08:50+08:00">2022-03-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/03/26/eigen/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/03/26/eigen/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
-<li>gdb 调试 <a target="_blank" rel="noopener" href="https://gitlab.com/libeigen/eigen/-/blob/master/debug/gdb/printers.py">printer</a></li>
-<li>vector 转 tensor <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/44664806">link</a> <a target="_blank" rel="noopener" href="https://blog.csdn.net/weareu/article/details/86486682">link1</a></li>
-<li>Tensor 转 vector</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Tensor&gt; <span class="function"><span class="type">static</span> std::vector&lt;<span class="type">float</span>&gt; <span class="title">run</span><span class="params">(<span class="type">const</span> Tensor &amp;tensor)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> Eigen::internal::remove_const&lt;<span class="keyword">typename</span> Tensor::Scalar&gt;::type</span><br><span class="line">      Scalar;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="keyword">typename</span> Tensor::Index Index;</span><br><span class="line">  <span class="type">const</span> Index total_size = Eigen::internal::<span class="built_in">array_prod</span>(tensor.<span class="built_in">dimensions</span>());</span><br><span class="line">  std::vector&lt;<span class="type">float</span>&gt; result;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (total_size &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    Eigen::Map&lt;<span class="type">const</span> Eigen::Array&lt;Scalar, Eigen::Dynamic, <span class="number">1</span>&gt;&gt; <span class="built_in">array</span>(</span><br><span class="line">        <span class="built_in">const_cast</span>&lt;Scalar *&gt;(tensor.<span class="built_in">data</span>()), total_size);</span><br><span class="line">    std::cout &lt;&lt; array[<span class="number">0</span>] &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> i = <span class="number">0u</span>; i &lt; total_size; ++i) &#123;</span><br><span class="line">      result.<span class="built_in">push_back</span>(array[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// os &lt;&lt; array;                                                                                                                                         &#125;</span></span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>头文件和编译选项</li>
-</ol>
-<figure class="highlight stan"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#include &lt;<span class="string">eigen</span>3/E<span class="string">igen</span>/E<span class="string">igen</span>&gt;</span></span><br><span class="line">find_package(Eigen3 REQUIRED)</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>矩阵默认<a target="_blank" rel="noopener" href="https://eigen.tuxfamily.org/dox/group__TopicStorageOrders.html">按列存储</a>， 按行需要指定</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Eigen::Matrix&lt;<span class="type">double</span>, <span class="number">4</span>, <span class="number">4</span>, Eigen::RowMajor&gt; cam_intra;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><p>常用数据结构：</p>
-<ul>
-<li>Vector3d: <code>auto col = Eigen::Vector3d(0, 0, 0);</code></li>
-<li>RowVector4d: <code>auto row = Eigen::RowVector4d(0, 0, 0, 1);</code></li>
-<li>MatrixXd: <code>Eigen::MatrixXd tmp(3, 4);</code></li>
-<li>Matrix: <code>Eigen::Matrix&lt;double, 4, 4, Eigen::RowMajor&gt; cam_intra;</code></li>
-<li>Map: <code>auto T_cab2cam = Eigen::Map&lt;Eigen::Vector3d&gt;(std_vector.data());</code></li>
-</ul>
-</li>
-<li><p>矩阵相乘： <code>A * B</code></p>
-</li>
-<li><p>矩阵求逆： <code>A.inverse()</code></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://eigen.tuxfamily.org/dox/group__TutorialBlockOperations.html">矩阵取列：</a> <code>A.col()</code></p>
-</li>
-<li><p>矩阵取行： <code>A.row()</code></p>
-</li>
-</ol>
-<h2 id="basci-module"><a href="#basci-module" class="headerlink" title="basci module"></a>basci module</h2><ol>
-<li>Matrix init</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Eigen::Matrix3d R_e2cab;</span><br><span class="line">  R_e2cab &lt;&lt; <span class="number">0</span>, <span class="number">0</span>, <span class="number">-1</span>,  <span class="comment">//</span></span><br><span class="line">      <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>,          <span class="comment">//</span></span><br><span class="line">      <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>;          <span class="comment">//</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>std::vecotr to Eigen::Vecotr or Eigen::Matrix</li>
-</ol>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">auto R_cab2cam_tmp = <span class="title class_">Eigen</span><span class="symbol">:</span><span class="symbol">:Map&lt;Eigen</span><span class="symbol">:</span><span class="symbol">:RowVector3d&gt;</span>(v_R_cab2cam.data());</span><br><span class="line">auto cam_k = <span class="title class_">Eigen</span><span class="symbol">:</span><span class="symbol">:Map&lt;Eigen</span><span class="symbol">:</span><span class="symbol">:Matrix&lt;double</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="title class_">Eigen</span><span class="symbol">:</span><span class="symbol">:RowMajor&gt;&gt;</span>(v_cam_k.data());</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>Eigen::Vecotr or Eigen::Matrix to std::vector</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function">std::vector&lt;<span class="type">double</span>&gt; <span class="title">vec_cam_intra</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">     cam_intra.data(), cam_intra.data() + cam_intra.rows() * cam_intra.cols())</span></span>;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>Matrix concat</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Eigen::MatrixXd <span class="title">cab2cam_tmp</span><span class="params">(<span class="number">3</span>, <span class="number">4</span>)</span></span>;</span><br><span class="line"><span class="keyword">auto</span> col_tmp = Eigen::<span class="built_in">RowVector4d</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line"><span class="function">Eigen::MatrixXd <span class="title">cab2cam</span><span class="params">(<span class="number">4</span>, <span class="number">4</span>)</span></span>;</span><br><span class="line">cab2cam &lt;&lt; cab2cam_tmp, col_tmp;</span><br><span class="line"></span><br><span class="line"><span class="function">Eigen::MatrixXd <span class="title">cab2cam_tmp</span><span class="params">(<span class="number">4</span>, <span class="number">3</span>)</span></span>;</span><br><span class="line"><span class="keyword">auto</span> col_tmp = Eigen::<span class="built_in">Vector3d</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line"><span class="function">Eigen::MatrixXd <span class="title">cab2cam</span><span class="params">(<span class="number">4</span>, <span class="number">4</span>)</span></span>;</span><br><span class="line">cab2cam &lt;&lt; cab2cam_tmp, col_tmp;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>Matrix slice (<a target="_blank" rel="noopener" href="https://eigen.tuxfamily.org/dox/group__TutorialBlockOperations.html">block</a>)</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Eigen::Matrix&lt;<span class="type">double</span>, <span class="number">4</span>, <span class="number">4</span>, Eigen::RowMajor&gt; cam2ego;</span><br><span class="line">Eigen::Matrix&lt;<span class="type">double</span>, <span class="number">3</span>, <span class="number">3</span>, Eigen::RowMajor&gt; R_cam2ego = cam2ego.<span class="built_in">block</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">3</span>);</span><br><span class="line">Eigen::Vector3d T_cam2ego = cam2ego.<span class="built_in">block</span>(<span class="number">0</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://gitlab.com/libeigen/eigen.git">gitlab repo</a></li>
-<li><a target="_blank" rel="noopener" href="https://eigen.tuxfamily.org/dox/GettingStarted.html">getting started</a></li>
-</ol>
-<h2 id="sample"><a href="#sample" class="headerlink" title="sample"></a>sample</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;glog/logging.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;yaml-cpp/yaml.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;eigen3/Eigen/Eigen&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">GetPgCamParm</span><span class="params">(<span class="type">const</span> std::string camera_param, <span class="type">const</span> std::string cali_param,</span></span></span><br><span class="line"><span class="params"><span class="function">                  <span class="type">const</span> std::string result_param)</span> </span>&#123;</span><br><span class="line">  YAML::Node cam_info = YAML::<span class="built_in">LoadFile</span>(camera_param);</span><br><span class="line">  YAML::Node cb_xyz = YAML::<span class="built_in">LoadFile</span>(cali_param);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// cam_k</span></span><br><span class="line">  std::vector&lt;<span class="type">double</span>&gt; v_cam_k;</span><br><span class="line">  <span class="keyword">if</span> (cam_info[<span class="string">&quot;mtx&quot;</span>][<span class="string">&quot;data&quot;</span>]) &#123;</span><br><span class="line">    v_cam_k = cam_info[<span class="string">&quot;mtx&quot;</span>][<span class="string">&quot;data&quot;</span>].as&lt;std::vector&lt;<span class="type">double</span>&gt;&gt;();</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">LOG</span>(FATAL) &lt;&lt; <span class="string">&quot;Can&#x27;t get cam_info[\&quot;mtx\&quot;][\&quot;data\&quot;]&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">auto</span> cam_k =</span><br><span class="line">      Eigen::Map&lt;Eigen::Matrix&lt;<span class="type">double</span>, <span class="number">3</span>, <span class="number">3</span>, Eigen::RowMajor&gt;&gt;(v_cam_k.<span class="built_in">data</span>());</span><br><span class="line">  <span class="built_in">VLOG</span>(<span class="number">2</span>) &lt;&lt; <span class="string">&quot;\ncam_k:\n&quot;</span> &lt;&lt; cam_k;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// cam_intra</span></span><br><span class="line">  <span class="keyword">auto</span> col = Eigen::<span class="built_in">Vector3d</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">  <span class="function">Eigen::MatrixXd <span class="title">tmp</span><span class="params">(<span class="number">3</span>, <span class="number">4</span>)</span></span>;</span><br><span class="line">  tmp &lt;&lt; cam_k, col;</span><br><span class="line">  <span class="keyword">auto</span> row = Eigen::<span class="built_in">RowVector4d</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">  Eigen::Matrix&lt;<span class="type">double</span>, <span class="number">4</span>, <span class="number">4</span>, Eigen::RowMajor&gt; cam_intra;</span><br><span class="line">  cam_intra &lt;&lt; tmp, row;</span><br><span class="line">  <span class="built_in">VLOG</span>(<span class="number">2</span>) &lt;&lt; <span class="string">&quot;\ncam_intra:\n&quot;</span> &lt;&lt; cam_intra;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// R_e2cab</span></span><br><span class="line">  Eigen::Matrix3d R_e2cab;</span><br><span class="line">  R_e2cab &lt;&lt; <span class="number">0</span>, <span class="number">0</span>, <span class="number">-1</span>,  <span class="comment">//</span></span><br><span class="line">      <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>,          <span class="comment">//</span></span><br><span class="line">      <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>;          <span class="comment">//</span></span><br><span class="line">  <span class="built_in">VLOG</span>(<span class="number">2</span>) &lt;&lt; <span class="string">&quot;\nR_e2cab:\n&quot;</span> &lt;&lt; R_e2cab;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// T_e2cab</span></span><br><span class="line">  Eigen::Vector3d T_e2cab;</span><br><span class="line">  <span class="keyword">if</span> (cb_xyz[<span class="string">&quot;boarad2ego&quot;</span>]) &#123;</span><br><span class="line">    T_e2cab &lt;&lt; cb_xyz[<span class="string">&quot;boarad2ego&quot;</span>][<span class="string">&#x27;x&#x27;</span>].<span class="built_in">as</span>&lt;<span class="type">double</span>&gt;(),</span><br><span class="line">        cb_xyz[<span class="string">&quot;boarad2ego&quot;</span>][<span class="string">&#x27;y&#x27;</span>].<span class="built_in">as</span>&lt;<span class="type">double</span>&gt;(),</span><br><span class="line">        cb_xyz[<span class="string">&quot;boarad2ego&quot;</span>][<span class="string">&#x27;z&#x27;</span>].<span class="built_in">as</span>&lt;<span class="type">double</span>&gt;();</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">LOG</span>(FATAL) &lt;&lt; <span class="string">&quot;Can&#x27;t get cb_xyz[\&quot;boarad2ego\&quot;]&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">VLOG</span>(<span class="number">2</span>) &lt;&lt; <span class="string">&quot;\nT_e2cab:\n&quot;</span> &lt;&lt; T_e2cab;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ego2cab</span></span><br><span class="line">  <span class="function">Eigen::MatrixXd <span class="title">ego2cab_tmp</span><span class="params">(<span class="number">3</span>, <span class="number">4</span>)</span></span>;</span><br><span class="line">  ego2cab_tmp &lt;&lt; R_e2cab, T_e2cab;</span><br><span class="line">  <span class="built_in">VLOG</span>(<span class="number">2</span>) &lt;&lt; <span class="string">&quot;\nego2cab_tmp:\n&quot;</span> &lt;&lt; ego2cab_tmp;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// R_cab2cam</span></span><br><span class="line">  std::vector&lt;<span class="type">double</span>&gt; v_R_cab2cam;</span><br><span class="line">  <span class="keyword">if</span> (cam_info[<span class="string">&quot;rvec&quot;</span>][<span class="string">&quot;data&quot;</span>]) &#123;</span><br><span class="line">    v_R_cab2cam = cam_info[<span class="string">&quot;rvec&quot;</span>][<span class="string">&quot;data&quot;</span>].as&lt;std::vector&lt;<span class="type">double</span>&gt;&gt;();</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">LOG</span>(FATAL) &lt;&lt; <span class="string">&quot;Can&#x27;t get cam_info[\&quot;rvec\&quot;][\&quot;data\&quot;]&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">auto</span> R_cab2cam_tmp = Eigen::<span class="built_in">Map</span>&lt;Eigen::RowVector3d&gt;(v_R_cab2cam.<span class="built_in">data</span>());</span><br><span class="line">  <span class="type">double</span> n_norm = R_cab2cam_tmp.<span class="built_in">norm</span>();</span><br><span class="line">  <span class="function">Eigen::AngleAxisd <span class="title">rotation_vector</span><span class="params">(n_norm, R_cab2cam_tmp / n_norm)</span></span>;</span><br><span class="line">  Eigen::Matrix3d R_cab2cam = rotation_vector.<span class="built_in">toRotationMatrix</span>();</span><br><span class="line">  <span class="built_in">VLOG</span>(<span class="number">2</span>) &lt;&lt; <span class="string">&quot;\nR_cab2cam:\n&quot;</span> &lt;&lt; R_cab2cam;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// T_cab2cam</span></span><br><span class="line">  std::vector&lt;<span class="type">double</span>&gt; v_T_cab2cam;</span><br><span class="line">  <span class="keyword">if</span> (cam_info[<span class="string">&quot;tvec&quot;</span>][<span class="string">&quot;data&quot;</span>]) &#123;</span><br><span class="line">    v_T_cab2cam = cam_info[<span class="string">&quot;tvec&quot;</span>][<span class="string">&quot;data&quot;</span>].as&lt;std::vector&lt;<span class="type">double</span>&gt;&gt;();</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">LOG</span>(FATAL) &lt;&lt; <span class="string">&quot;Can&#x27;t get cam_info[\&quot;tvec\&quot;][\&quot;data\&quot;]&quot;</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">auto</span> T_cab2cam = Eigen::<span class="built_in">Map</span>&lt;Eigen::Vector3d&gt;(v_T_cab2cam.<span class="built_in">data</span>());</span><br><span class="line">  <span class="built_in">VLOG</span>(<span class="number">2</span>) &lt;&lt; <span class="string">&quot;\nT_cab2cam:\n&quot;</span> &lt;&lt; T_cab2cam;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// cab2cam</span></span><br><span class="line">  <span class="function">Eigen::MatrixXd <span class="title">cab2cam_tmp</span><span class="params">(<span class="number">3</span>, <span class="number">4</span>)</span></span>;</span><br><span class="line">  cab2cam_tmp &lt;&lt; R_cab2cam, T_cab2cam;</span><br><span class="line">  <span class="keyword">auto</span> col_tmp = Eigen::<span class="built_in">RowVector4d</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">  <span class="function">Eigen::MatrixXd <span class="title">cab2cam</span><span class="params">(<span class="number">4</span>, <span class="number">4</span>)</span></span>;</span><br><span class="line">  cab2cam &lt;&lt; cab2cam_tmp, col_tmp;</span><br><span class="line">  <span class="built_in">VLOG</span>(<span class="number">2</span>) &lt;&lt; <span class="string">&quot;\ncab2cam:\n&quot;</span> &lt;&lt; cab2cam;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ego2cab</span></span><br><span class="line">  <span class="function">Eigen::MatrixXd <span class="title">ego2cab</span><span class="params">(<span class="number">4</span>, <span class="number">4</span>)</span></span>;</span><br><span class="line">  ego2cab &lt;&lt; ego2cab_tmp, col_tmp;</span><br><span class="line">  <span class="built_in">VLOG</span>(<span class="number">2</span>) &lt;&lt; <span class="string">&quot;\nego2cab:\n&quot;</span> &lt;&lt; ego2cab;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// cam2ego</span></span><br><span class="line">  Eigen::MatrixXd cam2ego = (cab2cam * ego2cab).<span class="built_in">inverse</span>();</span><br><span class="line">  <span class="built_in">VLOG</span>(<span class="number">2</span>) &lt;&lt; <span class="string">&quot;\ncam2ego:\n&quot;</span> &lt;&lt; cam2ego;</span><br><span class="line">  <span class="built_in">LOG</span>(INFO) &lt;&lt; <span class="string">&quot;\ncam2ego row:\n&quot;</span> &lt;&lt; cam2ego.<span class="built_in">row</span>(<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">LOG</span>(INFO) &lt;&lt; <span class="string">&quot;\ncam2ego row:\n&quot;</span> &lt;&lt; cam2ego.<span class="built_in">col</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// get results</span></span><br><span class="line">  <span class="built_in">LOG</span>(INFO) &lt;&lt; <span class="string">&quot;\nintrinsic: \n&quot;</span> &lt;&lt; cam_intra;</span><br><span class="line">  <span class="function">std::vector&lt;<span class="type">double</span>&gt; <span class="title">vec_cam_intra</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">      cam_intra.data(), cam_intra.data() + cam_intra.rows() * cam_intra.cols())</span></span>;</span><br><span class="line"></span><br><span class="line">  Eigen::Matrix&lt;<span class="type">double</span>, <span class="number">3</span>, <span class="number">3</span>, Eigen::RowMajor&gt; R_cam2ego =</span><br><span class="line">      cam2ego.<span class="built_in">block</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">3</span>);</span><br><span class="line">  <span class="built_in">LOG</span>(INFO) &lt;&lt; <span class="string">&quot;\nR_cam2ego: \n&quot;</span> &lt;&lt; R_cam2ego;</span><br><span class="line">  <span class="function">std::vector&lt;<span class="type">double</span>&gt; <span class="title">vec_R_cam2ego</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">      R_cam2ego.data(), R_cam2ego.data() + R_cam2ego.rows() * R_cam2ego.cols())</span></span>;</span><br><span class="line"></span><br><span class="line">  Eigen::Vector3d T_cam2ego = cam2ego.<span class="built_in">block</span>(<span class="number">0</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>);</span><br><span class="line">  <span class="built_in">LOG</span>(INFO) &lt;&lt; <span class="string">&quot;\nT_cam2ego: \n&quot;</span> &lt;&lt; T_cam2ego;</span><br><span class="line">  <span class="function">std::vector&lt;<span class="type">double</span>&gt; <span class="title">vec_T_cam2ego</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">      T_cam2ego.data(), T_cam2ego.data() + T_cam2ego.rows() * T_cam2ego.cols())</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// save result to yaml</span></span><br><span class="line">  YAML::Node config;</span><br><span class="line">  <span class="comment">// test[&quot;camera&quot;][&quot;v_cam_k&quot;].push_back(v);</span></span><br><span class="line">  <span class="comment">// note: push_back and = are not same</span></span><br><span class="line">  config[<span class="string">&quot;camera&quot;</span>][<span class="string">&quot;intrinsic&quot;</span>] = vec_cam_intra;</span><br><span class="line">  config[<span class="string">&quot;camera&quot;</span>][<span class="string">&quot;cam2ego_R&quot;</span>] = vec_R_cam2ego;</span><br><span class="line">  config[<span class="string">&quot;camera&quot;</span>][<span class="string">&quot;cam2ego_t&quot;</span>] = vec_T_cam2ego;</span><br><span class="line">  <span class="function">std::ofstream <span class="title">fout</span><span class="params">(result_param)</span></span>;</span><br><span class="line">  fout &lt;&lt; config;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">  <span class="built_in">GetPgCamParm</span>(<span class="string">&quot;camera_params.yaml&quot;</span>, <span class="string">&quot;cali_board2vehicle_xyz.yaml&quot;</span>,</span><br><span class="line">               <span class="string">&quot;pg_cam2_param.yaml&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/03/26/yaml/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/26/yaml/" class="post-title-link" itemprop="url">yaml</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-03-26 04:00:17" itemprop="dateCreated datePublished" datetime="2022-03-26T04:00:17+08:00">2022-03-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-27 11:36:34" itemprop="dateModified" datetime="2023-06-27T11:36:34+08:00">2023-06-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/03/26/yaml/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/03/26/yaml/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.5k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="opencv-对数"><a href="#opencv-对数" class="headerlink" title="opencv 对数"></a>opencv 对数</h2><ol>
-<li>python</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">`cv2.FileStorage(<span class="string">&quot;output.yml&quot;</span>, cv2.FILE_STORAGE_WRITE).write(<span class="string">&quot;mat&quot;</span>, mat)`</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fs = cv2.FileStorage(<span class="string">&quot;predict_benz_trajectory_v2_crop.yml&quot;</span>, cv2.FILE_STORAGE_WRITE)</span><br><span class="line">fs.write(<span class="string">&quot;Q&quot;</span>, Q.astype(np.float32))</span><br><span class="line">fs.write(<span class="string">&quot;traj_out_wid&quot;</span>, traj_out_wid)</span><br><span class="line">fs.release()</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>C++</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">cv::FileStorage <span class="title">ymlfile</span><span class="params">(<span class="string">&quot;predict_benz_trajectory_v2_crop.yml&quot;</span>,                                                                                                                                                                                                                          cv::FileStorage::READ)</span></span>;</span><br><span class="line"><span class="keyword">if</span>(!fs.<span class="built_in">isOpened</span>())&#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Cannot open config file!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line">cv::Mat disparity;</span><br><span class="line">ymlfile[<span class="string">&quot;disparity&quot;</span>] &gt;&gt; disparity;</span><br><span class="line"><span class="type">float</span> traj_wid = (<span class="type">float</span>)ymlfile[<span class="string">&quot;ground_traj_wid&quot;</span>];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  cv::Mat Q_mat;</span><br><span class="line">  cv::FileNode node = ymlfile[<span class="string">&quot;Q&quot;</span>];</span><br><span class="line">  <span class="keyword">if</span> (node.<span class="built_in">empty</span>()) &#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;Key not found in yaml file&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (node.<span class="built_in">type</span>() == cv::FileNode::MAP &amp;&amp; node.<span class="built_in">size</span>() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    node &gt;&gt; Q_mat;</span><br><span class="line">    <span class="keyword">if</span> (Q_mat.<span class="built_in">type</span>() == CV_64F) &#123;</span><br><span class="line">      Q_mat.<span class="built_in">convertTo</span>(Q_mat, CV_32F);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;Node is not an opencv mat  or is empty&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>numpy and vector</li>
-</ol>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import cv2</span><br><span class="line">import numpy as np</span><br><span class="line">np_array = np.array(<span class="string">[[1, 2, 3], [4, 5, 6]]</span>, dtype=<span class="string">&#x27;float32&#x27;</span>)</span><br><span class="line">fs = cv2.FileStorage(<span class="string">&#x27;output.xml&#x27;</span>, cv2.FileStorage_WRITE)</span><br><span class="line">fs.<span class="built_in">write</span>(<span class="string">&#x27;my_array&#x27;</span>, np_array)</span><br><span class="line">fs.release()</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;<span class="type">float</span>&gt; vec;</span><br><span class="line">vec.<span class="built_in">assign</span>((<span class="type">float</span>*)mat.datastart, (<span class="type">float</span>*)mat.dataend);</span><br></pre></td></tr></table></figure>
-
-<h3 id="读写"><a href="#读写" class="headerlink" title="读写"></a>读写</h3><ol>
-<li>yaml-cpp</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/learning_tortosie/article/details/97815514">opencv cv::FileStorage</a></li>
-</ol>
-<h3 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/jbeder/yaml-cpp">github</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/jbeder/yaml-cpp/wiki/Tutorial">tutorial</a></li>
-</ol>
-<h3 id="sample"><a href="#sample" class="headerlink" title="sample"></a>sample</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;yaml-cpp/yaml.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  YAML::Node config = YAML::<span class="built_in">LoadFile</span>(<span class="string">&quot;config.yaml&quot;</span>);</span><br><span class="line"></span><br><span class="line">  std::vector&lt;<span class="type">double</span>&gt; intrinsic;</span><br><span class="line">  <span class="keyword">if</span> (config[<span class="string">&quot;camera&quot;</span>][<span class="string">&quot;intrinsic&quot;</span>]) &#123;</span><br><span class="line">    intrinsic = config[<span class="string">&quot;camera&quot;</span>][<span class="string">&quot;intrinsic&quot;</span>].as&lt;std::vector&lt;<span class="type">double</span>&gt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> i = <span class="number">0u</span>; i &lt; intrinsic.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">      std::cout &lt;&lt; intrinsic[i] &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  std::vector&lt;<span class="type">double</span>&gt; cam2ego_R;</span><br><span class="line">  <span class="keyword">if</span> (config[<span class="string">&quot;camera&quot;</span>][<span class="string">&quot;cam2ego_R&quot;</span>]) &#123;</span><br><span class="line">    cam2ego_R = config[<span class="string">&quot;camera&quot;</span>][<span class="string">&quot;cam2ego_R&quot;</span>].as&lt;std::vector&lt;<span class="type">double</span>&gt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> i = <span class="number">0u</span>; i &lt; cam2ego_R.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">      std::cout &lt;&lt; cam2ego_R[i] &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  std::vector&lt;<span class="type">double</span>&gt; <span class="type">cam2ego_t</span>;</span><br><span class="line">  <span class="keyword">if</span> (config[<span class="string">&quot;camera&quot;</span>][<span class="string">&quot;cam2ego_t&quot;</span>]) &#123;</span><br><span class="line">    <span class="type">cam2ego_t</span> = config[<span class="string">&quot;camera&quot;</span>][<span class="string">&quot;cam2ego_t&quot;</span>].as&lt;std::vector&lt;<span class="type">double</span>&gt;&gt;();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> i = <span class="number">0u</span>; i &lt; <span class="type">cam2ego_t</span>.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">      std::cout &lt;&lt; <span class="type">cam2ego_t</span>[i] &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function">std::ofstream <span class="title">fout</span><span class="params">(<span class="string">&quot;./out.yaml&quot;</span>)</span></span>;</span><br><span class="line">  fout &lt;&lt; config;</span><br><span class="line"></span><br><span class="line">  YAML::Node test;</span><br><span class="line">  <span class="comment">// test[&quot;camera&quot;][&quot;intrinsic&quot;].push_back(v);</span></span><br><span class="line">  <span class="comment">// note: push_back and = are not same</span></span><br><span class="line">  test[<span class="string">&quot;camera&quot;</span>][<span class="string">&quot;intrinsic&quot;</span>] = intrinsic;</span><br><span class="line">  test[<span class="string">&quot;camera&quot;</span>][<span class="string">&quot;cam2ego_R&quot;</span>] = cam2ego_R;</span><br><span class="line">  test[<span class="string">&quot;camera&quot;</span>][<span class="string">&quot;cam2ego_t&quot;</span>] = <span class="type">cam2ego_t</span>;</span><br><span class="line">  <span class="function">std::ofstream <span class="title">fout1</span><span class="params">(<span class="string">&quot;./test.yaml&quot;</span>)</span></span>;</span><br><span class="line">  fout1 &lt;&lt; test;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">camera:</span></span><br><span class="line">  <span class="attr">intrinsic:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">1888.7618313608834</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">0</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">968.83548164132105</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">0</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">0</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">1896.5639945248038</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">547.4612962459845</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">0</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">0</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">0</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">1</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">0</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">0</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">0</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">0</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">cam2ego_R:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">0.034896920649101944</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">0.015135626613007833</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">0.99927629698862219</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">-0.99939075949347744</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">0.0010902662284327418</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">0.034884404167777945</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">-0.00056147988681672133</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">-0.99988485586850695</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">0.015164452300128389</span></span><br><span class="line">  <span class="attr">cam2ego_t:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">1.84679730821996</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">-0.089090448031248784</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">1.3980633087528846</span></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1074,7 +1108,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-count">192</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1107,6 +1141,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1114,12 +1154,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -1147,7 +1181,7 @@
 <div class="copyright">
   
   &copy; 2021 – 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1157,13 +1191,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">543k</span>
+    <span title="站点总字数">587k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:14</span>
+    <span title="站点阅读时长">8:54</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

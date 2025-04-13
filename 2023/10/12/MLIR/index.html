@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="base MLIR 即 Multi-Level Intermediate Representation，多级的中间表示。 mlir 只是个编译器框架，本身并没有什么完整功能。所以可以参考一些基于 MLIR 做的开源项目。 MLIR 能够很好地桥接高层 DSL 和底层编译器（如 LLVM）。 we do not intend MLIR to be a source language that end">
+  <meta name="description" content="builder and rewriter builder 和 rewriter 都用于构建和修改 IR（中间表示），但它们的用途和设计目标不同。 OpBuilder 适用于构建新的 IR，但不会管理旧 IR。 builder.setInsertionPointToEnd(&amp;block); 需要指定insert节点   PatternRewriter 适用于修改 IR，可以删除、替换和优化现">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MLIR">
 <meta property="og:url" content="https://jiaxiyang.github.io/2023/10/12/MLIR/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="base MLIR 即 Multi-Level Intermediate Representation，多级的中间表示。 mlir 只是个编译器框架，本身并没有什么完整功能。所以可以参考一些基于 MLIR 做的开源项目。 MLIR 能够很好地桥接高层 DSL 和底层编译器（如 LLVM）。 we do not intend MLIR to be a source language that end">
+<meta property="og:description" content="builder and rewriter builder 和 rewriter 都用于构建和修改 IR（中间表示），但它们的用途和设计目标不同。 OpBuilder 适用于构建新的 IR，但不会管理旧 IR。 builder.setInsertionPointToEnd(&amp;block); 需要指定insert节点   PatternRewriter 适用于修改 IR，可以删除、替换和优化现">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-12T07:31:23.000Z">
-<meta property="article:modified_time" content="2024-12-10T08:52:43.157Z">
+<meta property="article:modified_time" content="2025-03-18T06:34:25.292Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="IR">
@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-12-10 16:52:43" itemprop="dateModified" datetime="2024-12-10T16:52:43+08:00">2024-12-10</time>
+                <time title="修改时间：2025-03-18 14:34:25" itemprop="dateModified" datetime="2025-03-18T14:34:25+08:00">2025-03-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -278,14 +278,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>324</span>
+              <span>12k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>11 分钟</span>
             </span>
 
         </div>
@@ -297,12 +297,303 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+        <h2 id="builder-and-rewriter"><a href="#builder-and-rewriter" class="headerlink" title="builder and rewriter"></a>builder and rewriter</h2><ol>
+<li>builder 和 rewriter 都用于构建和修改 IR（中间表示），但它们的用途和设计目标不同。</li>
+<li>OpBuilder 适用于构建新的 IR，但不会管理旧 IR。<ul>
+<li>builder.setInsertionPointToEnd(&amp;block); 需要指定insert节点</li>
+</ul>
+</li>
+<li>PatternRewriter 适用于修改 IR，可以删除、替换和优化现有操作，在 MLIR Pass 变换中更常用。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Operation *op = <span class="built_in">getOperation</span>();</span><br><span class="line"><span class="function">OpBuilder <span class="title">builder</span><span class="params">(op-&gt;getContext())</span></span>;</span><br><span class="line"><span class="function">IRRewriter <span class="title">rewriter</span><span class="params">(builder)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="dialects"><a href="#dialects" class="headerlink" title="dialects"></a><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/Dialects/">dialects</a></h2><ol>
+<li>注意op和oprand的区别, Oprand和type的区别</li>
+<li><a target="_blank" rel="noopener" href="https://mlir.llvm.org/getting_started/Faq/#what-is-the-difference-between-the-tensor-and-vector-types">What is the difference between the Tensor and Vector types? ¶</a><ul>
+<li>Tensors accept an optional “encoding” attribute, vector don’t at the moment.</li>
+<li>The set of allowed element types is different: the Tensor type isn’t limited while Vector is limited to float and integer types.</li>
+<li>You can have a memref (a buffer in memory) containing Vectors but you can’t have a memref of a tensor type.</li>
+</ul>
+</li>
+</ol>
+<h3 id="tensor"><a href="#tensor" class="headerlink" title="tensor"></a>tensor</h3><ol>
+<li>注意tensor dialect, tensor type(oprand type), tensor op区别</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/llvm/llvm-project/blob/51c91095ab5b1f8f0d65e6fbd551e8b991866b3f/mlir/include/mlir/IR/BuiltinTypes.h#L55">tensor type</a></li>
+<li><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/Dialects/TensorOps/">tensor dialect</a></li>
+<li>tensor type是一种builtin type， 不是tensor dialect中定义的</li>
+<li>Tensor Dialect 提供了一组针对 张量操作 的通用抽象，例如 切片（slice）、拼接（concatenate）、广播（broadcast）等。</li>
+</ol>
+<h3 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h3><ol>
+<li>注意type和dialect区别</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/llvm/llvm-project/blob/f71b83b3593588c56fd4ab3e1347ad9c7bec624f/mlir/include/mlir/IR/BuiltinTypes.td#L1241">vector定义</a><ul>
+<li>用llvm tablegen 生成</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/Dialects/Vector/">vector dialect</a></li>
+</ol>
+<h2 id="AsmPrinter"><a href="#AsmPrinter" class="headerlink" title="AsmPrinter"></a>AsmPrinter</h2><ol>
+<li>AsmPrinter 是 MLIR（Multi-Level Intermediate Representation）中的一个 IR 序列化（Serialization）工具，用于将 MLIR 操作（Operation）、类型（Type）、属性（Attribute） 等以 可读的文本格式（assembly format） 输出。它主要用于 调试、代码生成和 IR 可视化。</li>
+<li><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/DefiningDialects/Assembly/">别名 Customizing Assembly Behavior</a><ul>
+<li>If multiple types&#x2F;attributes have the same alias from getAlias, a number is appended to the alias to avoid conflicts.</li>
+</ul>
+</li>
+</ol>
+<h2 id="attributes-and-types"><a href="#attributes-and-types" class="headerlink" title="attributes and types"></a><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/DefiningDialects/AttributesAndTypes/">attributes and types</a></h2><ol>
+<li><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/DefiningDialects/Assembly/">别名</a></li>
+<li>允许方言为属性(Attribute)和类型(Type)定义别名标识符,在打印文本形式的 IR 时使用<ul>
+<li>使用OpAsmDialectInterface方法 AliasResult getAlias(Attribute attr, raw_ostream &amp;os) </li>
+<li>AliasResult getAlias(Type type, raw_ostream &amp;os)</li>
+</ul>
+</li>
+<li>tablegen生成的类通过get()创建对象</li>
+<li>注意: 给op加参数和给tensor加属性不一样</li>
+<li>cuda通过给tensor加layout属性来确定线程处理的数据</li>
+<li>set： <code>op-&gt;setAttr(&quot;tts.target&quot;, StringAttr::get(op-&gt;getContext(), &quot;TILE&quot;));</code></li>
+<li>tablegen op定义的时候直接带属性</li>
+<li>RankedTensorType<ul>
+<li>tenosr带的属性影响整个op的验证：tt.load只改变输出tensor的属性，会报错，ptr指向的数据类型和输出数据类型的attr需要一致； tt.addi输入输出tensor的encoding(attr)需要一致, layout变换需要加转换op, 如triton::gpu::ConvertLayoutOp</li>
+<li>static get(ArrayRef<int64_t> shape, Type elementType, Attribute encoding &#x3D; {}); 创建对象时设置属性,见 <ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/llvm/llvm-project/blob/f71b83b3593588c56fd4ab3e1347ad9c7bec624f/mlir/include/mlir/IR/BuiltinTypes.td#L1241">vector定义</a></li>
+</ul>
+</li>
+<li>getEncoding() 获取属性</li>
+<li>一旦创建后，tensor的属性就是不可变的(immutable)</li>
+<li>如果需要修改属性，需要创建一个新的tensor类型</li>
+</ul>
+</li>
+<li>VectorType<ul>
+<li>没有类似的属性获取方法,它更关注向量的形状、元素类型和可扩展性</li>
+<li>static VectorType get(ArrayRef<int64_t> shape, Type elementType, ArrayRef<bool> scalableDims &#x3D; {});<ul>
+<li>scalableDims参数用于指定向量类型中哪些维度是可伸缩的（scalable）</li>
+<li>可伸缩向量（Scalable Vector）是一种其大小在运行时才能确定的向量类型, </li>
+<li>VectorType::get({2, 4}, elementType, {false, true}); &#x2F;&#x2F;创建一个2x[4]的向量，其中第二维是可伸缩的</li>
+<li>可伸缩向量主要用于支持SIMD（单指令多数据）等向量化操作, 这种设计使MLIR能够更好地支持现代处理器的向量化特性，特别是那些支持可变长度向量处理的架构</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="translate"><a href="#translate" class="headerlink" title="translate"></a>translate</h2><ol>
+<li><code>mlir-translate --mlir-to-llvmir lowered_example.mlir &gt; output.ll</code> mlir to llir</li>
+</ol>
+<h2 id="tools"><a href="#tools" class="headerlink" title="tools"></a>tools</h2><ol>
+<li>lsp server</li>
+<li>tablegen lsp server</li>
+<li>mlir-opt</li>
+</ol>
+<h2 id="note"><a href="#note" class="headerlink" title="note"></a>note</h2><ol>
+<li>add_mlir_tool默认不编译, 需要手动指定<ul>
+<li>ninja -t targets &amp;&amp; ninja xxx</li>
+<li>make help &amp;&amp; make xxx</li>
+</ul>
+</li>
+</ol>
+<h2 id="mlir-tutorial"><a href="#mlir-tutorial" class="headerlink" title="mlir-tutorial"></a><a target="_blank" rel="noopener" href="https://github.com/KEKE046/mlir-tutorial">mlir-tutorial</a></h2><ol>
+<li>ex3 - ex7不能同时运行， CMakeLists.txt只能选一个</li>
+<li>需要单独指定编译ninja toy-opt(target)</li>
+</ol>
+<h2 id="MLIR基本构成"><a href="#MLIR基本构成" class="headerlink" title="MLIR基本构成"></a>MLIR基本构成</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/KEKE046/mlir-tutorial/blob/main/README.md#41-op-%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">Operation</a> <ul>
+<li>用户定义的 arith.addi 等等 Op，本质上都是 Operation 的指针。但与 Operation* 不同的是，AddIOp 定义了 Operation 里储存的数据的解释方式。如 AddOp，自己是一个 Operation 的指针，也定义了一个函数 getLhs 用来返回第一个值，当作 lhs。</li>
+</ul>
+</li>
+<li>Operations can also have custom parser, printer, builder, verifier, constant folder, or canonicalizer.</li>
+<li>Operation类用于对所有操作进行一般建模。它是“不透明的”，因为它不描述特定操作或操作类型的属性。相反， Operation类为操作实例提供通用 API。另一方面，每个特定类型的操作都由Op派生类表示。   </li>
+<li>Type &#x2F; Attribute: MLIR 的 Type 和 Attribute 与 Op 类似。Type 是到 TypeStorage 的指针，Attribute 也是到 AttributeStorage 的指针。</li>
+<li>Value 要么来自于 Operation 的 Result 要么来自于 BlockArgument<ul>
+<li>op管理result value， result可以作为其他op的input（引用), 类似模型推理时的tensor管理</li>
+</ul>
+</li>
+<li>Value有owner:<ul>
+<li>tt.dot的输入oprand owner是tt.load, gdb打印显示  owner &#x3D; 0x0000000032661040 “tt.load”, tt.dot的输出Value owner是tt.dot op</li>
+</ul>
+</li>
+<li>Result：这个 Op 生成的新 Value</li>
+<li>Operand：这个 Op 接受的操作数, 每个 Operation 的 Operand 都是到 Value 的指针</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/451061340">MLIR入门理解2-背景及演进</a><ul>
+<li>MLIR提供的解决方案是Dialect和DialectConversion。Dialect用来抽象opset，DialectConversion用来做转换。</li>
+<li>接着为了增加对Dialect和Operation的标准化和功能扩展，MLIR增加了Constraint, Interface, Trait，方便对Operation进行限制和扩展。</li>
+</ul>
+</li>
+</ol>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><ol>
+<li>不好实现的先站位，从高层网低层次转， 抽象级别要对应，一次处理一小步</li>
+<li>核心在于transform</li>
+<li>上层的IR是一种抽象，不用具体实现，只需要规定输入输出类型，前后Op能匹配上就行</li>
+<li>每一行都是op, 在lower到llvm ir需要具体实现，上层的op不需要具体实现，只要后面能lower到低级别的op</li>
+</ol>
+<h2 id="dialect-conversion"><a href="#dialect-conversion" class="headerlink" title="dialect conversion"></a>dialect conversion</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/DialectConversion/">docs&#x2F;DialectConversion</a></li>
+<li>不合法才转换</li>
+<li>类型转换的时候，如果op输入输出类型变换，可以在定义op输入输出时允许多种类型</li>
+</ol>
+<h2 id="pass"><a href="#pass" class="headerlink" title="pass"></a>pass</h2><ol>
+<li>ConversionTarget里合法的不会在做matchandrewrite, 需要标记为非法才做matchandrewrite</li>
+<li>注意op和pass的区别；op可以为load, store, convert_tile_to_vector; pass用来转换的，将其他op转换，注意：convert_tile_to_vector是op，不是pass</li>
+<li>写pass时如果输入输出类型改变，插入转换op，后面再融合; 方便pass对op处理(使用unrealized_convertion_cast)<ul>
+<li>A –t–&gt; B   &#x3D;&#x3D;&#x3D;&#x3D;&gt;  A1 –t1-&gt; convert_t1_to_t –t-&gt; convert_t_to_t2 –t2-&gt; B2</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1YTGfJq-ccuVPH50r8ERnCrC977-4uzly/view">Tutorial: Create an MLIR pass for triton</a></li>
+<li>区分op和op pass; op是一种表示，pass是对op的处理(conversion or optimization); conversion指的是从其他op转换为当前op；当前op转换为其他op由后续的op处理</li>
+<li>op tablegen需要指定name, input, output及其类型</li>
+<li>Trasnform(optimize) <a target="_blank" rel="noopener" href="https://blog.csdn.net/2301_76434200/article/details/136205302">link</a><ul>
+<li>in dialect</li>
+<li>Transform 通常指的是在 同一 dialect 内对程序进行优化或转换。这个过程目的是通过简化、优化或改进表达式来提升程序的性能或质量，通常是通过应用特定的优化规则来消除冗余、合并操作、简化控制流等。</li>
+<li>写pass不需要像conversion需要ilegal一些op才能转换</li>
+<li>可以用于添加属性之类的操作</li>
+</ul>
+</li>
+<li>Conversion<ul>
+<li>between dialect</li>
+<li>Conversion 指的是将一个 Dialect 中的 IR 转换为另一个 Dialect 的 IR。这种转换通常涉及对同一程序的不同表示的转换，目的是为了适应不同的执行环境或优化策略。转换通常发生在不同的 Dialect 之间，或者从高层次的抽象操作到底层硬件相关的操作。</li>
+<li>NOTE: 注意op convertion(一种transform) 和 type convertion(只改变op输入输出类型)之间的区别</li>
+</ul>
+</li>
+<li>translation<ul>
+<li>other ir -&gt; mlir -&gt; other ir</li>
+<li>Translation 是指将 从其他 IR 转换到 MLIR 或从 MLIR 转换到其他 IR 的过程。它允许将一种编译表示（IR）转化为另一种表示。翻译通常发生在不同编译体系结构或编译链的之间，可以涉及从一种中间表示到另一种表示的转换，或者从源代码到中间表示的转换。</li>
+</ul>
+</li>
+<li>CSE（Common Subexpression Elimination） <ul>
+<li>是一种常见的优化 Pass，中文称为公共子表达式消除。</li>
+<li>CSE 的主要目的是识别并消除 IR（中间表示）中重复的子表达式，从而减少冗余计算，提升运行效率。</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = x + y;</span><br><span class="line"><span class="type">int</span> b = x + y;</span><br><span class="line"></span><br><span class="line"><span class="comment">// cse</span></span><br><span class="line"><span class="type">int</span> temp = x + y;</span><br><span class="line"><span class="type">int</span> a = temp;</span><br><span class="line"><span class="type">int</span> b = temp;</span><br></pre></td></tr></table></figure>
+<h2 id="Canonicalize"><a href="#Canonicalize" class="headerlink" title="Canonicalize"></a><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/Canonicalization/">Canonicalize</a></h2><ol>
+<li>Canonicalizer 知道清理死操作；然而，MLIR 保守地假设操作可能会产生副作用。我们可以通过向TransposeOp添加新特征Pure来解决此问题 <a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/Tutorials/Toy/Ch-3/">link</a></li>
+<li><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/Canonicalization/#defining-canonicalizations">两种方法</a></li>
+<li>可以做类型转换消除优化</li>
+<li>是一个标准的优化 Pass，用于对中间表示 (IR) 进行规范化（Canonicalization）。它的主要目的是通过应用一系列模式匹配和重写规则，简化 IR，去掉冗余操作，提升后续优化和代码生成的效率。</li>
+<li>其主要作用是清理冗余、提升 IR 的可优化性和一致性，(不能有side effect)</li>
+</ol>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// op.td里op添加</span></span><br><span class="line"><span class="keyword">let</span> <span class="variable">hasCanonicalizeMethod</span> = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// op.cpp中完成canonicalize函数</span></span><br><span class="line">LogicalResult ConvertTensorToTileOp::<span class="title function_ invoke__">canonicalize</span>(ConvertTensorToTileOp op,</span><br><span class="line">                                                  PatternRewriter &amp;rewriter) &#123;</span><br><span class="line">  <span class="comment">// patterns and rewrites go here.</span></span><br><span class="line">  Value input = op.<span class="title function_ invoke__">getOperand</span>();</span><br><span class="line">  auto tileToTensorOp =</span><br><span class="line">      input.getDefiningOp&lt;ConvertTileToTensorOp&gt;();</span><br><span class="line">  <span class="title function_ invoke__">if</span> (!tileToTensorOp)</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_ invoke__">failure</span>();</span><br><span class="line"></span><br><span class="line">  rewriter.<span class="title function_ invoke__">replaceOp</span>(op, tileToTensorOp.<span class="title function_ invoke__">getOperand</span>());</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_ invoke__">success</span>();</span><br><span class="line">  <span class="comment">// return failure();</span></span><br><span class="line">  </span><br><span class="line"><span class="comment">// 先replace， 再modify， 在erase《</span></span><br><span class="line"></span><br><span class="line">  * Pattern  : <span class="symbol">&#x27;tts</span>.convert_tensor_to_tile <span class="punctuation">-&gt;</span> ()&#x27; &#123;</span><br><span class="line">Trying to <span class="keyword">match</span> <span class="string">&quot;&quot;</span></span><br><span class="line">    ** Replace : <span class="symbol">&#x27;tts</span>.convert_tensor_to_tile&#x27;(<span class="number">0x6a3fc50</span>)</span><br><span class="line">    ** Modified: <span class="symbol">&#x27;tts</span>.tile_dot&#x27;(<span class="number">0x8590110</span>)</span><br><span class="line">    ** Erase   : <span class="symbol">&#x27;tts</span>.convert_tensor_to_tile&#x27;(<span class="number">0x6a3fc50</span>)</span><br><span class="line"><span class="string">&quot;&quot;</span> result <span class="number">1</span></span><br><span class="line">  &#125; <span class="punctuation">-&gt;</span> success : pattern applied successfully</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="mlir-opt"><a href="#mlir-opt" class="headerlink" title="mlir-opt"></a>mlir-opt</h2><ol>
+<li><code>mlir-opt input.mlir -canonicalize -o output.mlir</code></li>
+<li><code>-debug</code> 选项，可以打印 Pass 的详细执行过程</li>
+<li><code>-verify-each</code> 验证每个 Pass 运行后 IR 是否有效</li>
+</ol>
+<h2 id="IR表示"><a href="#IR表示" class="headerlink" title="IR表示"></a>IR表示</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/BobHuang/p/18249482">从零开始教你写一个MLIR Pass</a></li>
+<li><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/Tutorials/UnderstandingTheIRStructure/">UnderstandingTheIRStructure</a></li>
+<li><a target="_blank" rel="noopener" href="https://llvm.org/devmtg/2020-09/slides/MLIR_Tutorial.pdf">MLIR_Tutorial</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/KEKE046/mlir-tutorial?tab=readme-ov-file#5-mlir-%E7%9A%84%E5%9B%BE%E7%BB%93%E6%9E%84">mlir-tutorial</a></li>
+</ol>
+<h2 id="match-and-rewrite"><a href="#match-and-rewrite" class="headerlink" title="match and rewrite"></a>match and rewrite</h2><ol>
+<li>(good)<a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/PatternRewriter/#debug-names-and-labels">debug</a><br>1  </li>
+<li>内部参数不要直接使用<code>Value lhs = op.getOperand(0);</code> 获取的是转化之前的value， <ul>
+<li><code>auto lhs = adaptor.getOperands()[0];</code></li>
+<li><code>auto lhs = rewriter.getRemappedValue(op.getOperand(0));</code></li>
+<li>op 是 TileDotNoaccOp 的实例，它代表 MLIR 中的原始操作（原始 IR）。在转换过程中，op 仍然保持着 MLIR 中定义的 TileDotNoaccOp 操作的结构，并可以直接访问它的操作数、属性等。</li>
+<li>adaptor 是 OpAdaptor 类型，它用于适配 MLIR 转换过程中的操作数（operands）。<ul>
+<li>在 MLIR 低级转换（如从 Triton 低级 IR 到 LLVM IR）时，操作数可能已经经过类型转换或其他调整，而 adaptor 允许获取转换后的操作数。</li>
+<li>adaptor.getOperands() 通常用于获取转换后的操作数，而不是 op.getOperands()</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Canonicalizer 知道清理死操作；然而，MLIR 保守地假设操作可能会产生副作用。我们可以通过向TransposeOp添加新特征Pure来解决此问题</li>
+<li>当你使用 rewriter.replace 替换一个操作时，原操作会被标记为 “无效” 或 “已被替换”，但在实际的 MLIR IR 中，它的内存依然存在，直到清理阶段（如垃圾回收或优化 passes 的清理过程）才会被真正删除。</li>
+<li><code>Value newvalue = rewriter.create&lt;AddOp&gt;(loc, input0, input1);</code> rewriter.create 是 MLIR 中 PatternRewriter 类提供的方法，用于创建新的操作（Operation）。</li>
+<li><code>void replaceOp(Operation *op, ValueRange newValues);</code> rewriter.replace将op的结果用new value替换, 作用是将一个旧的操作及其结果用新的值替换，同时自动更新使用这些结果的其他操作，确保 IR 的一致性。</li>
+</ol>
+<h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>MLIR 是一个强有力的代表，但它也有非目标。我们不尝试支持低级机器代码生成算法（例如寄存器分配和指令调度）。它们更适合较低级别的优化器（例如 LLVM）。此外，我们不希望 MLIR 成为最终用户自己编写内核的源语言（类似于 CUDA C++）。另一方面，MLIR 为表示任何此类 DSL 并将其集成到生态系统中提供了支柱。</li>
+<li>在 MLIR（多级中间表示）中，ODS 是 “Operation Definition Specification” 的缩写。ODS 是一种用于定义操作（operation）、类型（type）、属性（attribute）等的 DSL（领域特定语言）。它通过一种声明式的方式来描述这些元素，并生成相应的 C++ 代码，从而简化了编写和维护 MLIR 操作的过程。</li>
 <li>MLIR 即 Multi-Level Intermediate Representation，多级的中间表示。</li>
 <li>mlir 只是个编译器框架，本身并没有什么完整功能。所以可以参考一些基于 MLIR 做的开源项目。</li>
 <li>MLIR 能够很好地桥接高层 DSL 和底层编译器（如 LLVM）。</li>
 <li>we do not intend MLIR to be a source language that end-users would themselves write kernels in (analogous to CUDA C++). On the other hand, MLIR provides the backbone for representing any such DSL and integrating it in the ecosystem.</li>
+<li><code>!</code> 在 MLIR 中，自定义类型通常由特定的方言定义，并使用 <code>!</code> 符号进行引用</li>
+<li><code>#</code> 符号用于表示自定义属性或符号。这些属性或符号通常由特定的方言（Dialect）定义，用于描述复杂的数据结构、布局和操作。通过使用自定义属性，可以在编译过程中对特定的硬件架构和优化需求进行精确的描述和操作。</li>
 </ol>
+<h2 id="tablegen"><a href="#tablegen" class="headerlink" title="tablegen"></a>tablegen</h2><ol>
+<li>使用mlir-tablegen，还有llvm-tablegen等其他tablegen</li>
+<li>class和def<ul>
+<li>class 关键字用于定义可继承的类，而 def 关键字用于实例化具体的对象。</li>
+<li>在 TableGen 中，def 语句创建的是一个 具体实例，而 class 语句定义的是 可继承的模板。通常，def 不能被继承，因为 def 本质上是一个实例，而不是一个类。</li>
+</ul>
+</li>
+<li><code>.td</code> 文件的名称来源是 “Table Definition” 的简称。这个命名反映了它的主要用途：定义表格式的数据结构，以支持代码生成和编译器相关的元信息处理。</li>
+<li>ODS(Operation Definition Specification) 模块用于定义operation</li>
+<li>DRR(Declarative Rewriting Rule) 模块用于实现两个dialect之间的conversion</li>
+<li>.td文件定义dialect, op<ul>
+<li>.h中需要include生成的.h.inc</li>
+<li>.cpp中需要include生成的.cpp.inc</li>
+</ul>
+</li>
+</ol>
+<h2 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://mlir.llvm.org/getting_started/Debugging/#miscellaneous-tips">debug tips</a><ul>
+<li>For printf debugging, instead of using llvm::errs(), one can emit diagnostics. For example, using <code>op.emitWarning() &lt;&lt; &quot;HERE: &quot; &lt;&lt; myVariable</code>; instead of llvm::errs() &lt;&lt; “HERE: “ &lt;&lt; myVariable &lt;&lt; “\n”;. This prints nicely with colors, shows the op (and its location) for free,</li>
+</ul>
+</li>
+<li>(good) lldb有问题调试，没问题直接命令行脚本执行更快</li>
+<li>vscode inlay hints可以方便看类型, 解决auto类型问题</li>
+<li>lldb<ul>
+<li><code>~/.lldbinit</code></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/gdbinit/lldbinit">lldbinit</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/pytorch/pytorch/blob/main/.lldbinit">pytorch .lldbinit</a><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">command script import /data/liudonghui/llvm-project-86b69c3/llvm/utils/lldbDataFormatters.py</span><br><span class="line">command script import /data/liudonghui/llvm-project-86b69c3/mlir/utils/lldb-scripts/mlirDataFormatters.py</span><br><span class="line">#  &quot;command script import lldb.formatters.cpp.libcxx&quot;,</span><br><span class="line">settings set target.prefer-dynamic-value run-target</span><br><span class="line">settings set target.display-runtime-support-values true</span><br><span class="line"></span><br><span class="line"># command script import  ~/lldbinit.py</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb">codelldb</a> 调试加速<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;lldb&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;attach&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;lldb&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/data/xiyang/miniconda3/envs/siorigin_triton_test/bin/python&quot;</span><span class="punctuation">,</span></span><br><span class="line">     </span><br><span class="line">        <span class="string">&quot;command script import /data/liudonghui/llvm-project-86b69c3/llvm/utils/lldbDataFormatters.py&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;command script import /data/liudonghui/llvm-project-86b69c3/mlir/utils/lldb-scripts/mlirDataFormatters.py&quot;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/vadimcn/codelldb/issues/574#issuecomment-1279891501">lldb pretty print</a></li>
+<li>lldb debug command:<ul>
+<li><code>command script import /data/xiyang/llvm-project-86b69c3/llvm/utils/lldbDataFormatters.py</code></li>
+<li><code>call op.dump()</code></li>
+<li><code>type lookup xxx</code></li>
+</ul>
+</li>
+<li><code>(*src).dump()</code> ref的时候需要先取值   </li>
+<li>(very good) <code>-exec pt xxx</code> 打印type<ul>
+<li>可以查看成员函数和变量，然后调用或者打印</li>
+</ul>
+</li>
+<li>dump(): 支持module, op, type, value的打印<ul>
+<li>str(mod) python更全面</li>
+</ul>
+</li>
+<li>打印op; vscode debug console: <code>-exec call op.dump()</code> 没有输出再调用<code>-exec call fflush(stderr)</code>， 输出在terminal里<ul>
+<li>改launch.json <code>&quot;terminal&quot;: &quot;console&quot;,</code> 在debug console输出</li>
+<li>可以在terminal里按enter, 让多次输出之间有空行，方便查看</li>
+<li>可以在watch里调用函数</li>
+</ul>
+</li>
+<li>op-&gt;dump()：直接输出到 llvm::errs()，适合快速调试。<ul>
+<li>python代码也可以</li>
+</ul>
+</li>
+<li>op-&gt;print(llvm::errs())：需要提供一个输出流，可以更灵活地控制输出目标（如文件或标准输出）。</li>
+<li>pattern-&gt;getDebugName()</li>
+<li>打印pass name: vscode中：<code>-exec call pass.getName()</code></li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (Pass &amp;pass : pm.<span class="built_in">getPasses</span>())</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">failed</span>(<span class="built_in">run</span>(&amp;pass, op, am, verifyPasses, parentInitGeneration)))</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">failure</span>();</span><br></pre></td></tr></table></figure>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://lists.llvm.org/pipermail/llvm-dev/2016-May/100365.html">gdb llvm mlir pretty print</a></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">source /data/xiyang/llvm-project-86b69c3/mlir/utils/gdb-scripts/prettyprinters.py</span><br><span class="line">source /data/xiyang/llvm-project-86b69c3/llvm/utils/gdb-scripts/prettyprinters.py</span><br></pre></td></tr></table></figure>
+<ol>
+<li>gdb 里直接<code>source .gdbinit</code> and then try again the <code>info pretty-print</code>. 可以看看pretty-print信息</li>
+</ol>
+<h2 id="CRTP"><a href="#CRTP" class="headerlink" title="CRTP"></a>CRTP</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://chatgpt.com/share/677b7d82-9e7c-8004-a823-244513e3e974">chatgpt</a></li>
+<li>CRTP 的全称是 Curiously Recurring Template Pattern，翻译为“奇异递归模板模式”。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Derived&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Base</span> &#123;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="built_in">static_cast</span>&lt;Derived*&gt;(<span class="keyword">this</span>)-&gt;<span class="built_in">impl</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Derived</span> : <span class="keyword">public</span> Base&lt;Derived&gt; &#123;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">impl</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 派生类实现</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>CRTP 是 C++ 中非常强大的设计模式，虽然对初学者稍显复杂，但在性能关键场景和库开发中极具价值。</li>
+<li>CRTP 是一种模板模式，其中一个类将自己作为模板参数传递给它的基类。<br>看起来有些“奇怪”，但它非常强大，尤其在以下场景中：<ul>
+<li>静态多态：在编译时实现类似于动态多态的行为。</li>
+<li>代码复用：通过基类模板实现通用功能。</li>
+<li>编译期优化：避免运行时的虚函数调用开销。</li>
+</ul>
+</li>
+<li>静态多态: 编译期确定类型，无需虚函数调用。更高效，适合性能敏感场景。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Derived&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Shape</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">draw</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="built_in">static_cast</span>&lt;Derived*&gt;(<span class="keyword">this</span>)-&gt;<span class="built_in">drawImpl</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Circle</span> : <span class="keyword">public</span> Shape&lt;Circle&gt; &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">drawImpl</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Drawing Circle\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Square</span> : <span class="keyword">public</span> Shape&lt;Square&gt; &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">drawImpl</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Drawing Square\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Circle c;</span><br><span class="line">    c.<span class="built_in">draw</span>(); <span class="comment">// 输出：Drawing Circle</span></span><br><span class="line"></span><br><span class="line">    Square s;</span><br><span class="line">    s.<span class="built_in">draw</span>(); <span class="comment">// 输出：Drawing Square</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -424,7 +715,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#builder-and-rewriter"><span class="nav-number">1.</span> <span class="nav-text">builder and rewriter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dialects"><span class="nav-number">2.</span> <span class="nav-text">dialects</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tensor"><span class="nav-number">2.1.</span> <span class="nav-text">tensor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vector"><span class="nav-number">2.2.</span> <span class="nav-text">vector</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AsmPrinter"><span class="nav-number">3.</span> <span class="nav-text">AsmPrinter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attributes-and-types"><span class="nav-number">4.</span> <span class="nav-text">attributes and types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#translate"><span class="nav-number">5.</span> <span class="nav-text">translate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tools"><span class="nav-number">6.</span> <span class="nav-text">tools</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#note"><span class="nav-number">7.</span> <span class="nav-text">note</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mlir-tutorial"><span class="nav-number">8.</span> <span class="nav-text">mlir-tutorial</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MLIR%E5%9F%BA%E6%9C%AC%E6%9E%84%E6%88%90"><span class="nav-number">9.</span> <span class="nav-text">MLIR基本构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%80%83"><span class="nav-number">10.</span> <span class="nav-text">思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dialect-conversion"><span class="nav-number">11.</span> <span class="nav-text">dialect conversion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pass"><span class="nav-number">12.</span> <span class="nav-text">pass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Canonicalize"><span class="nav-number">13.</span> <span class="nav-text">Canonicalize</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mlir-opt"><span class="nav-number">14.</span> <span class="nav-text">mlir-opt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IR%E8%A1%A8%E7%A4%BA"><span class="nav-number">15.</span> <span class="nav-text">IR表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#match-and-rewrite"><span class="nav-number">16.</span> <span class="nav-text">match and rewrite</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">17.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tablegen"><span class="nav-number">18.</span> <span class="nav-text">tablegen</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#debug"><span class="nav-number">19.</span> <span class="nav-text">debug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CRTP"><span class="nav-number">20.</span> <span class="nav-text">CRTP</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -440,7 +731,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-count">192</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -473,6 +764,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -480,12 +777,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -513,7 +804,7 @@
 <div class="copyright">
   
   &copy; 2021 – 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -523,13 +814,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">543k</span>
+    <span title="站点总字数">587k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:14</span>
+    <span title="站点阅读时长">8:54</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

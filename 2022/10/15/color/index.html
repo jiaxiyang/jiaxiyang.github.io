@@ -28,7 +28,7 @@
 <meta property="og:description" content="basic GLOG_colorlogtostderr&#x3D;1 .&#x2F;test glog 输出彩色 ANSI_escape_code 全面；包含各种颜色值 tip_colors_and_formatting Linux 使用 echo 命令打印输出特定颜色的字符 echo -e &quot;\033[43;31;5m我是黄底红色的闪烁字符串\033[0m&quot; 输出字符串的的前部”\033[43;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-10-15T07:43:06.000Z">
-<meta property="article:modified_time" content="2023-10-10T06:16:42.077Z">
+<meta property="article:modified_time" content="2025-01-09T03:02:14.666Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 
@@ -130,7 +130,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-10 14:16:42" itemprop="dateModified" datetime="2023-10-10T14:16:42+08:00">2023-10-10</time>
+                <time title="修改时间：2025-01-09 11:02:14" itemprop="dateModified" datetime="2025-01-09T11:02:14+08:00">2025-01-09</time>
               </span>
 
           
@@ -262,14 +262,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6.5k</span>
+              <span>7.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -295,11 +295,20 @@
 <li>开发板命令显示颜色：<code>alias ll=&quot;ls -al --color=auto&quot; alias ls=&quot;ls --color=auto&quot;</code></li>
 <li><a target="_blank" rel="noopener" href="https://www.cyberciti.biz/faq/bash-shell-change-the-color-of-my-shell-prompt-under-linux-or-unix/">PS1 set</a></li>
 </ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\e[0;31m\u@\h:\W% \e[m&quot;</span></span><br><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\e[0;32m\u@\h:\W% \e[m&quot;</span></span><br><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\e[0;33m\u@\h:\W% \e[m&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\033[01;32m\](docker)\u@10.10.129.7\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ &quot;</span></span><br><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\e[0;31m\u@\h:\W% \e[m&quot;</span></span><br><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\e[0;32m\u@\h:\W% \e[m&quot;</span></span><br><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\e[0;33m\u@\h:\W% \e[m&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <ol>
-<li><code>script -q -c &quot;bat symbol.json&quot; color.log &gt; /dev/null</code> 将彩色输出保存到到文件中 <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/27399198">write stdout to file with colors</a></li>
-<li>ninja color output</li>
+<li><p><a target="_blank" rel="noopener" href="https://emojipedia.org/fire">icons</a> 找chatgpt让它来给出</p>
+</li>
+<li><p>zsh配置PROMPT</p>
+<ul>
+<li>~&#x2F;.oh-my-zsh&#x2F;themes&#x2F;robbyrussell.zsh-theme 修改PROMPT</li>
+<li>jonathan theme<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">PROMPT<span class="operator">=</span>&#x27;⚡ <span class="variable">%n</span><span class="title">@219</span>.<span class="number">135.228</span>.<span class="number">244</span><span class="variable">%f</span>:%~<span class="variable">%f</span><span class="variable">%B</span><span class="variable">%f</span> ⚡ </span><br><span class="line">%(?:🔥:❌) &#x27;</span><br><span class="line">PROMPT<span class="operator">=</span>&#x27;<span class="variable">%B</span><span class="variable">%F</span>&#123;green&#125;<span class="variable">%n</span><span class="title">@219</span>.<span class="number">135.228</span>.<span class="number">244</span><span class="variable">%f</span>:<span class="variable">%F</span>&#123;blue&#125;%~<span class="variable">%f</span><span class="variable">%B</span><span class="variable">%f</span> </span><br><span class="line">%(?:%&#123;$fg_bold[red]%&#125;<span class="variable">%1</span>&#123;➜%&#125; :%&#123;$fg_bold[yellow]%&#125;<span class="variable">%1</span>&#123;➜%&#125; ) &#x27;</span><br><span class="line"></span><br><span class="line"># PROMPT<span class="operator">=</span>&#x27;⚡ <span class="variable">%B</span><span class="variable">%F</span>&#123;green&#125;<span class="variable">%n</span><span class="title">@219</span>.<span class="number">135.228</span>.<span class="number">244</span><span class="variable">%f</span>:<span class="variable">%F</span>&#123;blue&#125;%~<span class="variable">%f</span><span class="variable">%B</span><span class="variable">%f</span> ⚡ </span><br><span class="line"># %(?:%&#123;$fg_bold[red]%&#125;<span class="variable">%1</span>&#123;➜%&#125; :%&#123;$fg_bold[yellow]%&#125;<span class="variable">%1</span>&#123;➜%&#125; ) &#x27;</span><br><span class="line">PROMPT<span class="operator">=</span>&#x27;⚡ <span class="variable">%n</span><span class="title">@219</span>.<span class="number">135.228</span>.<span class="number">244</span><span class="variable">%f</span>:%~<span class="variable">%f</span><span class="variable">%B</span><span class="variable">%f</span> ⚡ </span><br><span class="line">%(?:%&#123;$fg_bold[yellow]%&#125;<span class="variable">%1</span>&#123;➜%&#125; :%&#123;$fg_bold[red]%&#125;<span class="variable">%1</span>&#123;➜%&#125; ) &#x27;</span><br><span class="line"></span><br><span class="line">PROMPT<span class="operator">=</span>&#x27;⚡ <span class="variable">%n</span><span class="title">@219</span>.<span class="number">135.228</span>.<span class="number">244</span><span class="variable">%f</span>:%~<span class="variable">%f</span><span class="variable">%B</span><span class="variable">%f</span> ⚡ </span><br><span class="line">%(?:✅ :❌ ) &#x27;</span><br><span class="line">🔥 👻 🎃 ❄️  ☃️  🥶</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">PROMPT<span class="operator">=</span>&#x27;<span class="variable">%B</span><span class="variable">%F</span>&#123;green&#125;(docker)<span class="variable">%n</span><span class="title">@10</span>.<span class="number">10.129</span>.<span class="number">7</span><span class="variable">%f</span>:<span class="variable">%F</span>&#123;blue&#125;%~<span class="variable">%f</span><span class="variable">%B</span><span class="variable">%f</span>\$ &#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><code>script -q -c &quot;bat symbol.json&quot; color.log &gt; /dev/null</code> 将彩色输出保存到到文件中 <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/27399198">write stdout to file with colors</a></p>
+</li>
+<li><p>ninja color output</p>
+</li>
 </ol>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="string">&quot;$&#123;CMAKE_CXX_COMPILER_ID&#125;&quot;</span> <span class="keyword">STREQUAL</span> <span class="string">&quot;GNU&quot;</span>)</span><br><span class="line">    <span class="keyword">add_compile_options</span> (-fdiagnostics-color=always)</span><br><span class="line"><span class="keyword">elseif</span> (<span class="string">&quot;$&#123;CMAKE_CXX_COMPILER_ID&#125;&quot;</span> <span class="keyword">STREQUAL</span> <span class="string">&quot;Clang&quot;</span>)</span><br><span class="line">    <span class="keyword">add_compile_options</span> (-fcolor-diagnostics)</span><br><span class="line"><span class="keyword">endif</span> ()</span><br></pre></td></tr></table></figure>
 
@@ -472,7 +481,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-count">192</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -505,6 +514,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -512,12 +527,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -545,7 +554,7 @@
 <div class="copyright">
   
   &copy; 2021 – 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -555,13 +564,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">543k</span>
+    <span title="站点总字数">587k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:14</span>
+    <span title="站点阅读时长">8:54</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

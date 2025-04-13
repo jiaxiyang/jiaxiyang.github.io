@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="NOTE (good)log 太多可以把 error 重定向到文件 command 2&gt; error_log.txt std::numeric_limits&lt;float&gt;::max() float 最大值 -Wno-xxx 不启动 xxx warning gcc 编译阶段打印宏定义的内容 100-gcc-tips 没 link 报undefined reference to, l">
+  <meta name="description" content="NOTE readelf --debug-dump&#x3D;decodedline  build&#x2F;cmake.linux-x86_64-cpython-3.10&#x2F;bin&#x2F;triton-tensor-layout | grep -oE &#39;&#x2F;[^ ]+\.cpp:&#39; | sort -u 获取文件中debug信息包含的C++文件     使用 -H（GCC&#x2F;Clang）查看头文件包含的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Debug">
 <meta property="og:url" content="https://jiaxiyang.github.io/2022/02/03/Cpp-debug/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="NOTE (good)log 太多可以把 error 重定向到文件 command 2&gt; error_log.txt std::numeric_limits&lt;float&gt;::max() float 最大值 -Wno-xxx 不启动 xxx warning gcc 编译阶段打印宏定义的内容 100-gcc-tips 没 link 报undefined reference to, l">
+<meta property="og:description" content="NOTE readelf --debug-dump&#x3D;decodedline  build&#x2F;cmake.linux-x86_64-cpython-3.10&#x2F;bin&#x2F;triton-tensor-layout | grep -oE &#39;&#x2F;[^ ]+\.cpp:&#39; | sort -u 获取文件中debug信息包含的C++文件     使用 -H（GCC&#x2F;Clang）查看头文件包含的">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-02-03T09:02:35.000Z">
-<meta property="article:modified_time" content="2024-11-14T09:27:45.905Z">
+<meta property="article:modified_time" content="2025-03-28T05:18:08.373Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="Debug">
 <meta name="twitter:card" content="summary">
@@ -131,7 +131,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">190</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -233,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-11-14 17:27:45" itemprop="dateModified" datetime="2024-11-14T17:27:45+08:00">2024-11-14</time>
+                <time title="修改时间：2025-03-28 13:18:08" itemprop="dateModified" datetime="2025-03-28T13:18:08+08:00">2025-03-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -276,7 +276,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>17k</span>
+              <span>18k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -296,7 +296,10 @@
 
       
         <h2 id="NOTE"><a href="#NOTE" class="headerlink" title="NOTE"></a>NOTE</h2><ol>
-<li>(good)log 太多可以把 error 重定向到文件 <code>command 2&gt; error_log.txt</code></li>
+<li><code>readelf --debug-dump=decodedline  build/cmake.linux-x86_64-cpython-3.10/bin/triton-tensor-layout | grep -oE &#39;/[^ ]+\.cpp:&#39; | sort -u</code> 获取文件中debug信息包含的C++文件   </li>
+<li></li>
+<li>使用 -H（GCC&#x2F;Clang）查看头文件包含的顺序。用于定位头文件顺序引起的问题</li>
+<li>(good)log 太多可以只把 error 重定向到文件 <code>command 2&gt; error_log.txt</code></li>
 <li><code>std::numeric_limits&lt;float&gt;::max()</code> float 最大值</li>
 <li><code>-Wno-xxx</code> 不启动 xxx warning</li>
 <li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/suiyek/p/14164160.html">gcc 编译阶段打印宏定义的内容</a></li>
@@ -343,7 +346,11 @@
 <li>在 C++中，如果函数有指定返回类型，但在实际代码中没有返回值或者在所有路径上都没有返回值，那么它的行为是未定义的（Undefined Behavior）。根据 C++标准，未定义的行为可能导致任何结果，包括程序崩溃、生成错误的结果或者在某些情况下看起来像是“正常工作”。</li>
 <li><code>addr2line</code>其功能是将函数地址解析成文件名或行号的工具。 <a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1974629">addr2line debug</a></li>
 <li>查看 debug 模式：gdb <code>l</code> and <code>info source</code></li>
-<li><code>-DCMAKE_BUILD_TYPE=RelWithDebInfo</code> release 模式编译，带 debug info</li>
+<li><code>-DCMAKE_BUILD_TYPE=RelWithDebInfo</code> release 模式编译，带 debug info<ul>
+<li>优化：开启（通常 -O2 或 -O3），以提高运行效率。 调试信息：仍然保留调试符号（-g），但由于优化的影响，变量和代码结构可能会与源代码对不上。</li>
+<li>和Debug的区别：<a target="_blank" rel="noopener" href="https://chatgpt.com/share/67d7f153-5e80-8004-aa7f-4ab0353ad467">link</a></li>
+</ul>
+</li>
 <li><code>-DCMAKE_CXX_FLAGS=&quot;-g&quot;</code> cmake 编译选项添加 debug info； release 模式也适用</li>
 <li>gcc 选项顺序很重要，如果两个选项冲突，则以后一个为准。可以用<code>-O3 -fno-inline-functions</code>既使用-O3 的功能又关闭函数内嵌功能。</li>
 </ol>
@@ -463,6 +470,11 @@
 </ol>
 <h2 id="crash-命令"><a href="#crash-命令" class="headerlink" title="crash 命令"></a>crash 命令</h2><h2 id="lldb"><a href="#lldb" class="headerlink" title="lldb"></a><a target="_blank" rel="noopener" href="https://lldb.llvm.org/">lldb</a></h2><ol>
 <li><a target="_blank" rel="noopener" href="https://lldb.llvm.org/use/map.html">GDB to LLDB command map</a></li>
+<li><code>command script import /data/xiyang/llvm-project-86b69c3/llvm/utils/lldbDataFormatters.py</code></li>
+<li><code>call op.dump()</code></li>
+<li><code>type lookup xxx</code></li>
+<li><code>lldb -- python test.py</code> &#x3D;&gt; <code>b emitError</code> 出错立即报错</li>
+<li><code>bt</code>显示完整文件</li>
 </ol>
 <h2 id="GDB-使用"><a href="#GDB-使用" class="headerlink" title="GDB 使用"></a><a target="_blank" rel="noopener" href="https://sourceware.org/gdb/current/onlinedocs/gdb.html/">GDB 使用</a></h2><ol>
 <li><a target="_blank" rel="noopener" href="https://wizardforcel.gitbooks.io/100-gdb-tips/content/break-on-entry.html">100 个小技巧</a></li>
@@ -520,7 +532,10 @@
 <li>b _start 然后 ni 看指令执行</li>
 <li>shell ls 或 !ls 在 gdb 中执行 shell 命令</li>
 <li>whatis xxx 打印变量类型，</li>
-<li>ptype xxx or pt xxx 打印详细信息，xxx 可以是变量也可以是类型名</li>
+<li>ptype xxx or pt xxx 打印详细信息，xxx 可以是变量也可以是类型名<ul>
+<li>可以查看成员函数和变量，然后调用或者打印</li>
+</ul>
+</li>
 <li>ptype + p sizeof() 查看类型占内存大小</li>
 <li>p object 直接打印对象，可以看出具体内存分配</li>
 <li>gdb -x gdb-script.txt –args .&#x2F;my_program<br>or (gdb) source gdb-script.txt 执行命令集合</li>
@@ -651,6 +666,7 @@
 <li>gdb 回放</li>
 </ol>
 <h2 id="vscode-C-调试"><a href="#vscode-C-调试" class="headerlink" title="vscode C++调试"></a>vscode C++调试</h2><ol>
+<li>variable右击可以加到watch中去</li>
 <li>打不上断点，看下 info sharedlibrary 是否加载， Syms Read 是否为 yes, 注意配置文件中的 cwd 路径, 要与 board 板子上库的相对位置路径一致</li>
 <li><a target="_blank" rel="noopener" href="https://excalidraw.com/#json=5TP0xwb0oD-C3RgVJIvjW,YzWZI8S8UEP_-nFMxL-rxA">vscode gdb gdbserver 关系</a></li>
 <li><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/cpp/launch-json-reference#_sourcefilemap">source file map</a> 用于 gdbserver, 指定源码位置</li>
@@ -964,7 +980,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-count">192</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -997,6 +1013,12 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1004,12 +1026,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/03/triton/" title="2024&#x2F;07&#x2F;03&#x2F;triton&#x2F;">triton</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/07/01/talk-skills/" title="2024&#x2F;07&#x2F;01&#x2F;talk-skills&#x2F;">talk_skills</a>
         </li>
     </ul>
   </div>
@@ -1037,7 +1053,7 @@
 <div class="copyright">
   
   &copy; 2021 – 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1047,13 +1063,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">543k</span>
+    <span title="站点总字数">587k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:14</span>
+    <span title="站点阅读时长">8:54</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
