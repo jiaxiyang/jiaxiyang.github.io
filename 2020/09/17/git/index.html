@@ -20,17 +20,17 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="merge git merge --ff-only feature-branch 不产生merge commit  patch git format-patch ab51eccf88f5321e7c60591c5546b254b6afab99..1b3ed340943eeb7a73c6c21270e86b507e85afbb -o &#x2F;data&#x2F;xiyang&#x2F;llvm_sipu.patch git">
+  <meta name="description" content="merge git merge --ff-only feature-branch 不产生merge commit targets&#x3D;&quot;python&#x2F;test&#x2F; unittest&#x2F; README.md&quot;; git checkout --theirs -- $targets &amp;&amp; git add $targets theirs表示接受他们的incoming， ours">
 <meta property="og:type" content="article">
 <meta property="og:title" content="git">
 <meta property="og:url" content="https://jiaxiyang.github.io/2020/09/17/git/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="merge git merge --ff-only feature-branch 不产生merge commit  patch git format-patch ab51eccf88f5321e7c60591c5546b254b6afab99..1b3ed340943eeb7a73c6c21270e86b507e85afbb -o &#x2F;data&#x2F;xiyang&#x2F;llvm_sipu.patch git">
+<meta property="og:description" content="merge git merge --ff-only feature-branch 不产生merge commit targets&#x3D;&quot;python&#x2F;test&#x2F; unittest&#x2F; README.md&quot;; git checkout --theirs -- $targets &amp;&amp; git add $targets theirs表示接受他们的incoming， ours">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/3753944fa6c4d586d337464233e75a61.png">
 <meta property="og:image" content="https://git-scm.com/book/en/v2/images/data-model-4.png">
 <meta property="article:published_time" content="2020-09-17T12:46:21.000Z">
-<meta property="article:modified_time" content="2025-03-31T03:47:15.319Z">
+<meta property="article:modified_time" content="2025-09-08T02:41:57.420Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary">
@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">195</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -236,7 +236,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-03-31 11:47:15" itemprop="dateModified" datetime="2025-03-31T11:47:15+08:00">2025-03-31</time>
+                <time title="修改时间：2025-09-08 10:41:57" itemprop="dateModified" datetime="2025-09-08T10:41:57+08:00">2025-09-08</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -279,14 +279,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>8.5k</span>
+              <span>9.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>8 分钟</span>
+              <span>9 分钟</span>
             </span>
 
         </div>
@@ -300,6 +300,31 @@
       
         <h2 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h2><ol>
 <li><code>git merge --ff-only feature-branch</code> 不产生merge commit</li>
+<li><code>targets=&quot;python/test/ unittest/ README.md&quot;; git checkout --theirs -- $targets &amp;&amp; git add $targets</code><ul>
+<li>theirs表示接受他们的incoming， ours表示接受我们的current</li>
+<li><code>git checkout --theirs -- &#39;*.mlir&#39; test/ &amp;&amp; git add &#39;*.mlir&#39; test/</code> mlir文件和test&#x2F;文件夹的冲突都接受incoming内容, *.mlir可以换成文件夹(多个文件夹),  先把delete删除了,</li>
+<li>vscode插件可以在文件夹下右击接受incoming</li>
+</ul>
+</li>
+<li><code>git restore --source develop src/main.cpp</code> 将某个文件切换到某个分支内容，用于验证merge前后内容<ul>
+<li>可以先restore, 然后一点点改</li>
+</ul>
+</li>
+<li><code>export MAX_JOBS=1</code> triton 设置环境变量，单线程编译，按顺序修复问题</li>
+<li><code>git diff main dev -- src/main.cpp</code> 查看两个分支某个文件不同   </li>
+<li><code>git diff dev -- src/main.cpp</code> 查看当前分支和摸个分支某个文件不同</li>
+</ol>
+<h2 id="revert"><a href="#revert" class="headerlink" title="revert"></a>revert</h2><ol>
+<li>git revert <hash></li>
+<li>不能revert某个commit里的单个文件</li>
+</ol>
+<h2 id="stash"><a href="#stash" class="headerlink" title="stash"></a>stash</h2><ol>
+<li><code>git stash -m &quot;text&quot;</code>添加文字</li>
+<li><code>git stash push -m &quot;my_feature_backup&quot;</code></li>
+<li><code>git stash list</code></li>
+<li><code>git stash apply stash@&#123;0&#125;</code></li>
+<li><code>git stash show -p stash@&#123;0&#125;</code> 查看stash内容</li>
+<li><code>git stash show -p stash@&#123;0&#125;</code> 查看和当前内容的区别</li>
 </ol>
 <h2 id="patch"><a href="#patch" class="headerlink" title="patch"></a>patch</h2><ol>
 <li><code>git format-patch ab51eccf88f5321e7c60591c5546b254b6afab99..1b3ed340943eeb7a73c6c21270e86b507e85afbb -o /data/xiyang/llvm_sipu.patch</code></li>
@@ -332,6 +357,9 @@
 <li><code>git submodule update --init --recursive</code></li>
 </ol>
 <h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><ol>
+<li><code>strings /share_data/triton/llvm_19_dir/250625/bin/llc | grep div.full</code> 检查llc是否注册intrinsic</li>
+<li><code>git restore --source develop src/main.cpp</code> 将某个文件切换到某个分支内容</li>
+<li><code>git grep GK_GFX950 v3.3.1</code>从某个tag查找内容</li>
 <li><code>git remote set-url origin git@xxx</code> 更新remote</li>
 <li><code>git config --global core.editor &quot;vi&quot;</code> 设置编辑器为vi</li>
 <li><code>git clone -b llvmorg-19.1.3 --depth=1 https://github.com/llvm/llvm-project</code></li>
@@ -353,6 +381,7 @@
 <li>先合并 commit, 再 rebase， 就不会出现 merge 多次现象,</li>
 <li><code>git log --format=&#39;%aN&#39; | sort -u | while read name; do echo -en &quot;作者： $name\t&quot;; git log --author=&quot;$name&quot; --pretty=tformat: --numstat | awk &#39;&#123; add += $1; subs += $2; loc += $1 - $2 &#125; END &#123; printf &quot;添加行数: %s, 删除的行数: %s, 代码总行数: %s\n&quot;, add, subs, loc &#125;&#39; -; done</code> 统计仓库每个成员代码量</li>
 <li><code>GIT_TRACE=1 GIT_CURL_VERBOSE=1 git clone </code> 定位问题</li>
+<li><code>git commit --amend --no-edit</code> 将staged和上次commit合并成新的commit， commit message不变</li>
 <li><code>git commit --amend --date=now --no-edit</code> 修改 commit 时间 <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/5017265">link</a></li>
 <li><code>--no-pager</code> 直接显示，不用按 q 退出 git –no-pager log -n 20</li>
 <li>magit <code>$</code> 查看具体命令</li>
@@ -611,7 +640,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#merge"><span class="nav-number">1.</span> <span class="nav-text">merge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#patch"><span class="nav-number">2.</span> <span class="nav-text">patch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pre-commit"><span class="nav-number">3.</span> <span class="nav-text">pre commit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#workflow"><span class="nav-number">4.</span> <span class="nav-text">workflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#submodule"><span class="nav-number">5.</span> <span class="nav-text">submodule</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic"><span class="nav-number">6.</span> <span class="nav-text">Basic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-%E4%BF%AE%E6%94%B9-commit"><span class="nav-number">7.</span> <span class="nav-text">git 修改 commit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#commit-%E8%A7%84%E8%8C%83"><span class="nav-number">8.</span> <span class="nav-text">commit 规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#add-git-info-in-C-exe"><span class="nav-number">9.</span> <span class="nav-text">add git info in C++ exe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ERROR"><span class="nav-number">10.</span> <span class="nav-text">ERROR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98"><span class="nav-number">11.</span> <span class="nav-text">git 权限问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">12.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">13.</span> <span class="nav-text">links</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#merge"><span class="nav-number">1.</span> <span class="nav-text">merge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#revert"><span class="nav-number">2.</span> <span class="nav-text">revert</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stash"><span class="nav-number">3.</span> <span class="nav-text">stash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#patch"><span class="nav-number">4.</span> <span class="nav-text">patch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pre-commit"><span class="nav-number">5.</span> <span class="nav-text">pre commit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#workflow"><span class="nav-number">6.</span> <span class="nav-text">workflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#submodule"><span class="nav-number">7.</span> <span class="nav-text">submodule</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic"><span class="nav-number">8.</span> <span class="nav-text">Basic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-%E4%BF%AE%E6%94%B9-commit"><span class="nav-number">9.</span> <span class="nav-text">git 修改 commit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#commit-%E8%A7%84%E8%8C%83"><span class="nav-number">10.</span> <span class="nav-text">commit 规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#add-git-info-in-C-exe"><span class="nav-number">11.</span> <span class="nav-text">add git info in C++ exe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ERROR"><span class="nav-number">12.</span> <span class="nav-text">ERROR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98"><span class="nav-number">13.</span> <span class="nav-text">git 权限问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">14.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">15.</span> <span class="nav-text">links</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -627,7 +656,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">192</span>
+          <span class="site-state-item-count">195</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -660,19 +689,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/08/20/AI-coding/" title="2025&#x2F;08&#x2F;20&#x2F;AI-coding&#x2F;">AI coding</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/28/Architecture/" title="2025&#x2F;04&#x2F;28&#x2F;Architecture&#x2F;">Computer Architecture</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/18/pytest/" title="2025&#x2F;04&#x2F;18&#x2F;pytest&#x2F;">pytest</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
     </ul>
   </div>
@@ -710,13 +739,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">587k</span>
+    <span title="站点总字数">624k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:54</span>
+    <span title="站点阅读时长">9:27</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

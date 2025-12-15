@@ -28,7 +28,7 @@
 <meta property="og:description" content="note 重要：Q矩阵不在d维度上做tiling flash attention公式计算 注意融合的时候，oi &#x3D; oi-1 + aiV[i, :], ai和V[i, :]是外积   softmax计算推导：指数和 &#x3D; 当前指数 + 前面指数和 * 修正参数(与max有关) softmax必须分两步（2 loop) 来算， 但attention不需要得到softmax结果，根据">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-02-03T06:55:42.000Z">
-<meta property="article:modified_time" content="2025-04-11T08:50:51.792Z">
+<meta property="article:modified_time" content="2025-07-28T09:27:29.405Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 
@@ -130,7 +130,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">195</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-04-11 16:50:51" itemprop="dateModified" datetime="2025-04-11T16:50:51+08:00">2025-04-11</time>
+                <time title="修改时间：2025-07-28 17:27:29" itemprop="dateModified" datetime="2025-07-28T17:27:29+08:00">2025-07-28</time>
               </span>
 
           
@@ -262,14 +262,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.7k</span>
+              <span>6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -312,7 +312,18 @@
 <li>对于 d(64-128) 和 N（大约 100KB）的典型值，d2 比 M 小很多倍，并且因此，FlashAttention 所需的 HBM 访问次数比标准实现少很多倍。</li>
 </ol>
 <h3 id="flash-attention-v1"><a href="#flash-attention-v1" class="headerlink" title="flash attention v1"></a>flash attention v1</h3><ol>
-<li>M 为shared memory大小，M&#x2F;4是算最大的tile Size，因为Q, K, V, O都需要tile数据在shared memory上， tile size越大，读写HBM次数越少 </li>
+<li>论文算法里注意shared memeory和register区别，on chip是register上   </li>
+<li>论文里的算法是一个thread block要处理的流程, 是一个head的attention, <ul>
+<li>We use 1 thread block to process one attention head</li>
+<li>Q, K，V都会做tiling, loop处理</li>
+</ul>
+</li>
+<li>NOTE: 论文算法里的block size跟thread block要处理的size没有关系, 只是划分数据用的   </li>
+<li>QK运算时类似split-k, 在k维度上做并行，最后再sync</li>
+<li>M 为shared memory大小，M&#x2F;4是算最大的tile Size，因为Q, K, V, O都需要tile数据在shared memory上， tile size越大，读写HBM次数越少<ul>
+<li>注意这里的tile_size是thread block要处理的size， 不是warp</li>
+</ul>
+</li>
 <li>为什么不把m和l直接放到shared memory中？<ul>
 <li>因为sequence length可能比较大， shared memeory中放不下， 每个token有一个m，l, N长的Q, m和l共占用memeory为2N(sequence len); 每个block需要计算一个head的所有attention计算，m和l共需2N memory, 内循环每次都需要从HBM load Tr长度的m和l，更新完写回HBM <ul>
 <li>为什么不复用li或mi? 因为Qtile对应一个mi和li，K和V在外层，内层的mi, li需要在K, V维度上累加，会混乱，结合<a target="_blank" rel="noopener" href="https://courses.cs.washington.edu/courses/cse599m/23sp/notes/flashattn.pdf">flash attention公式计算</a>图<ul>
@@ -323,12 +334,56 @@
 </li>
 </ul>
 </li>
+<li>For each block, FlashAttention splits K and V across 4 warps while keeping Q accessible by all warps<ul>
+<li>每个thread block内部还会划分threads(warp) 来计算<ul>
+<li>triton是thread block粒度的编程， 不需要划分threads(warp)，只需要计算好每个thread block要算的数，和算法流程</li>
+</ul>
+</li>
+<li>每个warp先算出O，m, l放回到shared memory中，然后再reduce, warp间需要同步</li>
+</ul>
+</li>
+<li>code</li>
 </ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// params.b = batch_size, params.h = num_heads</span><br><span class="line">dim3 grid(params.b, params.h);</span><br><span class="line">kernel&lt;&lt;&lt;grid, Kernel_traits::THREADS, smem_size_dq_dk_dv, stream&gt;&gt;&gt;(params);</span><br></pre></td></tr></table></figure>
+
 <h3 id="flash-attenion-v2"><a href="#flash-attenion-v2" class="headerlink" title="flash attenion v2"></a>flash attenion v2</h3><ol>
-<li>注意Q是在thread block上并行，不是warp上并行，thread block才共享 shared memory</li>
+<li>论文里的forwar算法不是一个thread block要处理的流程，是一个head的attention, <ul>
+<li>We use (seqlen_q &#x2F; kBlockM) thread blocks to process one attention head</li>
+</ul>
+</li>
+<li>code</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// params.b = batch_size, params.h = num_heads</span><br><span class="line">const int num_m_block = (params.seqlen_q + Kernel_traits::kBlockM - 1) / Kernel_traits::kBlockM;</span><br><span class="line">dim3 grid(num_m_block, params.b, params.h);</span><br><span class="line">............</span><br><span class="line">      kernel&lt;&lt;&lt;grid, Kernel_traits::kNThreads, smem_size, stream&gt;&gt;&gt;(params);</span><br></pre></td></tr></table></figure>
+<ol>
+<li>Q维度上是增加thread block并行，Q_tile内部是warp并行</li>
+<li>even within each thread block, we also have to decide how to partition the work between different warps. We typically use 4 or 8 warps per thread block,(128或256 threads)</li>
+<li>QK运算是slice-k, warp之间不需要sync</li>
 <li>没有使用M来设置tile size, 直接作为参数传递  </li>
 <li>先讲述 FlashAttention-2 对 FlashAttention 的改进，从而<code>减少了非矩阵乘法运算（non-matmul）的FLOPs</code>。然后说明如何将任务分配给不同的<code>thread block</code>进行并行计算，充分利用 GPU 资源。最后描述了如何在一个 thread block 内部分配任务给<code>不同的warps</code>，以减少访问共<br>享内存次数。这些优化方案使得 FlashAttention-2 的性能提升了 2-3 倍</li>
 <li>softmax 将 rescale 最后一起进行，中间结果可以多利用 tensor core 矩阵乘</li>
+<li>Warp Specialization: warp之间进行异步</li>
+<li>Multistage(流水线)：warp内进行异步<ul>
+<li>至少double buffer, 占用更多shared memmory</li>
+</ul>
+</li>
+</ol>
+<h3 id="flash-attention-v3"><a href="#flash-attention-v3" class="headerlink" title="flash attention v3"></a>flash attention v3</h3><ol>
+<li>有计算和计算之前的异步指令</li>
+<li>在 Hopper 之前的架构，GEMM 计算是同步的，即 GEMM 计算完成后才可调度其他计算单元（如 SFU）进行计算（A100 新增的cp.asyncAPI 是计算和数据传输的异步，并非计算和计算的异步），但对于 Hopper 而言，由于 WGMMA 指令的异步性，我们可以同时进行 Tensor Core 和 CUDA Core&#x2F;SFU 的计算，通过合理地安排 Warpgroup 的调度策略，就可以使 Softmax 的运算时间被 GEMM overlap。</li>
+<li>Warpgroup 指的是 4 个连续的 warps，共 128 个连续的 threads，正好对应了一个 SM 最多可并行计算的线程数。在 H100 上，我们可以以 Warpgroup 为粒度调度 GEMM 运算。</li>
+<li>Warp Specialization + Ping-Pong Scheduling + Intra-warpgroup pipelining <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/17533058076">link</a><ul>
+<li>warpgroup之间warp specialization</li>
+<li>Warp Specialization 数据传输和计算overlap</li>
+<li>Ping-Pong Scheduling 计算和计算之间overlap(注意：不是一个warpgroup内，是多个warpgroup之间， 一个group内是multistage) NOTE:只考虑计算</li>
+<li>Intra-warpgroup pipelining 计算和计算之间的overlap, 类似multstage; NOTE:只考虑计算</li>
+</ul>
+</li>
+<li>注意Warp Specialization, Multistage，  Intra-warpgroup overlapping, Ping-Pong Scheduling异步的区别</li>
+<li>mulitstage里的stage2就是在for里面算多少个不相关tile的数据<ul>
+<li>shared memory也有stage概念, 注意区分, 这里的multistage不一定要和shared memory stage相同，因为可能用不到shared memory, 直接使用寄存器</li>
+</ul>
+</li>
+<li>2 stage是将wgmma0和softmax算一个stage，和wgmma1做流水， 3 stage是 wgmma0, softmax, wgmma1做流水</li>
 </ol>
 <h3 id="flash-decoding"><a href="#flash-decoding" class="headerlink" title="flash decoding"></a><a target="_blank" rel="noopener" href="https://crfm.stanford.edu/2023/10/12/flashdecoding.html">flash decoding</a></h3><ol>
 <li>flash attention 是针对模型训练时的 forward 和 backward; 训练时的 forward 是并行运算的</li>
@@ -458,7 +513,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#note"><span class="nav-number">1.</span> <span class="nav-text">note</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#flash-attention-v1"><span class="nav-number">1.1.</span> <span class="nav-text">flash attention v1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flash-attenion-v2"><span class="nav-number">1.2.</span> <span class="nav-text">flash attenion v2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flash-decoding"><span class="nav-number">1.3.</span> <span class="nav-text">flash decoding</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#code"><span class="nav-number">2.</span> <span class="nav-text">code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">3.</span> <span class="nav-text">links</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#note"><span class="nav-number">1.</span> <span class="nav-text">note</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#flash-attention-v1"><span class="nav-number">1.1.</span> <span class="nav-text">flash attention v1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flash-attenion-v2"><span class="nav-number">1.2.</span> <span class="nav-text">flash attenion v2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flash-attention-v3"><span class="nav-number">1.3.</span> <span class="nav-text">flash attention v3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flash-decoding"><span class="nav-number">1.4.</span> <span class="nav-text">flash decoding</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#code"><span class="nav-number">2.</span> <span class="nav-text">code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">3.</span> <span class="nav-text">links</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -474,7 +529,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">192</span>
+          <span class="site-state-item-count">195</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -507,19 +562,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/08/20/AI-coding/" title="2025&#x2F;08&#x2F;20&#x2F;AI-coding&#x2F;">AI coding</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/28/Architecture/" title="2025&#x2F;04&#x2F;28&#x2F;Architecture&#x2F;">Computer Architecture</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/18/pytest/" title="2025&#x2F;04&#x2F;18&#x2F;pytest&#x2F;">pytest</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
     </ul>
   </div>
@@ -557,13 +612,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">587k</span>
+    <span title="站点总字数">624k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:54</span>
+    <span title="站点阅读时长">9:27</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">195</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,635 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/09/05/How-to-use-org-mode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/05/How-to-use-org-mode/" class="post-title-link" itemprop="url">How to use org mode</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-05 23:05:33" itemprop="dateCreated datePublished" datetime="2020-09-05T23:05:33+08:00">2020-09-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Emacs/" itemprop="url" rel="index"><span itemprop="name">Emacs</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/05/How-to-use-org-mode/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/05/How-to-use-org-mode/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Shortkeys"><a href="#Shortkeys" class="headerlink" title="Shortkeys"></a>Shortkeys</h2><ol>
+<li>next&#x2F;previous heading <code>C-c C-n/p</code></li>
+<li>next&#x2F;previous heading, same level <code>C-c C-f/b</code></li>
+<li><code>org-agenda-list</code> show agenda list</li>
+<li><code>org-open-at-point</code> <code>C-c C-o</code> open links</li>
+</ol>
+<h2 id="capture-refile-archiving"><a href="#capture-refile-archiving" class="headerlink" title="capture -&gt; refile -&gt; archiving"></a>capture -&gt; refile -&gt; archiving</h2><ol>
+<li>C-c c capture a new item (C-u C-u &#x3D; goto last)</li>
+<li>C-c C-w refile subtree (C-u C-u &#x3D; goto last)</li>
+<li>C-c C-x C-a archive subtree using the default command</li>
+<li>C-c C-x C-s move subtree to archive file</li>
+<li>C-c C-x a&#x2F;A toggle ARCHIVE tag &#x2F; to ARCHIVE sibling</li>
+</ol>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><ol>
+<li><code>&lt;src</code> to insert src block</li>
+<li><code>(org-babel-do-load-languages &#39;org-babel-load-languages &#39;((shell . t)))</code> enable sh</li>
+<li><code>(org-babel-do-load-languages &#39;org-babel-load-languages &#39;((C . t)))</code> enable c++</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#+begin_src cpp</span><br><span class="line">    <span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;hello world!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">#+end_src</span><br><span class="line"></span><br><span class="line">#+RESULTS:</span><br><span class="line">: hello world!</span><br></pre></td></tr></table></figure>
+
+<h2 id="Table"><a href="#Table" class="headerlink" title="Table"></a>Table</h2><ol>
+<li><code>|------+-----------|</code> 是 row 0</li>
+<li><code>org-table-export</code> test.csv 导出 csv</li>
+<li>公式<ul>
+<li><code>:=</code> 只对当前单元格起作用</li>
+<li><code>=</code> 对一行或一列起作用</li>
+<li><code>@</code> 指定行</li>
+<li><code>$</code> 指定列</li>
+<li><code>C-c &#39;</code> 编辑公式</li>
+<li><code>C-u C-c *</code> 整个表格求公式</li>
+<li>show line, column, formula reference <code>C-c ?</code></li>
+<li>toggle table coordinate grid <code>C-c &#125;</code></li>
+</ul>
+</li>
+<li><code>C-c -</code> insert hline below (C-u : above) current row</li>
+<li><code>C-c RET</code> insert hline and move to line below it</li>
+<li>convert region to table <code>C-c |</code></li>
+<li>move the current column left <code>M-LEFT/RIGHT</code></li>
+<li>move the current row up&#x2F;down <code>M-UP/DOWN</code></li>
+<li>sum numbers in current column&#x2F;rectangle <code>C-c +</code></li>
+<li>re-align the table without moving the cursor <code>C-c C-c</code></li>
+<li>re-align the table, move to next field <code>TAB</code></li>
+<li>move to previous field <code>S-TAB</code></li>
+<li>re-align the table, move to next row <code>RET</code></li>
+</ol>
+<h2 id="Tags"><a href="#Tags" class="headerlink" title="Tags"></a>Tags</h2><ol>
+<li>set tags for current heading <code>C-c C-q</code></li>
+<li>create sparse tree with matching tags <code>C-c \</code></li>
+<li><code>#+FILETAGS: :work</code> all the item in file has work tag</li>
+<li>globally (agenda) match tags at cursor <code>C-c C-o</code></li>
+</ol>
+<h2 id="Priority"><a href="#Priority" class="headerlink" title="Priority"></a>Priority</h2><ol>
+<li>raise&#x2F;lower priority of current item <code>S-UP/DOWN</code></li>
+<li>select next&#x2F;previous state <code>S-LEFT/RIGHT</code></li>
+<li><code>C-c , [ABC]</code> set the priority of the current item</li>
+<li><code>C-c , SPC</code> remove priority cookie from current item</li>
+</ol>
+<h2 id="checkbox"><a href="#checkbox" class="headerlink" title="checkbox"></a><a target="_blank" rel="noopener" href="https://orgmode.org/manual/Checkboxes.html">checkbox</a></h2><ol>
+<li><code>- [ ]</code></li>
+<li><code>C-c C-c</code> org-toggle-checkbox</li>
+<li>…..[&#x2F;] show [1&#x2F;5]</li>
+<li>…..[%] show [20%]</li>
+</ol>
+<h2 id="agenda"><a href="#agenda" class="headerlink" title="agenda"></a>agenda</h2><ol>
+<li><code>calfw-org-mode</code> M-c</li>
+<li><code>tab</code> open on other window</li>
+<li>start&#x2F;stop&#x2F;cancel the <code>clock</code> on current item <code>I / O / X</code></li>
+<li>view mode dispatcher <code>v</code></li>
+<li>add&#x2F;move current file to front of agenda <code>C-c [</code></li>
+<li>remove current file from your agenda <code>C-c ]</code></li>
+<li>cycle through agenda file list <code>C-’</code></li>
+<li>display next&#x2F;previous day,week,… <code>f / b</code></li>
+<li>goto today &#x2F; some date (prompt) <code>. / j</code></li>
+<li><code>d</code> org-agenda-day-view</li>
+<li><code>w</code> org-agenda-week-view</li>
+<li>toggle entry text &#x2F; clock report <code>E / R</code></li>
+</ol>
+<h2 id="clock"><a href="#clock" class="headerlink" title="clock"></a>clock</h2><ol>
+<li>start&#x2F;stop&#x2F;cancel the <code>clock</code> on current item <code>I / O / X</code></li>
+<li>start clock on current item <code>C-c C-x C-i</code></li>
+<li>stop&#x2F;cancel clock on current item <code>C-c C-x C-o/x</code></li>
+</ol>
+<h3 id="Calfw-org-mode"><a href="#Calfw-org-mode" class="headerlink" title="Calfw-org-mode"></a><a target="_blank" rel="noopener" href="https://github.com/kiwanami/emacs-calfw">Calfw-org-mode</a></h3><h2 id="Timestamp"><a href="#Timestamp" class="headerlink" title="Timestamp"></a>Timestamp</h2><ol>
+<li>prompt for date and insert timestamp <code>C-c .</code></li>
+<li>insert DEADLINE timestamp <code>C-c C-d</code></li>
+<li>insert SCHEDULED timestamp <code>C-c C-s</code>. <code>.</code> goto today</li>
+<li>stampe: <code>+1 20:00+1</code> +1day and 20:00-21:00</li>
+<li>change timestamp at cursor ±1 day <code>S-RIGHT/LEFT</code></li>
+<li>change year&#x2F;month&#x2F;day at cursor by ±1 <code>S-UP/DOWN</code></li>
+</ol>
+<h1 id="startup"><a href="#startup" class="headerlink" title="startup"></a><a target="_blank" rel="noopener" href="https://orgmode.org/manual/Initial-visibility.html">startup</a></h1><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#+STARTUP: overview</span></span><br><span class="line"><span class="meta">#+STARTUP: content</span></span><br><span class="line"><span class="meta">#+STARTUP: showall</span></span><br><span class="line"><span class="meta">#+STARTUP: show2levels</span></span><br><span class="line"><span class="meta">#+STARTUP: show3levels</span></span><br><span class="line"><span class="meta">#+STARTUP: show4levels</span></span><br><span class="line"><span class="meta">#+STARTUP: show5levels</span></span><br><span class="line"><span class="meta">#+STARTUP: showeverything</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Configs"><a href="#Configs" class="headerlink" title="Configs"></a>Configs</h1><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">global-set-key</span> (<span class="name">kbd</span> <span class="string">&quot;&lt;f9&gt;&quot;</span>) &#x27;org-clock-jump-to-current-clock)</span><br><span class="line">(<span class="name">global-set-key</span> (<span class="name">kbd</span> <span class="string">&quot;&lt;f12&gt;&quot;</span>) &#x27;org-agenda-list)</span><br><span class="line">(<span class="name">global-set-key</span> (<span class="name">kbd</span> <span class="string">&quot;C-c l&quot;</span>) &#x27;org-store-link)</span><br><span class="line">(<span class="name">global-set-key</span> (<span class="name">kbd</span> <span class="string">&quot;C-c a&quot;</span>) &#x27;org-agenda)</span><br><span class="line">(<span class="name">global-set-key</span> (<span class="name">kbd</span> <span class="string">&quot;C-c c&quot;</span>) &#x27;org-capture)</span><br><span class="line"></span><br><span class="line">(<span class="name">setq</span> org-clock-out-remove-zero-time-clocks <span class="literal">t</span>)</span><br><span class="line">(<span class="name">setq</span> org-startup-folded &#x27;content</span><br><span class="line">      org-agenda-span &#x27;day</span><br><span class="line">      org-agenda-window-setup &#x27;current-window</span><br><span class="line">      org-agenda-start-on-weekday <span class="literal">nil</span>)</span><br><span class="line">(<span class="name">setq</span> org-agenda-inhibit-startup <span class="literal">t</span>) <span class="comment">;; ~50x speedup</span></span><br><span class="line"><span class="comment">;;(setq org-agenda-use-tag-inheritance nil) ;; 3-4x speedup</span></span><br><span class="line">(<span class="name">setq</span> org-tags-column <span class="number">80</span>)</span><br><span class="line">(<span class="name">set-time-zone-rule</span> <span class="string">&quot;Asia/Shanghai&quot;</span>) <span class="comment">;; show china time zone</span></span><br><span class="line">(<span class="name">add-hook</span> &#x27;org-agenda-mode-hook</span><br><span class="line">            (<span class="name">lambda</span> () (<span class="name">add-hook</span> &#x27;window-configuration-change-hook</span><br><span class="line">                                 &#x27;org-agenda-align-tags <span class="literal">nil</span> <span class="literal">t</span>)))</span><br><span class="line"></span><br><span class="line">(<span class="name">setq</span> org-directory <span class="string">&quot;~/org&quot;</span>)</span><br><span class="line">(<span class="name">setq</span> org-default-notes-file (<span class="name">concat</span> org-directory <span class="string">&quot;/notes.org&quot;</span>))</span><br><span class="line">(<span class="name">setq</span> org-agenda-files &#x27;(<span class="string">&quot;~/org/gtd.org&quot;</span></span><br><span class="line">			 <span class="string">&quot;~/org/daily.org&quot;</span></span><br><span class="line">			 <span class="string">&quot;~/org/weekly.org&quot;</span></span><br><span class="line">			 <span class="string">&quot;~/org/ideas.org&quot;</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(<span class="name">setq</span> org-highest-priority ?A)</span><br><span class="line">(<span class="name">setq</span> org-lowest-priority  ?D)</span><br><span class="line">(<span class="name">setq</span> org-default-priority ?D)</span><br><span class="line">(<span class="name">setq</span> org-priority-faces</span><br><span class="line">      &#x27;((?A . (:background <span class="string">&quot;red&quot;</span> :foreground <span class="string">&quot;white&quot;</span> :weight bold))</span><br><span class="line">        (?B . (:background <span class="string">&quot;DarkOrange&quot;</span> :foreground <span class="string">&quot;white&quot;</span> :weight bold))</span><br><span class="line">        (?C . (:background <span class="string">&quot;yellow&quot;</span> :foreground <span class="string">&quot;DarkGreen&quot;</span> :weight bold))</span><br><span class="line">        (?D . (:background <span class="string">&quot;DodgerBlue&quot;</span> :foreground <span class="string">&quot;black&quot;</span> :weight bold))</span><br><span class="line">        ))</span><br><span class="line">(<span class="name">setq</span> org-todo-keywords</span><br><span class="line">      &#x27;((sequence <span class="string">&quot;TODO(t)&quot;</span> <span class="string">&quot;|&quot;</span> <span class="string">&quot;DONE(d)&quot;</span> <span class="string">&quot;CANCELED(c@/!)&quot;</span>)))</span><br><span class="line">        <span class="comment">;; (sequence &quot;|&quot; &quot;CANCELED(c)&quot;)))</span></span><br><span class="line">(<span class="name">setq</span> org-todo-keyword-faces &#x27;(</span><br><span class="line">                               ;; (<span class="string">&quot;TODO&quot;</span> . org-warning)</span><br><span class="line">                               ;; (<span class="string">&quot;DONE&quot;</span> . <span class="string">&quot;green&quot;</span>)</span><br><span class="line">                               (<span class="string">&quot;CANCELED&quot;</span> . <span class="string">&quot;grey&quot;</span>)</span><br><span class="line">                               ))</span><br><span class="line">(<span class="name">setq</span> org-agenda-prefix-format</span><br><span class="line">      (<span class="name">quote</span></span><br><span class="line">       ((<span class="name">agenda</span> . <span class="string">&quot; %-10:c%?-12t% s&quot;</span>))))</span><br><span class="line">(<span class="name">defun</span> my<span class="symbol">:open-org-calendar</span> ()</span><br><span class="line">  <span class="string">&quot;Open an org schedule calendar in the new buffer.&quot;</span></span><br><span class="line">  (<span class="name">interactive</span>)</span><br><span class="line">  (<span class="name">save-excursion</span></span><br><span class="line">    (<span class="name">let*</span> ((<span class="name">source1</span> (<span class="name">cfw</span><span class="symbol">:org-create-source</span>))</span><br><span class="line">           (<span class="name">curr-keymap</span> (<span class="name">if</span> cfw<span class="symbol">:org-overwrite-default-keybinding</span> cfw<span class="symbol">:org-custom-map</span> cfw<span class="symbol">:org-schedule-map</span>))</span><br><span class="line">           (<span class="name">cp</span> (<span class="name">cfw</span><span class="symbol">:create-calendar-component-buffer</span></span><br><span class="line">                <span class="symbol">:view</span> &#x27;week</span><br><span class="line">                <span class="symbol">:contents-sources</span> (<span class="name">list</span> source1)</span><br><span class="line">                <span class="symbol">:custom-map</span> curr-keymap</span><br><span class="line">                <span class="symbol">:sorter</span> &#x27;cfw<span class="symbol">:org-schedule-sorter</span>)))</span><br><span class="line">      (<span class="name">switch-to-buffer</span> (<span class="name">cfw</span><span class="symbol">:cp-get-buffer</span> cp))</span><br><span class="line">      (<span class="name">when</span> (<span class="name">not</span> org-todo-keywords-for-agenda)</span><br><span class="line">        (<span class="name">message</span> <span class="string">&quot;Warn : open org-agenda buffer first.&quot;</span>)))))</span><br><span class="line"></span><br><span class="line">(<span class="name">defun</span> calfw-org-mode()</span><br><span class="line">  <span class="string">&quot;Open calfw org&quot;</span></span><br><span class="line">  (<span class="name">interactive</span>)</span><br><span class="line">  (<span class="name">load-file</span> <span class="string">&quot;~/.emacs.d/straight/build/calfw-org/calfw-org.el&quot;</span>)</span><br><span class="line">  (<span class="name">my</span><span class="symbol">:open-org-calendar</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(<span class="name">defun</span> get-pic-from-url (<span class="name">url</span> filename)</span><br><span class="line">  (<span class="name">shell-command</span> (<span class="name">concat</span> <span class="string">&quot;wget -O &quot;</span> filename <span class="string">&quot; &quot;</span> url)))</span><br><span class="line">(<span class="name">defun</span> org-pomodoro-get-pictures ()</span><br><span class="line">  <span class="string">&quot;Get pomodoro notification pictures&quot;</span></span><br><span class="line">  (<span class="name">interactive</span>)</span><br><span class="line">  <span class="comment">;; (get-pic-from-url &quot;https://pic3.zhimg.com/e76fc9f4120b9bd6ca2a7ae03a447f19_1440w.jpg?source=172ae18b&quot; &quot;~/begin_short_break.jpg&quot;)</span></span><br><span class="line">  (<span class="name">get-pic-from-url</span></span><br><span class="line">  <span class="string">&quot;https://previews.123rf.com/images/vaselena/vaselena1507/vaselena150700001/42287443-white-alarm-clock-with-red-clock-face-with-inscription-coffee-time-without-figures-on-white-backgrou.jpg&quot;</span></span><br><span class="line">  <span class="string">&quot;~/coffe_time.jpg&quot;</span>)</span><br><span class="line">  (<span class="name">get-pic-from-url</span></span><br><span class="line">  <span class="string">&quot;https://previews.123rf.com/images/vaselena/vaselena1510/vaselena151000045/47728782-white-alarm-clock-with-red-clock-face-with-inscription-work-time-without-figures-on-white-background.jpg&quot;</span></span><br><span class="line">  <span class="string">&quot;~/work_time.jpg&quot;</span>))</span><br><span class="line"></span><br><span class="line">(<span class="name">add-hook</span> &#x27;org-pomodoro-finished-hook</span><br><span class="line">          (<span class="name">lambda</span> ()</span><br><span class="line">            (<span class="name">w32-shell-execute</span> <span class="string">&quot;open&quot;</span> <span class="string">&quot;~/coffe_time.jpg&quot;</span>)))</span><br><span class="line">(<span class="name">add-hook</span> &#x27;org-pomodoro-break-finished-hook</span><br><span class="line">          (<span class="name">lambda</span> ()</span><br><span class="line">            (<span class="name">w32-shell-execute</span> <span class="string">&quot;open&quot;</span> <span class="string">&quot;~/work_time.jpg&quot;</span>)))</span><br><span class="line">(<span class="name">add-hook</span> &#x27;org-pomodoro-long-break-finished-hook</span><br><span class="line">          (<span class="name">lambda</span> ()</span><br><span class="line">            (<span class="name">w32-shell-execute</span> <span class="string">&quot;open&quot;</span> <span class="string">&quot;~/work_time.jpg&quot;</span>)))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="pdf"><a href="#pdf" class="headerlink" title="pdf"></a>pdf</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/melvincabatuan/350f86611bc012a5c1c6">link</a></li>
+<li><code>sudo yum -y --skip-broken install texlive-\*</code></li>
+<li>install texlive-full <a target="_blank" rel="noopener" href="https://baohaojun.github.io/blog/2016/12/13/0-How-to-export-Chinese-with-Org-mode-Latex-backend.html">link</a></li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.gnu.org/software/emacs/refcards/pdf/orgcard.pdf">cheatsheat</a></li>
+<li><a target="_blank" rel="noopener" href="https://orgmode.org/">Org Mode</a></li>
+<li><a target="_blank" rel="noopener" href="https://orgmode.org/worg/orgcard.html">org card</a></li>
+<li><a target="_blank" rel="noopener" href="https://orgmode.org/orgguide.pdf">Org Guide</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Open_Source/archive/2011/07/17/2108747.html">Org Mode Chinese Tutorial</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/08/18/Bjarny-Stroustrup-Cpp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/18/Bjarny-Stroustrup-Cpp/" class="post-title-link" itemprop="url">Bjarny Stroustrup cpp</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-18 09:34:33" itemprop="dateCreated datePublished" datetime="2020-08-18T09:34:33+08:00">2020-08-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/08/18/Bjarny-Stroustrup-Cpp/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/18/Bjarny-Stroustrup-Cpp/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="What-is-C-20"><a href="#What-is-C-20" class="headerlink" title="What is C++20?"></a>What is C++20?</h2><ol>
+<li>The best approximation of C++’s ideals so far.</li>
+<li>As big an improvement over C++11 as C++11 was over C++98: A major “release”</li>
+<li>Lots of useful features<ul>
+<li>Simpler, more expressive, faster code that compiles faster</li>
+<li>Modeles</li>
+<li>Concepts</li>
+<li>Coroutines</li>
+<li>Ranges</li>
+<li>Dates</li>
+<li>Span</li>
+<li>Better compile-time programing support</li>
+<li>Many “minor features”</li>
+</ul>
+</li>
+<li>C++23 and C++26 is better than C++20, not the major “release”.</li>
+<li>Diretly learn C++20. It’s the outside layer of the onion.</li>
+<li>C++23:<ul>
+<li>“Completes C++20”</li>
+<li>Plus: standard modules, library support for coroutines, executors &amp; networking</li>
+<li>Maybe: static reflection, pattern matching</li>
+</ul>
+</li>
+</ol>
+<h2 id="Keys-C-“Rules-of-Thumb”"><a href="#Keys-C-“Rules-of-Thumb”" class="headerlink" title="Keys C++ “Rules of Thumb”"></a>Keys C++ “Rules of Thumb”</h2><ol>
+<li><code>A static type system</code> with equal support for build-in and user-defined types<ul>
+<li>A type: specifies the set of operations that can be applied to an object and specifies how an object is laid out in memory</li>
+<li>A static type system: the base of all</li>
+<li>static mean compile time will determine all the type(not the run-time).</li>
+<li>compile-time error detection</li>
+<li>performance</li>
+<li>flexibility through compile-time resolution(overloading, generic programming, metaprogramming…)</li>
+</ul>
+</li>
+<li><code>Value and reference semantics</code><ul>
+<li>value types: Inegers, characters, strings, containers,…</li>
+<li>Pointers&#x2F;references: T*, T&amp;, unique_ptr<T>, Forward_iterator</li>
+</ul>
+</li>
+<li><code>Direct use</code> of machine and operating system resources<ul>
+<li>bitset and span(modern c++)</li>
+<li>the onion principle: the more layers you peel off, the more control, the more error.</li>
+</ul>
+</li>
+<li>Systematic and general <code>resource management</code>(RAII)<ul>
+<li>manage heap, file…</li>
+<li>every resource must have an owner: responsible for its cleanup.</li>
+<li>control the complete object life cycle: creation, copy, move, destruction</li>
+</ul>
+</li>
+<li>Support <code>composition</code> of software from separately developed parts.<ul>
+<li>modules</li>
+<li>all major features support composition: moduls, classes, concepts, templates, functions, aliases</li>
+</ul>
+</li>
+<li>Support for <code>object-oriented programming</code></li>
+<li>Support for <code>generic programming</code><ul>
+<li>concepts</li>
+</ul>
+</li>
+<li>Support <code>compile-time programming</code><ul>
+<li>Move computation from run-time to compile-time(performace, do once)</li>
+<li>It’s everywhere: overloading and virtual functions, templates, variadic templates, constexp functions…</li>
+</ul>
+</li>
+<li><code>Concurency</code> through libraries supported by intrinsics</li>
+<li><code>Libraries</code><ul>
+<li>A user shouldn’t have to care whether a feature is implemented in the language or in a library</li>
+</ul>
+</li>
+</ol>
+<h2 id="Philosophy-CppCoreGuidelines"><a href="#Philosophy-CppCoreGuidelines" class="headerlink" title="Philosophy (CppCoreGuidelines)"></a>Philosophy (CppCoreGuidelines)</h2><ol>
+<li>Express ideas directly in code</li>
+<li>Write in ISO Stardard C++</li>
+<li>Express intent</li>
+<li>Ideally, a program should be statically type safe.</li>
+<li>Prefer compile-time checking to run-time checking.</li>
+<li>What cannot be checked at compile time should be checkable at run time</li>
+<li>Catch run-time errors early.</li>
+<li>Don’t leak any resources.</li>
+<li>Don’t waste time or space.</li>
+<li>Prefer immutable data to mutable data</li>
+<li>Encapsulate messy constructs, rather than spreading through the code.</li>
+<li>Use supporting tools as appropriate</li>
+<li>Use support libraries as appropriate</li>
+</ol>
+<h2 id="Lower-levels-of-abstaction"><a href="#Lower-levels-of-abstaction" class="headerlink" title="Lower levels of abstaction"></a>Lower levels of abstaction</h2><ol>
+<li>Samples:<ul>
+<li>Sizes</li>
+<li>Raw pointers</li>
+<li>Allocation and deallocation</li>
+<li>Loop-control variables</li>
+<li>Casts</li>
+<li>Macros</li>
+</ul>
+</li>
+<li>Except as implementation details and asides</li>
+<li>Don’t go to lower level if you have to.</li>
+</ol>
+<h2 id="What-really-matters"><a href="#What-really-matters" class="headerlink" title="What really matters?"></a>What really matters?</h2><ol>
+<li>People</li>
+<li>A programming language is a tool, not an end goal: peopeo want great systems, not programming languages.</li>
+<li>Software developers want great tools: not just programming language features.</li>
+</ol>
+<h2 id="Abstraction"><a href="#Abstraction" class="headerlink" title="Abstraction"></a>Abstraction</h2><ol>
+<li>Often, the software is more complicated than the hardware.</li>
+<li>abstraction in code:<ul>
+<li>resource mangement: vector</li>
+<li>generic programing: concepts: compile-time predicates.</li>
+</ul>
+</li>
+</ol>
+<h2 id="The-onion-principle"><a href="#The-onion-principle" class="headerlink" title="The onion principle"></a>The onion principle</h2><ol>
+<li>Mangagement of complexity: make simple thing simple.</li>
+<li>Layers of abstraction: the more layers you peel off, the more you cry.</li>
+</ol>
+<h2 id="An-engineering-approach"><a href="#An-engineering-approach" class="headerlink" title="An engineering approach"></a>An engineering approach</h2><ol>
+<li>Design c++ is not pure math.</li>
+<li>Principled and pragmatic design</li>
+<li>Progress gradually guided by feedback</li>
+<li>There are always many tradeoffs: choosing is hard</li>
+<li>Design decisions have consequences</li>
+</ol>
+<h2 id="C-in-two-lines"><a href="#C-in-two-lines" class="headerlink" title="C++ in two lines"></a>C++ in two lines</h2><ol>
+<li>Direct map to hardware<ul>
+<li>of instructions and fundamental data types</li>
+<li>initially from C</li>
+<li>Future: use novel hardware better(caches, multicores, GPUs, FPGAs, SIMD, …)</li>
+</ul>
+</li>
+<li>Zero-overhead abstraction<ul>
+<li>classes, inheritance, generic programming, …</li>
+<li>initially from Simula(where it wasn’t zero-overhead)</li>
+<li>Future: Type- and resouce-safety, concepts, modules, concurrency, …</li>
+</ul>
+</li>
+</ol>
+<h2 id="C-’s-role"><a href="#C-’s-role" class="headerlink" title="C++’s role"></a>C++’s role</h2><ol>
+<li>A language for<ul>
+<li>writing elegant and efficiaent programs</li>
+<li>for definning and using light-weight abstractions</li>
+<li>a language for resource-constrained applications</li>
+<li>building software infrastructure</li>
+</ul>
+</li>
+<li>Offers<ul>
+<li>a direct map to hardware</li>
+<li>Zero-overhead abstraction</li>
+</ul>
+</li>
+<li>No language is perfect<ul>
+<li>for everthing</li>
+<li>for everyone</li>
+</ul>
+</li>
+</ol>
+<h2 id="C-is-tunable"><a href="#C-is-tunable" class="headerlink" title="C++ is tunable"></a>C++ is tunable</h2><ol>
+<li>Make simple things simple<ul>
+<li>Don’t make complicated tasks impossible</li>
+<li>Don’t make complicated tasks unreasonable hard to do</li>
+<li>The onion principle</li>
+</ul>
+</li>
+<li>Don’t drop to lower levels of abstraction<ul>
+<li>Unless you really, really need to</li>
+<li>Hide messy code behind clean interfaces</li>
+</ul>
+</li>
+<li>Alwasy measure</li>
+</ol>
+<h2 id="Write-better-code"><a href="#Write-better-code" class="headerlink" title="Write better code"></a>Write better code</h2><ol>
+<li>Cleaner</li>
+<li>Simpler</li>
+<li>More readable</li>
+<li>More maintainable</li>
+<li>Faster</li>
+<li>Less clever</li>
+<li>More general</li>
+<li>More usable and re-usable</li>
+<li>Type safe</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/08/14/Effective-modern-cpp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/14/Effective-modern-cpp/" class="post-title-link" itemprop="url">Effective modern cpp</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-14 10:56:45" itemprop="dateCreated datePublished" datetime="2020-08-14T10:56:45+08:00">2020-08-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/08/14/Effective-modern-cpp/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/14/Effective-modern-cpp/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h2><ol>
+<li><code>右值</code>对应的是函数返回的临时对象，<code>左值</code>是可指涉的对象，可通过名字，指针等来标识。</li>
+<li>判断左值右值方法： 判断是否能取得地址。如果能取得地址则是左值，不能则为右值。例如<code>Widget(Widget&amp;&amp; rhs);</code>其中rhs为左值，因为函数体内对rhs取地址没有问题。相当于rhs被右值初始化，接受了右值。</li>
+<li>函数中，<code>实参</code>是用来初始化<code>形参</code>的。</li>
+<li>形参都是左值，而作为其初始化依据的实参，既能是右值，也可能是左值。例：<code>Widget(Widget&amp; rhs);</code>rhs是左值，传入的实参也是左值。<code>Widget(Widget&amp;&amp; rhs);</code>rhs是左值，传入的实参是右值。</li>
+<li><code>声明</code>的作用是引入名字和类型，而不给出细节。如存储位置或具体实现。<code>定义</code>则会给存储位置和具体实现的细节。定义同时也可以当声明用。</li>
+<li><code>函数的签名</code>：只包含形参类别和返回值类别，不包含函数名字和形参名字。例如：<code>bool(const Widget&amp;)</code></li>
+</ol>
+<h2 id="第一章-类型推到"><a href="#第一章-类型推到" class="headerlink" title="第一章 类型推到"></a>第一章 类型推到</h2><ol>
+<li>C++98仅有一套类型推导规则，用于函数模板。C++11对其进行改进，并增加了两套，一套用于auto，一套用于decltype。C++14又扩展了使用语义。</li>
+</ol>
+<h3 id="条款1：-理解模板类别推导"><a href="#条款1：-理解模板类别推导" class="headerlink" title="条款1： 理解模板类别推导"></a>条款1： 理解模板类别推导</h3><ol>
+<li></li>
+</ol>
+<h2 id="第三章-转向现代C"><a href="#第三章-转向现代C" class="headerlink" title="第三章 转向现代C++"></a>第三章 转向现代C++</h2><h3 id="在创建对象时注意区分-和"><a href="#在创建对象时注意区分-和" class="headerlink" title="在创建对象时注意区分()和{}"></a>在创建对象时注意区分()和{}</h3><ol>
+<li>对象初始化的方式包括使用小括号，使用等号，或是使用大括号：<code>int x(0); int y = 0; int z&#123;0&#125;;</code> 等号加大括号等效于大括号<code>int z = &#123;0&#125;;</code></li>
+<li>大括号初始化又称为<code>统一初始化</code>。</li>
+<li>大括号可以用来对容器进行初始化，例如: <code>vector&lt;int&gt; v&#123;1, 2, 3, 4&#125;;</code></li>
+<li>类的成员变量在类的定义时可以用<code>&#123;&#125;</code>或者<code>=</code>进行初始化，不能使用<code>()</code></li>
+<li>不可复制对象(例如：std::atomic)可以使用<code>&#123;&#125;</code>或者<code>()</code>进行初始化，不能使用<code>=</code></li>
+<li>大括号初始化<code>禁止内建类型进行隐式窄化类型转化</code>。如：<code>double x, y; ... ; int sum&#123;x+y&#125;;</code>编译出错，double无法用int表示。</li>
+<li>C++规定，任何能够解析为声明的都要解析为声明。大括号初始化免疫。<code>Widget w1();</code>此处被解析为函数声明，而不是初始化w1调用构造函数。<code>Widget w2&#123;&#125;;</code>调用无形参的构造函数来构造w2。</li>
+<li>大括号初始化时如果形参出现std::initializer_list会优先调用，此时可以小括号。</li>
+<li>模板内容进行创建时，应该使用小括号还是大括号是一个棘手问题。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -633,606 +1262,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/08/03/Software-design/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/03/Software-design/" class="post-title-link" itemprop="url">Software design</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-08-03 09:31:41" itemprop="dateCreated datePublished" datetime="2020-08-03T09:31:41+08:00">2020-08-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-22 19:53:04" itemprop="dateModified" datetime="2024-05-22T19:53:04+08:00">2024-05-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Design/" itemprop="url" rel="index"><span itemprop="name">Design</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/08/03/Software-design/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/03/Software-design/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="roadmap"><a href="#roadmap" class="headerlink" title="roadmap"></a><a target="_blank" rel="noopener" href="https://github.com/stemmlerjs/software-design-and-architecture-roadmap">roadmap</a></h2><ol>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/ByteByteGoHq/system-design-101">system-design-101</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/practical-tutorials/project-based-learning#cc">project-based-learning like build-your-own-x</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/kamranahmedse/developer-roadmap">developer-roadmap</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/codecrafters-io/build-your-own-x">build-your-own-x</a> 实现 os, git, c++编译器等 sample</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/donnemartin/system-design-primer">system-design-primer(200K star)</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/DovAmir/awesome-design-patterns">awesome-design-patterns</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/08/03/Software-design/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/07/27/Cpp-to-c-interface/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/27/Cpp-to-c-interface/" class="post-title-link" itemprop="url">Cpp to c interface</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-27 22:43:02" itemprop="dateCreated datePublished" datetime="2020-07-27T22:43:02+08:00">2020-07-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Cpp/" itemprop="url" rel="index"><span itemprop="name">Cpp</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/07/27/Cpp-to-c-interface/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/27/Cpp-to-c-interface/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>如果给 c++程序 dlopen 用，只需要 create 和 release 接口，c++程序可以拿到 C++头文件定义，可以将 create 指针强转成类对象，用完之后调用 free。</li>
-<li>shared_ptr 两种解决方法(堆上手动管理智能指针，栈由系统自动管理)<ul>
-<li>struct 存 graph</li>
-<li>创建 shared_ptr 的指针，指针不释放 (已经创建栈上的 shared_ptr,没法调用 new)</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/jiaxiyang/cpp_sandbox/tree/master/cpp2c">自建 sample</a></li>
-</ul>
-</li>
-</ol>
-<h3 id="extern-“C”-作用"><a href="#extern-“C”-作用" class="headerlink" title="extern “C” 作用"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiangtingshen/p/10980055.html">extern “C” 作用</a></h3><ol>
-<li>extern “C”的主要作用就是为了能够正确实现 C++代码调用其他 C 语言代码。加上 extern “C”后，会指示编译器这部分代码按 C 语言（而不是 C++）的方式进行编译。由于 C++支持函数重载，因此编译器编译函数的过程中会将函数的参数类型也加到编译后的代码中，而不仅仅是函数名；而 C 语言并不支持函数重载，因此编译 C 语言代码的函数时不会带上函数的参数类型，一般只包括函数名。</li>
-<li><code>extern &quot;C&quot; &#123;&#125;</code> 作用是阻止 C++ name mangling, 生成 C 格式符号表</li>
-</ol>
-<h2 id="method-hpp"><a href="#method-hpp" class="headerlink" title="method.hpp"></a>method.hpp</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line">Class Method &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> std::unique_ptr&lt;Method&gt; <span class="title">create</span><span class="params">(std::string name)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">const</span> std::string <span class="title">get_name</span><span class="params">()</span> <span class="type">const</span> </span>= <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="method-imp-hpp"><a href="#method-imp-hpp" class="headerlink" title="method_imp.hpp"></a>method_imp.hpp</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;method.hpp&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line">Class MethodImp : <span class="keyword">public</span> Method &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MethodImp</span>(std::string name);</span><br><span class="line">    <span class="function"><span class="type">const</span> std::string <span class="title">get_name</span><span class="params">()</span> <span class="type">const</span> <span class="keyword">override</span></span>;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> name_;</span><br><span class="line">    <span class="type">int</span> value_;</span><br><span class="line">    <span class="keyword">friend</span> <span class="keyword">class</span> <span class="title class_">c_api</span>;  <span class="comment">// the purpose is to get the private member which can not get from the public interface</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="method-cpp"><a href="#method-cpp" class="headerlink" title="method.cpp"></a>method.cpp</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;method.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;method_imp.hpp&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line"></span><br><span class="line"><span class="function">std::unique_ptr&lt;Method&gt; <span class="title">Method::create</span><span class="params">(std::string name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> std::unique_ptr&lt;Method&gt;&#123;<span class="built_in">static_cast</span>&lt;Method*&gt;(<span class="keyword">new</span> Method&#123;name&#125;)&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="method-imp-cpp"><a href="#method-imp-cpp" class="headerlink" title="method_imp.cpp"></a>method_imp.cpp</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;method_imp.hpp&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;c.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line"></span><br><span class="line">MethodImp::<span class="built_in">MethodImp</span>(std::string name)</span><br><span class="line">    : name_&#123;name&#125;,</span><br><span class="line">      value_&#123;<span class="number">1</span>&#125;&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">const</span> std::string <span class="title">MethodImp::get_name</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> name_;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;  <span class="comment">// namespace jia</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* C API implementations */</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;c.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> jia &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">c_api</span> &#123;</span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">int</span> <span class="title">get_value</span><span class="params">(<span class="type">c_method_t</span> method)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">auto</span> self = <span class="built_in">static_cast</span>&lt;jia::Method*&gt;(method);</span><br><span class="line">        <span class="keyword">return</span> self-&gt;value_;  <span class="comment">// to get value_; c_api need to be friend class of MethodImp</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">c_method_t</span> <span class="title">c_create</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> m = jia::Method::<span class="built_in">create</span>(std::<span class="built_in">string</span>(name));</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">static_cast</span>&lt;<span class="type">c_method_t</span>&gt;(m.<span class="built_in">realse</span>());  <span class="comment">// release will move unique_ptr ownership</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">int</span> <span class="title">c_destroyed</span><span class="params">(<span class="type">c_method_t</span> method)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> m = <span class="built_in">static_cast</span>&lt;jia::Method*&gt;(method);</span><br><span class="line">    <span class="keyword">delete</span> m;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">const</span> <span class="type">char</span>* <span class="title">c_get_name</span><span class="params">(<span class="type">c_method_t</span> method)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> self = <span class="built_in">static_cast</span>&lt;jia::Method*&gt;(method);</span><br><span class="line">    <span class="keyword">return</span> self-&gt;<span class="built_in">get_name</span>().<span class="built_in">cstr</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function"><span class="type">int</span> <span class="title">c_get_value</span><span class="params">(<span class="type">c_method_t</span> method)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> jia::c_api::<span class="built_in">get_value</span>(method);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="c-h"><a href="#c-h" class="headerlink" title="c.h"></a>c.h</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus  <span class="comment">// c++ will use and c not use</span></span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> &#123;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">void</span>* <span class="type">c_method_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">c_method_t</span> <span class="title">c_create</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* name)</span></span>;  <span class="comment">// create an instance</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">c_destroyed</span><span class="params">(<span class="type">c_method_t</span>)</span></span>;            <span class="comment">// destroy the instance</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">const</span> <span class="type">char</span>* <span class="title">c_get_name</span><span class="params">(<span class="type">c_method_t</span> method)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">c_get_value</span><span class="params">(<span class="type">c_method_t</span> method)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-
-<h2 id="test-c"><a href="#test-c" class="headerlink" title="test.c"></a>test.c</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;c.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">c_method_t</span> m = <span class="built_in">c_create</span>(<span class="string">&quot;c_test&quot;</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;name:  %s&quot;</span>, m-&gt;<span class="built_in">c_get_name</span>());</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;value: %d&quot;</span>, m-&gt;<span class="built_in">get_value</span>());</span><br><span class="line">    <span class="built_in">c_destroyed</span>(m);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/07/26/Memory-concept-and-issues/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/26/Memory-concept-and-issues/" class="post-title-link" itemprop="url">Memory concept and issues</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-26 15:34:35" itemprop="dateCreated datePublished" datetime="2020-07-26T15:34:35+08:00">2020-07-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-11-13 17:49:38" itemprop="dateModified" datetime="2024-11-13T17:49:38+08:00">2024-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Basic/" itemprop="url" rel="index"><span itemprop="name">Basic</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/07/26/Memory-concept-and-issues/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/26/Memory-concept-and-issues/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>7.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="内存层次结构"><a href="#内存层次结构" class="headerlink" title="内存层次结构"></a>内存层次结构</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://excalidraw.com/#json=-Jyt8n2_jgQDOsSsLHgc-,7u5WEbNh-76yPmNJw4AUqQ">示意图</a><br><img src="https://i.ibb.co/M2KRtV9/6-Lx-Su-Yv-CJI.png" alt="示意图"></li>
-<li>nsight compute 可以显示各 memory 速率</li>
-</ol>
-<h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/stressapptest/stressapptest">stressapptest</a><ul>
-<li>Stressful Application Test - userspace memory and IO test</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://blog.51cto.com/quantfabric/2593578">stress 压力测试工具</a><ul>
-<li>stress 是 Linux 的一个压力测试工具，可以对 CPU、Memory、IO、磁盘进行压力测试。</li>
-</ul>
-</li>
-<li><code>加权访存带宽计算</code>：只读带宽最高约 520 GB&#x2F;s，L2 Cache 带宽 1.9TB&#x2F;s，当 L2 cache 命中率为 30% 时，加权后的平均访存带宽为 520 x 0.7 + 1900 x 0.3 &#x3D; 934 GB&#x2F;s</li>
-<li>gpu sram 带宽为什么比主存大很多：<ul>
-<li>并行，多个 SM 访问 shared memory， 如有 80 个 sm，每个 sm4 个 partition， 每个 shared memory 有 32 个 bank， 等效位宽为：<code>80*4*32*8 = 81920</code>, hbm 位宽为 8192， 带宽为 1.5TB&#x2F;s, sram 为 19TB&#x2F;s</li>
-</ul>
-</li>
-<li>可以按照是否在芯片上分为片上内存(<code>on chip</code>)和片下内存(<code>off chip</code>)。</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/freelancer-leon/notes/blob/master/kernel/mm/meminfo.md">&#x2F;proc&#x2F;meminfo</a></li>
-<li>RES&#x3D;CODE+DATA 进程使用的、未被换出的物理内存大小</li>
-<li>内存主要关注物理内存, 虚拟内存表示程序文件及链接库大小，并不是所有的都加载到内存</li>
-<li>used mem &#x3D; total - free - buffers - cache （man free 可以看计算公式),</li>
-<li>主要看 <code>avaliable</code> &lt; free + buff&#x2F;cache <code> top | grep avail</code> or <code>free -s 1(100)</code> 间隔长好看趋势</li>
-<li>纳入内核管理的内存不见得都在使用中，还包括过去使用过的现在可以被重复利用的内存，内核并不把这些可被重新使用的内存交还到 free 中去，因此在 linux 上 free 内存会越来越少。</li>
-<li>%MEM – Memory Usage (RES) A task’s currently used share of available physical memory. 当前使用的物理内存 &#x2F; 总的物理内存</li>
-<li>进程内存不增长， 系统整体内存一直增长可能是 log 文件写到&#x2F;tmp 目录下</li>
-</ol>
-<h2 id="内存墙"><a href="#内存墙" class="headerlink" title="内存墙"></a>内存墙</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/P6rlEFZGZ6jZqhldmH5UKg">英伟达、高通、特斯拉、Mobileye 芯片真实算力大比拼</a> 包含各种内存芯片参数<ul>
-<li>芯片和内存分开， 芯片有最高支持的内存类型。开发板上 ddr 类型才是确认的。所以开发板和实际用的产品可能性能不一样。</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/tSTRBtdNG55COBlUWyCDIg">汽车领域拥抱 Transformer 需要多少算力？1200TOPS 都不够</a></li>
-<li><code>内存墙</code>是指随着计算能力的持续增长，内存的访问速度相对于处理器的速度提升相对滞后，导致处理器频繁地等待数据。这个不平衡造成的性能瓶颈常常被称为“内存墙”。</li>
-<li><code>处理器速度的增长</code>：在过去的几十年里，处理器的速度增长迅速，遵循摩尔定律（每 18-24 个月，晶体管的数量翻倍）。这导致了处理器每秒可以执行的指令数大幅增加。</li>
-<li><code>内存速度的增长相对较慢</code>：尽管 DRAM 技术也在不断进步，但与处理器的增速相比，其访问速度和带宽的增长较为缓慢。</li>
-<li><code>访问延迟</code>：当处理器需要从主内存中读取数据时，它经常需要等待几百个周期才能获取数据。由于处理器的速度比内存快得多，这种等待成为了一个瓶颈，限制了性能。</li>
-<li><code>缓存的引入</code>：为了缓解这个问题，现代计算机系统引入了缓存（L1、L2、L3 等）来存储频繁访问的数据。这些缓存比主内存快得多，但容量较小。当缓存未命中时，处理器必须从主内存中获取数据，这会引入延迟。</li>
-<li><code>带宽与延迟</code>：除了访问延迟外，带宽也是一个问题。<code>即使内存的延迟得到改善，处理器仍然可能会被大量的并发内存访问操作所限制，导致带宽成为瓶颈</code></li>
-<li><code>解决方案</code>：有许多方法被提出来试图克服内存墙的问题，包括更智能的缓存策略、预取策略、多线程、多核处理器设计等。此外，新的内存技术，如 HBM (High Bandwidth Memory) 和 3D 堆叠内存，也被引入来提供更高的带宽。<br>总的来说，内存墙描述了一个关键的挑战：随着处理器速度的增长，如何确保它们能够及时地获取所需的数据。这是计算机架构领域的一个核心问题，研究者持续致力于开发新的技术和策略来解决这个问题。</li>
-</ol>
-<h2 id="内存类型"><a href="#内存类型" class="headerlink" title="内存类型"></a>内存类型</h2><ol>
-<li>HBM (High Bandwidth Memory) 是一种高性能、高带宽的堆叠式 DRAM（动态随机存取存储器）技术。HBM 是由 AMD 和 Hynix 合作开发，旨在解决高性能计算应用中带宽和功耗的瓶颈问题。<ul>
-<li>将多个 DRAM 以一种堆叠的方式嵌入到统一处理器封装内部，可降低访问延迟。从而允许处理器和 DRAM 间建立更多更快的连接。</li>
-</ul>
-</li>
-<li>LPDDR4 是 “Low Power Double Data Rate 4” 的缩写，它是一种移动 DRAM（Dynamic Random-Access Memory）标准。这种类型的内存主要用于移动设备（如智能手机、平板电脑和某些高端笔记本电脑）中，因为它设计为在较低电压下运行，从而减少功耗和延长电池寿命。</li>
-<li>LPDDR4x 是 LPDDR4 的一个增强版本，它主要优化了功耗，适用于电池供电的移动设备，如智能手机和平板电脑。LPDDR4x 为 “Low Power Double Data Rate 4x” 的缩写。</li>
-</ol>
-<h2 id="内存概念"><a href="#内存概念" class="headerlink" title="内存概念"></a>内存概念</h2><ol>
-<li>page 是磁盘和内存交换数据基本单位， cache line 是内存和缓存交换数据基本单位。</li>
-<li>&lt;&lt;计算机体系结构&gt;&gt; 第 2 章存储器层次机构设计</li>
-<li>栈和堆都是代码在运行时可供使用的内存。</li>
-<li>栈中的所有数据都必须占用已知且固定大小。</li>
-<li>栈的读写比堆要快。</li>
-<li>当代码调用一个函数时，传递给函数的值和数据的局部变量被压入栈中，当函数结束时，这些值被移除栈。</li>
-<li>Rust 所有权的存在是为了管理堆数据。</li>
-<li>数据在堆上才需要释放</li>
-<li>数据在堆上赋值时无指出是浅拷贝(C++)或移动(Rust，原来的变量不在有效)，而不是深拷贝。</li>
-<li>Rust 数据在栈上，赋值是都是拷贝，原来的变量依旧有效。在堆上，赋值都是移动，原来变量无效。</li>
-<li>Rust String 由三部分组成，ptr，len，capacity，这一组数据在栈上，ptr 是指向在堆上数据的指针。（数据结构的固定长度数据在栈上，可变数据在堆上）</li>
-</ol>
-<h2 id="内存-堆栈-错误类型"><a href="#内存-堆栈-错误类型" class="headerlink" title="内存(堆栈)错误类型"></a>内存(堆栈)错误类型</h2><ol>
-<li>引用空指针</li>
-<li>使用未初始化的内存</li>
-<li>释放后使用，也就是使用悬垂指针</li>
-<li>缓冲区溢出，比如数组越界</li>
-<li>非法释放已经释放过的或者未分配的指针</li>
-</ol>
-<h2 id="内存管理方式"><a href="#内存管理方式" class="headerlink" title="内存管理方式"></a>内存管理方式</h2><ol>
-<li>垃圾回收机制，在程序运行时不断的寻找不再使用的内存</li>
-<li>程序员亲自分配内存和释放内存</li>
-<li>Rust 通过所有权系统管理内存，编译器在编译时会根据一系列规则进行检查，拥有数据所有者在离开作用域后自动清除其数据</li>
-</ol>
-<h2 id="内存信息"><a href="#内存信息" class="headerlink" title="内存信息"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wardensky/p/4274180.html">内存信息</a></h2><ol>
-<li><p><code>lshw -class memory</code></p>
-</li>
-<li><p><code>dmidecode|grep Speed</code></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.aida64.com/downloads/YWY1MWUxM2E=">windows aida64</a></p>
-<ul>
-<li>工具 -&gt; 内存缓存测试 -&gt; 有内存类型</li>
-<li>最下面有性能测试</li>
-<li><a target="_blank" rel="noopener" href="https://www.extremexbb.com/aida64-keys/">破解</a> 使用: 6.85.6300 版本</li>
-</ul>
-</li>
-<li><p><code>DDR4-2666</code></p>
-<ul>
-<li><code>I/O 时钟频率</code>： 1333 MHz</li>
-<li><code>数据传输速率</code>： 2666 MT&#x2F;s， 即每秒 2666 MT&#x2F;s（Mega Transfers per second）</li>
-<li>位宽决定带宽；如果位宽为 64， 带宽为： 2666 * 8 &#x3D; 21GB&#x2F;s</li>
-</ul>
-</li>
-<li><p>内存带宽和位宽都是评估和描述内存性能的关键指标。它们涉及到数据在内存与其他组件（如 CPU）之间传输的速率以及每次传输的数据量。以下是这两个术语的解释：</p>
-</li>
-<li><p><code>内存带宽 (Memory Bandwidth)</code>：</p>
-<ul>
-<li>定义：内存带宽描述了数据可以在特定时间内从内存传输到 CPU 或其他设备的最大速度。它是衡量内存性能的关键参数。</li>
-<li>单位：常用的单位是 GB&#x2F;s（吉字节每秒）。</li>
-<li>计算方法：内存带宽 &#x3D; 内存时钟频率 x 数据传输次数 x 位宽; 其中，数据传输次数通常基于内存类型，例如，DDR（Double Data Rate）内存每个时钟周期有两次数据传输。</li>
-</ul>
-</li>
-<li><p><code>位宽 (Memory Bus Width)</code>：</p>
-<ul>
-<li>定义：位宽描述了内存总线一次能够传输的数据量。它决定了每次数据传输的宽度。</li>
-<li>单位：位（bit）。常见的位宽有 8-bit, 16-bit, 32-bit, 64-bit, 128-bit 等。</li>
-<li>例如，一个 64-bit 宽的内存总线意味着它可以一次性传输 64 位（8 字节）的数据。</li>
-</ul>
-</li>
-<li><p><code>sample</code>：假设我们有一个 DDR3 内存，其时钟频率为 1600 MHz，位宽为 64-bit。那么内存带宽的计算方法为：内存带宽 &#x3D; 1600 MHz x 2 x 64 bits &#x3D; 25600 Mbits&#x2F;s &#x3D; 25.6 GB&#x2F;s, 因此，此内存的带宽是 25.6 GB&#x2F;s。</p>
-</li>
-</ol>
-<h2 id="理论峰值带宽-compare-with-cpu"><a href="#理论峰值带宽-compare-with-cpu" class="headerlink" title="理论峰值带宽(compare with cpu)"></a>理论峰值带宽(compare with cpu)</h2><ol>
-<li>和 cpu 比较</li>
-</ol>
-<h2 id="内存性能测试"><a href="#内存性能测试" class="headerlink" title="内存性能测试"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/pcokk/article/details/90733871">内存性能测试</a></h2><ol>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/LucaCanali/Miscellaneous/blob/master/Spark_Notes/Tools_Linux_Memory_Perf_Measure.md">Tools_Linux_Memory_Perf_Measure.md</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/RRZE-HPC/likwid/tree/master/groups">各平台各性能指标计算方法</a></p>
-</li>
-<li><p>因为 cache 比较小，需要频繁交换数据，读写大块数据几乎每次都要从 ddr 读数；例如：模型推理，每次推理都要从 ddr 重新读权重, 并不是将权重一直放在 cache 中。</p>
-<ul>
-<li>从磁盘到 ddr 可能只需要加载一次</li>
-</ul>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/imsnif/bandwhich">rust net bandwidth</a></p>
-</li>
-<li><p><code>mbw 32 -b 4096</code></p>
-</li>
-<li><p><code>sysbench memory run</code></p>
-</li>
-<li><p><code>lmbench</code></p>
-</li>
-<li><p><code>Memtest86+</code></p>
-</li>
-</ol>
-<h3 id="perf"><a href="#perf" class="headerlink" title="perf"></a>perf</h3><ol>
-<li><code>perf list and perf stat -e &lt;memory_access&gt;</code>获取 memory access, 根据时间，位宽算带宽<ul>
-<li><code>sudo perf record -F 99 -e armv8_pmuv3/mem_access/ -ag -- sleep 1</code></li>
-<li><code>sudo perf list -n</code> 还能看到带宽占用比例</li>
-<li>可以画火焰图</li>
-<li>bandwidth &#x3D; 位宽 * count &#x2F; second; 可以与 bandwidth 对比</li>
-</ul>
-</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">timeout</span>=2</span><br><span class="line"><span class="keyword">while</span> <span class="literal">true</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  perf record -e mem_access -ag -- <span class="built_in">sleep</span> <span class="variable">$timeout</span> &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">  db=$(perf report | grep <span class="string">&quot;Event&quot;</span> | awk <span class="string">&#x27;&#123;print $NF&#125;&#x27;</span> | <span class="built_in">head</span> -n 1)</span><br><span class="line">  result=$(( <span class="number">8</span> * <span class="variable">$&#123;db&#125;</span> / <span class="variable">$&#123;timeout&#125;</span>  / <span class="number">1000000</span> ))</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$result</span> MB/s&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><a target="_blank" rel="noopener" href="https://developer.arm.com/documentation/100442/0100/debug-descriptions/pmu/pmu-events?lang=en">arm55 pmu 手册</a></li>
-<li><code>likwid-perfctr -e</code> 列出所有 PMC</li>
-<li><code>likwid-perfctr -e | grep MEM</code>列出所有内存相关 PMC, <code>perf stat -e r013,r066,r067</code> r + mask + eventsel 监控对应事件</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">nvidia@miivii-tegra:~$ likwid-perfctr -e | grep MEM</span><br><span class="line">MEM_ACCESS, 0x13, 0x0, PMC</span><br><span class="line">MEMORY_ERROR, 0x1A, 0x0, PMC</span><br><span class="line">MEM_ACCESS_LD, 0x66, 0x0, PMC</span><br><span class="line">MEM_ACCESS_ST, 0x67, 0x0, PMC</span><br><span class="line"></span><br><span class="line">nvidia@miivii-tegra:~$ perf <span class="built_in">stat</span> -e r013,r066,r067 -- <span class="built_in">ls</span></span><br><span class="line">Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos</span><br><span class="line"></span><br><span class="line"> Performance counter stats <span class="keyword">for</span> <span class="string">&#x27;ls&#x27;</span>:</span><br><span class="line"></span><br><span class="line">           156,045      r013:u</span><br><span class="line">           118,079      r066:u</span><br><span class="line">            37,966      r067:u</span><br><span class="line"></span><br><span class="line">       0.003111539 seconds time elapsed</span><br><span class="line"></span><br><span class="line">       0.003294000 seconds user</span><br><span class="line">       0.000000000 seconds sys</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line"><span class="comment">## [stream](https://www.cs.virginia.edu/stream/stream2/)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### [BabelStream](https://github.com/UoB-HPC/BabelStream)</span></span><br><span class="line"></span><br><span class="line">1. use</span><br><span class="line"></span><br><span class="line">``` sh</span><br><span class="line">cmake -Bbuild -H. -DMODEL=cuda -DCUDA_ARCH=sm_86 -DCMAKE_CUDA_COMPILER=nvcc</span><br><span class="line">./cuda-stream</span><br><span class="line"></span><br><span class="line"><span class="comment"># result</span></span><br><span class="line">Running kernels 100 <span class="built_in">times</span></span><br><span class="line">Precision: double</span><br><span class="line">Array size: 268.4 MB (=0.3 GB)</span><br><span class="line">Total size: 805.3 MB (=0.8 GB)</span><br><span class="line">Using CUDA device Orin</span><br><span class="line">Driver: 11040</span><br><span class="line">Memory: DEFAULT</span><br><span class="line">Reduction kernel config: 56 <span class="built_in">groups</span> of (fixed) size 1024</span><br><span class="line">Init: 0.091487 s (=8802.387996 MBytes/sec)</span><br><span class="line">Read: 0.014568 s (=55279.816972 MBytes/sec)</span><br><span class="line">Function    MBytes/sec  Min (sec)   Max         Average</span><br><span class="line">Copy        103377.883  0.00519     0.00764     0.00553</span><br><span class="line">Mul         99863.044   0.00538     0.01373     0.00577</span><br><span class="line">Add         134846.743  0.00597     0.01092     0.00642</span><br><span class="line">Triad       134462.719  0.00599     0.00829     0.00637</span><br><span class="line"></span><br><span class="line">Triad 是一个计算模式，通常在性能测试和基准测试中使用，特别是在评估计算机系统的内存带宽和处理能力时。在最简单的形式中，Triad 操作涉及到以下三个操作：</span><br><span class="line"><span class="keyword">for</span> (i = 0; i &lt; N; i++) &#123;</span><br><span class="line">    A[i] = B[i] + scalar * C[i];</span><br><span class="line">&#125;</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line"><span class="comment">### [(good) bandwidth](https://zsmith.co/bandwidth.php#download)</span></span><br><span class="line"></span><br><span class="line">1. 可以抠出来源码，实时检测内存使用</span><br><span class="line">1. [不同处理器的带宽](https://zsmith.co/bw-table.php)</span><br><span class="line">1. 测试多核性能时，运行多个实例，相加结果。Is bandwidth actually showing the maximum bandwidth to and from main memory? There is an easy way to <span class="built_in">test</span> this. We can run one instance of bandwidth on each core of a multi-core CPU (<span class="keyword">in</span> my <span class="keyword">case</span>, two instances, one <span class="keyword">for</span> each core) and add up the access bandwidths to/from main memory <span class="keyword">for</span> all instances to see whether they approach the published limits <span class="keyword">for</span> our main memory system.</span><br><span class="line">1. 使用</span><br><span class="line"></span><br><span class="line">```sh</span><br><span class="line">wget -c https://zsmith.co/archives/bandwidth-1.12.3.tar.bz2</span><br><span class="line">sudo apt install nasm</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>上图可以看出来在三个地方曲线有明显的转折。分别是 32k、256K、12MB。这分别是三级缓存的大小。就跟下图所示一样, 也就是说：当读写的 size 大小落在相应的 cache 里面的时候，吞吐量是最大的。当读写的大小的 size 超过这个 cache，而落入到下一个 cache 的时候，吞吐量就会降低。内存是最低的。<a target="_blank" rel="noopener" href="https://neuyilan.github.io/2017/03/07/bandwidth%E6%95%99%E7%A8%8B/">link</a></li>
-</ol>
-<h3 id="likwid"><a href="#likwid" class="headerlink" title="likwid"></a>likwid</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/RRZE-HPC/likwid/wiki/Tutorial%3A-Empirical-Roofline-Model">测内存性能</a></li>
-</ol>
-<h3 id="TheBandwidthBenchmark"><a href="#TheBandwidthBenchmark" class="headerlink" title="TheBandwidthBenchmark"></a><a target="_blank" rel="noopener" href="https://github.com/RRZE-HPC/TheBandwidthBenchmark">TheBandwidthBenchmark</a></h3><h2 id="内存压测"><a href="#内存压测" class="headerlink" title="内存压测"></a><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_14900374/2533353">内存压测</a></h2><ol>
-<li>memtester</li>
-</ol>
-<h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><h3 id="malloc"><a href="#malloc" class="headerlink" title="malloc"></a>malloc</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://arjunsreedharan.org/post/148675821737/memory-allocators-101-write-a-simple-memory">memory-allocators-101-write-a-simple-memory</a></li>
-<li>malloc 缺点：<ul>
-<li>易内存泄漏</li>
-<li>碎片化，影响性能</li>
-</ul>
-</li>
-</ol>
-<h2 id="memory-profiler"><a href="#memory-profiler" class="headerlink" title="memory profiler"></a>memory profiler</h2><ol>
-<li><p>jemolloc</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.yuanguohuo.com/2019/01/02/jemalloc-heap-profiling/">内存泄漏调试 —- jemalloc 的 heap profiling</a></li>
-<li>jeprof 工具不仅可以查看详细信息或者生成调用路径图(如上所示)，还可以用来比较两个 dump(显示增量部分)：</li>
-</ul>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/KDE/heaptrack">heaptrack</a></p>
-<ul>
-<li>allocations 次数：<ul>
-<li>.&#x2F;bin&#x2F;heaptrack ls</li>
-<li>.&#x2F;bin&#x2F;heaptrack_print heaptrack.ls.5400.gz -F stacks.txt</li>
-<li>flamegraph.pl –title “heaptrack: allocations” –colors mem –countname allocations &lt; stacks.txt &gt; heaptrack.someapp.PID.svg</li>
-</ul>
-</li>
-<li>内存大小（–flamegraph-cost-type 指定 allocations: number of allocations; peak: bytes consumed at highest total memory consumption …)<ul>
-<li>.&#x2F;bin&#x2F;heaptrack_print heaptrack.example.6433.gz –flamegraph-cost-type peak -F stacks2.txt</li>
-<li>&#x2F;home&#x2F;xiyang&#x2F;d&#x2F;working&#x2F;FlameGraph&#x2F;flamegraph.pl –title “heaptrack: bytes” –colors mem –countname bytes &lt; stacks2.txt &gt; heaptrack.example_peak.svg</li>
-</ul>
-</li>
-<li>gui: <code>sudo apt-get install heaptrack-gui</code><ul>
-<li>使用 vnc</li>
-<li>注意 top-down 可以看堆栈</li>
-<li>caller&#x2F;callee 右下角有代码具体位置</li>
-</ul>
-</li>
-<li>加编译 debug 能显示具体某一行分配的内存</li>
-<li><a target="_blank" rel="noopener" href="https://milianw.de/blog/heaptrack-a-heap-memory-profiler-for-linux.html">usage</a></li>
-<li>.&#x2F;bin&#x2F;heaptrack_print heaptrack.example.6433.gz -M .&#x2F;test.txt 生成 massif 数据，可以用 massif-visualizer 可视化</li>
-<li><code>sudo apt install heaptrack</code> 会出现 free(): invalid pointer;</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/KDE/heaptrack?tab=readme-ov-file#compiling">源码编译</a><ul>
-<li><code>sudo apt install elfutils libdw-dev libunwind-dev</code></li>
-<li><code>cmake -DLIBDW_INCLUDE_DIR=/usr/include/ -DLIBDW_LIBRARIES=/lib/aarch64-linux-gnu/ ..</code> (不好使)</li>
-</ul>
-</li>
-<li><code>heaptrack -d ./example</code>debug， 会使用 gdb</li>
-</ul>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.brendangregg.com/FlameGraphs/memoryflamegraphs.html">FlameGraphs&#x2F;memoryflamegraphs</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/RudjiGames/MTuner?tab=readme-ov-file">MTuner</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://valgrind.org/docs/manual/ms-manual.html">valgrind Massif: a heap profiler</a></p>
-<ul>
-<li>valgrind –tool&#x3D;massif prog</li>
-<li>ms_print massif.out.8855 (加-g 选项也可以看具体哪一行分配的内存)</li>
-</ul>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://apps.kde.org/zh-cn/massif-visualizer/">massif-visualizer</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/34a495c3067b">procmem 和 procrank 查看动态库占用的内存</a></p>
-</li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/apache/arrow">apache&#x2F;arrow 内存分析工具</a></li>
-<li><a target="_blank" rel="noopener" href="https://people.freebsd.org/~lstewart/articles/cpumemory.pdf">What Every Programmer Should Know About Memory</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/611133924">每个程序员都应该了解的内存知识</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/freelancer-leon/notes/blob/master/kernel/mm/meminfo.md">meminfo</a></li>
-<li><a target="_blank" rel="noopener" href="https://arjunsreedharan.org/post/148675821737/memory-allocators-101-write-a-simple-memory">memory-allocators-101-write-a-simple-memory</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/30/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/32/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/30/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><span class="page-number current">31</span><a class="page-number" href="/page/32/">32</a><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/32/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1300,7 +1333,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">192</span>
+          <span class="site-state-item-count">195</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1333,19 +1366,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/08/20/AI-coding/" title="2025&#x2F;08&#x2F;20&#x2F;AI-coding&#x2F;">AI coding</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/28/Architecture/" title="2025&#x2F;04&#x2F;28&#x2F;Architecture&#x2F;">Computer Architecture</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/18/pytest/" title="2025&#x2F;04&#x2F;18&#x2F;pytest&#x2F;">pytest</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
     </ul>
   </div>
@@ -1383,13 +1416,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">587k</span>
+    <span title="站点总字数">624k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:54</span>
+    <span title="站点阅读时长">9:27</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

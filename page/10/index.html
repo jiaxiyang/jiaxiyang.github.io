@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">195</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,330 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/03/23/neon/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/03/23/neon/" class="post-title-link" itemprop="url">neon</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-23 16:55:28" itemprop="dateCreated datePublished" datetime="2023-03-23T16:55:28+08:00">2023-03-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-06 12:05:24" itemprop="dateModified" datetime="2024-05-06T12:05:24+08:00">2024-05-06</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/03/23/neon/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/03/23/neon/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>新的 Armv8a 架构有 32 个 128bit 向量寄存器，老的 ArmV7a 架构有 32 个 64bit（可当作 16 个 128bit）向量寄存器，编码时记得数一下占用多少个专用寄存器（例如 1 个 float32x4 就占用 1 个 128bit 寄存器），别用过量了，避免寄存器溢出 (Register Spilling）(<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41112170/article/details/90286091">https://blog.csdn.net/qq_41112170/article/details/90286091</a>) 导致的负优化。</li>
+<li>armv8: 一条 Neon 指令最多可以计算 4 个 float32，或者 8 个 float16，或者 16 个 int8。</li>
+<li><code>uint8x16_t</code> 表示 16 个 uint8</li>
+<li><code>float32x4_t</code> 表示 4 个 float32</li>
+</ol>
+<h2 id="intrinsics"><a href="#intrinsics" class="headerlink" title="intrinsics"></a><a target="_blank" rel="noopener" href="https://developer.arm.com/architectures/instruction-sets/intrinsics/">intrinsics</a></h2><ol>
+<li></li>
+</ol>
+<h2 id="要使用-NEON-加速步骤："><a href="#要使用-NEON-加速步骤：" class="headerlink" title="要使用 NEON 加速步骤："></a>要使用 NEON 加速步骤：</h2><ol>
+<li><code>load</code> 将相关数组数据加载到 NEON 寄存器。</li>
+<li><code>calculate</code> 使用 NEON 指令对多个数据元素进行并行操作。</li>
+<li><code>store</code> 将结果从 NEON 寄存器存储回主存储器。</li>
+</ol>
+<h2 id="编译选项"><a href="#编译选项" class="headerlink" title="编译选项"></a>编译选项</h2><ol>
+<li>j5 需要 <code>-ftree-vectorize -funroll-loops</code> 组合才能优化，单独不行</li>
+<li><code>-mfpu=neon</code> 此选项告诉编译器要为 NEON 浮点单元生成代码。这适用于较老的 ARM 架构和编译器版本。</li>
+<li><code>-march</code> 使用此选项指定目标架构，例如<code>-march=armv8-a</code>。这可以确保编译器针对特定的 ARM 版本生成优化代码。</li>
+<li><code>-mfloat-abi</code> 该选项定义了浮点数应该如何在函数调用中传递。有三个选项可以选择：soft、softfp 和 hard。使用 NEON 时，通常建议使用-mfloat-abi&#x3D;hard。</li>
+<li><code>-ftree-vectorize</code> 这是一个优化选项，允许编译器自动将循环转换为使用向量指令。虽然这不是直接与 NEON 相关的，但它可以帮助自动利用 NEON 功能。</li>
+<li><code>-funroll-loops</code>这也是一个优化选项，用于循环展开，可能有助于提高 NEON 代码的性能。</li>
+</ol>
+<h2 id="SVE-Scalable-Vector-Extension"><a href="#SVE-Scalable-Vector-Extension" class="headerlink" title="SVE(Scalable Vector Extension)"></a>SVE(Scalable Vector Extension)</h2><ol>
+<li>是 arm AArch64 架构下的下一代 SIMD 指令集，旨在加速高性能计算，SVE 引入了很多新的架构特点</li>
+<li>SVE（可扩展矢量指令 Scalable Vector Extension）是针对高性能计算（HPC）和机器学习等领域开发的一套全新的矢量指令集，它是下一代 SIMD 指令集实现，而不是 NEON 指令集的简单扩展。SVE 指令集中有很多概念与 NEON 指令集类似，例如矢量、通道、数据元素等。SVE 指令集也提出了一个全新的概念：可变矢量长度编程模型(VectorLength Agnostic，VLA)。</li>
+<li>SVE 指令集的矢量寄存器的长度最小支持 128 位，最大可以支持 2048 位，以 128 位为增量。</li>
+<li>SVE 指令集是在 A64 指令集的基础上新增的一组指令集，而 SVE2 是在 ARMv9 架构上发布的，它是 SVE 指令集的一个超集和扩充。</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/399686472">ARMv9 的 SVE&#x2F;SVE2 入门教程</a></li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://www.armadeus.org/wiki/index.php?title=NEON_HelloWorld">hello world</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Ewenwan/MVision/blob/master/CNN/HighPerformanceComputing/ARM_NEON_CNN%E7%BC%96%E7%A8%8B.md">ARM_NEON_CNN 编程</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/441686632">CPU 优化技术-NEON 指令介绍</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/03/13/OpenXLA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/03/13/OpenXLA/" class="post-title-link" itemprop="url">OpenXLA</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-13 10:34:20" itemprop="dateCreated datePublished" datetime="2023-03-13T10:34:20+08:00">2023-03-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-07-10 21:52:58" itemprop="dateModified" datetime="2023-07-10T21:52:58+08:00">2023-07-10</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/03/13/OpenXLA/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/03/13/OpenXLA/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>87</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/openxla/xla">openxla&#x2F;xla</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.tensorflow.org/xla?hl=zh-cn">tensorflow&#x2F;xla</a></li>
+<li><a target="_blank" rel="noopener" href="https://openxla.github.io/iree/#support-matrix">iree</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.sohu.com/a/653633664_129720">简介</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.sohu.com/a/578161914_612370">机器学习访存密集计算编译优化框架 AStitch，大幅提升任务执行效率</a></li>
+<li><a target="_blank" rel="noopener" href="https://tvm.hyper.ai/docs/tutorial/intro/">TVM 中文网站</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/03/06/cross-compile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/03/06/cross-compile/" class="post-title-link" itemprop="url">cross-compile</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-06 20:42:24" itemprop="dateCreated datePublished" datetime="2023-03-06T20:42:24+08:00">2023-03-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/03/06/cross-compile/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/03/06/cross-compile/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>22</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><h2 id="基本组成"><a href="#基本组成" class="headerlink" title="基本组成"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/u012503639/article/details/104159375">基本组成</a></h2><h3 id="binutils"><a href="#binutils" class="headerlink" title="binutils"></a>binutils</h3><h3 id="gcc"><a href="#gcc" class="headerlink" title="gcc"></a>gcc</h3><h3 id="glibc"><a href="#glibc" class="headerlink" title="glibc"></a>glibc</h3>
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1066,310 +1390,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/25/Coroutine/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/25/Coroutine/" class="post-title-link" itemprop="url">Coroutine</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-10-25 19:55:32" itemprop="dateCreated datePublished" datetime="2022-10-25T19:55:32+08:00">2022-10-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/10/25/Coroutine/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/25/Coroutine/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>231</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>协程并没有增加线程数量，只是在线程的基础之上通过分时复用的方式运行多个协程，而且协程的切换在用户态完成，切换的代价比线程从用户态到内核态的代价小很多。</li>
-<li>协程对计算密集型的任务也没有太大的好处，计算密集型的任务本身不需要大量的线程切换，因此协程的作用也十分有限，反而还增加了协程切换的开销。</li>
-<li>因此在协程中不能调用导致线程阻塞的操作。也就是说，协程只有和异步 IO 结合起来，才能发挥最大的威力。</li>
-<li>协程只有和异步 IO 结合起来才能发挥出最大的威力。</li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/172471249">什么是协程？</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/21/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/21/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">开发方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-10-21 16:57:14" itemprop="dateCreated datePublished" datetime="2022-10-21T16:57:14+08:00">2022-10-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/10/21/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/21/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>128</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>瀑布流方法（Waterfall）</li>
-<li>V 型方法（V-model）</li>
-<li>迭代式开发（Iterative and incremental development, IID）</li>
-<li>螺旋开发（Spiral）</li>
-<li>敏捷开发（Scrum）</li>
-<li>极限编程（Extreme programming, XP）</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/20/KataOS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/10/20/KataOS/" class="post-title-link" itemprop="url">KataOS</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-10-20 13:11:40" itemprop="dateCreated datePublished" datetime="2022-10-20T13:11:40+08:00">2022-10-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/10/20/KataOS/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/20/KataOS/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>96</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/AmbiML/sparrow-manifest">sparrow-manifest</a></li>
-<li><a target="_blank" rel="noopener" href="https://opensource.googleblog.com/2022/10/announcing-kataos-and-sparrow.html">announcing-kataos-and-sparrow</a></li>
-<li><a target="_blank" rel="noopener" href="https://antmicro.com/blog/2022/08/running-rust-programs-in-sel4/">Running Rust programs in seL4 using the sel4-sys crate</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1441,7 +1461,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">192</span>
+          <span class="site-state-item-count">195</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1474,19 +1494,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/08/20/AI-coding/" title="2025&#x2F;08&#x2F;20&#x2F;AI-coding&#x2F;">AI coding</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/28/Architecture/" title="2025&#x2F;04&#x2F;28&#x2F;Architecture&#x2F;">Computer Architecture</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/18/pytest/" title="2025&#x2F;04&#x2F;18&#x2F;pytest&#x2F;">pytest</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
     </ul>
   </div>
@@ -1524,13 +1544,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">587k</span>
+    <span title="站点总字数">624k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:54</span>
+    <span title="站点阅读时长">9:27</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

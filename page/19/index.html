@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">195</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,691 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/09/30/Emacs-on-Windows10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/30/Emacs-on-Windows10/" class="post-title-link" itemprop="url">Emacs on Windows10</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-30 08:05:00" itemprop="dateCreated datePublished" datetime="2020-09-30T08:05:00+08:00">2020-09-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/Emacs/" itemprop="url" rel="index"><span itemprop="name">Emacs</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/30/Emacs-on-Windows10/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/30/Emacs-on-Windows10/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>524</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Install-msys2-on-windindows"><a href="#Install-msys2-on-windindows" class="headerlink" title="Install msys2 on windindows"></a>Install msys2 on windindows</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/msys2/distrib/x86_64/">Tsing hua source</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.msys2.org/">Official web</a></li>
+</ol>
+<h2 id="Config-msys2"><a href="#Config-msys2" class="headerlink" title="Config msys2"></a>Config msys2</h2><ol>
+<li>Theme: dracula</li>
+<li>Font: Consolas 14</li>
+<li>Transparency: Medium</li>
+<li>Right mouse: paste</li>
+<li>Terminal Type: xterm-256color</li>
+<li>Cursor: bold, not blinking</li>
+</ol>
+<h2 id="Install-git-vim-oh-my-zsh-emacs"><a href="#Install-git-vim-oh-my-zsh-emacs" class="headerlink" title="Install git vim oh-my-zsh emacs"></a>Install git vim oh-my-zsh emacs</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013938484/article/details/83539008">Tutorial</a></li>
+<li>Note: Change package source. No vim at first, you can edit the file on windows</li>
+<li>Emacs install: <code>pacman -S mingw-w64-x86_64-emacs</code></li>
+<li>Libs install: <code>pacman -S mingw-w64-x86_64-libpng &amp;&amp; pacman -S mingw-w64-x86_64-libjpeg-turbo</code></li>
+<li>Config .bashrc and .zshrc</li>
+</ol>
+<h2 id="Build-emacs-plugins-in-Ubuntu-on-VMvare"><a href="#Build-emacs-plugins-in-Ubuntu-on-VMvare" class="headerlink" title="Build emacs plugins in Ubuntu on VMvare"></a>Build emacs plugins in Ubuntu on VMvare</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/jiaxiyang/100ms_dot_emacs">100ms emacs</a></li>
+<li>build and copy the tar package to msys2</li>
+<li>install package on msys2</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/09/17/git/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/17/git/" class="post-title-link" itemprop="url">git</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-17 20:46:21" itemprop="dateCreated datePublished" datetime="2020-09-17T20:46:21+08:00">2020-09-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-09-08 10:41:57" itemprop="dateModified" datetime="2025-09-08T10:41:57+08:00">2025-09-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/17/git/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/17/git/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h2><ol>
+<li><code>git merge --ff-only feature-branch</code> 不产生merge commit</li>
+<li><code>targets=&quot;python/test/ unittest/ README.md&quot;; git checkout --theirs -- $targets &amp;&amp; git add $targets</code><ul>
+<li>theirs表示接受他们的incoming， ours表示接受我们的current</li>
+<li><code>git checkout --theirs -- &#39;*.mlir&#39; test/ &amp;&amp; git add &#39;*.mlir&#39; test/</code> mlir文件和test&#x2F;文件夹的冲突都接受incoming内容, *.mlir可以换成文件夹(多个文件夹),  先把delete删除了,</li>
+<li>vscode插件可以在文件夹下右击接受incoming</li>
+</ul>
+</li>
+<li><code>git restore --source develop src/main.cpp</code> 将某个文件切换到某个分支内容，用于验证merge前后内容<ul>
+<li>可以先restore, 然后一点点改</li>
+</ul>
+</li>
+<li><code>export MAX_JOBS=1</code> triton 设置环境变量，单线程编译，按顺序修复问题</li>
+<li><code>git diff main dev -- src/main.cpp</code> 查看两个分支某个文件不同   </li>
+<li><code>git diff dev -- src/main.cpp</code> 查看当前分支和摸个分支某个文件不同</li>
+</ol>
+<h2 id="revert"><a href="#revert" class="headerlink" title="revert"></a>revert</h2><ol>
+<li>git revert <hash></li>
+<li>不能revert某个commit里的单个文件</li>
+</ol>
+<h2 id="stash"><a href="#stash" class="headerlink" title="stash"></a>stash</h2><ol>
+<li><code>git stash -m &quot;text&quot;</code>添加文字</li>
+<li><code>git stash push -m &quot;my_feature_backup&quot;</code></li>
+<li><code>git stash list</code></li>
+<li><code>git stash apply stash@&#123;0&#125;</code></li>
+<li><code>git stash show -p stash@&#123;0&#125;</code> 查看stash内容</li>
+<li><code>git stash show -p stash@&#123;0&#125;</code> 查看和当前内容的区别</li>
+</ol>
+<h2 id="patch"><a href="#patch" class="headerlink" title="patch"></a>patch</h2><ol>
+<li><code>git format-patch ab51eccf88f5321e7c60591c5546b254b6afab99..1b3ed340943eeb7a73c6c21270e86b507e85afbb -o /data/xiyang/llvm_sipu.patch</code></li>
+<li><code>git apply *.patch</code></li>
+</ol>
+<h2 id="pre-commit"><a href="#pre-commit" class="headerlink" title="pre commit"></a>pre commit</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/triton-lang/triton/blob/main/.pre-commit-config.yaml">triton precommit config</a></li>
+<li><code>pip install pre-commit</code></li>
+<li><code>pre-commit install</code></li>
+<li><code>git commit</code>会自动修复</li>
+<li><code>python3 -m pre_commit run --all-files --verbose</code> verbose</li>
+<li><code>pre-commit run --from-ref origin/main --to-ref HEAD</code> 修复当前分支问题</li>
+<li><code>pre-commit run --all-files</code>修复所有文件</li>
+<li><code>git diff --name-only --cached | xargs pre-commit run --files</code>修复staged</li>
+<li><code>git config --global alias.fix-staged &#39;!git diff --name-only --cached | xargs pre-commit run --files&#39;</code> <ul>
+<li>配置之后用<code>git fix-staged</code></li>
+</ul>
+</li>
+<li>可以使用本地的Hook <code>file:///tmp/precommit_hooks/pre-commit-hooks</code></li>
+</ol>
+<h2 id="workflow"><a href="#workflow" class="headerlink" title="workflow"></a>workflow</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.cn/jh/topics/gitlab_flow.html#gitlab-flow-%E4%BB%8B%E7%BB%8D">GitLab Flow 介绍</a></li>
+<li><a target="_blank" rel="noopener" href="http://dockone.io/article/2350">GitLab Flow 的 11 条规则</a></li>
+<li>dev 分支开发新功能</li>
+<li>main or master branch 合入新功能</li>
+<li>tag 来确定 release</li>
+</ol>
+<h2 id="submodule"><a href="#submodule" class="headerlink" title="submodule"></a>submodule</h2><ol>
+<li><code>git submodule add https://github.com/NVIDIA/cutlass.git</code></li>
+<li><code>git submodule update --init --recursive</code></li>
+</ol>
+<h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><ol>
+<li><code>strings /share_data/triton/llvm_19_dir/250625/bin/llc | grep div.full</code> 检查llc是否注册intrinsic</li>
+<li><code>git restore --source develop src/main.cpp</code> 将某个文件切换到某个分支内容</li>
+<li><code>git grep GK_GFX950 v3.3.1</code>从某个tag查找内容</li>
+<li><code>git remote set-url origin git@xxx</code> 更新remote</li>
+<li><code>git config --global core.editor &quot;vi&quot;</code> 设置编辑器为vi</li>
+<li><code>git clone -b llvmorg-19.1.3 --depth=1 https://github.com/llvm/llvm-project</code></li>
+<li>获取某个commit：<code>wget https://github.com/llvm/llvm-project/archive/186a4b3b657878ae2aea23caf684b6e103901162.zip</code></li>
+<li>获取某个commit:</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone --depth 1 &lt;repository_url&gt;</span><br><span class="line">cd &lt;repository_name&gt;</span><br><span class="line">git fetch --depth=1 origin &lt;commit_hash&gt;</span><br><span class="line">git checkout &lt;commit_hash&gt;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>git-lfs</code> - Work with large files in Git repositories</li>
+<li><code>git lfs clone https://xxx</code></li>
+<li><code>git lfs install &amp;&amp; git lfs pull</code> 已经存在的 repo</li>
+<li>git lfs pull 加速</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.proxy http://10.31.10.80:7890</span><br><span class="line">git config --global https.proxy https://10.31.10.80:7890</span><br><span class="line">git config --global --list</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>git fetch –prune 会自动创建本地分支</li>
+<li>先合并 commit, 再 rebase， 就不会出现 merge 多次现象,</li>
+<li><code>git log --format=&#39;%aN&#39; | sort -u | while read name; do echo -en &quot;作者： $name\t&quot;; git log --author=&quot;$name&quot; --pretty=tformat: --numstat | awk &#39;&#123; add += $1; subs += $2; loc += $1 - $2 &#125; END &#123; printf &quot;添加行数: %s, 删除的行数: %s, 代码总行数: %s\n&quot;, add, subs, loc &#125;&#39; -; done</code> 统计仓库每个成员代码量</li>
+<li><code>GIT_TRACE=1 GIT_CURL_VERBOSE=1 git clone </code> 定位问题</li>
+<li><code>git commit --amend --no-edit</code> 将staged和上次commit合并成新的commit， commit message不变</li>
+<li><code>git commit --amend --date=now --no-edit</code> 修改 commit 时间 <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/5017265">link</a></li>
+<li><code>--no-pager</code> 直接显示，不用按 q 退出 git –no-pager log -n 20</li>
+<li>magit <code>$</code> 查看具体命令</li>
+<li><code>git add --update</code> 添加所有修改的文件</li>
+<li><code>git describe --always --dirty --match &#39;NOT A TAG&#39;</code>当前信息 无 tag</li>
+<li><code>git describe --dirty --tags</code>: 显示当前 commit 信息；例如 v1.0.1-100-gad0ddd0-dirty; v1.0.1 是最近 tag, 100 是第多少次提交；gxxx 是 commit 号， dirty 是有改动</li>
+<li><code>tldr git tag</code>: show how to use git tag</li>
+<li><code>origin</code>为<code>远程</code>仓库名，不是分支。 .git&#x2F;config 中有远程仓库 origin 对应的 url 和 fetch</li>
+<li>upstream 上游仓库: <a target="_blank" rel="noopener" href="https://blog.csdn.net/xo3ylAF9kGs/article/details/114810781">Git 的 origin 和 upstream，如何用？</a><br><img src="https://img-blog.csdnimg.cn/img_convert/3753944fa6c4d586d337464233e75a61.png" alt="upstream"></li>
+<li><code>git tag v0.0.1 &amp;&amp; git push orgin v0.0.1</code> 创建和 push tag</li>
+</ol>
+<h2 id="git-修改-commit"><a href="#git-修改-commit" class="headerlink" title="git 修改 commit"></a>git 修改 commit</h2><ol>
+<li>git rebase –interactive HEAD~2</li>
+<li>修改： <code>c</code> &#x3D;&gt; <code>w</code> &#x3D;&gt; <code>C-c C-c</code></li>
+<li>合并： magit: rebase <code>r</code> &#x3D;&gt;<code>i</code> &#x3D;&gt; <code>C-c C-c</code> &#x3D;&gt; <code>f .. f</code> &#x3D;&gt; <code>C-c C-c</code></li>
+<li><code>ce</code> Extend 当前 Staged 的文件合并到上一次提交中 git commit –amend –no-edit</li>
+<li><code>ca</code> Amend 只修改上次提交的日志 git commit –amend</li>
+</ol>
+<h2 id="commit-规范"><a href="#commit-规范" class="headerlink" title="commit 规范"></a>commit 规范</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.conventionalcommits.org/zh-hans/v1.0.0/">约定式提交</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines">Commit Message Guidelines</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#">手册</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines">Angular 约定</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/feflow/git-commit-style-guide">guide</a></li>
+</ol>
+<h2 id="add-git-info-in-C-exe"><a href="#add-git-info-in-C-exe" class="headerlink" title="add git info in C++ exe"></a>add git info in C++ exe</h2><ol>
+<li><a target="_blank" rel="noopener" href="http://xit0.org/2013/04/cmake-use-git-branch-and-commit-details-in-project/">cmake</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/51727566/how-to-make-git-commit-hash-available-in-c-code-without-needless-recompiling">without compiling</a></li>
+</ol>
+<h2 id="ERROR"><a href="#ERROR" class="headerlink" title="ERROR"></a>ERROR</h2><ol>
+<li><code>git config --global http.postBuffer 5242880000</code> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/mmzs/p/12039888.html">git clone https 失败</a></li>
+</ol>
+<h2 id="git-权限问题"><a href="#git-权限问题" class="headerlink" title="git 权限问题"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zqb-all/p/10631505.html">git 权限问题</a></h2><ol>
+<li>mount 问题解决<code>chmod o+w -R .</code> <code>find . -type f | xargs chmod o+w</code> <code>chmod o+w $(find . -type f)</code> 给其他用户加写权限， 不会有 git 历史，umask 022</li>
+<li><a target="_blank" rel="noopener" href="https://learnku.com/laravel/t/5340/linux-solution-to-modify-the-file-permissions-caused-by-the-git-record-file-changes">不跟踪权限</a></li>
+</ol>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><ol>
+<li><p>Git 是一个<code>内容寻址文件系统</code>，Git 的核心部分是一个简单的键值对数据库（key-value data store）。你可以向 Git 仓库中插入任意类型的内容，它会返回一个唯一的键，通过该键可以在任意时刻再次取回该内容。</p>
+</li>
+<li><p>.git 下四个条目很重要：HEAD 文件、（尚待创建的）index 文件，和 objects 目录、refs 目录。 它们都是 Git 的核心组成部分。</p>
+<ul>
+<li><code>objects</code> 目录存储所有数据内容；</li>
+<li><code>refs</code> 目录存储指向数据（分支、远程仓库和标签等）的提交对象的指针；</li>
+<li><code>HEAD</code> 文件指向目前被检出的分支；</li>
+<li><code>index</code> 文件保存暂存区信息。</li>
+</ul>
+</li>
+<li><p>.git 其他文件</p>
+<ul>
+<li><code>description</code> 文件仅供 GitWeb 程序使用，我们无需关心。</li>
+<li><code>config</code> 文件包含项目特有的配置选项。</li>
+<li><code>info</code> 目录包含一个全局性排除（global exclude）文件， 用以放置那些不希望被记录在 .gitignore 文件中的忽略模式（ignored patterns）。</li>
+<li><code>hooks</code> 目录包含客户端或服务端的钩子脚本</li>
+</ul>
+</li>
+<li><p><code>git hash-object</code> 会接受你传给它的东西，而它只会返回可以存储在 Git 仓库中的唯一键。 -w 选项会指示该命令不要只返回键，还要将该对象写入数据库中。 这就是开始时 Git 存储内容的方式——一个文件对应一条内容， 以该内容加上特定头部信息一起的 SHA-1 校验和为文件命名。 校验和的前两个字符用于命名子目录，余下的 38 个字符则用作文件名。</p>
+</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> $ <span class="built_in">echo</span> <span class="string">&#x27;test content&#x27;</span> | git hash-object -w --stdin</span><br><span class="line">d670460b4b4aece5915caf5c68d12f560a9fe3e4</span><br><span class="line"> $ find .git/objects -<span class="built_in">type</span> f</span><br><span class="line">.git/objects/d6/70460b4b4aece5915caf5c68d12f560a9fe3e4</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&#x27;version 1&#x27;</span> &gt; test.txt</span><br><span class="line">$ git hash-object -w test.txt</span><br><span class="line">83baae61804e65cc73a7201a7252750c76066a30</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&#x27;version 2&#x27;</span> &gt; test.txt</span><br><span class="line">$ git hash-object -w test.txt</span><br><span class="line">1f7a7a472abf3dd9643fd615f6da379c4acb3e3a</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>通过 <code>cat-file</code> 命令从 Git 那里取回数据。 这个命令简直就是一把剖析 Git 对象的瑞士军刀。 为 cat-file 指定 -p 选项可指示该命令自动判断内容的类型，</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git cat-file -p d670460b4b4aece5915caf5c68d12f560a9fe3e4</span><br><span class="line"><span class="built_in">test</span> content</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>利用 <code>git cat-file -t</code> 命令，可以让 Git 告诉我们其内部存储的任何对象类型，只要给定该对象的 SHA-1 值：</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git cat-file -t 1f7a7a472abf3dd9643fd615f6da379c4acb3e3a</span><br><span class="line">blob</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>上述类型的对象我们称之为 <code>数据对象（blob object）</code></p>
+</li>
+<li><p>Git 另一种对象类型是<code>树对象（tree object）</code>，它能解决文件名保存的问题，也允许我们将多个文件组织到一起。 Git 以一种类似于 UNIX 文件系统的方式存储内容，但作了些许简化。 所有内容均以树对象和数据对象的形式存储，其中树对象对应了 UNIX 中的目录项，数据对象则大致上对应了 inodes 或文件内容。 一个树对象包含了一条或多条树对象记录（tree entry），每条记录含有一个指向数据对象或者子树对象的 SHA-1 指针，以及相应的模式、类型、文件名信息。 例如，某项目当前对应的最新树对象可能是这样的：</p>
+</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git cat-file -p master^&#123;tree&#125;</span><br><span class="line">100644 blob a906cb2a4a904a152e80877d4088654daad0c859      README</span><br><span class="line">100644 blob 8f94139338f9404f26296befa88755fc2598c289      Rakefile</span><br><span class="line">040000 tree 99f1a6d12cb4b6f19c8655fca46c3ecf317074e0      lib</span><br></pre></td></tr></table></figure>
+
+<p>master^{tree} 语法表示 master 分支上最新的提交所指向的树对象。 请注意，lib 子目录（所对应的那条树对象记录）并不是一个数据对象，而是一个指针，其指向的是另一个树对象：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git cat-file -p 99f1a6d12cb4b6f19c8655fca46c3ecf317074e0</span><br><span class="line">100644 blob 47c6340d6459e05787f644c2447d2595f5d3a54b      simplegit.rb</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>可以通过底层命令 <code>git update-index</code> 为一个单独文件——我们的 test.txt 文件的首个版本——创建一个暂存区。</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git update-index --add --cacheinfo 100644 83baae61804e65cc73a7201a7252750c76066a30 test.txt</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>可以通过 <code>git write-tree</code> 命令将暂存区内容写入一个树对象。 此处无需指定 -w 选项——如果某个树对象此前并不存在的话，当调用此命令时， 它会根据当前暂存区状态自动创建一个新的树对象：</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ git write-tree</span><br><span class="line">d8329fc1cc938780ffdd9f94e0d364e0ea74f579</span><br><span class="line">$ git cat-file -p d8329fc1cc938780ffdd9f94e0d364e0ea74f579</span><br><span class="line">100644 blob 83baae61804e65cc73a7201a7252750c76066a30      test.txt</span><br><span class="line">$ git cat-file -t d8329fc1cc938780ffdd9f94e0d364e0ea74f579</span><br><span class="line">tree</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&#x27;new file&#x27;</span> &gt; new.txt</span><br><span class="line">$ git update-index --add --cacheinfo 100644 \</span><br><span class="line">  1f7a7a472abf3dd9643fd615f6da379c4acb3e3a test.txt</span><br><span class="line">$ git update-index --add new.txt</span><br><span class="line"></span><br><span class="line">$ git write-tree</span><br><span class="line">0155eb4229851634a0f03eb265b69f5a2d56f341</span><br><span class="line">$ git cat-file -p 0155eb4229851634a0f03eb265b69f5a2d56f341</span><br><span class="line">100644 blob fa49b077972391ad58037050f2a75f74e3671e92      new.txt</span><br><span class="line">100644 blob 1f7a7a472abf3dd9643fd615f6da379c4acb3e3a      test.txt</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>只是为了好玩：你可以将第一个树对象加入第二个树对象，使其成为新的树对象的一个子目录。 通过调用 <code>git read-tree</code> 命令，可以把树对象读入暂存区。 本例中，可以通过对该命令指定 –prefix 选项，将一个已有的树对象作为子树读入暂存区：</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ git read-tree --prefix=bak d8329fc1cc938780ffdd9f94e0d364e0ea74f579</span><br><span class="line">$ git write-tree</span><br><span class="line">3c4e9cd789d88d8d89c1073707c3585e41b0e614</span><br><span class="line">$ git cat-file -p 3c4e9cd789d88d8d89c1073707c3585e41b0e614</span><br><span class="line">040000 tree d8329fc1cc938780ffdd9f94e0d364e0ea74f579      bak</span><br><span class="line">100644 blob fa49b077972391ad58037050f2a75f74e3671e92      new.txt</span><br><span class="line">100644 blob 1f7a7a472abf3dd9643fd615f6da379c4acb3e3a      test.txt</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>那么现在就有了三个树对象，分别代表我们想要跟踪的不同项目快照。 然而问题依旧：若想重用这些快照，你必须记住所有三个 SHA-1 哈希值。 并且，你也完全不知道是谁保存了这些快照，在什么时刻保存的，以及为什么保存这些快照。 而以上这些，正是<code>提交对象（commit object）</code>能为你保存的基本信息。</li>
+<li>可以通过调用 <code>commit-tree</code> 命令创建一个提交对象，为此需要指定一个树对象的 SHA-1 值，以及该提交的父提交对象（如果有的话）。 我们从之前创建的第一个树对象开始：</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">&#x27;first commit&#x27;</span> | git commit-tree d8329f</span><br><span class="line">fdf4fc3344e67ab068f836878b6c4951e3b15f3d</span><br></pre></td></tr></table></figure>
+
+<p>由于创建时间和作者数据不同，你现在会得到一个不同的散列值。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git cat-file -p fdf4fc3</span><br><span class="line">tree d8329fc1cc938780ffdd9f94e0d364e0ea74f579</span><br><span class="line">author Scott Chacon &lt;schacon@gmail.com&gt; 1243040974 -0700</span><br><span class="line">committer Scott Chacon &lt;schacon@gmail.com&gt; 1243040974 -0700</span><br><span class="line"></span><br><span class="line">first commit</span><br></pre></td></tr></table></figure>
+
+<p>提交对象的格式很简单：它先指定一个顶层树对象，代表当前项目快照； 然后是可能存在的父提交（前面描述的提交对象并不存在任何父提交）； 之后是作者&#x2F;提交者信息（依据你的 user.name 和 user.email 配置来设定，外加一个时间戳）； 留空一行，最后是提交注释。</p>
+<ol>
+<li><p>每次我们运行 git add 和 git commit 命令时，Git 所做的工作实质就是将被改写的文件保存为数据对象， 更新暂存区，记录树对象，最后创建一个指明了顶层树对象和父提交的提交对象。 这三种主要的 Git 对象——<code>数据对象、树对象、提交对象</code>——最初均以单独文件的形式保存在 .git&#x2F;objects 目录下。</p>
+</li>
+<li><p>如果你对仓库中从一个提交（比如 1a410e）开始往前的历史感兴趣，那么可以运行 git log 1a410e 这样的命令来显示历史，不过你需要记得 1a410e 是你查看历史的起点提交。 如果我们有一个文件来保存 SHA-1 值，而该文件有一个简单的名字， 然后用这个名字指针来替代原始的 SHA-1 值的话会更加简单。<br>在 Git 中，这种简单的名字被称为<code>引用（references，或简写为 refs）</code></p>
+</li>
+<li><p>若要创建一个新引用来帮助记忆最新提交所在的位置，从技术上讲我们只需简单地做如下操作：</p>
+</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> 1a410efbd13591db07496601ebc7a059dd55cfe9 &gt; .git/refs/heads/master</span><br></pre></td></tr></table></figure>
+
+<p>现在，你就可以在 Git 命令中使用这个刚创建的新引用来代替 SHA-1 值了：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">log</span> --pretty=oneline master</span><br><span class="line">1a410efbd13591db07496601ebc7a059dd55cfe9 third commit</span><br><span class="line">cac0cab538b970a37ea1e769cbbde608743bc96d second commit</span><br><span class="line">fdf4fc3344e67ab068f836878b6c4951e3b15f3d first commit</span><br></pre></td></tr></table></figure>
+
+<p>我们不提倡直接编辑引用文件。 如果想更新某个引用，Git 提供了一个更加安全的命令 <code>update-ref</code> 来完成此事：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git update-ref refs/heads/master 1a410efbd13591db07496601ebc7a059dd55cfe9</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>这基本就是 Git <code>分支的本质：一个指向某一系列提交之首的指针或引用</code>。 若想在第二个提交上创建一个分支，可以这么做：</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git update-ref refs/heads/test cac0ca</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>至此，我们的 Git 数据库从概念上看起来像这样：<br><img src="https://git-scm.com/book/en/v2/images/data-model-4.png" alt="包含分支引用的 Git 目录对象"><br>当运行类似于 git branch <branch> 这样的命令时，Git 实际上会运行 update-ref 命令， 取得当前所在分支最新提交对应的 SHA-1 值，并将其加入你想要创建的任何新引用中。</p>
+</li>
+<li><p>当你执行 git branch <branch> 时，Git 如何知道最新提交的 SHA-1 值呢？ 答案是 HEAD 文件。</p>
+</li>
+<li><p><code>HEAD 文件通常是一个符号引用（symbolic reference），指向目前所在的分支</code>。 所谓符号引用，表示它是一个指向其他引用的指针。</p>
+</li>
+<li><p>当我们执行 git commit 时，该命令会创建一个提交对象，并用 HEAD 文件中那个引用所指向的 SHA-1 值设置其父提交字段。<br>你也可以手动编辑该文件，然而同样存在一个更安全的命令来完成此事：git symbolic-ref。 可以借助此命令来查看 HEAD 引用对应的值：</p>
+</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git symbolic-ref HEAD</span><br><span class="line">refs/heads/master</span><br></pre></td></tr></table></figure>
+
+<p>同样可以设置 HEAD 引用的值：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git symbolic-ref HEAD refs/heads/test</span><br><span class="line">$ <span class="built_in">cat</span> .git/HEAD</span><br><span class="line">ref: refs/heads/test</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>标签引用</code><br>前面我们刚讨论过 Git 的<code>三种主要的对象类型（数据对象、树对象 和 提交对象 ）</code>，然而实际上还有第四种。 <code>标签对象（tag object）</code> 非常类似于一个提交对象——它包含一个标签创建者信息、一个日期、一段注释信息，以及一个指针。 主要的区别在于，标签对象通常指向一个提交对象，而不是一个树对象。 <code>它像是一个永不移动的分支引用——永远指向同一个提交对象</code>，只不过给这个提交对象加上一个更友好的名字罢了。</li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://learngitbranching.js.org/?locale=zh_CN">git 游戏</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/190303151">git 可视化</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xueweihan/p/13524162.html">5 git workflow</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/12/git-workflow.html?bsh_bid=2219775734">一文弄懂 Gitflow、Github flow、Gitlab flow 的工作流</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.51cto.com/nanjke/3030113">gitflow github_flow gitlab_flow</a></li>
+<li><a target="_blank" rel="noopener" href="https://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ByteByteGoHq/system-design-101#how-does-git-work">how-does-git-work</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/09/05/How-to-use-org-mode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/05/How-to-use-org-mode/" class="post-title-link" itemprop="url">How to use org mode</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-05 23:05:33" itemprop="dateCreated datePublished" datetime="2020-09-05T23:05:33+08:00">2020-09-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Emacs/" itemprop="url" rel="index"><span itemprop="name">Emacs</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/09/05/How-to-use-org-mode/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/05/How-to-use-org-mode/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Shortkeys"><a href="#Shortkeys" class="headerlink" title="Shortkeys"></a>Shortkeys</h2><ol>
+<li>next&#x2F;previous heading <code>C-c C-n/p</code></li>
+<li>next&#x2F;previous heading, same level <code>C-c C-f/b</code></li>
+<li><code>org-agenda-list</code> show agenda list</li>
+<li><code>org-open-at-point</code> <code>C-c C-o</code> open links</li>
+</ol>
+<h2 id="capture-refile-archiving"><a href="#capture-refile-archiving" class="headerlink" title="capture -&gt; refile -&gt; archiving"></a>capture -&gt; refile -&gt; archiving</h2><ol>
+<li>C-c c capture a new item (C-u C-u &#x3D; goto last)</li>
+<li>C-c C-w refile subtree (C-u C-u &#x3D; goto last)</li>
+<li>C-c C-x C-a archive subtree using the default command</li>
+<li>C-c C-x C-s move subtree to archive file</li>
+<li>C-c C-x a&#x2F;A toggle ARCHIVE tag &#x2F; to ARCHIVE sibling</li>
+</ol>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><ol>
+<li><code>&lt;src</code> to insert src block</li>
+<li><code>(org-babel-do-load-languages &#39;org-babel-load-languages &#39;((shell . t)))</code> enable sh</li>
+<li><code>(org-babel-do-load-languages &#39;org-babel-load-languages &#39;((C . t)))</code> enable c++</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#+begin_src cpp</span><br><span class="line">    <span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;hello world!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">#+end_src</span><br><span class="line"></span><br><span class="line">#+RESULTS:</span><br><span class="line">: hello world!</span><br></pre></td></tr></table></figure>
+
+<h2 id="Table"><a href="#Table" class="headerlink" title="Table"></a>Table</h2><ol>
+<li><code>|------+-----------|</code> 是 row 0</li>
+<li><code>org-table-export</code> test.csv 导出 csv</li>
+<li>公式<ul>
+<li><code>:=</code> 只对当前单元格起作用</li>
+<li><code>=</code> 对一行或一列起作用</li>
+<li><code>@</code> 指定行</li>
+<li><code>$</code> 指定列</li>
+<li><code>C-c &#39;</code> 编辑公式</li>
+<li><code>C-u C-c *</code> 整个表格求公式</li>
+<li>show line, column, formula reference <code>C-c ?</code></li>
+<li>toggle table coordinate grid <code>C-c &#125;</code></li>
+</ul>
+</li>
+<li><code>C-c -</code> insert hline below (C-u : above) current row</li>
+<li><code>C-c RET</code> insert hline and move to line below it</li>
+<li>convert region to table <code>C-c |</code></li>
+<li>move the current column left <code>M-LEFT/RIGHT</code></li>
+<li>move the current row up&#x2F;down <code>M-UP/DOWN</code></li>
+<li>sum numbers in current column&#x2F;rectangle <code>C-c +</code></li>
+<li>re-align the table without moving the cursor <code>C-c C-c</code></li>
+<li>re-align the table, move to next field <code>TAB</code></li>
+<li>move to previous field <code>S-TAB</code></li>
+<li>re-align the table, move to next row <code>RET</code></li>
+</ol>
+<h2 id="Tags"><a href="#Tags" class="headerlink" title="Tags"></a>Tags</h2><ol>
+<li>set tags for current heading <code>C-c C-q</code></li>
+<li>create sparse tree with matching tags <code>C-c \</code></li>
+<li><code>#+FILETAGS: :work</code> all the item in file has work tag</li>
+<li>globally (agenda) match tags at cursor <code>C-c C-o</code></li>
+</ol>
+<h2 id="Priority"><a href="#Priority" class="headerlink" title="Priority"></a>Priority</h2><ol>
+<li>raise&#x2F;lower priority of current item <code>S-UP/DOWN</code></li>
+<li>select next&#x2F;previous state <code>S-LEFT/RIGHT</code></li>
+<li><code>C-c , [ABC]</code> set the priority of the current item</li>
+<li><code>C-c , SPC</code> remove priority cookie from current item</li>
+</ol>
+<h2 id="checkbox"><a href="#checkbox" class="headerlink" title="checkbox"></a><a target="_blank" rel="noopener" href="https://orgmode.org/manual/Checkboxes.html">checkbox</a></h2><ol>
+<li><code>- [ ]</code></li>
+<li><code>C-c C-c</code> org-toggle-checkbox</li>
+<li>…..[&#x2F;] show [1&#x2F;5]</li>
+<li>…..[%] show [20%]</li>
+</ol>
+<h2 id="agenda"><a href="#agenda" class="headerlink" title="agenda"></a>agenda</h2><ol>
+<li><code>calfw-org-mode</code> M-c</li>
+<li><code>tab</code> open on other window</li>
+<li>start&#x2F;stop&#x2F;cancel the <code>clock</code> on current item <code>I / O / X</code></li>
+<li>view mode dispatcher <code>v</code></li>
+<li>add&#x2F;move current file to front of agenda <code>C-c [</code></li>
+<li>remove current file from your agenda <code>C-c ]</code></li>
+<li>cycle through agenda file list <code>C-’</code></li>
+<li>display next&#x2F;previous day,week,… <code>f / b</code></li>
+<li>goto today &#x2F; some date (prompt) <code>. / j</code></li>
+<li><code>d</code> org-agenda-day-view</li>
+<li><code>w</code> org-agenda-week-view</li>
+<li>toggle entry text &#x2F; clock report <code>E / R</code></li>
+</ol>
+<h2 id="clock"><a href="#clock" class="headerlink" title="clock"></a>clock</h2><ol>
+<li>start&#x2F;stop&#x2F;cancel the <code>clock</code> on current item <code>I / O / X</code></li>
+<li>start clock on current item <code>C-c C-x C-i</code></li>
+<li>stop&#x2F;cancel clock on current item <code>C-c C-x C-o/x</code></li>
+</ol>
+<h3 id="Calfw-org-mode"><a href="#Calfw-org-mode" class="headerlink" title="Calfw-org-mode"></a><a target="_blank" rel="noopener" href="https://github.com/kiwanami/emacs-calfw">Calfw-org-mode</a></h3><h2 id="Timestamp"><a href="#Timestamp" class="headerlink" title="Timestamp"></a>Timestamp</h2><ol>
+<li>prompt for date and insert timestamp <code>C-c .</code></li>
+<li>insert DEADLINE timestamp <code>C-c C-d</code></li>
+<li>insert SCHEDULED timestamp <code>C-c C-s</code>. <code>.</code> goto today</li>
+<li>stampe: <code>+1 20:00+1</code> +1day and 20:00-21:00</li>
+<li>change timestamp at cursor ±1 day <code>S-RIGHT/LEFT</code></li>
+<li>change year&#x2F;month&#x2F;day at cursor by ±1 <code>S-UP/DOWN</code></li>
+</ol>
+<h1 id="startup"><a href="#startup" class="headerlink" title="startup"></a><a target="_blank" rel="noopener" href="https://orgmode.org/manual/Initial-visibility.html">startup</a></h1><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#+STARTUP: overview</span></span><br><span class="line"><span class="meta">#+STARTUP: content</span></span><br><span class="line"><span class="meta">#+STARTUP: showall</span></span><br><span class="line"><span class="meta">#+STARTUP: show2levels</span></span><br><span class="line"><span class="meta">#+STARTUP: show3levels</span></span><br><span class="line"><span class="meta">#+STARTUP: show4levels</span></span><br><span class="line"><span class="meta">#+STARTUP: show5levels</span></span><br><span class="line"><span class="meta">#+STARTUP: showeverything</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Configs"><a href="#Configs" class="headerlink" title="Configs"></a>Configs</h1><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">global-set-key</span> (<span class="name">kbd</span> <span class="string">&quot;&lt;f9&gt;&quot;</span>) &#x27;org-clock-jump-to-current-clock)</span><br><span class="line">(<span class="name">global-set-key</span> (<span class="name">kbd</span> <span class="string">&quot;&lt;f12&gt;&quot;</span>) &#x27;org-agenda-list)</span><br><span class="line">(<span class="name">global-set-key</span> (<span class="name">kbd</span> <span class="string">&quot;C-c l&quot;</span>) &#x27;org-store-link)</span><br><span class="line">(<span class="name">global-set-key</span> (<span class="name">kbd</span> <span class="string">&quot;C-c a&quot;</span>) &#x27;org-agenda)</span><br><span class="line">(<span class="name">global-set-key</span> (<span class="name">kbd</span> <span class="string">&quot;C-c c&quot;</span>) &#x27;org-capture)</span><br><span class="line"></span><br><span class="line">(<span class="name">setq</span> org-clock-out-remove-zero-time-clocks <span class="literal">t</span>)</span><br><span class="line">(<span class="name">setq</span> org-startup-folded &#x27;content</span><br><span class="line">      org-agenda-span &#x27;day</span><br><span class="line">      org-agenda-window-setup &#x27;current-window</span><br><span class="line">      org-agenda-start-on-weekday <span class="literal">nil</span>)</span><br><span class="line">(<span class="name">setq</span> org-agenda-inhibit-startup <span class="literal">t</span>) <span class="comment">;; ~50x speedup</span></span><br><span class="line"><span class="comment">;;(setq org-agenda-use-tag-inheritance nil) ;; 3-4x speedup</span></span><br><span class="line">(<span class="name">setq</span> org-tags-column <span class="number">80</span>)</span><br><span class="line">(<span class="name">set-time-zone-rule</span> <span class="string">&quot;Asia/Shanghai&quot;</span>) <span class="comment">;; show china time zone</span></span><br><span class="line">(<span class="name">add-hook</span> &#x27;org-agenda-mode-hook</span><br><span class="line">            (<span class="name">lambda</span> () (<span class="name">add-hook</span> &#x27;window-configuration-change-hook</span><br><span class="line">                                 &#x27;org-agenda-align-tags <span class="literal">nil</span> <span class="literal">t</span>)))</span><br><span class="line"></span><br><span class="line">(<span class="name">setq</span> org-directory <span class="string">&quot;~/org&quot;</span>)</span><br><span class="line">(<span class="name">setq</span> org-default-notes-file (<span class="name">concat</span> org-directory <span class="string">&quot;/notes.org&quot;</span>))</span><br><span class="line">(<span class="name">setq</span> org-agenda-files &#x27;(<span class="string">&quot;~/org/gtd.org&quot;</span></span><br><span class="line">			 <span class="string">&quot;~/org/daily.org&quot;</span></span><br><span class="line">			 <span class="string">&quot;~/org/weekly.org&quot;</span></span><br><span class="line">			 <span class="string">&quot;~/org/ideas.org&quot;</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(<span class="name">setq</span> org-highest-priority ?A)</span><br><span class="line">(<span class="name">setq</span> org-lowest-priority  ?D)</span><br><span class="line">(<span class="name">setq</span> org-default-priority ?D)</span><br><span class="line">(<span class="name">setq</span> org-priority-faces</span><br><span class="line">      &#x27;((?A . (:background <span class="string">&quot;red&quot;</span> :foreground <span class="string">&quot;white&quot;</span> :weight bold))</span><br><span class="line">        (?B . (:background <span class="string">&quot;DarkOrange&quot;</span> :foreground <span class="string">&quot;white&quot;</span> :weight bold))</span><br><span class="line">        (?C . (:background <span class="string">&quot;yellow&quot;</span> :foreground <span class="string">&quot;DarkGreen&quot;</span> :weight bold))</span><br><span class="line">        (?D . (:background <span class="string">&quot;DodgerBlue&quot;</span> :foreground <span class="string">&quot;black&quot;</span> :weight bold))</span><br><span class="line">        ))</span><br><span class="line">(<span class="name">setq</span> org-todo-keywords</span><br><span class="line">      &#x27;((sequence <span class="string">&quot;TODO(t)&quot;</span> <span class="string">&quot;|&quot;</span> <span class="string">&quot;DONE(d)&quot;</span> <span class="string">&quot;CANCELED(c@/!)&quot;</span>)))</span><br><span class="line">        <span class="comment">;; (sequence &quot;|&quot; &quot;CANCELED(c)&quot;)))</span></span><br><span class="line">(<span class="name">setq</span> org-todo-keyword-faces &#x27;(</span><br><span class="line">                               ;; (<span class="string">&quot;TODO&quot;</span> . org-warning)</span><br><span class="line">                               ;; (<span class="string">&quot;DONE&quot;</span> . <span class="string">&quot;green&quot;</span>)</span><br><span class="line">                               (<span class="string">&quot;CANCELED&quot;</span> . <span class="string">&quot;grey&quot;</span>)</span><br><span class="line">                               ))</span><br><span class="line">(<span class="name">setq</span> org-agenda-prefix-format</span><br><span class="line">      (<span class="name">quote</span></span><br><span class="line">       ((<span class="name">agenda</span> . <span class="string">&quot; %-10:c%?-12t% s&quot;</span>))))</span><br><span class="line">(<span class="name">defun</span> my<span class="symbol">:open-org-calendar</span> ()</span><br><span class="line">  <span class="string">&quot;Open an org schedule calendar in the new buffer.&quot;</span></span><br><span class="line">  (<span class="name">interactive</span>)</span><br><span class="line">  (<span class="name">save-excursion</span></span><br><span class="line">    (<span class="name">let*</span> ((<span class="name">source1</span> (<span class="name">cfw</span><span class="symbol">:org-create-source</span>))</span><br><span class="line">           (<span class="name">curr-keymap</span> (<span class="name">if</span> cfw<span class="symbol">:org-overwrite-default-keybinding</span> cfw<span class="symbol">:org-custom-map</span> cfw<span class="symbol">:org-schedule-map</span>))</span><br><span class="line">           (<span class="name">cp</span> (<span class="name">cfw</span><span class="symbol">:create-calendar-component-buffer</span></span><br><span class="line">                <span class="symbol">:view</span> &#x27;week</span><br><span class="line">                <span class="symbol">:contents-sources</span> (<span class="name">list</span> source1)</span><br><span class="line">                <span class="symbol">:custom-map</span> curr-keymap</span><br><span class="line">                <span class="symbol">:sorter</span> &#x27;cfw<span class="symbol">:org-schedule-sorter</span>)))</span><br><span class="line">      (<span class="name">switch-to-buffer</span> (<span class="name">cfw</span><span class="symbol">:cp-get-buffer</span> cp))</span><br><span class="line">      (<span class="name">when</span> (<span class="name">not</span> org-todo-keywords-for-agenda)</span><br><span class="line">        (<span class="name">message</span> <span class="string">&quot;Warn : open org-agenda buffer first.&quot;</span>)))))</span><br><span class="line"></span><br><span class="line">(<span class="name">defun</span> calfw-org-mode()</span><br><span class="line">  <span class="string">&quot;Open calfw org&quot;</span></span><br><span class="line">  (<span class="name">interactive</span>)</span><br><span class="line">  (<span class="name">load-file</span> <span class="string">&quot;~/.emacs.d/straight/build/calfw-org/calfw-org.el&quot;</span>)</span><br><span class="line">  (<span class="name">my</span><span class="symbol">:open-org-calendar</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(<span class="name">defun</span> get-pic-from-url (<span class="name">url</span> filename)</span><br><span class="line">  (<span class="name">shell-command</span> (<span class="name">concat</span> <span class="string">&quot;wget -O &quot;</span> filename <span class="string">&quot; &quot;</span> url)))</span><br><span class="line">(<span class="name">defun</span> org-pomodoro-get-pictures ()</span><br><span class="line">  <span class="string">&quot;Get pomodoro notification pictures&quot;</span></span><br><span class="line">  (<span class="name">interactive</span>)</span><br><span class="line">  <span class="comment">;; (get-pic-from-url &quot;https://pic3.zhimg.com/e76fc9f4120b9bd6ca2a7ae03a447f19_1440w.jpg?source=172ae18b&quot; &quot;~/begin_short_break.jpg&quot;)</span></span><br><span class="line">  (<span class="name">get-pic-from-url</span></span><br><span class="line">  <span class="string">&quot;https://previews.123rf.com/images/vaselena/vaselena1507/vaselena150700001/42287443-white-alarm-clock-with-red-clock-face-with-inscription-coffee-time-without-figures-on-white-backgrou.jpg&quot;</span></span><br><span class="line">  <span class="string">&quot;~/coffe_time.jpg&quot;</span>)</span><br><span class="line">  (<span class="name">get-pic-from-url</span></span><br><span class="line">  <span class="string">&quot;https://previews.123rf.com/images/vaselena/vaselena1510/vaselena151000045/47728782-white-alarm-clock-with-red-clock-face-with-inscription-work-time-without-figures-on-white-background.jpg&quot;</span></span><br><span class="line">  <span class="string">&quot;~/work_time.jpg&quot;</span>))</span><br><span class="line"></span><br><span class="line">(<span class="name">add-hook</span> &#x27;org-pomodoro-finished-hook</span><br><span class="line">          (<span class="name">lambda</span> ()</span><br><span class="line">            (<span class="name">w32-shell-execute</span> <span class="string">&quot;open&quot;</span> <span class="string">&quot;~/coffe_time.jpg&quot;</span>)))</span><br><span class="line">(<span class="name">add-hook</span> &#x27;org-pomodoro-break-finished-hook</span><br><span class="line">          (<span class="name">lambda</span> ()</span><br><span class="line">            (<span class="name">w32-shell-execute</span> <span class="string">&quot;open&quot;</span> <span class="string">&quot;~/work_time.jpg&quot;</span>)))</span><br><span class="line">(<span class="name">add-hook</span> &#x27;org-pomodoro-long-break-finished-hook</span><br><span class="line">          (<span class="name">lambda</span> ()</span><br><span class="line">            (<span class="name">w32-shell-execute</span> <span class="string">&quot;open&quot;</span> <span class="string">&quot;~/work_time.jpg&quot;</span>)))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="pdf"><a href="#pdf" class="headerlink" title="pdf"></a>pdf</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/melvincabatuan/350f86611bc012a5c1c6">link</a></li>
+<li><code>sudo yum -y --skip-broken install texlive-\*</code></li>
+<li>install texlive-full <a target="_blank" rel="noopener" href="https://baohaojun.github.io/blog/2016/12/13/0-How-to-export-Chinese-with-Org-mode-Latex-backend.html">link</a></li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.gnu.org/software/emacs/refcards/pdf/orgcard.pdf">cheatsheat</a></li>
+<li><a target="_blank" rel="noopener" href="https://orgmode.org/">Org Mode</a></li>
+<li><a target="_blank" rel="noopener" href="https://orgmode.org/worg/orgcard.html">org card</a></li>
+<li><a target="_blank" rel="noopener" href="https://orgmode.org/orgguide.pdf">Org Guide</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Open_Source/archive/2011/07/17/2108747.html">Org Mode Chinese Tutorial</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1430,437 +2115,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/07/22/Zsh-config/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/22/Zsh-config/" class="post-title-link" itemprop="url">Zsh config</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-22 15:19:28" itemprop="dateCreated datePublished" datetime="2020-07-22T15:19:28+08:00">2020-07-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-01-05 19:05:51" itemprop="dateModified" datetime="2025-01-05T19:05:51+08:00">2025-01-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/Zsh/" itemprop="url" rel="index"><span itemprop="name">Zsh</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/07/22/Zsh-config/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/22/Zsh-config/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>4.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Settings"><a href="#Settings" class="headerlink" title="Settings"></a>Settings</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">export TERM=&quot;screen-256color&quot;</span><br><span class="line"></span><br><span class="line">ZSH_HIGHLIGHT_STYLES[arg0]=&#x27;fg=#26ff00,bold&#x27;</span><br><span class="line">ZSH_HIGHLIGHT_STYLES[command]=&#x27;fg=#26ff00,bold&#x27;</span><br><span class="line"></span><br><span class="line">export FZF_DEFAULT_OPTS=&quot;--color=hl:green,hl+:#00ff00&quot; # 设置fzf color</span><br><span class="line"></span><br><span class="line">precmd() &#123;                                                                                                                                          print -n &#x27;\n&#x27;                                                                                                                                 &#125;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="function"><span class="title">precmd</span></span>() &#123;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  <span class="built_in">print</span> -n <span class="string">&#x27;⚡\n\n&#x27;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">&#125;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="function"><span class="title">precmd</span></span>() &#123;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  <span class="built_in">print</span> -n <span class="string">&#x27;\n&#x27;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  <span class="built_in">local</span> width=$(tput cols)  <span class="comment"># 获取终端宽度</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  <span class="built_in">printf</span> <span class="string">&#x27;%*s\n&#x27;</span> <span class="string">&quot;<span class="variable">$width</span>&quot;</span> <span class="string">&#x27;&#x27;</span> | <span class="built_in">tr</span> <span class="string">&#x27; &#x27;</span> <span class="string">&#x27;-&#x27;</span>  <span class="comment"># 打印一行 &#x27;-&#x27;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">&#125;</span></span><br><span class="line">precmd() &#123;</span><br><span class="line">  local width=$(tput cols)  # 获取终端宽度</span><br><span class="line">  local line=$(printf &#x27;%*s&#x27; &quot;$width&quot; &#x27;&#x27; | tr &#x27; &#x27; &#x27;-&#x27;)  # 生成宽度为终端宽度的一行 &#x27;-&#x27;</span><br><span class="line"></span><br><span class="line">  print -n &#x27;\n&#x27;</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">设置浅灰色并打印</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  <span class="built_in">printf</span> <span class="string">&#x27;\033[90m%s\033[0m\n&#x27;</span> <span class="string">&quot;<span class="variable">$line</span>&quot;</span></span></span><br><span class="line">  printf &#x27;\033[38;2;100;100;100m%s\033[0m\n\n&#x27; &quot;$line&quot;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">bash功能</span></span><br><span class="line">PROMPT_COMMAND=&#x27;</span><br><span class="line">  width=$(tput cols)  # 获取终端宽度</span><br><span class="line">  line=$(printf &quot;%*s&quot; &quot;$width&quot; &quot;&quot; | tr &quot; &quot; &quot;-&quot;)  # 生成宽度为终端宽度的一行 &quot;-&quot;</span><br><span class="line">  printf &quot;\n\033[38;2;100;100;100m%s\033[0m\n\n&quot; &quot;$line&quot;  # 打印浅灰色的一行 &quot;-&quot;</span><br><span class="line">&#x27;</span><br><span class="line">  </span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="NOTE"><a href="#NOTE" class="headerlink" title="NOTE"></a>NOTE</h2><ol>
-<li>scp not work</li>
-</ol>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># remember to put this code to .bashrc before <span class="built_in">execute</span> zsh</span><br><span class="line"># If <span class="keyword">not</span>, scp can <span class="keyword">not</span> work.</span><br><span class="line"><span class="string">[[ $- == *i* ]]</span> || <span class="keyword">return</span></span><br><span class="line">zsh</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>如果你使用的是 zsh，上面的通配符会失效，你可以切换到 bash 执行这些命令，或者使用 setopt no_nomatch 来关闭 zsh 对于通配符的拦截</li>
-</ol>
-<h2 id="oh-my-zsh"><a href="#oh-my-zsh" class="headerlink" title="oh my zsh"></a>oh my zsh</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="microsoft-inshellisense-npm-issue"><a href="#microsoft-inshellisense-npm-issue" class="headerlink" title="microsoft&#x2F;inshellisense npm issue"></a><a target="_blank" rel="noopener" href="https://github.com/microsoft/inshellisense">microsoft&#x2F;inshellisense</a> <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/61404290">npm issue</a></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @microsoft/inshellisense</span><br><span class="line">inshellisense <span class="built_in">bind</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="autosuggestions"><a href="#autosuggestions" class="headerlink" title="autosuggestions"></a>autosuggestions</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://github.com/zsh-users/zsh-autosuggestions <span class="variable">$ZSH_CUSTOM</span>/custom/plugins/zsh-autosuggestions</span><br><span class="line">sed -i <span class="string">&quot;s/fg=8/fg=cyan/&quot;</span> .oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh</span><br><span class="line">vi ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 文件，修改 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=<span class="string">&#x27;fg=blue&#x27;</span></span><br><span class="line"><span class="comment"># support colors: black, red, green; yellow; blue; magenta; cyan and white;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="zsh-syntax-highlighting"><a href="#zsh-syntax-highlighting" class="headerlink" title="zsh-syntax-highlighting"></a>zsh-syntax-highlighting</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://github.com/jimmijj/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting</span><br><span class="line">vi ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh <span class="comment">#默认配色</span></span><br><span class="line"></span><br><span class="line">ZSH_HIGHLIGHT_STYLES[arg0]=<span class="string">&#x27;fg=yellow,bold&#x27;</span> <span class="comment">#命令行里先实验，让后放到.zshrc中</span></span><br><span class="line">ZSH_HIGHLIGHT_STYLES[<span class="built_in">command</span>]=<span class="string">&#x27;fg=#26ff00,bold&#x27;</span></span><br><span class="line">ZSH_HIGHLIGHT_STYLES[arg0]=<span class="string">&#x27;fg=#26ff00,bold&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="zshrc-config"><a href="#zshrc-config" class="headerlink" title=".zshrc config"></a>.zshrc config</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PROMPT=<span class="string">&quot;%n@%m:%1~%# &quot;</span></span><br><span class="line">plugins=(rust rustup cargo zsh-autosuggestions zsh-syntax-highlighting colored-man-pages tmux fd)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Othe-config"><a href="#Othe-config" class="headerlink" title="Othe config"></a>Othe config</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config oh-my-zsh.hide-status 1 --global <span class="comment">#close git status</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Powlevel9k-theme"><a href="#Powlevel9k-theme" class="headerlink" title="Powlevel9k theme"></a>Powlevel9k theme</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git clone https:<span class="regexp">//gi</span>thub.com<span class="regexp">/bhilburn/</span>powerlevel9k.git ~<span class="regexp">/.oh-my-zsh/</span>custom<span class="regexp">/themes/</span>powerlevel9k</span><br><span class="line">.zshrc：</span><br><span class="line">export TERM=<span class="string">&quot;xterm-256color&quot;</span></span><br><span class="line">POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user dir)</span><br><span class="line">POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(root_indicator background_jobs )</span><br><span class="line">POWERLEVEL9K_MODE=<span class="string">&#x27;awesome-fontconfig&#x27;</span></span><br><span class="line">ZSH_THEME=<span class="string">&quot;powerlevel9k/powerlevel9k&quot;</span></span><br><span class="line">~<span class="regexp">/.oh-my-zsh/</span>custom<span class="regexp">/themes/</span>powerlevel9k/powerlevel9k.zsh-theme          修改  <span class="string">&quot;CONTENT&quot;</span>             <span class="string">&quot;jia@61&quot;</span> <span class="comment">#&quot;$(whoami)&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="awesome-terminal-fonts"><a href="#awesome-terminal-fonts" class="headerlink" title="awesome-terminal-fonts"></a>awesome-terminal-fonts</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/gabrielelana/awesome-terminal-fonts</span><br><span class="line"><span class="built_in">cp</span> -R build/* ~/.fonts/</span><br><span class="line">fc-cache -fv ~/.fonts</span><br><span class="line"><span class="built_in">cp</span> config/10-symbols.conf ~/.config/fontconfig/conf.d</span><br><span class="line"><span class="built_in">source</span> ~/.fonts/*.sh</span><br></pre></td></tr></table></figure>
-
-<h2 id="autojump"><a href="#autojump" class="headerlink" title="autojump"></a>autojump</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://github.com/joelthelion/autojump.git</span><br><span class="line"><span class="built_in">cd</span> autojump</span><br><span class="line">./install.py</span><br></pre></td></tr></table></figure>
-
-<h2 id="powerline-非必须）"><a href="#powerline-非必须）" class="headerlink" title="powerline(非必须）"></a>powerline(非必须）</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install fonts-powerline</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/powerline/fonts.git --depth=1</span><br><span class="line"><span class="built_in">cd</span> fonts</span><br><span class="line">./install.sh</span><br></pre></td></tr></table></figure>
-
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><p>install oh my zsh : sh -c “$(curl -fsSL <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh">https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh</a>)”<br>zsh autosuggestions <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBa075b0a3e60cbde5f506563c3c14997a/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBa075b0a3e60cbde5f506563c3c14997a/</a><br>sudo apt-get install autojump <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEB1da9f35b71c3815439e1426116e7ecf9/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEB1da9f35b71c3815439e1426116e7ecf9/</a><br>Powlevel9k theme install <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBfd1ecc9886dfcf108ee9bae6b586cab6/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBfd1ecc9886dfcf108ee9bae6b586cab6/</a><br>Powerline <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBac4ed9c8ab78bb09940458cfb9b1a397/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBac4ed9c8ab78bb09940458cfb9b1a397/</a><br>awesome-terminal-fonts <a target="_blank" rel="noopener" href="http://www.cnblogs.com/weixuqin/p/7029177.html">http://www.cnblogs.com/weixuqin/p/7029177.html</a><br>zsh-syntax-highlighting <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBef4ca4fdaf7d36950545241429e3daee/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBef4ca4fdaf7d36950545241429e3daee/</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/07/10/Why-Rust/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/10/Why-Rust/" class="post-title-link" itemprop="url">Why Rust</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-10 21:45:08" itemprop="dateCreated datePublished" datetime="2020-07-10T21:45:08+08:00">2020-07-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Rust/" itemprop="url" rel="index"><span itemprop="name">Rust</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/07/10/Why-Rust/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/10/Why-Rust/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>798</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Why-Rust"><a href="#Why-Rust" class="headerlink" title="Why Rust?"></a>Why Rust?</h2><h3 id="Performance"><a href="#Performance" class="headerlink" title="Performance"></a>Performance</h3><ol>
-<li>It’s <strong><code>fast</code></strong> and memory efficient: with no runtime or garbage collector.</li>
-<li>It can easily integrate with other languages.</li>
-</ol>
-<h3 id="Reliability"><a href="#Reliability" class="headerlink" title="Reliability"></a>Reliability</h3><ol>
-<li>It’s rich type system and ownership model guarantee <font color='red'><strong>memory-safety</strong></font> and <font color='red'><strong>thread-safety</strong></font>.</li>
-</ol>
-<h3 id="Productivity"><a href="#Productivity" class="headerlink" title="Productivity"></a>Productivity</h3><ol>
-<li>Great documentation</li>
-<li>Friendly compiler, find most errors when compiling</li>
-<li>An integrated package manager</li>
-<li>Doc system: <code>cargo doc --open</code></li>
-</ol>
-<h2 id="Rust-features"><a href="#Rust-features" class="headerlink" title="Rust features"></a>Rust features</h2><ol>
-<li>Zero-cost abstractions</li>
-<li>Modern conveniences</li>
-<li>Type system: Ownership and Borrowing</li>
-<li>Sense of craftsmanship</li>
-</ol>
-<h2 id="Why-Name-Rust"><a href="#Why-Name-Rust" class="headerlink" title="Why Name Rust?"></a>Why Name Rust?</h2><ol>
-<li>It’s a pun on “chrome”. Rust was written by the engineer company Mozilla(firefox). And chrome is a metal.</li>
-</ol>
-<h2 id="Rust-目的"><a href="#Rust-目的" class="headerlink" title="Rust 目的"></a>Rust 目的</h2><ol>
-<li>创建这个新语言的目的是为了解决一个顽疾：软件的演进速度大大低于硬件的演进，软件在语言级别上无法真正利用多核计算带来的性能提升。Rust是针对多核体系提出的语言，并且吸收一些其他动态语言的重要特性，比如不需要管理内存，比如不会出现Null指针等</li>
-</ol>
-<h2 id="Why-not-C"><a href="#Why-not-C" class="headerlink" title="Why not C++"></a>Why not C++</h2><ol>
-<li>当然C++ 也很好，因为它教会了我怎么面向搜索引擎编程。</li>
-</ol>
-<h2 id="Rust类型系统借鉴Haskell特性"><a href="#Rust类型系统借鉴Haskell特性" class="headerlink" title="Rust类型系统借鉴Haskell特性"></a>Rust类型系统借鉴Haskell特性</h2><ol>
-<li>没有空指针</li>
-<li>类型默认不可变</li>
-<li>表达式</li>
-<li>高阶函数</li>
-<li>代数数据类型</li>
-<li>模式匹配</li>
-<li>泛型</li>
-<li>trait和关联类型</li>
-<li>本地类型推导</li>
-</ol>
-<h2 id="Rust相比Haskell独有特点"><a href="#Rust相比Haskell独有特点" class="headerlink" title="Rust相比Haskell独有特点"></a>Rust相比Haskell独有特点</h2><ol>
-<li>仿射变换(Affine Type)</li>
-<li>借用，生命周期</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/07/09/Rust-start/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/09/Rust-start/" class="post-title-link" itemprop="url">Rust start</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-09 08:56:09" itemprop="dateCreated datePublished" datetime="2020-07-09T08:56:09+08:00">2020-07-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-11 11:15:52" itemprop="dateModified" datetime="2023-10-11T11:15:52+08:00">2023-10-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Rust/" itemprop="url" rel="index"><span itemprop="name">Rust</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/07/09/Rust-start/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/09/Rust-start/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>314</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><img src="https://www.rust-lang.org/static/images/ferris.gif" alt="Ferris"></p>
-<h2 id="Install-on-linux"><a href="#Install-on-linux" class="headerlink" title="Install on linux"></a>Install on linux</h2><ol>
-<li><code>curl https://sh.rustup.rs -sSf | sh</code></li>
-<li><a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/ch01-01-installation.html">Install step</a></li>
-</ol>
-<h2 id="Config"><a href="#Config" class="headerlink" title="Config"></a>Config</h2><ol>
-<li><a target="_blank" rel="noopener" href="http://wcy123.github.io/2020-04-05-setup-rust-IDE-for-emacs.html">wcy’s config</a></li>
-</ol>
-<h2 id="Local-doc"><a href="#Local-doc" class="headerlink" title="Local doc"></a>Local doc</h2><ol>
-<li><code>rustup doc</code></li>
-</ol>
-<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.rust-lang.org/">Officail website</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.rust-lang.org/learn">Official resource</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/rust-unofficial/awesome-rust#readme">Awesome Rust</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/ctjhoa/rust-learning">Rust learning</a></li>
-<li><a target="_blank" rel="noopener" href="https://users.rust-lang.org/">Forum</a></li>
-<li><a target="_blank" rel="noopener" href="https://crates.io/">Packages</a></li>
-<li><a target="_blank" rel="noopener" href="https://doc.rust-lang.org/std/index.html">STD library</a></li>
-<li><a target="_blank" rel="noopener" href="https://doc.rust-lang.org/book/">Rust book</a></li>
-<li><a target="_blank" rel="noopener" href="http://120.78.128.153/rustbook/">Rust book Chinese</a></li>
-<li><a target="_blank" rel="noopener" href="https://doc.rust-lang.org/cargo/">Cargo book</a></li>
-<li><a target="_blank" rel="noopener" href="https://doc.rust-lang.org/stable/rust-by-example/">Rust examples</a></li>
-<li><a target="_blank" rel="noopener" href="https://play.rust-lang.org/">Rust online programming</a></li>
-<li><a target="_blank" rel="noopener" href="https://rustacean.net/">Ferris pictures</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/mohanson/gameboy">Rust gameboy</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/topic/19674381/intro">Rust zhihu</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.infoq.cn/article/Uugi_eIJusEka1aSPmQM">Rust 张汉东</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzU1NDA4NjU2MA==&mid=2247597850&idx=1&sn=679ccdcaf76e8b6ab97ca42687769da1">未来的人工智能语言，是 Rust 还是 Mojo ？</a></li>
-</ol>
-<h2 id="repos"><a href="#repos" class="headerlink" title="repos"></a>repos</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/emilk/egui">egui</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/rerun-io/rerun">rerun</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1932,7 +2186,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">192</span>
+          <span class="site-state-item-count">195</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1965,19 +2219,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/08/20/AI-coding/" title="2025&#x2F;08&#x2F;20&#x2F;AI-coding&#x2F;">AI coding</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/28/Architecture/" title="2025&#x2F;04&#x2F;28&#x2F;Architecture&#x2F;">Computer Architecture</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/18/pytest/" title="2025&#x2F;04&#x2F;18&#x2F;pytest&#x2F;">pytest</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
     </ul>
   </div>
@@ -2015,13 +2269,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">587k</span>
+    <span title="站点总字数">624k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:54</span>
+    <span title="站点阅读时长">9:27</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

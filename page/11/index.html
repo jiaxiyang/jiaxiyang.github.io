@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">195</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -199,6 +199,310 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/25/Coroutine/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/25/Coroutine/" class="post-title-link" itemprop="url">Coroutine</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-10-25 19:55:32" itemprop="dateCreated datePublished" datetime="2022-10-25T19:55:32+08:00">2022-10-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/10/25/Coroutine/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/25/Coroutine/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>231</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>协程并没有增加线程数量，只是在线程的基础之上通过分时复用的方式运行多个协程，而且协程的切换在用户态完成，切换的代价比线程从用户态到内核态的代价小很多。</li>
+<li>协程对计算密集型的任务也没有太大的好处，计算密集型的任务本身不需要大量的线程切换，因此协程的作用也十分有限，反而还增加了协程切换的开销。</li>
+<li>因此在协程中不能调用导致线程阻塞的操作。也就是说，协程只有和异步 IO 结合起来，才能发挥最大的威力。</li>
+<li>协程只有和异步 IO 结合起来才能发挥出最大的威力。</li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/172471249">什么是协程？</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/21/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/21/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">开发方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-10-21 16:57:14" itemprop="dateCreated datePublished" datetime="2022-10-21T16:57:14+08:00">2022-10-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/10/21/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/21/%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>128</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>瀑布流方法（Waterfall）</li>
+<li>V 型方法（V-model）</li>
+<li>迭代式开发（Iterative and incremental development, IID）</li>
+<li>螺旋开发（Spiral）</li>
+<li>敏捷开发（Scrum）</li>
+<li>极限编程（Extreme programming, XP）</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/20/KataOS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/10/20/KataOS/" class="post-title-link" itemprop="url">KataOS</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-10-20 13:11:40" itemprop="dateCreated datePublished" datetime="2022-10-20T13:11:40+08:00">2022-10-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/10/20/KataOS/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/10/20/KataOS/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>96</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/AmbiML/sparrow-manifest">sparrow-manifest</a></li>
+<li><a target="_blank" rel="noopener" href="https://opensource.googleblog.com/2022/10/announcing-kataos-and-sparrow.html">announcing-kataos-and-sparrow</a></li>
+<li><a target="_blank" rel="noopener" href="https://antmicro.com/blog/2022/08/running-rust-programs-in-sel4/">Running Rust programs in seL4 using the sel4-sys crate</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/10/15/color/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -230,7 +534,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-01-09 11:02:14" itemprop="dateModified" datetime="2025-01-09T11:02:14+08:00">2025-01-09</time>
+                <time title="修改时间：2025-07-14 11:10:07" itemprop="dateModified" datetime="2025-07-14T11:10:07+08:00">2025-07-14</time>
               </span>
 
           
@@ -253,7 +557,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7.5k</span>
+              <span>7.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -286,7 +590,7 @@
 <li>开发板命令显示颜色：<code>alias ll=&quot;ls -al --color=auto&quot; alias ls=&quot;ls --color=auto&quot;</code></li>
 <li><a target="_blank" rel="noopener" href="https://www.cyberciti.biz/faq/bash-shell-change-the-color-of-my-shell-prompt-under-linux-or-unix/">PS1 set</a></li>
 </ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\033[01;32m\](docker)\u@10.10.129.7\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ &quot;</span></span><br><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\e[0;31m\u@\h:\W% \e[m&quot;</span></span><br><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\e[0;32m\u@\h:\W% \e[m&quot;</span></span><br><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\e[0;33m\u@\h:\W% \e[m&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\033[01;32m\](docker)\u@10.10.129.7\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ &quot;</span></span><br><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ &quot;</span></span><br><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\e[0;31m\u@\h:\W% \e[m&quot;</span></span><br><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\e[0;32m\u@\h:\W% \e[m&quot;</span></span><br><span class="line"><span class="built_in">export</span> PS1=<span class="string">&quot;\e[0;33m\u@\h:\W% \e[m&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <ol>
 <li><p><a target="_blank" rel="noopener" href="https://emojipedia.org/fire">icons</a> 找chatgpt让它来给出</p>
 </li>
@@ -1064,414 +1368,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/26/Document/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/26/Document/" class="post-title-link" itemprop="url">Document</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-09-26 14:53:29" itemprop="dateCreated datePublished" datetime="2022-09-26T14:53:29+08:00">2022-09-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/09/26/Document/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/26/Document/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>396</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h2><ol>
-<li><p><a target="_blank" rel="noopener" href="https://bazel.build/?hl=zh-cn">参考 bazel</a></p>
-</li>
-<li><p>are several main types of documents that software engineers often need to write:</p>
-<ul>
-<li>Reference documentation, including code comments 参考文档，包括代码注释</li>
-<li>Design documents 设计文档</li>
-<li>Tutorials 教程</li>
-<li>Conceptual documentation 概念文档</li>
-<li>Landing pages 着陆页</li>
-<li>quickstart, Getting Started</li>
-<li>introduction, overview</li>
-</ul>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://qiangmzsx.github.io/Software-Engineering-at-Google/#/zh-cn/Chapter-10_Documentation/Chapter-10_Documentatio">Software-Engineering-at-Google</a></p>
-</li>
-</ol>
-<h2 id="tools"><a href="#tools" class="headerlink" title="tools"></a>tools</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/jgm/pandoc">pandoc</a> (The universal markup converter 可以转换各种标记语言)</li>
-<li>doxygen</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/sphinx-doc/sphinx">sphinx-doc&#x2F;sphinx</a></li>
-<li>Latex <a target="_blank" rel="noopener" href="https://github.com/Wandmalfarbe/pandoc-latex-template">pandoc-latex-template</a></li>
-<li><a target="_blank" rel="noopener" href="https://readthedocs.org/">readthedocs</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/26/github/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/26/github/" class="post-title-link" itemprop="url">github</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-09-26 11:27:54" itemprop="dateCreated datePublished" datetime="2022-09-26T11:27:54+08:00">2022-09-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-01-02 16:56:43" itemprop="dateModified" datetime="2025-01-02T16:56:43+08:00">2025-01-02</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/09/26/github/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/26/github/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>463</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="note"><a href="#note" class="headerlink" title="note"></a>note</h2><ol>
-<li>markdown需要打开文件才能更好的显示outline 大纲</li>
-<li>github clone&#x2F;push 问题<ul>
-<li><a target="_blank" rel="noopener" href="https://docs.github.com/en/authentication/troubleshooting-ssh/using-ssh-over-the-https-port#enabling-ssh-connections-over-https">enabling-ssh-connections-over-https</a></li>
-</ul>
-</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    Hostname ssh.github.com</span><br><span class="line">    Port 443</span><br><span class="line">    User git</span><br></pre></td></tr></table></figure>
-
-<h2 id="explore"><a href="#explore" class="headerlink" title="explore"></a>explore</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://star-history.com/">star-history</a> 可以多个 repo 同时显示</li>
-<li><a target="_blank" rel="noopener" href="https://starchart.cc/">starchart.cc</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/anuraghazra/github-readme-stats">github-readme-stats</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/search?o=desc&q=stars:%3E0&s=stars&type=Repositories">start sort</a></li>
-<li><a target="_blank" rel="noopener" href="https://octobox.io/">octobox.io 管理 github 通知</a><ul>
-<li>直接登录 github 就能显示</li>
-</ul>
-</li>
-</ol>
-<h2 id="gist"><a href="#gist" class="headerlink" title="gist"></a>gist</h2><h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://shields.io/badges">badges&#x2F;shields</a> 左上角按要求输入变量，会生成 URL, 点击 execute 会预览结果<ul>
-<li><a target="_blank" rel="noopener" href="https://shields.io/badges/static-badge">任意格式</a> <a target="_blank" rel="noopener" href="https://img.shields.io/badge/try%20it-online-orange">sample</a></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/doctest/doctest">badge example</a></li>
-<li><a target="_blank" rel="noopener" href="https://dev.to/azure/github-how-to-display-the-status-badge-for-a-github-action-5449">build-badge</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.repostatus.org/">repostatus</a></li>
-<li><a target="_blank" rel="noopener" href="https://isitmaintained.com/">issuse badge</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/Platane/snk">自动生成蛇的行走路径，一口气吃光所有“绿块”</a></li>
-<li>访问 github 有问题，访问 gitlab 无问题， 可以先用 gitlab 去 mirrors github repo， 再访问 gitlab</li>
-<li>点击<code>go to file</code>， 搜索文件</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2022/09/25/LaTeX/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/25/LaTeX/" class="post-title-link" itemprop="url">LaTeX</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-09-25 14:25:17" itemprop="dateCreated datePublished" datetime="2022-09-25T14:25:17+08:00">2022-09-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-28 13:14:09" itemprop="dateModified" datetime="2023-09-28T13:14:09+08:00">2023-09-28</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2022/09/25/LaTeX/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2022/09/25/LaTeX/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.5k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>LaTeX: Lamport TeX</li>
-<li>读音：莱泰克</li>
-<li><a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/Font_sizes%2C_families%2C_and_styles">调整字体大小</a></li>
-<li>中文问题 <code>\begin&#123;CJK&#125;&#123;UTF8&#125;</code> 换成 <code>\begin&#123;CJK&#125;&#123;gbsn&#125;</code> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/zyl910/archive/2013/06/02/doxygen_pdf_chinese.html">link</a></li>
-<li>换页问题： <code>\doxysection</code> 之前加 <code>\newpage</code></li>
-<li><a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/Headers_and_footers">fancy Headers_and_footers</a><ul>
-<li><code>O</code> or <code>E</code>: to specify Odd or Even pages</li>
-<li><code>H</code> or <code>F</code>: to indicate Header or Footer</li>
-<li><code>L</code>, <code>C</code> or <code>R</code>: for the Left, Centre and Right “zone” of the header or footer</li>
-</ul>
-</li>
-<li><code>\pagestyle&#123;fancyplain&#125;</code> doxygen refman.tex 删除之后页眉页脚不再有横杠</li>
-<li>pagestyle <code>\pagestyle&#123;⟨style⟩&#125;</code> <a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/Headers_and_footers">link</a><ul>
-<li>empty: no headers or footers on pages</li>
-<li>plain: no page headers, footers consist of a centered page number</li>
-<li>headings: no footers, headers contains class-specific information and page number</li>
-<li>myheadings: no footers, headers contains page number and user-supplied information</li>
-</ul>
-</li>
-<li>picture in header <a target="_blank" rel="noopener" href="https://tex.stackexchange.com/a/122936">link</a> picture 下可以添加官网网址，并加上点击链接 <code>\fancyhead[L]&#123;\includegraphics[width=3cm]&#123;logo1&#125; \\\href&#123;https://www.wikibooks.org&#125;&#123;Wikibooks home&#125;&#125;</code></li>
-<li>oneside or twoside <a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/Single_sided_and_double_sided_documents#Difference_between_one-side_and_two-side_documents">link</a></li>
-<li>chapter style <a target="_blank" rel="noopener" href="https://tex.stackexchange.com/a/18605">link</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/Lists_of_tables_and_figures">list of features and tables</a></li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">% Headers &amp; footers</span><br><span class="line">\usepackage&#123;fancyhdr&#125;</span><br><span class="line">\pagestyle&#123;fancy&#125;</span><br><span class="line">\setlength\headheight&#123;32pt&#125;</span><br><span class="line">\fancyhead&#123;&#125;</span><br><span class="line">\fancyhead[L]&#123;\includegraphics[width=3cm]&#123;logo1&#125;&#125;</span><br><span class="line">\fancyhead[R]&#123;\text&#123;dcv-cpp 开发手册&#125; \\[4pt] \\\text&#123;\fancyplain&#123;&#125;&#123;\rightmark&#125;&#125;&#125;</span><br><span class="line">% \renewcommand&#123;\headrulewidth&#125;&#123;0pt&#125;</span><br><span class="line">% \renewcommand&#123;\footrulewidth&#125;&#123;0pt&#125;</span><br><span class="line">\renewcommand&#123;\headruleskip&#125;&#123;2.5pt&#125;</span><br><span class="line">% \renewcommand&#123;\footruleskip&#125;&#123;0pt&#125;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>首页设置</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">\begin&#123;titlepage&#125;</span><br><span class="line">\vspace*&#123;7cm&#125;</span><br><span class="line">\begin&#123;center&#125;%</span><br><span class="line">\includegraphics[width=4cm]&#123;logo1&#125;</span><br><span class="line"></span><br><span class="line">\textbf&#123;\Huge heimdallr-\/sdk 用户手册 \\[3ex]\Large v1.\+0.\+0 &#125;\\</span><br><span class="line">\vfill</span><br><span class="line">\vspace*&#123;1cm&#125;</span><br><span class="line">&#123;\large 制作者 PhiGent Robotics&#125;\\</span><br><span class="line">\end&#123;center&#125;</span><br><span class="line">\end&#123;titlepage&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="editer"><a href="#editer" class="headerlink" title="editer"></a>editer</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/James-Yu/LaTeX-Workshop">vscode</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.overleaf.com/">online editer overleaf</a><ul>
-<li>点击可以到对应代码</li>
-<li>可以修改主题， 编译器, 字体大小，style 等</li>
-<li>添加 package <a target="_blank" rel="noopener" href="https://tex.stackexchange.com/a/536730">link</a></li>
-<li>doxygen 需要的 sty: tabu_doxygen.sty, ongtable_doxygen.sty, doxygen.sty</li>
-</ul>
-</li>
-</ol>
-<h2 id="Tutorial"><a href="#Tutorial" class="headerlink" title="Tutorial"></a>Tutorial</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes">overleaf Learn_LaTeX_in_30_minutes</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/luong-komorebi/Begin-Latex-in-minutes">Begin-Latex-in-minutes</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/luong-komorebi/Begin-Latex-in-minutes/blob/master/Translation-Chinese.md">Begin-Latex-in-minutes Chinese</a></li>
-</ol>
-<h2 id="简历模板"><a href="#简历模板" class="headerlink" title="简历模板"></a>简历模板</h2><ol>
-<li><p>The CV presents a full history of your academic credentials, so the length of the document is variable. In contrast, a resume presents a concise picture of your skills and qualifications for a specific position, so length tends to be shorter and dictated by years of experience (generally 1-2 pages).</p>
-</li>
-<li><p>CV 是履历，Resume 是简历。</p>
-<ul>
-<li>Resume，简述于求职相关的教育背景和工作经历，其目的在于说服用人单位雇用自己；</li>
-<li>CV，Curriculum Vitae 事集中说明学术工作，不重视与文化程度和学习成绩无直接关系的资料。</li>
-</ul>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/posquit0/Awesome-CV">Awesome-CV</a> CV: Curriculum Vitae 个人简历</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.overleaf.com/latex/templates/awesome-cv/dfnvtnhzhhbm">overleaf awesome-cv template</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/jankapunkt/latexcv/tree/master/sidebar">latexcv</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/dyweb/awesome-resume-for-chinese">awesome-resume-for-chinese</a></p>
-</li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/HarisIqbal88/PlotNeuralNet"> drawing neural networks for reports and presentation</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/Wandmalfarbe/pandoc-latex-template">pandoc-latex-template</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.ti.com/lit/an/spracz2/spracz2.pdf?ts=1664353778597&ref_url=https%253A%252F%252Fwww.google.com%252F">TI 文档参考</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1543,7 +1439,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">192</span>
+          <span class="site-state-item-count">195</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1576,19 +1472,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/08/20/AI-coding/" title="2025&#x2F;08&#x2F;20&#x2F;AI-coding&#x2F;">AI coding</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/28/Architecture/" title="2025&#x2F;04&#x2F;28&#x2F;Architecture&#x2F;">Computer Architecture</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/18/pytest/" title="2025&#x2F;04&#x2F;18&#x2F;pytest&#x2F;">pytest</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
     </ul>
   </div>
@@ -1626,13 +1522,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">587k</span>
+    <span title="站点总字数">624k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:54</span>
+    <span title="站点阅读时长">9:27</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

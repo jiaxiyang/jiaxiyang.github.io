@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="builder and rewriter builder 和 rewriter 都用于构建和修改 IR（中间表示），但它们的用途和设计目标不同。 OpBuilder 适用于构建新的 IR，但不会管理旧 IR。 builder.setInsertionPointToEnd(&amp;block); 需要指定insert节点   PatternRewriter 适用于修改 IR，可以删除、替换和优化现">
+  <meta name="description" content="transform conversion translation transform: dialect内转换 conversion: dialect之间转换 tranlation: MLIR 和外部格式之间的转换  DialectConversion 郑思泽  dialect之间转化的时候才会用到typeconverter, 相同dialect type不变  在tollvm时可以在matchan">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MLIR">
 <meta property="og:url" content="https://jiaxiyang.github.io/2023/10/12/MLIR/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="builder and rewriter builder 和 rewriter 都用于构建和修改 IR（中间表示），但它们的用途和设计目标不同。 OpBuilder 适用于构建新的 IR，但不会管理旧 IR。 builder.setInsertionPointToEnd(&amp;block); 需要指定insert节点   PatternRewriter 适用于修改 IR，可以删除、替换和优化现">
+<meta property="og:description" content="transform conversion translation transform: dialect内转换 conversion: dialect之间转换 tranlation: MLIR 和外部格式之间的转换  DialectConversion 郑思泽  dialect之间转化的时候才会用到typeconverter, 相同dialect type不变  在tollvm时可以在matchan">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-10-12T07:31:23.000Z">
-<meta property="article:modified_time" content="2025-03-18T06:34:25.292Z">
+<meta property="article:modified_time" content="2025-12-15T10:11:22.423Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="IR">
@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">195</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-03-18 14:34:25" itemprop="dateModified" datetime="2025-03-18T14:34:25+08:00">2025-03-18</time>
+                <time title="修改时间：2025-12-15 18:11:22" itemprop="dateModified" datetime="2025-12-15T18:11:22+08:00">2025-12-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -278,14 +278,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>12k</span>
+              <span>15k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>11 分钟</span>
+              <span>13 分钟</span>
             </span>
 
         </div>
@@ -297,7 +297,68 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="builder-and-rewriter"><a href="#builder-and-rewriter" class="headerlink" title="builder and rewriter"></a>builder and rewriter</h2><ol>
+        <h2 id="transform-conversion-translation"><a href="#transform-conversion-translation" class="headerlink" title="transform conversion translation"></a>transform conversion translation</h2><ol>
+<li>transform: dialect内转换</li>
+<li>conversion: dialect之间转换</li>
+<li>tranlation: MLIR 和外部格式之间的转换</li>
+</ol>
+<h3 id="DialectConversion"><a href="#DialectConversion" class="headerlink" title="DialectConversion"></a><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/DialectConversion/">DialectConversion</a></h3><ol>
+<li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/3453025905">郑思泽</a></p>
+</li>
+<li><p>dialect之间转化的时候才会用到typeconverter, 相同dialect type不变</p>
+</li>
+<li><p>在tollvm时可以在matchandwrite函数中通过typeconverter拿到要转换的结果，和转换的结果做比对</p>
+</li>
+<li><p>每个pass typeconverter 会转换所有满足要求的type</p>
+<ul>
+<li>to llvm时第一个pass typeconvert会先加unrealized_conversion_cast from type to llvm_struct, 后面真正lowering op的时候会pack到llvm_struct, 再添加unrealized_conversion_cast from llvm_struct to type, 最终消除unrealized_conversion_cast</li>
+</ul>
+</li>
+<li><p>convertOpResultTypes(…)只改变输出type(sample: block level to thread level, remove tensor encoding) 主要完成两件事：</p>
+<ul>
+<li>调用 TypeConverter::convertType 把结果类型从非法的转换为合法的</li>
+<li>收集转换后的结果类型，供新 op 使用</li>
+</ul>
+</li>
+<li><p>RewritePattern: 一般 IR 的局部优化 &#x2F; 重写； 不涉及类型转换， 不需要typeconverter; 主要目的：替换一个 op → 另一个等价 op</p>
+</li>
+<li><p>ConversionPattern：类型转换场景（type conversion）, 专门用于类型转换, 需要 TypeConverter, 主要目的：替换不合法类型 → 合法类型的 op</p>
+<ul>
+<li>ConversionPattern; 转换所有op, 可以配合convertOpResultTypes（）一起使用, struct ConvertAllOpResultsPattern : public mlir::ConversionPatternstruct ConvertAllOpResultsPattern : public mlir::ConversionPattern</li>
+<li>子类 OpConversionPattern；转换一种op; sample: struct ConvertMyAdd : public OpConversionPattern<MyAddOp></li>
+</ul>
+</li>
+<li><p>typeconverter.isLegal(op); 需要转换的类型不合法</p>
+<ul>
+<li>判断某个类型是否合法（能否通过 type converter 转换）:typeConverter.isLegal(type);</li>
+<li>判断某个 op 的 operands&#x2F;results&#x2F;region param 类型都合法: typeConverter.isLegal(op);</li>
+<li>配合target使用, 需要转换的标记为不合法，不用单独写判断逻辑; 在 ConversionTarget 中使用 isLegal(op) 的最大好处是：✅ 让合法性判断自动化、类型驱动、覆盖全面;<ul>
+<li>不用列举所有非法 op，只要类型非法，op 就非法; </li>
+<li>自动遍历 op 的 operand&#x2F;result&#x2F;region param;</li>
+<li>合法性逻辑与类型转换保持一致，避免重复维护；</li>
+<li>只要你更新 TypeConverter，合法性判断逻辑自动变化; </li>
+<li>能对整个 dialect 应用统一规则，而不是逐个 op 列表维护</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">addDynamicallyLegalDialect</span>&lt;triton::TritonDialect, tensor::TensorDialect,</span><br><span class="line">                           triton::gpu::TritonGPUDialect,</span><br><span class="line">                           arith::ArithDialect, math::MathDialect&gt;(</span><br><span class="line">    [&amp;](Operation *op) -&gt; std::optional&lt;<span class="type">bool</span>&gt; &#123;</span><br><span class="line">      <span class="keyword">return</span> converter.<span class="built_in">isLegal</span>(op);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="ops"><a href="#ops" class="headerlink" title="ops"></a>ops</h2><ol>
+<li>zext	Zero extension	无符号扩展，高位补0</li>
+<li>sext	Sign extension	有符号扩展，高位补符号位</li>
+<li>trunc	Truncate	截断高位</li>
+</ol>
+<h2 id="call-intrinsic"><a href="#call-intrinsic" class="headerlink" title="call intrinsic"></a>call intrinsic</h2><ol>
+<li>使用</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mlir::<span class="function">LLVM::CallIntrinsicOp</span></span><br><span class="line"><span class="function"><span class="title">callLLVMIntrinsic</span><span class="params">(mlir::OpBuilder &amp;rewriter, mlir::Location loc,</span></span></span><br><span class="line"><span class="params"><span class="function">                  mlir::TypeRange returnType, llvm::StringRef intrinsicName,</span></span></span><br><span class="line"><span class="params"><span class="function">                  llvm::SmallVector&lt;mlir::Value&gt; operands, <span class="type">bool</span> usePoison)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (usePoison)</span><br><span class="line">    operands.<span class="built_in">insert</span>(operands.<span class="built_in">begin</span>(),</span><br><span class="line">                    rewriter.<span class="built_in">create</span>&lt;mlir::LLVM::PoisonOp&gt;(loc, returnType));</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> rewriter.<span class="built_in">create</span>&lt;mlir::LLVM::CallIntrinsicOp&gt;(</span><br><span class="line">      loc, returnType, rewriter.<span class="built_in">getStringAttr</span>(intrinsicName), operands,</span><br><span class="line">      mlir::LLVM::<span class="built_in">FastmathFlagsAttr</span>());</span><br><span class="line">&#125;    </span><br></pre></td></tr></table></figure>
+<ol>
+<li>vector返回需要poisonOp占位，PoisonOp 创建一个“未定义但确定非法使用会导致未定义行为”的值，常用于初始化向量或寄存器值，告诉编译器“这个值现在还没初始化”。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mlir::Value poison = rewriter.<span class="built_in">create</span>&lt;mlir::LLVM::PoisonOp&gt;(loc, gatherResVecType);</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="builder-and-rewriter"><a href="#builder-and-rewriter" class="headerlink" title="builder and rewriter"></a>builder and rewriter</h2><ol>
 <li>builder 和 rewriter 都用于构建和修改 IR（中间表示），但它们的用途和设计目标不同。</li>
 <li>OpBuilder 适用于构建新的 IR，但不会管理旧 IR。<ul>
 <li>builder.setInsertionPointToEnd(&amp;block); 需要指定insert节点</li>
@@ -307,6 +368,11 @@
 </ol>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Operation *op = <span class="built_in">getOperation</span>();</span><br><span class="line"><span class="function">OpBuilder <span class="title">builder</span><span class="params">(op-&gt;getContext())</span></span>;</span><br><span class="line"><span class="function">IRRewriter <span class="title">rewriter</span><span class="params">(builder)</span></span>;</span><br></pre></td></tr></table></figure>
 
+<h2 id="layout"><a href="#layout" class="headerlink" title="layout"></a>layout</h2><ol>
+<li>blocklayout (tb级别)</li>
+<li>threadlayout (thread级别)</li>
+<li>ir也分block和thread level的</li>
+</ol>
 <h2 id="dialects"><a href="#dialects" class="headerlink" title="dialects"></a><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/Dialects/">dialects</a></h2><ol>
 <li>注意op和oprand的区别, Oprand和type的区别</li>
 <li><a target="_blank" rel="noopener" href="https://mlir.llvm.org/getting_started/Faq/#what-is-the-difference-between-the-tensor-and-vector-types">What is the difference between the Tensor and Vector types? ¶</a><ul>
@@ -324,6 +390,7 @@
 <li>Tensor Dialect 提供了一组针对 张量操作 的通用抽象，例如 切片（slice）、拼接（concatenate）、广播（broadcast）等。</li>
 </ol>
 <h3 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h3><ol>
+<li>当前上游的多级中间表示（MLIR，Multi-Level Intermediate Representation）中的向量方言（Vector Dialect）采用的是定长向量表示。</li>
 <li>注意type和dialect区别</li>
 <li><a target="_blank" rel="noopener" href="https://github.com/llvm/llvm-project/blob/f71b83b3593588c56fd4ab3e1347ad9c7bec624f/mlir/include/mlir/IR/BuiltinTypes.td#L1241">vector定义</a><ul>
 <li>用llvm tablegen 生成</li>
@@ -416,7 +483,7 @@
 </ul>
 </li>
 </ol>
-<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><ol>
+<h3 id="IR-Verifier"><a href="#IR-Verifier" class="headerlink" title="IR Verifier"></a>IR Verifier</h3><h3 id="Parser"><a href="#Parser" class="headerlink" title="Parser"></a>Parser</h3><h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><ol>
 <li>不好实现的先站位，从高层网低层次转， 抽象级别要对应，一次处理一小步</li>
 <li>核心在于transform</li>
 <li>上层的IR是一种抽象，不用具体实现，只需要规定输入输出类型，前后Op能匹配上就行</li>
@@ -493,6 +560,7 @@
 <li>adaptor.getOperands() 通常用于获取转换后的操作数，而不是 op.getOperands()</li>
 </ul>
 </li>
+<li>在实际编写重写模式时，通常会同时使用 op 和 adaptor，前者用于获取操作的上下文信息，后者用于访问已转换的操作数和属性。</li>
 </ul>
 </li>
 <li>Canonicalizer 知道清理死操作；然而，MLIR 保守地假设操作可能会产生副作用。我们可以通过向TransposeOp添加新特征Pure来解决此问题</li>
@@ -501,6 +569,13 @@
 <li><code>void replaceOp(Operation *op, ValueRange newValues);</code> rewriter.replace将op的结果用new value替换, 作用是将一个旧的操作及其结果用新的值替换，同时自动更新使用这些结果的其他操作，确保 IR 的一致性。</li>
 </ol>
 <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li>populateXXXPatterns()	是一种注册&#x2F;收集多个 rewrite pattern 的函数，将 pattern 添加到 pattern list 中<ul>
+<li>RewritePattern	是一个具体的转换规则（转换逻辑 + 匹配条件），用来定义“怎么把 A 转换成 B”</li>
+<li>pass可以一次执行所有收集到的pattern;也可以只执行一个或多个</li>
+<li>populate…只是收集的作用, 在一个pass里执行多个pattern; 一个pass执行的好处是能控制转换顺序；多个pass</li>
+<li>lib&#x2F;Conversion&#x2F;TritonToTritonGPU&#x2F;TritonToTritonGPUPass.cpp poplate了所有op，按顺序改变op输出type; 输入是adaptor.getOperands()，因为按顺序，表明输入之前已经转换为输出type了</li>
+</ul>
+</li>
 <li>MLIR 是一个强有力的代表，但它也有非目标。我们不尝试支持低级机器代码生成算法（例如寄存器分配和指令调度）。它们更适合较低级别的优化器（例如 LLVM）。此外，我们不希望 MLIR 成为最终用户自己编写内核的源语言（类似于 CUDA C++）。另一方面，MLIR 为表示任何此类 DSL 并将其集成到生态系统中提供了支柱。</li>
 <li>在 MLIR（多级中间表示）中，ODS 是 “Operation Definition Specification” 的缩写。ODS 是一种用于定义操作（operation）、类型（type）、属性（attribute）等的 DSL（领域特定语言）。它通过一种声明式的方式来描述这些元素，并生成相应的 C++ 代码，从而简化了编写和维护 MLIR 操作的过程。</li>
 <li>MLIR 即 Multi-Level Intermediate Representation，多级的中间表示。</li>
@@ -511,6 +586,7 @@
 <li><code>#</code> 符号用于表示自定义属性或符号。这些属性或符号通常由特定的方言（Dialect）定义，用于描述复杂的数据结构、布局和操作。通过使用自定义属性，可以在编译过程中对特定的硬件架构和优化需求进行精确的描述和操作。</li>
 </ol>
 <h2 id="tablegen"><a href="#tablegen" class="headerlink" title="tablegen"></a>tablegen</h2><ol>
+<li><code>assemblyFormat</code>注意有格式要求</li>
 <li>使用mlir-tablegen，还有llvm-tablegen等其他tablegen</li>
 <li>class和def<ul>
 <li>class 关键字用于定义可继承的类，而 def 关键字用于实例化具体的对象。</li>
@@ -547,7 +623,8 @@
 <li><code>type lookup xxx</code></li>
 </ul>
 </li>
-<li><code>(*src).dump()</code> ref的时候需要先取值   </li>
+<li><code>(*src).dump()</code> ref的时候需要先取值</li>
+<li>vscode lldb debug 调试可以把 c++: on throw勾选去掉， </li>
 <li>(very good) <code>-exec pt xxx</code> 打印type<ul>
 <li>可以查看成员函数和变量，然后调用或者打印</li>
 </ul>
@@ -715,7 +792,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#builder-and-rewriter"><span class="nav-number">1.</span> <span class="nav-text">builder and rewriter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dialects"><span class="nav-number">2.</span> <span class="nav-text">dialects</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tensor"><span class="nav-number">2.1.</span> <span class="nav-text">tensor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vector"><span class="nav-number">2.2.</span> <span class="nav-text">vector</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AsmPrinter"><span class="nav-number">3.</span> <span class="nav-text">AsmPrinter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attributes-and-types"><span class="nav-number">4.</span> <span class="nav-text">attributes and types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#translate"><span class="nav-number">5.</span> <span class="nav-text">translate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tools"><span class="nav-number">6.</span> <span class="nav-text">tools</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#note"><span class="nav-number">7.</span> <span class="nav-text">note</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mlir-tutorial"><span class="nav-number">8.</span> <span class="nav-text">mlir-tutorial</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MLIR%E5%9F%BA%E6%9C%AC%E6%9E%84%E6%88%90"><span class="nav-number">9.</span> <span class="nav-text">MLIR基本构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%80%83"><span class="nav-number">10.</span> <span class="nav-text">思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dialect-conversion"><span class="nav-number">11.</span> <span class="nav-text">dialect conversion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pass"><span class="nav-number">12.</span> <span class="nav-text">pass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Canonicalize"><span class="nav-number">13.</span> <span class="nav-text">Canonicalize</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mlir-opt"><span class="nav-number">14.</span> <span class="nav-text">mlir-opt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IR%E8%A1%A8%E7%A4%BA"><span class="nav-number">15.</span> <span class="nav-text">IR表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#match-and-rewrite"><span class="nav-number">16.</span> <span class="nav-text">match and rewrite</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">17.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tablegen"><span class="nav-number">18.</span> <span class="nav-text">tablegen</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#debug"><span class="nav-number">19.</span> <span class="nav-text">debug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CRTP"><span class="nav-number">20.</span> <span class="nav-text">CRTP</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#transform-conversion-translation"><span class="nav-number">1.</span> <span class="nav-text">transform conversion translation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DialectConversion"><span class="nav-number">1.1.</span> <span class="nav-text">DialectConversion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ops"><span class="nav-number">2.</span> <span class="nav-text">ops</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#call-intrinsic"><span class="nav-number">3.</span> <span class="nav-text">call intrinsic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#builder-and-rewriter"><span class="nav-number">4.</span> <span class="nav-text">builder and rewriter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#layout"><span class="nav-number">5.</span> <span class="nav-text">layout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dialects"><span class="nav-number">6.</span> <span class="nav-text">dialects</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tensor"><span class="nav-number">6.1.</span> <span class="nav-text">tensor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vector"><span class="nav-number">6.2.</span> <span class="nav-text">vector</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AsmPrinter"><span class="nav-number">7.</span> <span class="nav-text">AsmPrinter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attributes-and-types"><span class="nav-number">8.</span> <span class="nav-text">attributes and types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#translate"><span class="nav-number">9.</span> <span class="nav-text">translate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tools"><span class="nav-number">10.</span> <span class="nav-text">tools</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#note"><span class="nav-number">11.</span> <span class="nav-text">note</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mlir-tutorial"><span class="nav-number">12.</span> <span class="nav-text">mlir-tutorial</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MLIR%E5%9F%BA%E6%9C%AC%E6%9E%84%E6%88%90"><span class="nav-number">13.</span> <span class="nav-text">MLIR基本构成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IR-Verifier"><span class="nav-number">13.1.</span> <span class="nav-text">IR Verifier</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parser"><span class="nav-number">13.2.</span> <span class="nav-text">Parser</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%80%83"><span class="nav-number">14.</span> <span class="nav-text">思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dialect-conversion"><span class="nav-number">15.</span> <span class="nav-text">dialect conversion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pass"><span class="nav-number">16.</span> <span class="nav-text">pass</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Canonicalize"><span class="nav-number">17.</span> <span class="nav-text">Canonicalize</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mlir-opt"><span class="nav-number">18.</span> <span class="nav-text">mlir-opt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IR%E8%A1%A8%E7%A4%BA"><span class="nav-number">19.</span> <span class="nav-text">IR表示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#match-and-rewrite"><span class="nav-number">20.</span> <span class="nav-text">match and rewrite</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">21.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tablegen"><span class="nav-number">22.</span> <span class="nav-text">tablegen</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#debug"><span class="nav-number">23.</span> <span class="nav-text">debug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CRTP"><span class="nav-number">24.</span> <span class="nav-text">CRTP</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -731,7 +808,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">192</span>
+          <span class="site-state-item-count">195</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -764,19 +841,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/08/20/AI-coding/" title="2025&#x2F;08&#x2F;20&#x2F;AI-coding&#x2F;">AI coding</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/28/Architecture/" title="2025&#x2F;04&#x2F;28&#x2F;Architecture&#x2F;">Computer Architecture</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/18/pytest/" title="2025&#x2F;04&#x2F;18&#x2F;pytest&#x2F;">pytest</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
     </ul>
   </div>
@@ -814,13 +891,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">587k</span>
+    <span title="站点总字数">624k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:54</span>
+    <span title="站点阅读时长">9:27</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

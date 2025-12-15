@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">195</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -199,6 +199,440 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/03/05/git-biset-to-debug/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/05/git-biset-to-debug/" class="post-title-link" itemprop="url">Git bisect to debug</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-05 09:51:13" itemprop="dateCreated datePublished" datetime="2021-03-05T09:51:13+08:00">2021-03-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/03/05/git-biset-to-debug/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/05/git-biset-to-debug/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>599</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h2><ol>
+<li>Use binary search to find the commit that introduced a bug</li>
+</ol>
+<h2 id="Command"><a href="#Command" class="headerlink" title="Command"></a>Command</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect start</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect bad                 <span class="comment"># Current version is bad</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect good v2.6.13-rc2    <span class="comment"># v2.6.13-rc2 is known to be good</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect <span class="built_in">log</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect skip                 <span class="comment"># Current version cannot be tested</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect reset</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">run script</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect run my_script arguments</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> ~/test.sh</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line">make || exit 125                     # this skips broken builds</span><br><span class="line">~/check_test_case.sh                 # does the test case pass?</span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect start HEAD v1.3.1 --      <span class="comment"># HEAD is bad, v1.2 is good</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect run ~/test.sh</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">git bisect run sh -c <span class="string">&quot;make || exit 125; ~/check_test_case.sh&quot;</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git bisect reset                   <span class="comment"># quit the bisect session</span></span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://git-scm.com/docs/git-bisect">git bisect</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903537860673544">Git 二分调试法，火速定位疑难Bug</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/02/23/FFmpeg/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/23/FFmpeg/" class="post-title-link" itemprop="url">FFmpeg</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-23 20:21:13" itemprop="dateCreated datePublished" datetime="2021-02-23T20:21:13+08:00">2021-02-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/FFmpeg/" itemprop="url" rel="index"><span itemprop="name">FFmpeg</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/02/23/FFmpeg/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/02/23/FFmpeg/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="视频处理基本概念"><a href="#视频处理基本概念" class="headerlink" title="视频处理基本概念"></a><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2020/01/ffmpeg.html">视频处理基本概念</a></h2><ol>
+<li><code>容器(封装)</code>：<code>ffmpeg-formats</code> 视频文件本身其实是一个容器（container），里面包括了视频和音频，也可能有字幕等其他内容。</li>
+<li><code>编码格式</code>：<code>ffmpeg-codecs</code> 视频和音频都需要经过编码，才能保存成文件。不同的编码格式（CODEC），有不同的压缩率，会导致文件大小和清晰度的差异。</li>
+<li><code>编码器</code>：<code>ffmpeg-encoders</code> 编码器（encoders）是实现某种编码格式的库文件。只有安装了某种格式的编码器，才能实现该格式视频&#x2F;音频的编码和解码。</li>
+</ol>
+<h2 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h2><ol>
+<li>ffmpeg的主要工作流程相对比较简单，具体如下。</li>
+</ol>
+<ul>
+<li>解封装（Demuxing）</li>
+<li>解码（Decoding）</li>
+<li>编码（Encoding）</li>
+<li>封装（Muxing）</li>
+</ul>
+<ol>
+<li>其中需要经过6个步骤，具体如下。</li>
+</ol>
+<ul>
+<li>读取输入源</li>
+<li>进行音视频的解封装</li>
+<li>解码每一帧音视频数据</li>
+<li>进行音视频的重新封装</li>
+<li>输出到目标</li>
+</ul>
+<p>1.<br>                _______              ______________<br>               |       |            |              |<br>               | input |  demuxer   | encoded data |   decoder<br>               | file  | ———&gt; | packets      | —–+<br>               |<em><strong><strong><strong>|            |</strong></strong></strong><strong><strong><strong><strong>|      |<br>                                                          v<br>                                                      _________<br>                                                     |         |<br>                                                     | decoded |<br>                                                     | frames  |<br>                                                     |</strong></strong></strong></strong></em>|<br>                ________             ______________       |<br>               |        |           |              |      |<br>               | output | &lt;——– | encoded data | &lt;—-+<br>               | file   |   muxer   | packets      |   encoder<br>               |<strong><strong><strong><strong>|           |</strong></strong></strong></strong>______|</p>
+<h2 id="ffmpeg"><a href="#ffmpeg" class="headerlink" title="ffmpeg"></a>ffmpeg</h2><ol>
+<li>FFmpeg框架的基本组成包含AVFormat、AVCodec、AVFilter、AVDevice、AVUtil等模块库</li>
+<li>主要命令</li>
+</ol>
+<ul>
+<li>ffmpeg主要用于音视频编解码</li>
+<li>ffprobe主要用于音视频内容分析</li>
+<li>ffplay主要用于音视频播放、可视化分析</li>
+</ul>
+<h3 id="ffmpeg-1"><a href="#ffmpeg-1" class="headerlink" title="ffmpeg"></a>ffmpeg</h3><ol>
+<li>总共分为5部分：<code>ffmpeg &#123;1&#125; &#123;2&#125; -i &#123;3&#125; &#123;4&#125; &#123;5&#125;</code></li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ffmpeg \</span><br><span class="line"><span class="selector-attr">[全局参数]</span> \</span><br><span class="line"><span class="selector-attr">[输入文件参数]</span> \</span><br><span class="line">-<span class="selector-tag">i</span> <span class="selector-attr">[输入文件]</span> \</span><br><span class="line"><span class="selector-attr">[输出文件参数]</span> \</span><br><span class="line"><span class="selector-attr">[输出文件]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="ffplay"><a href="#ffplay" class="headerlink" title="ffplay"></a>ffplay</h3><ol>
+<li>FFmpeg不但可以提供转码、转封装等功能，同时还提供了播放器相关功能，使用FFmpeg的avformat与avcodec，可以播放各种媒体文件或者流。如果想要使用ffplay，那么系统首先需要有SDL来进行ffplay的基础支撑。</li>
+</ol>
+<h3 id="ffprobe"><a href="#ffprobe" class="headerlink" title="ffprobe"></a>ffprobe</h3><ol>
+<li>ffprobe也是FFmpeg源码编译后生成的一个可执行程序。ffprobe是一个非常强大的多媒体分析工具，可以从媒体文件或者媒体流中获得你想要了解的媒体信息，比如音频的参数、视频的参数、媒体容器的参数信息等。</li>
+<li><code>./ffprobe –show_streams output.mp4</code></li>
+</ol>
+<h2 id="ffmpeg硬编解码"><a href="#ffmpeg硬编解码" class="headerlink" title="ffmpeg硬编解码"></a>ffmpeg硬编解码</h2><ol>
+<li>当使用FFmpeg进行软编码时，常见的基于CPU进行H.264或H.265编码其相对成本会比较高，CPU编码时的性能也很低，所以出于编码效率及成本考虑，很多时候都会考虑采用硬编码，常见的硬编码包含Nvidia GPU与Intel QSV两种，还有常见的嵌入式平台，如树莓派、瑞芯微等</li>
+</ol>
+<h2 id="ffmpeg流媒体"><a href="#ffmpeg流媒体" class="headerlink" title="ffmpeg流媒体"></a>ffmpeg流媒体</h2><ol>
+<li>随着互联网、移动互联网的发展，人们获取信息的方式开始从纸质媒体转向互联网文字媒体，又从文字媒体转向音视频流媒体。音视频流媒体又称为流媒体，而用于处理流媒体的压缩、录制、编辑操作，开源并强大的工具屈指可数，FFmpeg就是常见的流媒体处理工具。</li>
+<li>流类型：RTMP, RTSP, HTTP, UDP&#x2F;TCP, HDS, DASH</li>
+</ol>
+<h2 id="ffmpeg-filter"><a href="#ffmpeg-filter" class="headerlink" title="ffmpeg filter"></a>ffmpeg filter</h2><ol>
+<li>FFmpeg除了具有强大的封装&#x2F;解封装、编&#x2F;解码功能之外，还包含了一个非常强大的组件——avfilter。avfilter组件经常用于进行多媒体的处理与编辑。例如加水印，画中画，多宫格视频等</li>
+</ol>
+<h2 id="ffmpeg视频采集"><a href="#ffmpeg视频采集" class="headerlink" title="ffmpeg视频采集"></a>ffmpeg视频采集</h2><ol>
+<li>可以使用FFmpeg采集本地的音视频采集设备的数据，然后进行编码、封装、传输等操作</li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://ffmpeg.org/documentation.html">Official Documents</a></li>
+<li><a target="_blank" rel="noopener" href="http://jxz1.j9p.com/pc/dgsdfhghgh.pdf">FFmpeg从入门到精通（书）</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/02/23/Gstreamer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/23/Gstreamer/" class="post-title-link" itemprop="url">Gstreamer</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-23 08:43:01" itemprop="dateCreated datePublished" datetime="2021-02-23T08:43:01+08:00">2021-02-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-06-20 15:37:37" itemprop="dateModified" datetime="2023-06-20T15:37:37+08:00">2023-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Program/Gstreamer/" itemprop="url" rel="index"><span itemprop="name">Gstreamer</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/02/23/Gstreamer/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/02/23/Gstreamer/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Why-Gstreamer"><a href="#Why-Gstreamer" class="headerlink" title="Why Gstreamer"></a>Why Gstreamer</h2><ol>
+<li>构建一个视频分析应用，需要考虑的内容有：视频流获取、视频流解码、预处理、算法推理、数据编码、数据显示、数据传输等。常常需要引入一些第三方的开发包，如 OpenCV，FFmpeg，Caffe，TensorRT，OpenGL 等。GStreamer 是一个用于开发流式多媒体应用的跨平台开源框架，应用程序可以通过管道(Pipeline)的方式，<code>将多媒体处理的各个步骤串联起来</code>，达到预期的效果。</li>
+</ol>
+<h2 id="Gstreamer"><a href="#Gstreamer" class="headerlink" title="Gstreamer"></a>Gstreamer</h2><ol>
+<li><code>核心</code>为<code>Pipeline</code>框架以及用于扩展功能的<code>Plugins</code>。plugin 负责实现音视频传输协议、音视频输入输出源、音视频编解转码等真实的媒体处理功能，而 plugin 之间通过 pipeline 关联在一起，pipeline 负责将上一个 plugin 的数据流(data flow)传输给下一个 plugin，最终形成一个完整的多媒体处理应用；</li>
+<li>原理：GStreamer 的程序通过连接数字媒体处理的元素注入管道（pipeline）。每个元素(element)是由一个插件提供。元素可组合为箱（bins），箱可以进一步聚合，从而形成架构图。元素沟通是透过垫（pads）。来源垫（source pad）上一个元素可以被连接到一个接收垫（sink pad）在另一个。当管道是在播放状态，数据缓冲流（data buffers flow）从来源垫（source pad）流向接收垫（sink pad）。</li>
+<li>箱柜(bin)是由多个 element 构成的容器，同时 bin 本身也是一种 element，所以能够像操作普通 element 一样操作一个 bin，改变 bin 的状态可以改变 bin 内部所有 elements 的状态。bin 可以发送总线消息给它的子集 elements ，包括：错误消息(error messages)，标签消息(tag messages)，EOS 消息(EOS messages)。</li>
+<li>管道(pipeline)是一个特殊的 bin，当设定管道暂停或播放状态的时候，数据流将开始流动，并且媒体数据处理也开始处理。</li>
+<li>element 被封装成 plugin 才能被 gstreamer 使用。</li>
+</ol>
+<h2 id="3-层架构（plugin-core-app"><a href="#3-层架构（plugin-core-app" class="headerlink" title="3 层架构（plugin, core, app)"></a>3 层架构（plugin, core, app)</h2><p><img src="https://gstreamer.freedesktop.org/documentation/application-development/introduction/images/gstreamer-overview.png" alt="overview"></p>
+<ol>
+<li>最底层：element(plugins)</li>
+<li>中间层：插件框架、pipeline 架构、媒体类型处理机制、等等，也就是处理 Elements 的方式方法.</li>
+<li>最上层：tools, 多媒体应用</li>
+</ol>
+<h2 id="GStreamer-plug-ins-could-be-classified"><a href="#GStreamer-plug-ins-could-be-classified" class="headerlink" title="GStreamer plug-ins could be classified"></a>GStreamer plug-ins could be classified</h2><ol>
+<li>protocols handling</li>
+<li>sources: for audio and video (involves protocol plugins)</li>
+<li>formats: parsers, formaters, muxers, demuxers, metadata, subtitles</li>
+<li>codecs: coders and decoders</li>
+<li>filters: converters, mixers, effects, …</li>
+<li>sinks: for audio and video (involves protocol plugins)</li>
+</ol>
+<h2 id="GStreamer-tools"><a href="#GStreamer-tools" class="headerlink" title="GStreamer tools"></a>GStreamer tools</h2><ol>
+<li>gst-launch-1.0: 命令行建立和运行 pipeline, 不用编写 C 代码； <code>gst-launch-1.0 videotestsrc ! autovideosink</code></li>
+<li>gst-inspect-1.0: 查看可用的插件和它们的相关信息； <code>gst-inspect-1.0 videotestsrc</code></li>
+<li>gst-discoverer-1.0: 查看媒体文件的内部结构； <code>gst-discoverer-1.0 /root/Desktop/video.mp4</code></li>
+<li>GST*DEBUG&#x3D;”GST_TRACER:7” GST_TRACERS&#x3D;”proctime” gst-launch-1.0 … <code>查看每个element性能</code> <a target="_blank" rel="noopener" href="https://developer.ridgerun.com/wiki/index.php?title=GstShark*-_Processing_Time_tracer">link</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/RidgeRun/gst-shark">gst-shark</a></li>
+</ol>
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://gstreamer.freedesktop.org/documentation/application-development/introduction/index.html?gi-language=c">About Gstreamer</a></li>
+<li><a target="_blank" rel="noopener" href="https://gstreamer.freedesktop.org/documentation/tutorials/basic/gstreamer-tools.html?gi-language=c">Gstreamer tools</a></li>
+<li><a target="_blank" rel="noopener" href="https://gstreamer.freedesktop.org/documentation/tutorials/basic/index.html?gi-language=c">Gstreamer tutorials</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/sdroege/gstreamer-rs/tree/master/tutorials">Gstreamer tutorials rust</a></li>
+<li><a target="_blank" rel="noopener" href="http://orangeamoy.com/2019/06/28/GStreamerAndDeepStream/">由 GStreamer 到 DeepStream</a></li>
+<li><a target="_blank" rel="noopener" href="http://ericnode.info/post/gstreamer_intro/">插件例子</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.shangyexinzhi.com/article/571316.html">中文基础概念</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2021/02/02/Docker/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -230,7 +664,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-01-24 10:57:26" itemprop="dateModified" datetime="2025-01-24T10:57:26+08:00">2025-01-24</time>
+                <time title="修改时间：2025-07-15 10:19:48" itemprop="dateModified" datetime="2025-07-15T10:19:48+08:00">2025-07-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -266,14 +700,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>10k</span>
+              <span>11k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>9 分钟</span>
+              <span>10 分钟</span>
             </span>
 
         </div>
@@ -289,6 +723,7 @@
 <li>用于运行docker image</li>
 </ol>
 <h2 id="NOTES"><a href="#NOTES" class="headerlink" title="NOTES"></a>NOTES</h2><ol>
+<li><code>docker system df</code>查看用的空间</li>
 <li><code>docker pull swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/ubuntu:22.04</code><ul>
 <li><a target="_blank" rel="noopener" href="https://docker.aityp.com/s/docker.io">link</a></li>
 </ul>
@@ -317,7 +752,10 @@
 <li><code>docker push docker.io/my-username/my-image:v1.0.0</code></li>
 <li><code>docker image rm eb3f9d403e36</code> 删除 image</li>
 </ol>
-<h2 id="docker-container-install-ssh-server"><a href="#docker-container-install-ssh-server" class="headerlink" title="docker container install ssh server"></a>docker container install ssh server</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sed -i s@/archive.ubuntu.com/@/mirrors.tuna.tsinghua.edu.cn/@g /etc/apt/sources.list &amp;&amp; apt-get update -y</span><br><span class="line">sudo apt install -y openssh-server</span><br><span class="line">PORT=22; sed -i -e <span class="string">&quot;s/^#Port 22/Port <span class="variable">$PORT</span>/&quot;</span> -e <span class="string">&#x27;s/^#PermitRootLogin prohibit-password/PermitRootLogin yes/&#x27;</span> -e <span class="string">&#x27;s/^#PasswordAuthentication yes/PasswordAuthentication yes/&#x27;</span> /etc/ssh/sshd_config</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;root:root&#x27;</span> | chpasswd &amp;&amp; /etc/init.d/ssh start</span><br><span class="line"><span class="comment"># /etc/init.d/ssh start</span></span><br><span class="line"><span class="comment"># vi /etc/ssh/sshd_config</span></span><br><span class="line"><span class="comment"># 设置 PermitRootLogin yes和 PasswordAuthentication yes</span></span><br><span class="line">/etc/init.d/ssh restart</span><br><span class="line">passwd <span class="comment"># 设置密码</span></span><br></pre></td></tr></table></figure>
+<h2 id="多阶段构建"><a href="#多阶段构建" class="headerlink" title="多阶段构建"></a>多阶段构建</h2><ol>
+<li><code>FROM conda AS build</code></li>
+</ol>
+<h2 id="docker-container-install-ssh-server"><a href="#docker-container-install-ssh-server" class="headerlink" title="docker container install ssh server"></a>docker container install ssh server</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sed -i s@/archive.ubuntu.com/@/mirrors.tuna.tsinghua.edu.cn/@g /etc/apt/sources.list &amp;&amp; apt-get update -y</span><br><span class="line">sudo apt install -y openssh-server</span><br><span class="line">PORT=22; sed -i -e <span class="string">&quot;s/^#Port 22/Port <span class="variable">$PORT</span>/&quot;</span> -e <span class="string">&#x27;s/^#PermitRootLogin prohibit-password/PermitRootLogin yes/&#x27;</span> -e <span class="string">&#x27;s/^#PasswordAuthentication yes/PasswordAuthentication yes/&#x27;</span> /etc/ssh/sshd_config</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;root:root&#x27;</span> | chpasswd &amp;&amp; /etc/init.d/ssh start</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="subst">$(whoami)</span>:root&quot;</span> | sudo chpasswd &amp;&amp; sudo /etc/init.d/ssh start</span><br><span class="line"><span class="comment"># /etc/init.d/ssh start</span></span><br><span class="line"><span class="comment"># vi /etc/ssh/sshd_config</span></span><br><span class="line"><span class="comment"># 设置 PermitRootLogin yes和 PasswordAuthentication yes</span></span><br><span class="line">/etc/init.d/ssh restart</span><br><span class="line">passwd <span class="comment"># 设置密码</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="network-host"><a href="#network-host" class="headerlink" title="network&#x3D;host"></a>network&#x3D;host</h2><ol>
 <li>–network&#x3D;host 和 -p 选项不能同时使用</li>
@@ -673,702 +1111,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/12/07/Tmux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/07/Tmux/" class="post-title-link" itemprop="url">Tmux config</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-12-07 15:19:28" itemprop="dateCreated datePublished" datetime="2020-12-07T15:19:28+08:00">2020-12-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-12-21 22:19:14" itemprop="dateModified" datetime="2024-12-21T22:19:14+08:00">2024-12-21</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tools/Tmux/" itemprop="url" rel="index"><span itemprop="name">Tmux</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/12/07/Tmux/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/12/07/Tmux/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="tmux-plugin"><a href="#tmux-plugin" class="headerlink" title="tmux plugin"></a>tmux plugin</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/tmux-plugins/tpm">tpm</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/orgs/tmux-plugins/repositories?q=&type=all&language=&sort=stargazers">tmux-plgins</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/tmux-plugins/tmux-resurrect">tmux-resurrect</a></li>
-<li>prefix + I install</li>
-</ol>
-<h2 id="clear-history"><a href="#clear-history" class="headerlink" title="clear-history"></a>clear-history</h2><ol>
-<li>Just type<code>&lt;prefix&gt; + :</code>in the relevant pane and then type <code>clear-history</code> and press enter.</li>
-</ol>
-<h2 id="windows-layerout"><a href="#windows-layerout" class="headerlink" title="windows layerout"></a>windows layerout</h2><ol>
-<li><code>&lt;prefix&gt; + M-1</code> 垂直对齐</li>
-<li><code>&lt;prefix&gt; + M-2</code> 水平对齐</li>
-<li><code>&lt;prefix&gt; + M-3</code></li>
-<li><code>&lt;prefix&gt; + M-4</code></li>
-<li><code>&lt;prefix&gt; + M-5</code></li>
-</ol>
-<h2 id="resize-window"><a href="#resize-window" class="headerlink" title="resize window"></a>resize window</h2><ol>
-<li>:resize-window -A</li>
-</ol>
-<h2 id="Tmux-config"><a href="#Tmux-config" class="headerlink" title="Tmux config"></a>Tmux config</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#use mouse to scroll history</span></span><br><span class="line"><span class="built_in">set</span> -g mouse on        <span class="comment">#For tmux version 2.1 and up</span></span><br><span class="line"><span class="comment"># set -g mode-mouse on   #For tmux versions &lt; 2.1</span></span><br><span class="line"><span class="comment">#set -g default-terminal &quot;xterm-256color&quot;</span></span><br><span class="line"><span class="built_in">set</span> -g default-terminal <span class="string">&quot;xterm&quot;</span></span><br><span class="line"><span class="built_in">set</span> -g status-style <span class="built_in">bg</span>=yellow,<span class="built_in">fg</span>=black</span><br><span class="line"></span><br><span class="line"><span class="comment"># set history lenth</span></span><br><span class="line"><span class="built_in">set</span> -g history-limit 15000</span><br><span class="line"></span><br><span class="line"><span class="comment"># change prefix key</span></span><br><span class="line"><span class="built_in">set</span> -g prefix C-q</span><br><span class="line">unbind C-b</span><br><span class="line"><span class="built_in">bind</span> C-q send-prefix</span><br><span class="line"><span class="built_in">set</span> -g prefix2 C-j</span><br><span class="line"><span class="built_in">bind</span> C-j send-prefix -2</span><br><span class="line"></span><br><span class="line"><span class="comment"># more intuitive keybindings for splitting and create window</span></span><br><span class="line"><span class="built_in">bind</span> \\ split-window -h -c <span class="string">&quot;#&#123;pane_current_path&#125;&quot;</span></span><br><span class="line"><span class="built_in">bind</span> - split-window -v -c <span class="string">&quot;#&#123;pane_current_path&#125;&quot;</span></span><br><span class="line"><span class="built_in">bind</span> c new-window -c <span class="string">&quot;#&#123;pane_current_path&#125;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># swap window bind</span></span><br><span class="line"><span class="built_in">bind</span> M-l swap-window -t + \; next-window</span><br><span class="line"><span class="built_in">bind</span> M-h swap-window -t - \; previous-window</span><br><span class="line"></span><br><span class="line"><span class="comment"># display</span></span><br><span class="line"><span class="built_in">set</span> -g base-index 1</span><br><span class="line">set-window-option -g pane-base-index 1</span><br><span class="line"><span class="built_in">set</span> -g renumber-windows on</span><br><span class="line"></span><br><span class="line"><span class="comment"># set terminal title</span></span><br><span class="line"><span class="built_in">set</span> -g set-titles on</span><br><span class="line"></span><br><span class="line"><span class="comment"># redraw status line every 10 seconds</span></span><br><span class="line"><span class="built_in">set</span> -g status-interval 10</span><br><span class="line"></span><br><span class="line"><span class="comment"># right status: tmux show-options -g | grep status-right</span></span><br><span class="line"><span class="built_in">set</span> -g status-right <span class="string">&quot;#&#123;=21:host_short&#125; &quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Remove delay when sending commands</span></span><br><span class="line"><span class="comment"># (default is 500 milliseconds)</span></span><br><span class="line"><span class="built_in">set</span> -sg escape-time 1</span><br><span class="line"></span><br><span class="line"><span class="comment"># reference C-t ?</span></span><br><span class="line">bind-key -T prefix a select-window -t :=1</span><br><span class="line">bind-key -T prefix s select-window -t :=2</span><br><span class="line">bind-key -T prefix d select-window -t :=3</span><br><span class="line">bind-key -T prefix f select-window -t :=4</span><br><span class="line">bind-key -T prefix g select-window -t :=5</span><br><span class="line">bind-key -T prefix h select-window -t :=6</span><br><span class="line">bind-key -T prefix j select-window -t :=7</span><br><span class="line">bind-key -T prefix k select-window -t :=8</span><br><span class="line">bind-key -T prefix \; select-window -t :=1 \; select-window -t -1</span><br></pre></td></tr></table></figure>
-
-<h2 id="Reload-config"><a href="#Reload-config" class="headerlink" title="Reload config"></a>Reload config</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tmux source-file ~/.tmux.conf</span><br></pre></td></tr></table></figure>
-
-<h2 id="Tmux-Zsh-CheatSheet"><a href="#Tmux-Zsh-CheatSheet" class="headerlink" title="Tmux Zsh CheatSheet"></a>Tmux Zsh CheatSheet</h2><p><a target="_blank" rel="noopener" href="https://github.com/ohmyzsh/ohmyzsh/wiki/Cheatsheet">https://github.com/ohmyzsh/ohmyzsh/wiki/Cheatsheet</a></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ta    : tmux attach -t</span><br><span class="line">tad   : tmux attach -d -t</span><br><span class="line">ts    : tmux new-session -s</span><br><span class="line">tl    : tmux list-sessions</span><br><span class="line">tksv  : tmux kill-server</span><br><span class="line">tkss  : tmux kill-session -t</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/11/28/Shell-script/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/28/Shell-script/" class="post-title-link" itemprop="url">Shell Script</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-11-28 10:38:00" itemprop="dateCreated datePublished" datetime="2020-11-28T10:38:00+08:00">2020-11-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-09-28 13:13:38" itemprop="dateModified" datetime="2023-09-28T13:13:38+08:00">2023-09-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Shell/" itemprop="url" rel="index"><span itemprop="name">Shell</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/11/28/Shell-script/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/28/Shell-script/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
-<li>判断 linux 命令是否存在</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">BUILD_SYSTEM=Ninja</span><br><span class="line"><span class="keyword">if</span> ! [ -x <span class="string">&quot;<span class="subst">$(command -v ninja)</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">    BUILD_SYSTEM=<span class="string">&#x27;Unix Makefiles&#x27;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ! <span class="built_in">command</span> -v &lt;the_command&gt; &amp;&gt; /dev/null</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;&lt;the_command&gt; could not be found&quot;</span></span><br><span class="line">    <span class="built_in">exit</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>分支，循环、 case， 函数、正则表达式</li>
-<li>shell 风格指南 <a target="_blank" rel="noopener" href="https://zh-google-styleguide.readthedocs.io/en/latest/google-shell-styleguide/contents/">link</a></li>
-<li>seq 产生顺序数 for i in <code>seq 1 10</code>;do echo jia; sleep 1; done</li>
-<li>cat</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span>  &gt;&gt; a.txt &lt;&lt;<span class="string">EOF        追加</span></span><br><span class="line"><span class="string">    hello,world</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span>  &gt; a.txt &lt;&lt;<span class="string">EOF      覆盖</span></span><br><span class="line"><span class="string">    hello,world</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>set -xe 显示运行的每一条命令，出错退出。 -x 显示 -e 退出</li>
-<li>echo -e “jiaxiyang\c” 脚本输出不换行</li>
-<li>16 进制转化为 10 进制 num&#x3D;”ABCD1234” &amp;&amp; echo $((16#${num}))</li>
-<li>产生随机数 cat &#x2F;proc&#x2F;sys&#x2F;kernel&#x2F;random&#x2F;uuid</li>
-<li>获取本机 IP 地址： ifconfig | grep “inet addr:” | awk ‘{ print $2 }’| sed ‘s&#x2F;addr:&#x2F;&#x2F;g’</li>
-<li>awk 按列过滤参数 ls -l test.sh | awk ‘{ print $5 }’ 输出：454</li>
-<li>shell 小程序<a target="_blank" rel="noopener" href="https://www.jb51.net/article/54488.htm">link</a></li>
-<li>shell 得到文件信息 <code>ll /var/log/messages | cut -d &quot; &quot; -f 5</code></li>
-<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#106;&#105;&#97;&#x78;&#105;&#121;&#x61;&#110;&#103;&#x40;&#49;&#x30;&#46;&#49;&#48;&#x2e;&#x30;&#x2e;&#49;&#x37;">&#106;&#105;&#97;&#x78;&#105;&#121;&#x61;&#110;&#103;&#x40;&#49;&#x30;&#46;&#49;&#48;&#x2e;&#x30;&#x2e;&#49;&#x37;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
-<li>读文件内容，记录到变量中 var&#x3D;$(cat name.txt)</li>
-<li>计时 start&#x3D;$(date+%s) &amp;&amp; sleep 2 &amp;&amp; end&#x3D;$(date+%s)&amp;&amp; echo $(($end - $start)) <a target="_blank" rel="noopener" href="http://blog.csdn.net/gengshenghong/article/details/7583580">link</a></li>
-<li>sleep: sleep 1 睡眠 1 秒 sleep 1s 睡眠 1 秒 sleep 1m 睡眠 1 分 sleep 1h 睡眠 1 小时</li>
-<li>[ -f test ] &amp;&amp; rm test 如果存在 test 文件 删除 test ，逻辑运算代替 if<br>对于包含至少一个其他函数的足够长的脚本，需要称为  main  的函数。main “$@”</li>
-<li>比较二进制文件</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">process</span></span>()</span><br><span class="line">&#123;</span><br><span class="line">    file=<span class="variable">$1</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;file  : <span class="subst">$(realpath $&#123;file&#125;)</span>&quot;</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;date  : <span class="subst">$(date -r $&#123;file&#125;)</span>&quot;</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;length: <span class="subst">$(wc -c $&#123;file&#125; | awk &#x27;&#123;print $1&#125;&#x27;)</span>&quot;</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;md5sum: <span class="subst">$(md5sum $(realpath $&#123;file&#125;)</span> | awk &#x27;&#123;print <span class="variable">$1</span>&#125;&#x27;)&quot;</span></span><br><span class="line">    xxd -l 96 <span class="variable">$&#123;file&#125;</span></span><br><span class="line">    <span class="built_in">echo</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;date now: <span class="subst">$(date)</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span></span><br><span class="line"><span class="keyword">for</span> var <span class="keyword">in</span> <span class="variable">$@</span>; <span class="keyword">do</span></span><br><span class="line">    process <span class="variable">$var</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>function(in .bashrc)</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">loop</span></span> ()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">eval</span> <span class="string">&quot;<span class="variable">$@</span>&quot;</span>;</span><br><span class="line">    <span class="keyword">while</span> <span class="built_in">sleep</span> 1; <span class="keyword">do</span></span><br><span class="line">        <span class="built_in">eval</span> <span class="string">&quot;<span class="variable">$@</span>&quot;</span>;</span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>copy link libs</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">libs</span></span>() &#123;</span><br><span class="line">    OUTPUT_DIR=$(<span class="built_in">date</span> -u +<span class="string">&quot;%Y-%m-%d-%H:%M:%S&quot;</span>)</span><br><span class="line">    <span class="built_in">mkdir</span> -p <span class="variable">$&#123;OUTPUT_DIR&#125;</span>/bin <span class="variable">$&#123;OUTPUT_DIR&#125;</span>/lib</span><br><span class="line">    BINS=<span class="string">&quot;<span class="variable">$@</span>&quot;</span></span><br><span class="line">    <span class="built_in">cp</span> <span class="variable">$&#123;BINS&#125;</span> <span class="variable">$&#123;OUTPUT_DIR&#125;</span>/bin/</span><br><span class="line">    <span class="string">&quot;<span class="subst">$(ldd $&#123;BINS&#125; | grep <span class="string">&quot;=&gt; /&quot;</span> | awk &#x27;&#123;print $3&#125;&#x27; | xargs -I &#x27;&#123;&#125;&#x27; cp -v &#x27;&#123;&#125;&#x27; $&#123;OUTPUT_DIR&#125;/lib)</span>&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>创建固定个数 panel，每个 panel 执行不同命令</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">PANEL_NUM=6</span><br><span class="line"><span class="keyword">while</span> [ $(tmux list-panes | <span class="built_in">wc</span> -l) -lt <span class="variable">$&#123;PANEL_NUM&#125;</span> ]; <span class="keyword">do</span></span><br><span class="line">	tmux split-window \; <span class="comment">#select-pane -L</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># even-horizontal even-vertical main-horizontal main-vertical tiled</span></span><br><span class="line"><span class="comment"># tmux select-layout even-horizontal</span></span><br><span class="line">tmux select-layout tiled</span><br><span class="line"></span><br><span class="line">CURRENT_PANEL=$(tmux display -pt <span class="string">&quot;<span class="variable">$&#123;TMUX_PANE:?&#125;</span>&quot;</span> <span class="string">&#x27;#&#123;pane_index&#125;&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(<span class="built_in">seq</span> 1 <span class="variable">$&#123;PANEL_NUM&#125;</span>); <span class="keyword">do</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="variable">$&#123;i&#125;</span></span><br><span class="line">	<span class="keyword">if</span> [ <span class="variable">$&#123;i&#125;</span> -ne <span class="variable">$&#123;CURRENT_PANEL&#125;</span> ]; <span class="keyword">then</span></span><br><span class="line">		tmux send-keys -t .<span class="variable">$&#123;i&#125;</span> <span class="string">&quot;echo <span class="variable">$&#123;i&#125;</span>; ls -al&quot;</span> c-m</span><br><span class="line">	<span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>删除和添加版权信息</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## remove license</span></span><br><span class="line"><span class="comment"># for i in $(/usr/bin/fdfind -e h -e cpp -e hpp -e cc); do</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(find . -regex <span class="string">&#x27;.*\.\(cpp\|cc\|cxx\|hpp\|h\)&#x27;</span>); <span class="keyword">do</span></span><br><span class="line">	line=$(<span class="built_in">cat</span> <span class="variable">$i</span> | grep -n <span class="string">&quot;#i[fn]\|#pragma&quot;</span> | awk -F <span class="string">&#x27;:&#x27;</span> <span class="string">&#x27;&#123;print $1&#125;&#x27;</span> | awk <span class="string">&#x27;NR==1&#x27;</span>)</span><br><span class="line">	line=$((<span class="variable">$&#123;line&#125;</span> - <span class="number">1</span>))</span><br><span class="line">	<span class="keyword">if</span> ((<span class="variable">$&#123;line&#125;</span> &gt; <span class="number">0</span>)); <span class="keyword">then</span></span><br><span class="line">		sed -i <span class="string">&quot;1, <span class="variable">$&#123;line&#125;</span>d&quot;</span> <span class="variable">$i</span></span><br><span class="line">	<span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## add license</span></span><br><span class="line"><span class="built_in">cat</span> &gt;pgcopyright.txt &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">/**</span></span><br><span class="line"><span class="string"> * @copyright PhiGent.ai @ 2022</span></span><br><span class="line"><span class="string"> */</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> $(find . -regex <span class="string">&#x27;.*\.\(cpp\|cc\|cxx\|hpp\|h\)&#x27;</span>); <span class="keyword">do</span></span><br><span class="line">	<span class="built_in">cat</span> pgcopyright.txt <span class="variable">$i</span> &gt;<span class="variable">$i</span>.new &amp;&amp; <span class="built_in">mv</span> <span class="variable">$i</span>.new <span class="variable">$i</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> pgcopyright.txt</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>push to jfrog</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line">JFROG_USER=xiyang.jia</span><br><span class="line">JFROG_PASSWD=</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">push_to_jfrog</span></span>() &#123;</span><br><span class="line">        FILE=<span class="variable">$1</span></span><br><span class="line">        JFROG_PATH=http://artifacts.phigent.io/artifactory/<span class="variable">$2</span></span><br><span class="line">        MD5=$(<span class="built_in">md5sum</span> <span class="variable">$FILE</span> | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span>)</span><br><span class="line">        curl -u<span class="string">&quot;<span class="variable">$&#123;JFROG_USER&#125;</span>:<span class="variable">$&#123;JFROG_PASSWD&#125;</span>&quot;</span> -T <span class="variable">$FILE</span> -H <span class="string">&quot;X-Checksum-MD5:<span class="variable">$&#123;MD5&#125;</span>&quot;</span> -L <span class="string">&quot;<span class="variable">$&#123;JFROG_PATH&#125;</span>&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">push_dir_to_jfrog</span></span>()&#123;</span><br><span class="line">        <span class="keyword">for</span> file <span class="keyword">in</span> $(find <span class="variable">$1</span> -<span class="built_in">type</span> f); <span class="keyword">do</span></span><br><span class="line">                push_to_jfrog <span class="variable">$&#123;file&#125;</span> <span class="variable">$2</span>/<span class="variable">$&#123;file&#125;</span></span><br><span class="line">        <span class="keyword">done</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -d <span class="variable">$1</span> ]; <span class="keyword">then</span></span><br><span class="line">        push_dir_to_jfrog <span class="variable">$1</span> <span class="variable">$2</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">        push_to_jfrog <span class="variable">$1</span> <span class="variable">$2</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/11/16/Python-grammar/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/16/Python-grammar/" class="post-title-link" itemprop="url">Python-grammar</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-11-16 21:39:20" itemprop="dateCreated datePublished" datetime="2020-11-16T21:39:20+08:00">2020-11-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-03-19 10:26:25" itemprop="dateModified" datetime="2025-03-19T10:26:25+08:00">2025-03-19</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/11/16/Python-grammar/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/16/Python-grammar/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>10k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>9 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="解释器"><a href="#解释器" class="headerlink" title="解释器"></a>解释器</h2><ol>
-<li>官方版本的解释器:Cpython 这个解释器是用 C 语言开发的，所以叫 CPython。</li>
-<li><a target="_blank" rel="noopener" href="https://devguide.python.org/#other-interpreter-implementations">其他解释器</a></li>
-<li>CPython 解释器由一个<code>编译器</code>和一个<code>虚拟机</code>构成，编译器负责将源代码转换成字节码文件，而虚拟机负责执行字节码。所以，解释型语言其实也有编译过程，只不过这个编译过程并不是直接生成目标代码，而是中间代码（字节码），然后再通过虚拟机来逐行解释执行字节码</li>
-<li>python 解释器的编译器会将.py 源文件编译（解释）成字节码生成 PyCodeObject 字节码对象存放在内存中。python 解释器的虚拟机将执行内存中的字节码对象转化为机器语言，虚拟机与操作系统交互，使机器语言在机器硬件上运行。运行结束后 python 解释器则将 PyCodeObject 写回到 pyc 文件中。当 python 程序第二次运行时，首先程序会在硬盘中寻找 pyc 文件，如果找到，则直接载入，否则就重复上面的过程。</li>
-<li>pyc 文件其实是 PyCodeObject 的一种持久化保存方式。pyc 文件，文件中包含 python 的 magic number（来说明编译时使用的 python 版本号）、源文件的 mtime（使 pyc 和 py 文件保持同步）、编译出的 code 对象</li>
-<li>字节码是一种中间代码，类似于汇编语言，它可以被解释器直接执行，也可以被保存到.pyc 文件中以提高下次执行的速度。</li>
-<li><a target="_blank" rel="noopener" href="https://www.imahui.com/network/6026.html">解释器基本构成</a></li>
-</ol>
-<h2 id="加速"><a href="#加速" class="headerlink" title="加速"></a>加速</h2><ol>
-<li>sample 见 python_sandbox 中的 optimization</li>
-<li>numba jit 加速(不能使用复杂数据结构)</li>
-<li>triton 加速</li>
-<li>torch compile 加速</li>
-<li>cuda 加速</li>
-<li>数据结构改变，优化访存</li>
-</ol>
-<h2 id="vscode-test"><a href="#vscode-test" class="headerlink" title="vscode test"></a>vscode test</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/python/testing">link</a></li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://docs.python.org/3/tutorial/">python tutorial</a></li>
-</ol>
-<h2 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/gcgc/p/16529975.html">Cython</a><ul>
-<li>编译成 c，再编译成 so，strip 后再使用</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://www.toolfk.com/tools/online-python-confuse.html">在线混淆</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/54296517">代码加密</a></li>
-</ol>
-<h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
-<li><code>pass</code> 语句用于指示一个空的代码块。它不执行任何操作，只是作为占位符使用，用于保持语法完整性。通常在语法上需要语句或代码块的地方，但是逻辑上不需要执行任何操作时，可以使用 pass 语句。</li>
-<li>CPython 的 Frame Evaluation API（框架评估 API）是一个高级特性，允许开发者定制 Python 解释器执行代码的方式。这个 API 提供了一种方法，能够在 Python 解释器运行时动态插入和替换代码执行的框架，从而可以进行代码插桩、动态优化或其他高级操作。</li>
-<li>print</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> torch.allclose(triton_output, torch_output, atol=<span class="number">0.125</span>, rtol=<span class="number">0</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;✅ Triton and Torch match&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;❌ Triton and Torch differ&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><code>pip show numpy</code>查看 numpy 信息, 包括安装路径</li>
-<li><code>python -v</code> import module 时可以查看 module path</li>
-<li><code>print(os.environ)</code> vs code debug console 打印环境变量<ul>
-<li><code>print(os.environ[&#39;HOME&#39;])</code></li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://www.learnpython.org/en/Partial_functions">Partial_functions</a> 给函数加指定参数<ul>
-<li>偏函数允许将具有 x 个参数的函数导出为具有较少参数和为更有限的函数设置的固定值的函数。</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://sikasjc.github.io/2018/10/12/star/">Python 中的星号，*<em>和</em>运算符</a><ul>
-<li>数学运算符： <code>*</code>用于乘法， <code>**</code> 用于乘方</li>
-<li>函数参数：<ul>
-<li>*args 可以表示任意多个参数，它本质是一个 tuple。</li>
-<li>**kwargs 是关键字参数，它本质上是一个 dict。</li>
-</ul>
-</li>
-<li>解包参数列表: 在 Python 中，调用函数时，利用*语句可以将参数列表解包</li>
-<li>序列解包</li>
-<li>Keyword-Only Arguments</li>
-</ul>
-</li>
-<li><code>id(a)</code> a 对象的地址, 用于分析对象内存<ul>
-<li>Return the identity of an object.This is guaranteed to be unique among simultaneously existing objects. (CPython uses the object’s memory address.)</li>
-</ul>
-</li>
-<li>计时</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">start_time = time.perf_counter()</span><br><span class="line">your_function()</span><br><span class="line">end_time = time.perf_counter()</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>在 Python 中,可以使用三个双引号(“””)或三个单引号(‘’’)来进行段落注释。</li>
-<li><code>#!/usr/bin/env python3</code> 指定执行器</li>
-<li>python repl 里运行 py 文件</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exec</span>(<span class="built_in">open</span>(<span class="string">&quot;test.py&quot;</span>).read()) <span class="comment"># python3</span></span><br><span class="line"><span class="built_in">exec</span>(<span class="built_in">open</span>(<span class="string">&quot;filename.py&quot;</span>).read()) <span class="comment"># python2</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><code>print(cls.__class__.__name__)</code>打印 cls 实例类的名字</li>
-<li>print 到文件</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;output.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Hello, world!&#x27;</span>, file=file)</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><code>help(torch.ones)</code> 显示函数 help</li>
-<li><code>print(dir(list))</code> python 的 dir()函数可以用来获取对象的属性和方法。</li>
-<li><code>unset all_proxy</code> 不能使用代理，可能出现 install 错误 <a target="_blank" rel="noopener" href="https://blog.csdn.net/whatday/article/details/109287343">link</a></li>
-<li><a target="_blank" rel="noopener" href="https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa">install python from deadsnakes</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/deadsnakes/docs/blob/main/Building-Deadsnakes-Packages-from-Git.rst">build python from source</a> 编译之后需要前一级目录 <code>sudo dpkg -i *.deb</code></li>
-<li><code>pip freeze | grep torch</code>: 查看库版本</li>
-<li><code>python3 -c &quot;import torch; print(torch.__version__)&quot;</code></li>
-<li><code>python3 -c &quot;import tensorrt_llm; print(tensorrt_llm.__version__)&quot;</code></li>
-<li><code>print(&quot;Numpy version:&quot;, numpy.__version__)</code></li>
-<li><a target="_blank" rel="noopener" href="https://elpy.readthedocs.io/en/latest/ide.html#other-useful-snippets">useful-snippets</a></li>
-<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2391275">值语义与引用语义</a><ul>
-<li>不可变变量的值一旦创建，就不能被修改。如果你尝试修改一个不可变对象的值，Python 将会创建一个新的对象。Python 中的不可变对象包括整数（int）、浮点数（float）、字符串（str）、元组（tuple）等。</li>
-<li>可变变量的值可以在原地修改，而不会创建一个新的对象。Python 中的可变对象包括列表（list）、字典（dict）、集合（set）等。</li>
-</ul>
-</li>
-<li><code>import copy; x = copy.deepcopy(y)</code></li>
-<li>print(“x: “, x, type(x), x.shape) <a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_28576553/article/details/81154912">link</a></li>
-<li>“%s&#x2F;Kernels” % self.exe_path 的作用是将 self.exe_path 中的值插入到字符串中 %s 的位置。这种格式化方法被称作“旧式字符串格式化”（old-style string formatting）。</li>
-<li>现代代码中更倾向于使用 str.format() 方法或者 f-string（在 Python 3.6 及以后的版本中）。例如，使用 str.format()，上述代码可以写作 “{}&#x2F;Kernels”.format(self.exe_path)；使用 f-string，可以写作 f”{self.exe_path}&#x2F;Kernels”。</li>
-<li>print(‘{:.2f} ms’.format(xxx))</li>
-<li>print(f’{xxx:.2f} ms’)</li>
-<li>pytorch tensor to binary file: <code>tensor.cpu().numpy().astype(np.float32).tofile(&quot;test.bin&quot;)</code>; c++ read binary file</li>
-<li>print(‘type : {}’.format(type(xxx)))</li>
-<li>print(‘size : {}’.format(len(xxx)))</li>
-</ol>
-<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">static std::vector&lt;<span class="built_in">float</span>&gt; read<span class="constructor">_from_bin_file(<span class="params">std</span>::<span class="params">string</span> <span class="params">file</span>)</span> &#123;</span><br><span class="line">  auto result_size = std::filesystem::file<span class="constructor">_size(<span class="params">file</span>)</span>;</span><br><span class="line">  std::vector&lt;<span class="built_in">float</span>&gt; result(result_size<span class="operator"> / </span><span class="number">4</span>);</span><br><span class="line">  <span class="constructor">CHECK(<span class="params">std</span>::<span class="params">ifstream</span>(<span class="params">file</span>)</span>.read((<span class="built_in">char</span>*)&amp;result<span class="literal">[<span class="number">0</span>]</span>, result_size).good<span class="literal">()</span>)</span><br><span class="line">      &lt;&lt; <span class="string">&quot;failed to read baseline from &quot;</span> &lt;&lt; file;</span><br><span class="line">  return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void mywritefile(T* src, <span class="built_in">int</span> size1, std::<span class="built_in">string</span> filename) &#123;</span><br><span class="line">  ofstream Tout;</span><br><span class="line">  <span class="module-access"><span class="module"><span class="identifier">Tout</span>.</span></span><span class="keyword">open</span>(filename, ios_base::out <span class="pattern-match">| ios<span class="constructor">_base</span>::binary);</span></span><br><span class="line"><span class="pattern-match">  <span class="keyword">if</span> (!<span class="constructor">Tout</span>) &#123;</span></span><br><span class="line"><span class="pattern-match">    cout &lt;&lt; &quot;<span class="constructor">Can</span>&#x27;t <span class="keyword">open</span> the file! &quot; &lt;&lt; filename &lt;&lt; &quot;\n&quot;;</span></span><br><span class="line"><span class="pattern-match">    return;</span></span><br><span class="line"><span class="pattern-match">  &#125;</span></span><br><span class="line"><span class="pattern-match">  <span class="constructor">Tout</span>.write((<span class="built_in">char</span><span class="operator">*</span>)src, size1 <span class="operator">*</span> sizeof(<span class="constructor">T</span>));</span></span><br><span class="line"><span class="pattern-match">  <span class="operator">/</span><span class="operator">/</span> <span class="constructor">CHECK(<span class="params">std</span>::<span class="params">ofstream</span>(<span class="params">filename</span>)</span>.write((<span class="built_in">char</span><span class="operator">*</span>)data.data, size).good()) &lt;&lt;</span></span><br><span class="line"><span class="pattern-match">&#125;</span></span><br><span class="line"><span class="pattern-match"></span></span><br><span class="line"><span class="pattern-match">template void mywritefile(int8<span class="constructor">_t</span><span class="operator">*</span> src, <span class="built_in">int</span> size1, std::<span class="built_in">string</span> filename);</span></span><br><span class="line"><span class="pattern-match"></span></span><br></pre></td></tr></table></figure>
-
-<h2 id="多线程问题"><a href="#多线程问题" class="headerlink" title="多线程问题"></a>多线程问题</h2><ol>
-<li>GIL(Global Interpreter Lock) 全局解释器锁</li>
-<li>GIL 限制了 Python 解释器同一时间只能执行一个线程的代码，因此在 CPU 密集型的任务中，多线程程序并不一定比单线程程序更快。</li>
-</ol>
-<h2 id="Generators"><a href="#Generators" class="headerlink" title="Generators"></a><a target="_blank" rel="noopener" href="https://wiki.python.org/moin/Generators">Generators</a></h2><ol>
-<li>生成器（Generator），是计算机科学中特殊的子程序。实际上，所有生成器都是迭代器。生成器非常类似于返回数组的函数，都是具有参数、可被调用、产生一系列的值。但是生成器不是构造出数组包含所有的值并一次性返回，而是每次产生一个值，因此生成器看起来像函数，但行为像迭代器。</li>
-<li>Generator 可以减少内存使用，用到了再产生</li>
-<li><code>print(list(model.parameters())[0])</code> 打印 generators 第一个元素， model.parameters()是一个 generator</li>
-<li><code>print([x for x in model.parameters()])</code></li>
-<li>关键字 yiled 来创建 generator</li>
-</ol>
-<h2 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.runoob.com/python/python-func-sorted.html">sorted</a><ul>
-<li>sorted_data &#x3D; sorted(data, reverse&#x3D;True) 降序</li>
-</ul>
-</li>
-</ol>
-<h2 id="class"><a href="#class" class="headerlink" title="class"></a>class</h2><h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><ol>
-<li><strong>init</strong> 方法是一个特殊的方法（称为构造器），当创建类的新实例时，它会自动被调用。它用于初始化类的属性或其他必要的启动过程。</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, param1, param2</span>):</span><br><span class="line">        self.attribute1 = param1</span><br><span class="line">        self.attribute2 = param2</span><br></pre></td></tr></table></figure>
-
-<h3 id="类方法"><a href="#类方法" class="headerlink" title="类方法"></a>类方法</h3><ol>
-<li>在 Python 中，可以使用类方法来创建实例。这种方式通常称为“工厂方法”，它允许你以不同的方式创建类的实例。</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, param1, param2</span>):</span><br><span class="line">        self.attribute1 = param1</span><br><span class="line">        self.attribute2 = param2</span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">from_string</span>(<span class="params">cls, string</span>):</span><br><span class="line">        param1, param2 = <span class="built_in">map</span>(<span class="built_in">int</span>, string.split(<span class="string">&#x27;-&#x27;</span>))</span><br><span class="line">        <span class="keyword">return</span> cls(param1, param2)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 __init__</span></span><br><span class="line">instance1 = MyClass(<span class="number">10</span>, <span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用类方法</span></span><br><span class="line">instance2 = MyClass.from_string(<span class="string">&quot;10-20&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="static-方法"><a href="#static-方法" class="headerlink" title="static 方法"></a>static 方法</h3><ol>
-<li>可以定义一个静态方法或一个独立的函数来处理复杂的初始化，并返回类的实例。</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, param1, param2</span>):</span><br><span class="line">        self.attribute1 = param1</span><br><span class="line">        self.attribute2 = param2</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">from_list</span>(<span class="params">param_list</span>):</span><br><span class="line">        <span class="keyword">return</span> MyClass(*param_list) <span class="comment"># 在Python中，调用函数时，利用*语句可以将参数列表解包</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create_instance</span>(<span class="params">param1, param2</span>):</span><br><span class="line">    <span class="comment"># 可以在这里执行更复杂的初始化</span></span><br><span class="line">    <span class="keyword">return</span> MyClass(param1, param2)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用静态方法</span></span><br><span class="line">instance1 = MyClass.from_list([<span class="number">10</span>, <span class="number">20</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用独立的函数</span></span><br><span class="line">instance2 = create_instance(<span class="number">10</span>, <span class="number">20</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Decorator-装饰器"><a href="#Decorator-装饰器" class="headerlink" title="Decorator 装饰器"></a>Decorator 装饰器</h2><ol>
-<li>在 Python 中，函数名上方的 @ 符号表示装饰器（Decorator）。装饰器是 Python 的一个高级特性，用于在不修改原函数代码的情况下增强或改变函数的功能。</li>
-<li>装饰器<code>本质上是一个函数，它接受一个函数作为参数，并返回一个新的函数。</code>使用 @ 符号 followed by the decorator name 就可以将装饰器应用于一个函数。例如：在这个例子中，say_hello 函数被 my_decorator 装饰器装饰。当你调用 say_hello 时，实际上是在调用 my_decorator 返回的 wrapper 函数。</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_decorator</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">wrapper</span>():</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Something is happening before the function is called.&quot;</span>)</span><br><span class="line">        func()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Something is happening after the function is called.&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="meta">@my_decorator</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">say_hello</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Hello!&quot;</span>)</span><br><span class="line"></span><br><span class="line">say_hello()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>装饰器的作用<ul>
-<li>日志记录：自动记录函数的调用细节。</li>
-<li>性能测试：检测函数运行时间。</li>
-<li>权限校验：在函数执行前进行权限检查。</li>
-<li>缓存：存储函数的返回结果，以便后续调用时快速返回。</li>
-<li>类型检查：检查函数的输入输出类型。</li>
-</ul>
-</li>
-</ol>
-<h2 id="setuptools"><a href="#setuptools" class="headerlink" title="setuptools"></a><a target="_blank" rel="noopener" href="https://github.com/pypa/setuptools">setuptools</a></h2><ol>
-<li>建议新项目避免 setup.py 配置</li>
-<li>In addition to specifying a build system, you also will need to add some package information such as metadata, contents, dependencies, etc. This can be done in the same <code>pyproject.toml</code> file, or in a separated one: <code>setup.cfg</code> or <code>setup.py</code>.</li>
-<li><code>setup.py</code> pip install .&#x2F;example 时执行 setup.py 来编译</li>
-<li><code>python setup.py build --debug</code></li>
-<li><code>python setup.py install --debug</code></li>
-</ol>
-<h2 id="wheel-python-包"><a href="#wheel-python-包" class="headerlink" title="wheel python 包"></a>wheel python 包</h2><ol>
-<li><code>pip wheel .</code> 生成 python 包</li>
-<li><code>pip install *.whl</code></li>
-</ol>
-<h2 id="argparse"><a href="#argparse" class="headerlink" title="argparse"></a><a target="_blank" rel="noopener" href="https://docs.python.org/3/library/argparse.html">argparse</a></h2><ol>
-<li>参数传递</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser(description=<span class="string">&#x27;Process some integers.&#x27;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&#x27;integers&#x27;</span>, metavar=<span class="string">&#x27;N&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, nargs=<span class="string">&#x27;+&#x27;</span>,</span><br><span class="line">                    <span class="built_in">help</span>=<span class="string">&#x27;an integer for the accumulator&#x27;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&#x27;--sum&#x27;</span>, dest=<span class="string">&#x27;accumulate&#x27;</span>, action=<span class="string">&#x27;store_const&#x27;</span>,</span><br><span class="line">                    const=<span class="built_in">sum</span>, default=<span class="built_in">max</span>,</span><br><span class="line">                    <span class="built_in">help</span>=<span class="string">&#x27;sum the integers (default: find the max)&#x27;</span>)</span><br><span class="line"></span><br><span class="line">args = parser.parse_args()</span><br><span class="line"><span class="built_in">print</span>(args.accumulate(args.integers))</span><br></pre></td></tr></table></figure>
-
-<h2 id="data-structure"><a href="#data-structure" class="headerlink" title="data structure"></a><a target="_blank" rel="noopener" href="https://docs.python.org/3/tutorial/datastructures.html">data structure</a></h2><ol>
-<li>Python 为我们提供了三种常用数据结构，列表(Lists),字典（Dictionary）,元组（Tuple）</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_53453184/article/details/137224600">与 c++数据结构做对比</a></li>
-</ol>
-<h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><ol>
-<li>类似 c++ vector</li>
-<li>list[-1] 最后一个元素，负号表示倒着索引</li>
-<li>squares[-3:] slice: 创建新的索引，包含最后三个 value</li>
-<li>slice 是浅拷贝</li>
-<li>list1 + list2 表示 concat</li>
-<li>letters[2:5] &#x3D; [‘C’, ‘D’, ‘E’] 批量赋值</li>
-<li>letters[2:5] &#x3D; [] remove 第 3 个到第 5 个元素</li>
-</ol>
-<h3 id="dict"><a href="#dict" class="headerlink" title="dict"></a><a target="_blank" rel="noopener" href="https://www.w3schools.com/python/python_dictionaries.asp">dict</a></h3><ol>
-<li><code>thisdict = dict(name = &quot;John&quot;, age = 36, country = &quot;Norway&quot;)</code> dict constructor</li>
-<li><code>thisdict = &#123;&quot;brand&quot;: &quot;Ford&quot;, &quot;model&quot;: &quot;Mustang&quot;,&quot;year&quot;: 1964&#125;</code></li>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/34305003/difference-between-dictionary-and-ordereddict">Difference between dictionary and OrderedDict</a></li>
-<li>dict –&gt; c++ unordered_map</li>
-<li>OrderedDict –&gt; c++ map ?</li>
-<li>SortedDict –&gt; c++ map</li>
-<li>这就是有序和排序的区别。 OrderedDict 根据插入顺序维护顺序，而 SortedDict 将根据键的排序顺序维护顺序</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/grantjenks/python-sortedcontainers">sortedcontainers</a><ul>
-<li>需要安装</li>
-</ul>
-</li>
-<li><code>del dict[&quot;Key&quot;]</code>删除</li>
-</ol>
-<h4 id="dict-merge"><a href="#dict-merge" class="headerlink" title="dict merge"></a><a target="_blank" rel="noopener" href="https://www.runoob.com/python3/python-merging-two-dictionaries.html">dict merge</a></h4><ol>
-<li><code>dict2.update(dict1)</code></li>
-</ol>
-<h4 id="dict-values"><a href="#dict-values" class="headerlink" title="dict_values"></a><a target="_blank" rel="noopener" href="https://www.programiz.com/python-programming/methods/dictionary/values">dict_values</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">marks = &#123;<span class="string">&#x27;Physics&#x27;</span>:<span class="number">67</span>, <span class="string">&#x27;Maths&#x27;</span>:<span class="number">87</span>&#125;</span><br><span class="line"><span class="built_in">print</span>(marks.values())</span><br><span class="line"></span><br><span class="line"><span class="comment"># Output: dict_values([67, 87])</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="dict-keys"><a href="#dict-keys" class="headerlink" title="dict_keys"></a><a target="_blank" rel="noopener" href="https://www.programiz.com/python-programming/methods/dictionary/keys">dict_keys</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">numbers = &#123;<span class="number">1</span>: <span class="string">&#x27;one&#x27;</span>, <span class="number">2</span>: <span class="string">&#x27;two&#x27;</span>, <span class="number">3</span>: <span class="string">&#x27;three&#x27;</span>&#125;</span><br><span class="line"><span class="built_in">print</span>(numbers.keys())</span><br><span class="line"></span><br><span class="line"><span class="comment"># Output: dict_keys([1, 2, 3])</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="tuple"><a href="#tuple" class="headerlink" title="tuple"></a>tuple</h3><ol>
-<li>c++ tuple</li>
-</ol>
-<h2 id="Comprehension"><a href="#Comprehension" class="headerlink" title="Comprehension"></a>Comprehension</h2><ol>
-<li>Python 列表推导(List Comprehension)是 Python 中一个非常有用且常被使用的语法结构。它可以用简洁的语法代替循环语句,从一个可迭代对象中创建一个新的列表。</li>
-<li><code>[ expr for val in collection [if condition] ]</code></li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 简单推导</span></span><br><span class="line">nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">squares = [x ** <span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> nums] <span class="comment"># [1, 4, 9, 16]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 带判断条件</span></span><br><span class="line">even_squares = [x ** <span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> nums <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>] <span class="comment"># [4, 16]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字典推导</span></span><br><span class="line">dict_1 = &#123;<span class="string">&#x27;a&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;b&#x27;</span>: <span class="number">2</span>&#125;</span><br><span class="line">dict_2 = &#123;k:v**<span class="number">2</span> <span class="keyword">for</span> k,v <span class="keyword">in</span> dict_1.items()&#125; <span class="comment"># &#123;&#x27;a&#x27;: 1, &#x27;b&#x27;: 4&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="虚拟环境"><a href="#虚拟环境" class="headerlink" title="虚拟环境"></a>虚拟环境</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python3 -m venv myenv</span><br><span class="line">source myenv/<span class="built_in">bin</span>/activate</span><br><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
-
-<h2 id="输出表格"><a href="#输出表格" class="headerlink" title="输出表格"></a>输出表格</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> prettytable <span class="keyword">import</span> PrettyTable</span><br><span class="line"></span><br><span class="line">table = PrettyTable([<span class="string">&#x27;Name&#x27;</span>, <span class="string">&#x27;Age&#x27;</span>, <span class="string">&#x27;Gender&#x27;</span>])</span><br><span class="line">table.add_row([<span class="string">&#x27;Bob&#x27;</span>, <span class="number">18</span>, <span class="string">&#x27;Male&#x27;</span>])</span><br><span class="line"><span class="built_in">print</span>(table)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h2><ol>
-<li>vscode debug</li>
-<li>vscode 无法跳转可能是 interpreter 问题</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/singxsy/article/details/123730161">不跳转问题修复</a></li>
-<li>lsp language server 使用 pylance, jedi</li>
-<li><code>&quot;justMyCode&quot;:False</code> 可以跳转到三方库源代码</li>
-<li><code>python -i test.py</code> 执行之后会停下来，可以查看变量</li>
-<li><code>python -m pdb test.py</code></li>
-<li><code>import pdb; pdb.set_trace()</code></li>
-<li><code>python -m trace --trackcalls pyscript.py</code></li>
-<li><code>python -m trace --trace pyscript.py</code></li>
-<li>打印动态库</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">for</span> name, module <span class="keyword">in</span> sys.modules.items():</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">hasattr</span>(module, <span class="string">&#x27;__file__&#x27;</span>) <span class="keyword">and</span> module.__file__:</span><br><span class="line">        <span class="keyword">if</span> module.__file__.endswith((<span class="string">&#x27;.so&#x27;</span>, <span class="string">&#x27;.dll&#x27;</span>, <span class="string">&#x27;.pyd&#x27;</span>)):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;name&#125;</span>: <span class="subst">&#123;module.__file__&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="Debug-方法"><a href="#Debug-方法" class="headerlink" title="Debug 方法"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38542085/article/details/78562458">Debug 方法</a></h3><ol>
-<li>elpy-pdb-debug-buffer</li>
-<li>logging</li>
-<li>pdb</li>
-<li>print</li>
-</ol>
-<h2 id="profiling"><a href="#profiling" class="headerlink" title="profiling"></a>profiling</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/gaogaotiantian/viztracer">viztracer</a><ul>
-<li>可用来看调用栈</li>
-<li>适合看整体，可以看火焰图及 timeline</li>
-<li>vscode 插件：找到 result.json， 右键最后</li>
-</ul>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/nsight-systems/UserGuide/index.html#python-profiling">nsight system python-profiling</a></li>
-</ol>
-</li>
-<li><a target="_blank" rel="noopener" href="https://docs.python.org/3/library/timeit.html">timeit</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wang_yb/p/18106433">Python 装饰器实战：打造高效性能计时工具</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/plasma-umass/scalene">scalene</a><ul>
-<li>适合找具体每一行耗时及系统瓶颈</li>
-<li>a high-performance, high-precision CPU, GPU, and memory profiler for Python with AI-powered optimization proposals</li>
-<li>pip install scalene</li>
-<li>scalene –outfile result.html –html</li>
-<li>PROFILING&#x3D;y scalene –outfile result5.html –html –reduced-profile –no-browser</li>
-<li>配合 cprofile 看</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/joerick/pyinstrument">pyinstrument</a><ul>
-<li>pyinstrument -r html -o profile.html test.py</li>
-<li>html 右上角可以切换具体耗时及百分比</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/24495603">cprofile</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/baverman/flameprof">flameprof</a><ul>
-<li>可以将 cprofile 结果画出火焰图</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/nvdv/vprof">vprof</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/pyutils/line_profiler">line_profiler</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.python.org/3/library/tracemalloc.html">tracemalloc</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/pympler/pympler">pympler&#x2F;pympler</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/bloomberg/memray">memray</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/pythonprofilers/memory_profiler/tree/master">memory_profiler</a><br><code>gprof2dot -f pstats mkm_run.prof | dot -Tpng -o mkm_run.png</code></li>
-<li>profile 库</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> profile</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>():</span><br><span class="line">    fps = profile.fps()</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        xxxxxxxxxxxxxxxxxxx</span><br><span class="line">        logging.info(<span class="string">&#x27;fps:&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(fps.compute()))</span><br></pre></td></tr></table></figure>
-
-<h2 id="package-management"><a href="#package-management" class="headerlink" title="package management"></a>package management</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/582651418">基于 pyproject.toml 的包管理</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/python-poetry/poetry">poetry</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/prefix-dev/pixi">pixi</a></li>
-</ol>
-<h2 id="main"><a href="#main" class="headerlink" title="main"></a>main</h2><ol>
-<li>这里是一个使用<code>if __name__ == &#39;__main__&#39;</code>的 Python 示例:</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模块1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">foo</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;foo&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">bar</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;bar&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    foo()</span><br><span class="line">    bar()</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模块2</span></span><br><span class="line"><span class="keyword">import</span> module1</span><br><span class="line"></span><br><span class="line">module1.foo() <span class="comment"># 调用foo函数</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>当作为脚本直接运行 module1 时,<code>__name__</code>等于<code>&#39;__main__&#39;</code>,if 语句块会被执行,打印 foo 和 bar。而当 module1 被导入时,<code>__name__</code>会设置成模块名,if 语句块不会执行。这种方式非常常用,它允许同一个模块既可以被导入调用,也可以直接作为脚本运行,实现代码的重用。<code>if __name__ ==&#39;__main__&#39;</code> 是 Python 程序常见的惯用法,用于模块的导入和直接运行的区分。</li>
-</ol>
-<h2 id="Logging"><a href="#Logging" class="headerlink" title="Logging"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/360306588">Logging</a></h2><ol>
-<li>format 配置: &#96;’[%(asctime)s]</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/28/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/30/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/28/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/30/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1436,7 +1182,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">192</span>
+          <span class="site-state-item-count">195</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1469,19 +1215,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/08/20/AI-coding/" title="2025&#x2F;08&#x2F;20&#x2F;AI-coding&#x2F;">AI coding</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/28/Architecture/" title="2025&#x2F;04&#x2F;28&#x2F;Architecture&#x2F;">Computer Architecture</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/18/pytest/" title="2025&#x2F;04&#x2F;18&#x2F;pytest&#x2F;">pytest</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
     </ul>
   </div>
@@ -1519,13 +1265,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">587k</span>
+    <span title="站点总字数">624k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:54</span>
+    <span title="站点阅读时长">9:27</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

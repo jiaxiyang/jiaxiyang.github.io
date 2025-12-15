@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="LLVM IR br: branch; “br”在LLVM IR (中间表示) 中是一个分支指令，它用于控制流跳转，可以是有条件的也可以是无条件的。 br label %target br i1 %cond, label %if.true, label %if.false    llvm ir LLVM IR 中的 phi 指令用于实现 SSA（静态单赋值）形式下的变量合并。在一个基本块（basi">
+  <meta name="description" content="basic 编译器组件交互方式：  通过内存：通过监督工具Clang实现，该工具将每个LLVM组件作为一个库，并依赖内存中分配的数据结构将一个阶段的输出作为输入提供给另一个阶段 通过文件：通过用户实现，用户启动较小的独立工具，改工具将特定组件的结果写入磁盘文件，用户决定这个文件作为输入传给下一个   像Clang这样的高级工具可以整合使用其他几个更小的工具，具体做法是链接霄工具的库来实现工具的功能">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LLVM">
 <meta property="og:url" content="https://jiaxiyang.github.io/2024/12/29/LLVM/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="LLVM IR br: branch; “br”在LLVM IR (中间表示) 中是一个分支指令，它用于控制流跳转，可以是有条件的也可以是无条件的。 br label %target br i1 %cond, label %if.true, label %if.false    llvm ir LLVM IR 中的 phi 指令用于实现 SSA（静态单赋值）形式下的变量合并。在一个基本块（basi">
+<meta property="og:description" content="basic 编译器组件交互方式：  通过内存：通过监督工具Clang实现，该工具将每个LLVM组件作为一个库，并依赖内存中分配的数据结构将一个阶段的输出作为输入提供给另一个阶段 通过文件：通过用户实现，用户启动较小的独立工具，改工具将特定组件的结果写入磁盘文件，用户决定这个文件作为输入传给下一个   像Clang这样的高级工具可以整合使用其他几个更小的工具，具体做法是链接霄工具的库来实现工具的功能">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-12-29T07:42:47.000Z">
-<meta property="article:modified_time" content="2025-02-14T05:17:05.137Z">
+<meta property="article:modified_time" content="2025-11-03T08:01:32.110Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 
@@ -130,7 +130,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">195</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-02-14 13:17:05" itemprop="dateModified" datetime="2025-02-14T13:17:05+08:00">2025-02-14</time>
+                <time title="修改时间：2025-11-03 16:01:32" itemprop="dateModified" datetime="2025-11-03T16:01:32+08:00">2025-11-03</time>
               </span>
 
           
@@ -262,14 +262,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
+              <span>1.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -281,23 +281,57 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="LLVM-IR"><a href="#LLVM-IR" class="headerlink" title="LLVM IR"></a>LLVM IR</h2><ol>
+        <h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
+<li><p>编译器组件交互方式：</p>
+<ul>
+<li>通过内存：通过监督工具Clang实现，该工具将每个LLVM组件作为一个库，并依赖内存中分配的数据结构将一个阶段的输出作为输入提供给另一个阶段</li>
+<li>通过文件：通过用户实现，用户启动较小的独立工具，改工具将特定组件的结果写入磁盘文件，用户决定这个文件作为输入传给下一个</li>
+</ul>
+</li>
+<li><p>像Clang这样的高级工具可以整合使用其他几个更小的工具，具体做法是链接霄工具的库来实现工具的功能，LLVM设计上十分重视以库的形式进行大量代码复用。</p>
+</li>
+<li><p>llc使用libLLVMCodeGen库实现部分功能，LLVM IR优化器opt使用libLLVMipa实现与目标无关的过程间优化。Clang使用上面两个库来代替llc和op。并向用户提供更简单的接口。</p>
+</li>
+<li><p>语法(Syntax)：关注代码的结构和形式，通过预定义的文法规则来判断源代码是否“写对了格式”。它是编译器前端的第一道防线，主要产生的是语法树。</p>
+</li>
+<li><p>语义(Semantic)：关注代码的意义和逻辑，确保程序各部分之间的关系正确、类型匹配、作用域清晰等。它依赖于语法树，并进一步填充具体的含义信息，为中间代码生成提供依据。</p>
+</li>
+</ol>
+<h2 id="TableGen"><a href="#TableGen" class="headerlink" title="TableGen"></a>TableGen</h2><ol>
+<li>TableGen 是 LLVM 的“数据模板语言” + “代码生成器”。它用一套 .td 文件定义规则，用工具 llvm-tblgen 自动生成 C++ 源码文件</li>
+<li>TableGen 是 LLVM 的“编译器生成器”中的生成器。它本身不生成机器码，而是生成“生成机器码的代码”。</li>
+<li>TableGen → llvm-tblgen → .inc(*.h.inc or *.cpp.inc)</li>
+<li>.inc 文件通常是 C&#x2F;C++ 源码片段（include 文件），不是完整的编译单元。.inc的名字来自 “include” 的缩写，表示它需要通过 #include 被其他 C++ 文件包含。</li>
+<li>.inc &#x3D; include 文件的缩写;主要是 TableGen 生成的 C++ 代码片段;不可独立编译，需要 #include</li>
+<li>用途：<ul>
+<li>指令编码表</li>
+<li>寄存器表</li>
+<li>汇编打印 &#x2F; 解析</li>
+<li>DAG 指令选择规则</li>
+<li>Clang 诊断信息 &#x2F; 内建函数 &#x2F; 编译器选项</li>
+</ul>
+</li>
+<li>可以理解为：<ul>
+<li>.td 文件是 “表定义”，人可读</li>
+<li>.inc 文件是 “表实现”，编译器可用</li>
+</ul>
+</li>
+</ol>
+<h2 id="LLC"><a href="#LLC" class="headerlink" title="LLC"></a>LLC</h2><ol>
+<li><code>llc --version</code></li>
+<li><code>llc &lt;llir file without postfix&gt; --debug</code></li>
+</ol>
+<h2 id="LLVM-IR"><a href="#LLVM-IR" class="headerlink" title="LLVM IR"></a>LLVM IR</h2><ol>
 <li>br: branch; “br”在LLVM IR (中间表示) 中是一个分支指令，它用于控制流跳转，可以是有条件的也可以是无条件的。<ul>
 <li>br label %target</li>
 <li>br i1 %cond, label %if.true, label %if.false</li>
 </ul>
 </li>
-</ol>
-<h2 id="llvm-ir"><a href="#llvm-ir" class="headerlink" title="llvm ir"></a>llvm ir</h2><ol>
 <li>LLVM IR 中的 phi 指令用于实现 SSA（静态单赋值）形式下的变量合并。在一个基本块（basic block）中，如果存在多个前驱块（predecessor），那么在该块的开始处就需要一个 phi 指令来选择正确的值。它的基本语法如下：<ul>
 <li><code>%result = phi &lt;type&gt; [ %val1, %pred1 ], [ %val2, %pred2 ], …</code> </li>
 <li>这表示：如果控制流是从前驱块 %pred1 进入当前块，则 %result 的值为 %val1；如果是从 %pred2 进入，则 %result 为 %val2，依此类推。</li>
 </ul>
 </li>
-</ol>
-<h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
-<li>语法(Syntax)：关注代码的结构和形式，通过预定义的文法规则来判断源代码是否“写对了格式”。它是编译器前端的第一道防线，主要产生的是语法树。</li>
-<li>语义(Semantic)：关注代码的意义和逻辑，确保程序各部分之间的关系正确、类型匹配、作用域清晰等。它依赖于语法树，并进一步填充具体的含义信息，为中间代码生成提供依据。</li>
 </ol>
 <h1 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h1><ol>
 <li><a target="_blank" rel="noopener" href="https://llvm.org/docs/ProgrammersManual.html#the-llvm-debug-macro-and-debug-option">the-llvm-debug-macro-and-debug-option</a></li>
@@ -407,7 +441,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#LLVM-IR"><span class="nav-number">1.</span> <span class="nav-text">LLVM IR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#llvm-ir"><span class="nav-number">2.</span> <span class="nav-text">llvm ir</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#basic"><span class="nav-number">3.</span> <span class="nav-text">basic</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Debug"><span class="nav-number"></span> <span class="nav-text">Debug</span></a></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#basic"><span class="nav-number">1.</span> <span class="nav-text">basic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TableGen"><span class="nav-number">2.</span> <span class="nav-text">TableGen</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LLC"><span class="nav-number">3.</span> <span class="nav-text">LLC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LLVM-IR"><span class="nav-number">4.</span> <span class="nav-text">LLVM IR</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Debug"><span class="nav-number"></span> <span class="nav-text">Debug</span></a></div>
       </div>
       <!--/noindex-->
 
@@ -423,7 +457,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">192</span>
+          <span class="site-state-item-count">195</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -456,19 +490,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/08/20/AI-coding/" title="2025&#x2F;08&#x2F;20&#x2F;AI-coding&#x2F;">AI coding</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/28/Architecture/" title="2025&#x2F;04&#x2F;28&#x2F;Architecture&#x2F;">Computer Architecture</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/18/pytest/" title="2025&#x2F;04&#x2F;18&#x2F;pytest&#x2F;">pytest</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
     </ul>
   </div>
@@ -506,13 +540,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">587k</span>
+    <span title="站点总字数">624k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:54</span>
+    <span title="站点阅读时长">9:27</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

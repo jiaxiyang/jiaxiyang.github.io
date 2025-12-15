@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="base -### 打印要执行的命令，不执行 -Wall：启用大多数警告。这是开发中常用的选项，可以帮助发现潜在的代码问题。 -Wextra：启用额外的警告，比 -Wall 更严格。 -Werror：将所有警告当作错误处理。这意味着任何警告都会导致编译失败，迫使开发者修复这些潜在的问题  clang VS gcc clang 优势 编译速度更快 编译产出更小 出错提示更友好 内置有静态分析工具 专">
+  <meta name="description" content="base -### 打印要执行的命令，不执行 -Wall：启用大多数警告。这是开发中常用的选项，可以帮助发现潜在的代码问题。 -Wextra：启用额外的警告，比 -Wall 更严格。 -Werror：将所有警告当作错误处理。这意味着任何警告都会导致编译失败，迫使开发者修复这些潜在的问题 clang参数： 传给驱动器: 传给前端： 如果你要传递参数给 前端 (cc1)，驱动器是不认识的。 需要加-X">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Clang">
 <meta property="og:url" content="https://jiaxiyang.github.io/2022/07/07/Clang/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="base -### 打印要执行的命令，不执行 -Wall：启用大多数警告。这是开发中常用的选项，可以帮助发现潜在的代码问题。 -Wextra：启用额外的警告，比 -Wall 更严格。 -Werror：将所有警告当作错误处理。这意味着任何警告都会导致编译失败，迫使开发者修复这些潜在的问题  clang VS gcc clang 优势 编译速度更快 编译产出更小 出错提示更友好 内置有静态分析工具 专">
+<meta property="og:description" content="base -### 打印要执行的命令，不执行 -Wall：启用大多数警告。这是开发中常用的选项，可以帮助发现潜在的代码问题。 -Wextra：启用额外的警告，比 -Wall 更严格。 -Werror：将所有警告当作错误处理。这意味着任何警告都会导致编译失败，迫使开发者修复这些潜在的问题 clang参数： 传给驱动器: 传给前端： 如果你要传递参数给 前端 (cc1)，驱动器是不认识的。 需要加-X">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-07T05:58:12.000Z">
-<meta property="article:modified_time" content="2025-02-08T10:17:24.012Z">
+<meta property="article:modified_time" content="2025-11-05T02:11:30.830Z">
 <meta property="article:author" content="贾夕阳">
 <meta name="twitter:card" content="summary">
 
@@ -130,7 +130,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">192</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">195</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-02-08 18:17:24" itemprop="dateModified" datetime="2025-02-08T18:17:24+08:00">2025-02-08</time>
+                <time title="修改时间：2025-11-05 10:11:30" itemprop="dateModified" datetime="2025-11-05T10:11:30+08:00">2025-11-05</time>
               </span>
 
           
@@ -262,14 +262,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.5k</span>
+              <span>2.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -286,7 +286,39 @@
 <li><code>-Wall</code>：启用大多数警告。这是开发中常用的选项，可以帮助发现潜在的代码问题。</li>
 <li><code>-Wextra</code>：启用额外的警告，比 -Wall 更严格。</li>
 <li><code>-Werror</code>：将所有警告当作错误处理。这意味着任何警告都会导致编译失败，迫使开发者修复这些潜在的问题</li>
+<li>clang参数：<ul>
+<li>传给驱动器:</li>
+<li>传给前端： 如果你要传递参数给 前端 (cc1)，驱动器是不认识的。 需要加-Xclang</li>
+</ul>
+</li>
+<li>-Xclang：告诉 clang 驱动，把后面的参数直接传给内部的 clang 前端（frontend）。</li>
 </ol>
+<h2 id="clang编译基本流程"><a href="#clang编译基本流程" class="headerlink" title="clang编译基本流程"></a>clang编译基本流程</h2><ol>
+<li>源码 ——&gt; 预处理(Preprocess) -&gt; 词法分析(Lex) -&gt; 语法分析(Parse 生成AST) -&gt; 语义分析(Sema) -&gt; IR生成(IR CodeGen, 从AST生成LLIR) -&gt; 优化(LLVM opt) -&gt;  汇编生成(LLVM CodeGen; 使用llc将LLIR生成.s) -&gt; 汇编 -&gt; 链接</li>
+<li>源码到LLIR生成是前端，优化是中端，汇编生成是后端</li>
+<li>后端：指令选择、寄存器分配、指令调度</li>
+<li>clang 实际上是一个 驱动程序（driver），它会根据参数调用不同的子阶段。</li>
+</ol>
+<h3 id="前端流程"><a href="#前端流程" class="headerlink" title="前端流程"></a>前端流程</h3><ol>
+<li>lexer阶段将所有的输入当作一个特别长的string， 然后进行解析， 得到token流</li>
+<li>Parser和Sema的输入是一个token流， 结果是树状结构的AST， 节点是各种AST的node， 所以首先需要定义AstNode。当需要增加前端支持的语法时， 比如在基础的语法上想要支持 if else语法时， 就需要增加对应的AST node， 并且要有对应的Parser来解析</li>
+<li>调用llvm接口可以将AST生成llvm IR</li>
+</ol>
+<h3 id="sema"><a href="#sema" class="headerlink" title="sema"></a>sema</h3><ol>
+<li>Clang 前端最核心、也最复杂的模块之一, 代码占比最多</li>
+<li>作用<ul>
+<li>名称解析</li>
+<li>类型检查</li>
+<li>作用域与可见性</li>
+<li>展开模板、推到模板参数，实例化模板</li>
+<li>属性与修饰符检查 constexpr, 例如 constexpr函数内不允许运行时表达式</li>
+<li>添加诊断信息: 生成准确的错误位置和信息</li>
+</ul>
+</li>
+<li>代码位于llvm工程下</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">clang/lib/Sema/</span><br><span class="line">clang/include/clang/Sema/</span><br></pre></td></tr></table></figure>
+
 <h2 id="clang-VS-gcc"><a href="#clang-VS-gcc" class="headerlink" title="clang VS gcc"></a>clang VS gcc</h2><ol>
 <li>clang 优势<ul>
 <li>编译速度更快</li>
@@ -320,6 +352,21 @@
 <li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1449757">linux 下 Clang 和 gcc 的区别</a></li>
 </ol>
 <h2 id="command"><a href="#command" class="headerlink" title="command"></a>command</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">echo -e &quot;\n=== 0. -### 打印编译命令, 不执行 ===&quot;</span><br><span class="line">clang++ -### test.cpp &gt; test.cmd 2&gt;&amp;1   </span><br><span class="line"></span><br><span class="line">echo -e &quot;\n=== 1. -save-temps 保存编译中间文件 ===&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">clang++ -save-temps test.cpp</span></span><br><span class="line"></span><br><span class="line">echo -e &quot;\n=== 2. 词法分析 ===&quot;</span><br><span class="line">clang++ -fsyntax-only -Xclang -dump-tokens test.cpp &gt; test.tok 2&gt;&amp;1</span><br><span class="line"></span><br><span class="line">echo -e &quot;\n=== 3. 语法分析（AST） ===&quot;</span><br><span class="line">clang++ -fsyntax-only -Xclang -ast-dump test.cpp &gt; test.ast 2&gt;&amp;1</span><br><span class="line"></span><br><span class="line">echo -e &quot;\n=== 4. LLVM IR生成 ===&quot;</span><br><span class="line">clang++ -S -emit-llvm  test.cpp -o test.ll</span><br><span class="line"></span><br><span class="line">echo -e &quot;\n=== 5. 打印编译阶段 ===&quot;</span><br><span class="line">clang++ -ccc-print-phases test.cpp &gt; test.phase 2&gt;&amp;1</span><br><span class="line"></span><br><span class="line">echo -e &quot;\n=== 6. ast 可视化 ===&quot;</span><br><span class="line">clang++ -cc1 -ast-view test.cpp</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">有了ast文件后可视化 https://www.cnblogs.com/qs-smile/p/17445908.html</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="clang适配一种cuda-like语法，nvidia-gpu-like硬件"><a href="#clang适配一种cuda-like语法，nvidia-gpu-like硬件" class="headerlink" title="clang适配一种cuda like语法，nvidia gpu like硬件"></a>clang适配一种cuda like语法，nvidia gpu like硬件</h2><ol>
+<li>llvm clang中如何添加对类似cuda编程语言的支持，硬件架构类似nvidia gpu?</li>
+<li>分析&#x2F;data&#x2F;users&#x2F;jiaxiyang&#x2F;llvm-project&#x2F;clang文件中对sipu的支持，梳理代码逻辑?</li>
+<li>前端后端都需要适配</li>
+<li>开发生态要点:<ul>
+<li>语言&#x2F;语义: 通过属性&#x2F;关键字标注哪些函数&#x2F;数据在设备侧执行（如 global&#x2F;device，在 SIPU 中为 sipu_global&#x2F;sipu_device）。</li>
+<li>编译流程: 主机与设备分别编译，设备代码用目标后端生成对象&#x2F;ELF；再由驱动把设备二进制打包&#x2F;嵌入到主机对象或最终可执行里。</li>
+<li>运行时: 主机侧通过 runtime 初始化设备、管理内存与内核启动，设备侧执行并返回。</li>
+</ul>
+</li>
+<li>Clang 驱动识别 SIPU 源（.su），创建 SIPU 设备工具链，独立完成设备编译与链接（RISC‑V rv64）。设备产物直接嵌入到主机对象（不走多架构 fatbin），主机通过句柄触发设备执行。   </li>
+<li>Offloading（异构卸载）: 指把部分程序的计算从“主机”（CPU 端）转移到“设备”（如 GPU、加速器、专用 IP）上执行，由主机发起、设备加速、结果回传。</li>
+</ol>
 
     </div>
 
@@ -420,7 +467,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#clang-VS-gcc"><span class="nav-number">2.</span> <span class="nav-text">clang VS gcc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cmake-%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">cmake 使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#include-what-you-use"><span class="nav-number">4.</span> <span class="nav-text">include-what-you-use</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">5.</span> <span class="nav-text">links</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#command"><span class="nav-number">6.</span> <span class="nav-text">command</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#clang%E7%BC%96%E8%AF%91%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">clang编译基本流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E6%B5%81%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">前端流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sema"><span class="nav-number">2.2.</span> <span class="nav-text">sema</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#clang-VS-gcc"><span class="nav-number">3.</span> <span class="nav-text">clang VS gcc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cmake-%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">cmake 使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#include-what-you-use"><span class="nav-number">5.</span> <span class="nav-text">include-what-you-use</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">6.</span> <span class="nav-text">links</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#command"><span class="nav-number">7.</span> <span class="nav-text">command</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#clang%E9%80%82%E9%85%8D%E4%B8%80%E7%A7%8Dcuda-like%E8%AF%AD%E6%B3%95%EF%BC%8Cnvidia-gpu-like%E7%A1%AC%E4%BB%B6"><span class="nav-number">8.</span> <span class="nav-text">clang适配一种cuda like语法，nvidia gpu like硬件</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -436,7 +483,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">192</span>
+          <span class="site-state-item-count">195</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -469,19 +516,19 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/08/20/AI-coding/" title="2025&#x2F;08&#x2F;20&#x2F;AI-coding&#x2F;">AI coding</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/28/Architecture/" title="2025&#x2F;04&#x2F;28&#x2F;Architecture&#x2F;">Computer Architecture</a>
+        </li>
+        <li class="links-of-recent-posts-item">
+          <a href="/2025/04/18/pytest/" title="2025&#x2F;04&#x2F;18&#x2F;pytest&#x2F;">pytest</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/11/13/deformable-attention/" title="2024&#x2F;11&#x2F;13&#x2F;deformable-attention&#x2F;">deformable_attention</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/10/15/QNX/" title="2024&#x2F;10&#x2F;15&#x2F;QNX&#x2F;">QNX</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/09/24/qualcomm/" title="2024&#x2F;09&#x2F;24&#x2F;qualcomm&#x2F;">qualcomm</a>
         </li>
     </ul>
   </div>
@@ -519,13 +566,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">587k</span>
+    <span title="站点总字数">624k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:54</span>
+    <span title="站点阅读时长">9:27</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
