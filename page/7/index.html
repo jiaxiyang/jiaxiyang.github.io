@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">195</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">196</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,220 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/11/10/nvidia/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/11/10/nvidia/" class="post-title-link" itemprop="url">nvidia</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-10 11:45:20" itemprop="dateCreated datePublished" datetime="2023-11-10T11:45:20+08:00">2023-11-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-25 10:41:25" itemprop="dateModified" datetime="2024-01-25T10:41:25+08:00">2024-01-25</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2023/11/10/nvidia/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2023/11/10/nvidia/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://epochai.org/blog/trends-in-machine-learning-hardware">trends-in-machine-learning-hardware</a></li>
+<li><code>export CUDA_VISIBLE_DEVICES=0,1</code>强制使用哪几个 GPU 上</li>
+<li>sdk manager 图像界面安装各种工具</li>
+<li>fp32 -&gt; fp16(int8)是否加速要看芯片手册</li>
+<li>芯片手册中有 cuda core 算力和 tensor core 算力 <a target="_blank" rel="noopener" href="https://www.nvidia.com/content/PDF/nvidia-ampere-ga-102-gpu-architecture-whitepaper-v2.pdf">link</a><ul>
+<li>3090 的 cuda core int32 算力是 fp21 的一半</li>
+<li>3090 的 cuda core fp32 和 fp16 算力一样</li>
+<li>3090 的 fp32 cuda core 和 tensor core 算力一样</li>
+<li>3090 的 tensor core fp16 算力是 fp32 的 2 倍或 4 倍</li>
+<li>3070 一样的现象</li>
+</ul>
+</li>
+</ol>
+<h2 id="查看-GPU-info"><a href="#查看-GPU-info" class="headerlink" title="查看 GPU info"></a>查看 GPU info</h2><ol>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/nvidia/cuda-samples">cuda-sample</a> 见 cuda.md</p>
+<ul>
+<li><code>cd /usr/local/cuda-12/samples/1_Utilities/deviceQuery &amp;&amp; make &amp;&amp; ./deviceQuery</code> 查看 gpu 详细信息,<ul>
+<li>arch: 3080， 3090 是 sm_86, orin 是 sm_87</li>
+<li>sm num</li>
+<li>cuda core num &#x2F; per sm</li>
+<li>Maximum number of threads per block</li>
+<li>Maximum number of threads per multiprocessor</li>
+<li>Max dimension size of a thread block (x,y,z)</li>
+<li>Max dimension size of a grid size (x,y,z)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>通过对比 sm 个数等信息可以估算大致性能差距</p>
+</li>
+<li><p>查看 driver 版本 <code>cat /proc/driver/nvidia/version</code></p>
+</li>
+</ol>
+<h3 id="server"><a href="#server" class="headerlink" title="server"></a>server</h3><ol>
+<li><code>nvitop</code></li>
+<li><code>nvtop</code> 有风险</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wookayin/gpustat">gpustat</a><ul>
+<li>不要用源码装：否则 NVML 版本不匹配</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/michaelcjl/p/16657548.html">nvidia-smi 命令参数含义</a></li>
+<li><code>nvidia-smi</code> 可以看出每个 GPU 的显存总量和使用量 还可以看到 cuda 版本</li>
+<li><code>nvidia-smi -L</code>列出 GPU 列表, 查看 GPU 先开显卡型号</li>
+<li><code>nvidia-smi -l 1</code> 会每秒更新一次显示信息。<code>watch -n 1 nvidia-smi</code> 类似 top</li>
+<li><code>nvidia-smi -q</code> 查看 GPU 信息</li>
+<li><code>free -h</code> 看内存，注意服务器上内存和显存不一样, 不共享; PCIe 接在服务器上。 服务器市场的需求与集成设备（如 Jetson 系列）不同。服务器用户通常需要高度定制化的解决方案，可以独立升级和优化各个组件，而集成设备则更注重成本效益和空间效率。</li>
+<li>加速器：不包含 arm</li>
+</ol>
+<h2 id="edge"><a href="#edge" class="headerlink" title="edge"></a>edge</h2><ol>
+<li>SOC: 包含 arm</li>
+<li>NVIDIA Jetson 系列设备，包括像 Jetson Nano、Jetson TX1&#x2F;TX2、Jetson Xavier、 Jetson Orin 等，使用的是 NVIDIA 的 <code>Tegra</code> 架构。在这种架构中，CPU 和 GPU 确实共享内存，这被称为<code>统一内存（Unified Memory）或共享内存</code>。</li>
+<li>统一内存的优缺点：<a target="_blank" rel="noopener" href="https://chat.openai.com/c/c4285778-9988-4bba-80b2-0ae08689af88">link</a><ul>
+<li>优点：简化编程模型， 提高效率</li>
+<li>缺点：内存访问延迟，带宽限制，复杂的内存管理</li>
+</ul>
+</li>
+<li>tegra 是 SOC 架构</li>
+<li><code>jtop</code> <a target="_blank" rel="noopener" href="https://github.com/rbonghi/jetson_stats">jetson_stats</a> jetson-stats is a package for monitoring and control your NVIDIA Jetson [Orin, Xavier, Nano, TX] series.</li>
+<li><code>jetson_release</code></li>
+</ol>
+<h2 id="指标"><a href="#指标" class="headerlink" title="指标"></a>指标</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.techpowerup.com/gpu-specs/">gpu specs</a></li>
+</ol>
+<h3 id="performance"><a href="#performance" class="headerlink" title="performance"></a>performance</h3><ol>
+<li><code>FLOPS = 2 x freqs * cores</code> fma 有 2 个 flop， f32 性能 cores 就是 f32 cuda core number</li>
+</ol>
+<h3 id="memory"><a href="#memory" class="headerlink" title="memory"></a>memory</h3><ol>
+<li><code>B/s = bps * width / 8</code></li>
+</ol>
+<h3 id="pcie"><a href="#pcie" class="headerlink" title="pcie"></a>pcie</h3><h2 id="产品"><a href="#产品" class="headerlink" title="产品"></a>产品</h2><ol>
+<li>性能参数：产品 -&gt; 规格</li>
+<li><a target="_blank" rel="noopener" href="https://www.nvidia.cn/autonomous-machines/embedded-systems/">边缘计算产品</a> 查看模组对比， 可以看到各个芯片的参数<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.nvidia.com/embedded/develop/roadmap">jetson roadmap</a></li>
+</ul>
+</li>
+<li>数据中心： A, H, L, V 系列<ul>
+<li><a target="_blank" rel="noopener" href="https://www.nvidia.cn/data-center/h100/">H100 性能参数</a> 游戏：RTX, GTX</li>
+<li>RTX: Ray Tracing eXtreme</li>
+<li>GTX: Graphics Processor protoType eXtreme</li>
+<li><a target="_blank" rel="noopener" href="https://www.nvidia.cn/geforce/graphics-cards/compare/?section=compare-specs">GeForce 显卡比较</a></li>
+<li>在 NVIDIA 的 GeForce 系列显卡中，Ti 是一个特殊的标识，用来表示某个型号的改进或升级版。从本意来讲，TI 属于’Titanium’的缩写，和太空金属’钛’是一个意思，在显卡中他代表着更高级版本。</li>
+</ul>
+</li>
+</ol>
+<h2 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h2><ol>
+<li>搜 white paper 看细节</li>
+<li><a target="_blank" rel="noopener" href="https://www.nvidia.com/en-us/design-visualization/ampere-architecture/">ampere-architecture 官方架构详细介绍</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.nvidia.com/en-us/data-center/technologies/hopper-architecture/">hopper-architecture</a><ul>
+<li>下方的白皮书</li>
+<li>手册中有芯片 cuda core 算力和 tensor core 算力</li>
+<li>利用 tensor core 才能达到最大算力</li>
+<li>int32 不一定有 float32 算力高，因为 float32 计算单元更多</li>
+<li>多关注 SM 架构<br><img src="https://i.ibb.co/2c186WT/g-LTQhd-K40g.png" alt="sm"></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/nsight-compute/2023.3/ProfilingGuide/index.html#metrics-hw-model">Hardware Model</a><ul>
+<li>对 sm 介绍比较好</li>
+</ul>
+</li>
+<li>可以从架构图上看出一个 SM 有多少个 cuda core</li>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/index.html#gpu-feature-list">cuda-compiler-driver-nvcc gpu-feature-list</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/kunhe0512/article/details/126247243">https://blog.csdn.net/kunhe0512/article/details/126247243</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/394352476">NVIDIA GPU 架构梳理</a></li>
+<li>天梯图</li>
+<li>架构演进</li>
+<li>tegra 是 SOC 架构, tesla 是 GPU 架构</li>
+<li>NVIDIA GeForce RTX 3090 使用的是 NVIDIA 的 Ampere 架构 sm_86</li>
+<li>NVIDIA Jetson Orin 是基于 NVIDIA 的 Ampere 架构的高性能 AI 计算平台</li>
+<li>CUDA_ARCHS 是指定 CUDA 代码编译目标 NVIDIA GPU 架构的编译标志。</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/631850036">为各种 NVIDIA 架构匹配 CUDA arch 和 CUDA gencode</a></li>
+<li>架构历史</li>
+<li><a target="_blank" rel="noopener" href="https://www.baseten.co/blog/understanding-nvidias-datacenter-gpu-line/">understanding-nvidias-datacenter-gpu-line</a><br><img src="https://i.ibb.co/hZVxQFd/ZEI0-D9zw-C5.png" alt="历史"></li>
+</ol>
+<h2 id="JetPack"><a href="#JetPack" class="headerlink" title="JetPack"></a><a target="_blank" rel="noopener" href="https://docs.nvidia.com/jetson/jetpack/introduction/index.html">JetPack</a></h2><ol>
+<li>NVIDIA JetPack SDK is the most comprehensive solution for building AI applications. JetPack SDK provides a full development environment for hardware-accelerated AI-at-the-edge development.JetPack SDK includes Jetson Linux Driver Package with bootloader, Linux kernel, Ubuntu desktop environment, and a complete set of libraries for acceleration of GPU computing, multimedia, graphics, and computer vision. It also includes samples, documentation, and developer tools for both host computer and developer kit, and supports higher level SDKs such as DeepStream for streaming video analytics, Isaac for robotics and Riva for conversational AI.</li>
+</ol>
+<h2 id="vpi"><a href="#vpi" class="headerlink" title="vpi"></a><a target="_blank" rel="noopener" href="https://docs.nvidia.com/vpi/algorithms.html">vpi</a></h2><ol>
+<li>支持多种硬件做前处理, 如 resize, convert color, remap (VIC 都支持，可以释放 GPU 资源)</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -679,7 +893,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-12-15 18:11:22" itemprop="dateModified" datetime="2025-12-15T18:11:22+08:00">2025-12-15</time>
+                <time title="修改时间：2025-12-16 17:13:52" itemprop="dateModified" datetime="2025-12-16T17:13:52+08:00">2025-12-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -715,14 +929,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>15k</span>
+              <span>17k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>13 分钟</span>
+              <span>15 分钟</span>
             </span>
 
         </div>
@@ -841,6 +1055,14 @@
 <li>If multiple types&#x2F;attributes have the same alias from getAlias, a number is appended to the alias to avoid conflicts.</li>
 </ul>
 </li>
+<li>generic assembly format<ul>
+<li>is the one shown when breaking down toy.transpose at the beginning of this chapter.</li>
+</ul>
+</li>
+<li>custom assembly format<ul>
+<li>either declaratively or imperatively via C++. Defining a custom assembly format allows for tailoring the generated IR into something a bit more readable by removing a lot of the fluff that is required by the generic format.</li>
+</ul>
+</li>
 </ol>
 <h2 id="attributes-and-types"><a href="#attributes-and-types" class="headerlink" title="attributes and types"></a><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/DefiningDialects/AttributesAndTypes/">attributes and types</a></h2><ol>
 <li><a target="_blank" rel="noopener" href="https://mlir.llvm.org/docs/DefiningDialects/Assembly/">别名</a></li>
@@ -919,8 +1141,46 @@
 <li>接着为了增加对Dialect和Operation的标准化和功能扩展，MLIR增加了Constraint, Interface, Trait，方便对Operation进行限制和扩展。</li>
 </ul>
 </li>
+<li>每个 op（操作） 都有两类非常重要的机制：verifier 和 builder。它们的作用分别是 校验操作的合法性 和 简化操作的构造。</li>
 </ol>
-<h3 id="IR-Verifier"><a href="#IR-Verifier" class="headerlink" title="IR Verifier"></a>IR Verifier</h3><h3 id="Parser"><a href="#Parser" class="headerlink" title="Parser"></a>Parser</h3><h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><ol>
+<h3 id="IR-Verifier"><a href="#IR-Verifier" class="headerlink" title="IR Verifier"></a>IR Verifier</h3><ol>
+<li>Verifier 是用来检查一个操作实例是否满足该操作的语义约束。它会在 IR 构建或变换后运行，用来确保这个操作合法、内部一致，而不是 “乱七八糟的” IR。</li>
+<li>在没有注册 dialect&#x2F;operation 之前，MLIR 结构上会接受任意字符串作为操作名，可以 round-trip（解析 + 打印）未定义操作。但是这种 IR 可能是语义上不合法的（比如参数数量错误、返回类型不对等），Verifier 就是负责捕捉这类问题的机制。</li>
+<li>当你定义一个 operation（比如 toy.constant）时，可以：<br>✔ 自动根据 Operation Definition Specification（ODS） 生成结构层面的约束检查<br>✔ 或者自己定义一个更复杂的 verify 方法来执行额外的检查 let hasVerifier &#x3D; 1;</li>
+</ol>
+<h3 id="builder"><a href="#builder" class="headerlink" title="builder"></a>builder</h3><ol>
+<li>Builder 提供一种 简洁、安全 的方式来创建这个 operation。</li>
+<li>一个 helper，让你通过抽象参数就能生成合法的操作实例</li>
+<li>可直接用于编译器前端、Pass、Dialect 创建代码等</li>
+<li>构造 MLIR operation 要指定：操作名称，输入 operands等参数， 如果手动组装，会异常繁琐，而且容易出错。builder 自动帮你填充 OperationState 的内容</li>
+</ol>
+<h3 id="Parser"><a href="#Parser" class="headerlink" title="Parser"></a>Parser</h3><h3 id="Interface"><a href="#Interface" class="headerlink" title="Interface"></a>Interface</h3><ol>
+<li>Interface 是一种“基于 trait 的多态机制”，允许 dialect 中的 op&#x2F;type 实现一组统一的行为接口，而不需要相互依赖。</li>
+<li>Interface 定义只定义：接口名字，namesapce, 接口有哪些方法，不关心谁来实现<ul>
+<li>不关心 op 是谁; 只关心：是不是实现了接口</li>
+</ul>
+</li>
+<li>op 在pass里使用interface<ul>
+<li>直接op.func()调用</li>
+<li><code>if (auto shapeOp = dyn_cast&lt;ShapeInferenceOpInterface&gt;(op))</code></li>
+</ul>
+</li>
+<li>注意traits和interface的区别<ul>
+<li>interface有多态，有方法</li>
+<li>DeclareOpInterfaceMethods<CastOpInterface> 可以把interface转换为trait</li>
+</ul>
+</li>
+</ol>
+<h3 id="Trait"><a href="#Trait" class="headerlink" title="Trait"></a>Trait</h3><ol>
+<li>Trait 是给 Op &#x2F; Type &#x2F; Attribute 打的“静态标签”，用于表达“这个东西满足某种结构或语义约束”，但不提供行为函数。</li>
+<li>它本质是 编译期&#x2F;结构级别的约束与标记机制。</li>
+<li>在 MLIR 里，你经常需要表达：这个 op 没有副作用;这个 op 只有一个结果;这个 op 是 terminator;这个 op 结果类型和输入类型一致;这个 op 是 elementwise 的;<ul>
+<li>这些都是： “事实 &#x2F; 性质”，不是“行为算法”</li>
+</ul>
+</li>
+<li>Trait影响verifier, conconiacalization, folding</li>
+</ol>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><ol>
 <li>不好实现的先站位，从高层网低层次转， 抽象级别要对应，一次处理一小步</li>
 <li>核心在于transform</li>
 <li>上层的IR是一种抽象，不用具体实现，只需要规定输入输出类型，前后Op能匹配上就行</li>
@@ -1006,21 +1266,32 @@
 <li><code>void replaceOp(Operation *op, ValueRange newValues);</code> rewriter.replace将op的结果用new value替换, 作用是将一个旧的操作及其结果用新的值替换，同时自动更新使用这些结果的其他操作，确保 IR 的一致性。</li>
 </ol>
 <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li>populateXXXPatterns()	是一种注册&#x2F;收集多个 rewrite pattern 的函数，将 pattern 添加到 pattern list 中<ul>
+<li><p>populateXXXPatterns()	是一种注册&#x2F;收集多个 rewrite pattern 的函数，将 pattern 添加到 pattern list 中</p>
+<ul>
+<li>用于标准 dialect lowering， patterns.add用于自己的dialect lowering</li>
+<li>可用于to LLVM dialect</li>
 <li>RewritePattern	是一个具体的转换规则（转换逻辑 + 匹配条件），用来定义“怎么把 A 转换成 B”</li>
 <li>pass可以一次执行所有收集到的pattern;也可以只执行一个或多个</li>
 <li>populate…只是收集的作用, 在一个pass里执行多个pattern; 一个pass执行的好处是能控制转换顺序；多个pass</li>
-<li>lib&#x2F;Conversion&#x2F;TritonToTritonGPU&#x2F;TritonToTritonGPUPass.cpp poplate了所有op，按顺序改变op输出type; 输入是adaptor.getOperands()，因为按顺序，表明输入之前已经转换为输出type了</li>
+<li>lib&#x2F;Conversion&#x2F;TritonToTritonGPU&#x2F;TritonToTritonGPUPass.cpp poplate了所有op，按顺序改变op输出type; 输入是adaptor.getOperands()，因为按顺序，表明输入之前已经转换为输出type了<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">RewritePatternSet <span class="title">patterns</span><span class="params">(ctx)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 标准 dialect lowering</span></span><br><span class="line"><span class="built_in">populateArithToLLVMConversionPatterns</span>(converter, patterns);</span><br><span class="line"><span class="built_in">populateFuncToLLVMConversionPatterns</span>(converter, patterns);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 自己的 dialect lowering</span></span><br><span class="line">patterns.<span class="built_in">add</span>&lt;</span><br><span class="line">  LowerMyDialectOp1,</span><br><span class="line">  LowerMyDialectOp2</span><br><span class="line">&gt;(ctx);</span><br></pre></td></tr></table></figure></li>
 </ul>
 </li>
-<li>MLIR 是一个强有力的代表，但它也有非目标。我们不尝试支持低级机器代码生成算法（例如寄存器分配和指令调度）。它们更适合较低级别的优化器（例如 LLVM）。此外，我们不希望 MLIR 成为最终用户自己编写内核的源语言（类似于 CUDA C++）。另一方面，MLIR 为表示任何此类 DSL 并将其集成到生态系统中提供了支柱。</li>
-<li>在 MLIR（多级中间表示）中，ODS 是 “Operation Definition Specification” 的缩写。ODS 是一种用于定义操作（operation）、类型（type）、属性（attribute）等的 DSL（领域特定语言）。它通过一种声明式的方式来描述这些元素，并生成相应的 C++ 代码，从而简化了编写和维护 MLIR 操作的过程。</li>
-<li>MLIR 即 Multi-Level Intermediate Representation，多级的中间表示。</li>
-<li>mlir 只是个编译器框架，本身并没有什么完整功能。所以可以参考一些基于 MLIR 做的开源项目。</li>
-<li>MLIR 能够很好地桥接高层 DSL 和底层编译器（如 LLVM）。</li>
-<li>we do not intend MLIR to be a source language that end-users would themselves write kernels in (analogous to CUDA C++). On the other hand, MLIR provides the backbone for representing any such DSL and integrating it in the ecosystem.</li>
-<li><code>!</code> 在 MLIR 中，自定义类型通常由特定的方言定义，并使用 <code>!</code> 符号进行引用</li>
-<li><code>#</code> 符号用于表示自定义属性或符号。这些属性或符号通常由特定的方言（Dialect）定义，用于描述复杂的数据结构、布局和操作。通过使用自定义属性，可以在编译过程中对特定的硬件架构和优化需求进行精确的描述和操作。</li>
+<li><p>MLIR 是一个强有力的代表，但它也有非目标。我们不尝试支持低级机器代码生成算法（例如寄存器分配和指令调度）。它们更适合较低级别的优化器（例如 LLVM）。此外，我们不希望 MLIR 成为最终用户自己编写内核的源语言（类似于 CUDA C++）。另一方面，MLIR 为表示任何此类 DSL 并将其集成到生态系统中提供了支柱。</p>
+</li>
+<li><p>在 MLIR（多级中间表示）中，ODS 是 “Operation Definition Specification” 的缩写。ODS 是一种用于定义操作（operation）、类型（type）、属性（attribute）等的 DSL（领域特定语言）。它通过一种声明式的方式来描述这些元素，并生成相应的 C++ 代码，从而简化了编写和维护 MLIR 操作的过程。</p>
+</li>
+<li><p>MLIR 即 Multi-Level Intermediate Representation，多级的中间表示。</p>
+</li>
+<li><p>mlir 只是个编译器框架，本身并没有什么完整功能。所以可以参考一些基于 MLIR 做的开源项目。</p>
+</li>
+<li><p>MLIR 能够很好地桥接高层 DSL 和底层编译器（如 LLVM）。</p>
+</li>
+<li><p>we do not intend MLIR to be a source language that end-users would themselves write kernels in (analogous to CUDA C++). On the other hand, MLIR provides the backbone for representing any such DSL and integrating it in the ecosystem.</p>
+</li>
+<li><p><code>!</code> 在 MLIR 中，自定义类型通常由特定的方言定义，并使用 <code>!</code> 符号进行引用</p>
+</li>
+<li><p><code>#</code> 符号用于表示自定义属性或符号。这些属性或符号通常由特定的方言（Dialect）定义，用于描述复杂的数据结构、布局和操作。通过使用自定义属性，可以在编译过程中对特定的硬件架构和优化需求进行精确的描述和操作。</p>
+</li>
 </ol>
 <h2 id="tablegen"><a href="#tablegen" class="headerlink" title="tablegen"></a>tablegen</h2><ol>
 <li><code>assemblyFormat</code>注意有格式要求</li>
@@ -1031,7 +1302,10 @@
 </ul>
 </li>
 <li><code>.td</code> 文件的名称来源是 “Table Definition” 的简称。这个命名反映了它的主要用途：定义表格式的数据结构，以支持代码生成和编译器相关的元信息处理。</li>
-<li>ODS(Operation Definition Specification) 模块用于定义operation</li>
+<li>ODS(Operation Definition Specification) 模块用于定义operation<ul>
+<li>每个 op（操作） 都有两类非常重要的机制：verifier 和 builder。它们的作用分别是 校验操作的合法性 和 简化操作的构造。</li>
+</ul>
+</li>
 <li>DRR(Declarative Rewriting Rule) 模块用于实现两个dialect之间的conversion</li>
 <li>.td文件定义dialect, op<ul>
 <li>.h中需要include生成的.h.inc</li>
@@ -1641,144 +1915,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2023/09/21/assembly/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/21/assembly/" class="post-title-link" itemprop="url">assembly</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-09-21 14:11:28" itemprop="dateCreated datePublished" datetime="2023-09-21T14:11:28+08:00">2023-09-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-10-10 12:16:35" itemprop="dateModified" datetime="2023-10-10T12:16:35+08:00">2023-10-10</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2023/09/21/assembly/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2023/09/21/assembly/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h2><h3 id="hello-world"><a href="#hello-world" class="headerlink" title="hello world"></a>hello world</h3><ol>
-<li>code</li>
-</ol>
-<figure class="highlight plaintext"><figcaption><span>test.s</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">.section .data   # 指示汇编器开始一个数据段，通常用于存储变量和常量。</span><br><span class="line">hello_message:   # 定义了一个名为 hello_message 的标签，其内容是 &quot;Hello, World!\n&quot; 字符串。.asciz 指令告诉汇编器创建一个以零结尾的 ASCII 字符串（即 C 字符串）。</span><br><span class="line">    .asciz &quot;Hello, World!\n&quot;</span><br><span class="line">.section .text   # 指示汇编器开始一个代码段，通常用于存储程序代码。</span><br><span class="line">.globl _start    # 告诉链接器 _start 标签是一个全局符号，意味着它可以在其他文件中被引用。对于这个程序，_start 是程序的入口点。</span><br><span class="line"></span><br><span class="line">_start:</span><br><span class="line">    # Write hello_message to stdout</span><br><span class="line">    mov x8, #64            // syscall: write</span><br><span class="line">    mov x0, #1             // file descriptor: stdout</span><br><span class="line">    ldr x1, =hello_message // pointer to hello_message</span><br><span class="line">    mov x2, #13            // message length</span><br><span class="line">    svc #0                 // invoke syscall</span><br><span class="line"></span><br><span class="line">    # Exit the program</span><br><span class="line">    mov x8, #93            // syscall: exit</span><br><span class="line">    mov x0, #0             // exit status 0</span><br><span class="line">    svc #0                 // invoke syscall</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>compile command</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">as test.s -o test.o</span><br><span class="line">ld test.o -o <span class="built_in">test</span></span><br><span class="line">./test</span><br><span class="line">objdump -dw <span class="built_in">test</span> <span class="comment">#查看生成的汇编</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="vector-sample"><a href="#vector-sample" class="headerlink" title="vector sample"></a>vector sample</h3><ol>
-<li>code</li>
-</ol>
-<figure class="highlight plaintext"><figcaption><span>test.s</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">.global _start      // 声明全局标签，这是程序的起始点</span><br><span class="line"></span><br><span class="line">.section .data      // 开始数据段，用于定义初始化的变量</span><br><span class="line">.align 3            // 确保32位对齐</span><br><span class="line">a:      .int 1, 2, 3, 4    // 定义整数数组a</span><br><span class="line">b:      .int 5, 6, 7, 8    // 定义整数数组b</span><br><span class="line">result: .int 0, 0, 0, 0    // 定义整数数组result用于存储结果</span><br><span class="line">msg:    .asciz &quot;Result: [%d, %d, %d, %d]\n&quot;   // 定义用于打印的字符串格式</span><br><span class="line"></span><br><span class="line">.section .text      // 开始文本段，用于定义代码</span><br><span class="line"></span><br><span class="line">vector_add:</span><br><span class="line">    ld1 &#123;v0.4s&#125;, [x0]   // 从x0指向的地址加载向量到v0寄存器</span><br><span class="line">    ld1 &#123;v1.4s&#125;, [x1]   // 从x1指向的地址加载向量到v1寄存器</span><br><span class="line">    add v2.4s, v0.4s, v1.4s  // 将v0和v1的内容相加，结果存放在v2中</span><br><span class="line">    st1 &#123;v2.4s&#125;, [x2]   // 将v2的内容存储到x2指向的地址</span><br><span class="line">    ret                 // 返回到调用此函数的位置</span><br><span class="line"></span><br><span class="line">_start:</span><br><span class="line">    adr x0, a           // 将数组a的地址加载到x0寄存器</span><br><span class="line">    adr x1, b           // 将数组b的地址加载到x1寄存器</span><br><span class="line">    adr x2, result      // 将数组result的地址加载到x2寄存器</span><br><span class="line">    bl vector_add       // 调用vector_add函数</span><br><span class="line"></span><br><span class="line">    adr x0, msg         // 加载字符串格式的地址到x0寄存器</span><br><span class="line">    adr x5, result      // 将数组result的地址加载到x5寄存器</span><br><span class="line">    ldr w1, [x5]        // 加载result数组的第一个元素到x1寄存器</span><br><span class="line">    ldr w2, [x5, #4]    // 加载result数组的第二个元素到x2寄存器</span><br><span class="line">    ldr w3, [x5, #8]    // 加载result数组的第三个元素到x3寄存器</span><br><span class="line">    ldr w4, [x5, #12]   // 加载result数组的第四个元素到x4寄存器</span><br><span class="line">    bl printf           // 调用printf函数打印结果</span><br><span class="line"></span><br><span class="line">    mov x8, #93         // 加载系统调用号到x8寄存器，93是exit的调用号</span><br><span class="line">    mov x0, #0          // 设置退出状态为0</span><br><span class="line">    svc 0               // 进行系统调用</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>compile command</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">as -o test.o test.s</span><br><span class="line">ld -o <span class="built_in">test</span> test.o -lc <span class="comment"># 需要链接C库</span></span><br><span class="line">./test</span><br><span class="line">objdump -dw <span class="built_in">test</span> <span class="comment">#查看生成的汇编</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><a target="_blank" rel="noopener" href="https://arm64.syscall.sh/">系统调用寄存器配置</a></li>
-</ol>
-<h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
-<li>ARMv8-A：<ul>
-<li>前 8 个整数参数传递给函数时，使用寄存器 x0 到 x7。如果有更多的整数参数，它们会通过堆栈传递。前 8 个浮点参数使用浮点寄存器 v0 到 v7 传递。整数或指针返回值使用寄存器 x0（和 x1，如果需要返回更大的值，例如 128 位的值）。浮点数或向量返回值通过 v0 和 v1 返回。</li>
-<li>系统调用主要使用 x0 到 x8 这 9 个寄存器，其中 x8 存储系统调用号，x0 到 x7 用于参数传递和返回值。</li>
-</ul>
-</li>
-<li>指令、伪指令、寄存器都可以全部是大写或者小写，GNU 风格是小写。</li>
-</ol>
-<h2 id="伪指令"><a href="#伪指令" class="headerlink" title="伪指令"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/533821145">伪指令</a></h2><ol>
-<li>伪指令就是对汇编器发出的指令。它在源程序汇编期间由汇编器处理。伪指令是由汇编器预处理的指令。它可以分解为几条指令的集合。</li>
-<li>伪指令可以实现一下功能 - 符号定义 - 数据定义和对齐 - 汇编控制 - 汇编宏 - 段描述</li>
-</ol>
-<h2 id="WebAssembly-abbreviated-Wasm"><a href="#WebAssembly-abbreviated-Wasm" class="headerlink" title="WebAssembly (abbreviated Wasm)"></a><a target="_blank" rel="noopener" href="https://webassembly.org/">WebAssembly (abbreviated Wasm)</a></h2><ol>
-<li>WebAssembly 是一种运行在现代网络浏览器中的新型代码，并且提供新的性能特性和效果。它设计的目的不是为了手写代码,而是为诸如 C、C++和 Rust 等低级源语言提供一个高效的编译目标。</li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://winddoing.github.io/post/7190.html">ARMv8-aarch64 寄存器和指令集</a></li>
-<li><a target="_blank" rel="noopener" href="https://armv8-doc.readthedocs.io/en/latest/02.html">Armv8&#x2F;armv9 架构入门指南</a></li>
-<li><a target="_blank" rel="noopener" href="https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md">Linux System Call Table 多个平台</a></li>
-<li><a target="_blank" rel="noopener" href="https://syscall.sh/">不同平台系统调用寄存器配置</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1850,7 +1986,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">195</span>
+          <span class="site-state-item-count">196</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1883,6 +2019,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2025/12/29/claude-code/" title="2025&#x2F;12&#x2F;29&#x2F;claude-code&#x2F;">claude code</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2025/08/20/AI-coding/" title="2025&#x2F;08&#x2F;20&#x2F;AI-coding&#x2F;">AI coding</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1893,9 +2032,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2024/12/29/LLVM/" title="2024&#x2F;12&#x2F;29&#x2F;LLVM&#x2F;">LLVM</a>
         </li>
     </ul>
   </div>
@@ -1923,7 +2059,7 @@
 <div class="copyright">
   
   &copy; 2021 – 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1933,13 +2069,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">624k</span>
+    <span title="站点总字数">628k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">9:27</span>
+    <span title="站点阅读时长">9:31</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
