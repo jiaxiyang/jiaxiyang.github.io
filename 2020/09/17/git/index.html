@@ -20,21 +20,20 @@
     var CONFIG = {"hostname":"jiaxiyang.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
-  <meta name="description" content="merge git merge --ff-only feature-branch 不产生merge commit targets&#x3D;&quot;python&#x2F;test&#x2F; unittest&#x2F; README.md&quot;; git checkout --theirs -- $targets &amp;&amp; git add $targets theirs表示接受他们的incoming， ours">
+  <meta name="description" content="基础操作clone 与获取12345678910# 浅克隆指定分支git clone -b llvmorg-19.1.3 --depth&#x3D;1 https:&#x2F;&#x2F;github.com&#x2F;llvm&#x2F;llvm-project# 获取某个 commitgit clone --depth 1 &lt;repository_url&gt;git fetch --depth&#x3D;1 origin &lt;commit_">
 <meta property="og:type" content="article">
 <meta property="og:title" content="git">
 <meta property="og:url" content="https://jiaxiyang.github.io/2020/09/17/git/index.html">
 <meta property="og:site_name" content="Xiyang">
-<meta property="og:description" content="merge git merge --ff-only feature-branch 不产生merge commit targets&#x3D;&quot;python&#x2F;test&#x2F; unittest&#x2F; README.md&quot;; git checkout --theirs -- $targets &amp;&amp; git add $targets theirs表示接受他们的incoming， ours">
+<meta property="og:description" content="基础操作clone 与获取12345678910# 浅克隆指定分支git clone -b llvmorg-19.1.3 --depth&#x3D;1 https:&#x2F;&#x2F;github.com&#x2F;llvm&#x2F;llvm-project# 获取某个 commitgit clone --depth 1 &lt;repository_url&gt;git fetch --depth&#x3D;1 origin &lt;commit_">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/img_convert/3753944fa6c4d586d337464233e75a61.png">
 <meta property="og:image" content="https://git-scm.com/book/en/v2/images/data-model-4.png">
 <meta property="article:published_time" content="2020-09-17T12:46:21.000Z">
-<meta property="article:modified_time" content="2025-09-08T02:41:57.420Z">
+<meta property="article:modified_time" content="2026-01-04T03:38:53.773Z">
 <meta property="article:author" content="贾夕阳">
 <meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/img_convert/3753944fa6c4d586d337464233e75a61.png">
+<meta name="twitter:image" content="https://git-scm.com/book/en/v2/images/data-model-4.png">
 
 <link rel="canonical" href="https://jiaxiyang.github.io/2020/09/17/git/">
 
@@ -236,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-08 10:41:57" itemprop="dateModified" datetime="2025-09-08T10:41:57+08:00">2025-09-08</time>
+                <time title="修改时间：2026-01-04 11:38:53" itemprop="dateModified" datetime="2026-01-04T11:38:53+08:00">2026-01-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -279,14 +278,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>9.5k</span>
+              <span>4.5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>9 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -298,244 +297,212 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h2><ol>
-<li><code>git merge --ff-only feature-branch</code> 不产生merge commit</li>
-<li><code>targets=&quot;python/test/ unittest/ README.md&quot;; git checkout --theirs -- $targets &amp;&amp; git add $targets</code><ul>
-<li>theirs表示接受他们的incoming， ours表示接受我们的current</li>
-<li><code>git checkout --theirs -- &#39;*.mlir&#39; test/ &amp;&amp; git add &#39;*.mlir&#39; test/</code> mlir文件和test&#x2F;文件夹的冲突都接受incoming内容, *.mlir可以换成文件夹(多个文件夹),  先把delete删除了,</li>
-<li>vscode插件可以在文件夹下右击接受incoming</li>
+        <h2 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h2><h3 id="clone-与获取"><a href="#clone-与获取" class="headerlink" title="clone 与获取"></a>clone 与获取</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 浅克隆指定分支</span></span><br><span class="line">git <span class="built_in">clone</span> -b llvmorg-19.1.3 --depth=1 https://github.com/llvm/llvm-project</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取某个 commit</span></span><br><span class="line">git <span class="built_in">clone</span> --depth 1 &lt;repository_url&gt;</span><br><span class="line">git fetch --depth=1 origin &lt;commit_hash&gt;</span><br><span class="line">git checkout &lt;commit_hash&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或直接下载</span></span><br><span class="line">wget https://github.com/llvm/llvm-project/archive/&lt;commit_hash&gt;.zip</span><br></pre></td></tr></table></figure>
+
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>git add --update</code></td>
+<td>添加所有修改的文件</td>
+</tr>
+<tr>
+<td><code>git restore --source develop src/main.cpp</code></td>
+<td>将文件切换到某个分支内容</td>
+</tr>
+<tr>
+<td><code>git grep GK_GFX950 v3.3.1</code></td>
+<td>从某个 tag 查找内容</td>
+</tr>
+<tr>
+<td><code>git remote set-url origin git@xxx</code></td>
+<td>更新 remote</td>
+</tr>
+<tr>
+<td><code>git config --global core.editor &quot;vi&quot;</code></td>
+<td>设置编辑器</td>
+</tr>
+<tr>
+<td><code>git fetch --prune</code></td>
+<td>同步并清理远程已删除的分支</td>
+</tr>
+<tr>
+<td><code>git --no-pager log -n 20</code></td>
+<td>直接显示，不用按 q 退出</td>
+</tr>
+</tbody></table>
+<h3 id="tag-操作"><a href="#tag-操作" class="headerlink" title="tag 操作"></a>tag 操作</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git tag v0.0.1 &amp;&amp; git push origin v0.0.1  <span class="comment"># 创建并推送 tag</span></span><br><span class="line">git describe --dirty --tags  <span class="comment"># 显示当前 commit 信息，如 v1.0.1-100-gad0ddd0-dirty</span></span><br><span class="line">git describe --always --dirty --match <span class="string">&#x27;NOT A TAG&#x27;</span>  <span class="comment"># 无 tag 时显示信息</span></span><br><span class="line">tldr git tag  <span class="comment"># 查看使用帮助</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Git-LFS"><a href="#Git-LFS" class="headerlink" title="Git LFS"></a>Git LFS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git lfs <span class="built_in">clone</span> https://xxx           <span class="comment"># 克隆 LFS 仓库</span></span><br><span class="line">git lfs install &amp;&amp; git lfs pull     <span class="comment"># 已存在的 repo 拉取 LFS 文件</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 代理加速</span></span><br><span class="line">git config --global http.proxy http://10.31.10.80:7890</span><br><span class="line">git config --global https.proxy https://10.31.10.80:7890</span><br></pre></td></tr></table></figure>
+
+<h3 id="调试与统计"><a href="#调试与统计" class="headerlink" title="调试与统计"></a>调试与统计</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 调试 clone 问题</span></span><br><span class="line">GIT_TRACE=1 GIT_CURL_VERBOSE=1 git <span class="built_in">clone</span> &lt;url&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 统计每个成员代码量</span></span><br><span class="line">git <span class="built_in">log</span> --format=<span class="string">&#x27;%aN&#x27;</span> | <span class="built_in">sort</span> -u | <span class="keyword">while</span> <span class="built_in">read</span> name; <span class="keyword">do</span></span><br><span class="line">  <span class="built_in">echo</span> -en <span class="string">&quot;作者：<span class="variable">$name</span>\t&quot;</span></span><br><span class="line">  git <span class="built_in">log</span> --author=<span class="string">&quot;<span class="variable">$name</span>&quot;</span> --pretty=tformat: --numstat | \</span><br><span class="line">    awk <span class="string">&#x27;&#123; add += $1; subs += $2; loc += $1 - $2 &#125; END &#123; printf &quot;添加: %s, 删除: %s, 总计: %s\n&quot;, add, subs, loc &#125;&#x27;</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 检查二进制文件内容</span></span><br><span class="line">strings /path/to/binary | grep keyword</span><br></pre></td></tr></table></figure>
+
+<h2 id="Worktree"><a href="#Worktree" class="headerlink" title="Worktree"></a>Worktree</h2><p>Git worktree 允许同时检出多个分支到不同目录，无需多次 clone。</p>
+<h3 id="常用命令-1"><a href="#常用命令-1" class="headerlink" title="常用命令"></a>常用命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建 worktree（新目录检出指定分支）</span></span><br><span class="line">git worktree add ../feature-branch feature-branch</span><br><span class="line">git worktree add ../hotfix -b hotfix  <span class="comment"># 同时创建新分支</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出所有 worktree</span></span><br><span class="line">git worktree list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除 worktree</span></span><br><span class="line">git worktree remove ../feature-branch</span><br><span class="line"><span class="comment"># 或手动删除目录后执行</span></span><br><span class="line">git worktree prune</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移动 worktree</span></span><br><span class="line">git worktree move ../old-path ../new-path</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>并行开发</td>
+<td>同时在多个分支工作，无需 stash 或 commit</td>
+</tr>
+<tr>
+<td>紧急修复</td>
+<td>开发中途快速切换到 hotfix 分支</td>
+</tr>
+<tr>
+<td>代码对比</td>
+<td>在不同目录查看不同分支代码</td>
+</tr>
+<tr>
+<td>长时间编译</td>
+<td>一个 worktree 编译，另一个继续开发</td>
+</tr>
+<tr>
+<td>CI&#x2F;CD</td>
+<td>并行构建多个分支</td>
+</tr>
+</tbody></table>
+<h3 id="示例：并行开发"><a href="#示例：并行开发" class="headerlink" title="示例：并行开发"></a>示例：并行开发</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 主仓库在 ~/project，正在开发 feature-a</span></span><br><span class="line"><span class="built_in">cd</span> ~/project</span><br><span class="line">git worktree add ../project-hotfix main  <span class="comment"># 创建 hotfix worktree</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 hotfix 目录修复 bug</span></span><br><span class="line"><span class="built_in">cd</span> ../project-hotfix</span><br><span class="line">git checkout -b hotfix-123</span><br><span class="line"><span class="comment"># ... 修复并提交 ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 回到主开发</span></span><br><span class="line"><span class="built_in">cd</span> ~/project</span><br><span class="line"><span class="comment"># feature-a 的工作状态完全保留</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li>每个分支只能在一个 worktree 中检出</li>
+<li>所有 worktree 共享 <code>.git</code> 目录（在主 worktree）</li>
+<li>删除 worktree 前确保没有未提交的更改</li>
 </ul>
-</li>
-<li><code>git restore --source develop src/main.cpp</code> 将某个文件切换到某个分支内容，用于验证merge前后内容<ul>
-<li>可以先restore, 然后一点点改</li>
+<h2 id="Merge"><a href="#Merge" class="headerlink" title="Merge"></a>Merge</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># fast-forward 合并（不产生 merge commit）</span></span><br><span class="line">git merge --ff-only feature-branch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解决冲突：接受 theirs（incoming）或 ours（current）</span></span><br><span class="line">targets=<span class="string">&quot;python/test/ unittest/ README.md&quot;</span></span><br><span class="line">git checkout --theirs -- <span class="variable">$targets</span> &amp;&amp; git add <span class="variable">$targets</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看分支差异</span></span><br><span class="line">git diff main dev -- src/main.cpp      <span class="comment"># 两个分支某文件差异</span></span><br><span class="line">git diff dev -- src/main.cpp           <span class="comment"># 当前分支与某分支差异</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>提示</strong>：VSCode 插件可在文件夹右击接受 incoming</p>
+<h2 id="Revert"><a href="#Revert" class="headerlink" title="Revert"></a>Revert</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git revert &lt;<span class="built_in">hash</span>&gt;  <span class="comment"># 撤销某个 commit</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：不能 revert 某个 commit 里的单个文件</p>
+<h2 id="Stash"><a href="#Stash" class="headerlink" title="Stash"></a>Stash</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git stash -m <span class="string">&quot;text&quot;</span>                    <span class="comment"># 保存并添加描述</span></span><br><span class="line">git stash push -m <span class="string">&quot;my_feature_backup&quot;</span>  <span class="comment"># 同上</span></span><br><span class="line">git stash list                         <span class="comment"># 列出所有 stash</span></span><br><span class="line">git stash apply stash@&#123;0&#125;              <span class="comment"># 应用指定 stash</span></span><br><span class="line">git stash show -p stash@&#123;0&#125;            <span class="comment"># 查看 stash 内容</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Patch"><a href="#Patch" class="headerlink" title="Patch"></a>Patch</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成 patch</span></span><br><span class="line">git format-patch &lt;start_hash&gt;..&lt;end_hash&gt; -o /path/to/patches/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 应用 patch</span></span><br><span class="line">git apply *.patch</span><br></pre></td></tr></table></figure>
+
+<h2 id="Submodule"><a href="#Submodule" class="headerlink" title="Submodule"></a>Submodule</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git submodule add https://github.com/NVIDIA/cutlass.git</span><br><span class="line">git submodule update --init --recursive</span><br></pre></td></tr></table></figure>
+
+<h2 id="Commit-修改"><a href="#Commit-修改" class="headerlink" title="Commit 修改"></a>Commit 修改</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改最近一次 commit</span></span><br><span class="line">git commit --amend --no-edit           <span class="comment"># 合并 staged，message 不变</span></span><br><span class="line">git commit --amend                     <span class="comment"># 修改 message</span></span><br><span class="line">git commit --amend --<span class="built_in">date</span>=now --no-edit  <span class="comment"># 修改时间</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 交互式 rebase 修改历史 commit</span></span><br><span class="line">git rebase --interactive HEAD~2</span><br></pre></td></tr></table></figure>
+
+<p><strong>Magit 快捷键</strong>：</p>
+<ul>
+<li><code>ce</code> Extend：staged 合并到上次提交</li>
+<li><code>ca</code> Amend：修改上次提交的日志</li>
+<li><code>$</code> 查看具体命令</li>
 </ul>
-</li>
-<li><code>export MAX_JOBS=1</code> triton 设置环境变量，单线程编译，按顺序修复问题</li>
-<li><code>git diff main dev -- src/main.cpp</code> 查看两个分支某个文件不同   </li>
-<li><code>git diff dev -- src/main.cpp</code> 查看当前分支和摸个分支某个文件不同</li>
-</ol>
-<h2 id="revert"><a href="#revert" class="headerlink" title="revert"></a>revert</h2><ol>
-<li>git revert <hash></li>
-<li>不能revert某个commit里的单个文件</li>
-</ol>
-<h2 id="stash"><a href="#stash" class="headerlink" title="stash"></a>stash</h2><ol>
-<li><code>git stash -m &quot;text&quot;</code>添加文字</li>
-<li><code>git stash push -m &quot;my_feature_backup&quot;</code></li>
-<li><code>git stash list</code></li>
-<li><code>git stash apply stash@&#123;0&#125;</code></li>
-<li><code>git stash show -p stash@&#123;0&#125;</code> 查看stash内容</li>
-<li><code>git stash show -p stash@&#123;0&#125;</code> 查看和当前内容的区别</li>
-</ol>
-<h2 id="patch"><a href="#patch" class="headerlink" title="patch"></a>patch</h2><ol>
-<li><code>git format-patch ab51eccf88f5321e7c60591c5546b254b6afab99..1b3ed340943eeb7a73c6c21270e86b507e85afbb -o /data/xiyang/llvm_sipu.patch</code></li>
-<li><code>git apply *.patch</code></li>
-</ol>
-<h2 id="pre-commit"><a href="#pre-commit" class="headerlink" title="pre commit"></a>pre commit</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/triton-lang/triton/blob/main/.pre-commit-config.yaml">triton precommit config</a></li>
-<li><code>pip install pre-commit</code></li>
-<li><code>pre-commit install</code></li>
-<li><code>git commit</code>会自动修复</li>
-<li><code>python3 -m pre_commit run --all-files --verbose</code> verbose</li>
-<li><code>pre-commit run --from-ref origin/main --to-ref HEAD</code> 修复当前分支问题</li>
-<li><code>pre-commit run --all-files</code>修复所有文件</li>
-<li><code>git diff --name-only --cached | xargs pre-commit run --files</code>修复staged</li>
-<li><code>git config --global alias.fix-staged &#39;!git diff --name-only --cached | xargs pre-commit run --files&#39;</code> <ul>
-<li>配置之后用<code>git fix-staged</code></li>
-</ul>
-</li>
-<li>可以使用本地的Hook <code>file:///tmp/precommit_hooks/pre-commit-hooks</code></li>
-</ol>
-<h2 id="workflow"><a href="#workflow" class="headerlink" title="workflow"></a>workflow</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://docs.gitlab.cn/jh/topics/gitlab_flow.html#gitlab-flow-%E4%BB%8B%E7%BB%8D">GitLab Flow 介绍</a></li>
-<li><a target="_blank" rel="noopener" href="http://dockone.io/article/2350">GitLab Flow 的 11 条规则</a></li>
+<h2 id="Pre-commit"><a href="#Pre-commit" class="headerlink" title="Pre-commit"></a>Pre-commit</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">pip install pre-commit</span><br><span class="line">pre-commit install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行检查</span></span><br><span class="line">pre-commit run --all-files             <span class="comment"># 检查所有文件</span></span><br><span class="line">pre-commit run --from-ref origin/main --to-ref HEAD  <span class="comment"># 检查当前分支</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 只检查 staged 文件</span></span><br><span class="line">git diff --name-only --cached | xargs pre-commit run --files</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置别名</span></span><br><span class="line">git config --global alias.fix-staged <span class="string">&#x27;!git diff --name-only --cached | xargs pre-commit run --files&#x27;</span></span><br><span class="line"><span class="comment"># 之后使用 git fix-staged</span></span><br></pre></td></tr></table></figure>
+
+<p>参考：<a target="_blank" rel="noopener" href="https://github.com/triton-lang/triton/blob/main/.pre-commit-config.yaml">triton precommit config</a></p>
+<h2 id="Workflow"><a href="#Workflow" class="headerlink" title="Workflow"></a>Workflow</h2><ul>
 <li>dev 分支开发新功能</li>
-<li>main or master branch 合入新功能</li>
-<li>tag 来确定 release</li>
-</ol>
-<h2 id="submodule"><a href="#submodule" class="headerlink" title="submodule"></a>submodule</h2><ol>
-<li><code>git submodule add https://github.com/NVIDIA/cutlass.git</code></li>
-<li><code>git submodule update --init --recursive</code></li>
-</ol>
-<h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><ol>
-<li><code>strings /share_data/triton/llvm_19_dir/250625/bin/llc | grep div.full</code> 检查llc是否注册intrinsic</li>
-<li><code>git restore --source develop src/main.cpp</code> 将某个文件切换到某个分支内容</li>
-<li><code>git grep GK_GFX950 v3.3.1</code>从某个tag查找内容</li>
-<li><code>git remote set-url origin git@xxx</code> 更新remote</li>
-<li><code>git config --global core.editor &quot;vi&quot;</code> 设置编辑器为vi</li>
-<li><code>git clone -b llvmorg-19.1.3 --depth=1 https://github.com/llvm/llvm-project</code></li>
-<li>获取某个commit：<code>wget https://github.com/llvm/llvm-project/archive/186a4b3b657878ae2aea23caf684b6e103901162.zip</code></li>
-<li>获取某个commit:</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone --depth 1 &lt;repository_url&gt;</span><br><span class="line">cd &lt;repository_name&gt;</span><br><span class="line">git fetch --depth=1 origin &lt;commit_hash&gt;</span><br><span class="line">git checkout &lt;commit_hash&gt;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><code>git-lfs</code> - Work with large files in Git repositories</li>
-<li><code>git lfs clone https://xxx</code></li>
-<li><code>git lfs install &amp;&amp; git lfs pull</code> 已经存在的 repo</li>
-<li>git lfs pull 加速</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.proxy http://10.31.10.80:7890</span><br><span class="line">git config --global https.proxy https://10.31.10.80:7890</span><br><span class="line">git config --global --list</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>git fetch –prune 会自动创建本地分支</li>
-<li>先合并 commit, 再 rebase， 就不会出现 merge 多次现象,</li>
-<li><code>git log --format=&#39;%aN&#39; | sort -u | while read name; do echo -en &quot;作者： $name\t&quot;; git log --author=&quot;$name&quot; --pretty=tformat: --numstat | awk &#39;&#123; add += $1; subs += $2; loc += $1 - $2 &#125; END &#123; printf &quot;添加行数: %s, 删除的行数: %s, 代码总行数: %s\n&quot;, add, subs, loc &#125;&#39; -; done</code> 统计仓库每个成员代码量</li>
-<li><code>GIT_TRACE=1 GIT_CURL_VERBOSE=1 git clone </code> 定位问题</li>
-<li><code>git commit --amend --no-edit</code> 将staged和上次commit合并成新的commit， commit message不变</li>
-<li><code>git commit --amend --date=now --no-edit</code> 修改 commit 时间 <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/5017265">link</a></li>
-<li><code>--no-pager</code> 直接显示，不用按 q 退出 git –no-pager log -n 20</li>
-<li>magit <code>$</code> 查看具体命令</li>
-<li><code>git add --update</code> 添加所有修改的文件</li>
-<li><code>git describe --always --dirty --match &#39;NOT A TAG&#39;</code>当前信息 无 tag</li>
-<li><code>git describe --dirty --tags</code>: 显示当前 commit 信息；例如 v1.0.1-100-gad0ddd0-dirty; v1.0.1 是最近 tag, 100 是第多少次提交；gxxx 是 commit 号， dirty 是有改动</li>
-<li><code>tldr git tag</code>: show how to use git tag</li>
-<li><code>origin</code>为<code>远程</code>仓库名，不是分支。 .git&#x2F;config 中有远程仓库 origin 对应的 url 和 fetch</li>
-<li>upstream 上游仓库: <a target="_blank" rel="noopener" href="https://blog.csdn.net/xo3ylAF9kGs/article/details/114810781">Git 的 origin 和 upstream，如何用？</a><br><img src="https://img-blog.csdnimg.cn/img_convert/3753944fa6c4d586d337464233e75a61.png" alt="upstream"></li>
-<li><code>git tag v0.0.1 &amp;&amp; git push orgin v0.0.1</code> 创建和 push tag</li>
-</ol>
-<h2 id="git-修改-commit"><a href="#git-修改-commit" class="headerlink" title="git 修改 commit"></a>git 修改 commit</h2><ol>
-<li>git rebase –interactive HEAD~2</li>
-<li>修改： <code>c</code> &#x3D;&gt; <code>w</code> &#x3D;&gt; <code>C-c C-c</code></li>
-<li>合并： magit: rebase <code>r</code> &#x3D;&gt;<code>i</code> &#x3D;&gt; <code>C-c C-c</code> &#x3D;&gt; <code>f .. f</code> &#x3D;&gt; <code>C-c C-c</code></li>
-<li><code>ce</code> Extend 当前 Staged 的文件合并到上一次提交中 git commit –amend –no-edit</li>
-<li><code>ca</code> Amend 只修改上次提交的日志 git commit –amend</li>
-</ol>
-<h2 id="commit-规范"><a href="#commit-规范" class="headerlink" title="commit 规范"></a>commit 规范</h2><ol>
+<li>main&#x2F;master 合入新功能</li>
+<li>tag 确定 release</li>
+</ul>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.cn/jh/topics/gitlab_flow.html">GitLab Flow 介绍</a></li>
+<li><a target="_blank" rel="noopener" href="http://dockone.io/article/2350">GitLab Flow 的 11 条规则</a></li>
+</ul>
+<h2 id="Commit-规范"><a href="#Commit-规范" class="headerlink" title="Commit 规范"></a>Commit 规范</h2><p>参考：</p>
+<ul>
 <li><a target="_blank" rel="noopener" href="https://www.conventionalcommits.org/zh-hans/v1.0.0/">约定式提交</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines">Commit Message Guidelines</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#">手册</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines">Angular 约定</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/feflow/git-commit-style-guide">guide</a></li>
-</ol>
-<h2 id="add-git-info-in-C-exe"><a href="#add-git-info-in-C-exe" class="headerlink" title="add git info in C++ exe"></a>add git info in C++ exe</h2><ol>
-<li><a target="_blank" rel="noopener" href="http://xit0.org/2013/04/cmake-use-git-branch-and-commit-details-in-project/">cmake</a></li>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/51727566/how-to-make-git-commit-hash-available-in-c-code-without-needless-recompiling">without compiling</a></li>
-</ol>
-<h2 id="ERROR"><a href="#ERROR" class="headerlink" title="ERROR"></a>ERROR</h2><ol>
-<li><code>git config --global http.postBuffer 5242880000</code> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/mmzs/p/12039888.html">git clone https 失败</a></li>
-</ol>
-<h2 id="git-权限问题"><a href="#git-权限问题" class="headerlink" title="git 权限问题"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zqb-all/p/10631505.html">git 权限问题</a></h2><ol>
-<li>mount 问题解决<code>chmod o+w -R .</code> <code>find . -type f | xargs chmod o+w</code> <code>chmod o+w $(find . -type f)</code> 给其他用户加写权限， 不会有 git 历史，umask 022</li>
-<li><a target="_blank" rel="noopener" href="https://learnku.com/laravel/t/5340/linux-solution-to-modify-the-file-permissions-caused-by-the-git-record-file-changes">不跟踪权限</a></li>
-</ol>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><ol>
-<li><p>Git 是一个<code>内容寻址文件系统</code>，Git 的核心部分是一个简单的键值对数据库（key-value data store）。你可以向 Git 仓库中插入任意类型的内容，它会返回一个唯一的键，通过该键可以在任意时刻再次取回该内容。</p>
-</li>
-<li><p>.git 下四个条目很重要：HEAD 文件、（尚待创建的）index 文件，和 objects 目录、refs 目录。 它们都是 Git 的核心组成部分。</p>
-<ul>
-<li><code>objects</code> 目录存储所有数据内容；</li>
-<li><code>refs</code> 目录存储指向数据（分支、远程仓库和标签等）的提交对象的指针；</li>
-<li><code>HEAD</code> 文件指向目前被检出的分支；</li>
-<li><code>index</code> 文件保存暂存区信息。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines">Angular Commit Guidelines</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/feflow/git-commit-style-guide">Commit Style Guide</a></li>
 </ul>
-</li>
-<li><p>.git 其他文件</p>
-<ul>
-<li><code>description</code> 文件仅供 GitWeb 程序使用，我们无需关心。</li>
-<li><code>config</code> 文件包含项目特有的配置选项。</li>
-<li><code>info</code> 目录包含一个全局性排除（global exclude）文件， 用以放置那些不希望被记录在 .gitignore 文件中的忽略模式（ignored patterns）。</li>
-<li><code>hooks</code> 目录包含客户端或服务端的钩子脚本</li>
+<h2 id="C-项目嵌入-Git-信息"><a href="#C-项目嵌入-Git-信息" class="headerlink" title="C++ 项目嵌入 Git 信息"></a>C++ 项目嵌入 Git 信息</h2><ul>
+<li><a target="_blank" rel="noopener" href="http://xit0.org/2013/04/cmake-use-git-branch-and-commit-details-in-project/">CMake 方案</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/51727566/how-to-make-git-commit-hash-available-in-c-code-without-needless-recompiling">无需重编译方案</a></li>
 </ul>
-</li>
-<li><p><code>git hash-object</code> 会接受你传给它的东西，而它只会返回可以存储在 Git 仓库中的唯一键。 -w 选项会指示该命令不要只返回键，还要将该对象写入数据库中。 这就是开始时 Git 存储内容的方式——一个文件对应一条内容， 以该内容加上特定头部信息一起的 SHA-1 校验和为文件命名。 校验和的前两个字符用于命名子目录，余下的 38 个字符则用作文件名。</p>
-</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> $ <span class="built_in">echo</span> <span class="string">&#x27;test content&#x27;</span> | git hash-object -w --stdin</span><br><span class="line">d670460b4b4aece5915caf5c68d12f560a9fe3e4</span><br><span class="line"> $ find .git/objects -<span class="built_in">type</span> f</span><br><span class="line">.git/objects/d6/70460b4b4aece5915caf5c68d12f560a9fe3e4</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&#x27;version 1&#x27;</span> &gt; test.txt</span><br><span class="line">$ git hash-object -w test.txt</span><br><span class="line">83baae61804e65cc73a7201a7252750c76066a30</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&#x27;version 2&#x27;</span> &gt; test.txt</span><br><span class="line">$ git hash-object -w test.txt</span><br><span class="line">1f7a7a472abf3dd9643fd615f6da379c4acb3e3a</span><br></pre></td></tr></table></figure>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="clone-失败"><a href="#clone-失败" class="headerlink" title="clone 失败"></a>clone 失败</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.postBuffer 5242880000</span><br></pre></td></tr></table></figure>
 
+<h3 id="权限问题"><a href="#权限问题" class="headerlink" title="权限问题"></a>权限问题</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 给其他用户加写权限</span></span><br><span class="line"><span class="built_in">chmod</span> o+w -R .</span><br><span class="line">find . -<span class="built_in">type</span> f | xargs <span class="built_in">chmod</span> o+w</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不跟踪权限变化</span></span><br><span class="line">git config core.fileMode <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/zqb-all/p/10631505.html">git 权限问题</a></p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>Git 是<strong>内容寻址文件系统</strong>，核心是键值对数据库。</p>
+<h3 id="git-目录结构"><a href="#git-目录结构" class="headerlink" title=".git 目录结构"></a>.git 目录结构</h3><table>
+<thead>
+<tr>
+<th>目录&#x2F;文件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>objects/</code></td>
+<td>存储所有数据内容（blob、tree、commit）</td>
+</tr>
+<tr>
+<td><code>refs/</code></td>
+<td>存储分支、远程、标签的引用指针</td>
+</tr>
+<tr>
+<td><code>HEAD</code></td>
+<td>指向当前检出的分支</td>
+</tr>
+<tr>
+<td><code>index</code></td>
+<td>暂存区信息</td>
+</tr>
+<tr>
+<td><code>config</code></td>
+<td>项目配置</td>
+</tr>
+<tr>
+<td><code>hooks/</code></td>
+<td>钩子脚本</td>
+</tr>
+</tbody></table>
+<h3 id="三种对象类型"><a href="#三种对象类型" class="headerlink" title="三种对象类型"></a>三种对象类型</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>blob</strong>（数据对象）</td>
+<td>文件内容</td>
+</tr>
+<tr>
+<td><strong>tree</strong>（树对象）</td>
+<td>目录结构，包含 blob 和子 tree 的引用</td>
+</tr>
+<tr>
+<td><strong>commit</strong>（提交对象）</td>
+<td>指向 tree，包含作者、时间、父提交信息</td>
+</tr>
+</tbody></table>
+<h3 id="底层命令"><a href="#底层命令" class="headerlink" title="底层命令"></a>底层命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 存储内容并返回 SHA-1</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;test&#x27;</span> | git hash-object -w --stdin</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看对象内容</span></span><br><span class="line">git cat-file -p &lt;sha1&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看对象类型</span></span><br><span class="line">git cat-file -t &lt;sha1&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看树对象</span></span><br><span class="line">git cat-file -p master^&#123;tree&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="引用（refs）"><a href="#引用（refs）" class="headerlink" title="引用（refs）"></a>引用（refs）</h3><ul>
+<li><strong>分支</strong>：指向某个 commit 的指针，存储在 <code>.git/refs/heads/</code></li>
+<li><strong>HEAD</strong>：符号引用，指向当前分支</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看 HEAD</span></span><br><span class="line">git symbolic-ref HEAD</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新引用</span></span><br><span class="line">git update-ref refs/heads/master &lt;sha1&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="核心流程"><a href="#核心流程" class="headerlink" title="核心流程"></a>核心流程</h3><p><code>git add</code> + <code>git commit</code> 实际做了：</p>
 <ol>
-<li>通过 <code>cat-file</code> 命令从 Git 那里取回数据。 这个命令简直就是一把剖析 Git 对象的瑞士军刀。 为 cat-file 指定 -p 选项可指示该命令自动判断内容的类型，</li>
+<li>将文件内容保存为 blob 对象</li>
+<li>更新暂存区（index）</li>
+<li>创建 tree 对象</li>
+<li>创建 commit 对象（指向 tree + 父 commit）</li>
 </ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git cat-file -p d670460b4b4aece5915caf5c68d12f560a9fe3e4</span><br><span class="line"><span class="built_in">test</span> content</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>利用 <code>git cat-file -t</code> 命令，可以让 Git 告诉我们其内部存储的任何对象类型，只要给定该对象的 SHA-1 值：</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git cat-file -t 1f7a7a472abf3dd9643fd615f6da379c4acb3e3a</span><br><span class="line">blob</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><p>上述类型的对象我们称之为 <code>数据对象（blob object）</code></p>
-</li>
-<li><p>Git 另一种对象类型是<code>树对象（tree object）</code>，它能解决文件名保存的问题，也允许我们将多个文件组织到一起。 Git 以一种类似于 UNIX 文件系统的方式存储内容，但作了些许简化。 所有内容均以树对象和数据对象的形式存储，其中树对象对应了 UNIX 中的目录项，数据对象则大致上对应了 inodes 或文件内容。 一个树对象包含了一条或多条树对象记录（tree entry），每条记录含有一个指向数据对象或者子树对象的 SHA-1 指针，以及相应的模式、类型、文件名信息。 例如，某项目当前对应的最新树对象可能是这样的：</p>
-</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git cat-file -p master^&#123;tree&#125;</span><br><span class="line">100644 blob a906cb2a4a904a152e80877d4088654daad0c859      README</span><br><span class="line">100644 blob 8f94139338f9404f26296befa88755fc2598c289      Rakefile</span><br><span class="line">040000 tree 99f1a6d12cb4b6f19c8655fca46c3ecf317074e0      lib</span><br></pre></td></tr></table></figure>
-
-<p>master^{tree} 语法表示 master 分支上最新的提交所指向的树对象。 请注意，lib 子目录（所对应的那条树对象记录）并不是一个数据对象，而是一个指针，其指向的是另一个树对象：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git cat-file -p 99f1a6d12cb4b6f19c8655fca46c3ecf317074e0</span><br><span class="line">100644 blob 47c6340d6459e05787f644c2447d2595f5d3a54b      simplegit.rb</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>可以通过底层命令 <code>git update-index</code> 为一个单独文件——我们的 test.txt 文件的首个版本——创建一个暂存区。</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git update-index --add --cacheinfo 100644 83baae61804e65cc73a7201a7252750c76066a30 test.txt</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>可以通过 <code>git write-tree</code> 命令将暂存区内容写入一个树对象。 此处无需指定 -w 选项——如果某个树对象此前并不存在的话，当调用此命令时， 它会根据当前暂存区状态自动创建一个新的树对象：</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ git write-tree</span><br><span class="line">d8329fc1cc938780ffdd9f94e0d364e0ea74f579</span><br><span class="line">$ git cat-file -p d8329fc1cc938780ffdd9f94e0d364e0ea74f579</span><br><span class="line">100644 blob 83baae61804e65cc73a7201a7252750c76066a30      test.txt</span><br><span class="line">$ git cat-file -t d8329fc1cc938780ffdd9f94e0d364e0ea74f579</span><br><span class="line">tree</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">echo</span> <span class="string">&#x27;new file&#x27;</span> &gt; new.txt</span><br><span class="line">$ git update-index --add --cacheinfo 100644 \</span><br><span class="line">  1f7a7a472abf3dd9643fd615f6da379c4acb3e3a test.txt</span><br><span class="line">$ git update-index --add new.txt</span><br><span class="line"></span><br><span class="line">$ git write-tree</span><br><span class="line">0155eb4229851634a0f03eb265b69f5a2d56f341</span><br><span class="line">$ git cat-file -p 0155eb4229851634a0f03eb265b69f5a2d56f341</span><br><span class="line">100644 blob fa49b077972391ad58037050f2a75f74e3671e92      new.txt</span><br><span class="line">100644 blob 1f7a7a472abf3dd9643fd615f6da379c4acb3e3a      test.txt</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>只是为了好玩：你可以将第一个树对象加入第二个树对象，使其成为新的树对象的一个子目录。 通过调用 <code>git read-tree</code> 命令，可以把树对象读入暂存区。 本例中，可以通过对该命令指定 –prefix 选项，将一个已有的树对象作为子树读入暂存区：</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ git read-tree --prefix=bak d8329fc1cc938780ffdd9f94e0d364e0ea74f579</span><br><span class="line">$ git write-tree</span><br><span class="line">3c4e9cd789d88d8d89c1073707c3585e41b0e614</span><br><span class="line">$ git cat-file -p 3c4e9cd789d88d8d89c1073707c3585e41b0e614</span><br><span class="line">040000 tree d8329fc1cc938780ffdd9f94e0d364e0ea74f579      bak</span><br><span class="line">100644 blob fa49b077972391ad58037050f2a75f74e3671e92      new.txt</span><br><span class="line">100644 blob 1f7a7a472abf3dd9643fd615f6da379c4acb3e3a      test.txt</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>那么现在就有了三个树对象，分别代表我们想要跟踪的不同项目快照。 然而问题依旧：若想重用这些快照，你必须记住所有三个 SHA-1 哈希值。 并且，你也完全不知道是谁保存了这些快照，在什么时刻保存的，以及为什么保存这些快照。 而以上这些，正是<code>提交对象（commit object）</code>能为你保存的基本信息。</li>
-<li>可以通过调用 <code>commit-tree</code> 命令创建一个提交对象，为此需要指定一个树对象的 SHA-1 值，以及该提交的父提交对象（如果有的话）。 我们从之前创建的第一个树对象开始：</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">&#x27;first commit&#x27;</span> | git commit-tree d8329f</span><br><span class="line">fdf4fc3344e67ab068f836878b6c4951e3b15f3d</span><br></pre></td></tr></table></figure>
-
-<p>由于创建时间和作者数据不同，你现在会得到一个不同的散列值。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git cat-file -p fdf4fc3</span><br><span class="line">tree d8329fc1cc938780ffdd9f94e0d364e0ea74f579</span><br><span class="line">author Scott Chacon &lt;schacon@gmail.com&gt; 1243040974 -0700</span><br><span class="line">committer Scott Chacon &lt;schacon@gmail.com&gt; 1243040974 -0700</span><br><span class="line"></span><br><span class="line">first commit</span><br></pre></td></tr></table></figure>
-
-<p>提交对象的格式很简单：它先指定一个顶层树对象，代表当前项目快照； 然后是可能存在的父提交（前面描述的提交对象并不存在任何父提交）； 之后是作者&#x2F;提交者信息（依据你的 user.name 和 user.email 配置来设定，外加一个时间戳）； 留空一行，最后是提交注释。</p>
-<ol>
-<li><p>每次我们运行 git add 和 git commit 命令时，Git 所做的工作实质就是将被改写的文件保存为数据对象， 更新暂存区，记录树对象，最后创建一个指明了顶层树对象和父提交的提交对象。 这三种主要的 Git 对象——<code>数据对象、树对象、提交对象</code>——最初均以单独文件的形式保存在 .git&#x2F;objects 目录下。</p>
-</li>
-<li><p>如果你对仓库中从一个提交（比如 1a410e）开始往前的历史感兴趣，那么可以运行 git log 1a410e 这样的命令来显示历史，不过你需要记得 1a410e 是你查看历史的起点提交。 如果我们有一个文件来保存 SHA-1 值，而该文件有一个简单的名字， 然后用这个名字指针来替代原始的 SHA-1 值的话会更加简单。<br>在 Git 中，这种简单的名字被称为<code>引用（references，或简写为 refs）</code></p>
-</li>
-<li><p>若要创建一个新引用来帮助记忆最新提交所在的位置，从技术上讲我们只需简单地做如下操作：</p>
-</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> 1a410efbd13591db07496601ebc7a059dd55cfe9 &gt; .git/refs/heads/master</span><br></pre></td></tr></table></figure>
-
-<p>现在，你就可以在 Git 命令中使用这个刚创建的新引用来代替 SHA-1 值了：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">log</span> --pretty=oneline master</span><br><span class="line">1a410efbd13591db07496601ebc7a059dd55cfe9 third commit</span><br><span class="line">cac0cab538b970a37ea1e769cbbde608743bc96d second commit</span><br><span class="line">fdf4fc3344e67ab068f836878b6c4951e3b15f3d first commit</span><br></pre></td></tr></table></figure>
-
-<p>我们不提倡直接编辑引用文件。 如果想更新某个引用，Git 提供了一个更加安全的命令 <code>update-ref</code> 来完成此事：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git update-ref refs/heads/master 1a410efbd13591db07496601ebc7a059dd55cfe9</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>这基本就是 Git <code>分支的本质：一个指向某一系列提交之首的指针或引用</code>。 若想在第二个提交上创建一个分支，可以这么做：</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git update-ref refs/heads/test cac0ca</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><p>至此，我们的 Git 数据库从概念上看起来像这样：<br><img src="https://git-scm.com/book/en/v2/images/data-model-4.png" alt="包含分支引用的 Git 目录对象"><br>当运行类似于 git branch <branch> 这样的命令时，Git 实际上会运行 update-ref 命令， 取得当前所在分支最新提交对应的 SHA-1 值，并将其加入你想要创建的任何新引用中。</p>
-</li>
-<li><p>当你执行 git branch <branch> 时，Git 如何知道最新提交的 SHA-1 值呢？ 答案是 HEAD 文件。</p>
-</li>
-<li><p><code>HEAD 文件通常是一个符号引用（symbolic reference），指向目前所在的分支</code>。 所谓符号引用，表示它是一个指向其他引用的指针。</p>
-</li>
-<li><p>当我们执行 git commit 时，该命令会创建一个提交对象，并用 HEAD 文件中那个引用所指向的 SHA-1 值设置其父提交字段。<br>你也可以手动编辑该文件，然而同样存在一个更安全的命令来完成此事：git symbolic-ref。 可以借助此命令来查看 HEAD 引用对应的值：</p>
-</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git symbolic-ref HEAD</span><br><span class="line">refs/heads/master</span><br></pre></td></tr></table></figure>
-
-<p>同样可以设置 HEAD 引用的值：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git symbolic-ref HEAD refs/heads/test</span><br><span class="line">$ <span class="built_in">cat</span> .git/HEAD</span><br><span class="line">ref: refs/heads/test</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><code>标签引用</code><br>前面我们刚讨论过 Git 的<code>三种主要的对象类型（数据对象、树对象 和 提交对象 ）</code>，然而实际上还有第四种。 <code>标签对象（tag object）</code> 非常类似于一个提交对象——它包含一个标签创建者信息、一个日期、一段注释信息，以及一个指针。 主要的区别在于，标签对象通常指向一个提交对象，而不是一个树对象。 <code>它像是一个永不移动的分支引用——永远指向同一个提交对象</code>，只不过给这个提交对象加上一个更友好的名字罢了。</li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://learngitbranching.js.org/?locale=zh_CN">git 游戏</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/190303151">git 可视化</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xueweihan/p/13524162.html">5 git workflow</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/12/git-workflow.html?bsh_bid=2219775734">一文弄懂 Gitflow、Github flow、Gitlab flow 的工作流</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.51cto.com/nanjke/3030113">gitflow github_flow gitlab_flow</a></li>
-<li><a target="_blank" rel="noopener" href="https://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/ByteByteGoHq/system-design-101#how-does-git-work">how-does-git-work</a></li>
-</ol>
+<p><img src="https://git-scm.com/book/en/v2/images/data-model-4.png" alt="Git 数据模型"></p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://learngitbranching.js.org/?locale=zh_CN">Learn Git Branching（交互式学习）</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/190303151">Git 可视化</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ByteByteGoHq/system-design-101#how-does-git-work">How Does Git Work</a></li>
+<li><a target="_blank" rel="noopener" href="https://nvie.com/posts/a-successful-git-branching-model/">A Successful Git Branching Model</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/12/git-workflow.html">Gitflow vs Github Flow vs Gitlab Flow</a></li>
+</ul>
 
     </div>
 
@@ -640,7 +607,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#merge"><span class="nav-number">1.</span> <span class="nav-text">merge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#revert"><span class="nav-number">2.</span> <span class="nav-text">revert</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stash"><span class="nav-number">3.</span> <span class="nav-text">stash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#patch"><span class="nav-number">4.</span> <span class="nav-text">patch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pre-commit"><span class="nav-number">5.</span> <span class="nav-text">pre commit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#workflow"><span class="nav-number">6.</span> <span class="nav-text">workflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#submodule"><span class="nav-number">7.</span> <span class="nav-text">submodule</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic"><span class="nav-number">8.</span> <span class="nav-text">Basic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-%E4%BF%AE%E6%94%B9-commit"><span class="nav-number">9.</span> <span class="nav-text">git 修改 commit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#commit-%E8%A7%84%E8%8C%83"><span class="nav-number">10.</span> <span class="nav-text">commit 规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#add-git-info-in-C-exe"><span class="nav-number">11.</span> <span class="nav-text">add git info in C++ exe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ERROR"><span class="nav-number">12.</span> <span class="nav-text">ERROR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98"><span class="nav-number">13.</span> <span class="nav-text">git 权限问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">14.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#links"><span class="nav-number">15.</span> <span class="nav-text">links</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">基础操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#clone-%E4%B8%8E%E8%8E%B7%E5%8F%96"><span class="nav-number">1.1.</span> <span class="nav-text">clone 与获取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.2.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tag-%E6%93%8D%E4%BD%9C"><span class="nav-number">1.3.</span> <span class="nav-text">tag 操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-LFS"><span class="nav-number">1.4.</span> <span class="nav-text">Git LFS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E4%B8%8E%E7%BB%9F%E8%AE%A1"><span class="nav-number">1.5.</span> <span class="nav-text">调试与统计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Worktree"><span class="nav-number">2.</span> <span class="nav-text">Worktree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4-1"><span class="nav-number">2.1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">2.2.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9A%E5%B9%B6%E8%A1%8C%E5%BC%80%E5%8F%91"><span class="nav-number">2.3.</span> <span class="nav-text">示例：并行开发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">2.4.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Merge"><span class="nav-number">3.</span> <span class="nav-text">Merge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Revert"><span class="nav-number">4.</span> <span class="nav-text">Revert</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stash"><span class="nav-number">5.</span> <span class="nav-text">Stash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Patch"><span class="nav-number">6.</span> <span class="nav-text">Patch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Submodule"><span class="nav-number">7.</span> <span class="nav-text">Submodule</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Commit-%E4%BF%AE%E6%94%B9"><span class="nav-number">8.</span> <span class="nav-text">Commit 修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pre-commit"><span class="nav-number">9.</span> <span class="nav-text">Pre-commit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Workflow"><span class="nav-number">10.</span> <span class="nav-text">Workflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Commit-%E8%A7%84%E8%8C%83"><span class="nav-number">11.</span> <span class="nav-text">Commit 规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E9%A1%B9%E7%9B%AE%E5%B5%8C%E5%85%A5-Git-%E4%BF%A1%E6%81%AF"><span class="nav-number">12.</span> <span class="nav-text">C++ 项目嵌入 Git 信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="nav-number">13.</span> <span class="nav-text">常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#clone-%E5%A4%B1%E8%B4%A5"><span class="nav-number">13.1.</span> <span class="nav-text">clone 失败</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98"><span class="nav-number">13.2.</span> <span class="nav-text">权限问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">14.</span> <span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#git-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">14.1.</span> <span class="nav-text">.git 目录结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E7%A7%8D%E5%AF%B9%E8%B1%A1%E7%B1%BB%E5%9E%8B"><span class="nav-number">14.2.</span> <span class="nav-text">三种对象类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%95%E5%B1%82%E5%91%BD%E4%BB%A4"><span class="nav-number">14.3.</span> <span class="nav-text">底层命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%EF%BC%88refs%EF%BC%89"><span class="nav-number">14.4.</span> <span class="nav-text">引用（refs）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%B5%81%E7%A8%8B"><span class="nav-number">14.5.</span> <span class="nav-text">核心流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">15.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -689,7 +656,7 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
-          <a href="/2025/12/29/claude-code/" title="2025&#x2F;12&#x2F;29&#x2F;claude-code&#x2F;">claude code</a>
+          <a href="/2025/12/29/claude-code/" title="2025&#x2F;12&#x2F;29&#x2F;claude-code&#x2F;">Claude Code</a>
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2025/08/20/AI-coding/" title="2025&#x2F;08&#x2F;20&#x2F;AI-coding&#x2F;">AI coding</a>
@@ -739,13 +706,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">628k</span>
+    <span title="站点总字数">626k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">9:31</span>
+    <span title="站点阅读时长">9:29</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
