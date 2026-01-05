@@ -756,7 +756,7 @@
 <li>awk 按列过滤参数 ls -l test.sh | awk ‘{ print $5 }’ 输出：454</li>
 <li>shell 小程序<a target="_blank" rel="noopener" href="https://www.jb51.net/article/54488.htm">link</a></li>
 <li>shell 得到文件信息 <code>ll /var/log/messages | cut -d &quot; &quot; -f 5</code></li>
-<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#106;&#x69;&#97;&#x78;&#x69;&#x79;&#x61;&#x6e;&#103;&#64;&#49;&#48;&#x2e;&#49;&#48;&#x2e;&#48;&#x2e;&#x31;&#55;">&#106;&#x69;&#97;&#x78;&#x69;&#x79;&#x61;&#x6e;&#103;&#64;&#49;&#48;&#x2e;&#49;&#48;&#x2e;&#48;&#x2e;&#x31;&#55;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
+<li>shell 不用输入密码登录 expect <a target="_blank" rel="noopener" href="http://www.cnblogs.com/lixigang/articles/4849527.html">link</a> set timeout 3 ; spawn ssh <a href="mailto:&#106;&#x69;&#97;&#x78;&#105;&#121;&#97;&#110;&#103;&#64;&#x31;&#x30;&#x2e;&#x31;&#48;&#46;&#48;&#x2e;&#49;&#55;">&#106;&#x69;&#97;&#x78;&#105;&#121;&#97;&#110;&#103;&#64;&#x31;&#x30;&#x2e;&#x31;&#48;&#46;&#48;&#x2e;&#49;&#55;</a>; expect “*password:”; send “jiaxiyang\r”;interact</li>
 <li>读文件内容，记录到变量中 var&#x3D;$(cat name.txt)</li>
 <li>计时 start&#x3D;$(date+%s) &amp;&amp; sleep 2 &amp;&amp; end&#x3D;$(date+%s)&amp;&amp; echo $(($end - $start)) <a target="_blank" rel="noopener" href="http://blog.csdn.net/gengshenghong/article/details/7583580">link</a></li>
 <li>sleep: sleep 1 睡眠 1 秒 sleep 1s 睡眠 1 秒 sleep 1m 睡眠 1 分 sleep 1h 睡眠 1 小时</li>
@@ -1835,7 +1835,7 @@ Bob--&gt;&gt;John: Jolly good!
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2026-01-04 15:31:39" itemprop="dateModified" datetime="2026-01-04T15:31:39+08:00">2026-01-04</time>
+                <time title="修改时间：2026-01-05 10:45:00" itemprop="dateModified" datetime="2026-01-05T10:45:00+08:00">2026-01-05</time>
               </span>
 
           
@@ -1858,14 +1858,14 @@ Bob--&gt;&gt;John: Jolly good!
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.3k</span>
+              <span>5k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -1931,6 +1931,10 @@ Bob--&gt;&gt;John: Jolly good!
 <tr>
 <td><code>/ide</code></td>
 <td>连接外部终端到 VS Code</td>
+</tr>
+<tr>
+<td><code>/export [filename] </code></td>
+<td>Export the current conversation to a file or clipboard</td>
 </tr>
 </tbody></table>
 <h2 id="IDE-集成"><a href="#IDE-集成" class="headerlink" title="IDE 集成"></a>IDE 集成</h2><p>CLI 和 IDE 插件连接：</p>
@@ -2033,7 +2037,7 @@ Bob--&gt;&gt;John: Jolly good!
 <li>登录: <code>glab auth login --hostname &lt;your-gitlab&gt; --token &lt;token&gt;</code></li>
 <li>验证: <code>glab auth status</code></li>
 </ol>
-<h3 id="创建-Plugin"><a href="#创建-Plugin" class="headerlink" title="创建 Plugin"></a>创建 Plugin</h3><p><strong>1. 创建清单 <code>.claude-plugin/plugin.json</code>：</strong></p>
+<h4 id="feature-dev"><a href="#feature-dev" class="headerlink" title="feature-dev"></a><a target="_blank" rel="noopener" href="https://github.com/anthropics/claude-code/tree/main/plugins/feature-dev">feature-dev</a></h4><h3 id="创建-Plugin"><a href="#创建-Plugin" class="headerlink" title="创建 Plugin"></a>创建 Plugin</h3><p><strong>1. 创建清单 <code>.claude-plugin/plugin.json</code>：</strong></p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;my-plugin&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;我的第一个插件&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;author&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Your Name&quot;</span> <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>2. 添加命令 <code>commands/hello.md</code>：</strong></p>
@@ -2084,7 +2088,10 @@ Bob--&gt;&gt;John: Jolly good!
 
 <h2 id="WSL-配置"><a href="#WSL-配置" class="headerlink" title="WSL 配置"></a>WSL 配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 端口转发</span></span><br><span class="line">ssh -N -L 18080:10.96.11.131:3100 yxsqw@10.193.64.77</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置 API 地址</span></span><br><span class="line"><span class="built_in">export</span> ANTHROPIC_BASE_URL=<span class="string">&quot;http://localhost:18080/api&quot;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="自定义斜杠命令"><a href="#自定义斜杠命令" class="headerlink" title="自定义斜杠命令"></a>自定义斜杠命令</h2><h3 id="创建位置"><a href="#创建位置" class="headerlink" title="创建位置"></a>创建位置</h3><p>在 <code>.claude/commands/</code> 目录创建 <code>.md</code> 文件</p>
+<h2 id="自定义斜杠命令"><a href="#自定义斜杠命令" class="headerlink" title="自定义斜杠命令"></a>自定义斜杠命令</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/slash-commands#built-in-slash-commands">内置斜杠命令</a></li>
+</ol>
+<h3 id="创建位置"><a href="#创建位置" class="headerlink" title="创建位置"></a>创建位置</h3><p>在 <code>.claude/commands/</code> 目录创建 <code>.md</code> 文件</p>
 <h3 id="示例：博客部署命令"><a href="#示例：博客部署命令" class="headerlink" title="示例：博客部署命令"></a>示例：博客部署命令</h3><p><strong><code>.claude/commands/deploy.md</code>：</strong></p>
 <h2 id="prompt"><a href="#prompt" class="headerlink" title="prompt"></a>prompt</h2><ol>
 <li>扩展思考 - 处理复杂任务时使用 “think hard” 或 “think deeply” 触发深度推理<ul>
@@ -2093,6 +2100,22 @@ Bob--&gt;&gt;John: Jolly good!
 </ul>
 </li>
 </ol>
+<h2 id="Boris-的-13-条建议"><a href="#Boris-的-13-条建议" class="headerlink" title="Boris 的 13 条建议"></a>Boris 的 13 条建议</h2><p>Claude Code 创始人 Boris 的使用技巧：</p>
+<ol>
+<li><strong>并行多 Claude</strong> - 终端运行 5 个 Claude，标签编号 1-5，配合系统通知</li>
+<li><strong>本地 + Web</strong> - 终端与 claude.ai&#x2F;code 并行，用 <code>&amp;</code> 交本地会话给 Web，或 <code>--teleport</code> 来回切换</li>
+<li><strong>Opus 4.5 + Thinking</strong> - 最佳编码模型，虽大且慢但需引导少，总体更快</li>
+<li><strong>共享 CLAUDE.md</strong> - 团队共用一个 CLAUDE.md��检入 git，发现问题立即添加</li>
+<li><strong>PR 审查集成</strong> - 用 GitHub Action，在同事 PR 上 tag @.claude 要求更新 CLAUDE.md</li>
+<li><strong>Plan 模式优先</strong> - 按 <code>Shift+Tab</code> 两次进入 Plan 模式，计划好后切换 auto-accept 模式一气呵成</li>
+<li><strong>Slash 命令</strong> - 每日重复的工作流用命令自动化，如 <code>/commit-push-pr</code></li>
+<li><strong>Subagent</strong> - 常用工作流用 subagent，如 code-simplifier、verify-app</li>
+<li><strong>PostToolUse Hook</strong> - 格式化代码，处理最后 10%</li>
+<li><strong>权限管理</strong> - 不用 <code>--dangerously-skip-permissions</code>，用 <code>/permissions</code> 预授权安全命令</li>
+<li><strong>MCP 工具</strong> - Claude 代用所有工具：Slack、BigQuery、Sentry 等</li>
+<li><strong>长时间任务</strong> - 用 background agent 验证，或用 Stop hook，或 ralph-wiggum 插件</li>
+<li><strong>验证反馈循环</strong> - <strong>最重要</strong> - 给 Claude 验证工作的方式，质量提升 2-3 倍</li>
+</ol>
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
 <li><a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/common-workflows">Common Workflow</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.anthropic.com/engineering/claude-code-best-practices">Claude Code Best Practices</a></li>
@@ -2100,6 +2123,7 @@ Bob--&gt;&gt;John: Jolly good!
 <li><a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/slash-commands.md">Slash Commands 文档</a></li>
 <li><a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/plugins.md">Plugin 官方文档</a></li>
 <li><a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/plugin-marketplaces.md">Plugin Marketplace</a></li>
+<li><a target="_blank" rel="noopener" href="https://x.com/i/status/2007179832300581177">Boris 的完整分享</a></li>
 </ul>
 
       
@@ -2272,7 +2296,7 @@ Bob--&gt;&gt;John: Jolly good!
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">625k</span>
+    <span title="站点总字数">626k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
