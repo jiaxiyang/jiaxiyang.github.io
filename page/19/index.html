@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">196</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">197</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,402 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/11/16/Python-grammar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/16/Python-grammar/" class="post-title-link" itemprop="url">Python-grammar</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-16 21:39:20" itemprop="dateCreated datePublished" datetime="2020-11-16T21:39:20+08:00">2020-11-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-03-19 10:26:25" itemprop="dateModified" datetime="2025-03-19T10:26:25+08:00">2025-03-19</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/11/16/Python-grammar/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/11/16/Python-grammar/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>10k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="解释器"><a href="#解释器" class="headerlink" title="解释器"></a>解释器</h2><ol>
+<li>官方版本的解释器:Cpython 这个解释器是用 C 语言开发的，所以叫 CPython。</li>
+<li><a target="_blank" rel="noopener" href="https://devguide.python.org/#other-interpreter-implementations">其他解释器</a></li>
+<li>CPython 解释器由一个<code>编译器</code>和一个<code>虚拟机</code>构成，编译器负责将源代码转换成字节码文件，而虚拟机负责执行字节码。所以，解释型语言其实也有编译过程，只不过这个编译过程并不是直接生成目标代码，而是中间代码（字节码），然后再通过虚拟机来逐行解释执行字节码</li>
+<li>python 解释器的编译器会将.py 源文件编译（解释）成字节码生成 PyCodeObject 字节码对象存放在内存中。python 解释器的虚拟机将执行内存中的字节码对象转化为机器语言，虚拟机与操作系统交互，使机器语言在机器硬件上运行。运行结束后 python 解释器则将 PyCodeObject 写回到 pyc 文件中。当 python 程序第二次运行时，首先程序会在硬盘中寻找 pyc 文件，如果找到，则直接载入，否则就重复上面的过程。</li>
+<li>pyc 文件其实是 PyCodeObject 的一种持久化保存方式。pyc 文件，文件中包含 python 的 magic number（来说明编译时使用的 python 版本号）、源文件的 mtime（使 pyc 和 py 文件保持同步）、编译出的 code 对象</li>
+<li>字节码是一种中间代码，类似于汇编语言，它可以被解释器直接执行，也可以被保存到.pyc 文件中以提高下次执行的速度。</li>
+<li><a target="_blank" rel="noopener" href="https://www.imahui.com/network/6026.html">解释器基本构成</a></li>
+</ol>
+<h2 id="加速"><a href="#加速" class="headerlink" title="加速"></a>加速</h2><ol>
+<li>sample 见 python_sandbox 中的 optimization</li>
+<li>numba jit 加速(不能使用复杂数据结构)</li>
+<li>triton 加速</li>
+<li>torch compile 加速</li>
+<li>cuda 加速</li>
+<li>数据结构改变，优化访存</li>
+</ol>
+<h2 id="vscode-test"><a href="#vscode-test" class="headerlink" title="vscode test"></a>vscode test</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://code.visualstudio.com/docs/python/testing">link</a></li>
+</ol>
+<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.python.org/3/tutorial/">python tutorial</a></li>
+</ol>
+<h2 id="加密"><a href="#加密" class="headerlink" title="加密"></a>加密</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/gcgc/p/16529975.html">Cython</a><ul>
+<li>编译成 c，再编译成 so，strip 后再使用</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.toolfk.com/tools/online-python-confuse.html">在线混淆</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/54296517">代码加密</a></li>
+</ol>
+<h2 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h2><ol>
+<li><code>pass</code> 语句用于指示一个空的代码块。它不执行任何操作，只是作为占位符使用，用于保持语法完整性。通常在语法上需要语句或代码块的地方，但是逻辑上不需要执行任何操作时，可以使用 pass 语句。</li>
+<li>CPython 的 Frame Evaluation API（框架评估 API）是一个高级特性，允许开发者定制 Python 解释器执行代码的方式。这个 API 提供了一种方法，能够在 Python 解释器运行时动态插入和替换代码执行的框架，从而可以进行代码插桩、动态优化或其他高级操作。</li>
+<li>print</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> torch.allclose(triton_output, torch_output, atol=<span class="number">0.125</span>, rtol=<span class="number">0</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;✅ Triton and Torch match&quot;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;❌ Triton and Torch differ&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>pip show numpy</code>查看 numpy 信息, 包括安装路径</li>
+<li><code>python -v</code> import module 时可以查看 module path</li>
+<li><code>print(os.environ)</code> vs code debug console 打印环境变量<ul>
+<li><code>print(os.environ[&#39;HOME&#39;])</code></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://www.learnpython.org/en/Partial_functions">Partial_functions</a> 给函数加指定参数<ul>
+<li>偏函数允许将具有 x 个参数的函数导出为具有较少参数和为更有限的函数设置的固定值的函数。</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://sikasjc.github.io/2018/10/12/star/">Python 中的星号，*<em>和</em>运算符</a><ul>
+<li>数学运算符： <code>*</code>用于乘法， <code>**</code> 用于乘方</li>
+<li>函数参数：<ul>
+<li>*args 可以表示任意多个参数，它本质是一个 tuple。</li>
+<li>**kwargs 是关键字参数，它本质上是一个 dict。</li>
+</ul>
+</li>
+<li>解包参数列表: 在 Python 中，调用函数时，利用*语句可以将参数列表解包</li>
+<li>序列解包</li>
+<li>Keyword-Only Arguments</li>
+</ul>
+</li>
+<li><code>id(a)</code> a 对象的地址, 用于分析对象内存<ul>
+<li>Return the identity of an object.This is guaranteed to be unique among simultaneously existing objects. (CPython uses the object’s memory address.)</li>
+</ul>
+</li>
+<li>计时</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">start_time = time.perf_counter()</span><br><span class="line">your_function()</span><br><span class="line">end_time = time.perf_counter()</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>在 Python 中,可以使用三个双引号(“””)或三个单引号(‘’’)来进行段落注释。</li>
+<li><code>#!/usr/bin/env python3</code> 指定执行器</li>
+<li>python repl 里运行 py 文件</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exec</span>(<span class="built_in">open</span>(<span class="string">&quot;test.py&quot;</span>).read()) <span class="comment"># python3</span></span><br><span class="line"><span class="built_in">exec</span>(<span class="built_in">open</span>(<span class="string">&quot;filename.py&quot;</span>).read()) <span class="comment"># python2</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>print(cls.__class__.__name__)</code>打印 cls 实例类的名字</li>
+<li>print 到文件</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;output.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> file:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Hello, world!&#x27;</span>, file=file)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><code>help(torch.ones)</code> 显示函数 help</li>
+<li><code>print(dir(list))</code> python 的 dir()函数可以用来获取对象的属性和方法。</li>
+<li><code>unset all_proxy</code> 不能使用代理，可能出现 install 错误 <a target="_blank" rel="noopener" href="https://blog.csdn.net/whatday/article/details/109287343">link</a></li>
+<li><a target="_blank" rel="noopener" href="https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa">install python from deadsnakes</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/deadsnakes/docs/blob/main/Building-Deadsnakes-Packages-from-Git.rst">build python from source</a> 编译之后需要前一级目录 <code>sudo dpkg -i *.deb</code></li>
+<li><code>pip freeze | grep torch</code>: 查看库版本</li>
+<li><code>python3 -c &quot;import torch; print(torch.__version__)&quot;</code></li>
+<li><code>python3 -c &quot;import tensorrt_llm; print(tensorrt_llm.__version__)&quot;</code></li>
+<li><code>print(&quot;Numpy version:&quot;, numpy.__version__)</code></li>
+<li><a target="_blank" rel="noopener" href="https://elpy.readthedocs.io/en/latest/ide.html#other-useful-snippets">useful-snippets</a></li>
+<li><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2391275">值语义与引用语义</a><ul>
+<li>不可变变量的值一旦创建，就不能被修改。如果你尝试修改一个不可变对象的值，Python 将会创建一个新的对象。Python 中的不可变对象包括整数（int）、浮点数（float）、字符串（str）、元组（tuple）等。</li>
+<li>可变变量的值可以在原地修改，而不会创建一个新的对象。Python 中的可变对象包括列表（list）、字典（dict）、集合（set）等。</li>
+</ul>
+</li>
+<li><code>import copy; x = copy.deepcopy(y)</code></li>
+<li>print(“x: “, x, type(x), x.shape) <a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_28576553/article/details/81154912">link</a></li>
+<li>“%s&#x2F;Kernels” % self.exe_path 的作用是将 self.exe_path 中的值插入到字符串中 %s 的位置。这种格式化方法被称作“旧式字符串格式化”（old-style string formatting）。</li>
+<li>现代代码中更倾向于使用 str.format() 方法或者 f-string（在 Python 3.6 及以后的版本中）。例如，使用 str.format()，上述代码可以写作 “{}&#x2F;Kernels”.format(self.exe_path)；使用 f-string，可以写作 f”{self.exe_path}&#x2F;Kernels”。</li>
+<li>print(‘{:.2f} ms’.format(xxx))</li>
+<li>print(f’{xxx:.2f} ms’)</li>
+<li>pytorch tensor to binary file: <code>tensor.cpu().numpy().astype(np.float32).tofile(&quot;test.bin&quot;)</code>; c++ read binary file</li>
+<li>print(‘type : {}’.format(type(xxx)))</li>
+<li>print(‘size : {}’.format(len(xxx)))</li>
+</ol>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">static std::vector&lt;<span class="built_in">float</span>&gt; read<span class="constructor">_from_bin_file(<span class="params">std</span>::<span class="params">string</span> <span class="params">file</span>)</span> &#123;</span><br><span class="line">  auto result_size = std::filesystem::file<span class="constructor">_size(<span class="params">file</span>)</span>;</span><br><span class="line">  std::vector&lt;<span class="built_in">float</span>&gt; result(result_size<span class="operator"> / </span><span class="number">4</span>);</span><br><span class="line">  <span class="constructor">CHECK(<span class="params">std</span>::<span class="params">ifstream</span>(<span class="params">file</span>)</span>.read((<span class="built_in">char</span>*)&amp;result<span class="literal">[<span class="number">0</span>]</span>, result_size).good<span class="literal">()</span>)</span><br><span class="line">      &lt;&lt; <span class="string">&quot;failed to read baseline from &quot;</span> &lt;&lt; file;</span><br><span class="line">  return result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">void mywritefile(T* src, <span class="built_in">int</span> size1, std::<span class="built_in">string</span> filename) &#123;</span><br><span class="line">  ofstream Tout;</span><br><span class="line">  <span class="module-access"><span class="module"><span class="identifier">Tout</span>.</span></span><span class="keyword">open</span>(filename, ios_base::out <span class="pattern-match">| ios<span class="constructor">_base</span>::binary);</span></span><br><span class="line"><span class="pattern-match">  <span class="keyword">if</span> (!<span class="constructor">Tout</span>) &#123;</span></span><br><span class="line"><span class="pattern-match">    cout &lt;&lt; &quot;<span class="constructor">Can</span>&#x27;t <span class="keyword">open</span> the file! &quot; &lt;&lt; filename &lt;&lt; &quot;\n&quot;;</span></span><br><span class="line"><span class="pattern-match">    return;</span></span><br><span class="line"><span class="pattern-match">  &#125;</span></span><br><span class="line"><span class="pattern-match">  <span class="constructor">Tout</span>.write((<span class="built_in">char</span><span class="operator">*</span>)src, size1 <span class="operator">*</span> sizeof(<span class="constructor">T</span>));</span></span><br><span class="line"><span class="pattern-match">  <span class="operator">/</span><span class="operator">/</span> <span class="constructor">CHECK(<span class="params">std</span>::<span class="params">ofstream</span>(<span class="params">filename</span>)</span>.write((<span class="built_in">char</span><span class="operator">*</span>)data.data, size).good()) &lt;&lt;</span></span><br><span class="line"><span class="pattern-match">&#125;</span></span><br><span class="line"><span class="pattern-match"></span></span><br><span class="line"><span class="pattern-match">template void mywritefile(int8<span class="constructor">_t</span><span class="operator">*</span> src, <span class="built_in">int</span> size1, std::<span class="built_in">string</span> filename);</span></span><br><span class="line"><span class="pattern-match"></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="多线程问题"><a href="#多线程问题" class="headerlink" title="多线程问题"></a>多线程问题</h2><ol>
+<li>GIL(Global Interpreter Lock) 全局解释器锁</li>
+<li>GIL 限制了 Python 解释器同一时间只能执行一个线程的代码，因此在 CPU 密集型的任务中，多线程程序并不一定比单线程程序更快。</li>
+</ol>
+<h2 id="Generators"><a href="#Generators" class="headerlink" title="Generators"></a><a target="_blank" rel="noopener" href="https://wiki.python.org/moin/Generators">Generators</a></h2><ol>
+<li>生成器（Generator），是计算机科学中特殊的子程序。实际上，所有生成器都是迭代器。生成器非常类似于返回数组的函数，都是具有参数、可被调用、产生一系列的值。但是生成器不是构造出数组包含所有的值并一次性返回，而是每次产生一个值，因此生成器看起来像函数，但行为像迭代器。</li>
+<li>Generator 可以减少内存使用，用到了再产生</li>
+<li><code>print(list(model.parameters())[0])</code> 打印 generators 第一个元素， model.parameters()是一个 generator</li>
+<li><code>print([x for x in model.parameters()])</code></li>
+<li>关键字 yiled 来创建 generator</li>
+</ol>
+<h2 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.runoob.com/python/python-func-sorted.html">sorted</a><ul>
+<li>sorted_data &#x3D; sorted(data, reverse&#x3D;True) 降序</li>
+</ul>
+</li>
+</ol>
+<h2 id="class"><a href="#class" class="headerlink" title="class"></a>class</h2><h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><ol>
+<li><strong>init</strong> 方法是一个特殊的方法（称为构造器），当创建类的新实例时，它会自动被调用。它用于初始化类的属性或其他必要的启动过程。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, param1, param2</span>):</span><br><span class="line">        self.attribute1 = param1</span><br><span class="line">        self.attribute2 = param2</span><br></pre></td></tr></table></figure>
+
+<h3 id="类方法"><a href="#类方法" class="headerlink" title="类方法"></a>类方法</h3><ol>
+<li>在 Python 中，可以使用类方法来创建实例。这种方式通常称为“工厂方法”，它允许你以不同的方式创建类的实例。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, param1, param2</span>):</span><br><span class="line">        self.attribute1 = param1</span><br><span class="line">        self.attribute2 = param2</span><br><span class="line"></span><br><span class="line"><span class="meta">    @classmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">from_string</span>(<span class="params">cls, string</span>):</span><br><span class="line">        param1, param2 = <span class="built_in">map</span>(<span class="built_in">int</span>, string.split(<span class="string">&#x27;-&#x27;</span>))</span><br><span class="line">        <span class="keyword">return</span> cls(param1, param2)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 __init__</span></span><br><span class="line">instance1 = MyClass(<span class="number">10</span>, <span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用类方法</span></span><br><span class="line">instance2 = MyClass.from_string(<span class="string">&quot;10-20&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="static-方法"><a href="#static-方法" class="headerlink" title="static 方法"></a>static 方法</h3><ol>
+<li>可以定义一个静态方法或一个独立的函数来处理复杂的初始化，并返回类的实例。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, param1, param2</span>):</span><br><span class="line">        self.attribute1 = param1</span><br><span class="line">        self.attribute2 = param2</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">from_list</span>(<span class="params">param_list</span>):</span><br><span class="line">        <span class="keyword">return</span> MyClass(*param_list) <span class="comment"># 在Python中，调用函数时，利用*语句可以将参数列表解包</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">create_instance</span>(<span class="params">param1, param2</span>):</span><br><span class="line">    <span class="comment"># 可以在这里执行更复杂的初始化</span></span><br><span class="line">    <span class="keyword">return</span> MyClass(param1, param2)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用静态方法</span></span><br><span class="line">instance1 = MyClass.from_list([<span class="number">10</span>, <span class="number">20</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用独立的函数</span></span><br><span class="line">instance2 = create_instance(<span class="number">10</span>, <span class="number">20</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Decorator-装饰器"><a href="#Decorator-装饰器" class="headerlink" title="Decorator 装饰器"></a>Decorator 装饰器</h2><ol>
+<li>在 Python 中，函数名上方的 @ 符号表示装饰器（Decorator）。装饰器是 Python 的一个高级特性，用于在不修改原函数代码的情况下增强或改变函数的功能。</li>
+<li>装饰器<code>本质上是一个函数，它接受一个函数作为参数，并返回一个新的函数。</code>使用 @ 符号 followed by the decorator name 就可以将装饰器应用于一个函数。例如：在这个例子中，say_hello 函数被 my_decorator 装饰器装饰。当你调用 say_hello 时，实际上是在调用 my_decorator 返回的 wrapper 函数。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">my_decorator</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">wrapper</span>():</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Something is happening before the function is called.&quot;</span>)</span><br><span class="line">        func()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Something is happening after the function is called.&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="meta">@my_decorator</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">say_hello</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Hello!&quot;</span>)</span><br><span class="line"></span><br><span class="line">say_hello()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>装饰器的作用<ul>
+<li>日志记录：自动记录函数的调用细节。</li>
+<li>性能测试：检测函数运行时间。</li>
+<li>权限校验：在函数执行前进行权限检查。</li>
+<li>缓存：存储函数的返回结果，以便后续调用时快速返回。</li>
+<li>类型检查：检查函数的输入输出类型。</li>
+</ul>
+</li>
+</ol>
+<h2 id="setuptools"><a href="#setuptools" class="headerlink" title="setuptools"></a><a target="_blank" rel="noopener" href="https://github.com/pypa/setuptools">setuptools</a></h2><ol>
+<li>建议新项目避免 setup.py 配置</li>
+<li>In addition to specifying a build system, you also will need to add some package information such as metadata, contents, dependencies, etc. This can be done in the same <code>pyproject.toml</code> file, or in a separated one: <code>setup.cfg</code> or <code>setup.py</code>.</li>
+<li><code>setup.py</code> pip install .&#x2F;example 时执行 setup.py 来编译</li>
+<li><code>python setup.py build --debug</code></li>
+<li><code>python setup.py install --debug</code></li>
+</ol>
+<h2 id="wheel-python-包"><a href="#wheel-python-包" class="headerlink" title="wheel python 包"></a>wheel python 包</h2><ol>
+<li><code>pip wheel .</code> 生成 python 包</li>
+<li><code>pip install *.whl</code></li>
+</ol>
+<h2 id="argparse"><a href="#argparse" class="headerlink" title="argparse"></a><a target="_blank" rel="noopener" href="https://docs.python.org/3/library/argparse.html">argparse</a></h2><ol>
+<li>参数传递</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser(description=<span class="string">&#x27;Process some integers.&#x27;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&#x27;integers&#x27;</span>, metavar=<span class="string">&#x27;N&#x27;</span>, <span class="built_in">type</span>=<span class="built_in">int</span>, nargs=<span class="string">&#x27;+&#x27;</span>,</span><br><span class="line">                    <span class="built_in">help</span>=<span class="string">&#x27;an integer for the accumulator&#x27;</span>)</span><br><span class="line">parser.add_argument(<span class="string">&#x27;--sum&#x27;</span>, dest=<span class="string">&#x27;accumulate&#x27;</span>, action=<span class="string">&#x27;store_const&#x27;</span>,</span><br><span class="line">                    const=<span class="built_in">sum</span>, default=<span class="built_in">max</span>,</span><br><span class="line">                    <span class="built_in">help</span>=<span class="string">&#x27;sum the integers (default: find the max)&#x27;</span>)</span><br><span class="line"></span><br><span class="line">args = parser.parse_args()</span><br><span class="line"><span class="built_in">print</span>(args.accumulate(args.integers))</span><br></pre></td></tr></table></figure>
+
+<h2 id="data-structure"><a href="#data-structure" class="headerlink" title="data structure"></a><a target="_blank" rel="noopener" href="https://docs.python.org/3/tutorial/datastructures.html">data structure</a></h2><ol>
+<li>Python 为我们提供了三种常用数据结构，列表(Lists),字典（Dictionary）,元组（Tuple）</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_53453184/article/details/137224600">与 c++数据结构做对比</a></li>
+</ol>
+<h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><ol>
+<li>类似 c++ vector</li>
+<li>list[-1] 最后一个元素，负号表示倒着索引</li>
+<li>squares[-3:] slice: 创建新的索引，包含最后三个 value</li>
+<li>slice 是浅拷贝</li>
+<li>list1 + list2 表示 concat</li>
+<li>letters[2:5] &#x3D; [‘C’, ‘D’, ‘E’] 批量赋值</li>
+<li>letters[2:5] &#x3D; [] remove 第 3 个到第 5 个元素</li>
+</ol>
+<h3 id="dict"><a href="#dict" class="headerlink" title="dict"></a><a target="_blank" rel="noopener" href="https://www.w3schools.com/python/python_dictionaries.asp">dict</a></h3><ol>
+<li><code>thisdict = dict(name = &quot;John&quot;, age = 36, country = &quot;Norway&quot;)</code> dict constructor</li>
+<li><code>thisdict = &#123;&quot;brand&quot;: &quot;Ford&quot;, &quot;model&quot;: &quot;Mustang&quot;,&quot;year&quot;: 1964&#125;</code></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/34305003/difference-between-dictionary-and-ordereddict">Difference between dictionary and OrderedDict</a></li>
+<li>dict –&gt; c++ unordered_map</li>
+<li>OrderedDict –&gt; c++ map ?</li>
+<li>SortedDict –&gt; c++ map</li>
+<li>这就是有序和排序的区别。 OrderedDict 根据插入顺序维护顺序，而 SortedDict 将根据键的排序顺序维护顺序</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/grantjenks/python-sortedcontainers">sortedcontainers</a><ul>
+<li>需要安装</li>
+</ul>
+</li>
+<li><code>del dict[&quot;Key&quot;]</code>删除</li>
+</ol>
+<h4 id="dict-merge"><a href="#dict-merge" class="headerlink" title="dict merge"></a><a target="_blank" rel="noopener" href="https://www.runoob.com/python3/python-merging-two-dictionaries.html">dict merge</a></h4><ol>
+<li><code>dict2.update(dict1)</code></li>
+</ol>
+<h4 id="dict-values"><a href="#dict-values" class="headerlink" title="dict_values"></a><a target="_blank" rel="noopener" href="https://www.programiz.com/python-programming/methods/dictionary/values">dict_values</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">marks = &#123;<span class="string">&#x27;Physics&#x27;</span>:<span class="number">67</span>, <span class="string">&#x27;Maths&#x27;</span>:<span class="number">87</span>&#125;</span><br><span class="line"><span class="built_in">print</span>(marks.values())</span><br><span class="line"></span><br><span class="line"><span class="comment"># Output: dict_values([67, 87])</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="dict-keys"><a href="#dict-keys" class="headerlink" title="dict_keys"></a><a target="_blank" rel="noopener" href="https://www.programiz.com/python-programming/methods/dictionary/keys">dict_keys</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">numbers = &#123;<span class="number">1</span>: <span class="string">&#x27;one&#x27;</span>, <span class="number">2</span>: <span class="string">&#x27;two&#x27;</span>, <span class="number">3</span>: <span class="string">&#x27;three&#x27;</span>&#125;</span><br><span class="line"><span class="built_in">print</span>(numbers.keys())</span><br><span class="line"></span><br><span class="line"><span class="comment"># Output: dict_keys([1, 2, 3])</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="tuple"><a href="#tuple" class="headerlink" title="tuple"></a>tuple</h3><ol>
+<li>c++ tuple</li>
+</ol>
+<h2 id="Comprehension"><a href="#Comprehension" class="headerlink" title="Comprehension"></a>Comprehension</h2><ol>
+<li>Python 列表推导(List Comprehension)是 Python 中一个非常有用且常被使用的语法结构。它可以用简洁的语法代替循环语句,从一个可迭代对象中创建一个新的列表。</li>
+<li><code>[ expr for val in collection [if condition] ]</code></li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 简单推导</span></span><br><span class="line">nums = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">squares = [x ** <span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> nums] <span class="comment"># [1, 4, 9, 16]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 带判断条件</span></span><br><span class="line">even_squares = [x ** <span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> nums <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>] <span class="comment"># [4, 16]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 字典推导</span></span><br><span class="line">dict_1 = &#123;<span class="string">&#x27;a&#x27;</span>: <span class="number">1</span>, <span class="string">&#x27;b&#x27;</span>: <span class="number">2</span>&#125;</span><br><span class="line">dict_2 = &#123;k:v**<span class="number">2</span> <span class="keyword">for</span> k,v <span class="keyword">in</span> dict_1.items()&#125; <span class="comment"># &#123;&#x27;a&#x27;: 1, &#x27;b&#x27;: 4&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="虚拟环境"><a href="#虚拟环境" class="headerlink" title="虚拟环境"></a>虚拟环境</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python3 -m venv myenv</span><br><span class="line">source myenv/<span class="built_in">bin</span>/activate</span><br><span class="line">pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+<h2 id="输出表格"><a href="#输出表格" class="headerlink" title="输出表格"></a>输出表格</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> prettytable <span class="keyword">import</span> PrettyTable</span><br><span class="line"></span><br><span class="line">table = PrettyTable([<span class="string">&#x27;Name&#x27;</span>, <span class="string">&#x27;Age&#x27;</span>, <span class="string">&#x27;Gender&#x27;</span>])</span><br><span class="line">table.add_row([<span class="string">&#x27;Bob&#x27;</span>, <span class="number">18</span>, <span class="string">&#x27;Male&#x27;</span>])</span><br><span class="line"><span class="built_in">print</span>(table)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h2><ol>
+<li>vscode debug</li>
+<li>vscode 无法跳转可能是 interpreter 问题</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/singxsy/article/details/123730161">不跳转问题修复</a></li>
+<li>lsp language server 使用 pylance, jedi</li>
+<li><code>&quot;justMyCode&quot;:False</code> 可以跳转到三方库源代码</li>
+<li><code>python -i test.py</code> 执行之后会停下来，可以查看变量</li>
+<li><code>python -m pdb test.py</code></li>
+<li><code>import pdb; pdb.set_trace()</code></li>
+<li><code>python -m trace --trackcalls pyscript.py</code></li>
+<li><code>python -m trace --trace pyscript.py</code></li>
+<li>打印动态库</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">for</span> name, module <span class="keyword">in</span> sys.modules.items():</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">hasattr</span>(module, <span class="string">&#x27;__file__&#x27;</span>) <span class="keyword">and</span> module.__file__:</span><br><span class="line">        <span class="keyword">if</span> module.__file__.endswith((<span class="string">&#x27;.so&#x27;</span>, <span class="string">&#x27;.dll&#x27;</span>, <span class="string">&#x27;.pyd&#x27;</span>)):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;name&#125;</span>: <span class="subst">&#123;module.__file__&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Debug-方法"><a href="#Debug-方法" class="headerlink" title="Debug 方法"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38542085/article/details/78562458">Debug 方法</a></h3><ol>
+<li>elpy-pdb-debug-buffer</li>
+<li>logging</li>
+<li>pdb</li>
+<li>print</li>
+</ol>
+<h2 id="profiling"><a href="#profiling" class="headerlink" title="profiling"></a>profiling</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/gaogaotiantian/viztracer">viztracer</a><ul>
+<li>可用来看调用栈</li>
+<li>适合看整体，可以看火焰图及 timeline</li>
+<li>vscode 插件：找到 result.json， 右键最后</li>
+</ul>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://docs.nvidia.com/nsight-systems/UserGuide/index.html#python-profiling">nsight system python-profiling</a></li>
+</ol>
+</li>
+<li><a target="_blank" rel="noopener" href="https://docs.python.org/3/library/timeit.html">timeit</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wang_yb/p/18106433">Python 装饰器实战：打造高效性能计时工具</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/plasma-umass/scalene">scalene</a><ul>
+<li>适合找具体每一行耗时及系统瓶颈</li>
+<li>a high-performance, high-precision CPU, GPU, and memory profiler for Python with AI-powered optimization proposals</li>
+<li>pip install scalene</li>
+<li>scalene –outfile result.html –html</li>
+<li>PROFILING&#x3D;y scalene –outfile result5.html –html –reduced-profile –no-browser</li>
+<li>配合 cprofile 看</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/joerick/pyinstrument">pyinstrument</a><ul>
+<li>pyinstrument -r html -o profile.html test.py</li>
+<li>html 右上角可以切换具体耗时及百分比</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/24495603">cprofile</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/baverman/flameprof">flameprof</a><ul>
+<li>可以将 cprofile 结果画出火焰图</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nvdv/vprof">vprof</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/pyutils/line_profiler">line_profiler</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.python.org/3/library/tracemalloc.html">tracemalloc</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/pympler/pympler">pympler&#x2F;pympler</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/bloomberg/memray">memray</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/pythonprofilers/memory_profiler/tree/master">memory_profiler</a><br><code>gprof2dot -f pstats mkm_run.prof | dot -Tpng -o mkm_run.png</code></li>
+<li>profile 库</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> profile</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>():</span><br><span class="line">    fps = profile.fps()</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        xxxxxxxxxxxxxxxxxxx</span><br><span class="line">        logging.info(<span class="string">&#x27;fps:&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(fps.compute()))</span><br></pre></td></tr></table></figure>
+
+<h2 id="package-management"><a href="#package-management" class="headerlink" title="package management"></a>package management</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/582651418">基于 pyproject.toml 的包管理</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/python-poetry/poetry">poetry</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/prefix-dev/pixi">pixi</a></li>
+</ol>
+<h2 id="main"><a href="#main" class="headerlink" title="main"></a>main</h2><ol>
+<li>这里是一个使用<code>if __name__ == &#39;__main__&#39;</code>的 Python 示例:</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模块1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">foo</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;foo&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">bar</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;bar&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    foo()</span><br><span class="line">    bar()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模块2</span></span><br><span class="line"><span class="keyword">import</span> module1</span><br><span class="line"></span><br><span class="line">module1.foo() <span class="comment"># 调用foo函数</span></span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>当作为脚本直接运行 module1 时,<code>__name__</code>等于<code>&#39;__main__&#39;</code>,if 语句块会被执行,打印 foo 和 bar。而当 module1 被导入时,<code>__name__</code>会设置成模块名,if 语句块不会执行。这种方式非常常用,它允许同一个模块既可以被导入调用,也可以直接作为脚本运行,实现代码的重用。<code>if __name__ ==&#39;__main__&#39;</code> 是 Python 程序常见的惯用法,用于模块的导入和直接运行的区分。</li>
+</ol>
+<h2 id="Logging"><a href="#Logging" class="headerlink" title="Logging"></a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/360306588">Logging</a></h2><ol>
+<li>format 配置: &#96;’[%(asctime)s]</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1740,345 +2136,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/07/26/Memory-concept-and-issues/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/26/Memory-concept-and-issues/" class="post-title-link" itemprop="url">Memory concept and issues</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-26 15:34:35" itemprop="dateCreated datePublished" datetime="2020-07-26T15:34:35+08:00">2020-07-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-11-13 17:49:38" itemprop="dateModified" datetime="2024-11-13T17:49:38+08:00">2024-11-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Program/Basic/" itemprop="url" rel="index"><span itemprop="name">Basic</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/07/26/Memory-concept-and-issues/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/26/Memory-concept-and-issues/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>7.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="内存层次结构"><a href="#内存层次结构" class="headerlink" title="内存层次结构"></a>内存层次结构</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://excalidraw.com/#json=-Jyt8n2_jgQDOsSsLHgc-,7u5WEbNh-76yPmNJw4AUqQ">示意图</a><br><img src="https://i.ibb.co/M2KRtV9/6-Lx-Su-Yv-CJI.png" alt="示意图"></li>
-<li>nsight compute 可以显示各 memory 速率</li>
-</ol>
-<h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/stressapptest/stressapptest">stressapptest</a><ul>
-<li>Stressful Application Test - userspace memory and IO test</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://blog.51cto.com/quantfabric/2593578">stress 压力测试工具</a><ul>
-<li>stress 是 Linux 的一个压力测试工具，可以对 CPU、Memory、IO、磁盘进行压力测试。</li>
-</ul>
-</li>
-<li><code>加权访存带宽计算</code>：只读带宽最高约 520 GB&#x2F;s，L2 Cache 带宽 1.9TB&#x2F;s，当 L2 cache 命中率为 30% 时，加权后的平均访存带宽为 520 x 0.7 + 1900 x 0.3 &#x3D; 934 GB&#x2F;s</li>
-<li>gpu sram 带宽为什么比主存大很多：<ul>
-<li>并行，多个 SM 访问 shared memory， 如有 80 个 sm，每个 sm4 个 partition， 每个 shared memory 有 32 个 bank， 等效位宽为：<code>80*4*32*8 = 81920</code>, hbm 位宽为 8192， 带宽为 1.5TB&#x2F;s, sram 为 19TB&#x2F;s</li>
-</ul>
-</li>
-<li>可以按照是否在芯片上分为片上内存(<code>on chip</code>)和片下内存(<code>off chip</code>)。</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/freelancer-leon/notes/blob/master/kernel/mm/meminfo.md">&#x2F;proc&#x2F;meminfo</a></li>
-<li>RES&#x3D;CODE+DATA 进程使用的、未被换出的物理内存大小</li>
-<li>内存主要关注物理内存, 虚拟内存表示程序文件及链接库大小，并不是所有的都加载到内存</li>
-<li>used mem &#x3D; total - free - buffers - cache （man free 可以看计算公式),</li>
-<li>主要看 <code>avaliable</code> &lt; free + buff&#x2F;cache <code> top | grep avail</code> or <code>free -s 1(100)</code> 间隔长好看趋势</li>
-<li>纳入内核管理的内存不见得都在使用中，还包括过去使用过的现在可以被重复利用的内存，内核并不把这些可被重新使用的内存交还到 free 中去，因此在 linux 上 free 内存会越来越少。</li>
-<li>%MEM – Memory Usage (RES) A task’s currently used share of available physical memory. 当前使用的物理内存 &#x2F; 总的物理内存</li>
-<li>进程内存不增长， 系统整体内存一直增长可能是 log 文件写到&#x2F;tmp 目录下</li>
-</ol>
-<h2 id="内存墙"><a href="#内存墙" class="headerlink" title="内存墙"></a>内存墙</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/P6rlEFZGZ6jZqhldmH5UKg">英伟达、高通、特斯拉、Mobileye 芯片真实算力大比拼</a> 包含各种内存芯片参数<ul>
-<li>芯片和内存分开， 芯片有最高支持的内存类型。开发板上 ddr 类型才是确认的。所以开发板和实际用的产品可能性能不一样。</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/tSTRBtdNG55COBlUWyCDIg">汽车领域拥抱 Transformer 需要多少算力？1200TOPS 都不够</a></li>
-<li><code>内存墙</code>是指随着计算能力的持续增长，内存的访问速度相对于处理器的速度提升相对滞后，导致处理器频繁地等待数据。这个不平衡造成的性能瓶颈常常被称为“内存墙”。</li>
-<li><code>处理器速度的增长</code>：在过去的几十年里，处理器的速度增长迅速，遵循摩尔定律（每 18-24 个月，晶体管的数量翻倍）。这导致了处理器每秒可以执行的指令数大幅增加。</li>
-<li><code>内存速度的增长相对较慢</code>：尽管 DRAM 技术也在不断进步，但与处理器的增速相比，其访问速度和带宽的增长较为缓慢。</li>
-<li><code>访问延迟</code>：当处理器需要从主内存中读取数据时，它经常需要等待几百个周期才能获取数据。由于处理器的速度比内存快得多，这种等待成为了一个瓶颈，限制了性能。</li>
-<li><code>缓存的引入</code>：为了缓解这个问题，现代计算机系统引入了缓存（L1、L2、L3 等）来存储频繁访问的数据。这些缓存比主内存快得多，但容量较小。当缓存未命中时，处理器必须从主内存中获取数据，这会引入延迟。</li>
-<li><code>带宽与延迟</code>：除了访问延迟外，带宽也是一个问题。<code>即使内存的延迟得到改善，处理器仍然可能会被大量的并发内存访问操作所限制，导致带宽成为瓶颈</code></li>
-<li><code>解决方案</code>：有许多方法被提出来试图克服内存墙的问题，包括更智能的缓存策略、预取策略、多线程、多核处理器设计等。此外，新的内存技术，如 HBM (High Bandwidth Memory) 和 3D 堆叠内存，也被引入来提供更高的带宽。<br>总的来说，内存墙描述了一个关键的挑战：随着处理器速度的增长，如何确保它们能够及时地获取所需的数据。这是计算机架构领域的一个核心问题，研究者持续致力于开发新的技术和策略来解决这个问题。</li>
-</ol>
-<h2 id="内存类型"><a href="#内存类型" class="headerlink" title="内存类型"></a>内存类型</h2><ol>
-<li>HBM (High Bandwidth Memory) 是一种高性能、高带宽的堆叠式 DRAM（动态随机存取存储器）技术。HBM 是由 AMD 和 Hynix 合作开发，旨在解决高性能计算应用中带宽和功耗的瓶颈问题。<ul>
-<li>将多个 DRAM 以一种堆叠的方式嵌入到统一处理器封装内部，可降低访问延迟。从而允许处理器和 DRAM 间建立更多更快的连接。</li>
-</ul>
-</li>
-<li>LPDDR4 是 “Low Power Double Data Rate 4” 的缩写，它是一种移动 DRAM（Dynamic Random-Access Memory）标准。这种类型的内存主要用于移动设备（如智能手机、平板电脑和某些高端笔记本电脑）中，因为它设计为在较低电压下运行，从而减少功耗和延长电池寿命。</li>
-<li>LPDDR4x 是 LPDDR4 的一个增强版本，它主要优化了功耗，适用于电池供电的移动设备，如智能手机和平板电脑。LPDDR4x 为 “Low Power Double Data Rate 4x” 的缩写。</li>
-</ol>
-<h2 id="内存概念"><a href="#内存概念" class="headerlink" title="内存概念"></a>内存概念</h2><ol>
-<li>page 是磁盘和内存交换数据基本单位， cache line 是内存和缓存交换数据基本单位。</li>
-<li>&lt;&lt;计算机体系结构&gt;&gt; 第 2 章存储器层次机构设计</li>
-<li>栈和堆都是代码在运行时可供使用的内存。</li>
-<li>栈中的所有数据都必须占用已知且固定大小。</li>
-<li>栈的读写比堆要快。</li>
-<li>当代码调用一个函数时，传递给函数的值和数据的局部变量被压入栈中，当函数结束时，这些值被移除栈。</li>
-<li>Rust 所有权的存在是为了管理堆数据。</li>
-<li>数据在堆上才需要释放</li>
-<li>数据在堆上赋值时无指出是浅拷贝(C++)或移动(Rust，原来的变量不在有效)，而不是深拷贝。</li>
-<li>Rust 数据在栈上，赋值是都是拷贝，原来的变量依旧有效。在堆上，赋值都是移动，原来变量无效。</li>
-<li>Rust String 由三部分组成，ptr，len，capacity，这一组数据在栈上，ptr 是指向在堆上数据的指针。（数据结构的固定长度数据在栈上，可变数据在堆上）</li>
-</ol>
-<h2 id="内存-堆栈-错误类型"><a href="#内存-堆栈-错误类型" class="headerlink" title="内存(堆栈)错误类型"></a>内存(堆栈)错误类型</h2><ol>
-<li>引用空指针</li>
-<li>使用未初始化的内存</li>
-<li>释放后使用，也就是使用悬垂指针</li>
-<li>缓冲区溢出，比如数组越界</li>
-<li>非法释放已经释放过的或者未分配的指针</li>
-</ol>
-<h2 id="内存管理方式"><a href="#内存管理方式" class="headerlink" title="内存管理方式"></a>内存管理方式</h2><ol>
-<li>垃圾回收机制，在程序运行时不断的寻找不再使用的内存</li>
-<li>程序员亲自分配内存和释放内存</li>
-<li>Rust 通过所有权系统管理内存，编译器在编译时会根据一系列规则进行检查，拥有数据所有者在离开作用域后自动清除其数据</li>
-</ol>
-<h2 id="内存信息"><a href="#内存信息" class="headerlink" title="内存信息"></a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wardensky/p/4274180.html">内存信息</a></h2><ol>
-<li><p><code>lshw -class memory</code></p>
-</li>
-<li><p><code>dmidecode|grep Speed</code></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.aida64.com/downloads/YWY1MWUxM2E=">windows aida64</a></p>
-<ul>
-<li>工具 -&gt; 内存缓存测试 -&gt; 有内存类型</li>
-<li>最下面有性能测试</li>
-<li><a target="_blank" rel="noopener" href="https://www.extremexbb.com/aida64-keys/">破解</a> 使用: 6.85.6300 版本</li>
-</ul>
-</li>
-<li><p><code>DDR4-2666</code></p>
-<ul>
-<li><code>I/O 时钟频率</code>： 1333 MHz</li>
-<li><code>数据传输速率</code>： 2666 MT&#x2F;s， 即每秒 2666 MT&#x2F;s（Mega Transfers per second）</li>
-<li>位宽决定带宽；如果位宽为 64， 带宽为： 2666 * 8 &#x3D; 21GB&#x2F;s</li>
-</ul>
-</li>
-<li><p>内存带宽和位宽都是评估和描述内存性能的关键指标。它们涉及到数据在内存与其他组件（如 CPU）之间传输的速率以及每次传输的数据量。以下是这两个术语的解释：</p>
-</li>
-<li><p><code>内存带宽 (Memory Bandwidth)</code>：</p>
-<ul>
-<li>定义：内存带宽描述了数据可以在特定时间内从内存传输到 CPU 或其他设备的最大速度。它是衡量内存性能的关键参数。</li>
-<li>单位：常用的单位是 GB&#x2F;s（吉字节每秒）。</li>
-<li>计算方法：内存带宽 &#x3D; 内存时钟频率 x 数据传输次数 x 位宽; 其中，数据传输次数通常基于内存类型，例如，DDR（Double Data Rate）内存每个时钟周期有两次数据传输。</li>
-</ul>
-</li>
-<li><p><code>位宽 (Memory Bus Width)</code>：</p>
-<ul>
-<li>定义：位宽描述了内存总线一次能够传输的数据量。它决定了每次数据传输的宽度。</li>
-<li>单位：位（bit）。常见的位宽有 8-bit, 16-bit, 32-bit, 64-bit, 128-bit 等。</li>
-<li>例如，一个 64-bit 宽的内存总线意味着它可以一次性传输 64 位（8 字节）的数据。</li>
-</ul>
-</li>
-<li><p><code>sample</code>：假设我们有一个 DDR3 内存，其时钟频率为 1600 MHz，位宽为 64-bit。那么内存带宽的计算方法为：内存带宽 &#x3D; 1600 MHz x 2 x 64 bits &#x3D; 25600 Mbits&#x2F;s &#x3D; 25.6 GB&#x2F;s, 因此，此内存的带宽是 25.6 GB&#x2F;s。</p>
-</li>
-</ol>
-<h2 id="理论峰值带宽-compare-with-cpu"><a href="#理论峰值带宽-compare-with-cpu" class="headerlink" title="理论峰值带宽(compare with cpu)"></a>理论峰值带宽(compare with cpu)</h2><ol>
-<li>和 cpu 比较</li>
-</ol>
-<h2 id="内存性能测试"><a href="#内存性能测试" class="headerlink" title="内存性能测试"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/pcokk/article/details/90733871">内存性能测试</a></h2><ol>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/LucaCanali/Miscellaneous/blob/master/Spark_Notes/Tools_Linux_Memory_Perf_Measure.md">Tools_Linux_Memory_Perf_Measure.md</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/RRZE-HPC/likwid/tree/master/groups">各平台各性能指标计算方法</a></p>
-</li>
-<li><p>因为 cache 比较小，需要频繁交换数据，读写大块数据几乎每次都要从 ddr 读数；例如：模型推理，每次推理都要从 ddr 重新读权重, 并不是将权重一直放在 cache 中。</p>
-<ul>
-<li>从磁盘到 ddr 可能只需要加载一次</li>
-</ul>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/imsnif/bandwhich">rust net bandwidth</a></p>
-</li>
-<li><p><code>mbw 32 -b 4096</code></p>
-</li>
-<li><p><code>sysbench memory run</code></p>
-</li>
-<li><p><code>lmbench</code></p>
-</li>
-<li><p><code>Memtest86+</code></p>
-</li>
-</ol>
-<h3 id="perf"><a href="#perf" class="headerlink" title="perf"></a>perf</h3><ol>
-<li><code>perf list and perf stat -e &lt;memory_access&gt;</code>获取 memory access, 根据时间，位宽算带宽<ul>
-<li><code>sudo perf record -F 99 -e armv8_pmuv3/mem_access/ -ag -- sleep 1</code></li>
-<li><code>sudo perf list -n</code> 还能看到带宽占用比例</li>
-<li>可以画火焰图</li>
-<li>bandwidth &#x3D; 位宽 * count &#x2F; second; 可以与 bandwidth 对比</li>
-</ul>
-</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">timeout</span>=2</span><br><span class="line"><span class="keyword">while</span> <span class="literal">true</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  perf record -e mem_access -ag -- <span class="built_in">sleep</span> <span class="variable">$timeout</span> &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">  db=$(perf report | grep <span class="string">&quot;Event&quot;</span> | awk <span class="string">&#x27;&#123;print $NF&#125;&#x27;</span> | <span class="built_in">head</span> -n 1)</span><br><span class="line">  result=$(( <span class="number">8</span> * <span class="variable">$&#123;db&#125;</span> / <span class="variable">$&#123;timeout&#125;</span>  / <span class="number">1000000</span> ))</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$result</span> MB/s&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><a target="_blank" rel="noopener" href="https://developer.arm.com/documentation/100442/0100/debug-descriptions/pmu/pmu-events?lang=en">arm55 pmu 手册</a></li>
-<li><code>likwid-perfctr -e</code> 列出所有 PMC</li>
-<li><code>likwid-perfctr -e | grep MEM</code>列出所有内存相关 PMC, <code>perf stat -e r013,r066,r067</code> r + mask + eventsel 监控对应事件</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">nvidia@miivii-tegra:~$ likwid-perfctr -e | grep MEM</span><br><span class="line">MEM_ACCESS, 0x13, 0x0, PMC</span><br><span class="line">MEMORY_ERROR, 0x1A, 0x0, PMC</span><br><span class="line">MEM_ACCESS_LD, 0x66, 0x0, PMC</span><br><span class="line">MEM_ACCESS_ST, 0x67, 0x0, PMC</span><br><span class="line"></span><br><span class="line">nvidia@miivii-tegra:~$ perf <span class="built_in">stat</span> -e r013,r066,r067 -- <span class="built_in">ls</span></span><br><span class="line">Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos</span><br><span class="line"></span><br><span class="line"> Performance counter stats <span class="keyword">for</span> <span class="string">&#x27;ls&#x27;</span>:</span><br><span class="line"></span><br><span class="line">           156,045      r013:u</span><br><span class="line">           118,079      r066:u</span><br><span class="line">            37,966      r067:u</span><br><span class="line"></span><br><span class="line">       0.003111539 seconds time elapsed</span><br><span class="line"></span><br><span class="line">       0.003294000 seconds user</span><br><span class="line">       0.000000000 seconds sys</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line"><span class="comment">## [stream](https://www.cs.virginia.edu/stream/stream2/)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### [BabelStream](https://github.com/UoB-HPC/BabelStream)</span></span><br><span class="line"></span><br><span class="line">1. use</span><br><span class="line"></span><br><span class="line">``` sh</span><br><span class="line">cmake -Bbuild -H. -DMODEL=cuda -DCUDA_ARCH=sm_86 -DCMAKE_CUDA_COMPILER=nvcc</span><br><span class="line">./cuda-stream</span><br><span class="line"></span><br><span class="line"><span class="comment"># result</span></span><br><span class="line">Running kernels 100 <span class="built_in">times</span></span><br><span class="line">Precision: double</span><br><span class="line">Array size: 268.4 MB (=0.3 GB)</span><br><span class="line">Total size: 805.3 MB (=0.8 GB)</span><br><span class="line">Using CUDA device Orin</span><br><span class="line">Driver: 11040</span><br><span class="line">Memory: DEFAULT</span><br><span class="line">Reduction kernel config: 56 <span class="built_in">groups</span> of (fixed) size 1024</span><br><span class="line">Init: 0.091487 s (=8802.387996 MBytes/sec)</span><br><span class="line">Read: 0.014568 s (=55279.816972 MBytes/sec)</span><br><span class="line">Function    MBytes/sec  Min (sec)   Max         Average</span><br><span class="line">Copy        103377.883  0.00519     0.00764     0.00553</span><br><span class="line">Mul         99863.044   0.00538     0.01373     0.00577</span><br><span class="line">Add         134846.743  0.00597     0.01092     0.00642</span><br><span class="line">Triad       134462.719  0.00599     0.00829     0.00637</span><br><span class="line"></span><br><span class="line">Triad 是一个计算模式，通常在性能测试和基准测试中使用，特别是在评估计算机系统的内存带宽和处理能力时。在最简单的形式中，Triad 操作涉及到以下三个操作：</span><br><span class="line"><span class="keyword">for</span> (i = 0; i &lt; N; i++) &#123;</span><br><span class="line">    A[i] = B[i] + scalar * C[i];</span><br><span class="line">&#125;</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line"><span class="comment">### [(good) bandwidth](https://zsmith.co/bandwidth.php#download)</span></span><br><span class="line"></span><br><span class="line">1. 可以抠出来源码，实时检测内存使用</span><br><span class="line">1. [不同处理器的带宽](https://zsmith.co/bw-table.php)</span><br><span class="line">1. 测试多核性能时，运行多个实例，相加结果。Is bandwidth actually showing the maximum bandwidth to and from main memory? There is an easy way to <span class="built_in">test</span> this. We can run one instance of bandwidth on each core of a multi-core CPU (<span class="keyword">in</span> my <span class="keyword">case</span>, two instances, one <span class="keyword">for</span> each core) and add up the access bandwidths to/from main memory <span class="keyword">for</span> all instances to see whether they approach the published limits <span class="keyword">for</span> our main memory system.</span><br><span class="line">1. 使用</span><br><span class="line"></span><br><span class="line">```sh</span><br><span class="line">wget -c https://zsmith.co/archives/bandwidth-1.12.3.tar.bz2</span><br><span class="line">sudo apt install nasm</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>上图可以看出来在三个地方曲线有明显的转折。分别是 32k、256K、12MB。这分别是三级缓存的大小。就跟下图所示一样, 也就是说：当读写的 size 大小落在相应的 cache 里面的时候，吞吐量是最大的。当读写的大小的 size 超过这个 cache，而落入到下一个 cache 的时候，吞吐量就会降低。内存是最低的。<a target="_blank" rel="noopener" href="https://neuyilan.github.io/2017/03/07/bandwidth%E6%95%99%E7%A8%8B/">link</a></li>
-</ol>
-<h3 id="likwid"><a href="#likwid" class="headerlink" title="likwid"></a>likwid</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/RRZE-HPC/likwid/wiki/Tutorial%3A-Empirical-Roofline-Model">测内存性能</a></li>
-</ol>
-<h3 id="TheBandwidthBenchmark"><a href="#TheBandwidthBenchmark" class="headerlink" title="TheBandwidthBenchmark"></a><a target="_blank" rel="noopener" href="https://github.com/RRZE-HPC/TheBandwidthBenchmark">TheBandwidthBenchmark</a></h3><h2 id="内存压测"><a href="#内存压测" class="headerlink" title="内存压测"></a><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_14900374/2533353">内存压测</a></h2><ol>
-<li>memtester</li>
-</ol>
-<h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><h3 id="malloc"><a href="#malloc" class="headerlink" title="malloc"></a>malloc</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://arjunsreedharan.org/post/148675821737/memory-allocators-101-write-a-simple-memory">memory-allocators-101-write-a-simple-memory</a></li>
-<li>malloc 缺点：<ul>
-<li>易内存泄漏</li>
-<li>碎片化，影响性能</li>
-</ul>
-</li>
-</ol>
-<h2 id="memory-profiler"><a href="#memory-profiler" class="headerlink" title="memory profiler"></a>memory profiler</h2><ol>
-<li><p>jemolloc</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.yuanguohuo.com/2019/01/02/jemalloc-heap-profiling/">内存泄漏调试 —- jemalloc 的 heap profiling</a></li>
-<li>jeprof 工具不仅可以查看详细信息或者生成调用路径图(如上所示)，还可以用来比较两个 dump(显示增量部分)：</li>
-</ul>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/KDE/heaptrack">heaptrack</a></p>
-<ul>
-<li>allocations 次数：<ul>
-<li>.&#x2F;bin&#x2F;heaptrack ls</li>
-<li>.&#x2F;bin&#x2F;heaptrack_print heaptrack.ls.5400.gz -F stacks.txt</li>
-<li>flamegraph.pl –title “heaptrack: allocations” –colors mem –countname allocations &lt; stacks.txt &gt; heaptrack.someapp.PID.svg</li>
-</ul>
-</li>
-<li>内存大小（–flamegraph-cost-type 指定 allocations: number of allocations; peak: bytes consumed at highest total memory consumption …)<ul>
-<li>.&#x2F;bin&#x2F;heaptrack_print heaptrack.example.6433.gz –flamegraph-cost-type peak -F stacks2.txt</li>
-<li>&#x2F;home&#x2F;xiyang&#x2F;d&#x2F;working&#x2F;FlameGraph&#x2F;flamegraph.pl –title “heaptrack: bytes” –colors mem –countname bytes &lt; stacks2.txt &gt; heaptrack.example_peak.svg</li>
-</ul>
-</li>
-<li>gui: <code>sudo apt-get install heaptrack-gui</code><ul>
-<li>使用 vnc</li>
-<li>注意 top-down 可以看堆栈</li>
-<li>caller&#x2F;callee 右下角有代码具体位置</li>
-</ul>
-</li>
-<li>加编译 debug 能显示具体某一行分配的内存</li>
-<li><a target="_blank" rel="noopener" href="https://milianw.de/blog/heaptrack-a-heap-memory-profiler-for-linux.html">usage</a></li>
-<li>.&#x2F;bin&#x2F;heaptrack_print heaptrack.example.6433.gz -M .&#x2F;test.txt 生成 massif 数据，可以用 massif-visualizer 可视化</li>
-<li><code>sudo apt install heaptrack</code> 会出现 free(): invalid pointer;</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/KDE/heaptrack?tab=readme-ov-file#compiling">源码编译</a><ul>
-<li><code>sudo apt install elfutils libdw-dev libunwind-dev</code></li>
-<li><code>cmake -DLIBDW_INCLUDE_DIR=/usr/include/ -DLIBDW_LIBRARIES=/lib/aarch64-linux-gnu/ ..</code> (不好使)</li>
-</ul>
-</li>
-<li><code>heaptrack -d ./example</code>debug， 会使用 gdb</li>
-</ul>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.brendangregg.com/FlameGraphs/memoryflamegraphs.html">FlameGraphs&#x2F;memoryflamegraphs</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/RudjiGames/MTuner?tab=readme-ov-file">MTuner</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://valgrind.org/docs/manual/ms-manual.html">valgrind Massif: a heap profiler</a></p>
-<ul>
-<li>valgrind –tool&#x3D;massif prog</li>
-<li>ms_print massif.out.8855 (加-g 选项也可以看具体哪一行分配的内存)</li>
-</ul>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://apps.kde.org/zh-cn/massif-visualizer/">massif-visualizer</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/34a495c3067b">procmem 和 procrank 查看动态库占用的内存</a></p>
-</li>
-</ol>
-<h2 id="links"><a href="#links" class="headerlink" title="links"></a>links</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/apache/arrow">apache&#x2F;arrow 内存分析工具</a></li>
-<li><a target="_blank" rel="noopener" href="https://people.freebsd.org/~lstewart/articles/cpumemory.pdf">What Every Programmer Should Know About Memory</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/611133924">每个程序员都应该了解的内存知识</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/freelancer-leon/notes/blob/master/kernel/mm/meminfo.md">meminfo</a></li>
-<li><a target="_blank" rel="noopener" href="https://arjunsreedharan.org/post/148675821737/memory-allocators-101-write-a-simple-memory">memory-allocators-101-write-a-simple-memory</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2150,7 +2207,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-count">197</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2183,6 +2240,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2026/01/06/JIRA/" title="2026&#x2F;01&#x2F;06&#x2F;JIRA&#x2F;">JIRA</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2025/12/29/claude-code/" title="2025&#x2F;12&#x2F;29&#x2F;claude-code&#x2F;">Claude Code</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -2193,9 +2253,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2025/04/18/pytest/" title="2025&#x2F;04&#x2F;18&#x2F;pytest&#x2F;">pytest</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
         </li>
     </ul>
   </div>
@@ -2233,13 +2290,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">626k</span>
+    <span title="站点总字数">628k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">9:29</span>
+    <span title="站点阅读时长">9:31</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

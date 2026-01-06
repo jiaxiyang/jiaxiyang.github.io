@@ -240,7 +240,7 @@ mjx-container[display="true"] + br {
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">196</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">197</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -307,6 +307,146 @@ mjx-container[display="true"] + br {
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2020/07/22/Zsh-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/07/22/Zsh-config/" class="post-title-link" itemprop="url">Zsh config</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-22 15:19:28" itemprop="dateCreated datePublished" datetime="2020-07-22T15:19:28+08:00">2020-07-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-01-05 19:05:51" itemprop="dateModified" datetime="2025-01-05T19:05:51+08:00">2025-01-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/" itemprop="url" rel="index"><span itemprop="name">Tools</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tools/Zsh/" itemprop="url" rel="index"><span itemprop="name">Zsh</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/07/22/Zsh-config/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/07/22/Zsh-config/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Settings"><a href="#Settings" class="headerlink" title="Settings"></a>Settings</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">export TERM=&quot;screen-256color&quot;</span><br><span class="line"></span><br><span class="line">ZSH_HIGHLIGHT_STYLES[arg0]=&#x27;fg=#26ff00,bold&#x27;</span><br><span class="line">ZSH_HIGHLIGHT_STYLES[command]=&#x27;fg=#26ff00,bold&#x27;</span><br><span class="line"></span><br><span class="line">export FZF_DEFAULT_OPTS=&quot;--color=hl:green,hl+:#00ff00&quot; # 设置fzf color</span><br><span class="line"></span><br><span class="line">precmd() &#123;                                                                                                                                          print -n &#x27;\n&#x27;                                                                                                                                 &#125;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="function"><span class="title">precmd</span></span>() &#123;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  <span class="built_in">print</span> -n <span class="string">&#x27;⚡\n\n&#x27;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">&#125;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="function"><span class="title">precmd</span></span>() &#123;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  <span class="built_in">print</span> -n <span class="string">&#x27;\n&#x27;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  <span class="built_in">local</span> width=$(tput cols)  <span class="comment"># 获取终端宽度</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  <span class="built_in">printf</span> <span class="string">&#x27;%*s\n&#x27;</span> <span class="string">&quot;<span class="variable">$width</span>&quot;</span> <span class="string">&#x27;&#x27;</span> | <span class="built_in">tr</span> <span class="string">&#x27; &#x27;</span> <span class="string">&#x27;-&#x27;</span>  <span class="comment"># 打印一行 &#x27;-&#x27;</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">&#125;</span></span><br><span class="line">precmd() &#123;</span><br><span class="line">  local width=$(tput cols)  # 获取终端宽度</span><br><span class="line">  local line=$(printf &#x27;%*s&#x27; &quot;$width&quot; &#x27;&#x27; | tr &#x27; &#x27; &#x27;-&#x27;)  # 生成宽度为终端宽度的一行 &#x27;-&#x27;</span><br><span class="line"></span><br><span class="line">  print -n &#x27;\n&#x27;</span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">设置浅灰色并打印</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">  <span class="built_in">printf</span> <span class="string">&#x27;\033[90m%s\033[0m\n&#x27;</span> <span class="string">&quot;<span class="variable">$line</span>&quot;</span></span></span><br><span class="line">  printf &#x27;\033[38;2;100;100;100m%s\033[0m\n\n&#x27; &quot;$line&quot;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">bash功能</span></span><br><span class="line">PROMPT_COMMAND=&#x27;</span><br><span class="line">  width=$(tput cols)  # 获取终端宽度</span><br><span class="line">  line=$(printf &quot;%*s&quot; &quot;$width&quot; &quot;&quot; | tr &quot; &quot; &quot;-&quot;)  # 生成宽度为终端宽度的一行 &quot;-&quot;</span><br><span class="line">  printf &quot;\n\033[38;2;100;100;100m%s\033[0m\n\n&quot; &quot;$line&quot;  # 打印浅灰色的一行 &quot;-&quot;</span><br><span class="line">&#x27;</span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="NOTE"><a href="#NOTE" class="headerlink" title="NOTE"></a>NOTE</h2><ol>
+<li>scp not work</li>
+</ol>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># remember to put this code to .bashrc before <span class="built_in">execute</span> zsh</span><br><span class="line"># If <span class="keyword">not</span>, scp can <span class="keyword">not</span> work.</span><br><span class="line"><span class="string">[[ $- == *i* ]]</span> || <span class="keyword">return</span></span><br><span class="line">zsh</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>如果你使用的是 zsh，上面的通配符会失效，你可以切换到 bash 执行这些命令，或者使用 setopt no_nomatch 来关闭 zsh 对于通配符的拦截</li>
+</ol>
+<h2 id="oh-my-zsh"><a href="#oh-my-zsh" class="headerlink" title="oh my zsh"></a>oh my zsh</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="microsoft-inshellisense-npm-issue"><a href="#microsoft-inshellisense-npm-issue" class="headerlink" title="microsoft&#x2F;inshellisense npm issue"></a><a target="_blank" rel="noopener" href="https://github.com/microsoft/inshellisense">microsoft&#x2F;inshellisense</a> <a target="_blank" rel="noopener" href="https://stackoverflow.com/a/61404290">npm issue</a></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @microsoft/inshellisense</span><br><span class="line">inshellisense <span class="built_in">bind</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="autosuggestions"><a href="#autosuggestions" class="headerlink" title="autosuggestions"></a>autosuggestions</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://github.com/zsh-users/zsh-autosuggestions <span class="variable">$ZSH_CUSTOM</span>/custom/plugins/zsh-autosuggestions</span><br><span class="line">sed -i <span class="string">&quot;s/fg=8/fg=cyan/&quot;</span> .oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh</span><br><span class="line">vi ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh 文件，修改 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=<span class="string">&#x27;fg=blue&#x27;</span></span><br><span class="line"><span class="comment"># support colors: black, red, green; yellow; blue; magenta; cyan and white;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="zsh-syntax-highlighting"><a href="#zsh-syntax-highlighting" class="headerlink" title="zsh-syntax-highlighting"></a>zsh-syntax-highlighting</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://github.com/jimmijj/zsh-syntax-highlighting ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting</span><br><span class="line">vi ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/highlighters/main/main-highlighter.zsh <span class="comment">#默认配色</span></span><br><span class="line"></span><br><span class="line">ZSH_HIGHLIGHT_STYLES[arg0]=<span class="string">&#x27;fg=yellow,bold&#x27;</span> <span class="comment">#命令行里先实验，让后放到.zshrc中</span></span><br><span class="line">ZSH_HIGHLIGHT_STYLES[<span class="built_in">command</span>]=<span class="string">&#x27;fg=#26ff00,bold&#x27;</span></span><br><span class="line">ZSH_HIGHLIGHT_STYLES[arg0]=<span class="string">&#x27;fg=#26ff00,bold&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="zshrc-config"><a href="#zshrc-config" class="headerlink" title=".zshrc config"></a>.zshrc config</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PROMPT=<span class="string">&quot;%n@%m:%1~%# &quot;</span></span><br><span class="line">plugins=(rust rustup cargo zsh-autosuggestions zsh-syntax-highlighting colored-man-pages tmux fd)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Othe-config"><a href="#Othe-config" class="headerlink" title="Othe config"></a>Othe config</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config oh-my-zsh.hide-status 1 --global <span class="comment">#close git status</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Powlevel9k-theme"><a href="#Powlevel9k-theme" class="headerlink" title="Powlevel9k theme"></a>Powlevel9k theme</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git clone https:<span class="regexp">//gi</span>thub.com<span class="regexp">/bhilburn/</span>powerlevel9k.git ~<span class="regexp">/.oh-my-zsh/</span>custom<span class="regexp">/themes/</span>powerlevel9k</span><br><span class="line">.zshrc：</span><br><span class="line">export TERM=<span class="string">&quot;xterm-256color&quot;</span></span><br><span class="line">POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(user dir)</span><br><span class="line">POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(root_indicator background_jobs )</span><br><span class="line">POWERLEVEL9K_MODE=<span class="string">&#x27;awesome-fontconfig&#x27;</span></span><br><span class="line">ZSH_THEME=<span class="string">&quot;powerlevel9k/powerlevel9k&quot;</span></span><br><span class="line">~<span class="regexp">/.oh-my-zsh/</span>custom<span class="regexp">/themes/</span>powerlevel9k/powerlevel9k.zsh-theme          修改  <span class="string">&quot;CONTENT&quot;</span>             <span class="string">&quot;jia@61&quot;</span> <span class="comment">#&quot;$(whoami)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="awesome-terminal-fonts"><a href="#awesome-terminal-fonts" class="headerlink" title="awesome-terminal-fonts"></a>awesome-terminal-fonts</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/gabrielelana/awesome-terminal-fonts</span><br><span class="line"><span class="built_in">cp</span> -R build/* ~/.fonts/</span><br><span class="line">fc-cache -fv ~/.fonts</span><br><span class="line"><span class="built_in">cp</span> config/10-symbols.conf ~/.config/fontconfig/conf.d</span><br><span class="line"><span class="built_in">source</span> ~/.fonts/*.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="autojump"><a href="#autojump" class="headerlink" title="autojump"></a>autojump</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://github.com/joelthelion/autojump.git</span><br><span class="line"><span class="built_in">cd</span> autojump</span><br><span class="line">./install.py</span><br></pre></td></tr></table></figure>
+
+<h2 id="powerline-非必须）"><a href="#powerline-非必须）" class="headerlink" title="powerline(非必须）"></a>powerline(非必须）</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install fonts-powerline</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/powerline/fonts.git --depth=1</span><br><span class="line"><span class="built_in">cd</span> fonts</span><br><span class="line">./install.sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="Links"><a href="#Links" class="headerlink" title="Links"></a>Links</h2><p>install oh my zsh : sh -c “$(curl -fsSL <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh">https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh</a>)”<br>zsh autosuggestions <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBa075b0a3e60cbde5f506563c3c14997a/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBa075b0a3e60cbde5f506563c3c14997a/</a><br>sudo apt-get install autojump <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEB1da9f35b71c3815439e1426116e7ecf9/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEB1da9f35b71c3815439e1426116e7ecf9/</a><br>Powlevel9k theme install <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBfd1ecc9886dfcf108ee9bae6b586cab6/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBfd1ecc9886dfcf108ee9bae6b586cab6/</a><br>Powerline <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBac4ed9c8ab78bb09940458cfb9b1a397/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBac4ed9c8ab78bb09940458cfb9b1a397/</a><br>awesome-terminal-fonts <a target="_blank" rel="noopener" href="http://www.cnblogs.com/weixuqin/p/7029177.html">http://www.cnblogs.com/weixuqin/p/7029177.html</a><br>zsh-syntax-highlighting <a target="_blank" rel="noopener" href="https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBef4ca4fdaf7d36950545241429e3daee/">https://note.youdao.com/web/#/file/WEB35aa360d3643be282ab89890d39646cf/note/WEBef4ca4fdaf7d36950545241429e3daee/</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1025,7 +1165,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-count">197</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1058,6 +1198,9 @@ mjx-container[display="true"] + br {
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2026/01/06/JIRA/" title="2026&#x2F;01&#x2F;06&#x2F;JIRA&#x2F;">JIRA</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2025/12/29/claude-code/" title="2025&#x2F;12&#x2F;29&#x2F;claude-code&#x2F;">Claude Code</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -1068,9 +1211,6 @@ mjx-container[display="true"] + br {
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2025/04/18/pytest/" title="2025&#x2F;04&#x2F;18&#x2F;pytest&#x2F;">pytest</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
         </li>
     </ul>
   </div>
@@ -1108,13 +1248,13 @@ mjx-container[display="true"] + br {
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">626k</span>
+    <span title="站点总字数">628k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">9:29</span>
+    <span title="站点阅读时长">9:31</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

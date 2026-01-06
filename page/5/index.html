@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">196</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">197</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,115 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/02/29/gemma/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/02/29/gemma/" class="post-title-link" itemprop="url">gemma</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-02-29 15:42:05" itemprop="dateCreated datePublished" datetime="2024-02-29T15:42:05+08:00">2024-02-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-03-04 15:04:12" itemprop="dateModified" datetime="2024-03-04T15:04:12+08:00">2024-03-04</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2024/02/29/gemma/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2024/02/29/gemma/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>337</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="gemma-cpp"><a href="#gemma-cpp" class="headerlink" title="gemma.cpp"></a><a target="_blank" rel="noopener" href="https://github.com/google/gemma.cpp">gemma.cpp</a></h2><ol>
+<li>使用了 hightway 加速</li>
+<li><a target="_blank" rel="noopener" href="https://www.kaggle.com/models/google/gemma/frameworks/gemmaCpp?select=tokenizer.spm">下载模型</a></li>
+<li><code>./build/gemma --verbosity 2 --tokenizer tokenizer.spm --compressed_weights 2b-it-sfp.sbs --model 2b-it</code></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/google/gemma.cpp/blob/main/gemma.cc">关键代码</a><ul>
+<li>GenerateImpl() 包含 prefill 和 generate 两个阶段</li>
+<li>prefill 阶段使用了 Prefill()函数<ul>
+<li>每次处理 kPrefillBatchSize 个输入，循环处理</li>
+</ul>
+</li>
+<li>generate 阶段使用了 Transformer()，Softmax(), SampleTopK()函数</li>
+</ul>
+</li>
+<li>add_definitions(-DPROFILER_ENABLED&#x3D;1), 打开 hightway profiler, 命令行%q 退出，<a target="_blank" rel="noopener" href="https://github.com/google/gemma.cpp/issues/73#issuecomment-1973230523">link</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1731,181 +1840,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/01/01/tensorrt-llm/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/01/01/tensorrt-llm/" class="post-title-link" itemprop="url">tensorrt-llm</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-01-01 20:33:30" itemprop="dateCreated datePublished" datetime="2024-01-01T20:33:30+08:00">2024-01-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-27 11:02:17" itemprop="dateModified" datetime="2024-02-27T11:02:17+08:00">2024-02-27</time>
-              </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2024/01/01/tensorrt-llm/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2024/01/01/tensorrt-llm/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="base"><a href="#base" class="headerlink" title="base"></a>base</h2><ol>
-<li><code>A TensorRT Toolbox for Optimized Large Language Model Inference</code></li>
-<li>tensorrt-llm 使用了很多 tensorrt 插件，插件里调用 kernel <a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/blob/main/docs/source/architecture.md#plugins">link</a></li>
-<li>大模型优化方法：tensorrt + plugins, 耗时的算子用专有库进行替换，如矩阵乘用 cutlass</li>
-<li>TensorRT-LLM wraps TensorRT’s deep learning compiler—which includes optimized kernels from FasterTransformer, pre- and post-processing, and multi-GPU and multi-node communication—in a simple open-source Python API for defining, optimizing, and executing LLMs for inference in production.</li>
-<li><a target="_blank" rel="noopener" href="https://nvidia.github.io/TensorRT-LLM/gpt_runtime.html#generation">generation</a></li>
-<li><a target="_blank" rel="noopener" href="https://nvidia.github.io/TensorRT-LLM/batch_manager.html#gptmanager-design">gptmanager</a></li>
-<li>TensorRT-LLM provides users with an easy-to-use Python API to define Large Language Models (LLMs) and build TensorRT engines that contain state-of-the-art optimizations to perform inference efficiently on NVIDIA GPUs. TensorRT-LLM also contains components to create Python and C++ runtimes that execute those TensorRT engines.</li>
-<li><a target="_blank" rel="noopener" href="https://nvidia.github.io/TensorRT-LLM/">doc</a></li>
-<li>TensorRT-LLM includes an API to implement Python and C++ runtimes. The role of the runtime components is to load the TensorRT engines and drive their execution. Typically, for an auto-regressive model like GPT, the runtime is in charge of loading the engine that implements <code>both the processing of the input sequence as well as the body of the generation loop</code>.</li>
-<li>TensorRT-LLM 的运行时需要管理：<ul>
-<li>模型加载及执行</li>
-<li>对于 AR 模型，两阶段(prompt 和 decoding)都需要处理</li>
-</ul>
-</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/blob/main/docs/source/gpt_runtime.md">decode only 执行流程</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/blob/main/docs/source/gpt_attention.md">attention 流程</a><ul>
-<li>As a quick reminder, the multihead attention is the sequence of a batched matmul, a softmax and another batched matmul described in the Attention Is All You Need article. attention 计算是 batch 的</li>
-<li>the current implementation supports two input modes: Padded and packed (non-padded). As the packed mode is always more memory-efficient and faster than the padded mode, support for padded mode may be removed in the future. 打包模式更节省内存并且更快</li>
-</ul>
-</li>
-<li>重算可以不用考虑 kv cache, uniad 只考虑 5 帧：前 4 帧运行时 padding 到 5 帧，重算 attention; 第六帧开始，recompute sliding window; 只考虑窗口的 5 帧，位置编码一直都是 0-5（位置改变，kv cache 需要重新计算)。 普通的 sliding windows 都是</li>
-</ol>
-<h2 id="best-practice"><a href="#best-practice" class="headerlink" title="best practice"></a><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/blob/main/docs/source/perf_best_practices.md">best practice</a></h2><h2 id="memory"><a href="#memory" class="headerlink" title="memory"></a>memory</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/blob/main/docs/source/memory.md">显存使用</a></li>
-</ol>
-<h2 id="key-features"><a href="#key-features" class="headerlink" title="key-features"></a>key-features</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/tree/main?tab=readme-ov-file#key-features">key-features 可学习如何优化</a></li>
-</ol>
-<h3 id="in-flight-batching"><a href="#in-flight-batching" class="headerlink" title="in-flight batching"></a>in-flight batching</h3><h3 id="paged-attention"><a href="#paged-attention" class="headerlink" title="paged attention"></a>paged attention</h3><h3 id="MHA-GQA-MQA"><a href="#MHA-GQA-MQA" class="headerlink" title="MHA GQA MQA"></a>MHA GQA MQA</h3><h3 id="Quantization"><a href="#Quantization" class="headerlink" title="Quantization"></a><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/blob/main/docs/source/precision.md">Quantization</a></h3><h3 id="Graph-Rewriting"><a href="#Graph-Rewriting" class="headerlink" title="Graph Rewriting"></a>Graph Rewriting</h3><ol>
-<li>TensorRT-LLM 在将 LLM 模型编译为 TensorRT Engines 时会对神经网络进行优化，提升执行效率。</li>
-</ol>
-<h2 id="deubg"><a href="#deubg" class="headerlink" title="deubg"></a>deubg</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/blob/6cc5e177ff2fb60b1aab3b03fa0534b5181cf0f1/cpp/tensorrt_llm/common/logger.cpp#L32">TLLM_LOG_LEVEL&#x3D;TRACE</a></li>
-<li>打开 trace， 跟踪代码执行</li>
-</ol>
-<h2 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://hub.docker.com/search?q=tensorrt_llm">docker hubs</a></li>
-</ol>
-<h2 id="install"><a href="#install" class="headerlink" title="install"></a>install</h2><ol>
-<li>使用 docker <a target="_blank" rel="noopener" href="https://hub.docker.com/r/baseten/tensorrt_llm-release">baseten&#x2F;tensorrt_llm-release</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/blob/v0.7.1/docs/source/installation.md#fetch-the-sources">fetch-the-sources</a> in docker</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/NVIDIA/TensorRT-LLM/blob/v0.7.1/docs/source/installation.md#build-tensorrt-llm">build-tensorrt-llm</a></li>
-<li>可能需要先卸载 <code>pip uninstall tensorrt_llm</code>， 重新安装</li>
-</ol>
-<h2 id="数据集"><a href="#数据集" class="headerlink" title="数据集"></a>数据集</h2><h3 id="ccdv-cnn-dailymail"><a href="#ccdv-cnn-dailymail" class="headerlink" title="ccdv&#x2F;cnn_dailymail"></a><a target="_blank" rel="noopener" href="https://huggingface.co/datasets/ccdv/cnn_dailymail">ccdv&#x2F;cnn_dailymail</a></h3><ol>
-<li>gitee 镜像版本不太好使</li>
-<li>下载之后传到服务器</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/abisee/cnn-dailymail/tree/master/url_lists">clone txt</a></li>
-<li>修改 summarize.py；从本地 load 数据集</li>
-<li><code>dataset = load_dataset(&quot;/mnt/data-2/home/xiyang.jia/TensorRT-LLM/examples/bloom/cnn_dailymail/cnn_dailymail.py&quot;, &quot;3.0.0&quot;)</code> 从本地加载数据集</li>
-</ol>
-<h2 id="vscode-setting"><a href="#vscode-setting" class="headerlink" title="vscode setting"></a>vscode setting</h2><ol>
-<li>env settings</li>
-</ol>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;env&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;PYDEVD_WARN_EVALUATION_TIMEOUT&quot;</span><span class="punctuation">:</span> <span class="string">&quot;500&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION&quot;</span><span class="punctuation">:</span> <span class="string">&quot;python&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;OPAL_PREFIX&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/opt/hpcx/ompi&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>launch.json</li>
-</ol>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Python: tensorrt&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;python&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="comment">// &quot;program&quot;: &quot;$&#123;workspaceFolder&#125;/examples/summarize.py&quot;,</span></span><br><span class="line">      <span class="comment">// &quot;cwd&quot;: &quot;$&#123;workspaceFolder&#125;/examples/bloom/&quot;,</span></span><br><span class="line">      <span class="comment">// &quot;program&quot;: &quot;../summarize.py&quot;,</span></span><br><span class="line">      <span class="comment">// &quot;args&quot;: [</span></span><br><span class="line">      <span class="comment">//     &quot;--test_trt_llm&quot;,</span></span><br><span class="line">      <span class="comment">//     &quot;--hf_model_dir&quot;,</span></span><br><span class="line">      <span class="comment">//     &quot;./bloom/560M/&quot;,</span></span><br><span class="line">      <span class="comment">//     &quot;--data_type&quot;,</span></span><br><span class="line">      <span class="comment">//     &quot;fp16&quot;,</span></span><br><span class="line">      <span class="comment">//     &quot;--engine_dir&quot;,</span></span><br><span class="line">      <span class="comment">//     &quot;./bloom/560M/trt_engines/fp16/1-gpu/&quot;</span></span><br><span class="line">      <span class="comment">// ],</span></span><br><span class="line">      <span class="comment">// run llama test</span></span><br><span class="line">      <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/examples/llama/&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;../run.py&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;--max_output_len=50&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;--tokenizer_dir&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;/mnt/data-2/home/xiyang.jia/Llama-2-7b-hf&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;--engine_dir=./tmp/llama/7B/trt_engines/fp16/1-gpu/&quot;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="comment">// build llama test</span></span><br><span class="line">      <span class="comment">// &quot;cwd&quot;: &quot;$&#123;workspaceFolder&#125;/examples/llama/&quot;,</span></span><br><span class="line">      <span class="comment">// &quot;program&quot;: &quot;./build.py&quot;,</span></span><br><span class="line">      <span class="comment">// &quot;args&quot;: [</span></span><br><span class="line">      <span class="comment">//     &quot;--model_dir&quot;,</span></span><br><span class="line">      <span class="comment">//     &quot;/mnt/data-2/home/xiyang.jia/Llama-2-7b-hf&quot;,</span></span><br><span class="line">      <span class="comment">//     &quot;--dtype&quot;,</span></span><br><span class="line">      <span class="comment">//     &quot;float16&quot;,</span></span><br><span class="line">      <span class="comment">//     &quot;--remove_input_padding&quot;,</span></span><br><span class="line">      <span class="comment">//     &quot;--use_gpt_attention_plugin&quot;,</span></span><br><span class="line">      <span class="comment">//     &quot;float16&quot;,</span></span><br><span class="line">      <span class="comment">//     &quot;--enable_context_fmha&quot;,</span></span><br><span class="line">      <span class="comment">//     &quot;--use_gemm_plugin&quot;,</span></span><br><span class="line">      <span class="comment">//     &quot;float16&quot;,</span></span><br><span class="line">      <span class="comment">//     &quot;--output_dir&quot;,</span></span><br><span class="line">      <span class="comment">//     &quot;./tmp/llama/7B/trt_engines/fp16/test/&quot;</span></span><br><span class="line">      <span class="comment">// ],</span></span><br><span class="line">      <span class="attr">&quot;env&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;PYDEVD_WARN_EVALUATION_TIMEOUT&quot;</span><span class="punctuation">:</span> <span class="string">&quot;500&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION&quot;</span><span class="punctuation">:</span> <span class="string">&quot;python&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;OPAL_PREFIX&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/opt/hpcx/ompi&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;CUDA_VISIBLE_DEVICES&quot;</span><span class="punctuation">:</span> <span class="string">&quot;6,7&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;TLLM_LOG_LEVEL&quot;</span><span class="punctuation">:</span> <span class="string">&quot;DEBUG&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;console&quot;</span><span class="punctuation">:</span> <span class="string">&quot;integratedTerminal&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;justMyCode&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h2><ol>
-<li><code>build.py</code> 每个 example 独占，用于构建模型和编译成 engine 模型; 需要模型配置：权重等</li>
-<li>In addition, there are two shared files in the parent folder examples for inference and evaluation:<ul>
-<li><code>run.py</code> to run the inference on an input text; 运行推理</li>
-<li><code>summarize.py</code> to summarize the articles in the cnn_dailymail dataset. 总结故事</li>
-</ul>
-</li>
-<li>需要 hf model; 例:llama-7B-hf; hf 是 Huggingface 对原始 llama-7B 模型的打包版本,</li>
-<li>TensorRT-LLM LLaMA builds TensorRT engine(s) from HF checkpoint. If no checkpoint directory is specified, TensorRT-LLM will build engine(s) with dummy weights. 如果不设置 <code>--model_dir</code>, 使用随机权重</li>
-<li>llama sample 运行时需要 config.json, <code>--tokenizer_dir</code>指定</li>
-<li><a target="_blank" rel="noopener" href="https://gitee.com/hf-models/Llama-2-7b-hf">gitee.com&#x2F;hf-models&#x2F;Llama-2-7b-hf</a> gitee 下载要快很多 <code>git lfs clone https://gitee.com/hf-models/Llama-2-7b-hf</code></li>
-<li>run 的时候加参数<code>--temperature=0.6 --top_k=10</code>可生成不一样内容</li>
-<li><code>/usr/local/tensorrt/bin/trtexec --loadEngine=tmp/llama/7B/trt_engines/fp16/1-gpu/llama_float16_tp1_rank0.engine</code>会出错，未解决<ul>
-<li><code>export LD_LIBRARY_PATH=/usr/local/tensorrt/lib/:$LD_LIBRARY_PATH</code></li>
-</ul>
-</li>
-<li><code> Error[1]: [stdArchiveReader.cpp::stdArchiveReaderInitCommon::47] Error Code 1: Serialization (Serialization assertion stdVersionRead == kSERIALIZATION_VERSION failed.Version tag does not match. Note: Current Version: 226, Serialized Engine Version: 228)</code> tensorrt 版本有问题</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/hpcaitech/SwiftInfer?tab=readme-ov-file">tensorrt llm llama</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1977,7 +1911,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-count">197</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2010,6 +1944,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2026/01/06/JIRA/" title="2026&#x2F;01&#x2F;06&#x2F;JIRA&#x2F;">JIRA</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2025/12/29/claude-code/" title="2025&#x2F;12&#x2F;29&#x2F;claude-code&#x2F;">Claude Code</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -2020,9 +1957,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2025/04/18/pytest/" title="2025&#x2F;04&#x2F;18&#x2F;pytest&#x2F;">pytest</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
         </li>
     </ul>
   </div>
@@ -2060,13 +1994,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">626k</span>
+    <span title="站点总字数">628k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">9:29</span>
+    <span title="站点阅读时长">9:31</span>
 </div>
 
 <!-- 网站运行时间的设置 -->

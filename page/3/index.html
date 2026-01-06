@@ -128,7 +128,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">196</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">197</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -195,6 +195,363 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2025/12/29/claude-code/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/coder2.jpg">
+      <meta itemprop="name" content="贾夕阳">
+      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Xiyang">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/12/29/claude-code/" class="post-title-link" itemprop="url">Claude Code</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-12-29 15:48:42" itemprop="dateCreated datePublished" datetime="2025-12-29T15:48:42+08:00">2025-12-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2026-01-06 15:39:59" itemprop="dateModified" datetime="2026-01-06T15:39:59+08:00">2026-01-06</time>
+              </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2025/12/29/claude-code/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2025/12/29/claude-code/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="快捷键"><a href="#快捷键" class="headerlink" title="快捷键"></a>快捷键</h2><table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>S-Tab</code></td>
+<td>切换模式</td>
+</tr>
+<tr>
+<td><code>C-d C-d</code></td>
+<td>退出</td>
+</tr>
+<tr>
+<td><code>C-r</code></td>
+<td>搜索历史</td>
+</tr>
+<tr>
+<td><code>ESC ESC</code></td>
+<td>回退历史，编辑之前的 prompt</td>
+</tr>
+</tbody></table>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/init</code></td>
+<td>创建 CLAUDE.md，扫描代码仓库建立工程上下文</td>
+</tr>
+<tr>
+<td><code>/cost</code></td>
+<td>显示花费</td>
+</tr>
+<tr>
+<td><code>/model</code></td>
+<td>选择模型</td>
+</tr>
+<tr>
+<td><code>/resume</code></td>
+<td>选择历史对话</td>
+</tr>
+<tr>
+<td><code>/clear</code></td>
+<td>重置上下文窗口（建议任务间频繁使用）</td>
+</tr>
+<tr>
+<td><code>/ide</code></td>
+<td>连接外部终端到 VS Code</td>
+</tr>
+<tr>
+<td><code>/export [filename] </code></td>
+<td>Export the current conversation to a file or clipboard</td>
+</tr>
+</tbody></table>
+<h2 id="CLAUDE-md"><a href="#CLAUDE-md" class="headerlink" title="CLAUDE.md"></a>CLAUDE.md</h2><h3 id="什么是-CLAUDE-md"><a href="#什么是-CLAUDE-md" class="headerlink" title="什么是 CLAUDE.md"></a>什么是 CLAUDE.md</h3><p>CLAUDE.md 是项目级配置文件，为 Claude Code 提供工程上下文。它指导 Claude 理解项目结构、命令、规范等。</p>
+<h3 id="创建与位置"><a href="#创建与位置" class="headerlink" title="创建与位置"></a>创建与位置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 /init 自动生成</span></span><br><span class="line">claude</span><br><span class="line">&gt; /init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 手动创建</span></span><br><span class="line"><span class="comment"># 项目级（推荐）</span></span><br><span class="line">./CLAUDE.md</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用户级（全局）</span></span><br><span class="line">~/.claude/CLAUDE.md</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="IDE-集成"><a href="#IDE-集成" class="headerlink" title="IDE 集成"></a>IDE 集成</h2><p>CLI 和 IDE 插件连接：</p>
+<ul>
+<li>在 VS Code 集成终端运行 <code>claude</code> 会自动与 IDE 集成</li>
+<li>外部终端使用 <code>/ide</code> 命令连接到 VS Code</li>
+<li>tmux 首次使用需全部关闭重启</li>
+<li>确保 IDE CLI 可用：VS Code 需要 <code>code</code> 命令，Cursor 需要 <code>cursor</code> 命令</li>
+<li>参考：<a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/vs-code#standalone-cli-not-connecting-to-ide">https://code.claude.com/docs/en/vs-code#standalone-cli-not-connecting-to-ide</a></li>
+<li>claude code show logs</li>
+<li>reset location来刷新自定义command<br>VS Code 快捷键：<code>View: Focus into Secondary Side Bar</code> 绑定到 <code>C-2</code></li>
+</ul>
+<h2 id="工作流"><a href="#工作流" class="headerlink" title="工作流"></a>工作流</h2><p><strong>推荐流程：</strong></p>
+<ul>
+<li>Explore → Plan → Code → Commit</li>
+<li>Write tests → Commit → Code → Iterate → Commit</li>
+<li>Write code → Screenshot result → Iterate</li>
+</ul>
+<p><strong>优化技巧：</strong></p>
+<ul>
+<li>指令要具体明确</li>
+<li>提供截图给 Claude</li>
+<li>大型任务使用 Markdown 文件作为 checklist</li>
+<li>多 Claude 协作：一个写代码，另一个验证；或一个写测试，另一个实现</li>
+</ul>
+<h2 id="Skill（技能）"><a href="#Skill（技能）" class="headerlink" title="Skill（技能）"></a>Skill（技能）</h2><h3 id="什么是-Skill"><a href="#什么是-Skill" class="headerlink" title="什么是 Skill"></a>什么是 Skill</h3><p>Skill 是 Markdown 文件，教导 Claude 如何执行特定任务。与 Slash Command 不同，Skill 由 Claude <strong>自动触发</strong>（基于请求内容语义匹配）。</p>
+<h3 id="创建-Skill"><a href="#创建-Skill" class="headerlink" title="创建 Skill"></a>创建 Skill</h3><p><strong>目录位置：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 个人 Skill（跨所有项目）</span></span><br><span class="line">~/.claude/skills/skill-name/SKILL.md</span><br><span class="line"></span><br><span class="line"><span class="comment"># 项目 Skill（仅限该仓库）</span></span><br><span class="line">.claude/skills/skill-name/SKILL.md</span><br></pre></td></tr></table></figure>
+
+<p><strong>SKILL.md 结构：</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">my-skill</span>              <span class="comment"># 只能用小写字母、数字和连字符</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">技能描述，Claude</span> <span class="string">用它决定何时应用</span> <span class="string">Skill</span></span><br><span class="line"><span class="attr">allowed-tools:</span> <span class="string">Read,</span> <span class="string">Grep</span>   <span class="comment"># 可选：限制可用工具</span></span><br><span class="line"><span class="attr">model:</span> <span class="string">claude-opus-4-5-20251101</span>  <span class="comment"># 可选：指定模型</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="comment"># 技能标题</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 说明</span></span><br><span class="line"><span class="string">详细步骤...</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 示例</span></span><br><span class="line"><span class="string">具体用法...</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Skill-示例：生成提交信息"><a href="#Skill-示例：生成提交信息" class="headerlink" title="Skill 示例：生成提交信息"></a>Skill 示例：生成提交信息</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">generating-commit-messages</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">从</span> <span class="string">git</span> <span class="string">diff</span> <span class="string">生成清晰的提交信息。写提交信息或审查暂存更改时使用。</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="comment"># 生成提交信息</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 说明</span></span><br><span class="line"><span class="number">1</span><span class="string">.</span> <span class="string">运行</span> <span class="string">`git</span> <span class="string">diff</span> <span class="string">--staged`</span> <span class="string">查看更改</span></span><br><span class="line"><span class="number">2</span><span class="string">.</span> <span class="string">建议提交信息包括：</span></span><br><span class="line">   <span class="bullet">-</span> <span class="string">摘要不超过</span> <span class="number">50</span> <span class="string">个字符</span></span><br><span class="line">   <span class="bullet">-</span> <span class="string">详细描述</span></span><br><span class="line">   <span class="bullet">-</span> <span class="string">受影响的组件</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 最佳实践</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">使用现在时</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">解释什么和为什么，而不是如何</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Skill-示例：代码审查"><a href="#Skill-示例：代码审查" class="headerlink" title="Skill 示例：代码审查"></a>Skill 示例：代码审查</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">code-review</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">根据团队标准审查代码质量和最佳实践。</span></span><br><span class="line"><span class="attr">allowed-tools:</span> <span class="string">Read,</span> <span class="string">Grep,</span> <span class="string">Glob,</span> <span class="string">Bash(git</span> <span class="string">diff:*)</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="comment"># 代码审查</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 检查项</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 安全性</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">没有硬编码的密钥或凭证</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">输入验证是否充分</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 性能</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">是否有不必要的循环</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">算法复杂度是否合理</span></span><br><span class="line"></span><br><span class="line"><span class="comment">### 代码风格</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">命名约定是否一致</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">是否遵循项目规范</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Skill-vs-Slash-Command"><a href="#Skill-vs-Slash-Command" class="headerlink" title="Skill vs Slash Command"></a>Skill vs Slash Command</h3><table>
+<thead>
+<tr>
+<th>方面</th>
+<th>Skill</th>
+<th>Slash Command</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>触发方式</td>
+<td>Claude 自动决定</td>
+<td>显式输入 <code>/command</code></td>
+</tr>
+<tr>
+<td>复杂性</td>
+<td>复杂工作流</td>
+<td>简单提示</td>
+</tr>
+<tr>
+<td>文件结构</td>
+<td>目录 + SKILL.md + 支持文件</td>
+<td>单一 .md 文件</td>
+</tr>
+</tbody></table>
+<h3 id="使用技巧"><a href="#使用技巧" class="headerlink" title="使用技巧"></a>使用技巧</h3><ul>
+<li>在请求中使用与 Skill 描述相似的关键词</li>
+<li>检查可用 Skill：<code>What Skills are available?</code></li>
+<li>重启 Claude Code 加载新 Skill</li>
+</ul>
+<h2 id="Plugin（插件）"><a href="#Plugin（插件）" class="headerlink" title="Plugin（插件）"></a>Plugin（插件）</h2><h3 id="什么是-Plugin"><a href="#什么是-Plugin" class="headerlink" title="什么是 Plugin"></a>什么是 Plugin</h3><p>Plugin 是 Claude Code 的扩展包，可包含：</p>
+<ul>
+<li>斜杠命令（Commands）</li>
+<li>技能（Skills）</li>
+<li>事件钩子（Hooks）</li>
+<li>MCP 服务器</li>
+<li>LSP 服务器</li>
+</ul>
+<p><strong>用途</strong>：跨项目复用、团队共享、通过 Marketplace 分发</p>
+<h3 id="Plugin-vs-独立配置"><a href="#Plugin-vs-独立配置" class="headerlink" title="Plugin vs 独立配置"></a>Plugin vs 独立配置</h3><table>
+<thead>
+<tr>
+<th>方式</th>
+<th>命令格式</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>独立配置 <code>.claude/</code></td>
+<td><code>/hello</code></td>
+<td>个人、项目特定、快速实验</td>
+</tr>
+<tr>
+<td>Plugin</td>
+<td><code>/plugin-name:hello</code></td>
+<td>团队共享、跨项目、版本管理</td>
+</tr>
+</tbody></table>
+<h3 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h3><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">my-plugin/</span><br><span class="line">├── <span class="string">.claude-plugin/</span></span><br><span class="line">│   └── plugin.json      <span class="comment"># 必需：插件清单</span></span><br><span class="line">├── commands/            <span class="comment"># 斜杠命令</span></span><br><span class="line">│   └── hello.md</span><br><span class="line">├── skills/              <span class="comment"># 技能</span></span><br><span class="line">│   └── code-review/</span><br><span class="line">│       └── SKILL.md</span><br><span class="line">├── hooks/               <span class="comment"># 钩子配置</span></span><br><span class="line">│   └── hooks.json</span><br><span class="line">├── <span class="string">.mcp.json</span>            <span class="comment"># MCP 服务器</span></span><br><span class="line">└── scripts/             <span class="comment"># 脚本</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="plugins"><a href="#plugins" class="headerlink" title="plugins"></a>plugins</h3><h4 id="code-review"><a href="#code-review" class="headerlink" title="code review"></a><a target="_blank" rel="noopener" href="https://github.com/anthropics/claude-code/tree/main">code review</a></h4><p>GitLab MR code review:</p>
+<ol>
+<li>安装 glab: <code>curl -s https://raw.githubusercontent.com/profclems/glab/trunk/scripts/install.sh | sudo bash</code></li>
+<li>获取 token: 访问 <code>https://gitlabsoft.siorigin.com/-/user_settings/personal_access_tokens</code>，创建 token 并勾选 <code>api</code>、<code>read_repository</code>、<code>write_repository</code> 权限</li>
+<li>登录: <code>glab auth login --hostname &lt;your-gitlab&gt; --token &lt;token&gt;</code></li>
+<li>验证: <code>glab auth status</code></li>
+</ol>
+<h4 id="feature-dev"><a href="#feature-dev" class="headerlink" title="feature-dev"></a><a target="_blank" rel="noopener" href="https://github.com/anthropics/claude-code/tree/main/plugins/feature-dev">feature-dev</a></h4><h3 id="创建-Plugin"><a href="#创建-Plugin" class="headerlink" title="创建 Plugin"></a>创建 Plugin</h3><p><strong>1. 创建清单 <code>.claude-plugin/plugin.json</code>：</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;my-plugin&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;我的第一个插件&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;author&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Your Name&quot;</span> <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 添加命令 <code>commands/hello.md</code>：</strong></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line"><span class="section">description: 问候用户</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line"><span class="section"># Hello 命令</span></span><br><span class="line"></span><br><span class="line">用 &quot;$ARGUMENTS&quot; 问候用户。</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. 测试 Plugin：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">claude --plugin-dir ./my-plugin</span><br></pre></td></tr></table></figure>
+
+<p>使用：<code>/my-plugin:hello World</code></p>
+<h3 id="Plugin-示例：代码审查"><a href="#Plugin-示例：代码审查" class="headerlink" title="Plugin 示例：代码审查"></a>Plugin 示例：代码审查</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">code-review-<span class="keyword">plugin</span>/</span><br><span class="line">├── .claude-<span class="keyword">plugin</span>/</span><br><span class="line">│   └── <span class="keyword">plugin</span>.json</span><br><span class="line">├── commands/</span><br><span class="line">│   └── review.md</span><br><span class="line">└── skills/</span><br><span class="line">    └── <span class="keyword">pr</span>-review/</span><br><span class="line">        └── SKILL.md</span><br></pre></td></tr></table></figure>
+
+<p><strong>plugin.json：</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;code-review&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;代码审查工具&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0.0&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>commands&#x2F;review.md：</strong></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line"><span class="section">description: 启动代码审查</span></span><br><span class="line"><span class="section">---</span></span><br><span class="line"></span><br><span class="line">检查代码质量、最佳实践、安全问题。</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装与管理"><a href="#安装与管理" class="headerlink" title="安装与管理"></a>安装与管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装（用户范围）</span></span><br><span class="line">claude plugin install plugin-name@marketplace</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装到项目（与团队共享）</span></span><br><span class="line">claude plugin install plugin-name@marketplace --scope project</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用/禁用</span></span><br><span class="line">claude plugin <span class="built_in">enable</span> plugin-name</span><br><span class="line">claude plugin <span class="built_in">disable</span> plugin-name</span><br><span class="line"></span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">claude plugin uninstall plugin-name</span><br></pre></td></tr></table></figure>
+
+<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><p>在 hooks、MCP 配置中使用 <code>$&#123;CLAUDE_PLUGIN_ROOT&#125;</code> 获取插件根目录：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;CLAUDE_PLUGIN_ROOT&#125;/scripts/run.sh&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Plugin-vs-Skill"><a href="#Plugin-vs-Skill" class="headerlink" title="Plugin vs Skill"></a>Plugin vs Skill</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Plugin</th>
+<th>Skill</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>定义</td>
+<td>完整扩展包</td>
+<td>教 Claude 做某事的文档</td>
+</tr>
+<tr>
+<td>触发</td>
+<td>用户显式调用 <code>/plugin:cmd</code></td>
+<td>Claude 自动匹配</td>
+</tr>
+<tr>
+<td>包含</td>
+<td>Commands + Skills + Hooks + MCP</td>
+<td>单个 SKILL.md</td>
+</tr>
+</tbody></table>
+<h2 id="权限与调试"><a href="#权限与调试" class="headerlink" title="权限与调试"></a>权限与调试</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 跳过权限确认（危险模式）</span></span><br><span class="line">claude --dangerously-skip-permissions</span><br><span class="line"><span class="built_in">alias</span> claude=<span class="string">&#x27;claude --dangerously-skip-permissions&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 调试模式（会生成 log 文件）</span></span><br><span class="line">claude --debug</span><br><span class="line"></span><br><span class="line">claude --verbose</span><br></pre></td></tr></table></figure>
+
+<h2 id="WSL-配置"><a href="#WSL-配置" class="headerlink" title="WSL 配置"></a>WSL 配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 端口转发</span></span><br><span class="line">ssh -N -L 18080:10.96.11.131:3100 yxsqw@10.193.64.77</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置 API 地址</span></span><br><span class="line"><span class="built_in">export</span> ANTHROPIC_BASE_URL=<span class="string">&quot;http://localhost:18080/api&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义斜杠命令"><a href="#自定义斜杠命令" class="headerlink" title="自定义斜杠命令"></a>自定义斜杠命令</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/slash-commands#built-in-slash-commands">内置斜杠命令</a></li>
+</ol>
+<h3 id="创建位置"><a href="#创建位置" class="headerlink" title="创建位置"></a>创建位置</h3><p>在 <code>.claude/commands/</code> 目录创建 <code>.md</code> 文件</p>
+<h3 id="示例：博客部署命令"><a href="#示例：博客部署命令" class="headerlink" title="示例：博客部署命令"></a>示例：博客部署命令</h3><p><strong><code>.claude/commands/deploy.md</code>：</strong></p>
+<h2 id="prompt"><a href="#prompt" class="headerlink" title="prompt"></a>prompt</h2><ol>
+<li>扩展思考 - 处理复杂任务时使用 “think hard” 或 “think deeply” 触发深度推理<ul>
+<li>“think” - 触发基本扩展思考</li>
+<li>“think hard”、”think more”、”think longer” - 触发更深层思考</li>
+</ul>
+</li>
+</ol>
+<h2 id="Boris-的-13-条建议"><a href="#Boris-的-13-条建议" class="headerlink" title="Boris 的 13 条建议"></a>Boris 的 13 条建议</h2><p>Claude Code 创始人 Boris 的使用技巧：</p>
+<ol>
+<li><strong>并行多 Claude</strong> - 终端运行 5 个 Claude，标签编号 1-5，配合系统通知</li>
+<li><strong>本地 + Web</strong> - 终端与 claude.ai&#x2F;code 并行，用 <code>&amp;</code> 交本地会话给 Web，或 <code>--teleport</code> 来回切换</li>
+<li><strong>Opus 4.5 + Thinking</strong> - 最佳编码模型，虽大且慢但需引导少，总体更快</li>
+<li><strong>共享 CLAUDE.md</strong> - 团队共用一个 CLAUDE.md��检入 git，发现问题立即添加</li>
+<li><strong>PR 审查集成</strong> - 用 GitHub Action，在同事 PR 上 tag @.claude 要求更新 CLAUDE.md</li>
+<li><strong>Plan 模式优先</strong> - 按 <code>Shift+Tab</code> 两次进入 Plan 模式，计划好后切换 auto-accept 模式一气呵成</li>
+<li><strong>Slash 命令</strong> - 每日重复的工作流用命令自动化，如 <code>/commit-push-pr</code></li>
+<li><strong>Subagent</strong> - 常用工作流用 subagent，如 code-simplifier、verify-app</li>
+<li><strong>PostToolUse Hook</strong> - 格式化代码，处理最后 10%</li>
+<li><strong>权限管理</strong> - 不用 <code>--dangerously-skip-permissions</code>，用 <code>/permissions</code> 预授权安全命令</li>
+<li><strong>MCP 工具</strong> - Claude 代用所有工具：Slack、BigQuery、Sentry 等</li>
+<li><strong>长时间任务</strong> - 用 background agent 验证，或用 Stop hook，或 ralph-wiggum 插件</li>
+<li><strong>验证反馈循环</strong> - <strong>最重要</strong> - 给 Claude 验证工作的方式，质量提升 2-3 倍</li>
+</ol>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/common-workflows">Common Workflow</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.anthropic.com/engineering/claude-code-best-practices">Claude Code Best Practices</a></li>
+<li><a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/skills.md">Skills 官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/slash-commands.md">Slash Commands 文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/plugins.md">Plugin 官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/plugin-marketplaces.md">Plugin Marketplace</a></li>
+<li><a target="_blank" rel="noopener" href="https://x.com/i/status/2007179832300581177">Boris 的完整分享</a></li>
+</ul>
+<h2 id="settings"><a href="#settings" class="headerlink" title="settings"></a>settings</h2><ol>
+<li>内置tools集合： <a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/settings#tools-available-to-claude">https://code.claude.com/docs/en/settings#tools-available-to-claude</a></li>
+<li>git commit不添加ai生成等信息，<a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/settings#attribution-settings">https://code.claude.com/docs/en/settings#attribution-settings</a></li>
+<li>默认编辑文件： <a target="_blank" rel="noopener" href="https://code.claude.com/docs/en/settings#permission-settings">https://code.claude.com/docs/en/settings#permission-settings</a></li>
+</ol>
+<ul>
+<li><code>&quot;defaultMode&quot;: &quot;acceptEdits&quot;</code></li>
+</ul>
+<ol>
+<li>Claude Code 了解 shell 操作符（如 &amp;&amp;），因此前缀匹配规则如 Bash(safe-cmd:*) 不会给它权限运行命令 safe-cmd &amp;&amp; other-cmd</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      
+
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -2033,141 +2390,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://jiaxiyang.github.io/2024/07/01/talk-skills/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/coder2.jpg">
-      <meta itemprop="name" content="贾夕阳">
-      <meta itemprop="description" content="深度学习/自动驾驶/C++/性能优化">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xiyang">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/07/01/talk-skills/" class="post-title-link" itemprop="url">talk_skills</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-07-01 15:41:15 / 修改时间：17:38:40" itemprop="dateCreated datePublished" datetime="2024-07-01T15:41:15+08:00">2024-07-01</time>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2024/07/01/talk-skills/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2024/07/01/talk-skills/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>290</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="技术分享"><a href="#技术分享" class="headerlink" title="技术分享"></a>技术分享</h2><h3 id="技巧"><a href="#技巧" class="headerlink" title="技巧"></a>技巧</h3><ol>
-<li>清晰简洁<ul>
-<li>语言要清晰简洁，避免使用过多的专业术语。</li>
-<li>使用简单易懂的例子来说明复杂的概念。</li>
-</ul>
-</li>
-<li>视觉辅助<ul>
-<li>使用图表、图片和动画来帮助解释概念。</li>
-<li>确保幻灯片内容简洁，不要过多的文字。</li>
-</ul>
-</li>
-<li>互动性<ul>
-<li>提出问题并邀请听众参与讨论。</li>
-<li>使用现场演示或代码运行来增加互动性。</li>
-</ul>
-</li>
-<li>实战演练<ul>
-<li>事先进行多次演练，熟悉内容和演示流程。</li>
-<li>准备好应对可能出现的问题或故障。</li>
-</ul>
-</li>
-<li>自信和热情<ul>
-<li>保持自信和热情，感染听众。</li>
-<li>展示你对所分享内容的兴趣和信心。</li>
-</ul>
-</li>
-<li>时间管理<ul>
-<li>控制好每个部分的时间，避免超时或内容过于简略。</li>
-<li>根据听众的反应灵活调整节奏。</li>
-</ul>
-</li>
-</ol>
-<h3 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h3><ol>
-<li>自我介绍</li>
-<li>引言<ul>
-<li>介绍主题与分享目的</li>
-</ul>
-</li>
-<li>大纲</li>
-<li>具体内容</li>
-<li>总结<ul>
-<li>回顾关键点，并提出可能的下一步</li>
-</ul>
-</li>
-<li>QA</li>
-<li>反馈和改进</li>
-</ol>
-<h2 id="会议组织"><a href="#会议组织" class="headerlink" title="会议组织"></a>会议组织</h2><h2 id="演讲"><a href="#演讲" class="headerlink" title="演讲"></a>演讲</h2>
-      
-    </div>
-
-    
-    
-    
-      
-
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -2239,7 +2461,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-count">197</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2272,6 +2494,9 @@
     </div>
     <ul class="links-of-recent-posts-list">
         <li class="links-of-recent-posts-item">
+          <a href="/2026/01/06/JIRA/" title="2026&#x2F;01&#x2F;06&#x2F;JIRA&#x2F;">JIRA</a>
+        </li>
+        <li class="links-of-recent-posts-item">
           <a href="/2025/12/29/claude-code/" title="2025&#x2F;12&#x2F;29&#x2F;claude-code&#x2F;">Claude Code</a>
         </li>
         <li class="links-of-recent-posts-item">
@@ -2282,9 +2507,6 @@
         </li>
         <li class="links-of-recent-posts-item">
           <a href="/2025/04/18/pytest/" title="2025&#x2F;04&#x2F;18&#x2F;pytest&#x2F;">pytest</a>
-        </li>
-        <li class="links-of-recent-posts-item">
-          <a href="/2025/01/18/cursor/" title="2025&#x2F;01&#x2F;18&#x2F;cursor&#x2F;">cursor</a>
         </li>
     </ul>
   </div>
@@ -2322,13 +2544,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">626k</span>
+    <span title="站点总字数">628k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">9:29</span>
+    <span title="站点阅读时长">9:31</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
