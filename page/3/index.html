@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2026-01-07 16:06:08" itemprop="dateModified" datetime="2026-01-07T16:06:08+08:00">2026-01-07</time>
+                <time title="修改时间：2026-01-16 17:19:37" itemprop="dateModified" datetime="2026-01-16T17:19:37+08:00">2026-01-16</time>
               </span>
 
           
@@ -253,14 +253,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>6.1k</span>
+              <span>10k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
+              <span>9 分钟</span>
             </span>
 
         </div>
@@ -295,6 +295,10 @@
 <td><code>ESC ESC</code></td>
 <td>回退历史，编辑之前的 prompt</td>
 </tr>
+<tr>
+<td><code>S-Enter</code> or <code>A+Enter</code></td>
+<td>换行, 有的需要执行&#x2F;terminal-setup</td>
+</tr>
 </tbody></table>
 <h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><table>
 <thead>
@@ -304,6 +308,10 @@
 </tr>
 </thead>
 <tbody><tr>
+<td><code>/help</code></td>
+<td>显示帮助信息 command列表 custom command 列表</td>
+</tr>
+<tr>
 <td><code>/init</code></td>
 <td>创建 CLAUDE.md，扫描代码仓库建立工程上下文</td>
 </tr>
@@ -330,6 +338,22 @@
 <tr>
 <td><code>/export [filename] </code></td>
 <td>Export the current conversation to a file or clipboard</td>
+</tr>
+<tr>
+<td><code>/statusline</code></td>
+<td>显示状态行路径</td>
+</tr>
+<tr>
+<td><code>/context</code></td>
+<td>显示上下文info</td>
+</tr>
+<tr>
+<td><code>/stats</code></td>
+<td>显示model token使用情况</td>
+</tr>
+<tr>
+<td><code>/todos</code></td>
+<td>显示todo列表</td>
 </tr>
 </tbody></table>
 <h2 id="CLAUDE-md"><a href="#CLAUDE-md" class="headerlink" title="CLAUDE.md"></a>CLAUDE.md</h2><h3 id="什么是-CLAUDE-md"><a href="#什么是-CLAUDE-md" class="headerlink" title="什么是 CLAUDE.md"></a>什么是 CLAUDE.md</h3><p>CLAUDE.md 是项目级配置文件，为 Claude Code 提供工程上下文。它指导 Claude 理解项目结构、命令、规范等。</p>
@@ -493,6 +517,14 @@
 <h3 id="创建位置"><a href="#创建位置" class="headerlink" title="创建位置"></a>创建位置</h3><p>在 <code>.claude/commands/</code> 目录创建 <code>.md</code> 文件</p>
 <h3 id="示例：博客部署命令"><a href="#示例：博客部署命令" class="headerlink" title="示例：博客部署命令"></a>示例：博客部署命令</h3><p><strong><code>.claude/commands/deploy.md</code>：</strong></p>
 <h2 id="prompt"><a href="#prompt" class="headerlink" title="prompt"></a>prompt</h2><ol>
+<li>(very good)This session is being continued from a previous conversation that ran out of context. The conversation is summarized below：对话超出之后，将conversation summarized总结到文档；方便下次加载</li>
+<li>你是一个精通 Triton, MLIR, LLVM, RISC-V 的专家工程师，你非常熟悉 Triton, MLIR, LLVM, RISC-V 的原理和实现，你非常熟悉 Triton, MLIR, LLVM, RISC-V 的优化和调试</li>
+</ol>
+<ul>
+<li>让AI生成更详细prompt</li>
+</ul>
+<ol>
+<li>你是一个精通python&#x2F;C++调试的专家工程师,熟悉LLDB的使用及各种调试技巧</li>
 <li>扩展思考 - 处理复杂任务时使用 “think hard” 或 “think deeply” 触发深度推理<ul>
 <li>“think” - 触发基本扩展思考</li>
 <li>“think hard”、”think more”、”think longer” - 触发更深层思考</li>
@@ -504,16 +536,35 @@
 <li>~&#x2F;.triton&#x2F;cache 缓存路径, 里面有各种 ir 文件</li>
 <li>MLIR_ENABLE_DUMP&#x3D;1 python xxx &gt; xxx.log 2&gt;&amp;1 可以查看mlir dump信息, 然后将一个pass之前的 MLIR 放到文件中xxx_pass.mlir，然后使用python&#x2F;build&#x2F;cmake.linux-x86_64-cpython-3.10&#x2F;bin&#x2F;triton-opt –debug -<PASS_NAME> xxx_pass.mlir &gt; xxx_pass.log 2&gt;&amp;1 来查看pass的log</li>
 </ol>
+<h2 id="使用技巧-1"><a href="#使用技巧-1" class="headerlink" title="使用技巧"></a>使用技巧</h2><ol>
+<li>如何管理seesion</li>
+<li><code>/compact</code> Clear conversation history but keep a summary in context. Optional: &#x2F;compact [instructions for summarization] 清除对话历史，但保留总结在上下文中。可选：&#x2F;compact [总结说明]</li>
+<li><code>/status</code> 查看session id； <code>~/.claude/projects/session-id.jsonl</code>找到历史对话, 可以用来总结内容</li>
+<li>多使用plan mode，将上下文保存到文件中，执行太长了重新开始</li>
+</ol>
+<ul>
+<li>plan mode生成的plan在~&#x2F;.claude&#x2F;plans下面，根据plan来继续执行</li>
+</ul>
+<ol>
+<li>开发和使用&#x2F;command不要在同一上下文, 会相互影响</li>
+<li>自动摘取出错的ir，缩减，使用opt来定位修复问题。给ai一个例子，让ai自己总结一个例子作为skills</li>
+<li>ai自动总结成skills</li>
+</ol>
 <h2 id="Boris-的-13-条建议"><a href="#Boris-的-13-条建议" class="headerlink" title="Boris 的 13 条建议"></a>Boris 的 13 条建议</h2><p>Claude Code 创始人 Boris 的使用技巧：</p>
 <ol>
-<li><strong>并行多 Claude</strong> - 终端运行 5 个 Claude，标签编号 1-5，配合系统通知</li>
+<li><strong>并行多 Claude</strong> - 终端运行 5 个 Claude，标签编号 1-5，配合系统通知<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动 5 个后台会话（macOS/Linux）</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> &#123;1..5&#125;; <span class="keyword">do</span></span><br><span class="line">  <span class="built_in">nohup</span> claude-code --name <span class="string">&quot;Claude-<span class="variable">$i</span>&quot;</span> &gt; /tmp/claude-<span class="variable">$i</span>.<span class="built_in">log</span> 2&gt;&amp;1 &amp;</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></li>
 <li><strong>本地 + Web</strong> - 终端与 claude.ai&#x2F;code 并行，用 <code>&amp;</code> 交本地会话给 Web，或 <code>--teleport</code> 来回切换</li>
-<li><strong>Opus 4.5 + Thinking</strong> - 最佳编码模型，虽大且慢但需引导少，总体更快</li>
+<li><strong>Opus 4.5 + Thinking</strong> - 最佳编码模型，虽大且慢但需引导少，总体更快, 开启thinking mode; &#x2F;config设置</li>
 <li><strong>共享 CLAUDE.md</strong> - 团队共用一个 CLAUDE.md��检入 git，发现问题立即添加</li>
 <li><strong>PR 审查集成</strong> - 用 GitHub Action，在同事 PR 上 tag @.claude 要求更新 CLAUDE.md</li>
 <li><strong>Plan 模式优先</strong> - 按 <code>Shift+Tab</code> 两次进入 Plan 模式，计划好后切换 auto-accept 模式一气呵成</li>
 <li><strong>Slash 命令</strong> - 每日重复的工作流用命令自动化，如 <code>/commit-push-pr</code></li>
 <li><strong>Subagent</strong> - 常用工作流用 subagent，如 code-simplifier、verify-app</li>
+</ol>
+<ul>
+<li>我经常使用一些子代理：code-simplifier 会在 Claude 完成工作后简化代码 ，verify-app 会提供详细的端到端 Claude 代码测试指南，等等。 类似于斜杠命令，我认为子代理的作用是自动化我处理大多数 PR 时最常用的工作流程。</li>
+</ul>
+<ol start="9">
 <li><strong>PostToolUse Hook</strong> - 格式化代码，处理最后 10%</li>
 <li><strong>权限管理</strong> - 不用 <code>--dangerously-skip-permissions</code>，用 <code>/permissions</code> 预授权安全命令</li>
 <li><strong>MCP 工具</strong> - Claude 代用所有工具：Slack、BigQuery、Sentry 等</li>
@@ -544,6 +595,9 @@
 <li>cursor也能读取工程下的自定义命令</li>
 </ol>
 <h2 id="MCPS"><a href="#MCPS" class="headerlink" title="MCPS"></a>MCPS</h2><ol>
+<li><code>claude mcp list</code> 查看mcp server列表</li>
+<li><code>mcp</code> 能查看mcp server列表, 配置文件</li>
+<li><code>/status</code> 能查看mcp server状态</li>
 <li>使用：</li>
 </ol>
 <ul>
@@ -553,9 +607,34 @@
 <ol>
 <li><a target="_blank" rel="noopener" href="https://github.com/zereight/gitlab-mcp">gitlab-mcp</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/sooperset/mcp-atlassian">mcp-atlassian</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/idosal/git-mcp">git-mcp</a></li>
 <li><a target="_blank" rel="noopener" href="https://github.com/github/github-mcp-server">github-mcp-server</a></li>
 <li><a target="_blank" rel="noopener" href="https://lldb.llvm.org/use/mcp.html">lldb-mcp</a></li>
 </ol>
+<h2 id="agents"><a href="#agents" class="headerlink" title="agents"></a>agents</h2><ol>
+<li><code>/agents</code> 查看agents列表</li>
+</ol>
+<h2 id="statusline-美化"><a href="#statusline-美化" class="headerlink" title="statusline 美化"></a><a target="_blank" rel="noopener" href="https://github.com/sirmalloc/ccstatusline">statusline 美化</a></h2><p>1<code>npx ccstatusline</code> 配置</p>
+<h3 id="ccstatusline"><a href="#ccstatusline" class="headerlink" title="ccstatusline"></a>ccstatusline</h3><p>增强 Claude Code 状态栏，显示模型、git 分支、token 使用等信息。</p>
+<p><strong>安装：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置到 settings.json</span></span><br><span class="line">~/.claude/settings.json 添加：</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;statusLine&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;type&quot;</span>: <span class="string">&quot;command&quot;</span>,</span><br><span class="line">    <span class="string">&quot;command&quot;</span>: <span class="string">&quot;npx ccstatusline@latest&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 首次运行会提示配置</span></span><br><span class="line"><span class="comment"># 可选择显示的 widgets、颜色、Powerline 样式等</span></span><br></pre></td></tr></table></figure>
+<p>json示例：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="number">3</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;lines&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">[</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;d75bc542-eaeb-48e8-bec1-bd34bbfccd5b&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;current-working-dir&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;color&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cyan&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xxxxxxxxx&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;separator&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;aaaaaaaaa&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;git-branch&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;color&quot;</span><span class="punctuation">:</span> <span class="string">&quot;magenta&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">[</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;model&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;color&quot;</span><span class="punctuation">:</span> <span class="string">&quot;brightBlack&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;separator&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;3&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;context-length&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;color&quot;</span><span class="punctuation">:</span> <span class="string">&quot;brightBlack&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0fea1d45-6d4a-4315-be36-5d71720954be&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;separator&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;97cf041a-c86b-46aa-92b0-127eb9864c4a&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;context-percentage-usable&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;color&quot;</span><span class="punctuation">:</span> <span class="string">&quot;brightBlack&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;4e1993b0-bcf5-476a-8adb-04c7a0d3b84f&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;separator&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;715f1c96-7edb-4906-bf3e-5fc0f49bd1c2&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;session-cost&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;color&quot;</span><span class="punctuation">:</span> <span class="string">&quot;brightBlack&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;694c477b-4e7c-4362-a322-92f38ae692be&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;separator&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;b4341d7a-939a-42b6-abf1-bf2500fa62d7&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;tokens-total&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;color&quot;</span><span class="punctuation">:</span> <span class="string">&quot;brightBlack&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">[</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;7bdbac29-6d10-4c3a-9926-52ab8968f292&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;claude-session-id&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;color&quot;</span><span class="punctuation">:</span> <span class="string">&quot;brightBlack&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;flexMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;full-minus-40&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;compactThreshold&quot;</span><span class="punctuation">:</span> <span class="number">60</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;colorLevel&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;inheritSeparatorColors&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;globalBold&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;powerline&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;separators&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">      <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;separatorInvertBackground&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">      <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">    <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;startCaps&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;endCaps&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;autoAlign&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="context-管理"><a href="#context-管理" class="headerlink" title="context 管理"></a>context 管理</h2><ol>
+<li>session一直失败，其他session正常，可以尝试&#x2F;compact总结context</li>
+<li>&#x2F;context 查看context信息 </li>
+<li>根据你之前的 &#x2F;context 输出，第一步占用较多 context length 是因为初始化时需要加载多项内容</li>
+<li>Ctx: 53.7k | Ctx(u): 33.6% 是 Ctx ≠ “送给模型的 prompt”， 真正送给模型的只是其中一个 被裁剪、重组、抽取后的子集</li>
+<li>claude-opus-4-5-20251101 · 1k&#x2F;200k tokens (0%) ；送给模型的 tokens 数量</li>
+</ol>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/daaain/claude-code-log">claude-code-log</a> 将jsonl转为markdown or html</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ryoppippi/ccusage">ccusage</a> 显示token使用情况</li>
+</ol>
+<ul>
+<li>&#x2F;export log.md 导出日志</li>
+</ul>
 
       
     </div>
@@ -1775,7 +1854,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-12-24 14:45:52" itemprop="dateModified" datetime="2025-12-24T14:45:52+08:00">2025-12-24</time>
+                <time title="修改时间：2026-01-12 16:25:01" itemprop="dateModified" datetime="2026-01-12T16:25:01+08:00">2026-01-12</time>
               </span>
 
           
@@ -2339,6 +2418,9 @@
 <li>triton.compile</li>
 <li>torch.compile</li>
 </ol>
+<h2 id="profiling"><a href="#profiling" class="headerlink" title="profiling"></a>profiling</h2><ol>
+<li>MLIR_ENABLE_TIMING&#x3D;1 打印mlir pass耗时</li>
+</ol>
 <h2 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h2><ol>
 <li>C++ 代码里：<code>#include &quot;llvm/Support/Debug.h&quot; llvm::DebugFlag = true;</code></li>
 <li><a target="_blank" rel="noopener" href="https://mlir.llvm.org/getting_started/Debugging/">MLIR debug</a><ul>
@@ -2565,13 +2647,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">629k</span>
+    <span title="站点总字数">633k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">9:31</span>
+    <span title="站点阅读时长">9:35</span>
 </div>
 
 <!-- 网站运行时间的设置 -->
